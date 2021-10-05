@@ -18,7 +18,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import net.ritasister.util.UtilPermissions;
 
-public class SRPApi 
+public class SRPApi
 {
 	public static boolean isAuthCommandsPermission(CommandSender sender, Command cmd, UtilPermissions utilPermissions, String message) 
 	{
