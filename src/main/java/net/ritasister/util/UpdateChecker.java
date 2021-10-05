@@ -10,7 +10,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 
-public class UpdateChecker {
+public class UpdateChecker 
+{
 
     private JavaPlugin plugin;
     private int resourceId;
@@ -25,14 +26,14 @@ public class UpdateChecker {
     {
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> 
         {
-            try (InputStream inputStream = 
-            		new URL("https://api.spigotmc.org/legacy/update.php?resource=" 
-            + this.resourceId).openStream(); Scanner scanner = new Scanner(inputStream)) 
+            try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId)
+            		.openStream(); Scanner scanner = new Scanner(inputStream)) 
             {
-                if (scanner.hasNext()){
+                if(scanner.hasNext())
+                {
                     consumer.accept(scanner.next());
                 }
-            }catch (IOException exception){
+            }catch(IOException exception){
                 this.plugin.getLogger().info("Cannot look for updates: " + exception.getMessage());
             }
         });
