@@ -13,14 +13,14 @@ public enum UtilPermissions
 	serverRegionProtect("srp.serverregionprotect"),
 	serverRegionProtectAllow("srp.serverregionallow");
 	
-	private String $perm;
+	private String perm;
 
-    private UtilPermissions(String $perm) 
+    private UtilPermissions(String perm) 
     {
-        this.$perm=$perm;
+        this.perm=perm;
     }
     public String getPerm() 
     {
-        return $perm;
+        return perm;
     }
 }
