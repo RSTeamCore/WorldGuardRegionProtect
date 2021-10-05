@@ -53,16 +53,17 @@ public class ServerRegionProtect extends JavaPlugin
 	{
 		ServerRegionProtect.instance = this;
 	}
+	
 	@Override
 	public void onEnable()
 	{
 		this.checkVersion();
+		this.checkUpdate();
+		this.loadMetrics();
         this.srpLoadLibs.loadWorldGuard();
 		this.utilConfigManager.loadConfig();
 		this.hyperCCARegisterCommands.RegisterCommands(utilCommandList);
 		this.hyperCCARegisterEvents.RegisterEvents(pluginManager);
-		this.checkUpdate();
-		this.loadMetrics();
 		SRPLogger.info("created by &8[&5RitaSister&8]");
 	}
 	private void checkUpdate()
