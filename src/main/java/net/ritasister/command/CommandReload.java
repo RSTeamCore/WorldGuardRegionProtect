@@ -44,12 +44,12 @@ public class CommandReload extends SRPCommandExecutor
 	}
 	
 	@Override
-	public List<String> onTabComplete(CommandSender sender, Player player, Command $cmd, String $label, String[] $args)
+	public List<String> onTabComplete(CommandSender sender, Player player, Command cmd, String label, String[] args)
 	{
-		if ($args.length == 1 && SRPApi.isAuthCommandsPermissionsOnTab(sender, UtilPermissions.reload_cfg)) 
+		if (args.length == 1 && SRPApi.isAuthCommandsPermissionsOnTab(sender, UtilPermissions.reload_cfg)) 
 		{
-			return $args.length == 1 && SRPApi.isAuthCommandsPermissionsOnTab(sender, UtilPermissions.reload_cfg) && sender instanceof Player ? 
-						StringUtil.copyPartialMatches($args[0], subCommand, new ArrayList<>()) : new ArrayList<>();
+			return args.length == 1 && SRPApi.isAuthCommandsPermissionsOnTab(sender, UtilPermissions.reload_cfg) && sender instanceof Player ? 
+						StringUtil.copyPartialMatches(args[0], subCommand, new ArrayList<>()) : new ArrayList<>();
 		}else{
 			return Collections.emptyList();
 		}
