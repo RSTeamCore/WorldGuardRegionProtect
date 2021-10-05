@@ -8,6 +8,7 @@ import java.util.logging.*;
 import java.util.stream.*;
 import javax.annotation.*;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.configuration.*;
@@ -25,7 +26,6 @@ import com.sk89q.worldguard.protection.regions.*;
 
 import net.ritasister.register.SRPRegisterCommand;
 import net.ritasister.register.SRPRegisterListener;
-import net.ritasister.util.Metrics;
 import net.ritasister.util.UpdateChecker;
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.util.UtilConfigManager;
