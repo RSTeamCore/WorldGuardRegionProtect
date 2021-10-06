@@ -21,7 +21,8 @@ import com.sk89q.worldguard.protection.*;
 import com.sk89q.worldguard.protection.managers.*;
 import com.sk89q.worldguard.protection.regions.*;
 
-import net.ritasister.srp.SRPApi;
+import net.ritasister.rslibs.api.RSApi;
+//import net.ritasister.srp.RSApi;
 import net.ritasister.srp.ServerRegionProtect;
 import net.ritasister.util.UtilPermissions;
 import net.ritasister.util.wg.Iwg;
@@ -44,15 +45,15 @@ public class RegionProtect implements Listener
 	{
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
-		if(SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtectAllow)
-			|| SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtectOnlyBreakAllow))
+		if(RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtectAllow)
+			|| RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtectOnlyBreakAllow))
 		{
 			e.setCancelled(false);
 		}else
-		if(SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect)) 
+		if(RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect)) 
 		{
 			final Player p = e.getPlayer();
-			if(SRPApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
 			{
 				e.setCancelled(true);
 				if (ServerRegionProtect.utilConfig.regionMessageProtect)
@@ -67,15 +68,15 @@ public class RegionProtect implements Listener
 	{
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
-		if(SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtectAllow))
+		if(RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtectAllow))
 		{
 			e.setCancelled(false);
 		}else
-		if(SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect)
-				|| SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtectAllow)) 
+		if(RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect)
+				|| RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtectAllow)) 
 		{
 			final Player p = e.getPlayer();
-			if(SRPApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
 			{
 				e.setCancelled(true);
 				if (ServerRegionProtect.utilConfig.regionMessageProtect)
@@ -88,9 +89,9 @@ public class RegionProtect implements Listener
 	{
 		final Player p = e.getPlayer();
 		final Location loc = e.getBlockClicked().getLocation();
-		if(SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
+		if(RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
 		{
-			if(SRPApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
 			{
 				if (e.getBlockClicked().getType() == Material.LAVA_BUCKET
 						&& e.getBlockClicked().getType() == Material.WATER_BUCKET
@@ -107,9 +108,9 @@ public class RegionProtect implements Listener
 		Entity entity = e.getEntity();
 		Entity damager = e.getDamager();
 		final Location loc = entity.getLocation();
-		if(SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
+		if(RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
 		{
-			if(SRPApi.isAuthListenerPermission(damager, UtilPermissions.serverRegionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(damager, UtilPermissions.serverRegionProtect, null))return;
 			{
 				if (entity instanceof ArmorStand 
 						|| entity instanceof ItemFrame 
@@ -136,9 +137,9 @@ public class RegionProtect implements Listener
 	{
 		final Player p = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
-		if(SRPApi.checkStandingRegion(clickLoc, ServerRegionProtect.utilConfig.regionProtect))
+		if(RSApi.checkStandingRegion(clickLoc, ServerRegionProtect.utilConfig.regionProtect))
 		{
-			if(SRPApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
 			{
 				if(e.getRightClicked().getType() == EntityType.ITEM_FRAME
 						&& this.wg.wg(p.getWorld(), p.getLocation(), false))
@@ -153,9 +154,9 @@ public class RegionProtect implements Listener
 	{
 		final Player p = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
-		if(SRPApi.checkStandingRegion(clickLoc, ServerRegionProtect.utilConfig.regionProtect))
+		if(RSApi.checkStandingRegion(clickLoc, ServerRegionProtect.utilConfig.regionProtect))
 		{
-			if(SRPApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
 			{
 				if(e.getRightClicked().getType() == EntityType.ARMOR_STAND 
 						&& this.wg.wg(p.getWorld(), clickLoc, false))
@@ -179,7 +180,7 @@ public class RegionProtect implements Listener
 		if (e.getItem() != null) 
 		{
 			Player p = e.getPlayer();
-			if(SRPApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
 			{
 				for(String spawnEntityType : ServerRegionProtect.utilConfig.spawnEntityType)
 				{
@@ -198,9 +199,9 @@ public class RegionProtect implements Listener
 		Entity entity = e.getEntity();
 		Entity damager = e.getRemover();
 		final Location loc = entity.getLocation();
-		if(SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
+		if(RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
 		{
-			if(SRPApi.isAuthListenerPermission(damager, UtilPermissions.serverRegionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(damager, UtilPermissions.serverRegionProtect, null))return;
 			{
 				if (e.getRemover().getType() == EntityType.PLAYER) 
 				{
@@ -230,9 +231,9 @@ public class RegionProtect implements Listener
 		final Entity entity = e.getEntity();
 		final Player p = (Player) e.getPlayer();
 		final Location loc = entity.getLocation();
-		if(SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
+		if(RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
 		{
-			if(SRPApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
 			{
 				if (p.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
 						|| p.getInventory().getItemInMainHand().getType() == Material.PAINTING) 
@@ -247,7 +248,7 @@ public class RegionProtect implements Listener
 	{
 		final Entity entity = e.getEntity();
 		final Location loc = entity.getLocation();
-		if(SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
+		if(RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
 		{
 			if(e.getEntityType() == EntityType.PRIMED_TNT 
 					|| e.getEntityType() == EntityType.ENDER_CRYSTAL 
@@ -262,7 +263,7 @@ public class RegionProtect implements Listener
 	{
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
-		if(SRPApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
+		if(RSApi.checkStandingRegion(loc, ServerRegionProtect.utilConfig.regionProtect))
 		{
 			if(b.getType() == null)return;
 			{
@@ -278,7 +279,7 @@ public class RegionProtect implements Listener
 	{
 		final Player p = e.getPlayer();
 		final String[] s = e.getMessage().toLowerCase().split(" ");
-		if(SRPApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
+		if(RSApi.isAuthListenerPermission(p, UtilPermissions.serverRegionProtect, null))return;
 		{
 			if (this.cmdWE(s[0]) && !this.wg.checkIntersection(p)) 
 			{

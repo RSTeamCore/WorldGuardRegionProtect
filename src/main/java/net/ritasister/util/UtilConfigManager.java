@@ -1,6 +1,6 @@
 package net.ritasister.util;
 
-import net.ritasister.srp.SRPLogger;
+import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.srp.ServerRegionProtect;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
@@ -16,7 +16,6 @@ public class UtilConfigManager
 		
 		utilConfigManager.LoadMSGConfig(ServerRegionProtect.instance, true);
 		ServerRegionProtect.utilConfigMessage = new UtilConfigMessage();
-		
-		SRPLogger.info("Все конфиги успешно загружены.");
+		RSLogger.info("&2All configs load successfully!");
 	}
 }

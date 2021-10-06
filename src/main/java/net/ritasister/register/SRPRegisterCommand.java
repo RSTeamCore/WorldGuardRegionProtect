@@ -1,9 +1,9 @@
 package net.ritasister.register;
 
-import java.util.HashMap;
+import org.bukkit.Bukkit;
 
 import net.ritasister.command.CommandReload;
-import net.ritasister.srp.SRPLogger;
+import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.srp.ServerRegionProtect;
 import net.ritasister.util.UtilCommandList;
 
@@ -14,13 +14,13 @@ public class SRPRegisterCommand
 		try 
 		{
 			ServerRegionProtect.instance.getCommand(ucl.serverregionprotect).setExecutor(new CommandReload(ucl));
-			SRPLogger.info("Все команды плагина были успешно зарегистрированы.");
+			RSLogger.info("&2All commands load successfully!");
 		}catch(NullPointerException e){
-			SRPLogger.err("Команда не может быть &4null."); 
-			SRPLogger.err("Взможны несколько причин ошибки:");
-			SRPLogger.err("- команда не указана в &4getCommand(ucl.cmd_name).");
-			SRPLogger.err("- команда не указана в &4UtilCommandList.");
-			SRPLogger.err("- команда не указана в &4plugin.yml.");
+			RSLogger.err("&cCommand cannout be &4null."); 
+			RSLogger.err("&cPossible for reason:");
+			RSLogger.err("&c- command not set in &4getCommand(ucl.cmd_name).");
+			RSLogger.err("&c- command not set in &4UtilCommandList.");
+			RSLogger.err("&c- command not set in &4plugin.yml.");
 		}
 	}
 }

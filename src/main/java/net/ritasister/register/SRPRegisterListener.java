@@ -3,7 +3,7 @@ package net.ritasister.register;
 import org.bukkit.plugin.PluginManager;
 
 import net.ritasister.listener.protect.RegionProtect;
-import net.ritasister.srp.SRPLogger;
+import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.srp.ServerRegionProtect;
 
 public class SRPRegisterListener 
@@ -16,9 +16,9 @@ public class SRPRegisterListener
 			final RegionProtect creativeListener = new RegionProtect(ServerRegionProtect.instance);
 			pm.registerEvents(creativeListener, ServerRegionProtect.instance);
 			
-			SRPLogger.info("Все события плагина были успешно зарегистрированы.");
+			RSLogger.info("&2All listeners load successfully!");
 		}catch(Exception e){
-            SRPLogger.err("Не удалось зарегистрировать все события плагина.");
+            RSLogger.err("Could load all listeners... We have a error!");
             e.fillInStackTrace();
         }
 	}

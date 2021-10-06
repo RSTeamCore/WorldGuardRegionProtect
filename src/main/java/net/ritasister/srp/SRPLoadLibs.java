@@ -5,6 +5,8 @@ import org.bukkit.plugin.*;
 
 import com.sk89q.worldguard.bukkit.*;
 
+import net.ritasister.rslibs.api.RSLogger;
+
 public class SRPLoadLibs 
 {
 	@SuppressWarnings("null")
@@ -20,13 +22,13 @@ public class SRPLoadLibs
             }catch(NullPointerException | ClassCastException | NoClassDefFoundError ex){
                 final Throwable t = null;
                 final Throwable e = t;
-                SRPLogger.err(e.getMessage());
+                RSLogger.err(e.getMessage());
             }
         }
         return null;
     }
 	private static void msgSuccess(final String s) 
 	{
-        SRPLogger.info(ServerRegionProtect.colorize("Plugin: " + s + " loaded successfull!."));
+        RSLogger.info("&2Plugin: " + s + " loaded successfull!.");
     }
 }

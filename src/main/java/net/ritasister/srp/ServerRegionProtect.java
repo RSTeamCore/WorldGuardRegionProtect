@@ -25,8 +25,11 @@ import com.sk89q.worldguard.protection.regions.*;
 
 import net.ritasister.register.SRPRegisterCommand;
 import net.ritasister.register.SRPRegisterListener;
-import net.ritasister.util.Metrics;
-import net.ritasister.util.UpdateChecker;
+import net.ritasister.rslibs.api.RSLogger;
+import net.ritasister.rslibs.utils.Metrics;
+import net.ritasister.rslibs.utils.UpdateChecker;
+//import net.ritasister.util.Metrics;
+//import net.ritasister.util.UpdateChecker;
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.util.UtilConfigManager;
 import net.ritasister.util.UtilLoadConfig;
@@ -36,9 +39,13 @@ import net.ritasister.util.config.UtilConfigMessage;
 public class ServerRegionProtect extends JavaPlugin
 {
 	public static ServerRegionProtect instance;
+	
+	//RSLogger RSLogger = new RSLogger(null);
+	
 	public static UtilConfig utilConfig;
 	public static UtilConfigMessage utilConfigMessage;
 	public static UtilLoadConfig utilLoadConfig = new UtilLoadConfig(instance);
+	
 	private UtilConfigManager utilConfigManager;	
 	private UtilCommandList utilCommandList;
 	
@@ -60,11 +67,11 @@ public class ServerRegionProtect extends JavaPlugin
 		this.checkVersion();
 		this.checkUpdate();
 		this.loadMetrics();
-        this.srpLoadLibs.loadWorldGuard();
+		this.srpLoadLibs.loadWorldGuard();
 		this.utilConfigManager.loadConfig();
 		this.hyperCCARegisterCommands.RegisterCommands(utilCommandList);
 		this.hyperCCARegisterEvents.RegisterEvents(pluginManager);
-		SRPLogger.info("created by &8[&5RitaSister&8]");
+		RSLogger.info("&2created by &8[&5RitaSister&8]");
 	}
 	private void checkUpdate()
 	{
@@ -72,18 +79,18 @@ public class ServerRegionProtect extends JavaPlugin
 		{
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) 
             {	
-            	SRPLogger.info("&6==============================================");
-                SRPLogger.info("Current version: &b<pl_ver>".replace("<pl_ver>", pluginVersion));
-                SRPLogger.info("This is latest version plugin.".replace("<pl_ver>", pluginVersion));
-                SRPLogger.info("&6==============================================");
+            	RSLogger.info("&6==============================================");
+                RSLogger.info("&2Current version: &b<pl_ver>".replace("<pl_ver>", pluginVersion));
+                RSLogger.info("&2This is latest version plugin.".replace("<pl_ver>", pluginVersion));
+                RSLogger.info("&6==============================================");
             }else{
-            	SRPLogger.info("&6==============================================");
-                SRPLogger.info("&eThere is a new version update available.");
-                SRPLogger.info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", pluginVersion));
-                SRPLogger.info("&3New version: &b<new_pl_ver>".replace("<new_pl_ver>", version));
-                SRPLogger.info("&ePlease download new version here:");
-                SRPLogger.info("&ehttps://www.spigotmc.org/resources/serverregionprotect-1-13-1-17.81321/");
-                SRPLogger.info("&6==============================================");
+            	RSLogger.info("&6==============================================");
+                RSLogger.info("&eThere is a new version update available.");
+                RSLogger.info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", pluginVersion));
+                RSLogger.info("&3New version: &b<new_pl_ver>".replace("<new_pl_ver>", version));
+                RSLogger.info("&ePlease download new version here:");
+                RSLogger.info("&ehttps://www.spigotmc.org/resources/serverregionprotect-1-13-1-17.81321/");
+                RSLogger.info("&6==============================================");
             }
         });
 	}
@@ -97,8 +104,8 @@ public class ServerRegionProtect extends JavaPlugin
         try{
             javaVersionNum = Integer.parseInt(version);
         }catch(final NumberFormatException e){
-            SRPLogger.warn("Failed to determine Java version; Could not parse {}".replace("{}", version) + e);
-            SRPLogger.warn(String.valueOf(javaVersion));
+            RSLogger.warn("Failed to determine Java version; Could not parse {}".replace("{}", version) + e);
+            RSLogger.warn(String.valueOf(javaVersion));
             return;
         }
 		String serverVersion;
@@ -107,16 +114,12 @@ public class ServerRegionProtect extends JavaPlugin
         }catch(ArrayIndexOutOfBoundsException whatVersionAreYouUsingException){
             return;
         }
-        SRPLogger.info("&6You are running is &ejava &6version: &e<javaVersion>".replace("<javaVersion>", String.valueOf(javaVersionNum)));
-		SRPLogger.info("&6Your &eserver &6is running version: &e<serverVersion>".replace("<serverVersion>", String.valueOf(serverVersion)));
+        RSLogger.info("&6You are running is &ejava &6version: &e<javaVersion>".replace("<javaVersion>", String.valueOf(javaVersionNum)));
+		RSLogger.info("&6Your &eserver &6is running version: &e<serverVersion>".replace("<serverVersion>", String.valueOf(serverVersion)));
 	}
 	private void loadMetrics()
 	{
 		int pluginId = 10853;
         Metrics metrics = new Metrics(this, pluginId);
-	}
-	public static String colorize(String str) 
-	{
-		return str.replaceAll("(?i)&([a-f0-9k-or])", "\247$1");
 	}
 }

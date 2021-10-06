@@ -2,7 +2,20 @@ package net.ritasister.util;
 
 import org.bukkit.permissions.*;
 
-public enum UtilPermissions 
+public interface UtilPermissions 
+{
+	public static final String 
+	/* Main Permission */
+	all_perm_plugin = ("srp.*"),
+	all_perm = ("*"),
+	/* Command Permission */
+	reload_cfg = ("srp.reload.cfg"),
+	reload_msg_cfg = ("srp.reload.cfg.msg"),
+	/* Listener Permission */
+	serverRegionProtect = ("srp.serverregionprotect"),
+	serverRegionProtectAllow = ("srp.serverregionallow");
+}
+/*public enum UtilPermissions 
 {
 	all_perm_plugin("aqualimecommand.*"),
 	all_perm("*"),
@@ -23,4 +36,4 @@ public enum UtilPermissions
     {
         return perm;
     }
-}
+}*/

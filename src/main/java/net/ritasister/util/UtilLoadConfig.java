@@ -5,7 +5,7 @@ import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
 import org.bukkit.event.*;
 
-import net.ritasister.srp.SRPLogger;
+import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.srp.ServerRegionProtect;
 
 import java.io.*;
@@ -30,13 +30,13 @@ public class UtilLoadConfig
             if (copy) 
             {
                 $m.saveResource("messages.yml", false);
-                SRPLogger.LoadConfigMsgSuccess(messagesf);
+                RSLogger.LoadConfigMsgSuccess(messagesf);
             }else{
         	try
         	{
 				messagesf.createNewFile();
 			}catch(Exception ex){
-				SRPLogger.LoadConfigMsgError(messagesf+ex.getMessage());
+				RSLogger.LoadConfigMsgError(messagesf+ex.getMessage());
 				ex.printStackTrace();
         	}
         }
@@ -45,10 +45,10 @@ public class UtilLoadConfig
     	{
     		messages = YamlConfiguration.loadConfiguration(messagesf);
     	}catch(NullPointerException e){
-    		SRPLogger.LoadConfigMsgError(messagesf+e.getMessage());
+    		RSLogger.LoadConfigMsgError(messagesf+e.getMessage());
     		e.printStackTrace();
     	}
-        SRPLogger.LoadConfigMsgSuccess(messagesf);
+        RSLogger.LoadConfigMsgSuccess(messagesf);
     }
 	public static void SaveMsgConfig()
 	{
@@ -60,14 +60,14 @@ public class UtilLoadConfig
 		{
 			messages = YamlConfiguration.loadConfiguration(messagesf);
 		}catch(NullPointerException e){
-			SRPLogger.err("Could not save " + e.getMessage());
+			RSLogger.err("Could not save " + e.getMessage());
 			e.printStackTrace();
 		}
 		try
 		{
 			messages.save(messagesf);
 		}catch(IOException e){
-			SRPLogger.err("Could not load config. " + e.getMessage());
+			RSLogger.err("Could not load config. " + e.getMessage());
 			e.printStackTrace();
 		}
 	}

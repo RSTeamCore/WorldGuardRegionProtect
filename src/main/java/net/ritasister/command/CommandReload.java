@@ -9,14 +9,14 @@ import org.bukkit.potion.*;
 import org.bukkit.scheduler.*;
 import org.bukkit.util.StringUtil;
 
-import net.ritasister.srp.SRPApi;
 import net.ritasister.srp.ServerRegionProtect;
-import net.ritasister.command.executor.SRPCommandExecutor;
+import net.ritasister.rslibs.api.CmdExecutor;
+import net.ritasister.rslibs.api.RSApi;
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.util.UtilPermissions;
 import net.ritasister.util.config.UtilConfig;
 
-public class CommandReload extends SRPCommandExecutor
+public class CommandReload extends CmdExecutor
 {
 	
 	private final List<String> subCommand = Arrays.asList("reload");
@@ -30,7 +30,7 @@ public class CommandReload extends SRPCommandExecutor
 	protected void run(CommandSender sender, Command cmd, String[] args) throws Exception
 	{
 		final boolean sp = sender instanceof Player;
-		if(sp && !SRPApi.isAuthCommandsPermission((Player)sender, cmd, UtilPermissions.reload_cfg,	
+		if(sp && !RSApi.isAuthCommandsPermission((Player)sender, cmd, UtilPermissions.reload_cfg,	
 				ServerRegionProtect.utilConfigMessage.noPerm)){return;}else{
 			if (args.length == 1)
 			{			
@@ -46,9 +46,9 @@ public class CommandReload extends SRPCommandExecutor
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Player player, Command cmd, String label, String[] args)
 	{
-		if (args.length == 1 && SRPApi.isAuthCommandsPermissionsOnTab(sender, UtilPermissions.reload_cfg)) 
+		if (args.length == 1 && RSApi.isAuthCommandsPermissionsOnTab(sender, UtilPermissions.reload_cfg)) 
 		{
-			return args.length == 1 && SRPApi.isAuthCommandsPermissionsOnTab(sender, UtilPermissions.reload_cfg) && sender instanceof Player ? 
+			return args.length == 1 && RSApi.isAuthCommandsPermissionsOnTab(sender, UtilPermissions.reload_cfg) && sender instanceof Player ? 
 						StringUtil.copyPartialMatches(args[0], subCommand, new ArrayList<>()) : new ArrayList<>();
 		}else{
 			return Collections.emptyList();
