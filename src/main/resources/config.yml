@@ -1,8 +1,8 @@
 #-------------------------------------------------------------
-# Server Region Protect - Protection of regions by the plugin.
-# Server Region Protect - Защита регионов плагином.
+# WorldGuardProtectRegion - Protection of regions by the plugin.
+# WorldGuardProtectRegion - Защита регионов плагином.
 #-------------------------------------------------------------
-server_region_protect:
+worldguard_protect_region:
 
   #-------------------------------------------------------------
   # List of protected regions.
@@ -119,14 +119,38 @@ server_region_protect:
     - //place
     - //replacenear
     - //hollow
+    
+  #--------------------------------------------------------------------------------------
+  # Turn Enable/Disable the notification if player try to use in the protected region WE\FAWE command.
+  # Включить/Выключить оповещение в консоль и админу если игрок попытался использовать команду в защищенном регионе.
+  #--------------------------------------------------------------------------------------
+  spy_command:
+    notify:
+      console: true
+      admin: false
+    command_list:
+    - //set
+    - //replace
+    - //overlay
+    - //walls
+    - //deform
+    - //fill
+    - //fillr
+    - //fixlava
+    - //hollow
+    - //move
+    - //stack
+    - //smooth
+    - //cut
+    - //replacenear
 
   #--------------------------------------------------------------------------------------
-  # Turn on/Disable the protected region message.
+  # Turn Enable/Disable the protected region message.
   # Включить/Выключить сообщение о защищенном регионе.
   #--------------------------------------------------------------------------------------
   protect_message: true
   #--------------------------------------------------------------------------------------
-  # Turn on/Disable the protected region message when using the WE\FAWE commands.
+  # Turn Enable/Disable the protected region message when using the WE\FAWE commands.
   # Включить/Выключить сообщение о защищенном регионе при использовании команд WE\FAWE.
   #--------------------------------------------------------------------------------------
   protect_we_message: true

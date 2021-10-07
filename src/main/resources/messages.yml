@@ -1,12 +1,13 @@
 messages:
   ServerMsg:
-    srp_msg_we: '&8[&cSRP&8] &cYou can''t used WorldEdit command here!'
-    srp_msg: '&8[&cSRP&8] &aThis region is protect by server!'
-    noperm: '&cYou don''t have permissions to use this command.'
+    wgrpMsg_We: '&8[&cSRP&8] &cYou can''t used WorldEdit command here!'
+    wgrpMsg: '&8[&cSRP&8] &aThis region is protect by server!'
+    noPerm: '&cYou don''t have permissions to use this command.'
+    sendAminInfo: '&8[&4!&8] &cAttention! &e<player> used command &5<cmd> in region: &3<rg>'
   Configs:
-    config_reloaded: '&8[&cSRP&8] &aFile &6config.yml &areload success!'
-    config_not_found: '&8[&cSRP&8] &cFile &6config.yml &cnot found, created new!'
-    config_msg_reloaded: '&8[&cSRP&8] &aFile &6messages.yml &areload success!'
-    config_msg_not_found: '&8[&cSRP&8] &cFile &6messages.yml &cnot found, created new!'
-  Example_Use_Command:
-    srp_use_help: '&aUse: &e/srp help'
+    configReloaded: '&8[&cSRP&8] &aFile &6config.yml &areload success!'
+    configNotFound: '&8[&cSRP&8] &cFile &6config.yml &cnot found, created new!'
+    configMsgReloaded: '&8[&cSRP&8] &aFile &6messages.yml &areload success!'
+    configMsgNotFound: '&8[&cSRP&8] &cFile &6messages.yml &cnot found, created new!'
+  ExampleUseCommand:
+    wgrpUseHelp: '&aUse: &e/srp help'
