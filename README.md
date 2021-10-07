@@ -1,4 +1,4 @@
-# ServerRegionProtect Protecting the server region using the WorldGuard 7+
+# WorldGuardRegionProtect Protecting the server region using the WorldGuard 7+
 
 ## ATTENTION
 
