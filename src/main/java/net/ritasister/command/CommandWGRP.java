@@ -34,7 +34,7 @@ public class CommandWGRP extends CmdExecutor
 				WorldGuardRegionProtect.utilConfigMessage.noPerm)){return;}else{
 			if (args.length == 1)
 			{	
-				if(args[0].equalsIgnoreCase("admin"))
+				if(args[0].equalsIgnoreCase("help"))
 				{
 					sender.sendMessage(
 							"&b======================================================================================================================================"
@@ -53,6 +53,8 @@ public class CommandWGRP extends CmdExecutor
 					WorldGuardRegionProtect.utilConfig = new UtilConfig();
 					sender.sendMessage(WorldGuardRegionProtect.utilConfigMessage.configReloaded);
 				}
+			}else{
+				sender.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpUseHelp);
 			}
 		}
 	}
