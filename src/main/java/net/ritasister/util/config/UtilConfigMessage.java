@@ -12,11 +12,12 @@ public class UtilConfigMessage
 {
 	private UtilLoadConfig config;
 	
-	public String srpMsg;
-	public String srpWeMsg;
-	
+	public String wgrpMsg;
+	public String wgrpMsgWe;
 	public String noPerm;
-	public String srpUseHelp;
+	public String sendAminInfo;
+	
+	public String wgrpUseHelp;
 	
 	public String configReloaded;
 	public String configNotFound;
@@ -27,15 +28,16 @@ public class UtilConfigMessage
 	{
 		this.config = WorldGuardRegionProtect.instance.utilLoadConfig;
 		
-		srpWeMsg = this.config.messages.getString("messages.ServerMsg.srp_msg_we", srpWeMsg).replaceAll("&", "§");
-		srpMsg = this.config.messages.getString("messages.ServerMsg.srp_msg", srpMsg).replaceAll("&", "§");
-		noPerm = this.config.messages.getString("messages.ServerMsg.noperm", noPerm).replaceAll("&", "§");
+		wgrpMsg = this.config.messages.getString("messages.ServerMsg.wgrpMsg", wgrpMsg).replaceAll("&", "§");
+		wgrpMsgWe = this.config.messages.getString("messages.ServerMsg.wgrpMsg_We", wgrpMsgWe).replaceAll("&", "§");
+		noPerm = this.config.messages.getString("messages.ServerMsg.noPerm", noPerm).replaceAll("&", "§");
+		sendAminInfo = this.config.messages.getString("messages.ServerMsg.sendAminInfo", sendAminInfo).replaceAll("&", "§");
 		
-		srpUseHelp = this.config.messages.getString("messages.Example_Use_Command.srp_use_help", srpUseHelp).replaceAll("&", "§");
+		wgrpUseHelp = this.config.messages.getString("messages.ExampleUseCommand.wgrpUseHelp", wgrpUseHelp).replaceAll("&", "§");
 		
-		configReloaded = this.config.messages.getString("messages.Configs.config_reloaded", configReloaded).replaceAll("&", "§");
-		configNotFound = this.config.messages.getString("messages.Configs.config_not_found", configNotFound).replaceAll("&", "§");
-		configMsgReloaded = this.config.messages.getString("messages.Configs.config_msg_reloaded", configMsgReloaded).replaceAll("&", "§");
-		configMsgNotFound = this.config.messages.getString("messages.Configs.config_msg_not_found", configMsgNotFound).replaceAll("&", "§");
+		configReloaded = this.config.messages.getString("messages.Configs.configReloaded", configReloaded).replaceAll("&", "§");
+		configNotFound = this.config.messages.getString("messages.Configs.configNotFound", configNotFound).replaceAll("&", "§");
+		configMsgReloaded = this.config.messages.getString("messages.Configs.configMsgReloaded", configMsgReloaded).replaceAll("&", "§");
+		configMsgNotFound = this.config.messages.getString("messages.Configs.configMsgNotFound", configMsgNotFound).replaceAll("&", "§");
 	}
 }
