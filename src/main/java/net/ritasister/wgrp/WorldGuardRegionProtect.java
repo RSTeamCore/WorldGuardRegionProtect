@@ -1,4 +1,4 @@
-package net.ritasister.srp;
+package net.ritasister.wgrp;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -23,24 +23,22 @@ import com.sk89q.worldguard.bukkit.*;
 import com.sk89q.worldguard.protection.*;
 import com.sk89q.worldguard.protection.regions.*;
 
-import net.ritasister.register.SRPRegisterCommand;
-import net.ritasister.register.SRPRegisterListener;
+import net.ritasister.register.RegisterCommand;
+import net.ritasister.register.RegisterListener;
+import net.ritasister.register.RegisterCommand;
+import net.ritasister.register.RegisterListener;
 import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.rslibs.utils.Metrics;
 import net.ritasister.rslibs.utils.UpdateChecker;
-//import net.ritasister.util.Metrics;
-//import net.ritasister.util.UpdateChecker;
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.util.UtilConfigManager;
 import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
 
-public class ServerRegionProtect extends JavaPlugin
+public class WorldGuardRegionProtect extends JavaPlugin
 {
-	public static ServerRegionProtect instance;
-	
-	//RSLogger RSLogger = new RSLogger(null);
+	public static WorldGuardRegionProtect instance;
 	
 	public static UtilConfig utilConfig;
 	public static UtilConfigMessage utilConfigMessage;
@@ -49,16 +47,16 @@ public class ServerRegionProtect extends JavaPlugin
 	private UtilConfigManager utilConfigManager;	
 	private UtilCommandList utilCommandList;
 	
-	private SRPLoadLibs srpLoadLibs;
-	private SRPRegisterListener hyperCCARegisterEvents;
-	private SRPRegisterCommand hyperCCARegisterCommands;
+	private LoadLibs loadLibs;
+	private RegisterListener registerEvents;
+	private RegisterCommand registerCommands;
 	
 	private final PluginManager pluginManager = getServer().getPluginManager();
 	private final String pluginVersion = getDescription().getVersion();
 
-	public ServerRegionProtect() 
+	public WorldGuardRegionProtect() 
 	{
-		ServerRegionProtect.instance = this;
+		WorldGuardRegionProtect.instance = this;
 	}
 	
 	@Override
@@ -67,10 +65,10 @@ public class ServerRegionProtect extends JavaPlugin
 		this.checkVersion();
 		this.checkUpdate();
 		this.loadMetrics();
-		this.srpLoadLibs.loadWorldGuard();
+		this.loadLibs.loadWorldGuard();
 		this.utilConfigManager.loadConfig();
-		this.hyperCCARegisterCommands.RegisterCommands(utilCommandList);
-		this.hyperCCARegisterEvents.RegisterEvents(pluginManager);
+		this.registerCommands.RegisterCommands(utilCommandList);
+		this.registerEvents.RegisterEvents(pluginManager);
 		RSLogger.info("&2created by &8[&5RitaSister&8]");
 	}
 	private void checkUpdate()

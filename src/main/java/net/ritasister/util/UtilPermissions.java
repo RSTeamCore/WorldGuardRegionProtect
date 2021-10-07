@@ -12,8 +12,8 @@ public interface UtilPermissions
 	reload_cfg = ("srp.reload.cfg"),
 	reload_msg_cfg = ("srp.reload.cfg.msg"),
 	/* Listener Permission */
-	serverRegionProtect = ("srp.serverregionprotect"),
-	serverRegionProtectAllow = ("srp.serverregionallow");
+	regionProtect = ("srp.regionprotect"),
+	regionProtectAllow = ("srp.regionprotectallow");
 }
 /*public enum UtilPermissions 
 {

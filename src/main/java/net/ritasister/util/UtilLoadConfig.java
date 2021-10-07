@@ -6,23 +6,23 @@ import org.bukkit.configuration.file.*;
 import org.bukkit.event.*;
 
 import net.ritasister.rslibs.api.RSLogger;
-import net.ritasister.srp.ServerRegionProtect;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 import java.io.*;
 import java.util.logging.*;
 
 public class UtilLoadConfig
 {
-	private static ServerRegionProtect serverRegionProtect;
+	private static WorldGuardRegionProtect worldGuardRegionProtect;
 
 	public static File messagesf;
 	public static FileConfiguration messages;
 
-	public UtilLoadConfig(ServerRegionProtect instance)
+	public UtilLoadConfig(WorldGuardRegionProtect instance)
 	{
-		serverRegionProtect=instance;
+		worldGuardRegionProtect=instance;
 	}
-	public static void LoadMSGConfig(ServerRegionProtect $m, boolean copy)
+	public static void LoadMSGConfig(WorldGuardRegionProtect $m, boolean copy)
     {
 		messagesf = new File($m.getDataFolder(), "messages.yml");
         if (!messagesf.exists()) 
@@ -54,7 +54,7 @@ public class UtilLoadConfig
 	{
 		if(!messagesf.exists()) 
 		{
-			LoadMSGConfig(serverRegionProtect, true);
+			LoadMSGConfig(worldGuardRegionProtect, true);
 		}
 		try 
 		{

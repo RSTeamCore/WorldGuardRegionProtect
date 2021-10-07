@@ -9,12 +9,12 @@ import org.bukkit.potion.*;
 import org.bukkit.scheduler.*;
 import org.bukkit.util.StringUtil;
 
-import net.ritasister.srp.ServerRegionProtect;
 import net.ritasister.rslibs.api.CmdExecutor;
 import net.ritasister.rslibs.api.RSApi;
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.util.UtilPermissions;
 import net.ritasister.util.config.UtilConfig;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 public class CommandReload extends CmdExecutor
 {
@@ -31,13 +31,13 @@ public class CommandReload extends CmdExecutor
 	{
 		final boolean sp = sender instanceof Player;
 		if(sp && !RSApi.isAuthCommandsPermission((Player)sender, cmd, UtilPermissions.reload_cfg,	
-				ServerRegionProtect.utilConfigMessage.noPerm)){return;}else{
+				WorldGuardRegionProtect.utilConfigMessage.noPerm)){return;}else{
 			if (args.length == 1)
 			{			
 				if(args[0].equalsIgnoreCase("reload"))
 				{
-					ServerRegionProtect.utilConfig = new UtilConfig();
-					sender.sendMessage(ServerRegionProtect.utilConfigMessage.configReloaded);
+					WorldGuardRegionProtect.utilConfig = new UtilConfig();
+					sender.sendMessage(WorldGuardRegionProtect.utilConfigMessage.configReloaded);
 				}
 			}
 		}

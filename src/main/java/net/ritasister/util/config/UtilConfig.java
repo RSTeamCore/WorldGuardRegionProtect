@@ -6,7 +6,7 @@ import java.util.*;
 import org.bukkit.World;
 import org.bukkit.configuration.file.*;
 
-import net.ritasister.srp.ServerRegionProtect;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 public final class UtilConfig
 {
@@ -29,9 +29,9 @@ public final class UtilConfig
 	
 	public UtilConfig() 
 	{
-		ServerRegionProtect.instance.saveDefaultConfig();
-		ServerRegionProtect.instance.reloadConfig();
-		this.config = ServerRegionProtect.instance.getConfig();
+		WorldGuardRegionProtect.instance.saveDefaultConfig();
+		WorldGuardRegionProtect.instance.reloadConfig();
+		this.config = WorldGuardRegionProtect.instance.getConfig();
 
 		this.regionProtect=(List<String>)this.config.getList("server_region_protect.region_protect",(List)new ArrayList());
 		this.regionProtectAllow=(List<String>)this.config.getList("server_region_protect.region_protect_allow",(List)new ArrayList());

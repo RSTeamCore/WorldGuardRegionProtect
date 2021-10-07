@@ -21,7 +21,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
-import net.ritasister.srp.ServerRegionProtect;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -30,15 +30,15 @@ import org.bukkit.entity.Player;
 
 public class wg7 implements Iwg
 {
-    public ServerRegionProtect serverRegionProtect;
+    public WorldGuardRegionProtect worldGuardRegionProtect;
     public WorldGuardPlugin wg;
     public WorldEditPlugin we;
     
-    public wg7(final ServerRegionProtect instance) 
+    public wg7(final WorldGuardRegionProtect instance) 
     {
         this.wg = (WorldGuardPlugin)Bukkit.getPluginManager().getPlugin("WorldGuard");
         this.we = (WorldEditPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
-        this.serverRegionProtect = instance;
+        this.worldGuardRegionProtect = instance;
     }
     @Override
     public boolean wg(final World w, final Location l, final boolean b) 
@@ -51,7 +51,7 @@ public class wg7 implements Iwg
         final ApplicableRegionSet set = this.getApplicableRegions(l);
         for (final ProtectedRegion rg : set) 
         {
-            for (final Object region : this.serverRegionProtect.getConfig().getList("server_region_protect.region_protect" + mine)) {
+            for (final Object region : this.worldGuardRegionProtect.getConfig().getList("server_region_protect.region_protect" + mine)) {
                 if (rg.getId().equalsIgnoreCase(region.toString())) 
                 {
                     return true;
@@ -84,7 +84,7 @@ public class wg7 implements Iwg
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) 
             {
-                for (final Object region : ServerRegionProtect.utilConfig.regionProtect) 
+                for (final Object region : WorldGuardRegionProtect.utilConfig.regionProtect) 
                 {
                     if (rg.getId().equalsIgnoreCase(region.toString())) 
                     {
@@ -94,7 +94,7 @@ public class wg7 implements Iwg
             }
             for (final ProtectedRegion rg : set) 
             {
-                for (final Object region : ServerRegionProtect.utilConfig.regionProtectOnlyBreakAllow) 
+                for (final Object region : WorldGuardRegionProtect.utilConfig.regionProtectOnlyBreakAllow) 
                 {
                     if (rg.getId().equalsIgnoreCase(region.toString())) 
                     {

@@ -5,7 +5,7 @@ import java.util.List;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.*;
 
-import net.ritasister.srp.ServerRegionProtect;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.util.UtilLoadConfig;
 
 public class UtilConfigMessage
@@ -25,7 +25,7 @@ public class UtilConfigMessage
 	
 	public UtilConfigMessage()
 	{
-		this.config = ServerRegionProtect.instance.utilLoadConfig;
+		this.config = WorldGuardRegionProtect.instance.utilLoadConfig;
 		
 		srpWeMsg = this.config.messages.getString("messages.ServerMsg.srp_msg_we", srpWeMsg).replaceAll("&", "§");
 		srpMsg = this.config.messages.getString("messages.ServerMsg.srp_msg", srpMsg).replaceAll("&", "§");
