@@ -127,7 +127,7 @@ worldguard_protect_region:
   spy_command:
     notify:
       console: true
-      admin: false
+      admin: true
     command_list:
     - //set
     - //replace

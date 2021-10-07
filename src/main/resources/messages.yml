@@ -1,9 +1,9 @@
 messages:
   ServerMsg:
-    wgrpMsg_We: '&8[&cSRP&8] &cYou can''t used WorldEdit command here!'
     wgrpMsg: '&8[&cSRP&8] &aThis region is protect by server!'
+    wgrpMsg_We: '&8[&cSRP&8] &cYou can''t used WorldEdit command here!'
     noPerm: '&cYou don''t have permissions to use this command.'
-    sendAminInfo: '&8[&4!&8] &cAttention! &e<player> used command &5<cmd> in region: &3<rg>'
+    sendAminInfo: '&8[&4!&8] &cAttention! &e<player> &cused command &5<cmd> &cin region: &3<rg>'
   Configs:
     configReloaded: '&8[&cSRP&8] &aFile &6config.yml &areload success!'
     configNotFound: '&8[&cSRP&8] &cFile &6config.yml &cnot found, created new!'
