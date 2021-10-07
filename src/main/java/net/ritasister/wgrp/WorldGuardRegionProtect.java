@@ -73,7 +73,7 @@ public class WorldGuardRegionProtect extends JavaPlugin
 	}
 	private void checkUpdate()
 	{
-		new UpdateChecker(this, 81333).getVersion(version -> 
+		new UpdateChecker(this, 81321).getVersion(version -> 
 		{
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) 
             {	
@@ -117,7 +117,7 @@ public class WorldGuardRegionProtect extends JavaPlugin
 	}
 	private void loadMetrics()
 	{
-		int pluginId = 10853;
+		int pluginId = 12975;
         Metrics metrics = new Metrics(this, pluginId);
 	}
 }
