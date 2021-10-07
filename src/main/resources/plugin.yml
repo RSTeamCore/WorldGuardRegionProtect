@@ -1,7 +1,7 @@
-name: ServerRegionProtect
+name: WorldGuardRegionProtect
 author: RitaSister
 version: 0.7.0-pre1
-main: net.ritasister.srp.ServerRegionProtect
+main: net.ritasister.srp.WorldGuardRegionProtect
 softdepend: [ WorldGuard ]
 description: Protect your region in the server.
 api-version: 1.13

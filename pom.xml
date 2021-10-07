@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>net.ritasister.srp</groupId>
-  <artifactId>ServerRegionProtect</artifactId>
-  <version>0.7.0-pre1</version>
+  <artifactId>WorldGuardRegionProtect</artifactId>
+  <version>0.7.0-pre2</version>
   <packaging>jar</packaging>
 
-  <name>ServerRegionProtect</name>
+  <name>WorldGuardRegionProtect</name>
   <url>http://maven.apache.org</url>
 
   <properties>
