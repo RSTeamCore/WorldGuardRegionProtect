@@ -4,16 +4,16 @@ import org.bukkit.Bukkit;
 
 import net.ritasister.command.CommandReload;
 import net.ritasister.rslibs.api.RSLogger;
-import net.ritasister.srp.ServerRegionProtect;
 import net.ritasister.util.UtilCommandList;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
 
-public class SRPRegisterCommand 
+public class RegisterCommand 
 {
 	public static void RegisterCommands(UtilCommandList ucl)
 	{
 		try 
 		{
-			ServerRegionProtect.instance.getCommand(ucl.serverregionprotect).setExecutor(new CommandReload(ucl));
+			WorldGuardRegionProtect.instance.getCommand(ucl.serverregionprotect).setExecutor(new CommandReload(ucl));
 			RSLogger.info("&2All commands load successfully!");
 		}catch(NullPointerException e){
 			RSLogger.err("&cCommand cannout be &4null."); 
