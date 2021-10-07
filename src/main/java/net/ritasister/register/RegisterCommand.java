@@ -2,7 +2,7 @@ package net.ritasister.register;
 
 import org.bukkit.Bukkit;
 
-import net.ritasister.command.CommandReload;
+import net.ritasister.command.CommandWGRP;
 import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
@@ -13,7 +13,7 @@ public class RegisterCommand
 	{
 		try 
 		{
-			WorldGuardRegionProtect.instance.getCommand(ucl.serverregionprotect).setExecutor(new CommandReload(ucl));
+			WorldGuardRegionProtect.instance.getCommand(ucl.worldguardregionprotect).setExecutor(new CommandWGRP(ucl));
 			RSLogger.info("&2All commands load successfully!");
 		}catch(NullPointerException e){
 			RSLogger.err("&cCommand cannout be &4null."); 
