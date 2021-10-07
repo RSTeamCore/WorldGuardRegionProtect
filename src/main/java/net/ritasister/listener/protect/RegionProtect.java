@@ -40,7 +40,7 @@ public class RegionProtect implements Listener
 		this.wg = this.setUpWorldGuardVersionSeven();
 	}
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
-	private void BBE(final BlockBreakEvent e) 
+	private void denyBreak(final BlockBreakEvent e) 
 	{
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
@@ -57,13 +57,13 @@ public class RegionProtect implements Listener
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtect)
 				{
-					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.srpMsg);  
+					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsg);  
 				}
 			}
 		}
 	}
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
-	private void BPE(final BlockPlaceEvent e)
+	private void denyPlace(final BlockPlaceEvent e)
 	{
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
@@ -79,12 +79,12 @@ public class RegionProtect implements Listener
 			{
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtect)
-					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.srpMsg); 
+					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsg); 
 			}
 		}
 	}
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-	private void PBEE(final PlayerBucketEmptyEvent e) 
+	private void denyUseBucket(final PlayerBucketEmptyEvent e) 
 	{
 		final Player p = e.getPlayer();
 		final Location loc = e.getBlockClicked().getLocation();
@@ -102,7 +102,7 @@ public class RegionProtect implements Listener
 		}
 	}
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-	private void EDBEE(final EntityDamageByEntityEvent e) 
+	private void denyEntityDamageByEntityEvent(final EntityDamageByEntityEvent e) 
 	{
 		Entity entity = e.getEntity();
 		Entity damager = e.getDamager();
@@ -132,7 +132,7 @@ public class RegionProtect implements Listener
 		}
 	}
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-	private void PIEE(final PlayerInteractEntityEvent e)
+	private void denyInteractWithEntity(final PlayerInteractEntityEvent e)
 	{
 		final Player p = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
@@ -149,7 +149,7 @@ public class RegionProtect implements Listener
 		}
 	}
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-	private void PASME(final PlayerArmorStandManipulateEvent e)
+	private void denyManipulateAS(final PlayerArmorStandManipulateEvent e)
 	{
 		final Player p = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
@@ -166,7 +166,7 @@ public class RegionProtect implements Listener
 		}
 	}
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-	private void SGE(final StructureGrowEvent e) 
+	private void denyStructureGrow(final StructureGrowEvent e) 
 	{
 		if (this.wg.wg(e.getWorld(), e.getLocation(), false)) 
 		{
@@ -174,7 +174,7 @@ public class RegionProtect implements Listener
 		}
 	}
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-	private void PIE(final PlayerInteractEvent e)
+	private void denyInteract(final PlayerInteractEvent e)
 	{
 		if (e.getItem() != null) 
 		{
@@ -193,7 +193,7 @@ public class RegionProtect implements Listener
 		}
 	}
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-	private void HBBEE(final HangingBreakByEntityEvent e)
+	private void denyHangingBreakByEntity(final HangingBreakByEntityEvent e)
 	{
 		Entity entity = e.getEntity();
 		Entity damager = e.getRemover();
@@ -225,7 +225,7 @@ public class RegionProtect implements Listener
 		}
 	}
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-	private void HPE(final HangingPlaceEvent e)
+	private void denyHangingPlace(final HangingPlaceEvent e)
 	{
 		final Entity entity = e.getEntity();
 		final Player p = (Player) e.getPlayer();
@@ -243,7 +243,7 @@ public class RegionProtect implements Listener
 		}
 	}
 	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled = false)
-	private void EEE(final EntityExplodeEvent e) 
+	private void denyExplode(final EntityExplodeEvent e) 
 	{
 		final Entity entity = e.getEntity();
 		final Location loc = entity.getLocation();
@@ -258,7 +258,7 @@ public class RegionProtect implements Listener
 		}
 	}
 	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled = false)
-	public void BEE(final BlockExplodeEvent e) 
+	public void denyExplodeRespawnAnchor(final BlockExplodeEvent e) 
 	{
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
@@ -273,41 +273,89 @@ public class RegionProtect implements Listener
 			}
 		}
 	}
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-	private void PCPE(final PlayerCommandPreprocessEvent e) 
+	/*@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
+	private void sendToAdmin(final PlayerCommandPreprocessEvent e)
 	{
 		final Player p = e.getPlayer();
-		final String[] s = e.getMessage().toLowerCase().split(" ");
-		if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+		final Location loc = p.getLocation();
+		final String playerName = p.getPlayerProfile().getName();
+		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
+		final String regionName = RSApi.getNameRegionFromConfig(loc, WorldGuardRegionProtect.utilConfig.regionProtect);
+		if(regionName != null)
 		{
-			if (this.cmdWE(s[0]) && !this.wg.checkIntersection(p)) 
+			for (String tmp : WorldGuardRegionProtect.utilConfig.spyCommand) 
 			{
-				e.setCancelled(true);
-			}
-			if (this.cmdWE_C(s[0]) && !this.wg.checkCIntersection(p, s)) 
-			{
-				e.setCancelled(true);
-			}
-			if (this.cmdWE_P(s[0]) && !this.wg.checkPIntersection(p, s)) 
-			{
-				e.setCancelled(true);
-			}
-			if (this.cmdWE_S(s[0]) && !this.wg.checkSIntersection(p, s)) 
-			{
-				e.setCancelled(true);
-			}
-			if (this.cmdWE_U(s[0]) && !this.wg.checkUIntersection(p, s)) 
-			{
-				e.setCancelled(true);
-			}
-			if (this.cmdWE_CP(s[0])) 
-			{
-				e.setMessage(e.getMessage().replace("-o", ""));
-				if (!this.wg.checkCPIntersection(p, s)) 
+				if (tmp.equalsIgnoreCase(cmd.toLowerCase())) 
 				{
-					e.setCancelled(true);
+					Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
+						.replace("<player>", playerName)
+						.replace("<cmd>", tmp)
+						.replace("<rg>", regionName));
+					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
+						.replace("<player>", playerName)
+						.replace("<cmd>", tmp)
+						.replace("<rg>", regionName));
 				}
 			}
+		}
+	}*/
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
+	private void denyUseWEAndWGCommand(final PlayerCommandPreprocessEvent e) 
+	{
+		final Player p = e.getPlayer();
+		final Location loc = p.getLocation();
+		final String[] s = e.getMessage().toLowerCase().split(" ");
+		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
+		final String playerName = p.getPlayerProfile().getName();
+		final String regionName = RSApi.getNameRegionFromConfig(loc, WorldGuardRegionProtect.utilConfig.regionProtect);
+		if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+		{
+			if(regionName != null)
+			{
+				for (String tmp : WorldGuardRegionProtect.utilConfig.spyCommand) 
+				{
+					if (tmp.equalsIgnoreCase(cmd.toLowerCase())) 
+					{
+						if (this.cmdWE(s[0]) && !this.wg.checkIntersection(p)) 
+						{
+							this.notifyAdmin(p, playerName, tmp, regionName);
+							this.notifyConsole(playerName, tmp, regionName);
+							e.setCancelled(true);
+						}
+						if (this.cmdWE_C(s[0]) && !this.wg.checkCIntersection(p, s)) 
+						{
+							this.notifyAdmin(p, playerName, tmp, regionName);
+							this.notifyConsole(playerName, tmp, regionName);
+							e.setCancelled(true);
+						}
+						if (this.cmdWE_P(s[0]) && !this.wg.checkPIntersection(p, s)) 
+						{
+							this.notifyAdmin(p, playerName, tmp, regionName);
+							this.notifyConsole(playerName, tmp, regionName);
+							e.setCancelled(true);
+						}
+						if (this.cmdWE_S(s[0]) && !this.wg.checkSIntersection(p, s)) 
+						{
+							this.notifyAdmin(p, playerName, tmp, regionName);
+							this.notifyConsole(playerName, tmp, regionName);
+							e.setCancelled(true);
+						}
+						if (this.cmdWE_U(s[0]) && !this.wg.checkUIntersection(p, s)) 
+						{
+							this.notifyAdmin(p, playerName, tmp, regionName);
+							this.notifyConsole(playerName, tmp, regionName);
+							e.setCancelled(true);
+						}
+						if (this.cmdWE_CP(s[0])) 
+						{
+							e.setMessage(e.getMessage().replace("-o", ""));
+							if (!this.wg.checkCPIntersection(p, s)) 
+							{
+								this.notifyAdmin(p, playerName, tmp, regionName);
+								this.notifyConsole(playerName, tmp, regionName);
+								e.setCancelled(true);
+							}
+						}
 			if ((s[0].equalsIgnoreCase("/rg") 
 					|| s[0].equalsIgnoreCase("/region") 
 					|| s[0].equalsIgnoreCase("/regions") 
@@ -408,6 +456,9 @@ public class RegionProtect implements Listener
 			}
 		}
 	}
+	}
+	}
+	}
 	private Iwg setUpWorldGuardVersionSeven() 
 	{
 		try{
@@ -487,5 +538,25 @@ public class RegionProtect implements Listener
 			}
 		}
 		return false;
+	}
+	private void notifyAdmin(Player p, String playerName, String tmp, String regionName)
+	{
+		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdmin)
+		{
+			p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
+				.replace("<player>", playerName)
+				.replace("<cmd>", tmp)
+				.replace("<rg>", regionName));
+		}
+	}
+	private void notifyConsole(String playerName, String tmp, String regionName)
+	{
+		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyConsole)
+		{
+			Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
+				.replace("<player>", playerName)
+				.replace("<cmd>", tmp)
+				.replace("<rg>", regionName));
+		}
 	}
 }
