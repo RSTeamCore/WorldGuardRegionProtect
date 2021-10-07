@@ -18,13 +18,13 @@ public final class UtilConfig
 	public List<String> spawnEntityType;
 	public List<String> interactType;
 	public List<String> spyCommand;
-	public List<String> CmdsWE;
-	public List<String> cmdweC;
-	public List<String> cmdweP;
-	public List<String> cmdweS;
-	public List<String> cmdweU;
-	public List<String> cmdweCP;
-	public List<String> cmdweB;
+	public List<String> cmdWe;
+	public List<String> cmdWeC;
+	public List<String> cmdWeP;
+	public List<String> cmdWeS;
+	public List<String> cmdWeU;
+	public List<String> cmdWeCP;
+	public List<String> cmdWeB;
 	public boolean regionMessageProtect;
 	public boolean regionMessageProtectWe;
 	public boolean spyCommandNotifyConsole;
@@ -42,18 +42,18 @@ public final class UtilConfig
 		this.spawnEntityType=(List<String>)this.config.getList("worldguard_protect_region.spawn_entity_type",(List)new ArrayList());
 		this.interactType=(List<String>)this.config.getList("worldguard_protect_region.interact_type",(List)new ArrayList());
 
-		this.CmdsWE=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_we",(List)new ArrayList());
-		this.cmdweC=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_c",(List)new ArrayList());
-		this.cmdweP=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_p",(List)new ArrayList());
-		this.cmdweS=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_s",(List)new ArrayList());
-		this.cmdweU=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_u",(List)new ArrayList());
-		this.cmdweCP=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_cp",(List)new ArrayList());
-		this.cmdweB=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_b",(List)new ArrayList());
+		this.cmdWe=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_we",(List)new ArrayList());
+		this.cmdWeC=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_c",(List)new ArrayList());
+		this.cmdWeP=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_p",(List)new ArrayList());
+		this.cmdWeS=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_s",(List)new ArrayList());
+		this.cmdWeU=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_u",(List)new ArrayList());
+		this.cmdWeCP=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_cp",(List)new ArrayList());
+		this.cmdWeB=(List<String>)this.config.getList("worldguard_protect_region.no_protect_cmd.command_b",(List)new ArrayList());
 		this.spyCommand=(List<String>)this.config.getList("worldguard_protect_region.spy_command.command_list",(List)new ArrayList());
 		
 		this.regionMessageProtect=this.config.getBoolean("worldguard_protect_region.protect_message");
 		this.regionMessageProtectWe=this.config.getBoolean("worldguard_protect_region.protect_we_message");
-		this.spyCommandNotifyConsole=this.config.getBoolean("worldguard_protect_region.notify.console");
-		this.spyCommandNotifyAdmin=this.config.getBoolean("worldguard_protect_region.notify.admin");
+		this.spyCommandNotifyConsole=this.config.getBoolean("worldguard_protect_region.spy_command.notify.console");
+		this.spyCommandNotifyAdmin=this.config.getBoolean("worldguard_protect_region.spy_command.notify.admin");
 	}
 }
