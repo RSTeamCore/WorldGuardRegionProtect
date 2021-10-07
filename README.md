@@ -28,8 +28,8 @@
 * Operators (if you gave anybody /op) are not allowed access in to the region.
 
 ## Metrics
-[bStats](https://bstats.org/plugin/bukkit/ServerRegionProtect/10853)
-![bStats](https://bstats.org/signatures/bukkit/ServerRegionProtect.svg)
+[bStats](https://bstats.org/plugin/bukkit/ServerRegionProtect/12975)
+![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg)
 
 ## Old versions
 
