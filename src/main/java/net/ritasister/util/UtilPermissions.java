@@ -11,7 +11,7 @@ public interface UtilPermissions
 	reload_cfg=("wgrp.reload.cfg"),
 	reload_msg_cfg=("wgrp.reload.cfg.msg"),
 
-	regionProtectInfoAdmin=("wgrgprotect.info.admin"),
+	regionProtectNotifyAdmin=("wgrp.notify.admin"),
 	regionProtect=("wgrp.regionprotect"),
 	regionProtectAllow=("wgrp.regionprotectallow");
 }
