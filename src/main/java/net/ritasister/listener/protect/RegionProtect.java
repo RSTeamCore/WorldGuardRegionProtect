@@ -11,15 +11,6 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.hanging.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.world.StructureGrowEvent;
-import org.bukkit.projectiles.*;
-
-import com.sk89q.worldedit.bukkit.*;
-import com.sk89q.worldedit.math.*;
-import com.sk89q.worldguard.*;
-import com.sk89q.worldguard.bukkit.*;
-import com.sk89q.worldguard.protection.*;
-import com.sk89q.worldguard.protection.managers.*;
-import com.sk89q.worldguard.protection.regions.*;
 
 import net.ritasister.rslibs.api.RSApi;
 import net.ritasister.util.IUtilPermissions;
@@ -29,8 +20,8 @@ import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 public class RegionProtect implements Listener
 {
-	private WorldGuardRegionProtect worldGuardRegionProtect;
-	private Iwg wg;
+	private final WorldGuardRegionProtect worldGuardRegionProtect;
+	private final Iwg wg;
 	private final List<String> regionEditArgs = Arrays.asList("f", "flag");
 	private final List<String> regionEditArgsFlags = Arrays.asList("-f", "-u", "-n", "-g", "-a");
 
@@ -63,46 +54,23 @@ public class RegionProtect implements Listener
 		}
 	}
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
-	private void denyPlace(final BlockPlaceEvent e)
-	{
+	private void denyPlace(final BlockPlaceEvent e) {
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
-		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtectAllow))
-		{
+		if (RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtectAllow)) {
 			e.setCancelled(false);
-		}else
-		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)
-				|| RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtectAllow)) 
-		{
+		} else if (RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)
+				|| RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtectAllow)) {
 			final Player p = e.getPlayer();
-			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
+			if (RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null)) return;
 			{
 				e.setCancelled(true);
-				if (WorldGuardRegionProtect.utilConfig.regionMessageProtect)
-				{
-					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsg); 
+				if (WorldGuardRegionProtect.utilConfig.regionMessageProtect) {
+					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsg);
 				}
 			}
 		}
 	}
-	/*@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
-	private void denyUseBucket(final PlayerBucketEmptyEvent e) 
-	{
-		final Player p = e.getPlayer();
-		final Location loc = e.getBlockClicked().getLocation();
-		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect))
-		{
-			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
-			{
-				if (e.getBlockClicked().getType() == Material.LAVA_BUCKET
-						&& e.getBlockClicked().getType() == Material.WATER_BUCKET
-						&& e.getBlockClicked().getType() == Material.BUCKET)
-				{
-					e.setCancelled(true);
-				}
-			}
-		}
-	}*/
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = false)
 	private void denyUseBucket(PlayerBucketEmptyEvent e) 
 	{

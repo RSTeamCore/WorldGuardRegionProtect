@@ -1,30 +1,8 @@
 package net.ritasister.wgrp;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.*;
-import java.util.logging.*;
-import java.util.stream.*;
-import javax.annotation.*;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import org.bukkit.*;
-import org.bukkit.command.*;
-import org.bukkit.configuration.*;
-import org.bukkit.configuration.file.*;
-import org.bukkit.entity.Player;
-import org.bukkit.event.*;
-import org.bukkit.inventory.*;
-import org.bukkit.plugin.*;
-import org.bukkit.plugin.java.*;
-
-import com.sk89q.worldguard.*;
-import com.sk89q.worldguard.bukkit.*;
-import com.sk89q.worldguard.protection.*;
-import com.sk89q.worldguard.protection.regions.*;
-
-import net.ritasister.register.RegisterCommand;
-import net.ritasister.register.RegisterListener;
 import net.ritasister.register.RegisterCommand;
 import net.ritasister.register.RegisterListener;
 import net.ritasister.rslibs.api.RSLogger;
@@ -38,15 +16,15 @@ import net.ritasister.util.config.UtilConfigMessage;
 
 public class WorldGuardRegionProtect extends JavaPlugin
 {
-	public static WorldGuardRegionProtect instance;
 	
 	public static UtilConfig utilConfig;
 	public static UtilConfigMessage utilConfigMessage;
+	private static WorldGuardRegionProtect instance;
 	public static UtilLoadConfig utilLoadConfig = new UtilLoadConfig(instance);
-	
-	private UtilConfigManager utilConfigManager;	
+
+	private UtilConfigManager utilConfigManager;
 	private UtilCommandList utilCommandList;
-	
+
 	private LoadLibs loadLibs;
 	private RegisterListener registerEvents;
 	private RegisterCommand registerCommands;

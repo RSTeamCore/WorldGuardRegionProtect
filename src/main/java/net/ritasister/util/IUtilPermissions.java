@@ -1,10 +1,7 @@
 package net.ritasister.util;
 
-import org.bukkit.permissions.*;
-
-public interface IUtilPermissions 
+public interface IUtilPermissions
 {
-	//
 	public static final String 
 	all_perm_plugin=("wgrp.*"),
 	all_perm=("*"),
