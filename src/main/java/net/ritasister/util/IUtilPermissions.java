@@ -4,6 +4,7 @@ import org.bukkit.permissions.*;
 
 public interface IUtilPermissions 
 {
+	//test
 	public static final String 
 	all_perm_plugin=("wgrp.*"),
 	all_perm=("*"),
