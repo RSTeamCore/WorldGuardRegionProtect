@@ -22,7 +22,7 @@ import com.sk89q.worldguard.protection.managers.*;
 import com.sk89q.worldguard.protection.regions.*;
 
 import net.ritasister.rslibs.api.RSApi;
-import net.ritasister.util.UtilPermissions;
+import net.ritasister.util.IUtilPermissions;
 import net.ritasister.util.wg.Iwg;
 import net.ritasister.util.wg.wg7;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
@@ -52,7 +52,7 @@ public class RegionProtect implements Listener
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) 
 		{
 			final Player p = e.getPlayer();
-			if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
 			{
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtect)
@@ -75,7 +75,7 @@ public class RegionProtect implements Listener
 				|| RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtectAllow)) 
 		{
 			final Player p = e.getPlayer();
-			if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
 			{
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtect)
@@ -92,7 +92,7 @@ public class RegionProtect implements Listener
 		final Location loc = e.getBlockClicked().getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect))
 		{
-			if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
 			{
 				if (e.getBlockClicked().getType() == Material.LAVA_BUCKET
 						&& e.getBlockClicked().getType() == Material.WATER_BUCKET
@@ -110,7 +110,7 @@ public class RegionProtect implements Listener
 		final Location loc = e.getBlockClicked().getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect))
 		{
-			if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, WorldGuardRegionProtect.utilConfigMessage.wgrpMsg))return;
+			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, WorldGuardRegionProtect.utilConfigMessage.wgrpMsg))return;
 			{
 				if (e.getBlockClicked().getType() == Material.LAVA_BUCKET)
 				{
@@ -136,7 +136,7 @@ public class RegionProtect implements Listener
 		final Location loc = entity.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect))
 		{
-			if(RSApi.isAuthListenerPermission(damager, UtilPermissions.regionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(damager, IUtilPermissions.regionProtect, null))return;
 			{
 				if (entity instanceof ArmorStand 
 						|| entity instanceof ItemFrame 
@@ -165,7 +165,7 @@ public class RegionProtect implements Listener
 		final Location clickLoc = e.getRightClicked().getLocation();
 		if(RSApi.checkStandingRegion(clickLoc, WorldGuardRegionProtect.utilConfig.regionProtect))
 		{
-			if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
 			{
 				if(e.getRightClicked().getType() == EntityType.ITEM_FRAME
 						&& this.wg.wg(p.getWorld(), p.getLocation(), false))
@@ -182,7 +182,7 @@ public class RegionProtect implements Listener
 		final Location clickLoc = e.getRightClicked().getLocation();
 		if(RSApi.checkStandingRegion(clickLoc, WorldGuardRegionProtect.utilConfig.regionProtect))
 		{
-			if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
 			{
 				if(e.getRightClicked().getType() == EntityType.ARMOR_STAND 
 						&& this.wg.wg(p.getWorld(), clickLoc, false))
@@ -206,7 +206,7 @@ public class RegionProtect implements Listener
 		if (e.getItem() != null) 
 		{
 			Player p = e.getPlayer();
-			if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
 			{
 				for(String spawnEntityType : WorldGuardRegionProtect.utilConfig.spawnEntityType)
 				{
@@ -227,7 +227,7 @@ public class RegionProtect implements Listener
 		final Location loc = entity.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect))
 		{
-			if(RSApi.isAuthListenerPermission(damager, UtilPermissions.regionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(damager, IUtilPermissions.regionProtect, null))return;
 			{
 				if (e.getRemover().getType() == EntityType.PLAYER) 
 				{
@@ -259,7 +259,7 @@ public class RegionProtect implements Listener
 		final Location loc = entity.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect))
 		{
-			if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
 			{
 				if (p.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
 						|| p.getInventory().getItemInMainHand().getType() == Material.PAINTING) 
@@ -309,7 +309,7 @@ public class RegionProtect implements Listener
 		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
 		final String playerName = p.getPlayerProfile().getName();
 		final String regionName = RSApi.getNameRegionFromConfig(loc, WorldGuardRegionProtect.utilConfig.regionProtect);
-		if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+		if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
 		{
 			if(regionName != null)
 			{
@@ -467,7 +467,7 @@ public class RegionProtect implements Listener
 		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
 		final String playerName = p.getPlayerProfile().getName();
 		final String regionName = RSApi.getNameRegionFromConfig(loc, WorldGuardRegionProtect.utilConfig.regionProtect);
-		if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtect, null))return;
+		if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
 		{
 			if(regionName != null)
 			{
@@ -719,7 +719,7 @@ public class RegionProtect implements Listener
 	{
 		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdmin)
 		{
-			if(RSApi.isAuthListenerPermission(p, UtilPermissions.regionProtectNotifyAdmin, null))
+			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtectNotifyAdmin, null))
 			{
 				p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
 						.replace("<player>", playerName)
