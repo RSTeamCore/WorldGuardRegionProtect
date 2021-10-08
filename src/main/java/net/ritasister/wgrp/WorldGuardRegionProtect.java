@@ -1,5 +1,6 @@
 package net.ritasister.wgrp;
 
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,21 +17,19 @@ import net.ritasister.util.config.UtilConfigMessage;
 
 public class WorldGuardRegionProtect extends JavaPlugin
 {
+	public static WorldGuardRegionProtect instance;
 	public static UtilConfig utilConfig;
 	public static UtilConfigMessage utilConfigMessage;
-	public static WorldGuardRegionProtect instance;
-	public static UtilLoadConfig utilLoadConfig = new UtilLoadConfig(instance);
 	public static UtilCommandList utilCommandList;
-	
+
+	public final UtilLoadConfig utilLoadConfig = new UtilLoadConfig(this);
 	private final PluginManager pluginManager = getServer().getPluginManager();
 	private final String pluginVersion = getDescription().getVersion();
 
-	public WorldGuardRegionProtect(UtilCommandList utilCommandList)
+	public WorldGuardRegionProtect()
 	{
-		WorldGuardRegionProtect.utilCommandList = utilCommandList;
 		WorldGuardRegionProtect.instance = this;
 	}
-
 	@Override
 	public void onEnable()
 	{

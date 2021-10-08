@@ -1,9 +1,7 @@
 package net.ritasister.util.config;
 
-import java.io.*;
 import java.util.*;
 
-import org.bukkit.World;
 import org.bukkit.configuration.file.*;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
@@ -28,7 +26,7 @@ public final class UtilConfig
 	public boolean spyCommandNotifyConsole;
 	public boolean spyCommandNotifyAdmin;
 	
-	public UtilConfig() 
+	public UtilConfig()
 	{
 		WorldGuardRegionProtect.instance.saveDefaultConfig();
 		WorldGuardRegionProtect.instance.reloadConfig();
