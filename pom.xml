@@ -1,22 +1,23 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>net.ritasister.srp</groupId>
-  <artifactId>WorldGuardRegionProtect</artifactId>
-  <version>0.7.0-pre3</version>
-  <packaging>jar</packaging>
+    <groupId>net.ritasister.srp</groupId>
+    <artifactId>wgrp</artifactId>
+    <version>0.7.0-pre4</version>
+    <packaging>jar</packaging>
+    <name>WorldGuardRegionProtect</name>
 
-  <name>WorldGuardRegionProtect</name>
-  <url>http://maven.apache.org</url>
+    <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-  <!-- Build -->
+    <!-- Build -->
     <build>
-        <directory>ServerRegionProtect build</directory>
+        <directory>WorldGuardRegionProtect build</directory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -25,7 +26,6 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
-                    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -63,10 +63,10 @@
             <id>sk89q-repo</id>
             <url>https://maven.enginehub.org/repo/</url>
         </repository>
-        <repository>
-            <id>rslib</id>
-            <url>file://C:/Users/Rita Wolf/Desktop/AquaLime plugins/RSLibs/RSLibs/RSLibs-0.0.1.jar</url>
-        </repository>
+        <!--repository>
+            <id>rslibs</id>
+            <url>file://C:/Users/Rita Wolf/Desktop/AquaLime plugins/RSLibs/RSLibs build/RSLibs.jar</url>
+        </repository-->
     </repositories>
     <dependencies>
         <!-- PaperMC -->
@@ -84,11 +84,11 @@
             <scope>provided</scope>
         </dependency>
         <!-- RSLibs -->
-        <dependency>
+        <!--dependency>
             <groupId>net.ritasister.rslibs</groupId>
-            <artifactId>RSLibs</artifactId>
+            <artifactId>rslibs-api</artifactId>
             <version>0.0.1</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency-->
     </dependencies>
 </project>
