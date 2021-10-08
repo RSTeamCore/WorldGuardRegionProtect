@@ -7,7 +7,7 @@ import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 public class UtilConfigManager 
 {
-	private static UtilLoadConfig utilConfigManager = new UtilLoadConfig(WorldGuardRegionProtect.instance);
+	private static final UtilLoadConfig utilConfigManager = new UtilLoadConfig(WorldGuardRegionProtect.instance);
 	
 	public static void loadConfig()
 	{	

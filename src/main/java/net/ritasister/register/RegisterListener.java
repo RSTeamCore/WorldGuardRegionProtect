@@ -11,8 +11,7 @@ public class RegisterListener
 	
 	public static void RegisterEvents(PluginManager pm)
 	{
-		try
-		{
+		try{
 			final RegionProtect creativeListener = new RegionProtect(WorldGuardRegionProtect.instance);
 			pm.registerEvents(creativeListener, WorldGuardRegionProtect.instance);
 			

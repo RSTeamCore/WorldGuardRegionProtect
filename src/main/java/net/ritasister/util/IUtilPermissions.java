@@ -2,14 +2,10 @@ package net.ritasister.util;
 
 public interface IUtilPermissions
 {
-	public static final String 
-	all_perm_plugin=("wgrp.*"),
-	all_perm=("*"),
+	String reload_cfg=("wgrp.reload.cfg");
+	String reload_msg_cfg=("wgrp.reload.cfg.msg");
 
-	reload_cfg=("wgrp.reload.cfg"),
-	reload_msg_cfg=("wgrp.reload.cfg.msg"),
-
-	regionProtectNotifyAdmin=("wgrp.notify.admin"),
-	regionProtect=("wgrp.regionprotect"),
-	regionProtectAllow=("wgrp.regionprotectallow");
+	String regionProtectNotifyAdmin=("wgrp.notify.admin");
+	String regionProtect=("wgrp.regionprotect");
+	String regionProtectAllow=("wgrp.regionprotectallow");
 }

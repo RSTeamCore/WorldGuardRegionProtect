@@ -2,11 +2,8 @@ package net.ritasister.command;
 
 import java.util.*;
 
-import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
-import org.bukkit.potion.*;
-import org.bukkit.scheduler.*;
 import org.bukkit.util.StringUtil;
 
 import net.ritasister.rslibs.api.CmdExecutor;
@@ -19,19 +16,20 @@ import net.ritasister.wgrp.WorldGuardRegionProtect;
 public class CommandWGRP extends CmdExecutor
 {
 	
-	private final List<String> subCommand = Arrays.asList("reload, admin");
+	private final List<String> subCommand = List.of("reload, admin");
 	
-	public CommandWGRP(UtilCommandList ucl) 
+	public CommandWGRP(UtilCommandList ucl)
 	{
-		super(ucl.worldguardregionprotect);
+		super(ucl.worldGuardRegionProtect);
 	}
 
 	@Override
 	protected void run(CommandSender sender, Command cmd, String[] args) throws Exception
 	{
 		final boolean sp = sender instanceof Player;
-		if(sp && !RSApi.isAuthCommandsPermission((Player)sender, cmd, IUtilPermissions.reload_cfg,	
-				WorldGuardRegionProtect.utilConfigMessage.noPerm)){return;}else{
+		if(sp && !RSApi.isAuthCommandsPermission((Player)sender, cmd, IUtilPermissions.reload_cfg,
+				WorldGuardRegionProtect.utilConfigMessage.noPerm)) {return;}
+		{
 			if (args.length == 1)
 			{	
 				if(args[0].equalsIgnoreCase("help"))
@@ -58,13 +56,12 @@ public class CommandWGRP extends CmdExecutor
 			}
 		}
 	}
-	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Player player, Command cmd, String label, String[] args)
 	{
 		if (args.length == 1 && RSApi.isAuthCommandsPermissionsOnTab(sender, IUtilPermissions.reload_cfg)) 
 		{
-			return args.length == 1 && RSApi.isAuthCommandsPermissionsOnTab(sender, IUtilPermissions.reload_cfg) && sender instanceof Player ? 
+			return args.length == 1 && RSApi.isAuthCommandsPermissionsOnTab(sender, IUtilPermissions.reload_cfg) && sender instanceof Player ?
 						StringUtil.copyPartialMatches(args[0], subCommand, new ArrayList<>()) : new ArrayList<>();
 		}else{
 			return Collections.emptyList();

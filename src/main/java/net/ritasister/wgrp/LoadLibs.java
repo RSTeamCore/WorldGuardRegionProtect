@@ -1,10 +1,7 @@
 package net.ritasister.wgrp;
 
-import org.bukkit.*;
 import org.bukkit.plugin.*;
-
 import com.sk89q.worldguard.bukkit.*;
-
 import net.ritasister.rslibs.api.RSLogger;
 
 public class LoadLibs 
@@ -17,7 +14,7 @@ public class LoadLibs
         if (plg != null && plg.isEnabled()) 
         {
             try{
-                msgSuccess(s);
+                msgSuccess();
                 return (WorldGuardPlugin)plg;
             }catch(NullPointerException | ClassCastException | NoClassDefFoundError ex){
                 final Throwable t = null;
@@ -27,8 +24,8 @@ public class LoadLibs
         }
         return null;
     }
-	private static void msgSuccess(final String s) 
+	private static void msgSuccess()
 	{
-        RSLogger.info("&2Plugin: " + s + " loaded successfull!.");
+        RSLogger.info("&2Plugin: WorldGuard loaded successful!.");
     }
 }

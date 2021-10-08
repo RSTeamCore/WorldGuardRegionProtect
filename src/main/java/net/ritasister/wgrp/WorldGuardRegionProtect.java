@@ -16,37 +16,31 @@ import net.ritasister.util.config.UtilConfigMessage;
 
 public class WorldGuardRegionProtect extends JavaPlugin
 {
-	
 	public static UtilConfig utilConfig;
 	public static UtilConfigMessage utilConfigMessage;
-	private static WorldGuardRegionProtect instance;
+	public static WorldGuardRegionProtect instance;
 	public static UtilLoadConfig utilLoadConfig = new UtilLoadConfig(instance);
-
-	private UtilConfigManager utilConfigManager;
-	private UtilCommandList utilCommandList;
-
-	private LoadLibs loadLibs;
-	private RegisterListener registerEvents;
-	private RegisterCommand registerCommands;
+	public static UtilCommandList utilCommandList;
 	
 	private final PluginManager pluginManager = getServer().getPluginManager();
 	private final String pluginVersion = getDescription().getVersion();
 
-	public WorldGuardRegionProtect() 
+	public WorldGuardRegionProtect(UtilCommandList utilCommandList)
 	{
+		WorldGuardRegionProtect.utilCommandList = utilCommandList;
 		WorldGuardRegionProtect.instance = this;
 	}
-	
+
 	@Override
 	public void onEnable()
 	{
 		this.checkVersion();
 		this.checkUpdate();
 		this.loadMetrics();
-		this.loadLibs.loadWorldGuard();
-		this.utilConfigManager.loadConfig();
-		this.registerCommands.RegisterCommands(utilCommandList);
-		this.registerEvents.RegisterEvents(pluginManager);
+		LoadLibs.loadWorldGuard();
+		UtilConfigManager.loadConfig();
+		RegisterCommand.RegisterCommands(utilCommandList);
+		RegisterListener.RegisterEvents(pluginManager);
 		RSLogger.info("&2created by &8[&5RitaSister&8]");
 	}
 	private void checkUpdate()
@@ -81,12 +75,12 @@ public class WorldGuardRegionProtect extends JavaPlugin
             javaVersionNum = Integer.parseInt(version);
         }catch(final NumberFormatException e){
             RSLogger.warn("Failed to determine Java version; Could not parse {}".replace("{}", version) + e);
-            RSLogger.warn(String.valueOf(javaVersion));
+            RSLogger.warn(javaVersion);
             return;
         }
 		String serverVersion;
         try{
-            serverVersion = this.instance.getServer().getClass().getPackage().getName().split("\\.")[3];
+            serverVersion = instance.getServer().getClass().getPackage().getName().split("\\.")[3];
         }catch(ArrayIndexOutOfBoundsException whatVersionAreYouUsingException){
             return;
         }
@@ -96,6 +90,6 @@ public class WorldGuardRegionProtect extends JavaPlugin
 	private void loadMetrics()
 	{
 		int pluginId = 12975;
-        Metrics metrics = new Metrics(this, pluginId);
+		new Metrics(this, pluginId);
 	}
 }
