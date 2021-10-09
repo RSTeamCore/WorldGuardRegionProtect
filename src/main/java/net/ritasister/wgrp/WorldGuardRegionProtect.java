@@ -66,22 +66,22 @@ public class WorldGuardRegionProtect extends JavaPlugin
 	private void checkVersion() 
 	{
 		final String javaVersion = System.getProperty("java.version");
-        final int dotIndex = javaVersion.indexOf('.');
-        final int endIndex = dotIndex == -1 ? javaVersion.length() : dotIndex;
-        final String version = javaVersion.substring(0, endIndex);
-        final int javaVersionNum;
+        	final int dotIndex = javaVersion.indexOf('.');
+       		final int endIndex = dotIndex == -1 ? javaVersion.length() : dotIndex;
+        	final String version = javaVersion.substring(0, endIndex);
+        	final int javaVersionNum;
         try{
-            javaVersionNum = Integer.parseInt(version);
+            	javaVersionNum = Integer.parseInt(version);
         }catch(final NumberFormatException e){
-            RSLogger.warn("Failed to determine Java version; Could not parse {}".replace("{}", version) + e);
-            RSLogger.warn(javaVersion);
-            return;
+            	RSLogger.warn("Failed to determine Java version; Could not parse {}".replace("{}", version) + e);
+            	RSLogger.warn(javaVersion);
+            	return;
         }
 		String serverVersion;
         try{
-            serverVersion = instance.getServer().getClass().getPackage().getName().split("\\.")[3];
+            	serverVersion = instance.getServer().getClass().getPackage().getName().split("\\.")[3];
         }catch(ArrayIndexOutOfBoundsException whatVersionAreYouUsingException){
-            return;
+            	return;
         }
         RSLogger.info("&6You are running is &ejava &6version: &e<javaVersion>".replace("<javaVersion>", String.valueOf(javaVersionNum)));
 		RSLogger.info("&6Your &eserver &6is running version: &e<serverVersion>".replace("<serverVersion>", String.valueOf(serverVersion)));
