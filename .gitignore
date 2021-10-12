@@ -1,12 +1,3 @@
-/ServerRegionProtect build/
-/target/
-/.classpath
-/.project
-/github.pub
-/github
-/WorldGuardRegionProtect build/
-/WorldGuardRegionProtect.iml
-/src/main/resources/META-INF/
-/.idea/
 /build/
 /.gradle/
+/.idea/
