@@ -18,10 +18,7 @@ public class CommandWGRP extends CmdExecutor
 	
 	private final List<String> subCommand = List.of("reload, admin");
 	
-	public CommandWGRP(UtilCommandList ucl)
-	{
-		super(ucl.worldGuardRegionProtect);
-	}
+	public CommandWGRP(UtilCommandList ucl) {super(ucl.worldGuardRegionProtect);}
 
 	@Override
 	protected void run(CommandSender sender, Command cmd, String[] args) throws Exception
