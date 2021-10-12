@@ -17,7 +17,6 @@ import net.ritasister.util.config.UtilConfigMessage;
 
 public class WorldGuardRegionProtect extends JavaPlugin
 {
-	//test commit
 	public static WorldGuardRegionProtect instance;
 	public static UtilConfig utilConfig;
 	public static UtilConfigMessage utilConfigMessage;
