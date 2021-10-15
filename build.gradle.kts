@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "net.ritasister.srp"
-version = "0.7.0-pre5"
+version = "0.7.0"
 description = "WorldGuardRegionProtect"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
