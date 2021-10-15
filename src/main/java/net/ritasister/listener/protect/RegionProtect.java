@@ -232,6 +232,7 @@ public class RegionProtect implements Listener
 		final Location loc = entity.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect))
 		{
+			assert p != null;
 			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;
 			{
 				if (p.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
@@ -528,6 +529,10 @@ public class RegionProtect implements Listener
 				{
 					if(cmd.equalsIgnoreCase(senderCommand.toLowerCase()))
 					{
+						if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdminPlaySoundEnable)
+						{
+							p.playSound(p.getLocation(), WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdminPlaySound, 1, 1);
+						}
 						p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
 								.replace("<player>", playerName)
 								.replace("<cmd>", cmd)
