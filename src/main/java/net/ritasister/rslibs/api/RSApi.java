@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class RSApi 
 {
-	/*
+	/**
 	 * Check if player have permissions for use command.
 	 * 
 	 * @param sender Who send this command.
@@ -40,7 +40,7 @@ public class RSApi
 		}
 		return true;
 	}
-	/*
+	/**
 	 * Check if player have permissions for use TAB.
 	 * 
 	 * @param sender Who send this command.
@@ -49,7 +49,7 @@ public class RSApi
 	 * @return isAuthCommandsPermissionsOnTab Have is Permissions or not.
 	 */
 	public static boolean isAuthCommandsPermissionsOnTab(@NotNull CommandSender sender, @NotNull String perm) {return sender.hasPermission(perm) && sender.isPermissionSet(perm);}
-	/*
+	/**
 	 * Check if player have permissions for use Listener.
 	 * 
 	 * @param sender Who send this command.
@@ -70,7 +70,7 @@ public class RSApi
 		}
 		return true;
 	}
-	/*
+	/**
 	 * Check if player have permissions for use Listener.
 	 * 
 	 * @param loc Get location of player.
@@ -96,7 +96,7 @@ public class RSApi
 		}
 		return false;
 	}
-	/*
+	/**
 	 * Get name of region for location
 	 * 
 	 * @param loc Get location of player.

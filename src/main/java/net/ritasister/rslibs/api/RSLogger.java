@@ -17,19 +17,19 @@ public class RSLogger
 
 	//public static Logger logger = LoggerFactory.getLogger("RSLibrary-Logger");
 
-	/*
+	/**
 	 * Send message with info.
 	 * 
 	 * @param msg
 	 */
 	public static void info(final String msg) {logger.warn(Color.getColorCode(msg));}
-	/*
+	/**
 	 * Send message with warn.
 	 * 
 	 * @param msg
 	 */
 	public static void warn(final String msg) {logger.warn(Color.getColorCode(msg));}
-	/*
+	/**
 	 * Send message with error.
 	 * 
 	 * @param msg
@@ -38,7 +38,7 @@ public class RSLogger
 	{
 		logger.error(Color.getColorCode(msg));
 	}
-	/*
+	/**
 	 * Send message with about file.
 	 * 
 	 * @param file
