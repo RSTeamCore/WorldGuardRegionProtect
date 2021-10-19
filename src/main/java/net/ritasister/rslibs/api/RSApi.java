@@ -2,14 +2,10 @@ package net.ritasister.rslibs.api;
 
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
@@ -38,7 +34,7 @@ public class RSApi
 		{
 			if (message != null) 
 			{
-				sender.sendMessage(message.replaceAll("&", ""));
+				sender.sendMessage(Color.getColorCode(message));
 			}
 			return false;
 		}
@@ -52,14 +48,7 @@ public class RSApi
 	 *
 	 * @return isAuthCommandsPermissionsOnTab Have is Permissions or not.
 	 */
-	public static boolean isAuthCommandsPermissionsOnTab(@NotNull CommandSender sender, @NotNull String perm)
-	{
-		if(!sender.hasPermission(perm) || !sender.isPermissionSet(perm))
-		{
-			return false;
-		}
-		return true;
-	}
+	public static boolean isAuthCommandsPermissionsOnTab(@NotNull CommandSender sender, @NotNull String perm) {return sender.hasPermission(perm) && sender.isPermissionSet(perm);}
 	/*
 	 * Check if player have permissions for use Listener.
 	 * 
@@ -75,7 +64,7 @@ public class RSApi
 		{
 			if (message != null) 
 			{
-				sender.sendMessage(message);
+				sender.sendMessage(Color.getColorCode(message));
 			}
 			return false;
 		}
