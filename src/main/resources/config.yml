@@ -130,10 +130,10 @@ worldguard_protect_region:
       admin: true
         # Sound notify to admin.
         # Звуковое оповещение администратора.
-        sound: true
+      sound: true
         # All sounds can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
         # Все звуки из 1.17.1 могут быть найдены тут: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
-        type: BLOCK_ANVIL_PLACE
+      type: BLOCK_ANVIL_PLACE
     command_list:
     - //set
     - //replace
