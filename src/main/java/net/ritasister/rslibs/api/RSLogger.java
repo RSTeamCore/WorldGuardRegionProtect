@@ -19,20 +19,17 @@ public class RSLogger
 
 	/**
 	 * Send message with info.
-	 * 
-	 * @param msg
+	 *
 	 */
 	public static void info(final String msg) {logger.warn(Color.getColorCode(msg));}
 	/**
 	 * Send message with warn.
-	 * 
-	 * @param msg
+	 *
 	 */
 	public static void warn(final String msg) {logger.warn(Color.getColorCode(msg));}
 	/**
 	 * Send message with error.
-	 * 
-	 * @param msg
+	 *
 	 */
 	public static void err(final String msg)
 	{
@@ -40,8 +37,7 @@ public class RSLogger
 	}
 	/**
 	 * Send message with about file.
-	 * 
-	 * @param file
+	 *
 	 */
 	public static void LoadConfigMsgSuccess(final String fileName)
 	{
