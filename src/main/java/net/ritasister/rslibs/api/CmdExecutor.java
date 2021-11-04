@@ -14,7 +14,7 @@ public abstract class CmdExecutor implements CommandExecutor, TabExecutor
     private Player p;
     
     protected CmdExecutor(String name) {this.name = name;}
-    /*
+    /**
 	 * Constructor for command.
 	 * 
 	 * @return onCommand.
@@ -28,7 +28,7 @@ public abstract class CmdExecutor implements CommandExecutor, TabExecutor
 		}
         return true;
     }
-	/*
+	/**
 	 * Constructor of TAB for command.
 	 * 
 	 * @return onTabComplete.
