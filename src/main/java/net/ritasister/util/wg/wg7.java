@@ -1,7 +1,5 @@
 package net.ritasister.util.wg;
 
-import java.util.Iterator;
-
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
@@ -12,7 +10,6 @@ import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
-import com.sk89q.worldedit.session.SessionOwner;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
@@ -51,7 +48,8 @@ public class wg7 implements Iwg
         final ApplicableRegionSet set = this.getApplicableRegions(l);
         for (final ProtectedRegion rg : set) 
         {
-            for (final Object region : this.worldGuardRegionProtect.getConfig().getList("server_region_protect.region_protect" + mine)) {
+            for (final Object region : this.worldGuardRegionProtect.getConfig().getList("server_region_protect.region_protect" + mine))
+            {
                 if (rg.getId().equalsIgnoreCase(region.toString())) 
                 {
                     return true;
@@ -63,7 +61,7 @@ public class wg7 implements Iwg
     @Override
     public boolean checkIntersection(final Player player) 
     {
-        final LocalSession l = WorldEdit.getInstance().getSessionManager().get((SessionOwner)BukkitAdapter.adapt(player));
+        final LocalSession l = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
         Region sel = null;
         try{
             sel = l.getSelection(BukkitAdapter.adapt(player.getWorld()));
@@ -80,7 +78,7 @@ public class wg7 implements Iwg
             final BlockVector3 max = sel.getMaximumPoint();
             final RegionContainer rc = WorldGuard.getInstance().getPlatform().getRegionContainer();
             final RegionManager regions = rc.get(sel.getWorld());
-            final ProtectedRegion __dummy__ = (ProtectedRegion)new ProtectedCuboidRegion("__dummy__", min, max);
+            final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", min, max);
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) 
             {
@@ -109,31 +107,31 @@ public class wg7 implements Iwg
     @Override
     public boolean checkCIntersection(final Player player, final String... args) 
     {
-        final Region sel = (Region)this.getCylSelection(player, args);
+        final Region sel = this.getCylSelection(player, args);
         return this.checkIntersection(sel);
     }
     @Override
     public boolean checkPIntersection(final Player player, final String... args) 
     {
-        final Region sel = (Region)this.getPyramidSelection(player, args);
+        final Region sel = this.getPyramidSelection(player, args);
         return this.checkIntersection(sel);
     }
     @Override
     public boolean checkSIntersection(final Player player, final String... args) 
     {
-        final Region sel = (Region)this.getSphereSelection(player, args);
+        final Region sel = this.getSphereSelection(player, args);
         return this.checkIntersection(sel);
     }
     @Override
     public boolean checkUIntersection(final Player player, final String... args) 
     {
-        final Region sel = (Region)this.getUpSelection(player, args);
+        final Region sel = this.getUpSelection(player, args);
         return this.checkIntersection(sel);
     }
     @Override
     public boolean checkCPIntersection(final Player player, final String... args) 
     {
-        final Region sel = (Region)this.getPasteSelection(player, args);
+        final Region sel = this.getPasteSelection(player, args);
         return this.checkIntersection(sel);
     }
     private CuboidRegion getCylSelection(final Player player, final String... args) 
@@ -151,8 +149,8 @@ public class wg7 implements Iwg
             }
             y = Integer.parseInt(args[3]);
         }catch(Exception ex){}
-        final Location loc1 = player.getLocation().subtract((double)x, (double)y, (double)z);
-        final Location loc2 = player.getLocation().add((double)x, (double)y, (double)z);
+        final Location loc1 = player.getLocation().subtract(x, y, z);
+        final Location loc2 = player.getLocation().add(x, y, z);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
     }
     private CuboidRegion getPyramidSelection(final Player player, final String... args) 
@@ -165,8 +163,8 @@ public class wg7 implements Iwg
         try{
             i = Integer.parseInt(args[2]);
         }catch(Exception ex){}
-        final Location loc1 = player.getLocation().subtract((double)i, (double)i, (double)i);
-        final Location loc2 = player.getLocation().add((double)i, (double)i, (double)i);
+        final Location loc1 = player.getLocation().subtract(i, i, i);
+        final Location loc2 = player.getLocation().add(i, i, i);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
     }
     private CuboidRegion getSphereSelection(final Player player, final String... args) 
@@ -183,16 +181,16 @@ public class wg7 implements Iwg
             y2 = Integer.parseInt(cr[1]);
             z2 = Integer.parseInt(cr[2]);
         }catch(Exception ex){}
-        final Location loc1 = player.getLocation().subtract((double)x2, (double)y2, (double)z2);
-        final Location loc2 = player.getLocation().add((double)x2, (double)y2, (double)z2);
+        final Location loc1 = player.getLocation().subtract(x2, y2, z2);
+        final Location loc2 = player.getLocation().add(x2, y2, z2);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asBlockVector(loc1), BukkitAdapter.asBlockVector(loc2));
     }
     private CuboidRegion getUpSelection(final Player player, final String... args) 
     {
         try{
             final int v = Integer.parseInt(args[1]);
-            final Location loc1 = player.getLocation().add(0.0, (double)v, 0.0);
-            final Location loc2 = player.getLocation().add(0.0, (double)v, 0.0);
+            final Location loc1 = player.getLocation().add(0.0, v, 0.0);
+            final Location loc2 = player.getLocation().add(0.0, v, 0.0);
             return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asBlockVector(loc1), BukkitAdapter.asBlockVector(loc2));
         }catch(Exception ex){
             return null;
@@ -201,10 +199,10 @@ public class wg7 implements Iwg
     private CuboidRegion getPasteSelection(final Player player, final String... args) 
     {
         try{
-            final LocalSession session = WorldEdit.getInstance().getSessionManager().get((SessionOwner)BukkitAdapter.adapt(player));
+            final LocalSession session = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
             final ClipboardHolder holder = session.getClipboard();
             final Clipboard clipboard = holder.getClipboard();
-            final BlockVector3 to = session.getPlacementPosition((com.sk89q.worldedit.entity.Player)BukkitAdapter.adapt(player));
+            final BlockVector3 to = session.getPlacementPosition(BukkitAdapter.adapt(player));
             final BlockVector3 min = to.add(clipboard.getRegion().getMinimumPoint().subtract(clipboard.getOrigin()));
             final BlockVector3 max = to.add(clipboard.getRegion().getMaximumPoint().subtract(clipboard.getOrigin()));
             return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), min, max);
