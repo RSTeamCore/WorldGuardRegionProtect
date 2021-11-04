@@ -2,6 +2,7 @@ package net.ritasister.listener.protect;
 
 import java.util.*;
 
+import net.ritasister.util.config.UtilConfigMsg;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.entity.*;
