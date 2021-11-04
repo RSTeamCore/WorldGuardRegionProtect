@@ -1,6 +1,6 @@
 package net.ritasister.wgrp;
 
-import org.bukkit.plugin.Plugin;
+import net.ritasister.util.config.UtilConfigMsg;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,7 +11,7 @@ import net.ritasister.rslibs.utils.Metrics;
 import net.ritasister.rslibs.utils.UpdateChecker;
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.util.UtilConfigManager;
-import net.ritasister.util.UtilLoadConfig;
+//import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
 
@@ -20,19 +20,17 @@ public class WorldGuardRegionProtect extends JavaPlugin
 	public static WorldGuardRegionProtect instance;
 	public static UtilConfig utilConfig;
 	public static UtilConfigMessage utilConfigMessage;
+	public static UtilConfigMsg utilConfigMsg;
 	public static UtilCommandList utilCommandList;
 
-	public final UtilLoadConfig utilLoadConfig = new UtilLoadConfig(this);
+	//public final UtilLoadConfig utilLoadConfig = new UtilLoadConfig(this);
 	private final PluginManager pluginManager = getServer().getPluginManager();
 	private final String pluginVersion = getDescription().getVersion();
 
-	public WorldGuardRegionProtect()
-	{
-		WorldGuardRegionProtect.instance = this;
-	}
+	public WorldGuardRegionProtect() {WorldGuardRegionProtect.instance = this;}
+
 	@Override
-	public void onEnable()
-	{
+	public void onEnable() {
 		this.checkVersion();
 		this.checkUpdate();
 		this.loadMetrics();
@@ -42,10 +40,8 @@ public class WorldGuardRegionProtect extends JavaPlugin
 		RegisterListener.RegisterEvents(pluginManager);
 		RSLogger.info("&2created by &8[&5RitaSister&8]");
 	}
-	private void checkUpdate()
-	{
-		new UpdateChecker(this, 81321).getVersion(version -> 
-		{
+	private void checkUpdate() {
+		new UpdateChecker(this, 81321).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) 
             {	
             	RSLogger.info("&6==============================================");
@@ -63,9 +59,8 @@ public class WorldGuardRegionProtect extends JavaPlugin
             }
         });
 	}
-	private void checkVersion() 
-	{
-		final String javaVersion = System.getProperty("java.version");
+	private void checkVersion() {
+			final String javaVersion = System.getProperty("java.version");
         	final int dotIndex = javaVersion.indexOf('.');
        		final int endIndex = dotIndex == -1 ? javaVersion.length() : dotIndex;
         	final String version = javaVersion.substring(0, endIndex);
@@ -86,8 +81,7 @@ public class WorldGuardRegionProtect extends JavaPlugin
         RSLogger.info("&6You are running is &ejava &6version: &e<javaVersion>".replace("<javaVersion>", String.valueOf(javaVersionNum)));
 		RSLogger.info("&6Your &eserver &6is running version: &e<serverVersion>".replace("<serverVersion>", String.valueOf(serverVersion)));
 	}
-	private void loadMetrics()
-	{
+	private void loadMetrics() {
 		int pluginId = 12975;
 		new Metrics(this, pluginId);
 	}
