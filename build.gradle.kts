@@ -1,12 +1,20 @@
 plugins {
-    kotlin("jvm") version "1.5.31"
     java
+    `maven-publish`
+}
+
+allprojects {
+    apply(plugin = "java")
+    apply(plugin = "maven-publish")
+
+    java {
+        toolchain {languageVersion.set(JavaLanguageVersion.of(11))}
+    }
 }
 
 group = "net.ritasister.srp"
 version = "0.7.1-pre1"
 description = "WorldGuardRegionProtect"
-java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
@@ -17,8 +25,4 @@ repositories {
 dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
     compileOnly ("com.sk89q.worldguard:worldguard-bukkit:7.0.4")
-}
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
 }
