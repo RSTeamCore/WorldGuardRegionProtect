@@ -6,8 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 
-public final class UtilConfig
-{
+public final class UtilConfig {
 	public List<String> regionProtect;
 	public List<String> regionProtectAllow;
 	public List<String> regionProtectOnlyBreakAllow;
@@ -29,8 +28,7 @@ public final class UtilConfig
 	public boolean spyCommandNotifyAdminPlaySoundEnable;
 
 	@SuppressWarnings("unchecked")
-	public UtilConfig()
-	{
+	public UtilConfig() {
 		WorldGuardRegionProtect.instance.saveDefaultConfig();
 		WorldGuardRegionProtect.instance.reloadConfig();
 

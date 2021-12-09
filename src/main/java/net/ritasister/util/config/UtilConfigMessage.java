@@ -1,10 +1,11 @@
 package net.ritasister.util.config;
 
-import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.rslibs.api.ChatApi;
+import org.bukkit.configuration.ConfigurationSection;
+
 import net.ritasister.util.UtilLoadConfig;
 
-public class UtilConfigMessage
-{
+public class UtilConfigMessage {
 	public String wgrpMsg;
 	public String wgrpMsgWe;
 	public String noPerm;
@@ -17,23 +18,21 @@ public class UtilConfigMessage
 	public String configMsgReloaded;
 	public String configMsgNotFound;
 
-	public UtilConfigMessage()
-	{
-		UtilLoadConfig config = WorldGuardRegionProtect.instance.utilLoadConfig;
+	public UtilConfigMessage() {
 		try{
-			wgrpMsg = config.messages.getString("messages.ServerMsg.wgrpMsg", wgrpMsg).replace("&", "§");
-			wgrpMsgWe = config.messages.getString("messages.ServerMsg.wgrpMsg_We", wgrpMsgWe).replace("&", "§");
-			noPerm = config.messages.getString("messages.ServerMsg.noPerm", noPerm).replace("&", "§");
-			sendAminInfo = config.messages.getString("messages.ServerMsg.sendAminInfo", sendAminInfo).replace("&", "§");
+			wgrpMsg = ChatApi.getColorCode(getMessageConfig().getString("messages.ServerMsg.wgrpMsg", wgrpMsg));
+			wgrpMsgWe = ChatApi.getColorCode(getMessageConfig().getString("messages.ServerMsg.wgrpMsg_We", wgrpMsgWe));
+			noPerm = ChatApi.getColorCode(getMessageConfig().getString("messages.ServerMsg.noPerm", noPerm));
+			sendAminInfo = ChatApi.getColorCode(getMessageConfig().getString("messages.ServerMsg.sendAminInfo", sendAminInfo));
+			wgrpUseHelp = ChatApi.getColorCode(getMessageConfig().getString("messages.ExampleUseCommand.wgrpUseHelp", wgrpUseHelp));
 
-			wgrpUseHelp = config.messages.getString("messages.ExampleUseCommand.wgrpUseHelp", wgrpUseHelp).replace("&", "§");
-
-			configReloaded = config.messages.getString("messages.Configs.configReloaded", configReloaded).replace("&", "§");
-			configNotFound = config.messages.getString("messages.Configs.configNotFound", configNotFound).replace("&", "§");
-			configMsgReloaded = config.messages.getString("messages.Configs.configMsgReloaded", configMsgReloaded).replace("&", "§");
-			configMsgNotFound = config.messages.getString("messages.Configs.configMsgNotFound", configMsgNotFound).replace("&", "§");
-		}catch(Exception e){
-			e.printStackTrace();
+			configReloaded = ChatApi.getColorCode(getMessageConfig().getString("messages.Configs.configReloaded", configReloaded));
+			configNotFound = ChatApi.getColorCode(getMessageConfig().getString("messages.Configs.configNotFound", configNotFound));
+			configMsgReloaded = ChatApi.getColorCode(getMessageConfig().getString("messages.Configs.configMsgReloaded", configMsgReloaded));
+			configMsgNotFound = ChatApi.getColorCode(getMessageConfig().getString("messages.Configs.configMsgNotFound", configMsgNotFound));
+		}catch(NullPointerException ex){
+			ex.printStackTrace();
 		}
 	}
+	private ConfigurationSection getMessageConfig() {return UtilLoadConfig.messages;}
 }

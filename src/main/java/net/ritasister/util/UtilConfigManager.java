@@ -5,14 +5,12 @@ import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 
-public class UtilConfigManager 
-{
+public class UtilConfigManager {
 	private static final UtilLoadConfig utilConfigManager = new UtilLoadConfig(WorldGuardRegionProtect.instance);
-	
-	public static void loadConfig()
-	{	
+
+	public static void loadConfig() {
 		WorldGuardRegionProtect.utilConfig = new UtilConfig();
-		
+
 		utilConfigManager.LoadMSGConfig(WorldGuardRegionProtect.instance, true);
 		WorldGuardRegionProtect.utilConfigMessage = new UtilConfigMessage();
 		RSLogger.info("&2All configs load successfully!");

@@ -16,8 +16,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.jetbrains.annotations.Nullable;
 
-public class RSApi 
-{
+public class RSApi {
 	/**
 	 * Check if player have permissions for use command.
 	 * 
@@ -28,17 +27,12 @@ public class RSApi
 	 *
 	 * @return isAuthCommandsPermission Have is Permissions or not.
 	 */
-	public static boolean isAuthCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String perm, @Nullable String message)
-	{
-		if (!sender.hasPermission(perm) || !sender.isPermissionSet(perm)) 
-		{
-			if (message != null) 
-			{
-				sender.sendMessage(Color.getColorCode(message));
-			}
-			return false;
-		}
-		return true;
+	public static boolean isAuthCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String perm, @Nullable String message) {
+		if (!sender.hasPermission(perm) || !sender.isPermissionSet(perm)) {
+			if (message != null) {
+				sender.sendMessage(ChatApi.getColorCode(message));
+			}return false;
+		}return true;
 	}
 	/**
 	 * Check if player have permissions for use TAB.
@@ -58,17 +52,12 @@ public class RSApi
 	 *
 	 * @return isAuthListenerPermission Have is Permissions or not.
 	 */
-	public static boolean isAuthListenerPermission(@NotNull CommandSender sender, @NotNull String perm,  @Nullable String message)
-	{
-		if (!sender.hasPermission(perm) || !sender.isPermissionSet(perm)) 
-		{
-			if (message != null) 
-			{
-				sender.sendMessage(Color.getColorCode(message));
-			}
-			return false;
-		}
-		return true;
+	public static boolean isAuthListenerPermission(@NotNull CommandSender sender, @NotNull String perm,  @Nullable String message) {
+		if (!sender.hasPermission(perm) || !sender.isPermissionSet(perm)) {
+			if (message != null) {
+				sender.sendMessage(ChatApi.getColorCode(message));
+			}return false;
+		}return true;
 	}
 	/**
 	 * Check if player have permissions for use Listener.
@@ -78,23 +67,16 @@ public class RSApi
 	 *
 	 * @return checkStandingRegion Where is standing player.
 	 */
-	public static boolean checkStandingRegion(@NotNull Location loc, List<String> list)
-	{
+	public static boolean checkStandingRegion(@NotNull Location loc, List<String> list) {
 		final World world = loc.getWorld();
 		final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
 		final BlockVector3 locationBlockVector3 = BlockVector3.at(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 		final ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(locationBlockVector3);
-		for (ProtectedRegion protectedRegion : applicableRegionSet)
-		{
-			for (String regionName : list) 
-			{
-				if (protectedRegion.getId().equalsIgnoreCase(regionName))
-				{
-					return true;
-				}
+		for (ProtectedRegion protectedRegion : applicableRegionSet) {
+			for (String regionName : list) {
+				if (protectedRegion.getId().equalsIgnoreCase(regionName)) {return true;}
 			}
-		}
-		return false;
+		}return false;
 	}
 	/**
 	 * Get name of region for location
@@ -104,22 +86,15 @@ public class RSApi
 	 *
 	 * @return regionName by Region where standing player.
 	 */
-	public static String getNameRegionFromConfig(@NotNull Location loc, List<String> list)
-	{
+	public static String getNameRegionFromConfig(@NotNull Location loc, List<String> list) {
 		final World world = loc.getWorld();
 		final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
 		final BlockVector3 locationBlockVector3 = BlockVector3.at(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 		final ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(locationBlockVector3);
-		for (ProtectedRegion protectedRegion : applicableRegionSet)
-		{
-			for (String regionName : list) 
-			{
-				if (protectedRegion.getId().equalsIgnoreCase(regionName))
-				{
-					return regionName;
-				}
+		for (ProtectedRegion protectedRegion : applicableRegionSet) {
+			for (String regionName : list) {
+				if (protectedRegion.getId().equalsIgnoreCase(regionName)) {return regionName;}
 			}
-		}
-		return null;
+		}return null;
 	}
 }

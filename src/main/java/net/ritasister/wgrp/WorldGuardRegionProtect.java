@@ -1,6 +1,5 @@
 package net.ritasister.wgrp;
 
-import net.ritasister.util.config.UtilConfigMsg;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,19 +10,18 @@ import net.ritasister.rslibs.utils.Metrics;
 import net.ritasister.rslibs.utils.UpdateChecker;
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.util.UtilConfigManager;
-//import net.ritasister.util.UtilLoadConfig;
+import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
 
-public class WorldGuardRegionProtect extends JavaPlugin
-{
+public class WorldGuardRegionProtect extends JavaPlugin {
+
 	public static WorldGuardRegionProtect instance;
 	public static UtilConfig utilConfig;
 	public static UtilConfigMessage utilConfigMessage;
-	public static UtilConfigMsg utilConfigMsg;
 	public static UtilCommandList utilCommandList;
 
-	//public final UtilLoadConfig utilLoadConfig = new UtilLoadConfig(this);
+	public final UtilLoadConfig utilLoadConfig = new UtilLoadConfig(this);
 	private final PluginManager pluginManager = getServer().getPluginManager();
 	private final String pluginVersion = getDescription().getVersion();
 
@@ -42,8 +40,7 @@ public class WorldGuardRegionProtect extends JavaPlugin
 	}
 	private void checkUpdate() {
 		new UpdateChecker(this, 81321).getVersion(version -> {
-            if (this.getDescription().getVersion().equalsIgnoreCase(version)) 
-            {	
+            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
             	RSLogger.info("&6==============================================");
                 RSLogger.info("&2Current version: &b<pl_ver>".replace("<pl_ver>", pluginVersion));
                 RSLogger.info("&2This is latest version plugin.".replace("<pl_ver>", pluginVersion));
@@ -60,20 +57,19 @@ public class WorldGuardRegionProtect extends JavaPlugin
         });
 	}
 	private void checkVersion() {
-			final String javaVersion = System.getProperty("java.version");
-        	final int dotIndex = javaVersion.indexOf('.');
-       		final int endIndex = dotIndex == -1 ? javaVersion.length() : dotIndex;
-        	final String version = javaVersion.substring(0, endIndex);
-        	final int javaVersionNum;
+		final String javaVersion = System.getProperty("java.version");
+		final int dotIndex = javaVersion.indexOf('.');
+		final int endIndex = dotIndex == -1 ? javaVersion.length() : dotIndex;
+		final String version = javaVersion.substring(0, endIndex);
+		final int javaVersionNum;
         try{
             	javaVersionNum = Integer.parseInt(version);
         }catch(final NumberFormatException e){
             	RSLogger.warn("Failed to determine Java version; Could not parse {}".replace("{}", version) + e);
             	RSLogger.warn(javaVersion);
             	return;
-        }
-		String serverVersion;
-        try{
+        }String serverVersion;
+		try{
             	serverVersion = instance.getServer().getClass().getPackage().getName().split("\\.")[3];
         }catch(ArrayIndexOutOfBoundsException whatVersionAreYouUsingException){
             	return;

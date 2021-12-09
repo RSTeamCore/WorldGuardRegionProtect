@@ -6,11 +6,9 @@ import net.ritasister.listener.protect.RegionProtect;
 import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 
-public class RegisterListener 
-{
+public class RegisterListener {
 	
-	public static void RegisterEvents(PluginManager pm)
-	{
+	public static void RegisterEvents(PluginManager pm) {
 		try{
 			final RegionProtect creativeListener = new RegionProtect(WorldGuardRegionProtect.instance);
 			pm.registerEvents(creativeListener, WorldGuardRegionProtect.instance);

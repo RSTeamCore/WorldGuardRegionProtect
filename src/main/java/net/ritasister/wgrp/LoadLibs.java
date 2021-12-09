@@ -4,15 +4,13 @@ import org.bukkit.plugin.*;
 import com.sk89q.worldguard.bukkit.*;
 import net.ritasister.rslibs.api.RSLogger;
 
-public class LoadLibs 
-{
+public class LoadLibs {
+
 	@SuppressWarnings("null")
-	public static WorldGuardPlugin loadWorldGuard() 
-	{
+	public static WorldGuardPlugin loadWorldGuard() {
         final String s = "WorldGuard";
         final Plugin plg = WorldGuardRegionProtect.instance.getServer().getPluginManager().getPlugin(s);
-        if (plg != null && plg.isEnabled()) 
-        {
+        if (plg != null && plg.isEnabled()) {
             try{
                 msgSuccess();
                 return (WorldGuardPlugin)plg;
@@ -21,8 +19,7 @@ public class LoadLibs
                 final Throwable e = t;
                 RSLogger.err(e.getMessage());
             }
-        }
-        return null;
+        }return null;
     }
 	private static void msgSuccess()
 	{
