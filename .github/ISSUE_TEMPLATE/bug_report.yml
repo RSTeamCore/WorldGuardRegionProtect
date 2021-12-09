@@ -77,7 +77,7 @@ body:
     attributes:
       label: WorldGuardRegionProtect version
       description: What version of WorldGuardRegionProtect are you running? (`/version WorldGuardRegionProtect`)
-      placeholder: "For example: WorldGuardRegionProtect version 0.7.0"
+      placeholder: "For example: WorldGuardRegionProtect version 0.7.1"
     validations:
       required: true
       
