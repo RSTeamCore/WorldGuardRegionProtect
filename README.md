@@ -38,6 +38,6 @@
 ## Old versions
 
  You can find there:
-* [spigotmc.ru](https://spigotmc.ru/resources/serverregionprotect-1-12-x.518/)
+* [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
 * [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)
 * [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect)
