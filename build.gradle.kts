@@ -13,7 +13,7 @@ allprojects {
 }
 
 group = "net.ritasister.srp"
-version = "0.7.1-pre1"
+version = "0.7.1-pre2"
 description = "WorldGuardRegionProtect"
 
 repositories {
@@ -23,6 +23,6 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.18-R0.1-SNAPSHOT")
     compileOnly ("com.sk89q.worldguard:worldguard-bukkit:7.0.4")
 }
