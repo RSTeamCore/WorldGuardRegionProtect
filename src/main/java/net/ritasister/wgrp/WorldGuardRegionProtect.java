@@ -51,7 +51,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
                 RSLogger.info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", pluginVersion));
                 RSLogger.info("&3New version: &b<new_pl_ver>".replace("<new_pl_ver>", version));
                 RSLogger.info("&ePlease download new version here:");
-                RSLogger.info("&ehttps://www.spigotmc.org/resources/serverregionprotect-1-13-1-17.81321/");
+                RSLogger.info("&ehttps://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-17.81321/");
                 RSLogger.info("&6==============================================");
             }
         });
