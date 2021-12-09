@@ -25,42 +25,35 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-public class wg7 implements Iwg
-{
+import java.util.Objects;
+
+public class wg7 implements Iwg {
     public WorldGuardRegionProtect worldGuardRegionProtect;
     public WorldGuardPlugin wg;
     public WorldEditPlugin we;
     
-    public wg7(final WorldGuardRegionProtect instance) 
-    {
+    public wg7(final WorldGuardRegionProtect instance) {
         this.wg = (WorldGuardPlugin)Bukkit.getPluginManager().getPlugin("WorldGuard");
         this.we = (WorldEditPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
         this.worldGuardRegionProtect = instance;
     }
     @Override
-    public boolean wg(final World w, final Location l, final boolean b) 
-    {
+    public boolean wg(final World w, final Location l, final boolean b) {
         String mine = "";
-        if (b) 
-        {
+        if (b) {
             mine = "mine";
         }
         final ApplicableRegionSet set = this.getApplicableRegions(l);
-        for (final ProtectedRegion rg : set) 
-        {
-            for (final Object region : this.worldGuardRegionProtect.getConfig().getList("server_region_protect.region_protect" + mine))
-            {
-                if (rg.getId().equalsIgnoreCase(region.toString())) 
-                {
+        for (final ProtectedRegion rg : set) {
+            for (final Object region : Objects.requireNonNull(this.worldGuardRegionProtect.getConfig().getList("worldguard_protect_region.region_protect" + mine))){
+                if (rg.getId().equalsIgnoreCase(region.toString())) {
                     return true;
                 }
             }
-        }
-        return false;
+        }return false;
     }
     @Override
-    public boolean checkIntersection(final Player player) 
-    {
+    public boolean checkIntersection(final Player player) {
         final LocalSession l = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
         Region sel = null;
         try{
@@ -70,72 +63,56 @@ public class wg7 implements Iwg
         }
         return this.checkIntersection(sel);
     }
-    private boolean checkIntersection(final Region sel) 
-    {
-        if (sel instanceof CuboidRegion) 
-        {
+    private boolean checkIntersection(final Region sel) {
+        if (sel instanceof CuboidRegion) {
             final BlockVector3 min = sel.getMinimumPoint();
             final BlockVector3 max = sel.getMaximumPoint();
             final RegionContainer rc = WorldGuard.getInstance().getPlatform().getRegionContainer();
             final RegionManager regions = rc.get(sel.getWorld());
             final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", min, max);
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
-            for (final ProtectedRegion rg : set) 
-            {
-                for (final Object region : WorldGuardRegionProtect.utilConfig.regionProtect) 
-                {
-                    if (rg.getId().equalsIgnoreCase(region.toString())) 
-                    {
+            for (final ProtectedRegion rg : set) {
+                for (final Object region : WorldGuardRegionProtect.utilConfig.regionProtect) {
+                    if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }
                 }
             }
-            for (final ProtectedRegion rg : set) 
-            {
-                for (final Object region : WorldGuardRegionProtect.utilConfig.regionProtectOnlyBreakAllow) 
-                {
-                    if (rg.getId().equalsIgnoreCase(region.toString())) 
-                    {
+            for (final ProtectedRegion rg : set) {
+                for (final Object region : WorldGuardRegionProtect.utilConfig.regionProtectOnlyBreakAllow) {
+                    if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }
                 }
-            }
-            return true;
-        }
-        return false;
+            }return true;
+        }return false;
     }
     @Override
-    public boolean checkCIntersection(final Player player, final String... args) 
-    {
+    public boolean checkCIntersection(final Player player, final String... args) {
         final Region sel = this.getCylSelection(player, args);
         return this.checkIntersection(sel);
     }
     @Override
-    public boolean checkPIntersection(final Player player, final String... args) 
-    {
+    public boolean checkPIntersection(final Player player, final String... args) {
         final Region sel = this.getPyramidSelection(player, args);
         return this.checkIntersection(sel);
     }
     @Override
-    public boolean checkSIntersection(final Player player, final String... args) 
-    {
+    public boolean checkSIntersection(final Player player, final String... args) {
         final Region sel = this.getSphereSelection(player, args);
         return this.checkIntersection(sel);
     }
     @Override
-    public boolean checkUIntersection(final Player player, final String... args) 
-    {
+    public boolean checkUIntersection(final Player player, final String... args) {
         final Region sel = this.getUpSelection(player, args);
         return this.checkIntersection(sel);
     }
     @Override
-    public boolean checkCPIntersection(final Player player, final String... args) 
-    {
+    public boolean checkCPIntersection(final Player player, final String... args) {
         final Region sel = this.getPasteSelection(player, args);
         return this.checkIntersection(sel);
     }
-    private CuboidRegion getCylSelection(final Player player, final String... args) 
-    {
+    private CuboidRegion getCylSelection(final Player player, final String... args) {
         int x = 1;
         int y = 1;
         int z = 0;
@@ -153,8 +130,7 @@ public class wg7 implements Iwg
         final Location loc2 = player.getLocation().add(x, y, z);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
     }
-    private CuboidRegion getPyramidSelection(final Player player, final String... args) 
-    {
+    private CuboidRegion getPyramidSelection(final Player player, final String... args) {
         if (args.length < 3) 
         {
             return null;
@@ -167,8 +143,7 @@ public class wg7 implements Iwg
         final Location loc2 = player.getLocation().add(i, i, i);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
     }
-    private CuboidRegion getSphereSelection(final Player player, final String... args) 
-    {
+    private CuboidRegion getSphereSelection(final Player player, final String... args) {
         if (args.length < 3) 
         {
             return null;
@@ -185,8 +160,7 @@ public class wg7 implements Iwg
         final Location loc2 = player.getLocation().add(x2, y2, z2);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asBlockVector(loc1), BukkitAdapter.asBlockVector(loc2));
     }
-    private CuboidRegion getUpSelection(final Player player, final String... args) 
-    {
+    private CuboidRegion getUpSelection(final Player player, final String... args) {
         try{
             final int v = Integer.parseInt(args[1]);
             final Location loc1 = player.getLocation().add(0.0, v, 0.0);
@@ -196,8 +170,7 @@ public class wg7 implements Iwg
             return null;
         }
     }
-    private CuboidRegion getPasteSelection(final Player player, final String... args) 
-    {
+    private CuboidRegion getPasteSelection(final Player player, final String... args) {
         try{
             final LocalSession session = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
             final ClipboardHolder holder = session.getClipboard();
@@ -210,8 +183,7 @@ public class wg7 implements Iwg
             return null;
         }
     }
-    private ApplicableRegionSet getApplicableRegions(final Location l) 
-    {
+    private ApplicableRegionSet getApplicableRegions(final Location l) {
         return WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(l.getWorld())).getApplicableRegions(BukkitAdapter.asBlockVector(l));
     }
 }
