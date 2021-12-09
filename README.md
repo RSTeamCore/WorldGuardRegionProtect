@@ -28,12 +28,16 @@
 * Operators (if you gave anybody /op) are not allowed access in to the region.
 
 ## Metrics
-[bStats](https://bstats.org/plugin/bukkit/ServerRegionProtect/12975)
+[bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect/12975)
 ![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg)
+
+## Old unsupported version 1.12.2!
+[bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect1-12-2/13532)
+![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect1-12-2.svg)
 
 ## Old versions
 
  You can find there:
-* [spigotmc.ru](https://spigotmc.ru/resources/serverregionprotect-1-12-x-bolshe-ne-podderzhivaetsja.518/)
-* [spigotmc.org](https://www.spigotmc.org/resources/serverregionprotect-1-12-unsupported-anymore.81333/)
-* [dev.bukkit.org](https://dev.bukkit.org/projects/serverregionprotect-protect-the-private-region)
+* [spigotmc.ru](https://spigotmc.ru/resources/serverregionprotect-1-12-x.518/)
+* [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)
+* [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect)
