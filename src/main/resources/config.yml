@@ -62,20 +62,20 @@ worldguard_protect_region:
   # interact_type: []
   #--------------------------------------------------------------------------------------
   interact_type:
+  - candle
   - armor_stand
   - end_crystal
   - minecart
-  - explosive_minecart
-  - command_minecart
+  - tnt_minecart
+  - command_block_minecart
   - hopper_minecart
-  - storage_minecart
-  - powered_minecart
-  - boat
-  - boat_spruce
-  - boat_birch
-  - boat_jungle
-  - boat_acacia
-  - boat_dark_oak
+  - chest_minecart
+  - furnace_minecart
+  - spruce_boat
+  - birch_boat
+  - jungle_boat
+  - acacia_boat
+  - dark_oak_boat
   - bucket
   - water_bucket
   - lava_bucket
