@@ -1,7 +1,7 @@
 # WorldGuardRegionProtect Protecting the server region using the WorldGuard 7+
 
 ## IMPORTANT
-* [LIST OF ALL VERSION WorldGuardRegionProtect AVAIABLE HERE](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
+* [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
 
 ## ATTENTION
 
