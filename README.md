@@ -5,7 +5,8 @@
 * PLUGIN VERSION OF 0.7.1-pre1 FOR 1.18 OR HIGHER CAN RUN ONLY ON JAVA 17!
 * PLUGIN VERSION OF 0.7.0 OR LOWEST CAN RUN ONLY ON JAVA 11!
 
-## UNSUPPORTED (I MEAN I DONT RESPOND ANY ISSUES) 
+## FOR MINECRAFT JAVA EDITION 1.12.2!!!
+
 * PLUGIN VERSION OF 0.7.1-pre1 FOR 1.12.2 CAN RUN ONLY ON JAVA 8 AND MC 1.12.2!
 
 ## Opportunities
@@ -34,7 +35,7 @@
 [bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect/12975)
 ![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg)
 
-## Old unsupported version 1.12.2!
+## Old version 1.12.2!
 [bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect1-12-2/13532)
 ![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect1-12-2.svg)
 
