@@ -92,8 +92,9 @@ public class RegionProtect implements Listener {
 		final Location loc = entity.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
 			if(RSApi.isAuthListenerPermission(attacker, IUtilPermissions.regionProtect, null))return;{
-				if (entity instanceof ArmorStand 
-						|| entity instanceof ItemFrame 
+				if (entity instanceof ArmorStand
+						|| entity instanceof ItemFrame
+						|| entity instanceof GlowItemFrame
 						|| entity instanceof Painting
 						|| entity instanceof EnderCrystal) {
 					if (attacker instanceof Player) {
@@ -115,6 +116,7 @@ public class RegionProtect implements Listener {
 		if(RSApi.checkStandingRegion(clickLoc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
 			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 				if(e.getRightClicked().getType() == EntityType.ITEM_FRAME
+						|| e.getRightClicked().getType() == EntityType.GLOW_ITEM_FRAME
 						&& this.wg.wg(p.getWorld(), p.getLocation(), false)) {e.setCancelled(true);}
 			}
 		}
@@ -159,7 +161,8 @@ public class RegionProtect implements Listener {
 					e.setCancelled(true);
 				}
 				if (entity instanceof ItemFrame
-					|| entity instanceof Painting) {
+						|| entity instanceof GlowItemFrame
+						|| entity instanceof Painting) {
 					if (attacker instanceof Player) {
 						e.setCancelled(true);
 					}else if (attacker instanceof Projectile){
@@ -181,6 +184,7 @@ public class RegionProtect implements Listener {
 			assert p != null;
 			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 				if (p.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
+						|| p.getInventory().getItemInMainHand().getType() == Material.GLOW_ITEM_FRAME
 						|| p.getInventory().getItemInMainHand().getType() == Material.PAINTING) {
 					e.setCancelled(true);
 				}
