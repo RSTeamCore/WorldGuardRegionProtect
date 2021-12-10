@@ -1,9 +1,16 @@
 # WorldGuardRegionProtect Protecting the server region using the WorldGuard 7+
 
-## ATTENTION
+## Social
+[Discord](https://discord.gg/kvqvA3GTVF)
 
-* PLUGIN CAN'T START ON THE SERVER WHERE INSTALLED OLD VERSIONS JAVA!
-* PLUGIN RUNNING ONLY ON JAVA 11 OR HIGHEST VERSION!
+## IMPORTANT
+* [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
+* PLUGIN VERSION OF 0.7.1-pre1 FOR 1.18 OR HIGHER CAN RUN ONLY ON JAVA 17!
+* PLUGIN VERSION OF 0.7.0 OR LOWEST FOR 1.13-1.17 CAN RUN ONLY ON JAVA 11!
+
+## FOR MINECRAFT JAVA EDITION 1.12.2!!!
+
+* PLUGIN VERSION OF 0.7.1-pre1 FOR 1.12.2 CAN RUN ONLY ON JAVA 8 AND MC 1.12.2!
 
 ## Opportunities
 
@@ -28,12 +35,16 @@
 * Operators (if you gave anybody /op) are not allowed access in to the region.
 
 ## Metrics
-[bStats](https://bstats.org/plugin/bukkit/ServerRegionProtect/12975)
+[bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect/12975)
 ![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg)
+
+## Old version 1.12.2!
+[bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect1-12-2/13532)
+![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect1-12-2.svg)
 
 ## Old versions
 
  You can find there:
-* [spigotmc.ru](https://spigotmc.ru/resources/serverregionprotect-1-12-x-bolshe-ne-podderzhivaetsja.518/)
-* [spigotmc.org](https://www.spigotmc.org/resources/serverregionprotect-1-12-unsupported-anymore.81333/)
-* [dev.bukkit.org](https://dev.bukkit.org/projects/serverregionprotect-protect-the-private-region)
+* [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
+* [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)
+* [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect)
