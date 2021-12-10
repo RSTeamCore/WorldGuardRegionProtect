@@ -30,7 +30,7 @@
 
 ## Permissions
 
-* In this case, the access rights to the region are registered through this Permissions: (- srp.serverregionprotect) access to protected region.
+* In this case, the access rights to the region are registered through this Permissions: (- wgrp.regionprotect) access to protected region.
 * The star permissions (- "*") gives all the rights.
 * Operators (if you gave anybody /op) are not allowed access in to the region.
 
