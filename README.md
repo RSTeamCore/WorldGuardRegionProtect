@@ -1,5 +1,8 @@
 # WorldGuardRegionProtect Protecting the server region using the WorldGuard 7+
 
+## Social
+[Discord](https://discord.gg/kvqvA3GTVF)
+
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
 * PLUGIN VERSION OF 0.7.1-pre1 FOR 1.18 OR HIGHER CAN RUN ONLY ON JAVA 17!
