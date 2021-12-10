@@ -1,10 +1,10 @@
 name: WorldGuardRegionProtect
 author: RitaSister
-version: 0.7.1-pre1
+version: 0.7.1-pre2
 main: net.ritasister.wgrp.WorldGuardRegionProtect
 softdepend: [ WorldGuard ]
 description: Protect your region in the server.
-api-version: 1.18
+api-version: 1.17
 commands:
   worldguardregionprotect:
    aliases: [wgrp]
