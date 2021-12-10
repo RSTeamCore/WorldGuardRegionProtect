@@ -5,7 +5,7 @@
 
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
-* PLUGIN VERSION OF 0.7.1-pre1 FOR 1.18 OR HIGHER CAN RUN ONLY ON JAVA 17!
+* PLUGIN VERSION OF 0.7.1-pre2 FOR 1.17.1-1.18 OR HIGHER CAN RUN ONLY ON JAVA 16+!
 * PLUGIN VERSION OF 0.7.0 OR LOWEST FOR 1.13-1.17 CAN RUN ONLY ON JAVA 11!
 
 ## FOR MINECRAFT JAVA EDITION 1.12.2!!!
