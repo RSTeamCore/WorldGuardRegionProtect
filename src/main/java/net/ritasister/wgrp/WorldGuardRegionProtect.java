@@ -1,5 +1,7 @@
 package net.ritasister.wgrp;
 
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,14 +31,23 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		this.checkVersion();
-		this.checkUpdate();
+		this.checkStartUpVersionServer();
+		this.checkJavaAndServerVersion();
 		this.loadMetrics();
 		LoadLibs.loadWorldGuard();
 		UtilConfigManager.loadConfig();
 		RegisterCommand.RegisterCommands(utilCommandList);
 		RegisterListener.RegisterEvents(pluginManager);
 		RSLogger.info("&2created by &8[&5RitaSister&8]");
+		this.checkUpdate();
+	}
+	private void checkStartUpVersionServer() {
+		if(!Bukkit.getVersion().contains("1.17.1") && !Bukkit.getVersion().contains("1.18")) {
+			RSLogger.err("This plugin version work only on 1.17.1+!");
+			RSLogger.err("Please read: https://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-18.81321/");
+			RSLogger.err("The main post on spigotmc and download correct version.");
+			Bukkit.getPluginManager().disablePlugin(this);
+		}
 	}
 	private void checkUpdate() {
 		new UpdateChecker(this, 81321).getVersion(version -> {
@@ -56,7 +67,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
             }
         });
 	}
-	private void checkVersion() {
+	private void checkJavaAndServerVersion() {
 		final String javaVersion = System.getProperty("java.version");
 		final int dotIndex = javaVersion.indexOf('.');
 		final int endIndex = dotIndex == -1 ? javaVersion.length() : dotIndex;
