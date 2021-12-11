@@ -1,11 +1,11 @@
-# WorldGuardRegionProtect Protecting the server region using the WorldGuard 7+
+# WorldGuardRegionProtect - Advanced secure protect for admins region from WorldGuard 7+
 
 ## Social
 [Discord](https://discord.gg/kvqvA3GTVF)
 
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
-* PLUGIN VERSION OF 0.7.1-pre2 FOR 1.17.1-1.18 OR HIGHER CAN RUN ONLY ON JAVA 16+!
+* PLUGIN VERSION OF 0.7.1-pre3 FOR 1.17.1-1.18 OR HIGHER CAN RUN ONLY ON JAVA 16+!
 * PLUGIN VERSION OF 0.7.0 OR LOWEST FOR 1.13-1.17 CAN RUN ONLY ON JAVA 11!
 
 ## FOR MINECRAFT JAVA EDITION 1.12.2!!!
@@ -16,13 +16,13 @@
 
 * By entering the name of the region in the plugin's config.yml, you will enter it in the plugin's protection. No one can break the region that is registered in config. yml, even the operators are not able to do this!
 
-## Plugin can do
+## With plugin you can do advanced protect from
 
 1. Cant place/break blocks.
 2. Protect frame, painting from any damage(arrows, trident, snowball, eggs, enderpearl and damaged from player).
 3. Protect any change in the frame.
 4. Cannot set armour stand and break him.
-5. Cannot fill lava/water bucket.
+5. Cannot use lava/water bucket in region.
 6. TNT, minecart with tnt, Respawn Anchor and ender crystal cant damaged any blocks in protect region.
 7. Support for banning dangerous commands. Separate commands were added and tested using FastAsyncWorldEdit in the protected region.
 8. Cannot anyone remove protected region just use like "/rg rem your_rg" and etc.
