@@ -16,6 +16,7 @@
 
 * By entering the name of the region in the plugin's config.yml, you will enter it in the plugin's protection. No one can break the region that is registered in config. yml, even the operators are not able to do this!
 
+(This plugin is for extended protection of an existing region from worldguard. For example from possible damage from the administration, or from operators.)
 ## With plugin you can do advanced protect from
 
 1. Cant place/break blocks.
