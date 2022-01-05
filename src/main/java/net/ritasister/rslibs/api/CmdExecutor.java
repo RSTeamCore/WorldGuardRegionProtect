@@ -7,9 +7,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
-public abstract class CmdExecutor implements CommandExecutor, TabExecutor 
-{
+public abstract class CmdExecutor implements CommandExecutor, TabExecutor {
+
     private final transient String name;
     private Player p;
     
@@ -19,8 +20,7 @@ public abstract class CmdExecutor implements CommandExecutor, TabExecutor
 	 * 
 	 * @return onCommand.
 	 */
-	public boolean onCommand(CommandSender s, Command cmd, String label, String[] args)
-    {
+	public boolean onCommand(@NotNull CommandSender s, @NotNull Command cmd, @NotNull String label, String[] args) {
         try{
 			run(s,cmd,args);
 		}catch(Exception e){
@@ -33,8 +33,7 @@ public abstract class CmdExecutor implements CommandExecutor, TabExecutor
 	 * 
 	 * @return onTabComplete.
 	 */
-	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args)
-	{
+	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 		return onTabComplete(sender, p, cmd, label, args);
 	}
 	protected abstract void run(CommandSender sender, Command cmd, String[] args) throws Exception;
