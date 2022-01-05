@@ -2,10 +2,14 @@ package net.ritasister.rslibs.api;
 
 import java.util.List;
 
+import net.ritasister.util.IUtilPermissions;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
@@ -96,5 +100,51 @@ public class RSApi {
 				if (protectedRegion.getId().equalsIgnoreCase(regionName)) {return regionName;}
 			}
 		}return null;
+	}
+	/**
+	 * Send notify to admin.
+	 *
+	 * @param player Get player object.
+	 * @param playerName Get nickname player.
+	 * @param senderCommand Get name command what player try to use in region.
+	 * @param regionName Get region name, where player send command to server.
+	 *
+	 */
+	public static void notifyAdmin(Player player, String playerName, String senderCommand, String regionName) {
+		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdmin) {
+			if(RSApi.isAuthListenerPermission(player, IUtilPermissions.regionProtectNotifyAdmin, null)) {
+				for(String cmd : WorldGuardRegionProtect.utilConfig.spyCommand) {
+					if(cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
+						if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdminPlaySoundEnable) {
+							player.playSound(player.getLocation(), WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdminPlaySound, 1, 1);
+						}
+						player.sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
+								.replace("<player>", playerName)
+								.replace("<cmd>", cmd)
+								.replace("<rg>", regionName));
+					}
+				}
+			}
+		}
+	}
+	/**
+	 * Send notify to admin.
+	 *
+	 * @param playerName Get nickname player.
+	 * @param senderCommand Get name command what player try to use in region.
+	 * @param regionName Get region name, where player send command to server.
+	 *
+	 */
+	public static void notifyConsole(String playerName, String senderCommand, String regionName) {
+		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyConsole) {
+			for(String cmd : WorldGuardRegionProtect.utilConfig.spyCommand) {
+				if(cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
+					Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
+							.replace("<player>", playerName)
+							.replace("<cmd>", cmd)
+							.replace("<rg>", regionName));
+				}
+			}
+		}
 	}
 }
