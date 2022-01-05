@@ -51,8 +51,8 @@ public final class UtilConfig {
 		this.regionMessageProtectWe = getPatch().getBoolean("protect_we_message");
 		this.spyCommandNotifyConsole = getPatch().getBoolean("spy_command.notify.console");
 		this.spyCommandNotifyAdmin = getPatch().getBoolean("spy_command.notify.admin");
-		this.spyCommandNotifyAdminPlaySoundEnable = getPatch().getBoolean("spy_command.notify.admin.sound");
-		this.spyCommandNotifyAdminPlaySound = getPatch().getString("spy_command.notify.admin.sound.type");
+		this.spyCommandNotifyAdminPlaySoundEnable = getPatch().getBoolean("spy_command.notify.sound");
+		this.spyCommandNotifyAdminPlaySound = getPatch().getString("spy_command.notify.sound_type");
 	}
 	private ConfigurationSection getPatch() {return WorldGuardRegionProtect.instance.getConfig().getConfigurationSection("worldguard_protect_region.");}
 }
