@@ -3,13 +3,16 @@ package net.ritasister.rslibs.api;
 import java.util.List;
 
 import net.ritasister.util.IUtilPermissions;
+import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
@@ -21,6 +24,9 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.jetbrains.annotations.Nullable;
 
 public class RSApi {
+
+	private static Location loc;
+
 	/**
 	 * Check if player have permissions for use command.
 	 * 
@@ -83,23 +89,24 @@ public class RSApi {
 		}return false;
 	}
 	/**
-	 * Get name of region for location
-	 * 
-	 * @param loc Get location of player.
-	 * @param list Get list of regions from WorldGuard.
+	 * Check if player have permissions for use Listener.
 	 *
-	 * @return regionName by Region where standing player.
+	 * @param loc Get location of player.
+	 *
+	 * @return checkStandingRegion Where is standing player.
 	 */
-	public static String getNameRegionFromConfig(@NotNull Location loc, List<String> list) {
+	public static boolean checkStandingRegion(@NotNull Location loc) {
 		final World world = loc.getWorld();
 		final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
 		final BlockVector3 locationBlockVector3 = BlockVector3.at(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 		final ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(locationBlockVector3);
 		for (ProtectedRegion protectedRegion : applicableRegionSet) {
-			for (String regionName : list) {
-				if (protectedRegion.getId().equalsIgnoreCase(regionName)) {return regionName;}
-			}
-		}return null;
+				protectedRegion.getId();
+		}return false;
+	}
+
+	public static String getRegionName() {
+		return String.valueOf(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect));
 	}
 	/**
 	 * Send notify to admin.
@@ -146,5 +153,40 @@ public class RSApi {
 				}
 			}
 		}
+	}
+	/**
+	 * Send notify if admin try to interact with region from WorldGuard.
+	 *
+	 * @param playerName Get nickname player.
+	 *
+	 */
+	public static void notifyInteract(String playerName) {
+		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyConsole) {
+			for(String cmd : WorldGuardRegionProtect.utilConfig.spyCommand) {
+					Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
+							.replace("<player>", playerName)
+							.replace("<cmd>", cmd));
+			}
+		}
+	}
+	/**
+	 * Send notify if admin try to interact with region from WorldGuard.
+	 *
+	 * @return getPatch for default config.
+	 *
+	 */
+	public static ConfigurationSection getPatch() {
+		return WorldGuardRegionProtect.instance.getConfig().getConfigurationSection("worldguard_protect_region.");
+	}
+	/**
+	 * Send notify if admin try to interact with region from WorldGuard.
+	 *
+	 * @return getStringMessageColor for message config.
+	 *
+	 */
+	@Contract("_, _ -> new")
+	@NotNull
+	public static String getStringMessageColor(String path, String def) {
+		return ChatApi.getColorCode(UtilLoadConfig.messages.getString(path, def));
 	}
 }
