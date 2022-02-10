@@ -4,6 +4,41 @@
 #-------------------------------------------------------------
 worldguard_protect_region:
 
+    #-------------------------------------------------------------
+    # MariaDB
+    #-------------------------------------------------------------
+    dataSource:
+      enable: false
+      database: "aqualimecore"
+
+      #-------------------------------------------------------------
+      # Host and port for connection to database.
+      #-------------------------------------------------------------
+      host: "127.0.0.1"
+      port: "3306"
+
+      #-------------------------------------------------------------
+      # Credentials for connect from user to database.
+      #-------------------------------------------------------------
+      user: "root"
+      password: "password"
+
+      tables:
+        #-------------------------------------------------------------
+        # Name table in database.
+        #-------------------------------------------------------------
+        tableName: "al_player_data"
+
+      useSsl: true
+
+      #-------------------------------------------------------------
+      # Settings for pool
+      #-------------------------------------------------------------
+      poolSettings:
+        maxPoolSize: 10
+        maxLifetime: 1800 # 30 minute
+        connectionTimeout: 5000 # 5 second
+
   #-------------------------------------------------------------
   # List of protected regions.
   # If regions are not needed, specify an empty parameter:
