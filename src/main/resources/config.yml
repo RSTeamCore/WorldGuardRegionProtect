@@ -27,7 +27,7 @@ worldguard_protect_region:
         #-------------------------------------------------------------
         # Name table in database.
         #-------------------------------------------------------------
-        tableName: "al_player_data"
+        tableName: "wgrp_logs"
 
       useSsl: true
 
@@ -38,6 +38,18 @@ worldguard_protect_region:
         maxPoolSize: 10
         maxLifetime: 1800 # 30 minute
         connectionTimeout: 5000 # 5 second
+
+      #-------------------------------------------------------------
+      # Interval of re-reading the list of players from the base (in seconds). Works
+      # in the asynchronous thread. Makes sense if there are several servers with one database.
+      # 0 - the scheduler will not be started at all.
+      #-------------------------------------------------------------
+      # Интервал перечитывания списка игроков из базы (в секундах). Работает
+      # в асинхронном потоке. Имеет смысл при наличии нескольких серверов с одной БД.
+      # 0 - шедулер не будет запущен вовсе.
+      #-------------------------------------------------------------
+      interval:
+        asyncReload: 60
 
   #-------------------------------------------------------------
   # List of protected regions.
