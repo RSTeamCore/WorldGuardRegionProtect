@@ -1,7 +1,10 @@
 package net.ritasister.wgrp;
 
+import net.ritasister.rslibs.datasource.Storage;
+import net.ritasister.rslibs.datasource.StorageDataBase;
+import net.ritasister.rslibs.datasource.StorageDataSource;
+import net.ritasister.util.config.UtilDataStorage;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,6 +18,10 @@ import net.ritasister.util.UtilConfigManager;
 import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
+import net.ritasister.util.wg.wgFunctions;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class WorldGuardRegionProtect extends JavaPlugin {
 
@@ -22,10 +29,15 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 	public static UtilConfig utilConfig;
 	public static UtilConfigMessage utilConfigMessage;
 	public static UtilCommandList utilCommandList;
+	public static UtilDataStorage utilDataStorage;
+	public static wgFunctions wgFunctions = new wgFunctions(instance);
 
-	public final UtilLoadConfig utilLoadConfig = new UtilLoadConfig(this);
+	public final UtilLoadConfig utilLoadConfig = new UtilLoadConfig(instance);
 	private final PluginManager pluginManager = getServer().getPluginManager();
 	private final String pluginVersion = getDescription().getVersion();
+
+	public static StorageDataSource dbLogsSource;
+	public static HashMap<UUID, StorageDataBase> dbLogs = new HashMap<>();
 
 	public WorldGuardRegionProtect() {WorldGuardRegionProtect.instance = this;}
 
@@ -38,6 +50,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 		UtilConfigManager.loadConfig();
 		RegisterCommand.RegisterCommands(utilCommandList);
 		RegisterListener.RegisterEvents(pluginManager);
+		this.loadDataBase();
 		RSLogger.info("&2created by &8[&5RitaSister&8]");
 		this.checkUpdate();
 	}
@@ -87,6 +100,28 @@ public class WorldGuardRegionProtect extends JavaPlugin {
         }
         RSLogger.info("&6You are running is &ejava &6version: &e<javaVersion>".replace("<javaVersion>", String.valueOf(javaVersionNum)));
 		RSLogger.info("&6Your &eserver &6is running version: &e<serverVersion>".replace("<serverVersion>", String.valueOf(serverVersion)));
+	}
+	private void loadDataBase() {
+		if(utilDataStorage.databaseEnable) {
+			final long duration_time_start = System.currentTimeMillis();
+			dbLogsSource = new Storage();
+			dbLogs.clear();
+			if(dbLogsSource == null) {
+				RSLogger.err("[DataBase] Не удаётся соединиться с базой данных!");
+			}
+			if(dbLogsSource.load()) {
+				RSLogger.info("[DataBase] База игроков загружена.");
+				this.postEnable();
+				RSLogger.info("[DataBase] Продолжительность запуска: {TIME} мс.".replace("{TIME}", String.valueOf(System.currentTimeMillis() - duration_time_start)));
+			}
+		}
+	}
+	private void postEnable() {
+		Bukkit.getServer().getScheduler().cancelTasks(this);
+		if (utilDataStorage.intervalReload > 0) {
+			dbLogsSource.loadAsync();
+			RSLogger.info("[DataBase] База загружена асинхронно.");
+		}
 	}
 	private void loadMetrics() {
 		int pluginId = 12975;
