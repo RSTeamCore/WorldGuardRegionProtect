@@ -5,6 +5,7 @@ import net.ritasister.rslibs.api.RSApi;
 public class UtilDataStorage {
 
     public String database;
+    public boolean databaseEnable;
     public String jdbcDriver;
     public String host;
     public String port;
@@ -17,10 +18,11 @@ public class UtilDataStorage {
     public int maxPoolSize;
     public int maxLifetime;
     public int connectionTimeout;
-    public int intervalReloadPlayers;
+    public int intervalReload;
 
     public UtilDataStorage() {
         this.database = RSApi.getPatch().getString("dataSource.database");
+        this.databaseEnable = RSApi.getPatch().getBoolean("dataSource.enable", false);
         this.jdbcDriver = RSApi.getPatch().getString("dataSource.jdbcDriver");
         this.host = RSApi.getPatch().getString("dataSource.host");
         this.port = RSApi.getPatch().getString("dataSource.port");
@@ -32,6 +34,6 @@ public class UtilDataStorage {
         this.maxPoolSize = RSApi.getPatch().getInt("dataSource.poolSettings.maxPoolSize");
         this.maxLifetime = RSApi.getPatch().getInt("dataSource.poolSettings.maxLifetime");
         this.connectionTimeout = RSApi.getPatch().getInt("dataSource.poolSettings.connectionTimeout");
-        this.intervalReloadPlayers = RSApi.getPatch().getInt("data_source.player_data.interval.reload_players", 60);
+        this.intervalReload = RSApi.getPatch().getInt("data_source.interval.asyncReload", 60);
     }
 }
