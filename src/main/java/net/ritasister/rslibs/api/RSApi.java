@@ -1,7 +1,9 @@
 package net.ritasister.rslibs.api;
 
+import java.lang.constant.Constable;
 import java.util.List;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
 import net.ritasister.util.IUtilPermissions;
 import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
@@ -161,7 +163,7 @@ public class RSApi {
 	 *
 	 */
 	public static void notifyInteract(String playerName) {
-		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyConsole) {
+		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdmin) {
 			for(String cmd : WorldGuardRegionProtect.utilConfig.spyCommand) {
 					Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
 							.replace("<player>", playerName)
