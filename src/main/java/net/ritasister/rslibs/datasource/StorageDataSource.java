@@ -7,7 +7,6 @@ public interface StorageDataSource {
 
 	boolean load();
 	void loadAsync();
-	void loadAsyncCheckAccountStatus();
 	void setUniqueID(String nickname, UUID uniqueId);
 	String getPlayerName(final UUID uniqueId) throws SQLException;
 	UUID getPlayerUniqueId(String username) throws SQLException;

@@ -3,7 +3,6 @@ package net.ritasister.rslibs.datasource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.ritasister.rslibs.api.RSLogger;
-import net.ritasister.util.config.UtilDataStorage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 
@@ -16,7 +15,6 @@ import java.util.UUID;
 
 public class Storage implements StorageDataSource {
 
-	private HikariConfig config;
 	private HikariDataSource ds;
 
 	public Storage() {
@@ -25,7 +23,7 @@ public class Storage implements StorageDataSource {
 	}
 
 	public void connect() {
-		config = new HikariConfig();
+		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("org.mariadb.jdbc.Driver");
 		config.setJdbcUrl("jdbc:mariadb://" 
 				+ WorldGuardRegionProtect.utilDataStorage.host + ":"
@@ -94,10 +92,9 @@ public class Storage implements StorageDataSource {
 						rs.getInt("id"), 
 						rs.getString("nickname"), 
 						uniqueId);
-				WorldGuardRegionProtect.dataBase.put(uniqueId, dataBase);
+				WorldGuardRegionProtect.dbLogs.put(uniqueId, dataBase);
 			}
-			boolean var10 = true;
-			return var10;
+			return true;
 		}catch(SQLException ex){
 			RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbLoadError);
 			ex.printStackTrace();
@@ -118,14 +115,14 @@ public class Storage implements StorageDataSource {
 				rs = pst.executeQuery();
 				while(rs.next()) {
 					UUID uniqueId = UUID.fromString(rs.getString("uuid"));
-					StorageDataBase current_dataBase = (StorageDataBase)WorldGuardRegionProtect.dataBase.get(uniqueId);
+					StorageDataBase current_dataBase = (StorageDataBase)WorldGuardRegionProtect.dbLogs.get(uniqueId);
 					StorageDataBase dataBase = new StorageDataBase(
 							rs.getInt("id"),
 							rs.getString("nickname"),
 							uniqueId);
 					tmp_players.put(uniqueId, dataBase);
 				}
-				WorldGuardRegionProtect.dataBase = new HashMap(tmp_players);
+				WorldGuardRegionProtect.dbLogs = new HashMap(tmp_players);
 			}catch(SQLException ex){
 				RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbLoadAsyncError);
 				ex.printStackTrace();
@@ -133,12 +130,8 @@ public class Storage implements StorageDataSource {
 				Storage.this.close(rs);
 				Storage.this.close(pst);
 			}
-		}, WorldGuardRegionProtect.utilDataStorage.intervalReloadPlayers * 20L, WorldGuardRegionProtect.utilDataStorage.intervalReloadPlayers * 20L);
-	}
-
-	@Override
-	public void loadAsyncCheckAccountStatus() {
-
+		}, WorldGuardRegionProtect.utilDataStorage.intervalReload * 20L,
+				WorldGuardRegionProtect.utilDataStorage.intervalReload * 20L);
 	}
 
 	@Override
