@@ -1,27 +1,29 @@
 package net.ritasister.wgrp;
 
-import net.ritasister.rslibs.datasource.Storage;
-import net.ritasister.rslibs.datasource.StorageDataBase;
-import net.ritasister.rslibs.datasource.StorageDataSource;
-import net.ritasister.util.config.UtilDataStorage;
+
+import java.util.HashMap;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.ritasister.register.RegisterCommand;
 import net.ritasister.register.RegisterListener;
+
 import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.rslibs.utils.Metrics;
 import net.ritasister.rslibs.utils.UpdateChecker;
+import net.ritasister.rslibs.datasource.Storage;
+import net.ritasister.rslibs.datasource.StorageDataBase;
+import net.ritasister.rslibs.datasource.StorageDataSource;
+
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.util.UtilConfigManager;
 import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
-import net.ritasister.util.wg.wgFunctions;
-
-import java.util.HashMap;
-import java.util.UUID;
+import net.ritasister.util.config.UtilDataStorage;
 
 public class WorldGuardRegionProtect extends JavaPlugin {
 
@@ -30,7 +32,6 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 	public static UtilConfigMessage utilConfigMessage;
 	public static UtilCommandList utilCommandList;
 	public static UtilDataStorage utilDataStorage;
-	public static wgFunctions wgFunctions = new wgFunctions(instance);
 
 	public final UtilLoadConfig utilLoadConfig = new UtilLoadConfig(instance);
 	private final PluginManager pluginManager = getServer().getPluginManager();
