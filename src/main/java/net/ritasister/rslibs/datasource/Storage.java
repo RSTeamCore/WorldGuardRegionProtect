@@ -55,15 +55,15 @@ public class Storage implements StorageDataSource {
         
 		ds = new HikariDataSource(config);
 	}
-	
-	public Connection getConnection() throws SQLException {return this.ds.getConnection();}
 
-	public void checkConnection() throws SQLException {
-		if (!this.getConnection().isValid(3)) {
+	public Connection getConnection() throws SQLException {
+		if (!this.ds.getConnection().isValid(3)) {
 			RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbReconnect);
 			this.connect();
 		}
+		return this.ds.getConnection();
 	}
+
 	private void initialize() {
 		PreparedStatement pst = null;
 		try(Connection conn = Storage.this.getConnection()) {
@@ -105,7 +105,7 @@ public class Storage implements StorageDataSource {
 	}
 	public void loadAsync() {
 		Bukkit.getScheduler().runTaskTimerAsynchronously(WorldGuardRegionProtect.instance, () -> {
-			final HashMap tmp_players = new HashMap();
+			final HashMap<UUID, StorageDataBase> tmp_players = new HashMap<>();
 			PreparedStatement pst = null;
 			ResultSet rs = null;
 			try(Connection conn = Storage.this.getConnection()) {
@@ -122,7 +122,7 @@ public class Storage implements StorageDataSource {
 							uniqueId);
 					tmp_players.put(uniqueId, dataBase);
 				}
-				WorldGuardRegionProtect.dbLogs = new HashMap(tmp_players);
+				WorldGuardRegionProtect.dbLogs = new HashMap<>(tmp_players);
 			}catch(SQLException ex){
 				RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbLoadAsyncError);
 				ex.printStackTrace();
@@ -140,12 +140,12 @@ public class Storage implements StorageDataSource {
 	}
 
 	@Override
-	public String getPlayerName(UUID uniqueId) throws SQLException {
+	public String getPlayerName(UUID uniqueId) {
 		return null;
 	}
 
 	@Override
-	public UUID getPlayerUniqueId(String username) throws SQLException {
+	public UUID getPlayerUniqueId(String username) {
 		return null;
 	}
 
