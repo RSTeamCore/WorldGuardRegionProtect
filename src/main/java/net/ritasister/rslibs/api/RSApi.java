@@ -169,39 +169,55 @@ public class RSApi {
 	/**
 	 * Send notify if player try to interact with region from WorldGuard.
 	 *
+	 * @param admin who's can give message who destroy region
+	 * @param suspect get object player for method
 	 * @param playerName get player name who's interact with region
 	 * @param regionName get region name
+	 * @param time get time placed anything
+	 * @param x get X position of block
+	 * @param y get Y position of block
+	 * @param z get Z position of block
+	 * @param world get world position of block
 	 *
 	 */
-	public static void notifyIfBreakInRegion(String playerName, String time, String regionName, double x, double y, double z, String world) {
-		if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdmin()) {
-			Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.instance.utilConfigMessage.sendAdminInfoIfBreakInRegion().
-					replace("<time>", time).
-					replace("<player>", playerName).
-					replace("<region>", regionName).
-					replace("<x>", String.valueOf(x)).
-					replace("<y>", String.valueOf(y)).
-					replace("<z>", String.valueOf(z)).
-					replace("<world>", world));
+	public static void notifyIfBreakInRegion(Player admin, Player suspect, String playerName, String time, String regionName, double x, double y, double z, String world) {
+		if(RSApi.isAuthListenerPermission(suspect, IUtilPermissions.spyInspectForSuspect, null)) {
+			if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdmin()) {
+				admin.sendMessage(WorldGuardRegionProtect.instance.utilConfigMessage.sendAdminInfoIfBreakInRegion()
+						.replace("<time>", time).replace("<player>", playerName)
+						.replace("<region>", regionName)
+						.replace("<x>", String.valueOf(x))
+						.replace("<y>", String.valueOf(y))
+						.replace("<z>", String.valueOf(z))
+						.replace("<world>", world));
+			}
 		}
 	}
 	/**
 	 * Send notify if player try to interact with region from WorldGuard.
 	 *
+	 * @param admin who's can give message who destroy region
+	 * @param suspect get object player for method
 	 * @param playerName get player name who's interact with region
 	 * @param regionName get region name
+	 * @param time get time placed anything
+	 * @param x get X position of block
+	 * @param y get Y position of block
+	 * @param z get Z position of block
+	 * @param world get world position of block
 	 *
 	 */
-	public static void notifyIfPlaceInRegion(String playerName, String time, String regionName, double x, double y, double z, String world) {
-		if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdmin()) {
-			Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.instance.utilConfigMessage.sendAdminInfoIfPlaceInRegion().
-					replace("<time>", time).
-					replace("<player>", playerName).
-					replace("<region>", regionName).
-					replace("<x>", String.valueOf(x)).
-					replace("<y>", String.valueOf(y)).
-					replace("<z>", String.valueOf(z)).
-					replace("<world>", world));
+	public static void notifyIfPlaceInRegion(Player admin, Player suspect, String playerName, String time, String regionName, double x, double y, double z, String world) {
+		if(RSApi.isAuthListenerPermission(suspect, IUtilPermissions.spyInspectForSuspect, null)) {
+			if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdmin()) {
+				admin.sendMessage(WorldGuardRegionProtect.instance.utilConfigMessage.sendAdminInfoIfBreakInRegion()
+						.replace("<time>", time).replace("<player>", playerName)
+						.replace("<region>", regionName)
+						.replace("<x>", String.valueOf(x))
+						.replace("<y>", String.valueOf(y))
+						.replace("<z>", String.valueOf(z))
+						.replace("<world>", world));
+			}
 		}
 	}
 }
