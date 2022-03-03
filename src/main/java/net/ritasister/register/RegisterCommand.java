@@ -3,16 +3,17 @@ package net.ritasister.register;
 import net.ritasister.command.CommandWGRP;
 import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.util.UtilCommandList;
+import net.ritasister.util.config.UtilConfig;
+import net.ritasister.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 import java.util.Objects;
 
-public class RegisterCommand 
-{
-	public static void RegisterCommands(UtilCommandList ucl)
-	{
+public class RegisterCommand {
+
+	public static void RegisterCommands(UtilCommandList utilCommandList, UtilConfig utilConfig, UtilConfigMessage utilConfigMessage) {
 		try{
-			Objects.requireNonNull(WorldGuardRegionProtect.instance.getCommand(UtilCommandList.worldGuardRegionProtect)).setExecutor(new CommandWGRP());
+			Objects.requireNonNull(WorldGuardRegionProtect.instance.getCommand(UtilCommandList.worldGuardRegionProtect)).setExecutor(new CommandWGRP(utilConfigMessage));
 			RSLogger.info("&2All commands load successfully!");
 		}catch(NullPointerException e){
 			RSLogger.err("&cCommand cannot be &4null.");

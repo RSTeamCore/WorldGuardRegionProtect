@@ -1,5 +1,7 @@
 package net.ritasister.register;
 
+import net.ritasister.util.config.UtilConfig;
+import net.ritasister.util.config.UtilConfigMessage;
 import org.bukkit.plugin.PluginManager;
 
 import net.ritasister.listener.protect.RegionProtect;
@@ -8,9 +10,9 @@ import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 public class RegisterListener {
 	
-	public static void RegisterEvents(PluginManager pm) {
+	public static void RegisterEvents(PluginManager pm, UtilConfig utilConfig, UtilConfigMessage utilConfigMessage) {
 		try{
-			final RegionProtect creativeListener = new RegionProtect(WorldGuardRegionProtect.instance);
+			final RegionProtect creativeListener = new RegionProtect(WorldGuardRegionProtect.instance, utilConfig, utilConfigMessage);
 			pm.registerEvents(creativeListener, WorldGuardRegionProtect.instance);
 			
 			RSLogger.info("&2All listeners load successfully!");

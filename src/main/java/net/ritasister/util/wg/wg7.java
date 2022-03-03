@@ -18,6 +18,8 @@ import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
+import net.ritasister.util.config.UtilConfig;
+import net.ritasister.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 import org.bukkit.Bukkit;
@@ -28,15 +30,17 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class wg7 implements Iwg {
-	
+
     public WorldGuardRegionProtect worldGuardRegionProtect;
+    private final UtilConfig utilConfig;
     public WorldGuardPlugin wg;
     public WorldEditPlugin we;
     
-    public wg7(final WorldGuardRegionProtect instance) {
+    public wg7(final WorldGuardRegionProtect worldGuardRegionProtect, UtilConfig utilConfig) {
+        this.worldGuardRegionProtect = worldGuardRegionProtect;
         this.wg = (WorldGuardPlugin)Bukkit.getPluginManager().getPlugin("WorldGuard");
         this.we = (WorldEditPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
-        this.worldGuardRegionProtect = instance;
+        this.utilConfig = utilConfig;
     }
     @Override
     public boolean wg(final World w, final Location l, final boolean b) {
@@ -73,14 +77,14 @@ public class wg7 implements Iwg {
             final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", min, max);
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) {
-                for (final Object region : WorldGuardRegionProtect.utilConfig.regionProtect) {
+                for (final Object region : utilConfig.regionProtect()) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }
                 }
             }
             for (final ProtectedRegion rg : set) {
-                for (final Object region : WorldGuardRegionProtect.utilConfig.regionProtectOnlyBreakAllow) {
+                for (final Object region : utilConfig.regionProtectOnlyBreakAllow()) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }

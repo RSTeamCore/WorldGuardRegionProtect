@@ -1,9 +1,9 @@
 package net.ritasister.wgrp;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
+import net.ritasister.rslibs.api.RSApi;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,28 +19,28 @@ import net.ritasister.rslibs.datasource.StorageDataBase;
 import net.ritasister.rslibs.datasource.StorageDataSource;
 
 import net.ritasister.util.UtilCommandList;
-import net.ritasister.util.UtilConfigManager;
-import net.ritasister.util.UtilLoadConfig;
+import net.ritasister.util.config.UtilConfigManager;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
-import net.ritasister.util.config.UtilDataStorage;
 
 public class WorldGuardRegionProtect extends JavaPlugin {
 
 	public static WorldGuardRegionProtect instance;
-	public static UtilConfig utilConfig;
-	public static UtilConfigMessage utilConfigMessage;
 	public static UtilCommandList utilCommandList;
-	public static UtilDataStorage utilDataStorage;
 
-	public final UtilLoadConfig utilLoadConfig = new UtilLoadConfig(instance);
 	private final PluginManager pluginManager = getServer().getPluginManager();
 	private final String pluginVersion = getDescription().getVersion();
 
 	public static StorageDataSource dbLogsSource;
 	public static HashMap<UUID, StorageDataBase> dbLogs = new HashMap<>();
 
-	public WorldGuardRegionProtect() {WorldGuardRegionProtect.instance = this;}
+	private final UtilConfigManager utilConfigManager = new UtilConfigManager();
+	public final UtilConfig utilConfig = new UtilConfig();
+	public final UtilConfigMessage utilConfigMessage = new UtilConfigMessage();
+
+	public WorldGuardRegionProtect() {
+		WorldGuardRegionProtect.instance = this;
+	}
 
 	@Override
 	public void onEnable() {
@@ -48,29 +48,29 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 		this.checkJavaAndServerVersion();
 		this.loadMetrics();
 		LoadLibs.loadWorldGuard();
-		UtilConfigManager.loadConfig();
-		RegisterCommand.RegisterCommands(utilCommandList);
-		RegisterListener.RegisterEvents(pluginManager);
-		Bukkit.getConsoleSender().sendMessage("current version file config: " + utilConfig.configVersion);
-		//Maybe I do database in the next build's for logging.
+		utilConfigManager.loadConfig();
+		utilConfigManager.loadMessageConfig();
+		RegisterCommand.RegisterCommands(utilCommandList, utilConfig, utilConfigMessage);
+		RegisterListener.RegisterEvents(pluginManager, utilConfig, utilConfigMessage);
+		//I do database in next time for logs.
 		//this.loadDataBase();
-		this.sendMessageIfTestBuild();
+		this.notifyIfIsPreBuild();
 		RSLogger.info("&2created by &8[&5RitaSister&8]");
 		this.checkUpdate();
 	}
 
-	private void sendMessageIfTestBuild() {
+	private void notifyIfIsPreBuild() {
 		if(instance.pluginVersion.contains("pre")) {
-			Bukkit.getConsoleSender().sendMessage("This is a test build. This build maybe will unstable!");
-		}else{
-			Bukkit.getConsoleSender().sendMessage("This is a stable build.");
+			RSLogger.warn("This is a test build. This build maybe will unstable!");
+		} else {
+			RSLogger.info("This is a stable build.");
 		}
 	}
 
 	private void checkStartUpVersionServer() {
 		if(!Bukkit.getVersion().contains("1.16.5")
-				&& !Bukkit.getVersion().contains("1.17")
-				&& !Bukkit.getVersion().contains("1.18")) {
+				&& !Bukkit.getVersion().contains("1.17") && !Bukkit.getVersion().contains("1.17.1")
+				&& !Bukkit.getVersion().contains("1.18")  && !Bukkit.getVersion().contains("1.18.1") && !Bukkit.getVersion().contains("1.18.2")) {
 			RSLogger.err("This plugin version work only on 1.16.5+!");
 			RSLogger.err("Please read: https://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-18.81321/");
 			RSLogger.err("The main post on spigotmc and download correct version.");
@@ -117,7 +117,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 		RSLogger.info("&6Your &eserver &6is running version: &e<serverVersion>".replace("<serverVersion>", String.valueOf(serverVersion)));
 	}
 	private void loadDataBase() {
-		if(utilDataStorage.databaseEnable) {
+		if(utilConfig.databaseEnable()) {
 			final long duration_time_start = System.currentTimeMillis();
 			dbLogsSource = new Storage();
 			dbLogs.clear();
@@ -133,7 +133,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 	}
 	private void postEnable() {
 		Bukkit.getServer().getScheduler().cancelTasks(this);
-		if (utilDataStorage.intervalReload > 0) {
+		if (utilConfig.intervalReload() > 0) {
 			dbLogsSource.loadAsync();
 			RSLogger.info("[DataBase] База загружена асинхронно.");
 		}

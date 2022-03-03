@@ -1,7 +1,9 @@
 package net.ritasister.listener.protect;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
+import net.ritasister.util.Time;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
 import org.bukkit.*;
@@ -47,7 +49,14 @@ public class RegionProtect implements Listener {
 		final String playerName = e.getPlayer().getPlayerProfile().getName();
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
-		final String RegionName = String.valueOf(RSApi.getProtectRegionName(loc));
+		final String regionName = RSApi.getProtectRegionName(loc);
+		Date date = new Date();
+		final long currentTime = (System.currentTimeMillis() - date.getTime()) / 1000L;
+		String time = Time.getTimeToString((int)currentTime, 1, true);
+		double x = b.getX();
+		double y = b.getY();
+		double z = b.getZ();
+		String world = b.getWorld().getName();
 		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtectAllow())
 			|| RSApi.checkStandingRegion(loc, utilConfig.regionProtectOnlyBreakAllow())) {
 			e.setCancelled(false);
@@ -61,7 +70,7 @@ public class RegionProtect implements Listener {
 				}
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
-			RSApi.notifyIfBreakInRegion(playerName, RegionName);
+			RSApi.notifyIfBreakInRegion(playerName, time, regionName, x, y, z, world);
 		}
 	}
 	@EventHandler(priority = EventPriority.LOW)
@@ -69,7 +78,14 @@ public class RegionProtect implements Listener {
 		final String playerName = e.getPlayer().getPlayerProfile().getName();
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
-		final String RegionName = String.valueOf(RSApi.getProtectRegionName(loc));
+		final String regionName = RSApi.getProtectRegionName(loc);
+		Date date = new Date();
+		final long currentTime = (System.currentTimeMillis() - date.getTime()) / 1000L;
+		String time = Time.getTimeToString((int)currentTime, 1, true);
+		double x = b.getX();
+		double y = b.getY();
+		double z = b.getZ();
+		String world = b.getWorld().getName();
 		if (RSApi.checkStandingRegion(loc, utilConfig.regionProtectAllow())) {
 			e.setCancelled(false);
 		} else if (RSApi.checkStandingRegion(loc, utilConfig.regionProtect())
@@ -82,7 +98,7 @@ public class RegionProtect implements Listener {
 				}
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
-			RSApi.notifyIfPlaceInRegion(playerName, RegionName);
+			RSApi.notifyIfPlaceInRegion(playerName, time, regionName, x, y, z, world);
 		}
 	}
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -237,43 +253,43 @@ public class RegionProtect implements Listener {
 				if (utilConfig.regionMessageProtectWe()) {
 					p.sendMessage(utilConfigMessage.wgrpMsgWe());
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
-				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notifyConsole(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}if (this.cmdWE_C(s[0]) && !this.wg.checkCIntersection(p, s)) {
 				e.setCancelled(true);
 				if (utilConfig.regionMessageProtectWe()) {
 					p.sendMessage(utilConfigMessage.wgrpMsgWe());
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
-				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notifyConsole(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}if (this.cmdWE_P(s[0]) && !this.wg.checkPIntersection(p, s)) {
 				e.setCancelled(true);
 				if (utilConfig.regionMessageProtectWe()) {
 					p.sendMessage(utilConfigMessage.wgrpMsgWe());
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
-				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notifyConsole(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}if (this.cmdWE_S(s[0]) && !this.wg.checkSIntersection(p, s)) {
 				e.setCancelled(true);
 				if (utilConfig.regionMessageProtectWe()) {
 					p.sendMessage(utilConfigMessage.wgrpMsgWe());
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
-				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notifyConsole(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}if (this.cmdWE_U(s[0]) && !this.wg.checkUIntersection(p, s)) {
 				e.setCancelled(true);
 				if (utilConfig.regionMessageProtectWe()) {
 					p.sendMessage(utilConfigMessage.wgrpMsgWe());
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
-				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notifyConsole(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}if (this.cmdWE_CP(s[0])) {
 				e.setMessage(e.getMessage().replace("-o", ""));
 				if (!this.wg.checkCPIntersection(p, s)) {
 					e.setCancelled(true);
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
-				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notifyConsole(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}
 			if (this.regionCommandNameArgs.contains(s[0]) && s.length > 2) {
 				for (final String list : utilConfig.regionProtect()) {
