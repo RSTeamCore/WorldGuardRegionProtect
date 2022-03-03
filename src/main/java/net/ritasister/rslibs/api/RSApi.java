@@ -3,9 +3,6 @@ package net.ritasister.rslibs.api;
 import java.util.List;
 
 import net.ritasister.util.IUtilPermissions;
-import net.ritasister.util.Time;
-import net.ritasister.util.config.UtilConfig;
-import net.ritasister.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -49,7 +46,9 @@ public class RSApi {
 	 *
 	 * @return isAuthCommandsPermissionsOnTab Have is Permissions or not.
 	 */
-	public static boolean isAuthCommandsPermissionsOnTab(@NotNull CommandSender sender, @NotNull String perm) {return sender.hasPermission(perm) && sender.isPermissionSet(perm);}
+	public static boolean isAuthCommandsPermissionsOnTab(@NotNull CommandSender sender, @NotNull String perm) {
+		return sender.hasPermission(perm) && sender.isPermissionSet(perm);
+	}
 	/**
 	 * Check if player have permissions for use Listener.
 	 * 
@@ -130,7 +129,7 @@ public class RSApi {
 	 * @param regionName Get region name, where player send command to server.
 	 *
 	 */
-	public static void notifyAdmin(Player player, String playerName, String senderCommand, String regionName) {
+	public static void notify(Player player, String playerName, String senderCommand, String regionName) {
 		if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdmin()) {
 			if(RSApi.isAuthListenerPermission(player, IUtilPermissions.regionProtectNotifyAdmin, null)) {
 				for(String cmd : WorldGuardRegionProtect.instance.utilConfig.spyCommand()) {
@@ -154,7 +153,7 @@ public class RSApi {
 	 * @param regionName Get region name, where player send command to server.
 	 *
 	 */
-	public static void notifyConsole(String playerName, String senderCommand, String regionName) {
+	public static void notify(String playerName, String senderCommand, String regionName) {
 		if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyConsole()) {
 			for(String cmd : WorldGuardRegionProtect.instance.utilConfig.spyCommand()) {
 				if(cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
@@ -210,7 +209,7 @@ public class RSApi {
 	public static void notifyIfPlaceInRegion(Player admin, Player suspect, String playerName, String time, String regionName, double x, double y, double z, String world) {
 		if(RSApi.isAuthListenerPermission(suspect, IUtilPermissions.spyInspectForSuspect, null)) {
 			if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdmin()) {
-				admin.sendMessage(WorldGuardRegionProtect.instance.utilConfigMessage.sendAdminInfoIfBreakInRegion()
+				admin.sendMessage(WorldGuardRegionProtect.instance.utilConfigMessage.sendAdminInfoIfPlaceInRegion()
 						.replace("<time>", time).replace("<player>", playerName)
 						.replace("<region>", regionName)
 						.replace("<x>", String.valueOf(x))
