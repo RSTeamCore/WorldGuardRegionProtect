@@ -10,7 +10,7 @@ allprojects {
 }
 
 group = "net.ritasister.srp"
-version = "0.7.1-pre5-1.16-1.18"
+version = "0.7.1-pre5-1.16.5-1.18"
 description = "WorldGuardRegionProtect"
 
 tasks.compileJava {
