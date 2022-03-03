@@ -1,11 +1,13 @@
 # WorldGuardRegionProtect - Advanced secure for region from WorldGuard
 
+[![Build Status](https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/badge/icon)](https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/)
+
 ## Social
 [Discord](https://discord.gg/kvqvA3GTVF)
 
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
-* PLUGIN VERSION OF 0.7.1-pre4 FOR 1.17.1-1.18 OR HIGHER CAN RUN ONLY ON JAVA 16+!
+* PLUGIN VERSION OF 0.7.1-pre5 FOR 1.16.5-1.18 OR HIGHER CAN RUN ONLY ON JAVA 16+!
 * PLUGIN VERSION OF 0.7.0 OR LOWEST FOR 1.13-1.17 CAN RUN ONLY ON JAVA 11!
 
 ## FOR MINECRAFT JAVA EDITION 1.12.2!!!
