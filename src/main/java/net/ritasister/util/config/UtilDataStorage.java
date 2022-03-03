@@ -22,7 +22,7 @@ public class UtilDataStorage {
 
     public UtilDataStorage() {
         this.database = RSApi.getPatch().getString("dataSource.database");
-        this.databaseEnable = RSApi.getPatch().getBoolean("dataSource.enable", false);
+        this.databaseEnable = RSApi.getPatch().getBoolean("dataSource.enable");
         this.jdbcDriver = RSApi.getPatch().getString("dataSource.jdbcDriver");
         this.host = RSApi.getPatch().getString("dataSource.host");
         this.port = RSApi.getPatch().getString("dataSource.port");
