@@ -1,57 +1,404 @@
 package net.ritasister.util.config;
 
-import java.util.*;
-import net.ritasister.rslibs.api.RSApi;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.rslibs.utils.annotatedyaml.Annotations.*;
+import net.ritasister.rslibs.utils.annotatedyaml.Configuration;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public final class UtilConfig {
-	public List<String> regionProtect;
-	public List<String> regionProtectAllow;
-	public List<String> regionProtectOnlyBreakAllow;
-	public List<String> spawnEntityType;
-	public List<String> interactType;
-	public List<String> spyCommand;
-	public List<String> cmdWe;
-	public List<String> cmdWeC;
-	public List<String> cmdWeP;
-	public List<String> cmdWeS;
-	public List<String> cmdWeU;
-	public List<String> cmdWeCP;
-	public List<String> cmdWeB;
-	public boolean regionMessageProtect;
-	public boolean regionMessageProtectWe;
-	public boolean spyCommandNotifyConsole;
-	public boolean spyCommandNotifyAdmin;
-	public String spyCommandNotifyAdminPlaySound;
-	public boolean spyCommandNotifyAdminPlaySoundEnable;
-	public int configVersion;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-	@SuppressWarnings("unchecked")
-	public UtilConfig() {
-		WorldGuardRegionProtect.instance.saveDefaultConfig();
-		WorldGuardRegionProtect.instance.reloadConfig();
+public final class UtilConfig extends Configuration {
 
-		this.regionProtect = (List<String>) RSApi.getPatch().getList("region_protect", new ArrayList<String>());
-		this.regionProtectAllow = (List<String>) RSApi.getPatch().getList("region_protect_allow", new ArrayList<String>());
-		this.regionProtectOnlyBreakAllow = (List<String>) RSApi.getPatch().getList(".region_protect_only_break_allow", new ArrayList<String>());
-		this.spawnEntityType = (List<String>) RSApi.getPatch().getList("spawn_entity_type", new ArrayList<String>());
-		this.interactType = (List<String>) RSApi.getPatch().getList("interact_type", new ArrayList<String>());
+	@Final
+	@Comment("Version of config, do not touch!")
+	@Key("config-version")
+	private final String configVersion = "1.0";
 
-		this.cmdWe = (List<String>) RSApi.getPatch().getList("no_protect_cmd.command_we", new ArrayList<String>());
-		this.cmdWeC = (List<String>) RSApi.getPatch().getList("no_protect_cmd.command_c", new ArrayList<String>());
-		this.cmdWeP = (List<String>) RSApi.getPatch().getList("no_protect_cmd.command_p", new ArrayList<String>());
-		this.cmdWeS = (List<String>) RSApi.getPatch().getList("no_protect_cmd.command_s", new ArrayList<String>());
-		this.cmdWeU = (List<String>) RSApi.getPatch().getList("no_protect_cmd.command_u", new ArrayList<String>());
-		this.cmdWeCP = (List<String>) RSApi.getPatch().getList("no_protect_cmd.command_cp", new ArrayList<String>());
-		this.cmdWeB = (List<String>) RSApi.getPatch().getList("no_protect_cmd.command_b", new ArrayList<String>());
-		this.spyCommand = (List<String>) RSApi.getPatch().getList("spy_command.command_list", new ArrayList<String>());
+	public String getConfigVersion() {
+		return configVersion;
+	}
 
-		this.regionMessageProtect = RSApi.getPatch().getBoolean("protect_message");
-		this.regionMessageProtectWe = RSApi.getPatch().getBoolean("protect_we_message");
-		this.spyCommandNotifyConsole = RSApi.getPatch().getBoolean("spy_command.notify.console");
-		this.spyCommandNotifyAdmin = RSApi.getPatch().getBoolean("spy_command.notify.admin");
-		this.spyCommandNotifyAdminPlaySoundEnable = RSApi.getPatch().getBoolean("spy_command.notify.sound");
-		this.spyCommandNotifyAdminPlaySound = RSApi.getPatch().getString("spy_command.notify.sound_type");
-		this.configVersion = RSApi.getPatch().getInt("configVersion");
+	@Comment({"""
+			#-------------------------------------------------------------
+			# List of protected regions.
+			# If regions are not needed, specify an empty parameter:
+			# region_protect: []
+			#-------------------------------------------------------------
+			# Список защищенных регионов.
+			# Если регионы не нужны, укажите пустой параметр:
+			# region_protect: []
+			#-------------------------------------------------------------"""})
+	@Key("region-protect")
+	private final List<String> regionProtect = Arrays.asList("spawn", "pvp");
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# List of protected regions where breaking is allowed with the 'build allow'flag.
+			# If regions are not needed, specify an empty parameter:
+			# region_protect_allow: []
+			#--------------------------------------------------------------------------------------
+			# Список защищенных регионов в которых разрешено ломать с флагом 'build allow'.
+			# Если регионы не нужны, укажите пустой параметр:
+			# region_protect_allow: []
+			#--------------------------------------------------------------------------------------""")
+	@Key("region-protect-allow")
+	private final List<String> regionProtectAllow = List.of("");
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# List of protected regions where only breaking is allowed with the 'build allow'flag.
+			# If regions are not needed, specify an empty parameter:
+			# region_protect_only_break_allow: []
+			#-------------------------------------------------------------
+			# Список защищенных регионов в которых разрешено только ломать с флагом 'build allow'.
+			# Если регионы не нужны, укажите пустой параметр:
+			# region_protect_only_break_allow: []
+			#--------------------------------------------------------------------------------------""")
+	@Key("region-protect-only-break-allow")
+	private final List<String> regionProtectOnlyBreakAllow = List.of("");
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# List of protected regions where only breaking is allowed with the 'build allow'flag.
+			# If regions are not needed, specify an empty parameter:
+			# spawn_entity_type: []
+			#-------------------------------------------------------------
+			# Список защищенных регионов в которых разрешено только ломать с флагом 'build allow'.
+			# Если регионы не нужны, укажите пустой параметр:
+			# spawn_entity_type: []
+			#--------------------------------------------------------------------------------------""")
+	@Key("spawn_entity_type")
+	private final List<String> spawnEntityType = List.of("");
+
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# List of prohibited entity / block for interaction in the protected region.
+			# If you don't want to block it, specify an empty parameter:
+			#
+			# Attention! In interact_type, the block IDs\\items are different from Minecraft!
+			# list of blocks prohibited by default\\items:
+			# - explosive_minecart
+			# - command_minecart
+			# - hopper_minecart
+			# - storage_minecart
+			# - powered_minecart
+			# - boat_spruce
+			# - boat_birch
+			# - boat_jungle
+			# - boat_acacia
+			# - boat_dark_oak
+			#
+			# interact_type: []
+			#--------------------------------------------------------------------------------------
+			# Список запрещенных entity/block для взаимодействия в защищенном регионе.
+			# Если не нужно блокировать, то укажите пустой параметр:
+			# interact_type: []
+			#--------------------------------------------------------------------------------------""")
+	@Key("interact-type")
+	private final List<String> interactType = Arrays.asList("candle", "armor_stand", "end_crystal", "minecart",
+			"tnt_minecart", "command_block_minecart", "hopper_minecart", "chest_minecart",
+			"furnace_minecart", "spruce_boat", "birch_boat", "jungle_boat", "acacia_boat",
+			"dark_oak_boat", "bucket", "water_bucket", "lava_bucket");
+
+	@Key("command_we")
+	private final List<String> cmdWe = Arrays.asList("//set", "//replace", "//overlay", "//walls",
+			"//deform", "//fill", "//fillr", "//fixlava",
+			"//hollow", "//move", "//stack", "//smooth", "//cut",
+			"//replacenear");
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# List of forbidden commands from WE / FAWE.
+			# Список запрещенных команд от WE / FAWE.
+			#--------------------------------------------------------------------------------------""")
+	@Key("no-protect-cmd-command_c")
+	private final List<String> cmdWeC = Arrays.asList("//cyl", "//hcyl", "//drain", "//rep");
+
+	@Key("no-protect-cmd-command_p")
+	private final List<String> cmdWeP = Arrays.asList("//pyramid", "//hpyramid");
+
+	@Key("no-protect-cmd-command_s")
+	private final List<String> cmdWeS = Arrays.asList("//sphere", "//hsphere");
+
+	@Key("no-protect-cmd-command_u")
+	private final List<String> cmdWeU = Arrays.asList("//up", "/up");
+
+	@Key("no-protect-cmd-command_cp")
+	private final List<String> cmdWeCP = Arrays.asList("//paste", "//place", "//replacenear", "//hollow");
+
+	@Key("no-protect-cmd-command_b")
+	private final List<String> cmdWeB = Arrays.asList("//set", "//replace", "//overlay", "//walls",
+			"//deform", "//fill", "//fillr", "//fixlava",
+			"//hollow", "//move", "//stack", "//smooth", "//cut",
+			"//replacenear");
+
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# Turn Enable/Disable the protected region message.
+			# Включить/Выключить сообщение о защищенном регионе.
+			#--------------------------------------------------------------------------------------""")
+	@Key("region-protect-message")
+	private final boolean regionMessageProtect = true;
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# Turn Enable/Disable the protected region message when using the WE\\FAWE commands.
+			# Включить/Выключить сообщение о защищенном регионе при использовании команд WE\\FAWE.
+			#--------------------------------------------------------------------------------------""")
+	@Key("protect-we-message")
+	private final boolean regionMessageProtectWe = true;
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# Enable notify to console and admin.
+			# Включение оповещения в консоль и администратору.
+			#--------------------------------------------------------------------------------------""")
+	@Key("spy-command-notify-console")
+	private final boolean spyCommandNotifyConsole = true;
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# Enable notify to console and admin.
+			# Включение оповещения в консоль и администратору.
+			#--------------------------------------------------------------------------------------""")
+	@Key("spy-command-notify-admin")
+	private final boolean spyCommandNotifyAdmin = true;
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# Sound notify to admin.
+			# Звуковое оповещение администратора.
+			#--------------------------------------------------------------------------------------""")
+	@Key("spy-command-notify-sound")
+	private final boolean spyCommandNotifyAdminPlaySoundEnable = true;
+
+	@Comment("""
+			#--------------------------------------------------------------------------------------
+			# All sounds can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+			# Все звуки из 1.17.1 могут быть найдены тут: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+			#--------------------------------------------------------------------------------------""")
+	@Key("spy-command-notify-sound-type")
+	private final String spyCommandNotifyAdminPlaySound = "BLOCK_ANVIL_PLACE";
+
+	@Key("spy-command-command-list")
+	private final List<String> spyCommand = Arrays.asList("//set", "//replace", "//overlay", "//walls",
+			"//deform", "//fill", "//fillr", "//fixlava",
+			"//hollow", "//move", "//stack", "//smooth", "//cut",
+			"//replacenear");
+
+	//DataBase start
+	@Key("dataSource-database")
+	private final String database = "database";
+
+	@Key("dataSource-enable")
+	private final boolean databaseEnable = false;
+
+	@Key("dataSource-jdbcDriver")
+	private final String jdbcDriver = "jdbc:mariadb://";
+
+	@Key("dataSource-host")
+	private final String host = "127.0.0.1";
+
+	@Key("dataSource-port")
+	private final String port = "3306";
+
+	@Key("dataSource-user")
+	private final String user = "root";
+
+	@Key("dataSource-password")
+	private final String password = "root";
+
+	@Key("dataSource-tables-tableName")
+	private final String tables = "tableName";
+
+	@Key("dataSource-useSsl")
+	private final boolean useSsl = true;
+
+	//Pool settings
+	@Key("dataSource-poolSettings-maxPoolSize")
+	private final int maxPoolSize = 10;
+
+	@Key("dataSource-poolSettings-maxLifetime")
+	private final int maxLifetime = 1800;
+
+	@Key("dataSource-poolSettings-connectionTimeout")
+	private final int connectionTimeout = 5000;
+
+	@Key("dataSource-interval-asyncReload")
+	private final int intervalReload = 60;
+	//DataBase end
+
+	public List<String> regionProtect() {
+		return  regionProtect;
+	}
+
+	public List<String> regionProtectAllow() {
+		return regionProtectAllow;
+	}
+
+	public List<String> regionProtectOnlyBreakAllow() {
+		return regionProtectOnlyBreakAllow;
+	}
+
+	public List<String> spawnEntityType() {
+		return spawnEntityType;
+	}
+
+	public List<String> interactType() {
+		return interactType;
+	}
+
+	public List<String> spyCommand() {
+		return spyCommand;
+	}
+
+	public List<String> cmdWe() {
+		return cmdWe;
+	}
+
+	public List<String> cmdWeC() {
+		return cmdWeC;
+	}
+
+	public List<String> cmdWeP() {
+		return cmdWeP;
+	}
+
+	public List<String> cmdWeS() {
+		return cmdWeS;
+	}
+
+	public List<String> cmdWeU() {
+		return cmdWeU;
+	}
+
+	public List<String> cmdWeCP() {
+		return cmdWeCP;
+	}
+
+	public List<String> cmdWeB() {
+		return cmdWeB;
+	}
+	public boolean regionMessageProtect() {
+		return regionMessageProtect;
+	}
+
+	public boolean regionMessageProtectWe() {
+		return regionMessageProtectWe;
+	}
+
+	public boolean spyCommandNotifyConsole() {
+		return spyCommandNotifyConsole;
+	}
+
+	public boolean spyCommandNotifyAdmin() {
+		return spyCommandNotifyAdmin;
+	}
+
+	public String spyCommandNotifyAdminPlaySound() {
+		return spyCommandNotifyAdminPlaySound;
+	}
+
+	public boolean spyCommandNotifyAdminPlaySoundEnable() {
+		return spyCommandNotifyAdminPlaySoundEnable;
+	}
+
+	//DataBase start
+	public String database() {
+		return database;
+	}
+
+	public boolean databaseEnable() {
+		return databaseEnable;
+	}
+
+	public String jdbcDriver() {
+		return jdbcDriver;
+	}
+
+	public String host() {
+		return host;
+	}
+
+	public String port() {
+		return port;
+	}
+
+	public String user() {
+		return user;
+	}
+
+	public String password() {
+		return password;
+	}
+
+	public String tables() {
+		return tables;
+	}
+
+	public boolean useSsl() {
+		return useSsl;
+	}
+
+	public int maxPoolSize() {
+		return maxPoolSize;
+	}
+
+	public int maxLifetime() {
+		return maxLifetime;
+	}
+
+	public int connectionTimeout() {
+		return connectionTimeout;
+	}
+
+	public int intervalReload() {
+		return intervalReload;
+	}
+	//DataBase end
+
+	@Override
+	public String toString() {
+		return "Config{" +
+				"configVersion='" + configVersion + '\'' +
+				"regionProtect='" + regionProtect + '\'' +
+				"regionProtectAllow='" + regionProtectAllow + '\'' +
+				"regionProtectOnlyBreakAllow='" + regionProtectOnlyBreakAllow + '\'' +
+				"spawnEntityType='" + spawnEntityType + '\'' +
+				"interactType='" + interactType + '\'' +
+				"cmdWe='" + cmdWe + '\'' +
+				"cmdWeC='" + cmdWeC + '\'' +
+				"cmdWeP='" + cmdWeP + '\'' +
+				"cmdWeS='" + cmdWeS + '\'' +
+				"cmdWeU='" + cmdWeU + '\'' +
+				"cmdWeCP='" + cmdWeCP + '\'' +
+				"cmdWeB='" + cmdWeB + '\'' +
+				"spyCommand='" + spyCommand + '\'' +
+				"regionMessageProtect='" + regionMessageProtect + '\'' +
+				"regionMessageProtectWe='" + regionMessageProtectWe + '\'' +
+				"spyCommandNotifyConsole='" + spyCommandNotifyConsole + '\'' +
+				"spyCommandNotifyAdmin='" + spyCommandNotifyAdmin + '\'' +
+				"spyCommandNotifyAdminPlaySoundEnable='" + spyCommandNotifyAdminPlaySoundEnable + '\'' +
+				"spyCommandNotifyAdminPlaySound='" + spyCommandNotifyAdminPlaySound + '\'' +
+				//DataBase start
+				"database='" + spyCommand + '\'' +
+				"databaseEnable='" + regionMessageProtect + '\'' +
+				"jdbcDriver='" + regionMessageProtectWe + '\'' +
+				"host='" + spyCommandNotifyConsole + '\'' +
+				"port='" + spyCommandNotifyAdmin + '\'' +
+				"user='" + spyCommandNotifyAdminPlaySoundEnable + '\'' +
+				"password='" + password + '\'' +
+				"tables='" + tables + '\'' +
+				"useSsl='" + useSsl + '\'' +
+				"maxPoolSize='" + maxPoolSize + '\'' +
+				"maxLifetime='" + maxLifetime + '\'' +
+				"connectionTimeout='" + connectionTimeout + '\'' +
+				"intervalReload='" + intervalReload + '\'' +
+				//DataBase end
+				'}';
 	}
 }
