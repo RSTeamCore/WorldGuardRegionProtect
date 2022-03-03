@@ -1,7 +1,7 @@
 package net.ritasister.wgrp;
 
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -51,10 +51,21 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 		UtilConfigManager.loadConfig();
 		RegisterCommand.RegisterCommands(utilCommandList);
 		RegisterListener.RegisterEvents(pluginManager);
+		Bukkit.getConsoleSender().sendMessage("current version file config: "+utilConfig.configVersion);
 		this.loadDataBase();
+		this.sendMessageIfTestBuild();
 		RSLogger.info("&2created by &8[&5RitaSister&8]");
 		this.checkUpdate();
 	}
+
+	private void sendMessageIfTestBuild() {
+		if(instance.pluginVersion.contains("pre")) {
+			Bukkit.getConsoleSender().sendMessage("This is a test build. please use last stable build!");
+		}else{
+			Bukkit.getConsoleSender().sendMessage("This is a stable build.");
+		}
+	}
+
 	private void checkStartUpVersionServer() {
 		if(!Bukkit.getVersion().contains("1.17.1") && !Bukkit.getVersion().contains("1.18")) {
 			RSLogger.err("This plugin version work only on 1.17.1+!");
