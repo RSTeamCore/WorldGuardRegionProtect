@@ -2,18 +2,17 @@ package net.ritasister.rslibs.api;
 
 import java.util.List;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.ritasister.util.IUtilPermissions;
-import net.ritasister.util.UtilLoadConfig;
+import net.ritasister.util.Time;
+import net.ritasister.util.config.UtilConfig;
+import net.ritasister.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
@@ -83,7 +82,9 @@ public class RSApi {
 		final ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(locationBlockVector3);
 		for (ProtectedRegion protectedRegion : applicableRegionSet) {
 			for (String regionName : list) {
-				if (protectedRegion.getId().equalsIgnoreCase(regionName)) {return true;}
+				if (protectedRegion.getId().equalsIgnoreCase(regionName)) {
+					return true;
+				}
 			}
 		}return false;
 	}
@@ -110,15 +111,15 @@ public class RSApi {
 	 *
 	 * @return getProtectRegionName Where is standing player.
 	 */
-	public static boolean getProtectRegionName(@NotNull Location loc) {
+	public static String getProtectRegionName(@NotNull Location loc) {
 		final World world = loc.getWorld();
 		final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
 		final BlockVector3 locationBlockVector3 = BlockVector3.at(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 		final ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(locationBlockVector3);
 		for (ProtectedRegion protectedRegion : applicableRegionSet) {
-			protectedRegion.getId();
+			return protectedRegion.getId();
 		}
-		return true;
+		return null;
 	}
 
 	/**
@@ -130,13 +131,13 @@ public class RSApi {
 	 *
 	 */
 	public static void notifyAdmin(Player player, String playerName, String senderCommand, String regionName) {
-		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdmin) {
+		if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdmin()) {
 			if(RSApi.isAuthListenerPermission(player, IUtilPermissions.regionProtectNotifyAdmin, null)) {
-				for(String cmd : WorldGuardRegionProtect.utilConfig.spyCommand) {
+				for(String cmd : WorldGuardRegionProtect.instance.utilConfig.spyCommand()) {
 					if(cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-						if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdminPlaySoundEnable) {
-							player.playSound(player.getLocation(), WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdminPlaySound, 1, 1);
-						}player.sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
+						if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdminPlaySoundEnable()) {
+							player.playSound(player.getLocation(), WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdminPlaySound(), 1, 1);
+						}	player.sendMessage(WorldGuardRegionProtect.instance.utilConfigMessage.sendAdminInfoIfUsedCommandWithRG()
 								.replace("<player>", playerName)
 								.replace("<cmd>", cmd)
 								.replace("<rg>", regionName));
@@ -154,48 +155,53 @@ public class RSApi {
 	 *
 	 */
 	public static void notifyConsole(String playerName, String senderCommand, String regionName) {
-		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyConsole) {
-			for(String cmd : WorldGuardRegionProtect.utilConfig.spyCommand) {
+		if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyConsole()) {
+			for(String cmd : WorldGuardRegionProtect.instance.utilConfig.spyCommand()) {
 				if(cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-					Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
+					Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.instance.utilConfigMessage.sendAdminInfoIfUsedCommandWithRG()
 							.replace("<player>", playerName)
 							.replace("<cmd>", cmd)
-							.replace("<rg>", regionName));
+							.replace("<region>", regionName));
 				}
 			}
 		}
 	}
 	/**
-	 * Send notify if admin try to interact with region from WorldGuard.
+	 * Send notify if player try to interact with region from WorldGuard.
 	 *
-	 * @param playerName Get nickname player.
+	 * @param playerName get player name who's interact with region
+	 * @param regionName get region name
 	 *
 	 */
-	public static void notifyInteract(String playerName, String regionName) {
-		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdmin) {
-			Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo.
+	public static void notifyIfBreakInRegion(String playerName, String time, String regionName, double x, double y, double z, String world) {
+		if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdmin()) {
+			Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.instance.utilConfigMessage.sendAdminInfoIfBreakInRegion().
+					replace("<time>", time).
 					replace("<player>", playerName).
-					replace("<region>", regionName));
+					replace("<region>", regionName).
+					replace("<x>", String.valueOf(x)).
+					replace("<y>", String.valueOf(y)).
+					replace("<z>", String.valueOf(z)).
+					replace("<world>", world));
 		}
 	}
 	/**
-	 * Send notify if admin try to interact with region from WorldGuard.
+	 * Send notify if player try to interact with region from WorldGuard.
 	 *
-	 * @return getPatch for default config.
-	 *
-	 */
-	public static ConfigurationSection getPatch() {
-		return WorldGuardRegionProtect.instance.getConfig().getConfigurationSection("worldguard_protect_region.");
-	}
-	/**
-	 * Send notify if admin try to interact with region from WorldGuard.
-	 *
-	 * @return getStringMessageColor for message config.
+	 * @param playerName get player name who's interact with region
+	 * @param regionName get region name
 	 *
 	 */
-	@Contract("_, _ -> new")
-	@NotNull
-	public static String getStringMessageColor(String path, String def) {
-		return ChatApi.getColorCode(UtilLoadConfig.messages.getString(path, def));
+	public static void notifyIfPlaceInRegion(String playerName, String time, String regionName, double x, double y, double z, String world) {
+		if(WorldGuardRegionProtect.instance.utilConfig.spyCommandNotifyAdmin()) {
+			Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.instance.utilConfigMessage.sendAdminInfoIfPlaceInRegion().
+					replace("<time>", time).
+					replace("<player>", playerName).
+					replace("<region>", regionName).
+					replace("<x>", String.valueOf(x)).
+					replace("<y>", String.valueOf(y)).
+					replace("<z>", String.valueOf(z)).
+					replace("<world>", world));
+		}
 	}
 }
