@@ -44,7 +44,7 @@ public final class UtilConfig extends Configuration {
 			# region_protect_allow: []
 			#--------------------------------------------------------------------------------------""")
 	@Key("region-protect-allow")
-	private final List<String> regionProtectAllow = List.of("");
+	private final List<String> regionProtectAllow = new ArrayList<>(0);
 
 	@Comment("""
 			#--------------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ public final class UtilConfig extends Configuration {
 			# region_protect_only_break_allow: []
 			#--------------------------------------------------------------------------------------""")
 	@Key("region-protect-only-break-allow")
-	private final List<String> regionProtectOnlyBreakAllow = List.of("");
+	private final List<String> regionProtectOnlyBreakAllow = new ArrayList<>(0);
 
 	@Comment("""
 			#--------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ public final class UtilConfig extends Configuration {
 			# spawn_entity_type: []
 			#--------------------------------------------------------------------------------------""")
 	@Key("spawn_entity_type")
-	private final List<String> spawnEntityType = List.of("");
+	private final List<String> spawnEntityType = new ArrayList<>(0);
 
 
 	@Comment("""
@@ -191,11 +191,11 @@ public final class UtilConfig extends Configuration {
 			"//replacenear");
 
 	//DataBase start
-	@Key("dataSource-database")
-	private final String database = "database";
-
 	@Key("dataSource-enable")
 	private final boolean databaseEnable = false;
+
+	@Key("dataSource-database")
+	private final String database = "database";
 
 	@Key("dataSource-jdbcDriver")
 	private final String jdbcDriver = "jdbc:mariadb://";
@@ -385,12 +385,12 @@ public final class UtilConfig extends Configuration {
 				"spyCommandNotifyAdminPlaySoundEnable='" + spyCommandNotifyAdminPlaySoundEnable + '\'' +
 				"spyCommandNotifyAdminPlaySound='" + spyCommandNotifyAdminPlaySound + '\'' +
 				//DataBase start
-				"database='" + spyCommand + '\'' +
-				"databaseEnable='" + regionMessageProtect + '\'' +
-				"jdbcDriver='" + regionMessageProtectWe + '\'' +
-				"host='" + spyCommandNotifyConsole + '\'' +
-				"port='" + spyCommandNotifyAdmin + '\'' +
-				"user='" + spyCommandNotifyAdminPlaySoundEnable + '\'' +
+				"database='" + database + '\'' +
+				"databaseEnable='" + databaseEnable + '\'' +
+				"jdbcDriver='" + jdbcDriver + '\'' +
+				"host='" + host + '\'' +
+				"port='" + port + '\'' +
+				"user='" + user + '\'' +
 				"password='" + password + '\'' +
 				"tables='" + tables + '\'' +
 				"useSsl='" + useSsl + '\'' +

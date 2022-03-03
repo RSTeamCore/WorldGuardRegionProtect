@@ -26,13 +26,13 @@ public class UtilConfigMessage extends Configuration {
 	private final String noPerm = "&cYou don't have permissions to use this command.";
 
 	@Key("sendAdminInfoIfUsedCommandWithRG")
-	private final String sendAdminInfoIfUsedCommandWithRG = "&8[&4!&8] &cAttention! &e<player> &cused command &5<cmd> &cin region: &3<rg>";
+	private final String sendAdminInfoIfUsedCommandWithRG = "&8[&4!&8] &cAttention! &e<player> &cused command &5<cmd> &cin region: &3<region>";
 
 	@Key("sendAdminInfoIfBreakInRegion")
-	private final String sendAdminInfoIfBreakInRegion = "&8[&4!&8] &cAttention! &e<player> &6break &cblock in region: &3<rg>";
+	private final String sendAdminInfoIfBreakInRegion = "&8[&4!&8] &cAttention! &b[<time>] &e<player> &6break &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>";
 
 	@Key("sendAdminInfoIfPlaceInRegion")
-	private final String sendAdminInfoIfPlaceInRegion = "&8[&4!&8] &cAttention! &e<player> &6place &cblock in region: &3<rg>";
+	private final String sendAdminInfoIfPlaceInRegion = "&8[&4!&8] &cAttention! &b[<time>] &e<player> &6place &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>";
 
 	@Key("example-use-command.wgrpUseHelp")
 	private final String wgrpUseHelp = "&aUse: &e/wgrp help";
@@ -78,6 +78,57 @@ public class UtilConfigMessage extends Configuration {
 	@Key("database.dbLoadAsyncError")
 	private final String dbLoadAsyncError = "Error when asynchronously loading data from the database!";
 
+	//Plural time start.
+	@Key("plural.pluralTimeEmpty")
+	private final String pluralTimeEmpty = "0 second";
+
+
+	@Key("plural.pluralDay1")
+	private final String pluralDay1 = "day";
+
+	@Key("plural.pluralDay2")
+	private final String pluralDay2 = "of the day";
+
+	@Key("plural.pluralDay3")
+	private final String pluralDay3 = "days";
+
+
+	@Key("plural.pluralHour1")
+	private final String pluralHour1 = "hour";
+
+	@Key("plural.pluralHour2")
+	private final String pluralHour2 = "hours";
+
+	@Key("plural.pluralHour3")
+	private final String pluralHour3 = "hours";
+
+
+	@Key("plural.pluralMinute1")
+	private final String pluralMinute1 = "minute";
+
+	@Key("plural.pluralMinute2")
+	private final String pluralMinute2 = "minute";
+
+	@Key("plural.pluralMinute3")
+	private final String pluralMinute3 = "minutes";
+
+	@Key("plural.pluralMinute4")
+	private final String pluralMinute4 = "minutes";
+
+
+	@Key("plural.pluralSecond1")
+	private final String pluralSecond1 = "second";
+
+	@Key("plural.pluralSecond2")
+	private final String pluralSecond2 = "second";
+
+	@Key("plural.pluralSecond3")
+	private final String pluralSecond3 = "seconds";
+
+	@Key("plural.pluralSecond4")
+	private final String pluralSecond4 = "seconds";
+	//Plural time end
+
 	//Main message
 	public String wgrpMsg() {
 		return ChatApi.getColorCode(wgrpMsg);
@@ -119,7 +170,7 @@ public class UtilConfigMessage extends Configuration {
 	public String getConfigMsgNotFound() {
 		return ChatApi.getColorCode(configMsgNotFound);
 	}
-	//Message for database
+	//Message for database start
 	public String dbConnectSuccessfull() {
 		return ChatApi.getColorCode(dbConnectSuccessfull);
 	}
@@ -155,6 +206,74 @@ public class UtilConfigMessage extends Configuration {
 	public String dbLoadAsyncError () {
 		return ChatApi.getColorCode(dbLoadAsyncError);
 	}
+	//Message for database end
+
+	//Plural time start
+	public String getPluralTimeEmpty() {
+		return pluralTimeEmpty;
+	}
+
+
+	public String getPluralDay1() {
+		return pluralDay1;
+	}
+
+	public String getPluralDay2() {
+		return pluralDay2;
+	}
+
+	public String getPluralDay3() {
+		return pluralDay3;
+	}
+
+
+	public String getPluralHour1() {
+		return pluralHour1;
+	}
+
+	public String getPluralHour2() {
+		return pluralHour2;
+	}
+
+	public String getPluralHour3() {
+		return pluralHour3;
+	}
+
+
+	public String getPluralMinute1() {
+		return pluralMinute1;
+	}
+
+	public String getPluralMinute2() {
+		return pluralMinute2;
+	}
+
+	public String getPluralMinute3() {
+		return pluralMinute3;
+	}
+
+	public String getPluralMinute4() {
+		return pluralMinute4;
+	}
+
+
+	public String getPluralSecond1() {
+		return pluralSecond1;
+	}
+
+	public String getPluralSecond2() {
+		return pluralSecond2;
+	}
+
+	public String getPluralSecond3() {
+		return pluralSecond3;
+	}
+
+	public String getPluralSecond4() {
+		return pluralSecond4;
+	}
+	//Plural time end
+
 
 	@Override
 	public String toString() {
@@ -171,6 +290,7 @@ public class UtilConfigMessage extends Configuration {
 				"configMsgReloaded='" + configMsgReloaded + '\'' +
 				"configMsgNotFound='" + configMsgNotFound + '\'' +
 				"wgrpUseHelp='" + wgrpUseHelp + '\'' +
+				//Message for database start
 				"dbConnectSuccessfull='" + dbConnectSuccessfull + '\'' +
 				"dbConnectError='" + dbConnectError + '\'' +
 				"dbConnectFailed='" + dbConnectFailed + '\'' +
@@ -179,7 +299,24 @@ public class UtilConfigMessage extends Configuration {
 				"dbCloseRSError='" + dbCloseRSError + '\'' +
 				"dbCloseDBError='" + dbCloseDBError + '\'' +
 				"dbLoadError='" + dbLoadError + '\'' +
-				"dbLoadAsyncError='" + dbLoadAsyncError + '\'' +
+				//Message for database end
+				//Plural time start
+				"dbLoadAsyncError='" + pluralTimeEmpty + '\'' +
+				"dbLoadAsyncError='" + pluralDay1 + '\'' +
+				"dbLoadAsyncError='" + pluralDay2 + '\'' +
+				"dbLoadAsyncError='" + pluralDay3 + '\'' +
+				"dbLoadAsyncError='" + pluralHour1 + '\'' +
+				"dbLoadAsyncError='" + pluralHour2 + '\'' +
+				"dbLoadAsyncError='" + pluralHour3 + '\'' +
+				"dbLoadAsyncError='" + pluralMinute1 + '\'' +
+				"dbLoadAsyncError='" + pluralMinute2 + '\'' +
+				"dbLoadAsyncError='" + pluralMinute3 + '\'' +
+				"dbLoadAsyncError='" + pluralMinute4 + '\'' +
+				"dbLoadAsyncError='" + pluralSecond1 + '\'' +
+				"dbLoadAsyncError='" + pluralSecond2 + '\'' +
+				"dbLoadAsyncError='" + pluralSecond3 + '\'' +
+				"dbLoadAsyncError='" + pluralSecond4 + '\'' +
+				//Plural time end
 				'}';
 	}
 }
