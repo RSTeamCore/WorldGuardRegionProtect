@@ -25,9 +25,10 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
+import java.util.*;
 
 public class wg7 implements Iwg {
+	
     public WorldGuardRegionProtect worldGuardRegionProtect;
     public WorldGuardPlugin wg;
     public WorldEditPlugin we;

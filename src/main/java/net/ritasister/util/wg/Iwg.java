@@ -4,8 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-public interface Iwg 
-{
+public interface Iwg {
    boolean wg(World world, Location loc, boolean bool);
 
    boolean checkIntersection(Player var1);

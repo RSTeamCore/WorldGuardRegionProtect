@@ -29,7 +29,7 @@ dependencies {
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
     //HikariCP
-    implementation("com.zaxxer:HikariCP:5.0.0")
+    implementation("com.zaxxer:HikariCP:5.0.1")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.4")
     //Paper 1.17.1
