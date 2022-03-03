@@ -24,6 +24,7 @@ public final class UtilConfig {
 	public boolean spyCommandNotifyAdmin;
 	public String spyCommandNotifyAdminPlaySound;
 	public boolean spyCommandNotifyAdminPlaySoundEnable;
+	public int configVersion;
 
 	@SuppressWarnings("unchecked")
 	public UtilConfig() {
@@ -51,5 +52,6 @@ public final class UtilConfig {
 		this.spyCommandNotifyAdmin = RSApi.getPatch().getBoolean("spy_command.notify.admin");
 		this.spyCommandNotifyAdminPlaySoundEnable = RSApi.getPatch().getBoolean("spy_command.notify.sound");
 		this.spyCommandNotifyAdminPlaySound = RSApi.getPatch().getString("spy_command.notify.sound_type");
+		this.configVersion = RSApi.getPatch().getInt("configVersion");
 	}
 }
