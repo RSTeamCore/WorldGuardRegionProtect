@@ -1,9 +1,8 @@
 package net.ritasister.rslibs.api;
 
-import java.lang.constant.Constable;
 import java.util.List;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.ritasister.util.IUtilPermissions;
 import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
@@ -23,11 +22,8 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import org.jetbrains.annotations.Nullable;
 
 public class RSApi {
-
-	private static Location loc;
 
 	/**
 	 * Check if player have permissions for use command.
@@ -39,7 +35,7 @@ public class RSApi {
 	 *
 	 * @return isAuthCommandsPermission Have is Permissions or not.
 	 */
-	public static boolean isAuthCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String perm, @Nullable String message) {
+	public static boolean isAuthCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String perm, String message) {
 		if (!sender.hasPermission(perm) || !sender.isPermissionSet(perm)) {
 			if (message != null) {
 				sender.sendMessage(ChatApi.getColorCode(message));
@@ -64,15 +60,16 @@ public class RSApi {
 	 *
 	 * @return isAuthListenerPermission Have is Permissions or not.
 	 */
-	public static boolean isAuthListenerPermission(@NotNull CommandSender sender, @NotNull String perm,  @Nullable String message) {
+	public static boolean isAuthListenerPermission(@NotNull CommandSender sender, @NotNull String perm, String message) {
 		if (!sender.hasPermission(perm) || !sender.isPermissionSet(perm)) {
 			if (message != null) {
 				sender.sendMessage(ChatApi.getColorCode(message));
 			}return false;
 		}return true;
 	}
+
 	/**
-	 * Check if player have permissions for use Listener.
+	 * Check access in standing region by player used region name from config.yml.
 	 * 
 	 * @param loc Get location of player.
 	 * @param list Get list of regions from WorldGuard.
@@ -90,8 +87,9 @@ public class RSApi {
 			}
 		}return false;
 	}
+
 	/**
-	 * Check if player have permissions for use Listener.
+	 * Check access in standing region by player without region name.
 	 *
 	 * @param loc Get location of player.
 	 *
@@ -102,17 +100,29 @@ public class RSApi {
 		final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
 		final BlockVector3 locationBlockVector3 = BlockVector3.at(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 		final ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(locationBlockVector3);
-		for (ProtectedRegion protectedRegion : applicableRegionSet) {
-				protectedRegion.getId();
-		}return false;
+		return (applicableRegionSet.size() != 0);
 	}
 
-	public static String getRegionName() {
-		return String.valueOf(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect));
+	/**
+	 * Getting region name for another method.
+	 *
+	 * @param loc Get location of player.
+	 *
+	 * @return getProtectRegionName Where is standing player.
+	 */
+	public static boolean getProtectRegionName(@NotNull Location loc) {
+		final World world = loc.getWorld();
+		final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
+		final BlockVector3 locationBlockVector3 = BlockVector3.at(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+		final ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(locationBlockVector3);
+		for (ProtectedRegion protectedRegion : applicableRegionSet) {
+			protectedRegion.getId();
+		}
+		return true;
 	}
+
 	/**
 	 * Send notify to admin.
-	 *
 	 * @param player Get player object.
 	 * @param playerName Get nickname player.
 	 * @param senderCommand Get name command what player try to use in region.
@@ -126,8 +136,7 @@ public class RSApi {
 					if(cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
 						if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdminPlaySoundEnable) {
 							player.playSound(player.getLocation(), WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdminPlaySound, 1, 1);
-						}
-						player.sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
+						}player.sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
 								.replace("<player>", playerName)
 								.replace("<cmd>", cmd)
 								.replace("<rg>", regionName));
@@ -162,13 +171,11 @@ public class RSApi {
 	 * @param playerName Get nickname player.
 	 *
 	 */
-	public static void notifyInteract(String playerName) {
+	public static void notifyInteract(String playerName, String regionName) {
 		if(WorldGuardRegionProtect.utilConfig.spyCommandNotifyAdmin) {
-			for(String cmd : WorldGuardRegionProtect.utilConfig.spyCommand) {
-					Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo
-							.replace("<player>", playerName)
-							.replace("<cmd>", cmd));
-			}
+			Bukkit.getConsoleSender().sendMessage(WorldGuardRegionProtect.utilConfigMessage.sendAminInfo.
+					replace("<player>", playerName).
+					replace("<region>", regionName));
 		}
 	}
 	/**

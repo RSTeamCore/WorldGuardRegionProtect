@@ -37,6 +37,7 @@ public class RegionProtect implements Listener {
 		final String playerName = e.getPlayer().getPlayerProfile().getName();
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
+		final String RegionName = String.valueOf(RSApi.getProtectRegionName(loc));
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtectAllow)
 			|| RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtectOnlyBreakAllow)) {
 			e.setCancelled(false);
@@ -50,7 +51,7 @@ public class RegionProtect implements Listener {
 				}
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
-			RSApi.notifyInteract(playerName);
+			RSApi.notifyInteract(playerName, RegionName);
 		}
 	}
 	@EventHandler(priority = EventPriority.LOW)
@@ -58,6 +59,7 @@ public class RegionProtect implements Listener {
 		final String playerName = e.getPlayer().getPlayerProfile().getName();
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
+		final String RegionName = String.valueOf(RSApi.getProtectRegionName(loc));
 		if (RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtectAllow)) {
 			e.setCancelled(false);
 		} else if (RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)
@@ -70,7 +72,7 @@ public class RegionProtect implements Listener {
 				}
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
-			RSApi.notifyInteract(playerName);
+			RSApi.notifyInteract(playerName, RegionName);
 		}
 	}
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -79,13 +81,9 @@ public class RegionProtect implements Listener {
 		final Location loc = e.getBlockClicked().getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
 			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, WorldGuardRegionProtect.utilConfigMessage.wgrpMsg))return;{
-				if (e.getBlockClicked().getType() == Material.LAVA_BUCKET) {
-					e.setCancelled(true);
-				}
-				if (e.getBlockClicked().getType() == Material.WATER_BUCKET) {
-					e.setCancelled(true);
-				}
-				if (e.getBlockClicked().getType() == Material.BUCKET) {
+				if (e.getBlockClicked().getType() == Material.LAVA_BUCKET
+						|| e.getBlockClicked().getType() == Material.WATER_BUCKET
+						|| e.getBlockClicked().getType() == Material.BUCKET) {
 					e.setCancelled(true);
 				}e.setCancelled(true);
 			}
@@ -223,6 +221,7 @@ public class RegionProtect implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
     private void denyUseWEAndWGCommand(final PlayerCommandPreprocessEvent e) {
         final Player p = e.getPlayer();
+		final Location loc = p.getLocation();
 		final String[] s = e.getMessage().toLowerCase().split(" ");
 		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
 		final String playerName = p.getName();
@@ -232,43 +231,43 @@ public class RegionProtect implements Listener {
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
 					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getRegionName());
-				RSApi.notifyConsole(playerName, cmd, RSApi.getRegionName());
+				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
 			}if (this.cmdWE_C(s[0]) && !this.wg.checkCIntersection(p, s)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
 					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getRegionName());
-				RSApi.notifyConsole(playerName, cmd, RSApi.getRegionName());
+				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
 			}if (this.cmdWE_P(s[0]) && !this.wg.checkPIntersection(p, s)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
 					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getRegionName());
-				RSApi.notifyConsole(playerName, cmd, RSApi.getRegionName());
+				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
 			}if (this.cmdWE_S(s[0]) && !this.wg.checkSIntersection(p, s)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
 					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getRegionName());
-				RSApi.notifyConsole(playerName, cmd, RSApi.getRegionName());
+				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
 			}if (this.cmdWE_U(s[0]) && !this.wg.checkUIntersection(p, s)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
 					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getRegionName());
-				RSApi.notifyConsole(playerName, cmd, RSApi.getRegionName());
+				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
 			}if (this.cmdWE_CP(s[0])) {
 				e.setMessage(e.getMessage().replace("-o", ""));
 				if (!this.wg.checkCPIntersection(p, s)) {
 					e.setCancelled(true);
 				}
-				RSApi.notifyAdmin(p, playerName, cmd, RSApi.getRegionName());
-				RSApi.notifyConsole(playerName, cmd, RSApi.getRegionName());
+				RSApi.notifyAdmin(p, playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
+				RSApi.notifyConsole(playerName, cmd, String.valueOf(RSApi.getProtectRegionName(loc)));
 			}
 			if (this.regionCommandNameArgs.contains(s[0]) && s.length > 2) {
 				for (final String list : WorldGuardRegionProtect.utilConfig.regionProtect) {
