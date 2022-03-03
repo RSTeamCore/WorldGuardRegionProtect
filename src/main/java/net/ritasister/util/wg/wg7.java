@@ -19,15 +19,12 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
 import net.ritasister.util.config.UtilConfig;
-import net.ritasister.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.util.*;
 
 public class wg7 implements Iwg {
 
@@ -43,14 +40,10 @@ public class wg7 implements Iwg {
         this.utilConfig = utilConfig;
     }
     @Override
-    public boolean wg(final World w, final Location l, final boolean b) {
-        String mine = "";
-        if (b) {
-            mine = "mine";
-        }
+    public boolean wg(final World w, final Location l) {
         final ApplicableRegionSet set = this.getApplicableRegions(l);
         for (final ProtectedRegion rg : set) {
-            for (final Object region : Objects.requireNonNull(this.worldGuardRegionProtect.getConfig().getList("worldguard_protect_region.region_protect" + mine))){
+            for(final Object region : this.utilConfig.regionProtect()) {
                 if (rg.getId().equalsIgnoreCase(region.toString())) {
                     return true;
                 }
@@ -130,7 +123,7 @@ public class wg7 implements Iwg {
                 x = Integer.parseInt(args[2]);
             }
             y = Integer.parseInt(args[3]);
-        }catch(Exception ex){}
+        }catch(Exception ignored){}
         final Location loc1 = player.getLocation().subtract(x, y, z);
         final Location loc2 = player.getLocation().add(x, y, z);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
@@ -143,7 +136,7 @@ public class wg7 implements Iwg {
         int i = 1;
         try{
             i = Integer.parseInt(args[2]);
-        }catch(Exception ex){}
+        }catch(Exception ignored){}
         final Location loc1 = player.getLocation().subtract(i, i, i);
         final Location loc2 = player.getLocation().add(i, i, i);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
@@ -160,7 +153,7 @@ public class wg7 implements Iwg {
         try{
             y2 = Integer.parseInt(cr[1]);
             z2 = Integer.parseInt(cr[2]);
-        }catch(Exception ex){}
+        }catch(Exception ignored){}
         final Location loc1 = player.getLocation().subtract(x2, y2, z2);
         final Location loc2 = player.getLocation().add(x2, y2, z2);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asBlockVector(loc1), BukkitAdapter.asBlockVector(loc2));
