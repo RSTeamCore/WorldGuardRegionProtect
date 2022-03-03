@@ -10,7 +10,7 @@ allprojects {
 }
 
 group = "net.ritasister.srp"
-version = "0.7.1-pre5-1.17-1.18"
+version = "0.7.1-pre5-1.16-1.18"
 description = "WorldGuardRegionProtect"
 
 tasks.compileJava {
@@ -33,9 +33,9 @@ dependencies {
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.4")
     //Paper 1.17.1
-    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    //compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
     //Paper 1.16.5
-    //compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
+    compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
 }
 
 tasks.withType<Jar>() {
