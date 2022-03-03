@@ -1,5 +1,7 @@
 # WorldGuardRegionProtect - Advanced secure for region from WorldGuard
 
+[![Build Status](https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/badge/icon)](https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/)
+
 ## Social
 [Discord](https://discord.gg/kvqvA3GTVF)
 
