@@ -11,6 +11,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {url = uri("https://repo.codemc.org/repository/maven-public")}
     //WorldGuard
     maven {url = uri("https://maven.enginehub.org/repo/")}
     //PaperMC
@@ -20,32 +21,28 @@ repositories {
 }
 
 dependencies {
-    implementation(projects.wgrpApi)
+    api(project(":wgrp-api"))
 
     //MariaDB for DataBase
-    implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
+    compileOnly("org.mariadb.jdbc:mariadb-java-client:2.7.3")
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
     //WorldGuard 7+
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.4")
+    implementation("com.sk89q.worldguard:worldguard-bukkit:7.0.4")
     //Paper 1.17.1
-    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    implementation("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    "shadeOnly"("org.bstats:bstats-bukkit:3.0.0")
 }
 
+tasks.compileJava {
+    options.encoding = "UTF-8"
+}
 
 tasks.named<Copy>("processResources") {
     val internalVersion = project.ext["internalVersion"]
     inputs.property("internalVersion", internalVersion)
     filesMatching("plugin.yml") {
         expand("internalVersion" to internalVersion)
-    }
-}
-
-tasks.named<Jar>("jar") {
-    val projectVersion = project.version
-    inputs.property("projectVersion", projectVersion)
-    manifest {
-        attributes("Implementation-Version" to projectVersion)
     }
 }
 

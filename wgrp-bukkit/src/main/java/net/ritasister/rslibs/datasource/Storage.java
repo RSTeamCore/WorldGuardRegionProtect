@@ -1,4 +1,4 @@
-package net.ritasister.datasources;
+package net.ritasister.rslibs.datasource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

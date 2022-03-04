@@ -1,4 +1,4 @@
-package net.ritasister.datasources;
+package net.ritasister.rslibs.datasource;
 
 import java.sql.SQLException;
 import java.util.UUID;
