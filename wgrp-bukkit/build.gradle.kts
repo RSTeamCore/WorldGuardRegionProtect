@@ -45,7 +45,7 @@ tasks.named<Jar>("jar") {
 
 tasks.named<ShadowJar>("shadowJar") {
     configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
-    archiveFileName.set("${rootProject.name}-Bukkit-${rootProject.version}.${archiveExtension.getOrElse("jar")}")
+    archiveFileName.set("${rootProject.name}-${rootProject.version}-1.16-1.18.${archiveExtension.getOrElse("jar")}")
 
     dependencies {
         include(dependency(":wgrp-api"))
