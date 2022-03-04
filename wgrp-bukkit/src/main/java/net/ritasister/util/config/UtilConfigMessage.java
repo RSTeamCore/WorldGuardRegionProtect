@@ -1,14 +1,14 @@
 package net.ritasister.util.config;
 
 import net.ritasister.rslibs.api.ChatApi;
-import net.ritasister.rslibs.utils.annotatedyaml.Annotations;
+import net.ritasister.rslibs.utils.annotatedyaml.Annotations.*;
 import net.ritasister.rslibs.utils.annotatedyaml.Configuration;
 
 public class UtilConfigMessage extends Configuration {
 
-	@Annotations.Final
-	@Annotations.Comment("Version of config, do not touch!")
-	@Annotations.Key("config-message-version")
+	@Final
+	@Comment("Version of config, do not touch!")
+	@Key("config-message-version")
 	private final String configVersion = "1.0";
 
 	public String getConfigVersion() {
@@ -16,116 +16,116 @@ public class UtilConfigMessage extends Configuration {
 	}
 
 	//Main message
-	@Annotations.Key("wgrpMsg")
+	@Key("wgrpMsg")
 	private final String wgrpMsg = "&8[&cWGRP&8] &aThis region is protect by server!";
 
-	@Annotations.Key("wgrpMsgWe")
+	@Key("wgrpMsgWe")
 	private final String wgrpMsgWe = "&8[&cWGRP&8] &cYou can''t used WorldEdit command here!";
 
-	@Annotations.Key("noPerm")
+	@Key("noPerm")
 	private final String noPerm = "&cYou don't have permissions to use this command.";
 
-	@Annotations.Key("sendAdminInfoIfUsedCommandWithRG")
+	@Key("sendAdminInfoIfUsedCommandWithRG")
 	private final String sendAdminInfoIfUsedCommandWithRG = "&8[&4!&8] &cAttention! &e<player> &cused command &5<cmd> &cin region: &3<region>";
 
-	@Annotations.Key("sendAdminInfoIfBreakInRegion")
+	@Key("sendAdminInfoIfBreakInRegion")
 	private final String sendAdminInfoIfBreakInRegion = "&8[&4!&8] &cAttention! &b[<time>] &e<player> &6break &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>";
 
-	@Annotations.Key("sendAdminInfoIfPlaceInRegion")
+	@Key("sendAdminInfoIfPlaceInRegion")
 	private final String sendAdminInfoIfPlaceInRegion = "&8[&4!&8] &cAttention! &b[<time>] &e<player> &6place &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>";
 
-	@Annotations.Key("example-use-command.wgrpUseHelp")
+	@Key("example-use-command.wgrpUseHelp")
 	private final String wgrpUseHelp = "&aUse: &e/wgrp help";
 
 	//Config
-	@Annotations.Key("configs.configReloaded")
+	@Key("configs.configReloaded")
 	private final String configReloaded = "&8[&cWGRP&8] &aFile &6config.yml &areload success!";
 
-	@Annotations.Key("configs.configNotFound")
+	@Key("configs.configNotFound")
 	private final String configNotFound = "&8[&cWGRP&8] &cFile &6config.yml &cnot found, created new!";
 
-	@Annotations.Key("configs.configMsgReloaded")
+	@Key("configs.configMsgReloaded")
 	private final String configMsgReloaded = "&8[&cWGRP&8] &aFile &6messages.yml &areload success!";
 
-	@Annotations.Key("configs.configMsgNotFound")
+	@Key("configs.configMsgNotFound")
 	private final String configMsgNotFound = "&8[&cWGRP&8] &cFile &6messages.yml &cnot found, created new!";
 
 	//Message for database
-	@Annotations.Key("database.dbConnectSuccessfull")
+	@Key("database.dbConnectSuccessfull")
 	private final String dbConnectSuccessfull = "Connection to the database successful.";
 
-	@Annotations.Key("database.dbConnectError")
+	@Key("database.dbConnectError")
 	private final String dbConnectError = "Failed connect to the database. Plugin will be stopped!";
 
-	@Annotations.Key("database.dbConnectFailed")
+	@Key("database.dbConnectFailed")
 	private final String dbConnectFailed = "Failed connect to the database!";
 
-	@Annotations.Key("database.dbReconnect")
+	@Key("database.dbReconnect")
 	private final String dbReconnect = "Lost connection to the database! An attempt will be made to reconnect.";
 
-	@Annotations.Key("database.dbClosePSTError")
+	@Key("database.dbClosePSTError")
 	private final String dbClosePSTError = "PreparedStatement Close Error!";
 
-	@Annotations.Key("database.dbCloseRSError")
+	@Key("database.dbCloseRSError")
 	private final String dbCloseRSError = "ResultSet Close Error!";
 
-	@Annotations.Key("database.dbCloseDBError")
+	@Key("database.dbCloseDBError")
 	private final String dbCloseDBError = "Database closing error!";
 
-	@Annotations.Key("database.dbLoadError")
+	@Key("database.dbLoadError")
 	private final String dbLoadError = "Error loading data from the database!";
 
-	@Annotations.Key("database.dbLoadAsyncError")
+	@Key("database.dbLoadAsyncError")
 	private final String dbLoadAsyncError = "Error when asynchronously loading data from the database!";
 
 	//Plural time start.
-	@Annotations.Key("plural.pluralTimeEmpty")
+	@Key("plural.pluralTimeEmpty")
 	private final String pluralTimeEmpty = "0 second";
 
 
-	@Annotations.Key("plural.pluralDay1")
+	@Key("plural.pluralDay1")
 	private final String pluralDay1 = "day";
 
-	@Annotations.Key("plural.pluralDay2")
+	@Key("plural.pluralDay2")
 	private final String pluralDay2 = "of the day";
 
-	@Annotations.Key("plural.pluralDay3")
+	@Key("plural.pluralDay3")
 	private final String pluralDay3 = "days";
 
 
-	@Annotations.Key("plural.pluralHour1")
+	@Key("plural.pluralHour1")
 	private final String pluralHour1 = "hour";
 
-	@Annotations.Key("plural.pluralHour2")
+	@Key("plural.pluralHour2")
 	private final String pluralHour2 = "hours";
 
-	@Annotations.Key("plural.pluralHour3")
+	@Key("plural.pluralHour3")
 	private final String pluralHour3 = "hours";
 
 
-	@Annotations.Key("plural.pluralMinute1")
+	@Key("plural.pluralMinute1")
 	private final String pluralMinute1 = "minute";
 
-	@Annotations.Key("plural.pluralMinute2")
+	@Key("plural.pluralMinute2")
 	private final String pluralMinute2 = "minute";
 
-	@Annotations.Key("plural.pluralMinute3")
+	@Key("plural.pluralMinute3")
 	private final String pluralMinute3 = "minutes";
 
-	@Annotations.Key("plural.pluralMinute4")
+	@Key("plural.pluralMinute4")
 	private final String pluralMinute4 = "minutes";
 
 
-	@Annotations.Key("plural.pluralSecond1")
+	@Key("plural.pluralSecond1")
 	private final String pluralSecond1 = "second";
 
-	@Annotations.Key("plural.pluralSecond2")
+	@Key("plural.pluralSecond2")
 	private final String pluralSecond2 = "second";
 
-	@Annotations.Key("plural.pluralSecond3")
+	@Key("plural.pluralSecond3")
 	private final String pluralSecond3 = "seconds";
 
-	@Annotations.Key("plural.pluralSecond4")
+	@Key("plural.pluralSecond4")
 	private final String pluralSecond4 = "seconds";
 	//Plural time end
 

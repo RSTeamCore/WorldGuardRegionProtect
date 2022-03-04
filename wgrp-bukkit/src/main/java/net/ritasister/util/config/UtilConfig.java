@@ -1,6 +1,6 @@
 package net.ritasister.util.config;
 
-import net.ritasister.rslibs.utils.annotatedyaml.Annotations;
+import net.ritasister.rslibs.utils.annotatedyaml.Annotations.*;
 import net.ritasister.rslibs.utils.annotatedyaml.Configuration;
 
 import java.util.ArrayList;
@@ -9,16 +9,16 @@ import java.util.List;
 
 public final class UtilConfig extends Configuration {
 
-	@Annotations.Final
-	@Annotations.Comment("Version of config, do not touch!")
-	@Annotations.Key("config-version")
+	@Final
+	@Comment("Version of config, do not touch!")
+	@Key("config-version")
 	private final String configVersion = "1.0";
 
 	public String getConfigVersion() {
 		return configVersion;
 	}
 
-	@Annotations.Comment({"""
+	@Comment({"""
 			#-------------------------------------------------------------
 			# List of protected regions.
 			# If regions are not needed, specify an empty parameter:
@@ -28,10 +28,10 @@ public final class UtilConfig extends Configuration {
 			# Если регионы не нужны, укажите пустой параметр:
 			# region_protect: []
 			#-------------------------------------------------------------"""})
-	@Annotations.Key("region-protect")
+	@Key("region-protect")
 	private final List<String> regionProtect = Arrays.asList("spawn", "pvp");
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# List of protected regions where breaking is allowed with the 'build allow'flag.
 			# If regions are not needed, specify an empty parameter:
@@ -41,10 +41,10 @@ public final class UtilConfig extends Configuration {
 			# Если регионы не нужны, укажите пустой параметр:
 			# region_protect_allow: []
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("region-protect-allow")
+	@Key("region-protect-allow")
 	private final List<String> regionProtectAllow = new ArrayList<>(0);
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# List of protected regions where only breaking is allowed with the 'build allow'flag.
 			# If regions are not needed, specify an empty parameter:
@@ -54,10 +54,10 @@ public final class UtilConfig extends Configuration {
 			# Если регионы не нужны, укажите пустой параметр:
 			# region_protect_only_break_allow: []
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("region-protect-only-break-allow")
+	@Key("region-protect-only-break-allow")
 	private final List<String> regionProtectOnlyBreakAllow = new ArrayList<>(0);
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# List of protected regions where only breaking is allowed with the 'build allow'flag.
 			# If regions are not needed, specify an empty parameter:
@@ -67,11 +67,11 @@ public final class UtilConfig extends Configuration {
 			# Если регионы не нужны, укажите пустой параметр:
 			# spawn_entity_type: []
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("spawn_entity_type")
+	@Key("spawn_entity_type")
 	private final List<String> spawnEntityType = new ArrayList<>(0);
 
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# List of prohibited entity / block for interaction in the protected region.
 			# If you don't want to block it, specify an empty parameter:
@@ -95,138 +95,138 @@ public final class UtilConfig extends Configuration {
 			# Если не нужно блокировать, то укажите пустой параметр:
 			# interact_type: []
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("interact-type")
+	@Key("interact-type")
 	private final List<String> interactType = Arrays.asList("candle", "armor_stand", "end_crystal", "minecart",
 			"tnt_minecart", "command_block_minecart", "hopper_minecart", "chest_minecart",
 			"furnace_minecart", "spruce_boat", "birch_boat", "jungle_boat", "acacia_boat",
 			"dark_oak_boat", "bucket", "water_bucket", "lava_bucket");
 
-	@Annotations.Key("command_we")
+	@Key("command_we")
 	private final List<String> cmdWe = Arrays.asList("//set", "//replace", "//overlay", "//walls",
 			"//deform", "//fill", "//fillr", "//fixlava",
 			"//hollow", "//move", "//stack", "//smooth", "//cut",
 			"//replacenear");
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# List of forbidden commands from WE / FAWE.
 			# Список запрещенных команд от WE / FAWE.
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("no-protect-cmd-command_c")
+	@Key("no-protect-cmd-command_c")
 	private final List<String> cmdWeC = Arrays.asList("//cyl", "//hcyl", "//drain", "//rep");
 
-	@Annotations.Key("no-protect-cmd-command_p")
+	@Key("no-protect-cmd-command_p")
 	private final List<String> cmdWeP = Arrays.asList("//pyramid", "//hpyramid");
 
-	@Annotations.Key("no-protect-cmd-command_s")
+	@Key("no-protect-cmd-command_s")
 	private final List<String> cmdWeS = Arrays.asList("//sphere", "//hsphere");
 
-	@Annotations.Key("no-protect-cmd-command_u")
+	@Key("no-protect-cmd-command_u")
 	private final List<String> cmdWeU = Arrays.asList("//up", "/up");
 
-	@Annotations.Key("no-protect-cmd-command_cp")
+	@Key("no-protect-cmd-command_cp")
 	private final List<String> cmdWeCP = Arrays.asList("//paste", "//place", "//replacenear", "//hollow");
 
-	@Annotations.Key("no-protect-cmd-command_b")
+	@Key("no-protect-cmd-command_b")
 	private final List<String> cmdWeB = Arrays.asList("//set", "//replace", "//overlay", "//walls",
 			"//deform", "//fill", "//fillr", "//fixlava",
 			"//hollow", "//move", "//stack", "//smooth", "//cut",
 			"//replacenear");
 
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# Turn Enable/Disable the protected region message.
 			# Включить/Выключить сообщение о защищенном регионе.
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("region-protect-message")
+	@Key("region-protect-message")
 	private final boolean regionMessageProtect = true;
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# Turn Enable/Disable the protected region message when using the WE\\FAWE commands.
 			# Включить/Выключить сообщение о защищенном регионе при использовании команд WE\\FAWE.
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("protect-we-message")
+	@Key("protect-we-message")
 	private final boolean regionMessageProtectWe = true;
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# Enable notify to console and admin.
 			# Включение оповещения в консоль и администратору.
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("spy-command-notify-console")
+	@Key("spy-command-notify-console")
 	private final boolean spyCommandNotifyConsole = true;
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# Enable notify to console and admin.
 			# Включение оповещения в консоль и администратору.
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("spy-command-notify-admin")
+	@Key("spy-command-notify-admin")
 	private final boolean spyCommandNotifyAdmin = true;
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# Sound notify to admin.
 			# Звуковое оповещение администратора.
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("spy-command-notify-sound")
+	@Key("spy-command-notify-sound")
 	private final boolean spyCommandNotifyAdminPlaySoundEnable = true;
 
-	@Annotations.Comment("""
+	@Comment("""
 			#--------------------------------------------------------------------------------------
 			# All sounds can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
 			# Все звуки из 1.17.1 могут быть найдены тут: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
 			#--------------------------------------------------------------------------------------""")
-	@Annotations.Key("spy-command-notify-sound-type")
+	@Key("spy-command-notify-sound-type")
 	private final String spyCommandNotifyAdminPlaySound = "BLOCK_ANVIL_PLACE";
 
-	@Annotations.Key("spy-command-command-list")
+	@Key("spy-command-command-list")
 	private final List<String> spyCommand = Arrays.asList("//set", "//replace", "//overlay", "//walls",
 			"//deform", "//fill", "//fillr", "//fixlava",
 			"//hollow", "//move", "//stack", "//smooth", "//cut",
 			"//replacenear");
 
 	//DataBase start
-	@Annotations.Key("dataSource-enable")
+	@Key("dataSource-enable")
 	private final boolean databaseEnable = false;
 
-	@Annotations.Key("dataSource-database")
+	@Key("dataSource-database")
 	private final String database = "database";
 
-	@Annotations.Key("dataSource-jdbcDriver")
+	@Key("dataSource-jdbcDriver")
 	private final String jdbcDriver = "jdbc:mariadb://";
 
-	@Annotations.Key("dataSource-host")
+	@Key("dataSource-host")
 	private final String host = "127.0.0.1";
 
-	@Annotations.Key("dataSource-port")
+	@Key("dataSource-port")
 	private final String port = "3306";
 
-	@Annotations.Key("dataSource-user")
+	@Key("dataSource-user")
 	private final String user = "root";
 
-	@Annotations.Key("dataSource-password")
+	@Key("dataSource-password")
 	private final String password = "root";
 
-	@Annotations.Key("dataSource-tables-tableName")
+	@Key("dataSource-tables-tableName")
 	private final String tables = "tableName";
 
-	@Annotations.Key("dataSource-useSsl")
+	@Key("dataSource-useSsl")
 	private final boolean useSsl = true;
 
 	//Pool settings
-	@Annotations.Key("dataSource-poolSettings-maxPoolSize")
+	@Key("dataSource-poolSettings-maxPoolSize")
 	private final int maxPoolSize = 10;
 
-	@Annotations.Key("dataSource-poolSettings-maxLifetime")
+	@Key("dataSource-poolSettings-maxLifetime")
 	private final int maxLifetime = 1800;
 
-	@Annotations.Key("dataSource-poolSettings-connectionTimeout")
+	@Key("dataSource-poolSettings-connectionTimeout")
 	private final int connectionTimeout = 5000;
 
-	@Annotations.Key("dataSource-interval-asyncReload")
+	@Key("dataSource-interval-asyncReload")
 	private final int intervalReload = 60;
 	//DataBase end
 

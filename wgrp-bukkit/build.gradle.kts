@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
-    id("com.github.johnrengelman.shadow") version "4.0.4"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 configurations {
@@ -16,15 +16,13 @@ repositories {
     maven {url = uri("https://maven.enginehub.org/repo/")}
     //PaperMC
     maven {url = uri("https://papermc.io/repo/repository/maven-public/")}
-
-    flatDir { dir(File("src/main/resources")) }
 }
 
 dependencies {
     api(project(":wgrp-api"))
 
     //MariaDB for DataBase
-    compileOnly("org.mariadb.jdbc:mariadb-java-client:2.7.3")
+    implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
     //WorldGuard 7+
@@ -46,11 +44,31 @@ tasks.named<Copy>("processResources") {
     }
 }
 
+tasks.named<Jar>("jar") {
+    val projectVersion = project.version
+    inputs.property("projectVersion", projectVersion)
+    manifest {
+        attributes("Implementation-Version" to projectVersion)
+    }
+}
+
 tasks.named<ShadowJar>("shadowJar") {
     configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
+    archiveFileName.set("${rootProject.name}-Bukkit-${project.version}.${archiveExtension.getOrElse("jar")}")
 
     dependencies {
         include(dependency(":wgrp-api"))
+        /*relocate ("com.zaxxer.hikari", "") {
+            include(dependency("com.zaxxer:hikari"))
+        }*/
+    }
+}
+
+tasks.withType<Jar>() {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    configurations["compileClasspath"].forEach { file: File ->
+        if(file.name.contains("HikariCP"))
+            from(zipTree(file.absoluteFile))
     }
 }
 
