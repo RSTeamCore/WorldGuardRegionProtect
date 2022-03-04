@@ -64,11 +64,10 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 		}
 	}
 
+
 	private void checkStartUpVersionServer() {
-		if(!Bukkit.getVersion().contains("1.16.5")
-				&& !Bukkit.getVersion().contains("1.17") && !Bukkit.getVersion().contains("1.17.1")
-				&& !Bukkit.getVersion().contains("1.18")  && !Bukkit.getVersion().contains("1.18.1") && !Bukkit.getVersion().contains("1.18.2")) {
-			RSLogger.err("This plugin version work only on 1.16.5+!");
+		if (!RSApi.isVersionSupported()) {
+			RSLogger.err("This plugin version work only on 1.16+!");
 			RSLogger.err("Please read: https://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-18.81321/");
 			RSLogger.err("The main post on spigotmc and download correct version.");
 			Bukkit.getPluginManager().disablePlugin(this);
