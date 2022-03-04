@@ -1,20 +1,12 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
-    java
-    `maven-publish`
+    `java-library`
+    id("com.github.johnrengelman.shadow") version "4.0.4"
 }
 
-allprojects {
-    apply(plugin = "java")
-    apply(plugin = "maven-publish")
-    java { toolchain {languageVersion.set(JavaLanguageVersion.of(16))} }
-}
-
-group = "net.ritasister.srp"
-version = "0.7.1-pre5-1.16.5-1.18"
-description = "WorldGuardRegionProtect"
-
-tasks.compileJava {
-    options.encoding = "UTF-8"
+configurations {
+    compileClasspath.get().extendsFrom(create("shadeOnly"))
 }
 
 repositories {
@@ -23,9 +15,13 @@ repositories {
     maven {url = uri("https://maven.enginehub.org/repo/")}
     //PaperMC
     maven {url = uri("https://papermc.io/repo/repository/maven-public/")}
+
+    flatDir { dir(File("src/main/resources")) }
 }
 
 dependencies {
+    implementation(projects.wgrpApi)
+
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
     //HikariCP
@@ -36,10 +32,31 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
 }
 
-tasks.withType<Jar>() {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    configurations["compileClasspath"].forEach { file: File ->
-        if(file.name.contains("HikariCP"))
-            from(zipTree(file.absoluteFile))
+
+tasks.named<Copy>("processResources") {
+    val internalVersion = project.ext["internalVersion"]
+    inputs.property("internalVersion", internalVersion)
+    filesMatching("plugin.yml") {
+        expand("internalVersion" to internalVersion)
     }
+}
+
+tasks.named<Jar>("jar") {
+    val projectVersion = project.version
+    inputs.property("projectVersion", projectVersion)
+    manifest {
+        attributes("Implementation-Version" to projectVersion)
+    }
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
+
+    dependencies {
+        include(dependency(":wgrp-api"))
+    }
+}
+
+tasks.named("assemble").configure {
+    dependsOn("shadowJar")
 }

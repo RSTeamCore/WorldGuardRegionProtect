@@ -1,6 +1,6 @@
 name: WorldGuardRegionProtect
 author: RitaSister
-version: 0.7.1-pre5
+version: "${internalVersion}"
 main: net.ritasister.wgrp.WorldGuardRegionProtect
 softdepend: [ WorldGuard ]
 description: Protect your region in the server.
