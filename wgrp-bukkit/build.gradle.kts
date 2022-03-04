@@ -9,15 +9,6 @@ configurations {
     compileClasspath.get().extendsFrom(create("shadeOnly"))
 }
 
-repositories {
-    mavenCentral()
-    maven {url = uri("https://repo.codemc.org/repository/maven-public")}
-    //WorldGuard
-    maven {url = uri("https://maven.enginehub.org/repo/")}
-    //PaperMC
-    maven {url = uri("https://papermc.io/repo/repository/maven-public/")}
-}
-
 dependencies {
     api(project(":wgrp-api"))
 
@@ -37,7 +28,7 @@ tasks.compileJava {
 }
 
 tasks.named<Copy>("processResources") {
-    val internalVersion = project.ext["internalVersion"]
+    val internalVersion = project.version
     inputs.property("internalVersion", internalVersion)
     filesMatching("plugin.yml") {
         expand("internalVersion" to internalVersion)
@@ -54,7 +45,7 @@ tasks.named<Jar>("jar") {
 
 tasks.named<ShadowJar>("shadowJar") {
     configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
-    archiveFileName.set("${rootProject.name}-Bukkit-${project.version}.${archiveExtension.getOrElse("jar")}")
+    archiveFileName.set("${rootProject.name}-Bukkit-${rootProject.version}.${archiveExtension.getOrElse("jar")}")
 
     dependencies {
         include(dependency(":wgrp-api"))
