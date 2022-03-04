@@ -28,12 +28,11 @@ body:
       description: Which server version version you using? If your server version is not listed, it is not supported. Update to a supported version first.
       multiple: false
       options:
+        - '1.18.2'
+        - '1.18.1'
+        - '1.18'
         - '1.17.1'
         - '1.16.5'
-        - '1.15.2'
-        - '1.14.4'
-        - '1.13.2'
-        - '1.12.2'
     validations:
       required: true
 
@@ -86,7 +85,7 @@ body:
       label: Checklist
       description: Make sure you have followed each of the steps outlined here.
       options:
-        - label: I am using the newest build from https://github.com/RitaSister/ServerRegionProtect/releases/ and the issue still persists.
+        - label: I am using the newest build from https://github.com/RitaSister/WorldGuardRegionProtect/releases/ and the issue still persists.
           required: true
 
   - type: textarea
