@@ -1,27 +1,33 @@
+.gradle/
+build/
+
+# Eclipse stuff
 .classpath
 .project
-.settings
-eclipse
-.idea
+.settings/
+
+# we use maven!
+build.xml
+
+# maven
+target/
+dependency-reduced-pom.xml
+
+# Mac filesystem dust
+.DS_Store/
+.DS_Store
+
+# intellij
 *.iml
 *.ipr
 *.iws
-/.metadata/
+.idea/
+out/
 
-bin
-build
-target
-.gradle
-forge-download
-out
-run
+# Linux temp files
+*~
 
-/dependency-reduced-pom.xml
-*-private.sh
-logs/
-*.bat
-wgrp-bukkit/src/main/java/ignore/*
-todo.txt
-mvn/*
-docs/
-*.sh
+# other stuff
+run/
+/wgrp-api/build/
+/wgrp-bukkit/build/
