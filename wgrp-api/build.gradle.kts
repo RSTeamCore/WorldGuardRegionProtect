@@ -3,8 +3,6 @@ plugins {
     `maven-publish`
 }
 
-defaultTasks("clean", "build")
-
 dependencies {
     //WorldGuard 7+
     implementation("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
@@ -26,8 +24,9 @@ publishing {
     repositories {
         val mavenUrl: String? by project
         val mavenSnapshotUrl: String? by project
+        val projectVersion = project.version
 
-        (if(version.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
+        (if(projectVersion.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
             maven(url) {
                 val mavenUsername: String? by project
                 val mavenPassword: String? by project
