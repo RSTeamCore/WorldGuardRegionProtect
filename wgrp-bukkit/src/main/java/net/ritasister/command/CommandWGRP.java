@@ -1,9 +1,9 @@
 package net.ritasister.command;
 
-import net.ritasister.rslibs.api.ChatApi;
 import net.ritasister.rslibs.api.CmdExecutor;
-import net.ritasister.rslibs.api.IUtilPermissions;
 import net.ritasister.rslibs.api.RSApi;
+import net.ritasister.rslibs.chat.api.ChatApi;
+import net.ritasister.rslibs.permissions.IUtilPermissions;
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
@@ -47,7 +47,7 @@ public class CommandWGRP extends CmdExecutor {
 			sender.sendMessage(ChatApi.getDoubleTabSpaceWithColor("&b======================================================================================================================================\n&aHi! If you need help from this plugin, you can contact with me on: \n&ehttps://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333/\n&ehttp://rubukkit.org/threads/sec-worldguardregionprotect-0-7-0-pre2-dop-zaschita-dlja-regionov-wg-1-13-1-17.171324/page-4#post-1678435\n&b======================================================================================================================================\n&aBut if you find any error or you want to send me any idea for this plugin&b, \n&aso you can create issues on github: &ehttps://github.com/RitaSister/WorldGuardRegionProtect/issues\n&6your welcome!"));
 		}
 		if(args[0].equalsIgnoreCase("reload")) {
-			WorldGuardRegionProtect.utilConfig = new UtilConfig();
+			WorldGuardRegionProtect.utilConfig = new UtilConfig(WorldGuardRegionProtect.getInstance());
 			sender.sendMessage(WorldGuardRegionProtect.utilConfigMessage.configReloaded);
 		}
 		if(args[0].equalsIgnoreCase("reloadmsg")) {
