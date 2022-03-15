@@ -33,8 +33,8 @@ publishing {
                 val mavenPassword: String? by project
                 if(mavenUsername != null && mavenPassword != null) {
                     credentials {
-                        username = "RitaSister"
-                        password = "rezeknerita1324"
+                        username = mavenUsername
+                        password = mavenPassword
                     }
                 }
             }
