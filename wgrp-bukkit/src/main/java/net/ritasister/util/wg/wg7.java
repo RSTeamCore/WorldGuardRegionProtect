@@ -43,7 +43,7 @@ public class wg7 implements Iwg {
     public boolean wg(final World w, final Location l) {
         final ApplicableRegionSet set = this.getApplicableRegions(l);
         for (final ProtectedRegion rg : set) {
-            for(final Object region : this.utilConfig.regionProtect()) {
+            for(final Object region : this.utilConfig.regionProtect) {
                 if (rg.getId().equalsIgnoreCase(region.toString())) {
                     return true;
                 }
@@ -70,14 +70,14 @@ public class wg7 implements Iwg {
             final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", min, max);
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) {
-                for (final Object region : utilConfig.regionProtect()) {
+                for (final Object region : utilConfig.regionProtect) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }
                 }
             }
             for (final ProtectedRegion rg : set) {
-                for (final Object region : utilConfig.regionProtectOnlyBreakAllow()) {
+                for (final Object region : utilConfig.regionProtectOnlyBreakAllow) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }

@@ -26,16 +26,16 @@ public class Storage implements StorageDataSource {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("org.mariadb.jdbc.Driver");
 		config.setJdbcUrl("jdbc:mariadb://"
-				+ WorldGuardRegionProtect.instance.utilConfig.host() + ":"
-				+ WorldGuardRegionProtect.instance.utilConfig.port() + "/"
-				+ WorldGuardRegionProtect.instance.utilConfig.database());
-		config.setUsername(WorldGuardRegionProtect.instance.utilConfig.user());
-		config.setPassword(WorldGuardRegionProtect.instance.utilConfig.password());
+				+ WorldGuardRegionProtect.utilConfig.host + ":"
+				+ WorldGuardRegionProtect.utilConfig.port + "/"
+				+ WorldGuardRegionProtect.utilConfig.database);
+		config.setUsername(WorldGuardRegionProtect.utilConfig.user);
+		config.setPassword(WorldGuardRegionProtect.utilConfig.password);
 		
 		// Pool settings
-        config.setMaximumPoolSize(WorldGuardRegionProtect.instance.utilConfig.maxPoolSize());
-        config.setMaxLifetime(WorldGuardRegionProtect.instance.utilConfig.maxLifetime() * 1000L);
-        config.setConnectionTimeout(WorldGuardRegionProtect.instance.utilConfig.connectionTimeout());
+        config.setMaximumPoolSize(WorldGuardRegionProtect.utilConfig.maxPoolSize);
+        config.setMaxLifetime(WorldGuardRegionProtect.utilConfig.maxLifetime * 1000L);
+        config.setConnectionTimeout(WorldGuardRegionProtect.utilConfig.connectionTimeout);
 				
 		config.setPoolName("MariaDBPool");
 		
@@ -58,7 +58,7 @@ public class Storage implements StorageDataSource {
 
 	public Connection getConnection() throws SQLException {
 		if (!this.ds.getConnection().isValid(3)) {
-			RSLogger.err(WorldGuardRegionProtect.instance.utilConfigMessage.dbReconnect());
+			RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbReconnect);
 			this.connect();
 		}
 		return this.ds.getConnection();
@@ -69,11 +69,11 @@ public class Storage implements StorageDataSource {
 		try(Connection conn = Storage.this.getConnection()) {
 			pst = conn.prepareStatement(
 					"CREATE TABLE IF NOT EXISTS <tables> (id INT AUTO_INCREMENT, nickname VARCHAR(16) NOT NULL UNIQUE, uuid VARCHAR(36) NOT NULL UNIQUE, IPAddress VARCHAR(15) NULL, temperature INT(4) NOT NULL DEFAULT '0', parkour_passed INT(4) NOT NULL DEFAULT '0', world VARCHAR(60), x DOUBLE NOT NULL DEFAULT '0', y DOUBLE NOT NULL DEFAULT '0', z DOUBLE NOT NULL DEFAULT '0', yaw FLOAT NOT NULL DEFAULT '0', pitch FLOAT NOT NULL DEFAULT '0', CONSTRAINT table_const_prim PRIMARY KEY (id, nickname, uuid));"
-					.replace("<tables>", WorldGuardRegionProtect.instance.utilConfig.tables()));
+					.replace("<tables>", WorldGuardRegionProtect.utilConfig.tables));
 			pst.execute();
 			pst.close();
 		}catch(SQLException ex){
-			RSLogger.err(WorldGuardRegionProtect.instance.utilConfigMessage.dbConnectFailed());
+			RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbConnectFailed);
 		}finally{
 			this.close(pst);
 		}
@@ -84,7 +84,7 @@ public class Storage implements StorageDataSource {
 		ResultSet rs = null;
 		try(Connection conn = this.getConnection()) {
 			pst = conn.prepareStatement("SELECT * FROM <tables>;"
-					.replace("<tables>", WorldGuardRegionProtect.instance.utilConfig.tables()));
+					.replace("<tables>", WorldGuardRegionProtect.utilConfig.tables));
 			rs = pst.executeQuery();
 			while(rs.next()) {
 				UUID uniqueId = UUID.fromString(rs.getString("uuid"));
@@ -96,7 +96,7 @@ public class Storage implements StorageDataSource {
 			}
 			return true;
 		}catch(SQLException ex){
-			RSLogger.err(WorldGuardRegionProtect.instance.utilConfigMessage.dbLoadError());
+			RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbLoadError);
 			ex.printStackTrace();
 		}finally{
 			this.close(rs);
@@ -104,14 +104,14 @@ public class Storage implements StorageDataSource {
 		}return false;
 	}
 	public void loadAsync() {
-		Bukkit.getScheduler().runTaskTimerAsynchronously(WorldGuardRegionProtect.instance, () -> {
+		Bukkit.getScheduler().runTaskTimerAsynchronously(WorldGuardRegionProtect.getInstance(), () -> {
 			final HashMap<UUID, StorageDataBase> tmp_players = new HashMap<>();
 			PreparedStatement pst = null;
 			ResultSet rs = null;
 			try(Connection conn = Storage.this.getConnection()) {
 				pst = conn.prepareStatement(
 						"SELECT * FROM <tables>;"
-						.replace("<tables>", WorldGuardRegionProtect.instance.utilConfig.tables()));
+						.replace("<tables>", WorldGuardRegionProtect.utilConfig.tables));
 				rs = pst.executeQuery();
 				while(rs.next()) {
 					UUID uniqueId = UUID.fromString(rs.getString("uuid"));
@@ -124,14 +124,14 @@ public class Storage implements StorageDataSource {
 				}
 				WorldGuardRegionProtect.dbLogs = new HashMap<>(tmp_players);
 			}catch(SQLException ex){
-				RSLogger.err(WorldGuardRegionProtect.instance.utilConfigMessage.dbLoadAsyncError());
+				RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbLoadAsyncError);
 				ex.printStackTrace();
 			}finally{
 				Storage.this.close(rs);
 				Storage.this.close(pst);
 			}
-		}, WorldGuardRegionProtect.instance.utilConfig.intervalReload() * 20L,
-				WorldGuardRegionProtect.instance.utilConfig.intervalReload() * 20L);
+		}, WorldGuardRegionProtect.utilConfig.intervalReload * 20L,
+				WorldGuardRegionProtect.utilConfig.intervalReload * 20L);
 	}
 
 	@Override

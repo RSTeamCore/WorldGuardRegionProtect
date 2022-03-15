@@ -2,9 +2,8 @@ package net.ritasister.listener.protect;
 
 import java.util.*;
 
+import net.ritasister.rslibs.api.RSApi;
 import net.ritasister.util.Time;
-import net.ritasister.util.config.UtilConfig;
-import net.ritasister.util.config.UtilConfigMessage;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.entity.*;
@@ -15,18 +14,17 @@ import org.bukkit.event.hanging.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.world.StructureGrowEvent;
 
-import net.ritasister.rslibs.api.RSApi;
-import net.ritasister.util.IUtilPermissions;
+import net.ritasister.rslibs.api.IUtilPermissions;
 import net.ritasister.util.wg.Iwg;
 import net.ritasister.util.wg.wg7;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 
+import static net.ritasister.wgrp.WorldGuardRegionProtect.utilConfig;
+import static net.ritasister.wgrp.WorldGuardRegionProtect.utilConfigMessage;
+
 public class RegionProtect implements Listener {
 
 	private final WorldGuardRegionProtect worldGuardRegionProtect;
-
-	private final UtilConfig utilConfig;
-	private final UtilConfigMessage utilConfigMessage;
 
 	private final Iwg wg;
 	private final List<String> regionCommandNameArgs = Arrays.asList(
@@ -36,10 +34,8 @@ public class RegionProtect implements Listener {
 	private final List<String> regionEditArgsFlags = Arrays.asList("-f", "-u", "-n", "-g", "-a");
 
 
-	public RegionProtect(WorldGuardRegionProtect worldGuardRegionProtect, UtilConfig utilConfig, UtilConfigMessage utilConfigMessage) {
+	public RegionProtect(WorldGuardRegionProtect worldGuardRegionProtect) {
 		this.worldGuardRegionProtect=worldGuardRegionProtect;
-		this.utilConfig = utilConfig;
-		this.utilConfigMessage = utilConfigMessage;
 		this.wg=this.setUpWorldGuardVersionSeven();
 	}
 
@@ -58,15 +54,15 @@ public class RegionProtect implements Listener {
 		double y = b.getY();
 		double z = b.getZ();
 		String world = b.getWorld().getName();
-		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtectAllow())
-			|| RSApi.checkStandingRegion(loc, utilConfig.regionProtectOnlyBreakAllow())) {
+		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtectAllow)
+			|| RSApi.checkStandingRegion(loc, utilConfig.regionProtectOnlyBreakAllow)) {
 			e.setCancelled(false);
-		} else if (RSApi.checkStandingRegion(loc, utilConfig.regionProtect())) {
+		} else if (RSApi.checkStandingRegion(loc, utilConfig.regionProtect)) {
 			final Player p = e.getPlayer();
 			if (!RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null)) {{
 					e.setCancelled(true);
-					if (utilConfig.regionMessageProtect()) {
-						p.sendMessage(utilConfigMessage.wgrpMsg());
+					if (utilConfig.regionMessageProtect) {
+						p.sendMessage(utilConfigMessage.wgrpMsg);
 					}
 				}
 			}
@@ -91,15 +87,15 @@ public class RegionProtect implements Listener {
 		double y = b.getY();
 		double z = b.getZ();
 		String world = b.getWorld().getName();
-		if (RSApi.checkStandingRegion(loc, utilConfig.regionProtectAllow())) {
+		if (RSApi.checkStandingRegion(loc, utilConfig.regionProtectAllow)) {
 			e.setCancelled(false);
-		} else if (RSApi.checkStandingRegion(loc, utilConfig.regionProtect())
-				|| RSApi.checkStandingRegion(loc, utilConfig.regionProtectAllow())) {
+		} else if (RSApi.checkStandingRegion(loc, utilConfig.regionProtect)
+				|| RSApi.checkStandingRegion(loc, utilConfig.regionProtectAllow)) {
 			final Player p = e.getPlayer();
 			if (RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null)) return;{
 				e.setCancelled(true);
-				if (utilConfig.regionMessageProtect()) {
-					p.sendMessage(utilConfigMessage.wgrpMsg());
+				if (utilConfig.regionMessageProtect) {
+					p.sendMessage(utilConfigMessage.wgrpMsg);
 				}
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
@@ -112,8 +108,8 @@ public class RegionProtect implements Listener {
 	private void denyUseBucket(final PlayerBucketEmptyEvent e) {
 		final Player p = e.getPlayer();
 		final Location loc = e.getBlockClicked().getLocation();
-		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect())) {
-			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, utilConfigMessage.wgrpMsg()))return;{
+		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect)) {
+			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, utilConfigMessage.wgrpMsg))return;{
 				if (e.getBlockClicked().getType() == Material.LAVA_BUCKET
 						|| e.getBlockClicked().getType() == Material.WATER_BUCKET
 						|| e.getBlockClicked().getType() == Material.BUCKET) {
@@ -127,7 +123,7 @@ public class RegionProtect implements Listener {
 		Entity entity = e.getEntity();
 		Entity attacker = e.getDamager();
 		final Location loc = entity.getLocation();
-		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect())) {
+		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect)) {
 			if(RSApi.isAuthListenerPermission(attacker, IUtilPermissions.regionProtect, null))return;{
 				if (entity instanceof ArmorStand
 						|| entity instanceof ItemFrame
@@ -149,7 +145,7 @@ public class RegionProtect implements Listener {
 	private void denyInteractWithEntity(final PlayerInteractEntityEvent e) {
 		final Player player = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
-		if(RSApi.checkStandingRegion(clickLoc, utilConfig.regionProtect())) {
+		if(RSApi.checkStandingRegion(clickLoc, utilConfig.regionProtect)) {
 			if(RSApi.isAuthListenerPermission(player, IUtilPermissions.regionProtect, null))return;{
 				if(e.getRightClicked().getType() == EntityType.ITEM_FRAME
 						|| e.getRightClicked().getType() == EntityType.GLOW_ITEM_FRAME
@@ -163,7 +159,7 @@ public class RegionProtect implements Listener {
 	private void denyManipulateArmorStand(final PlayerArmorStandManipulateEvent e) {
 		final Player p = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
-		if(RSApi.checkStandingRegion(clickLoc, utilConfig.regionProtect())) {
+		if(RSApi.checkStandingRegion(clickLoc, utilConfig.regionProtect)) {
 			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 				if(e.getRightClicked().getType() == EntityType.ARMOR_STAND 
 						&& this.wg.wg(p.getWorld(), clickLoc)) {e.setCancelled(true);}
@@ -179,7 +175,7 @@ public class RegionProtect implements Listener {
 		if (e.getItem() != null) {
 			Player p = e.getPlayer();
 			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
-				for(String spawnEntityType : utilConfig.spawnEntityType()) {
+				for(String spawnEntityType : utilConfig.spawnEntityType) {
 					if(e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase()) &&
 							e.getClickedBlock() != null && this.wg.wg(p.getWorld(), e.getClickedBlock().getLocation())) {
 						e.setCancelled(true);
@@ -193,7 +189,7 @@ public class RegionProtect implements Listener {
 		Entity entity = e.getEntity();
 		Entity attacker = e.getRemover();
 		final Location loc = entity.getLocation();
-		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect())) {
+		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect)) {
 			assert attacker != null;
 			if(RSApi.isAuthListenerPermission(attacker, IUtilPermissions.regionProtect, null))return;{
 				if (Objects.requireNonNull(e.getRemover()).getType() == EntityType.PLAYER) {
@@ -218,7 +214,7 @@ public class RegionProtect implements Listener {
 		final Entity entity = e.getEntity();
 		final Player p = e.getPlayer();
 		final Location loc = entity.getLocation();
-		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect())) {
+		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect)) {
 			assert p != null;
 			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 				if (p.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
@@ -232,7 +228,7 @@ public class RegionProtect implements Listener {
 	private void denyExplode(final EntityExplodeEvent e) {
 		final Entity entity = e.getEntity();
 		final Location loc = entity.getLocation();
-		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect())) {
+		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect)) {
 			if(e.getEntityType() == EntityType.PRIMED_TNT 
 					|| e.getEntityType() == EntityType.ENDER_CRYSTAL 
 					|| e.getEntityType() == EntityType.MINECART_TNT) {e.blockList().clear();}
@@ -242,7 +238,7 @@ public class RegionProtect implements Listener {
 	public void denyExplodeRespawnAnchor(final BlockExplodeEvent e) {
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
-		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect())) {
+		if(RSApi.checkStandingRegion(loc, utilConfig.regionProtect)) {
 			if(b.getType() == null)return;{
 				if(b.getType() == Material.RESPAWN_ANCHOR) return;{
 					e.setCancelled(true);
@@ -258,38 +254,38 @@ public class RegionProtect implements Listener {
 		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
 		final String playerName = p.getName();
 		if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
-			if (this.cmdWE(s[0]) && !this.wg.checkIntersection(p)) {
+			if (this.cmdWE(s[0]) && this.wg.checkIntersection(p)) {
 				e.setCancelled(true);
-				if (utilConfig.regionMessageProtectWe()) {
-					p.sendMessage(utilConfigMessage.wgrpMsgWe());
+				if (utilConfig.regionMessageProtectWe) {
+					p.sendMessage(utilConfigMessage.wgrpMsgWe);
 				}
 				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}if (this.cmdWE_C(s[0]) && !this.wg.checkCIntersection(p, s)) {
 				e.setCancelled(true);
-				if (utilConfig.regionMessageProtectWe()) {
-					p.sendMessage(utilConfigMessage.wgrpMsgWe());
+				if (utilConfig.regionMessageProtectWe) {
+					p.sendMessage(utilConfigMessage.wgrpMsgWe);
 				}
 				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}if (this.cmdWE_P(s[0]) && !this.wg.checkPIntersection(p, s)) {
 				e.setCancelled(true);
-				if (utilConfig.regionMessageProtectWe()) {
-					p.sendMessage(utilConfigMessage.wgrpMsgWe());
+				if (utilConfig.regionMessageProtectWe) {
+					p.sendMessage(utilConfigMessage.wgrpMsgWe);
 				}
 				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}if (this.cmdWE_S(s[0]) && !this.wg.checkSIntersection(p, s)) {
 				e.setCancelled(true);
-				if (utilConfig.regionMessageProtectWe()) {
-					p.sendMessage(utilConfigMessage.wgrpMsgWe());
+				if (utilConfig.regionMessageProtectWe) {
+					p.sendMessage(utilConfigMessage.wgrpMsgWe);
 				}
 				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}if (this.cmdWE_U(s[0]) && !this.wg.checkUIntersection(p, s)) {
 				e.setCancelled(true);
-				if (utilConfig.regionMessageProtectWe()) {
-					p.sendMessage(utilConfigMessage.wgrpMsgWe());
+				if (utilConfig.regionMessageProtectWe) {
+					p.sendMessage(utilConfigMessage.wgrpMsgWe);
 				}
 				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
@@ -302,22 +298,22 @@ public class RegionProtect implements Listener {
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}
 			if (this.regionCommandNameArgs.contains(s[0]) && s.length > 2) {
-				for (final String list : utilConfig.regionProtect()) {
+				for (final String list : utilConfig.regionProtect) {
 					if (list.equalsIgnoreCase(s[2])) {
 						e.setCancelled(true);
 					}
-				}for (final String list : utilConfig.regionProtectOnlyBreakAllow()) {
+				}for (final String list : utilConfig.regionProtectOnlyBreakAllow) {
 					if (list.equalsIgnoreCase(s[2])) {
 						e.setCancelled(true);
 					}
 				}
 				if (s.length > 3 && this.regionEditArgs.contains(s[2].toLowerCase())
 						|| s.length > 3 && this.regionEditArgsFlags.contains(s[2].toLowerCase())) {
-					for (final String list : utilConfig.regionProtect()) {
+					for (final String list : utilConfig.regionProtect) {
 						if (list.equalsIgnoreCase(s[3])) {
 							e.setCancelled(true);
 						}
-					}for (final String list : utilConfig.regionProtectOnlyBreakAllow()) {
+					}for (final String list : utilConfig.regionProtectOnlyBreakAllow) {
 						if (list.equalsIgnoreCase(s[3])) {
 							e.setCancelled(true);
 						}
@@ -325,20 +321,20 @@ public class RegionProtect implements Listener {
 				}
 				if (s.length > 4 && s[2].equalsIgnoreCase("-w")
 						|| s.length > 4 && this.regionEditArgsFlags.contains(s[2].toLowerCase())) {
-					for (final String list : utilConfig.regionProtect()) {
+					for (final String list : utilConfig.regionProtect) {
 						if (list.equalsIgnoreCase(s[4])) {
 							e.setCancelled(true);
 						}
-					}for (final String list : utilConfig.regionProtectOnlyBreakAllow()) {
+					}for (final String list : utilConfig.regionProtectOnlyBreakAllow) {
 						if (list.equalsIgnoreCase(s[4])) {e.setCancelled(true);}
 					}
 				}
 				if (s.length > 5 && s[3].equalsIgnoreCase("-w")
 						|| s.length > 5 && this.regionEditArgs.contains(s[4].toLowerCase())
 						|| s.length > 5 && this.regionEditArgsFlags.contains(s[4].toLowerCase())) {
-					for (final String list : utilConfig.regionProtect()) {
+					for (final String list : utilConfig.regionProtect) {
 						if (list.equalsIgnoreCase(s[5])) {e.setCancelled(true);}
-					}for (final String list : utilConfig.regionProtectOnlyBreakAllow()) {
+					}for (final String list : utilConfig.regionProtectOnlyBreakAllow) {
 						if (list.equalsIgnoreCase(s[5])) {e.setCancelled(true);}
 					}
 				}
@@ -346,9 +342,9 @@ public class RegionProtect implements Listener {
 						|| s.length > 6 && s[4].equalsIgnoreCase("-h")
 						|| s.length > 6 && this.regionEditArgs.contains(s[5].toLowerCase())
 						|| s.length > 6 && this.regionEditArgsFlags.contains(s[5].toLowerCase())) {
-					for (final String list : utilConfig.regionProtect()) {
+					for (final String list : utilConfig.regionProtect) {
 						if (list.equalsIgnoreCase(s[6])) {e.setCancelled(true);}
-					}for (final String list : utilConfig.regionProtectOnlyBreakAllow()) {
+					}for (final String list : utilConfig.regionProtectOnlyBreakAllow) {
 						if (list.equalsIgnoreCase(s[6])) {e.setCancelled(true);}
 					}
 				}
@@ -363,7 +359,7 @@ public class RegionProtect implements Listener {
 	}
 	private boolean cmdWE(String s) {
 		s = s.replace("worldedit:", "");
-		for(String tmp : utilConfig.cmdWe()) {
+		for(String tmp : utilConfig.cmdWe) {
 			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
 				return true;
 			}
@@ -371,7 +367,7 @@ public class RegionProtect implements Listener {
 	}
 	private boolean cmdWE_C(String s) {
 		s = s.replace("worldedit:", "");
-		for(String tmp : utilConfig.cmdWeC()) {
+		for(String tmp : utilConfig.cmdWeC) {
 			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
 				return true;
 			}
@@ -379,7 +375,7 @@ public class RegionProtect implements Listener {
 	}
 	private boolean cmdWE_P(String s) {
 		s = s.replace("worldedit:", "");
-		for(String tmp : utilConfig.cmdWeP()) {
+		for(String tmp : utilConfig.cmdWeP) {
 			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
 				return true;
 			}
@@ -387,7 +383,7 @@ public class RegionProtect implements Listener {
 	}
 	private boolean cmdWE_S(String s) {
 		s = s.replace("worldedit:", "");
-		for(String tmp : utilConfig.cmdWeS()) {
+		for(String tmp : utilConfig.cmdWeS) {
 			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
 				return true;
 			}
@@ -395,7 +391,7 @@ public class RegionProtect implements Listener {
 	}
 	private boolean cmdWE_U(String s) {
 		s = s.replace("worldedit:", "");
-		for(String tmp : utilConfig.cmdWeU()) {
+		for(String tmp : utilConfig.cmdWeU) {
 			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
 				return true;
 			}
@@ -403,7 +399,7 @@ public class RegionProtect implements Listener {
 	}
 	private boolean cmdWE_CP(String s) {
 		s = s.replace("worldedit:", "");
-		for(String tmp : utilConfig.cmdWeCP()) {
+		for(String tmp : utilConfig.cmdWeCP) {
 			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
 				return true;
 			}

@@ -6,8 +6,9 @@ import java.util.UUID;
 import net.ritasister.register.RegisterCommand;
 import net.ritasister.register.RegisterListener;
 import net.ritasister.rslibs.api.RSApi;
+import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.util.config.UtilConfig;
-import net.ritasister.util.config.UtilConfigManager;
+import net.ritasister.util.config.UtilConfigMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,11 +20,28 @@ import net.ritasister.rslibs.datasource.Storage;
 import net.ritasister.rslibs.datasource.StorageDataBase;
 import net.ritasister.rslibs.datasource.StorageDataSource;
 
-import net.ritasister.util.config.UtilConfigMessage;
-
 public class WorldGuardRegionProtect extends JavaPlugin {
 
-	public static WorldGuardRegionProtect instance;
+	/** Instance of this class */
+	private static WorldGuardRegionProtect instance;
+
+	/**
+	 * Returns instance of this class
+	 *
+	 * @return instance of this class
+	 */
+	public static WorldGuardRegionProtect getInstance() {
+		return instance;
+	}
+
+	/**
+	 * Changes instance of this class to new value
+	 *
+	 * @param instance Instance to set variable to
+	 */
+	public static void setInstance(WorldGuardRegionProtect instance) {
+		WorldGuardRegionProtect.instance = instance;
+	}
 
 	private final PluginManager pluginManager = getServer().getPluginManager();
 	private final String pluginVersion = getDescription().getVersion();
@@ -31,24 +49,22 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 	public static StorageDataSource dbLogsSource;
 	public static HashMap<UUID, StorageDataBase> dbLogs = new HashMap<>();
 
-	private final UtilConfigManager utilConfigManager = new UtilConfigManager();
-	public final UtilConfig utilConfig = new UtilConfig();
-	public final UtilConfigMessage utilConfigMessage = new UtilConfigMessage();
+	public static UtilConfig utilConfig;
+	public static UtilConfigMessage utilConfigMessage;
 
-	public WorldGuardRegionProtect() {
-		WorldGuardRegionProtect.instance = this;
-	}
+	private final RegisterListener registerListener = new RegisterListener();
+	private final RegisterCommand registerCommand = new RegisterCommand();
 
 	@Override
 	public void onEnable() {
+		setInstance(this);
 		this.checkStartUpVersionServer();
 		this.checkJavaAndServerVersion();
 		this.loadMetrics();
 		LoadLibs.loadWorldGuard();
-		utilConfigManager.loadConfig();
-		utilConfigManager.loadMessageConfig();
-		RegisterCommand.RegisterCommands(utilConfigMessage);
-		RegisterListener.RegisterEvents(pluginManager, utilConfig, utilConfigMessage);
+		UtilLoadConfig.initConfig();
+		registerCommand.RegisterCommands();
+		registerListener.RegisterEvents(pluginManager);
 		//I do database in next time for logs.
 		//this.loadDataBase();
 		this.notifyIfIsPreBuild();
@@ -57,13 +73,12 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 	}
 
 	private void notifyIfIsPreBuild() {
-		if(instance.pluginVersion.contains("pre")) {
+		if(getInstance().pluginVersion.contains("pre")) {
 			RSLogger.warn("This is a test build. This build maybe will unstable!");
 		} else {
-			RSLogger.info("This is a stable build.");
+			RSLogger.info("This is a latest stable build.");
 		}
 	}
-
 
 	private void checkStartUpVersionServer() {
 		if (!RSApi.isVersionSupported()) {
@@ -113,7 +128,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 		RSLogger.info("&6Your &eserver &6is running version: &e<serverVersion>".replace("<serverVersion>", String.valueOf(serverVersion)));
 	}
 	private void loadDataBase() {
-		if(utilConfig.databaseEnable()) {
+		if(utilConfig.databaseEnable) {
 			final long duration_time_start = System.currentTimeMillis();
 			dbLogsSource = new Storage();
 			dbLogs.clear();
@@ -129,7 +144,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 	}
 	private void postEnable() {
 		Bukkit.getServer().getScheduler().cancelTasks(this);
-		if (utilConfig.intervalReload() > 0) {
+		if (utilConfig.intervalReload > 0) {
 			dbLogsSource.loadAsync();
 			RSLogger.info("[DataBase] База загружена асинхронно.");
 		}

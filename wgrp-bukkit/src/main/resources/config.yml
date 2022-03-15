@@ -1,0 +1,182 @@
+#-------------------------------------------------------------
+# WorldGuardProtectRegion - Protection of regions by the plugin.
+# WorldGuardProtectRegion - Защита регионов плагином.
+#-------------------------------------------------------------
+worldguard_protect_region:
+  config_version: 1.0
+  #-------------------------------------------------------------
+  # List of protected regions.
+  # If regions are not needed, specify an empty parameter:
+  # region_protect: []
+  #-------------------------------------------------------------
+  # Список защищенных регионов.
+  # Если регионы не нужны, укажите пустой параметр:
+  # region_protect: []
+  #-------------------------------------------------------------
+  region_protect:
+  - spawn
+  - pvp
+
+  #--------------------------------------------------------------------------------------
+  # List of protected regions where breaking is allowed with the 'build allow'flag.
+  # If regions are not needed, specify an empty parameter:
+  # region_protect_allow: []
+  #--------------------------------------------------------------------------------------
+  # Список защищенных регионов в которых разрешено ломать с флагом 'build allow'.
+  # Если регионы не нужны, укажите пустой параметр:
+  # region_protect_allow: []
+  region_protect_allow: []
+
+  #--------------------------------------------------------------------------------------
+  # List of protected regions where only breaking is allowed with the 'build allow'flag.
+  # If regions are not needed, specify an empty parameter:
+  # region_protect_only_break_allow: []
+  #-------------------------------------------------------------
+  # Список защищенных регионов в которых разрешено только ломать с флагом 'build allow'.
+  # Если регионы не нужны, укажите пустой параметр:
+  # region_protect_only_break_allow: []
+  #--------------------------------------------------------------------------------------
+  region_protect_only_break_allow: []
+
+  #--------------------------------------------------------------------------------------
+  # List of prohibited entity / block for interaction in the protected region.
+  # If you don't want to block it, specify an empty parameter:
+  #
+  # Attention! In interact_type, the block IDs\items are different from Minecraft!
+  # list of blocks prohibited by default\items:
+  # - explosive_minecart
+  # - command_minecart
+  # - hopper_minecart
+  # - storage_minecart
+  # - powered_minecart
+  # - boat_spruce
+  # - boat_birch
+  # - boat_jungle
+  # - boat_acacia
+  # - boat_dark_oak
+  #
+  # interact_type: []
+  #--------------------------------------------------------------------------------------
+  # Список запрещенных entity/block для взаимодействия в защищенном регионе.
+  # Если не нужно блокировать, то укажите пустой параметр:
+  # interact_type: []
+  #--------------------------------------------------------------------------------------
+  interact_type:
+  - armor_stand
+  - end_crystal
+  - minecart
+  - explosive_minecart
+  - command_minecart
+  - hopper_minecart
+  - storage_minecart
+  - powered_minecart
+  - boat
+  - boat_spruce
+  - boat_birch
+  - boat_jungle
+  - boat_acacia
+  - boat_dark_oak
+  - bucket
+  - water_bucket
+  - lava_bucket
+
+  #--------------------------------------------------------------------------------------
+  # List of forbidden commands from WE / FAWE.
+  # Список запрещенных команд от WE / FAWE.
+  #--------------------------------------------------------------------------------------
+  no_protect_cmd:
+    command_we:
+    - //set
+    - //replace
+    - //overlay
+    - //walls
+    - //deform
+    - //fill
+    - //fillr
+    - //fixlava
+    - //hollow
+    - //move
+    - //stack
+    - //smooth
+    - //cut
+    - //replacenear
+    command_c:
+    - //cyl
+    - //hcyl
+    - //drain
+    - //rep
+    command_p:
+    - //pyramid
+    - //hpyramid
+    command_s:
+    - //sphere
+    - //hsphere
+    command_u:
+    - //up
+    - /up
+    command_cp:
+    - //paste
+    - //place
+    - //replacenear
+    - //hollow
+    
+  #--------------------------------------------------------------------------------------
+  # Turn Enable/Disable the notification if player try to use in the protected region WE\FAWE command.
+  # Включить/Выключить оповещение в консоль и админу если игрок попытался использовать команду в защищенном регионе.
+  #--------------------------------------------------------------------------------------
+  spy_command:
+    notify:
+      # Enable notify to console and admin.
+      # Включение оповещения в консоль и администратору.
+      console: true
+      admin: true
+      # Sound notify to admin.
+      # Звуковое оповещение администратора.
+      sound: true
+      # All sounds can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+      # Все звуки из 1.17.1 могут быть найдены тут: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+      type: BLOCK_ANVIL_PLACE
+    command_list:
+    - //set
+    - //replace
+    - //overlay
+    - //walls
+    - //deform
+    - //fill
+    - //fillr
+    - //fixlava
+    - //hollow
+    - //move
+    - //stack
+    - //smooth
+    - //cut
+    - //replacenear
+
+  #--------------------------------------------------------------------------------------
+  # Turn Enable/Disable the protected region message.
+  # Включить/Выключить сообщение о защищенном регионе.
+  #--------------------------------------------------------------------------------------
+  protect_message: true
+  #--------------------------------------------------------------------------------------
+  # Turn Enable/Disable the protected region message when using the WE\FAWE commands.
+  # Включить/Выключить сообщение о защищенном регионе при использовании команд WE\FAWE.
+  #--------------------------------------------------------------------------------------
+  protect_we_message: true
+
+  dataSource:
+    enable: false
+    database: database
+    host: 127.0.0.1
+    port: 3306
+    user: root
+    password: root
+    tables: tableName
+    useSsl: true
+
+    #--------------------------------------------------------------------------------------
+    # Pool settings...
+    #--------------------------------------------------------------------------------------
+    maxPoolSize: 10
+    maxLifetime: 1800
+    connectionTimeout: 5000
+    intervalReload: 60

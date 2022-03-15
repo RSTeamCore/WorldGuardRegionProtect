@@ -1,4 +1,4 @@
-package net.ritasister.util;
+package net.ritasister.rslibs.api;
 
 public interface IUtilPermissions {
 	String commandWGRP=("wgrp.command.wgrpbase");

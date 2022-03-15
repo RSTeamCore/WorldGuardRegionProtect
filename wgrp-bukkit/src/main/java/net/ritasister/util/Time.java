@@ -15,9 +15,9 @@ public class Time {
                 output = String.valueOf(day);
                 output = output + " ";
                 output = output + StringUtils.formatPlural(day,
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralDay1(),
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralDay2(),
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralDay3());
+                        WorldGuardRegionProtect.utilConfigMessage.pluralDay1,
+                        WorldGuardRegionProtect.utilConfigMessage.pluralDay2,
+                        WorldGuardRegionProtect.utilConfigMessage.pluralDay3);
                 output = output + " ";
                 --depth;
             }
@@ -26,9 +26,9 @@ public class Time {
                 output = output + hour;
                 output = output + " ";
                 output = output + StringUtils.formatPlural(hour,
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralHour1(),
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralHour1(),
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralHour1());
+                        WorldGuardRegionProtect.utilConfigMessage.pluralHour1,
+                        WorldGuardRegionProtect.utilConfigMessage.pluralHour2,
+                        WorldGuardRegionProtect.utilConfigMessage.pluralHour3);
                 output = output + " ";
                 --depth;
             }
@@ -37,10 +37,10 @@ public class Time {
                 output = output + min;
                 output = output + " ";
                 output = output + StringUtils.formatPlural(min, accusative ?
-                                WorldGuardRegionProtect.instance.utilConfigMessage.getPluralMinute1() :
-                                WorldGuardRegionProtect.instance.utilConfigMessage.getPluralMinute2(),
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralMinute3(),
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralMinute4());
+                                WorldGuardRegionProtect.utilConfigMessage.pluralMinute1 :
+                                WorldGuardRegionProtect.utilConfigMessage.pluralMinute2,
+                        WorldGuardRegionProtect.utilConfigMessage.pluralMinute3,
+                        WorldGuardRegionProtect.utilConfigMessage.pluralMinute4);
                 output = output + " ";
                 --depth;
             }
@@ -49,14 +49,14 @@ public class Time {
                 output = output + sec;
                 output = output + " ";
                 output = output + StringUtils.formatPlural(sec, accusative ?
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralSecond1() :
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralSecond2(),
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralSecond3(),
-                        WorldGuardRegionProtect.instance.utilConfigMessage.getPluralSecond4());
+                        WorldGuardRegionProtect.utilConfigMessage.pluralSecond1 :
+                        WorldGuardRegionProtect.utilConfigMessage.pluralSecond2,
+                        WorldGuardRegionProtect.utilConfigMessage.pluralSecond3,
+                        WorldGuardRegionProtect.utilConfigMessage.pluralSecond4);
                 --depth;
             }
         } else {
-            output = WorldGuardRegionProtect.instance.utilConfigMessage.getPluralTimeEmpty();
+            output = WorldGuardRegionProtect.utilConfigMessage.pluralTimeEmpty;
         }
 
         return output.trim();

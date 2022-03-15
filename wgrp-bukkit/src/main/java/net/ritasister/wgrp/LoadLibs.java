@@ -8,7 +8,7 @@ public class LoadLibs {
 	@SuppressWarnings("null")
 	public static void loadWorldGuard() {
         final String s = "WorldGuard";
-        final Plugin plg = WorldGuardRegionProtect.instance.getServer().getPluginManager().getPlugin(s);
+        final Plugin plg = WorldGuardRegionProtect.getInstance().getServer().getPluginManager().getPlugin(s);
         if (plg != null && plg.isEnabled()) {
             try{
                 msgSuccess();
