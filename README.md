@@ -1,9 +1,16 @@
 # WorldGuardRegionProtect - Advanced secure for region from WorldGuard
-
-[![Build Status](https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/badge/icon)](https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/)
-
-## Social
-[Discord](https://discord.gg/kvqvA3GTVF)
+<p align="center">
+<a href="https://www.spigotmc.org/resources/81321/"><img src="https://img.shields.io/spiget/downloads/81321?label=Spigot%20downloads" alt="Spigot downloads"></a>
+<a href="https://www.spigotmc.org/resources/81321/"><img src="https://img.shields.io/spiget/rating/81321?label=Spigot%20rating" alt="Spigot rating"></a>
+</p>
+<p align="center">
+<a href="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/"><img src="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/badge/icon" alt="Build Status"></a>
+<a href="https://github.com/RitaSister/WorldGuardRegionProtect/release"><img src="https://img.shields.io/github/release/RitaSister/WorldGuardRegionProtect.svg" alt="Current Release"></a>
+<a href="https://github.com/RitaSister/WorldGuardRegionProtect/graphs/contributors"><img src="https://img.shields.io/github/contributors/RitaSister/WorldGuardRegionProtect.svg" alt="Contributors"></a>
+<a href="https://github.com/RitaSister/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>
+<a href="https://github.com/RitaSister/WorldGuardRegionProtect/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/RitaSister/WorldGuardRegionProtect.svg" alt="License"></a>
+</p>
+<p align="center"><a href="https://discord.com/invite/kvqvA3GTVF"><img src="https://discordapp.com/api/guilds/186794372468178944/embed.png" alt="Discord embed"></a></p>
 
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
