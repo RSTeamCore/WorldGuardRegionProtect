@@ -1,6 +1,6 @@
 package net.ritasister.util.config;
 
-import net.ritasister.rslibs.api.ChatApi;
+import net.ritasister.rslibs.chat.api.ChatApi;
 import net.ritasister.util.UtilLoadConfig;
 import org.bukkit.configuration.ConfigurationSection;
 

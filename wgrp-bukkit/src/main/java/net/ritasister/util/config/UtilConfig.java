@@ -1,6 +1,7 @@
 package net.ritasister.util.config;
 
 import net.ritasister.util.UtilLoadConfig;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
@@ -47,8 +48,8 @@ public final class UtilConfig {
 	public final int intervalReload;
 
 	@SuppressWarnings("unchecked")
-	public UtilConfig() {
-		this.configVersion = getPatch().getString("config_version");
+	public UtilConfig(WorldGuardRegionProtect instance) {
+		this.configVersion = instance.getConfig().getString("config_version");
 
 		this.regionProtect = (List<String>) getPatch().getList("region_protect", new ArrayList<String>());
 		this.regionProtectAllow = (List<String>) getPatch().getList("region_protect_allow", new ArrayList<String>());
@@ -92,6 +93,6 @@ public final class UtilConfig {
 	}
 
 	public String getConfigVersion() {
-		return "1.1";
+		return configVersion;
 	}
 }

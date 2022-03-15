@@ -28,14 +28,18 @@ public class UtilLoadConfig {
 
 	public static void initConfig() {
 		LoadConfig(WorldGuardRegionProtect.getInstance(), true);
+		WorldGuardRegionProtect.utilConfig = new UtilConfig(WorldGuardRegionProtect.getInstance());
+
 		LoadMSGConfig(WorldGuardRegionProtect.getInstance(), true);
+		WorldGuardRegionProtect.utilConfigMessage = new UtilConfigMessage();
+
 		RSLogger.info("&2All configs load successfully!");
 	}
 
 	public static void LoadConfig(WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
 		configf = new File(worldGuardRegionProtect.getDataFolder(), "config.yml");
 		//rename old config
-		if (configf.exists() && WorldGuardRegionProtect.utilConfig.configVersion == null) {
+		if (configf.exists() && WorldGuardRegionProtect.utilConfig.configVersion != null) {
 			try {
 				Files.move(configf.toPath(), new File(configf.getParentFile(), "config.old." + System.nanoTime()).toPath(), StandardCopyOption.REPLACE_EXISTING);
 			}catch(IOException e) {
@@ -44,7 +48,7 @@ public class UtilLoadConfig {
 			WorldGuardRegionProtect.getInstance().reloadConfig();
 			if (!WorldGuardRegionProtect.utilConfig.configVersion.equals(WorldGuardRegionProtect.utilConfig.getConfigVersion())) {
 				RSLogger.info("Конфиг был обновлен. Проверьте новые значения");
-				saveMsgConfig();
+				WorldGuardRegionProtect.getInstance().reloadConfig();
 			}
 		}
 		if (!configf.exists()) {
