@@ -17,9 +17,9 @@ dependencies {
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
     //WorldGuard 7+
-    implementation("com.sk89q.worldguard:worldguard-bukkit:7.0.4")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
     //Paper 1.17.1
-    implementation("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
     "shadeOnly"("org.bstats:bstats-bukkit:3.0.0")
 }
 
