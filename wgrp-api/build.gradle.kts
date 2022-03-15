@@ -3,6 +3,9 @@ plugins {
     `maven-publish`
 }
 
+group = "net.ritasister"
+version = "0.7.1-pre6"
+
 dependencies {
     //WorldGuard 7+
     implementation("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
@@ -14,8 +17,8 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             groupId = group as String?
-            artifactId = property("name") as String
-            version = property("projectVersion") as String // from gradle.properties
+            artifactId = "YourArtifactName"
+            version = project.version as String?
 
             from(components["java"])
         }
@@ -24,9 +27,8 @@ publishing {
     repositories {
         val mavenUrl: String? by project
         val mavenSnapshotUrl: String? by project
-        val projectVersion = project.version
 
-        (if(projectVersion.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
+        (if(version.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
             maven(url) {
                 val mavenUsername: String? by project
                 val mavenPassword: String? by project
