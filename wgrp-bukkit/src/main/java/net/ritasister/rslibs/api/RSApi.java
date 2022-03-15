@@ -1,8 +1,13 @@
 package net.ritasister.rslibs.api;
 
-import java.util.Arrays;
-import java.util.List;
-
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import net.ritasister.rslibs.chat.api.ChatApi;
+import net.ritasister.rslibs.permissions.IUtilPermissions;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -12,12 +17,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.managers.RegionManager;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import java.util.Arrays;
+import java.util.List;
 
 public class RSApi {
 
@@ -227,9 +228,8 @@ public class RSApi {
 	 */
 	public static boolean isVersionSupported(){
 		List<String> supportedVersions = Arrays.asList(
-				"v1_13_R1", "v1_13_R2", "v1_14_R1",
-				"v1_15_R1", "v1_16_R1", "v1_16_R2",
-				"v1_16_R3", "v1_17_R1", "v1_18_R1", "v1_18_R2");
+				"v1_16_R1", "v1_16_R2", "v1_16_R3",
+				"v1_17_R1", "v1_18_R1", "v1_18_R2");
 		String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 		try {
 			long time = System.currentTimeMillis();
@@ -248,11 +248,9 @@ public class RSApi {
 		}
 		return false;
 	}
-	public static boolean isVersion_V1_13(){
+	public static boolean isVersionV1_16(){
 		List<String> supportedVersions = Arrays.asList(
-				"v1_13_R1", "v1_13_R2", "v1_14_R1",
-				"v1_15_R1", "v1_16_R1", "v1_16_R2",
-				"v1_16_R3");
+				"v1_16_R1", "v1_16_R2", "v1_16_R3");
 		String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 		try {
 			long time = System.currentTimeMillis();
@@ -271,7 +269,7 @@ public class RSApi {
 		}
 		return false;
 	}
-	public static boolean isVersion_V1_17(){
+	public static boolean isVersionV1_17(){
 		List<String> supportedVersions = Arrays.asList(
 				"v1_17_R1", "v1_18_R1", "v1_18_R2");
 		String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];

@@ -1,7 +1,7 @@
 package net.ritasister.wgrp;
 
-import org.bukkit.plugin.*;
 import net.ritasister.rslibs.api.RSLogger;
+import org.bukkit.plugin.Plugin;
 
 public class LoadLibs {
 
@@ -19,8 +19,7 @@ public class LoadLibs {
             }
         }
     }
-	private static void msgSuccess()
-	{
+	private static void msgSuccess() {
         RSLogger.info("&2Plugin: WorldGuard loaded successful!.");
     }
 }

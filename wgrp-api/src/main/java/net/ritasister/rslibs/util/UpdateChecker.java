@@ -1,13 +1,13 @@
-package net.ritasister.rslibs.utils;
+package net.ritasister.rslibs.util;
+
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Consumer;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
-
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Consumer;
 
 public class UpdateChecker {
 	private JavaPlugin plugin;

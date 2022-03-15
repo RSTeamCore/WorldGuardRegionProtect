@@ -1,5 +1,7 @@
 package net.ritasister.rslibs.api;
 
+import net.ritasister.rslibs.chat.api.ChatApi;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
