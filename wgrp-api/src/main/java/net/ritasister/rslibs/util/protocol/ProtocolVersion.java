@@ -1,4 +1,4 @@
-package net.ritasister.rslibs.utils.protocol;
+package net.ritasister.rslibs.util.protocol;
 
 /**
  * Enum class representing all possibly used protocol versions
