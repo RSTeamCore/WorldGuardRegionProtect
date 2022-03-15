@@ -1,10 +1,10 @@
-import org.ajoberstar.grgit.Grgit
-
 plugins {
-    id ("org.ajoberstar.grgit") version "2.3.0"
+    java
+    `maven-publish`
 }
 
 allprojects {
+    apply(plugin = "maven-publish")
     group = "net.ritasister"
     version = property("projectVersion") as String // from gradle.properties
 }
@@ -20,12 +20,32 @@ logger.lifecycle("""
 *******************************************
 """)
 
-if (!project.hasProperty("gitCommitHash")) {
-    apply(plugin = "org.ajoberstar.grgit")
-    ext["gitCommitHash"] = try {
-        Grgit.open(mapOf("currentDir" to project.rootDir))?.head()?.abbreviatedId
-    } catch (e: Exception) {
-        logger.warn("Error getting commit hash", e)
-        "no.git.id"
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            groupId = group as String?
+            artifactId = property("name") as String
+            version = property("projectVersion") as String // from gradle.properties
+
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        val mavenUrl: String? by project
+        val mavenSnapshotUrl: String? by project
+
+        (if(version.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
+            maven(url) {
+                val mavenUsername: String? by project
+                val mavenPassword: String? by project
+                if(mavenUsername != null && mavenPassword != null) {
+                    credentials {
+                        username = mavenUsername
+                        password = mavenPassword
+                    }
+                }
+            }
+        }
     }
 }
