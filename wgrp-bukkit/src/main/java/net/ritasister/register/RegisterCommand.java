@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class RegisterCommand {
 
-	public void RegisterCommands() {
+	public static void RegisterCommands() {
 		try{
 			Objects.requireNonNull(WorldGuardRegionProtect.getInstance().getCommand(UtilCommandList.worldGuardRegionProtect)).setExecutor(new CommandWGRP());
 			RSLogger.info("&2All commands load successfully!");
