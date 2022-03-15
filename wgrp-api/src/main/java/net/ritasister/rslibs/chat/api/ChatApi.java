@@ -1,4 +1,4 @@
-package net.ritasister.rslibs.api;
+package net.ritasister.rslibs.chat.api;
 
 import org.bukkit.ChatColor;
 
