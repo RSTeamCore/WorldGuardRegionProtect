@@ -77,7 +77,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
             RSLogger.info("This is a latest stable build.");
         }
     }
-
+    //test
     private void checkStartUpVersionServer() {
         if (!RSApi.isVersionSupported()) {
             RSLogger.err("This plugin version work only on 1.16+!");
