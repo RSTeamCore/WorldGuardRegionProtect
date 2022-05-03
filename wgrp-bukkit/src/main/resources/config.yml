@@ -170,7 +170,7 @@ worldguard_protect_region:
     port: 3306
     user: root
     password: root
-    tables: wgrp_logs
+    table: wgrp_logs
     useSsl: true
 
     #--------------------------------------------------------------------------------------
