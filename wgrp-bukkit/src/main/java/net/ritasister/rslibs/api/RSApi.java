@@ -8,6 +8,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import net.ritasister.rslibs.chat.api.ChatApi;
 import net.ritasister.rslibs.permissions.IUtilPermissions;
+import net.ritasister.util.Time;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -18,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class RSApi {
@@ -246,5 +248,11 @@ public class RSApi {
 			}
 		}
 		return false;
+	}
+
+	public static String getTime() {
+		Date date = new Date();
+		final long currentTime = (System.currentTimeMillis() - date.getTime()) / 1000L;
+		return Time.getTimeToString((int)currentTime, 1, true);
 	}
 }
