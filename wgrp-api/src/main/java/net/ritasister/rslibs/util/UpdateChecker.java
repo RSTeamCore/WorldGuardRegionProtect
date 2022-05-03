@@ -17,7 +17,7 @@ public class UpdateChecker {
         this.plugin = plugin;
         this.resourceId = resourceId;
     }
-    /*
+    /**
 	 * Method checker if plugin have a last version.
 	 * 
 	 * @param consumer
