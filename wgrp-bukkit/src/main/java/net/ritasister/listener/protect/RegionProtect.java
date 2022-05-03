@@ -3,7 +3,6 @@ package net.ritasister.listener.protect;
 import net.ritasister.rslibs.api.RSApi;
 import net.ritasister.rslibs.permissions.IUtilPermissions;
 import net.ritasister.rslibs.util.wg.Iwg;
-import net.ritasister.util.Time;
 import net.ritasister.util.wg.wg7;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Location;
@@ -24,7 +23,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.event.world.StructureGrowEvent;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,7 +58,7 @@ public class RegionProtect implements Listener {
 			e.setCancelled(false);
 		} else if (RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
 			final Player p = e.getPlayer();
-			if (!RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null)) {{
+			if (!RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null)) {{
 					e.setCancelled(true);
 					if (WorldGuardRegionProtect.utilConfig.regionMessageProtect) {
 						p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsg);
@@ -68,11 +66,12 @@ public class RegionProtect implements Listener {
 				}
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
-			if(RSApi.isAuthListenerPermission(admin, IUtilPermissions.spyAdminForSuspect, null)) {
+			if(RSApi.isSenderListenerPermission(admin, IUtilPermissions.spyAdminForSuspect, null)) {
 				RSApi.notifyIfBreakInRegion(admin, player, playerName, RSApi.getTime(), regionName, x, y, z, world);
 			}
 		}
 	}
+
 	@EventHandler(priority = EventPriority.LOW)
 	private void denyPlace(final BlockPlaceEvent e) {
 		final Player admin = e.getPlayer();
@@ -90,14 +89,14 @@ public class RegionProtect implements Listener {
 		} else if (RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)
 				|| RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtectAllow)) {
 			final Player p = e.getPlayer();
-			if (RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null)) return;{
+			if (RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null)) return;{
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtect) {
 					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsg);
 				}
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
-			if(RSApi.isAuthListenerPermission(admin, IUtilPermissions.spyAdminForSuspect, null)) {
+			if(RSApi.isSenderListenerPermission(admin, IUtilPermissions.spyAdminForSuspect, null)) {
 				RSApi.notifyIfPlaceInRegion(admin, player, playerName, RSApi.getTime(), regionName, x, y, z, world);
 			}
 		}
@@ -107,7 +106,7 @@ public class RegionProtect implements Listener {
 		final Player p = e.getPlayer();
 		final Location loc = e.getBlockClicked().getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
-			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, WorldGuardRegionProtect.utilConfigMessage.wgrpMsg))return;{
+			if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, WorldGuardRegionProtect.utilConfigMessage.wgrpMsg))return;{
 				if (e.getBlockClicked().getType() == Material.LAVA_BUCKET
 						|| e.getBlockClicked().getType() == Material.WATER_BUCKET
 						|| e.getBlockClicked().getType() == Material.BUCKET) {
@@ -122,7 +121,7 @@ public class RegionProtect implements Listener {
 		Entity attacker = e.getDamager();
 		final Location loc = entity.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
-			if(RSApi.isAuthListenerPermission(attacker, IUtilPermissions.regionProtect, null))return;{
+			if(RSApi.isSenderListenerPermission(attacker, IUtilPermissions.regionProtect, null))return;{
 				if (entity instanceof ArmorStand
 						|| entity instanceof ItemFrame
 						|| entity instanceof Painting
@@ -144,7 +143,7 @@ public class RegionProtect implements Listener {
 		final Player player = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
 		if(RSApi.checkStandingRegion(clickLoc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
-			if(RSApi.isAuthListenerPermission(player, IUtilPermissions.regionProtect, null))return;{
+			if(RSApi.isSenderListenerPermission(player, IUtilPermissions.regionProtect, null))return;{
 				if(e.getRightClicked().getType() == EntityType.ITEM_FRAME
 						|| e.getRightClicked().getType() == EntityType.GLOW_ITEM_FRAME
 						&& this.wg.wg(player.getWorld(), player.getLocation())) {
@@ -158,7 +157,7 @@ public class RegionProtect implements Listener {
 		final Player p = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
 		if(RSApi.checkStandingRegion(clickLoc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
-			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
+			if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 				if(e.getRightClicked().getType() == EntityType.ARMOR_STAND 
 						&& this.wg.wg(p.getWorld(), clickLoc)) {e.setCancelled(true);}
 			}
@@ -172,7 +171,7 @@ public class RegionProtect implements Listener {
 	private void denyInteract(final PlayerInteractEvent e) {
 		if (e.getItem() != null) {
 			Player p = e.getPlayer();
-			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
+			if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 				for(String spawnEntityType : WorldGuardRegionProtect.utilConfig.spawnEntityType) {
 					if(e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase()) &&
 							e.getClickedBlock() != null && this.wg.wg(p.getWorld(), e.getClickedBlock().getLocation())) {
@@ -189,7 +188,7 @@ public class RegionProtect implements Listener {
 		final Location loc = entity.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
 			assert attacker != null;
-			if(RSApi.isAuthListenerPermission(attacker, IUtilPermissions.regionProtect, null))return;{
+			if(RSApi.isSenderListenerPermission(attacker, IUtilPermissions.regionProtect, null))return;{
 				if (Objects.requireNonNull(e.getRemover()).getType() == EntityType.PLAYER) {
 					e.setCancelled(true);
 				}
@@ -213,7 +212,7 @@ public class RegionProtect implements Listener {
 		final Player p = e.getPlayer();
 		final Location loc = entity.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
-			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
+			if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 				if (p.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
 						|| p.getInventory().getItemInMainHand().getType() == Material.GLOW_ITEM_FRAME
 						|| p.getInventory().getItemInMainHand().getType() == Material.PAINTING) {
@@ -232,13 +231,14 @@ public class RegionProtect implements Listener {
 					|| e.getEntityType() == EntityType.MINECART_TNT) {e.blockList().clear();}
 		}
 	}
+
 	@EventHandler(priority=EventPriority.NORMAL)
 	public void denyExplodeRespawnAnchor(final BlockExplodeEvent e) {
-		final Block b = e.getBlock();
-		final Location loc = b.getLocation();
+		final Block block = e.getBlock();
+		final Location loc = block.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
-			if(b.getType() == null)return;{
-				if(b.getType() == Material.RESPAWN_ANCHOR) return;{
+			if(block.getType() != null)return;{
+				if(block.getType() == Material.RESPAWN_ANCHOR) return;{
 					e.setCancelled(true);
 				}
 			}
@@ -251,7 +251,7 @@ public class RegionProtect implements Listener {
 		final String[] s = e.getMessage().toLowerCase().split(" ");
 		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
 		final String playerName = p.getName();
-		if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
+		if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 			if (this.cmdWE(s[0]) && this.wg.checkIntersection(p)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
