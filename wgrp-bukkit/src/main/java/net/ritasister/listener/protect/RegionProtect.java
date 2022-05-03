@@ -152,7 +152,7 @@ public class RegionProtect implements Listener {
 		if(RSApi.checkStandingRegion(clickLoc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
 			if(RSApi.isAuthListenerPermission(player, IUtilPermissions.regionProtect, null))return;{
 				if(e.getRightClicked().getType() == EntityType.ITEM_FRAME
-						|| e.getRightClicked().getType() == EntityType.GLOW_ITEM_FRAME && RSApi.isVersionV1_17()
+						|| e.getRightClicked().getType() == EntityType.GLOW_ITEM_FRAME
 						&& this.wg.wg(player.getWorld(), player.getLocation())) {
 					e.setCancelled(true);
 				}
@@ -222,7 +222,7 @@ public class RegionProtect implements Listener {
 			assert p != null;
 			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 				if (p.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
-						|| p.getInventory().getItemInMainHand().getType() == Material.GLOW_ITEM_FRAME && RSApi.isVersionV1_17()
+						|| p.getInventory().getItemInMainHand().getType() == Material.GLOW_ITEM_FRAME
 						|| p.getInventory().getItemInMainHand().getType() == Material.PAINTING) {
 					e.setCancelled(true);
 				}
