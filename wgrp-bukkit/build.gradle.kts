@@ -5,22 +5,53 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
+group = "net.ritasister"
+
 configurations {
     compileClasspath.get().extendsFrom(create("shadeOnly"))
 }
 
 dependencies {
     api(project(":wgrp-api"))
-
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:3.0.4")
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
-    //Paper 1.17.1
+    //Paper 1.18+
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     "shadeOnly"("org.bstats:bstats-bukkit:3.0.0")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            groupId = project.group as String?
+            artifactId = project.group as String?
+            version = project.version as String?
+
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        val mavenUrl: String? by project
+        val mavenSnapshotUrl: String? by project
+
+        (if(version.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
+            maven(url) {
+                val mavenUsername: String? by project
+                val mavenPassword: String? by project
+                if(mavenUsername != null && mavenPassword != null) {
+                    credentials {
+                        username = mavenUsername
+                        password = mavenPassword
+                    }
+                }
+            }
+        }
+    }
 }
 
 tasks.compileJava {
@@ -61,9 +92,6 @@ tasks.withType<Jar>() {
         if(file.name.contains("HikariCP"))
             from(zipTree(file.absoluteFile))
     }
-}
-repositories {
-    mavenCentral()
 }
 
 tasks.named("assemble").configure {
