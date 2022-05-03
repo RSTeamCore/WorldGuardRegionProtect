@@ -18,7 +18,7 @@ worldguard_protect_region:
   - pvp
 
   #--------------------------------------------------------------------------------------
-  # List of protected regions where breaking is allowed with the 'build allow'flag.
+  # List of protected regions where breaking is allowed with the 'build allow' flag.
   # If regions are not needed, specify an empty parameter:
   # region_protect_allow: []
   #--------------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ worldguard_protect_region:
   region_protect_allow: []
 
   #--------------------------------------------------------------------------------------
-  # List of protected regions where only breaking is allowed with the 'build allow'flag.
+  # List of protected regions where only breaking is allowed with the 'build allow' flag.
   # If regions are not needed, specify an empty parameter:
   # region_protect_only_break_allow: []
   #-------------------------------------------------------------
@@ -170,7 +170,7 @@ worldguard_protect_region:
     port: 3306
     user: root
     password: root
-    tables: tableName
+    tables: wgrp_logs
     useSsl: true
 
     #--------------------------------------------------------------------------------------
