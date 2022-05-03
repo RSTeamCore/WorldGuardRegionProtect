@@ -37,7 +37,7 @@ public final class UtilConfig {
 	public final String port;
 	public final String user;
 	public final String password;
-	public final String tables;
+	public final String table;
 	public final boolean useSsl;
 
 	//Pool settings
@@ -79,7 +79,7 @@ public final class UtilConfig {
 		this.port = getPatch().getString("dataSource.user");
 		this.user = getPatch().getString("dataSource.password");
 		this.password = getPatch().getString("dataSource.");
-		this.tables = getPatch().getString("dataSource.tables");
+		this.table = getPatch().getString("dataSource.table");
 		this.useSsl = getPatch().getBoolean("dataSource.useSsl");
 
 		this.maxPoolSize = getPatch().getInt("dataSource.maxPoolSize");
