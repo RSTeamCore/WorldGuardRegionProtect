@@ -13,7 +13,7 @@ dependencies {
     api(project(":wgrp-api"))
 
     //MariaDB for DataBase
-    implementation("org.mariadb.jdbc:mariadb-java-client:2.7.3")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.0.4")
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
     //WorldGuard 7+
@@ -61,6 +61,9 @@ tasks.withType<Jar>() {
         if(file.name.contains("HikariCP"))
             from(zipTree(file.absoluteFile))
     }
+}
+repositories {
+    mavenCentral()
 }
 
 tasks.named("assemble").configure {

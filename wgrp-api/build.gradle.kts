@@ -4,7 +4,6 @@ plugins {
 }
 
 group = "net.ritasister"
-version = "0.7.1"
 
 dependencies {
     //WorldGuard 7+
@@ -17,7 +16,7 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             groupId = group as String?
-            artifactId = "YourArtifactName"
+            artifactId = "net.ritasister"
             version = project.version as String?
 
             from(components["java"])
