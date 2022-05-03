@@ -29,7 +29,7 @@ public class CommandWGRP extends CmdExecutor {
 		final boolean sp = sender instanceof Player;
 		UtilConfig configPatch = WorldGuardRegionProtect.utilConfig;
 		FileConfiguration getConfig = WorldGuardRegionProtect.getInstance().getConfig();
-		if(sp && !RSApi.isAuthCommandsPermission((Player)sender, cmd, IUtilPermissions.commandWGRP,
+		if(sp && !RSApi.isSenderCommandsPermission((Player)sender, cmd, IUtilPermissions.commandWGRP,
 				WorldGuardRegionProtect.utilConfigMessage.noPerm)) {return;}{
 			if(args.length <= 1) {
 				runCommand(sender, cmd, args, configPatch, getConfig);
@@ -66,8 +66,8 @@ public class CommandWGRP extends CmdExecutor {
 
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Player player, Command cmd, String label, String[] args) {
-		if (args.length == 1 && RSApi.isAuthCommandsPermissionsOnTab(sender, IUtilPermissions.commandWGRP)) {
-			return RSApi.isAuthCommandsPermissionsOnTab(sender, IUtilPermissions.commandWGRP) && sender instanceof Player ?
+		if (args.length == 1 && RSApi.isSenderCommandsPermissionOnTab(sender, IUtilPermissions.commandWGRP)) {
+			return RSApi.isSenderCommandsPermissionOnTab(sender, IUtilPermissions.commandWGRP) && sender instanceof Player ?
 					StringUtil.copyPartialMatches(args[0], subCommand, new ArrayList<>()) : new ArrayList<>();
 		}else{
 			return Collections.emptyList();
