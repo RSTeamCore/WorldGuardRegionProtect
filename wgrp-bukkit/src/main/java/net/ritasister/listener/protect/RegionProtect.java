@@ -51,9 +51,6 @@ public class RegionProtect implements Listener {
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
 		final String regionName = RSApi.getProtectRegionName(loc);
-		Date date = new Date();
-		final long currentTime = (System.currentTimeMillis() - date.getTime()) / 1000L;
-		String time = Time.getTimeToString((int)currentTime, 1, true);
 		double x = b.getX();
 		double y = b.getY();
 		double z = b.getZ();
@@ -72,7 +69,7 @@ public class RegionProtect implements Listener {
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
 			if(RSApi.isAuthListenerPermission(admin, IUtilPermissions.spyAdminForSuspect, null)) {
-				RSApi.notifyIfBreakInRegion(admin, player, playerName, time, regionName, x, y, z, world);
+				RSApi.notifyIfBreakInRegion(admin, player, playerName, RSApi.getTime(), regionName, x, y, z, world);
 			}
 		}
 	}
@@ -84,9 +81,6 @@ public class RegionProtect implements Listener {
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
 		final String regionName = RSApi.getProtectRegionName(loc);
-		Date date = new Date();
-		final long currentTime = (System.currentTimeMillis() - date.getTime()) / 1000L;
-		String time = Time.getTimeToString((int)currentTime, 1, true);
 		double x = b.getX();
 		double y = b.getY();
 		double z = b.getZ();
@@ -104,7 +98,7 @@ public class RegionProtect implements Listener {
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
 			if(RSApi.isAuthListenerPermission(admin, IUtilPermissions.spyAdminForSuspect, null)) {
-				RSApi.notifyIfPlaceInRegion(admin, player, playerName, time, regionName, x, y, z, world);
+				RSApi.notifyIfPlaceInRegion(admin, player, playerName, RSApi.getTime(), regionName, x, y, z, world);
 			}
 		}
 	}
@@ -219,7 +213,6 @@ public class RegionProtect implements Listener {
 		final Player p = e.getPlayer();
 		final Location loc = entity.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
-			assert p != null;
 			if(RSApi.isAuthListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 				if (p.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
 						|| p.getInventory().getItemInMainHand().getType() == Material.GLOW_ITEM_FRAME
