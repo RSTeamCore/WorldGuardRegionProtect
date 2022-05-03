@@ -4,13 +4,13 @@ plugins {
 }
 
 group = "net.ritasister"
-version = "0.7.1-pre6"
+version = "0.7.1"
 
 dependencies {
     //WorldGuard 7+
     implementation("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
     //Paper 1.17.1
-    implementation("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    implementation("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
 }
 
 publishing {
