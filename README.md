@@ -5,7 +5,7 @@
 </p>
 <p align="center">
 <a href="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/"><img src="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/badge/icon" alt="Build Status"></a>
-<a href="https://github.com/RitaSister/WorldGuardRegionProtect/release"><img src="https://img.shields.io/github/release/RitaSister/WorldGuardRegionProtect.svg" alt="Current Release"></a>
+<a href="https://github.com/RitaSister/WorldGuardRegionProtect/releases"><img src="https://img.shields.io/github/release/RitaSister/WorldGuardRegionProtect.svg" alt="Current Release"></a>
 <a href="https://github.com/RitaSister/WorldGuardRegionProtect/graphs/contributors"><img src="https://img.shields.io/github/contributors/RitaSister/WorldGuardRegionProtect.svg" alt="Contributors"></a>
 <a href="https://github.com/RitaSister/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>
 </p>
@@ -13,11 +13,11 @@
 
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
+* PLUGIN VERSION START OF 0.7.1-pre7 FOR 1.18 OR HIGHER CAN RUN ONLY ON JAVA 17+!
 * PLUGIN VERSION OF 0.7.1-pre5 FOR 1.16.5-1.18 OR HIGHER CAN RUN ONLY ON JAVA 16+!
 * PLUGIN VERSION OF 0.7.0 OR LOWEST FOR 1.13-1.17 CAN RUN ONLY ON JAVA 11!
 
-## FOR MINECRAFT JAVA EDITION 1.12.2!!!
-
+## IMPORTANT FOR MINECRAFT JAVA EDITION 1.12.2!!!
 * PLUGIN VERSION OF 0.7.1-pre1 FOR 1.12.2 CAN RUN ONLY ON JAVA 8 AND MC 1.12.2!
 
 ## Opportunities
@@ -51,8 +51,6 @@
 ## Old version 1.12.2!
 [bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect1-12-2/13532)
 ![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect1-12-2.svg)
-
-## Old versions
 
  You can find there:
 * [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
