@@ -57,14 +57,12 @@ public class WorldGuardRegionProtect extends JavaPlugin {
     public void onEnable() {
         setInstance(this);
         this.checkStartUpVersionServer();
-        this.checkJavaAndServerVersion();
         this.loadMetrics();
         LoadLibs.loadWorldGuard();
         UtilLoadConfig.initConfig();
         RegisterCommand.RegisterCommands();
         RegisterListener.RegisterEvents(pluginManager);
-        //I do database in next time for logs.
-        //this.loadDataBase();
+        this.loadDataBase();
         this.notifyPreBuild();
         RSLogger.info("&2created by &8[&5RitaSister&8]");
         this.checkUpdate();
@@ -72,17 +70,16 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 
     private void notifyPreBuild() {
         if(getInstance().pluginVersion.contains("pre")) {
-            RSLogger.warn("This is a test build. This build maybe will unstable!");
+            RSLogger.warn("This is a test build. This building may be unstable!");
         } else {
-            RSLogger.info("This is a latest stable build.");
+            RSLogger.info("This is the latest stable  building.");
         }
     }
-    //test
     private void checkStartUpVersionServer() {
         if (!RSApi.isVersionSupported()) {
-            RSLogger.err("This plugin version work only on 1.18+!");
-            RSLogger.err("Please read: https://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-18.81321/");
-            RSLogger.err("The main post on spigotmc and download correct version.");
+            RSLogger.err("This plugin version works only on 1.18+!");
+            RSLogger.err("Please read this thread: https://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-18.81321/");
+            RSLogger.err("The main post on spigotmc and please download the correct version.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
     }
@@ -91,39 +88,18 @@ public class WorldGuardRegionProtect extends JavaPlugin {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
                 RSLogger.info("&6==============================================");
                 RSLogger.info("&2Current version: &b<pl_ver>".replace("<pl_ver>", pluginVersion));
-                RSLogger.info("&2This is latest version plugin.".replace("<pl_ver>", pluginVersion));
+                RSLogger.info("&2This is the latest version of plugin.");
                 RSLogger.info("&6==============================================");
             }else{
                 RSLogger.info("&6==============================================");
                 RSLogger.info("&eThere is a new version update available.");
                 RSLogger.info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", pluginVersion));
                 RSLogger.info("&3New version: &b<new_pl_ver>".replace("<new_pl_ver>", version));
-                RSLogger.info("&ePlease download new version here:");
+                RSLogger.info("&eDownload new version here:");
                 RSLogger.info("&ehttps://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-17.81321/");
                 RSLogger.info("&6==============================================");
             }
         });
-    }
-    private void checkJavaAndServerVersion() {
-        final String javaVersion = System.getProperty("java.version");
-        final int dotIndex = javaVersion.indexOf('.');
-        final int endIndex = dotIndex == -1 ? javaVersion.length() : dotIndex;
-        final String version = javaVersion.substring(0, endIndex);
-        final int javaVersionNum;
-        try{
-            javaVersionNum = Integer.parseInt(version);
-        }catch(final NumberFormatException e){
-            RSLogger.warn("Failed to determine Java version; Could not parse {}".replace("{}", version) + e);
-            RSLogger.warn(javaVersion);
-            return;
-        }String serverVersion;
-        try{
-            serverVersion = instance.getServer().getClass().getPackage().getName().split("\\.")[3];
-        }catch(ArrayIndexOutOfBoundsException whatVersionAreYouUsingException){
-            return;
-        }
-        RSLogger.info("&6You are running is &ejava &6version: &e<javaVersion>".replace("<javaVersion>", String.valueOf(javaVersionNum)));
-        RSLogger.info("&6Your &eserver &6is running version: &e<serverVersion>".replace("<serverVersion>", String.valueOf(serverVersion)));
     }
     private void loadDataBase() {
         if(utilConfig.databaseEnable) {
@@ -131,12 +107,12 @@ public class WorldGuardRegionProtect extends JavaPlugin {
             dbLogsSource = new Storage();
             dbLogs.clear();
             if(dbLogsSource == null) {
-                RSLogger.err("[DataBase] Не удаётся соединиться с базой данных!");
+                RSLogger.err("[DataBase] Unable to connect to the database!");
             }
             if(dbLogsSource.load()) {
-                RSLogger.info("[DataBase] База игроков загружена.");
+                RSLogger.info("[DataBase] The player base is loaded.");
                 this.postEnable();
-                RSLogger.info("[DataBase] Продолжительность запуска: {TIME} мс.".replace("{TIME}", String.valueOf(System.currentTimeMillis() - duration_time_start)));
+                RSLogger.info("[DataBase] Startup duration: {TIME} мс.".replace("{TIME}", String.valueOf(System.currentTimeMillis() - duration_time_start)));
             }
         }
     }
@@ -144,7 +120,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
         Bukkit.getServer().getScheduler().cancelTasks(this);
         if (utilConfig.intervalReload > 0) {
             dbLogsSource.loadAsync();
-            RSLogger.info("[DataBase] База загружена асинхронно.");
+            RSLogger.info("[DataBase] The base is loaded asynchronously.");
         }
     }
     private void loadMetrics() {
