@@ -68,8 +68,8 @@ public class Storage implements StorageDataSource {
 		PreparedStatement pst = null;
 		try(Connection conn = Storage.this.getConnection()) {
 			pst = conn.prepareStatement(
-					"CREATE TABLE IF NOT EXISTS <tables> (id INT AUTO_INCREMENT, nickname VARCHAR(16) NOT NULL UNIQUE, uuid VARCHAR(36) NOT NULL UNIQUE, IPAddress VARCHAR(15) NULL, temperature INT(4) NOT NULL DEFAULT '0', parkour_passed INT(4) NOT NULL DEFAULT '0', world VARCHAR(60), x DOUBLE NOT NULL DEFAULT '0', y DOUBLE NOT NULL DEFAULT '0', z DOUBLE NOT NULL DEFAULT '0', yaw FLOAT NOT NULL DEFAULT '0', pitch FLOAT NOT NULL DEFAULT '0', CONSTRAINT table_const_prim PRIMARY KEY (id, nickname, uuid));"
-					.replace("<tables>", WorldGuardRegionProtect.utilConfig.tables));
+					"CREATE TABLE IF NOT EXISTS <table> (id INT AUTO_INCREMENT, nickname VARCHAR(16) NOT NULL UNIQUE, uniqueId VARCHAR(36) NOT NULL UNIQUE, time VARCHAR(15) NULL, action VARCHAR(5) NULL, region VARCHAR(60) NULL, world VARCHAR(60), x DOUBLE NOT NULL DEFAULT '0', y DOUBLE NOT NULL DEFAULT '0', z DOUBLE NOT NULL DEFAULT '0', yaw FLOAT NOT NULL DEFAULT '0', pitch FLOAT NOT NULL DEFAULT '0', CONSTRAINT table_const_prim PRIMARY KEY (id, nickname, uniqueId));"
+					.replace("<table>", WorldGuardRegionProtect.utilConfig.table));
 			pst.execute();
 			pst.close();
 		}catch(SQLException ex){
@@ -83,15 +83,24 @@ public class Storage implements StorageDataSource {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try(Connection conn = this.getConnection()) {
-			pst = conn.prepareStatement("SELECT * FROM <tables>;"
-					.replace("<tables>", WorldGuardRegionProtect.utilConfig.tables));
+			pst = conn.prepareStatement("SELECT * FROM <table>;"
+					.replace("<table>", WorldGuardRegionProtect.utilConfig.table));
 			rs = pst.executeQuery();
 			while(rs.next()) {
 				UUID uniqueId = UUID.fromString(rs.getString("uuid"));
 				StorageDataBase dataBase = new StorageDataBase(
-						rs.getInt("id"), 
-						rs.getString("nickname"), 
-						uniqueId);
+						rs.getInt("id"),
+						rs.getString("nickname"),
+						uniqueId,
+						rs.getString("time"),
+						rs.getString("action"),
+						rs.getString("region"),
+						rs.getString("world"),
+						rs.getDouble("x"),
+						rs.getDouble("y"),
+						rs.getDouble("z"),
+						rs.getFloat("yaw"),
+						rs.getFloat("pitch"));
 				WorldGuardRegionProtect.dbLogs.put(uniqueId, dataBase);
 			}
 			return true;
@@ -105,62 +114,82 @@ public class Storage implements StorageDataSource {
 	}
 	public void loadAsync() {
 		Bukkit.getScheduler().runTaskTimerAsynchronously(WorldGuardRegionProtect.getInstance(), () -> {
-			final HashMap<UUID, StorageDataBase> tmp_players = new HashMap<>();
-			PreparedStatement pst = null;
-			ResultSet rs = null;
-			try(Connection conn = Storage.this.getConnection()) {
-				pst = conn.prepareStatement(
-						"SELECT * FROM <tables>;"
-						.replace("<tables>", WorldGuardRegionProtect.utilConfig.tables));
-				rs = pst.executeQuery();
-				while(rs.next()) {
-					UUID uniqueId = UUID.fromString(rs.getString("uuid"));
-					StorageDataBase current_dataBase = (StorageDataBase)WorldGuardRegionProtect.dbLogs.get(uniqueId);
-					StorageDataBase dataBase = new StorageDataBase(
-							rs.getInt("id"),
-							rs.getString("nickname"),
-							uniqueId);
-					tmp_players.put(uniqueId, dataBase);
-				}
-				WorldGuardRegionProtect.dbLogs = new HashMap<>(tmp_players);
-			}catch(SQLException ex){
-				RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbLoadAsyncError);
-				ex.printStackTrace();
-			}finally{
-				Storage.this.close(rs);
-				Storage.this.close(pst);
-			}
-		}, WorldGuardRegionProtect.utilConfig.intervalReload * 20L,
+					final HashMap<UUID, StorageDataBase> tmp_players = new HashMap<>();
+					PreparedStatement pst = null;
+					ResultSet rs = null;
+					try (Connection conn = Storage.this.getConnection()) {
+						pst = conn.prepareStatement(
+								"SELECT * FROM <table>;"
+										.replace("<table>", WorldGuardRegionProtect.utilConfig.table));
+						rs = pst.executeQuery();
+						while (rs.next()) {
+							UUID uniqueId = UUID.fromString(rs.getString("uuid"));
+							StorageDataBase current_dataBase = (StorageDataBase) WorldGuardRegionProtect.dbLogs.get(uniqueId);
+							StorageDataBase dataBase = new StorageDataBase(
+									rs.getInt("id"),
+									rs.getString("nickname"),
+									uniqueId,
+									rs.getString("time"),
+									rs.getString("action"),
+									rs.getString("region"),
+									rs.getString("world"),
+									rs.getDouble("x"),
+									rs.getDouble("y"),
+									rs.getDouble("z"),
+									rs.getFloat("yaw"),
+									rs.getFloat("pitch"));
+							tmp_players.put(uniqueId, dataBase);
+						}
+						WorldGuardRegionProtect.dbLogs = new HashMap<>(tmp_players);
+					} catch (SQLException ex) {
+						RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbLoadAsyncError);
+						ex.printStackTrace();
+					} finally {
+						Storage.this.close(rs);
+						Storage.this.close(pst);
+					}
+				}, WorldGuardRegionProtect.utilConfig.intervalReload * 20L,
 				WorldGuardRegionProtect.utilConfig.intervalReload * 20L);
 	}
 
 	@Override
-	public void setUniqueID(String nickname, UUID uniqueId) {
-
-	}
-
-	@Override
-	public String getPlayerName(UUID uniqueId) {
-		return null;
-	}
-
-	@Override
-	public UUID getPlayerUniqueId(String username) {
-		return null;
+	public void logAction(String nickname, UUID uniqueId, String time, String action, String region, String world, Double x, Double y, Double z, Float yaw, Float pitch) {
+		PreparedStatement pst = null;
+		try(Connection conn = this.getConnection()) {
+				pst = conn.prepareStatement("INSERT INTO <table> (nickname, uniqueId, time, action, region, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+						.replace("<table>", WorldGuardRegionProtect.utilConfig.table));
+				pst.setString(1, nickname);
+				pst.setString(2, uniqueId.toString());
+				pst.setString(3, time);
+				pst.setString(4, action);
+				pst.setString(5, region);
+				pst.setString(6, world);
+				pst.setDouble(7, x);
+				pst.setDouble(8, y);
+				pst.setDouble(9, z);
+				pst.setFloat(10, yaw);
+				pst.setFloat(11, pitch);
+				pst.executeUpdate();
+			} catch (SQLException ex) {
+			RSLogger.err("[MySQL]  <id> "+uniqueId.toString()
+					.replace("<id>", uniqueId.toString())+ ex);
+		} finally {
+			this.close(pst);
+		}
 	}
 
 	public void close(final PreparedStatement pst) {
 		try{
 			if(pst != null) {pst.close();}
 		}catch(SQLException ex){
-			RSLogger.err("[MariaDB|PlayerData] Не удалось завершить preparedstatement!");
+			RSLogger.err("[MariaDB|PlayerData] Failed to end preparedstatement!");
 		}
 	}
 	public void close(final ResultSet rs) {
 		try{
 			if (rs != null) {rs.close();}
 		}catch(SQLException ex){
-			RSLogger.err("[MariaDB|PlayerData] Не удалось завершить resultset!");
+			RSLogger.err("[MariaDB|PlayerData] Failed to end resultset!");
 		}
 	}
 	
