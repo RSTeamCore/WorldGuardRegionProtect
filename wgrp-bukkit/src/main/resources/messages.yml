@@ -1,5 +1,5 @@
 messages:
-  config_version: 1.0
+  config-version: 1.0
   ServerMsg:
     wgrpMsg: '&8[&cWGRP&8] &aThis region is protect by server!'
     wgrpMsg_We: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
