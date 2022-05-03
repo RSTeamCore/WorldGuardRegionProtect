@@ -11,7 +11,7 @@ allprojects {
 
 logger.lifecycle("""
 *******************************************
- 1You are building WorldGuardRegionProtect!
+ You are building WorldGuardRegionProtect!
  If you encounter trouble:
  1) Try running 'build' in a separate Gradle run
  2) Use gradlew and not gradle
