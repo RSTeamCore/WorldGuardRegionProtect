@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class UtilConfig {
-
 	public String configVersion;
 
 	public List<String> regionProtect;

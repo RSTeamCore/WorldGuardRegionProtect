@@ -17,12 +17,10 @@ public class UtilLoadConfig {
 	public static File configf, messagesf;
 	public static FileConfiguration config, messages;
 	private static WorldGuardRegionProtect worldGuardRegionProtect;
-	private static UtilConfig utilConfig;
 	private static UtilConfigMessage utilConfigMessage;
 
 	public UtilLoadConfig(WorldGuardRegionProtect worldGuardRegionProtect, UtilConfig utilConfig, UtilConfigMessage utilConfigMessage) {
 		UtilLoadConfig.worldGuardRegionProtect=worldGuardRegionProtect;
-		UtilLoadConfig.utilConfig=utilConfig;
 		UtilLoadConfig.utilConfigMessage=utilConfigMessage;
 	}
 

@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class RegionProtect implements Listener {
-
 	private final WorldGuardRegionProtect worldGuardRegionProtect;
 
 	private final Iwg wg;
@@ -38,7 +37,6 @@ public class RegionProtect implements Listener {
 			"/worldguard:rg", "/worldguard:region", "/worldguard:regions");
 	private final List<String> regionEditArgs = Arrays.asList("f", "flag");
 	private final List<String> regionEditArgsFlags = Arrays.asList("-f", "-u", "-n", "-g", "-a");
-
 
 	public RegionProtect(WorldGuardRegionProtect worldGuardRegionProtect) {
 		this.worldGuardRegionProtect=worldGuardRegionProtect;

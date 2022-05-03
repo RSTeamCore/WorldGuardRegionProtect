@@ -228,8 +228,7 @@ public class RSApi {
 	 */
 	public static boolean isVersionSupported(){
 		List<String> supportedVersions = Arrays.asList(
-				"v1_16_R1", "v1_16_R2", "v1_16_R3",
-				"v1_17_R1", "v1_18_R1", "v1_18_R2");
+				"v1_18_R1", "v1_18_R2");
 		String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 		try {
 			long time = System.currentTimeMillis();

@@ -46,10 +46,10 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 
     private final PluginManager pluginManager = getServer().getPluginManager();
     private final String pluginVersion = getDescription().getVersion();
-
     public static StorageDataSource dbLogsSource;
     public static HashMap<UUID, StorageDataBase> dbLogs = new HashMap<>();
 
+    //Configs
     public static UtilConfig utilConfig;
     public static UtilConfigMessage utilConfigMessage;
 
@@ -65,12 +65,12 @@ public class WorldGuardRegionProtect extends JavaPlugin {
         RegisterListener.RegisterEvents(pluginManager);
         //I do database in next time for logs.
         //this.loadDataBase();
-        this.notifyIfIsPreBuild();
+        this.notifyPreBuild();
         RSLogger.info("&2created by &8[&5RitaSister&8]");
         this.checkUpdate();
     }
 
-    private void notifyIfIsPreBuild() {
+    private void notifyPreBuild() {
         if(getInstance().pluginVersion.contains("pre")) {
             RSLogger.warn("This is a test build. This build maybe will unstable!");
         } else {
@@ -80,7 +80,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
     //test
     private void checkStartUpVersionServer() {
         if (!RSApi.isVersionSupported()) {
-            RSLogger.err("This plugin version work only on 1.16+!");
+            RSLogger.err("This plugin version work only on 1.18+!");
             RSLogger.err("Please read: https://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-18.81321/");
             RSLogger.err("The main post on spigotmc and download correct version.");
             Bukkit.getPluginManager().disablePlugin(this);
