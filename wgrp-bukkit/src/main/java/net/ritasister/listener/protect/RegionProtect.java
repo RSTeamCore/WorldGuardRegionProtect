@@ -28,7 +28,6 @@ import java.util.Objects;
 
 public class RegionProtect implements Listener {
 	private final WorldGuardRegionProtect worldGuardRegionProtect;
-
 	private final Iwg wg;
 	private final List<String> regionCommandNameArgs = Arrays.asList(
 			"/rg", "/region", "/regions",
@@ -58,11 +57,10 @@ public class RegionProtect implements Listener {
 			e.setCancelled(false);
 		} else if (RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
 			final Player p = e.getPlayer();
-			if (!RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null)) {{
-					e.setCancelled(true);
-					if (WorldGuardRegionProtect.utilConfig.regionMessageProtect) {
-						p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsg);
-					}
+			if (!RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null)) {
+				e.setCancelled(true);
+				if (WorldGuardRegionProtect.utilConfig.regionMessageProtect) {
+					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsg);
 				}
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
@@ -159,7 +157,9 @@ public class RegionProtect implements Listener {
 		if(RSApi.checkStandingRegion(clickLoc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
 			if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
 				if(e.getRightClicked().getType() == EntityType.ARMOR_STAND 
-						&& this.wg.wg(p.getWorld(), clickLoc)) {e.setCancelled(true);}
+						&& this.wg.wg(p.getWorld(), clickLoc)) {
+					e.setCancelled(true);
+				}
 			}
 		}
 	}
@@ -172,7 +172,7 @@ public class RegionProtect implements Listener {
 		if (e.getItem() != null) {
 			Player p = e.getPlayer();
 			if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
-				for(String spawnEntityType : WorldGuardRegionProtect.utilConfig.spawnEntityType) {
+				for(String spawnEntityType : WorldGuardRegionProtect.utilConfig.interactType) {
 					if(e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase()) &&
 							e.getClickedBlock() != null && this.wg.wg(p.getWorld(), e.getClickedBlock().getLocation())) {
 						e.setCancelled(true);
@@ -228,7 +228,9 @@ public class RegionProtect implements Listener {
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
 			if(e.getEntityType() == EntityType.PRIMED_TNT 
 					|| e.getEntityType() == EntityType.ENDER_CRYSTAL 
-					|| e.getEntityType() == EntityType.MINECART_TNT) {e.blockList().clear();}
+					|| e.getEntityType() == EntityType.MINECART_TNT) {
+				e.blockList().clear();
+			}
 		}
 	}
 
@@ -252,7 +254,7 @@ public class RegionProtect implements Listener {
 		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
 		final String playerName = p.getName();
 		if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
-			if (this.cmdWE(s[0]) && this.wg.checkIntersection(p)) {
+			if (this.cmdWE(s[0]) && !this.wg.checkIntersection(p)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
 					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
@@ -324,16 +326,22 @@ public class RegionProtect implements Listener {
 							e.setCancelled(true);
 						}
 					}for (final String list : WorldGuardRegionProtect.utilConfig.regionProtectOnlyBreakAllow) {
-						if (list.equalsIgnoreCase(s[4])) {e.setCancelled(true);}
+						if (list.equalsIgnoreCase(s[4])) {
+							e.setCancelled(true);
+						}
 					}
 				}
 				if (s.length > 5 && s[3].equalsIgnoreCase("-w")
 						|| s.length > 5 && this.regionEditArgs.contains(s[4].toLowerCase())
 						|| s.length > 5 && this.regionEditArgsFlags.contains(s[4].toLowerCase())) {
 					for (final String list : WorldGuardRegionProtect.utilConfig.regionProtect) {
-						if (list.equalsIgnoreCase(s[5])) {e.setCancelled(true);}
+						if (list.equalsIgnoreCase(s[5])) {
+							e.setCancelled(true);
+						}
 					}for (final String list : WorldGuardRegionProtect.utilConfig.regionProtectOnlyBreakAllow) {
-						if (list.equalsIgnoreCase(s[5])) {e.setCancelled(true);}
+						if (list.equalsIgnoreCase(s[5])) {
+							e.setCancelled(true);
+						}
 					}
 				}
 				if (s.length > 6 && s[4].equalsIgnoreCase("-w")
@@ -341,9 +349,13 @@ public class RegionProtect implements Listener {
 						|| s.length > 6 && this.regionEditArgs.contains(s[5].toLowerCase())
 						|| s.length > 6 && this.regionEditArgsFlags.contains(s[5].toLowerCase())) {
 					for (final String list : WorldGuardRegionProtect.utilConfig.regionProtect) {
-						if (list.equalsIgnoreCase(s[6])) {e.setCancelled(true);}
+						if (list.equalsIgnoreCase(s[6])) {
+							e.setCancelled(true);
+						}
 					}for (final String list : WorldGuardRegionProtect.utilConfig.regionProtectOnlyBreakAllow) {
-						if (list.equalsIgnoreCase(s[6])) {e.setCancelled(true);}
+						if (list.equalsIgnoreCase(s[6])) {
+
+						}
 					}
 				}
 			}
@@ -353,7 +365,8 @@ public class RegionProtect implements Listener {
 		try{
 			Class.forName("com.sk89q.worldedit.math.BlockVector3");
 			return new wg7(this.worldGuardRegionProtect);
-		}catch(ClassNotFoundException ignored){}return wg;
+		}catch(ClassNotFoundException ignored){}
+		return wg;
 	}
 	private boolean cmdWE(String s) {
 		s = s.replace("worldedit:", "");
@@ -361,7 +374,8 @@ public class RegionProtect implements Listener {
 			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
 				return true;
 			}
-		}return false;
+		}
+		return false;
 	}
 	private boolean cmdWE_C(String s) {
 		s = s.replace("worldedit:", "");
