@@ -44,7 +44,6 @@ public class RegionProtect implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	private void denyBreak(final BlockBreakEvent e) {
 		final Player player = e.getPlayer();
-		final Player admin = e.getPlayer();
 		final String playerName = e.getPlayer().getPlayerProfile().getName();
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
@@ -65,8 +64,8 @@ public class RegionProtect implements Listener {
 				}
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
-			if(RSApi.isSenderListenerPermission(admin, IUtilPermissions.spyAdminForSuspect, null)) {
-				RSApi.notifyIfBreakInRegion(admin, player, playerName, RSApi.getTime(), regionName, x, y, z, world);
+			if(RSApi.isSenderListenerPermission(player, IUtilPermissions.spyAdminForSuspect, null)) {
+				RSApi.notifyIfBreakInRegion(player, player, playerName, RSApi.getTime(), regionName, x, y, z, world);
 			}
 		}
 	}
@@ -208,15 +207,15 @@ public class RegionProtect implements Listener {
 						|| entity instanceof Painting) {
 					if (attacker instanceof Player
 						|| attacker instanceof Creeper
-							|| attacker instanceof WitherSkull
-							|| attacker instanceof Fireball) {
+							|| attacker instanceof Wither
+							|| attacker instanceof Ghast) {
 						e.setCancelled(true);
 					}else if (attacker instanceof Projectile){
 						attacker = ((Projectile) attacker).getShooter() instanceof Entity ? (Entity) ((Projectile) attacker).getShooter() : null;
 						if (attacker instanceof Player
 								|| attacker instanceof Creeper
-								|| attacker instanceof WitherSkull
-								|| attacker instanceof Fireball) {
+								|| attacker instanceof Wither
+								|| attacker instanceof Ghast) {
 							e.setCancelled(true);
 						}
 					}
@@ -247,7 +246,9 @@ public class RegionProtect implements Listener {
 			if(e.getEntityType() == EntityType.PRIMED_TNT 
 					|| e.getEntityType() == EntityType.ENDER_CRYSTAL 
 					|| e.getEntityType() == EntityType.MINECART_TNT
-					|| e.getEntityType() == EntityType.CREEPER) {
+					|| e.getEntityType() == EntityType.CREEPER
+					|| e.getEntityType() == EntityType.FIREBALL
+					|| e.getEntityType() == EntityType.WITHER_SKULL) {
 				e.blockList().clear();
 			}
 		}
