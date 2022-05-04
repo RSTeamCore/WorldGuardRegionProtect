@@ -7,6 +7,15 @@ plugins {
 
 group = "net.ritasister"
 
+repositories {
+    maven ("https://repo.codemc.org/repository/maven-public")
+    //WorldGuard
+    maven ("https://maven.enginehub.org/repo/")
+    //PaperMC
+    maven ("https://papermc.io/repo/repository/maven-public/")
+    mavenCentral()
+}
+
 configurations {
     compileClasspath.get().extendsFrom(create("shadeOnly"))
 }
@@ -18,10 +27,11 @@ dependencies {
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
     //WorldGuard 7+
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Paper 1.18+
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
-    "shadeOnly"("org.bstats:bstats-bukkit:3.0.0")
+    implementation("org.bstats:bstats-bukkit:3.0.0")
+    implementation("org.bstats:bstats-base:3.0.0")
 }
 
 publishing {
@@ -80,6 +90,13 @@ tasks.named<ShadowJar>("shadowJar") {
 
     dependencies {
         include(dependency(":wgrp-api"))
+        relocate ("org.bstats", "org.bstats") {
+            include(dependency("org.bstats:bstats-bukkit"))
+            //include(dependency("org.bstats:bstats-base"))
+        }
+        relocate ("org.bstats", "org.bstats") {
+            include(dependency("org.bstats:bstats-base"))
+        }
         /*relocate ("com.zaxxer.hikari", "") {
             include(dependency("com.zaxxer:hikari"))
         }*/

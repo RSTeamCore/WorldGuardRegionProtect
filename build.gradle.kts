@@ -1,12 +1,10 @@
 plugins {
-    java
+    `java-library`
     `maven-publish`
 }
 
 allprojects {
     apply(plugin = "maven-publish")
-    group = "net.ritasister"
-    version = property("projectVersion") as String // from gradle.properties
 }
 
 logger.lifecycle("""
