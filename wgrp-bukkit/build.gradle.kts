@@ -3,6 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("xyz.jpenilla.run-paper") version "1.0.6"
 }
 
 group = "net.ritasister"
@@ -30,8 +31,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Paper 1.18+
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
-    implementation("org.bstats:bstats-bukkit:3.0.0")
-    implementation("org.bstats:bstats-base:3.0.0")
+    //shadeOnly("org.bstats:bstats-bukkit:3.0.0")
 }
 
 publishing {
@@ -64,6 +64,15 @@ publishing {
     }
 }
 
+tasks {
+    runServer {
+        // Configure the Minecraft version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        minecraftVersion("1.18.2")
+    }
+}
+
 tasks.compileJava {
     options.encoding = "UTF-8"
 }
@@ -90,13 +99,9 @@ tasks.named<ShadowJar>("shadowJar") {
 
     dependencies {
         include(dependency(":wgrp-api"))
-        relocate ("org.bstats", "org.bstats") {
+        /*relocate ("org.bstats", "org.bstats") {
             include(dependency("org.bstats:bstats-bukkit"))
-            //include(dependency("org.bstats:bstats-base"))
-        }
-        relocate ("org.bstats", "org.bstats") {
-            include(dependency("org.bstats:bstats-base"))
-        }
+        }*/
         /*relocate ("com.zaxxer.hikari", "") {
             include(dependency("com.zaxxer:hikari"))
         }*/
