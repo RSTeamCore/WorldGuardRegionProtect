@@ -8,6 +8,7 @@ import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.RespawnAnchor;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -72,9 +73,8 @@ public class RegionProtect implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW)
 	private void denyPlace(final BlockPlaceEvent e) {
-		final Player admin = e.getPlayer();
 		final Player player = e.getPlayer();
-		final String playerName = e.getPlayer().getPlayerProfile().getName();
+		final String playerName = player.getPlayerProfile().getName();
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
 		final String regionName = RSApi.getProtectRegionName(loc);
@@ -94,8 +94,8 @@ public class RegionProtect implements Listener {
 				}
 			}
 		} else if(RSApi.checkStandingRegion(loc)){
-			if(RSApi.isSenderListenerPermission(admin, IUtilPermissions.spyAdminForSuspect, null)) {
-				RSApi.notifyIfPlaceInRegion(admin, player, playerName, RSApi.getTime(), regionName, x, y, z, world);
+			if(RSApi.isSenderListenerPermission(player, IUtilPermissions.spyAdminForSuspect, null)) {
+				RSApi.notifyIfPlaceInRegion(player, player, playerName, RSApi.getTime(), regionName, x, y, z, world);
 			}
 		}
 	}
@@ -124,11 +124,17 @@ public class RegionProtect implements Listener {
 						|| entity instanceof ItemFrame
 						|| entity instanceof Painting
 						|| entity instanceof EnderCrystal) {
-					if (attacker instanceof Player) {
+					if (attacker instanceof Player
+							|| attacker instanceof Creeper
+							|| attacker instanceof Wither
+							|| attacker instanceof Ghast) {
 						e.setCancelled(true);
 					}else if (attacker instanceof Projectile){
 						attacker = ((Projectile) attacker).getShooter() instanceof Entity ? (Entity) ((Projectile) attacker).getShooter() : null;
-						if (attacker instanceof Player) {
+						if (attacker instanceof Player
+								|| attacker instanceof Creeper
+								|| attacker instanceof Wither
+								|| attacker instanceof Ghast) {
 							e.setCancelled(true);
 						}
 					}
@@ -194,11 +200,17 @@ public class RegionProtect implements Listener {
 				}
 				if (entity instanceof ItemFrame
 						|| entity instanceof Painting) {
-					if (attacker instanceof Player) {
+					if (attacker instanceof Player
+						|| attacker instanceof Creeper
+							|| attacker instanceof Wither
+							|| attacker instanceof Ghast) {
 						e.setCancelled(true);
 					}else if (attacker instanceof Projectile){
 						attacker = ((Projectile) attacker).getShooter() instanceof Entity ? (Entity) ((Projectile) attacker).getShooter() : null;
-						if (attacker instanceof Player) {
+						if (attacker instanceof Player
+								|| attacker instanceof Creeper
+								|| attacker instanceof Wither
+								|| attacker instanceof Ghast) {
 							e.setCancelled(true);
 						}
 					}
@@ -228,7 +240,8 @@ public class RegionProtect implements Listener {
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
 			if(e.getEntityType() == EntityType.PRIMED_TNT 
 					|| e.getEntityType() == EntityType.ENDER_CRYSTAL 
-					|| e.getEntityType() == EntityType.MINECART_TNT) {
+					|| e.getEntityType() == EntityType.MINECART_TNT
+					|| e.getEntityType() == EntityType.CREEPER) {
 				e.blockList().clear();
 			}
 		}
@@ -239,10 +252,9 @@ public class RegionProtect implements Listener {
 		final Block block = e.getBlock();
 		final Location loc = block.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
-			if(block.getType() != null)return;{
-				if(block.getType() == Material.RESPAWN_ANCHOR) return;{
-					e.setCancelled(true);
-				}
+			if(block.getType() == Material.RESPAWN_ANCHOR &&
+					block != null && this.wg.wg(block.getWorld(), loc))return; {
+				e.setCancelled(true);
 			}
 		}
 	}
