@@ -13,7 +13,7 @@ public final class UtilConfig {
 	public List<String> regionProtect;
 	public List<String> regionProtectAllow;
 	public List<String> regionProtectOnlyBreakAllow;
-	public List<String> spawnEntityType;
+	//public List<String> spawnEntityType;
 	public List<String> interactType;
 	public List<String> spyCommand;
 	public List<String> cmdWe;
@@ -53,7 +53,7 @@ public final class UtilConfig {
 		this.regionProtect = (List<String>) getPatch().getList("region_protect", new ArrayList<String>());
 		this.regionProtectAllow = (List<String>) getPatch().getList("region_protect_allow", new ArrayList<String>());
 		this.regionProtectOnlyBreakAllow = (List<String>) getPatch().getList(".region_protect_only_break_allow", new ArrayList<String>());
-		this.spawnEntityType = (List<String>) getPatch().getList("spawn_entity_type", new ArrayList<String>());
+		//this.spawnEntityType = (List<String>) getPatch().getList("spawn_entity_type", new ArrayList<String>());
 		this.interactType = (List<String>) getPatch().getList("interact_type", new ArrayList<String>());
 
 		this.cmdWe = (List<String>) getPatch().getList("no_protect_cmd.command_we", new ArrayList<String>());
