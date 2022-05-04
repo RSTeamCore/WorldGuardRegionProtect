@@ -49,9 +49,6 @@
 ![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg)
 
 ## Old version 1.12.2!
-[bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect1-12-2/13532)
-![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect1-12-2.svg)
-
  You can find there:
 * [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
 * [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)
