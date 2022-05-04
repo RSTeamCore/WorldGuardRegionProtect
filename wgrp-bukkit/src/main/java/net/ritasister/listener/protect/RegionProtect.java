@@ -176,11 +176,17 @@ public class RegionProtect implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyInteract(final PlayerInteractEvent e) {
 		if (e.getItem() != null) {
-			Player p = e.getPlayer();
-			if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
+			Player player = e.getPlayer();
+			if(RSApi.isSenderListenerPermission(player, IUtilPermissions.regionProtect, null))return;{
 				for(String spawnEntityType : WorldGuardRegionProtect.utilConfig.interactType) {
-					if(e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase()) &&
-							e.getClickedBlock() != null && this.wg.wg(p.getWorld(), e.getClickedBlock().getLocation())) {
+					if(e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase())
+							&& e.getClickedBlock() != null
+							&& this.wg.wg(player.getWorld(), e.getClickedBlock().getLocation())) {
+						e.setCancelled(true);
+					}else if(player.getInventory().getItemInMainHand().getType() == Material.GLOWSTONE
+							&& e.getClickedBlock() != null
+							&& e.getClickedBlock().getType() == Material.RESPAWN_ANCHOR
+							&& this.wg.wg(player.getWorld(), e.getClickedBlock().getLocation())) {
 						e.setCancelled(true);
 					}
 				}
@@ -202,15 +208,15 @@ public class RegionProtect implements Listener {
 						|| entity instanceof Painting) {
 					if (attacker instanceof Player
 						|| attacker instanceof Creeper
-							|| attacker instanceof Wither
-							|| attacker instanceof Ghast) {
+							|| attacker instanceof WitherSkull
+							|| attacker instanceof Fireball) {
 						e.setCancelled(true);
 					}else if (attacker instanceof Projectile){
 						attacker = ((Projectile) attacker).getShooter() instanceof Entity ? (Entity) ((Projectile) attacker).getShooter() : null;
 						if (attacker instanceof Player
 								|| attacker instanceof Creeper
-								|| attacker instanceof Wither
-								|| attacker instanceof Ghast) {
+								|| attacker instanceof WitherSkull
+								|| attacker instanceof Fireball) {
 							e.setCancelled(true);
 						}
 					}
@@ -221,19 +227,19 @@ public class RegionProtect implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyHangingPlace(final HangingPlaceEvent e) {
 		final Entity entity = e.getEntity();
-		final Player p = e.getPlayer();
+		final Player player = e.getPlayer();
 		final Location loc = entity.getLocation();
 		if(RSApi.checkStandingRegion(loc, WorldGuardRegionProtect.utilConfig.regionProtect)) {
-			if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
-				if (p.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
-						|| p.getInventory().getItemInMainHand().getType() == Material.GLOW_ITEM_FRAME
-						|| p.getInventory().getItemInMainHand().getType() == Material.PAINTING) {
+			if(RSApi.isSenderListenerPermission(player, IUtilPermissions.regionProtect, null))return;{
+				if (player.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
+						|| player.getInventory().getItemInMainHand().getType() == Material.GLOW_ITEM_FRAME
+						|| player.getInventory().getItemInMainHand().getType() == Material.PAINTING) {
 					e.setCancelled(true);
 				}
 			}
 		}
 	}
-	@EventHandler(priority=EventPriority.NORMAL)
+	@EventHandler(priority=EventPriority.LOWEST)
 	private void denyExplode(final EntityExplodeEvent e) {
 		final Entity entity = e.getEntity();
 		final Location loc = entity.getLocation();
@@ -247,7 +253,7 @@ public class RegionProtect implements Listener {
 		}
 	}
 
-	@EventHandler(priority=EventPriority.NORMAL)
+	@EventHandler(priority=EventPriority.LOWEST)
 	public void denyExplodeRespawnAnchor(final BlockExplodeEvent e) {
 		final Block block = e.getBlock();
 		final Location loc = block.getLocation();
@@ -260,53 +266,53 @@ public class RegionProtect implements Listener {
 	}
 	@EventHandler(priority = EventPriority.LOWEST)
     private void denyUseWEAndWGCommand(final PlayerCommandPreprocessEvent e) {
-        final Player p = e.getPlayer();
-		final Location loc = p.getLocation();
+        final Player player = e.getPlayer();
+		final Location loc = player.getLocation();
 		final String[] s = e.getMessage().toLowerCase().split(" ");
 		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
-		final String playerName = p.getName();
-		if(RSApi.isSenderListenerPermission(p, IUtilPermissions.regionProtect, null))return;{
-			if (this.cmdWE(s[0]) && !this.wg.checkIntersection(p)) {
+		final String playerName = player.getName();
+		if(RSApi.isSenderListenerPermission(player, IUtilPermissions.regionProtect, null))return;{
+			if (this.cmdWE(s[0]) && !this.wg.checkIntersection(player)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
-					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
+					player.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
 				}
-				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notify(player, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
-			}if (this.cmdWE_C(s[0]) && !this.wg.checkCIntersection(p, s)) {
+			}if (this.cmdWE_C(s[0]) && !this.wg.checkCIntersection(player, s)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
-					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
+					player.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
 				}
-				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notify(player, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
-			}if (this.cmdWE_P(s[0]) && !this.wg.checkPIntersection(p, s)) {
+			}if (this.cmdWE_P(s[0]) && !this.wg.checkPIntersection(player, s)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
-					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
+					player.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
 				}
-				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notify(player, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
-			}if (this.cmdWE_S(s[0]) && !this.wg.checkSIntersection(p, s)) {
+			}if (this.cmdWE_S(s[0]) && !this.wg.checkSIntersection(player, s)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
-					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
+					player.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
 				}
-				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notify(player, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
-			}if (this.cmdWE_U(s[0]) && !this.wg.checkUIntersection(p, s)) {
+			}if (this.cmdWE_U(s[0]) && !this.wg.checkUIntersection(player, s)) {
 				e.setCancelled(true);
 				if (WorldGuardRegionProtect.utilConfig.regionMessageProtectWe) {
-					p.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
+					player.sendMessage(WorldGuardRegionProtect.utilConfigMessage.wgrpMsgWe);
 				}
-				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notify(player, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}if (this.cmdWE_CP(s[0])) {
 				e.setMessage(e.getMessage().replace("-o", ""));
-				if (!this.wg.checkCPIntersection(p, s)) {
+				if (!this.wg.checkCPIntersection(player, s)) {
 					e.setCancelled(true);
 				}
-				RSApi.notify(p, playerName, cmd, RSApi.getProtectRegionName(loc));
+				RSApi.notify(player, playerName, cmd, RSApi.getProtectRegionName(loc));
 				RSApi.notify(playerName, cmd, RSApi.getProtectRegionName(loc));
 			}
 			if (this.regionCommandNameArgs.contains(s[0]) && s.length > 2) {
@@ -366,7 +372,6 @@ public class RegionProtect implements Listener {
 						}
 					}for (final String list : WorldGuardRegionProtect.utilConfig.regionProtectOnlyBreakAllow) {
 						if (list.equalsIgnoreCase(s[6])) {
-
 						}
 					}
 				}
