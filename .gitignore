@@ -31,3 +31,4 @@ out/
 run/
 /wgrp-api/build/
 /wgrp-bukkit/build/
+/plugin-test/
