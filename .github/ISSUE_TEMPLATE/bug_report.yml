@@ -31,8 +31,6 @@ body:
         - '1.18.2'
         - '1.18.1'
         - '1.18'
-        - '1.17.1'
-        - '1.16.5'
     validations:
       required: true
 
@@ -85,7 +83,7 @@ body:
       label: Checklist
       description: Make sure you have followed each of the steps outlined here.
       options:
-        - label: I am using the newest build from https://github.com/RitaSister/WorldGuardRegionProtect/releases/ and the issue still persists.
+        - label: I am using the newest build from https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/ and the issue still persists.
           required: true
 
   - type: textarea

@@ -13,7 +13,7 @@
 
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
-* PLUGIN VERSION START OF 0.7.1-pre7 FOR 1.18 OR HIGHER CAN RUN ONLY ON JAVA 17+!
+* PLUGIN VERSION START OF 0.7.1-pre8 FOR 1.18 OR HIGHER CAN RUN ONLY ON JAVA 17+!
 * PLUGIN VERSION OF 0.7.1-pre5 FOR 1.16.5-1.18 OR HIGHER CAN RUN ONLY ON JAVA 16+!
 * PLUGIN VERSION OF 0.7.0 OR LOWEST FOR 1.13-1.17 CAN RUN ONLY ON JAVA 11!
 
@@ -49,9 +49,6 @@
 ![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg)
 
 ## Old version 1.12.2!
-[bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect1-12-2/13532)
-![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect1-12-2.svg)
-
  You can find there:
 * [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
 * [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)
