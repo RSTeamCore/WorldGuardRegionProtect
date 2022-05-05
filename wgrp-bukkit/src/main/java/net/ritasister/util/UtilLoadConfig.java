@@ -36,66 +36,44 @@ public class UtilLoadConfig {
 
 	public static void LoadConfig(WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
 		configf = new File(worldGuardRegionProtect.getDataFolder(), "config.yml");
-		//rename old config
-		if (configf.exists() && WorldGuardRegionProtect.utilConfig.configVersion != null) {
-			try {
-				Files.move(configf.toPath(), new File(configf.getParentFile(), "config.old." + System.nanoTime()).toPath(), StandardCopyOption.REPLACE_EXISTING);
-			}catch(IOException e) {
-				e.printStackTrace();
-			}
-			WorldGuardRegionProtect.getInstance().reloadConfig();
-			if (!WorldGuardRegionProtect.utilConfig.configVersion.equals(WorldGuardRegionProtect.utilConfig.getConfigVersion())) {
-				RSLogger.info("Конфиг был обновлен. Проверьте новые значения");
-				WorldGuardRegionProtect.getInstance().reloadConfig();
-			}
-		}
 		if (!configf.exists()) {
 			if (copy) {
 				worldGuardRegionProtect.saveResource("config.yml", false);
+				RSLogger.LoadConfigMsgSuccess(configf);
 			}else{
-				try{
+				try {
 					configf.createNewFile();
 				}catch(Exception ex){
 					RSLogger.err(configf+ex.getMessage());
 					ex.printStackTrace();
 				}
 			}
-		}try{
+		}
+		try {
 			config = YamlConfiguration.loadConfiguration(configf);
 		}catch(NullPointerException e){
 			RSLogger.err(configf+e.getMessage());
 			e.printStackTrace();
 		}
-		RSLogger.LoadConfigMsgSuccess(configf);
+		RSLogger.LoadConfigMsgSuccess(messagesf);
 	}
 
 	public static void LoadMSGConfig(WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
 		messagesf = new File(worldGuardRegionProtect.getDataFolder(), "messages.yml");
-		//rename old config
-		if (messagesf.exists() && utilConfigMessage.configVersion == null) {
-			try {
-				Files.move(messagesf.toPath(), new File(messagesf.getParentFile(), "messsages.old." + System.nanoTime()).toPath(), StandardCopyOption.REPLACE_EXISTING);
-			}catch(IOException e) {
-				e.printStackTrace();
-			}
-			saveMsgConfig();
-			if (!utilConfigMessage.configVersion.equals(utilConfigMessage.getConfigVersion())) {
-				RSLogger.info("Конфиг был обновлен. Проверьте новые значения");
-				saveMsgConfig();
-			}
-		}
 		if (!messagesf.exists()) {
 			if (copy) {
 				worldGuardRegionProtect.saveResource("messages.yml", false);
+				RSLogger.LoadConfigMsgSuccess(messagesf);
 			}else{
-				try{
+				try {
 					messagesf.createNewFile();
 				}catch(Exception ex){
 					RSLogger.err(messagesf+ex.getMessage());
 					ex.printStackTrace();
 				}
 			}
-		}try{
+		}
+		try {
 			messages = YamlConfiguration.loadConfiguration(messagesf);
 		}catch(NullPointerException e){
 			RSLogger.err(messagesf+e.getMessage());
@@ -104,7 +82,7 @@ public class UtilLoadConfig {
 		RSLogger.LoadConfigMsgSuccess(messagesf);
 	}
 
-	public static void saveMsgConfig() {
+	/*public static void saveMsgConfig() {
 		if(!messagesf.exists()) {
 			LoadMSGConfig(WorldGuardRegionProtect.getInstance(), true);
 		}try{
@@ -118,7 +96,7 @@ public class UtilLoadConfig {
 			RSLogger.err("Could not load config. " + e.getMessage());
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	public static WorldGuardRegionProtect getWorldGuardRegionProtect() {
 		return worldGuardRegionProtect;
