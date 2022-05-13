@@ -2,11 +2,10 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
+    `maven-publish`
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("xyz.jpenilla.run-paper") version "1.0.6"
 }
-
-group = "net.ritasister"
 
 repositories {
     maven ("https://repo.codemc.org/repository/maven-public")
@@ -23,6 +22,7 @@ configurations {
 
 dependencies {
     api(project(":wgrp-api"))
+    compileOnlyApi ("org.yaml:snakeyaml:1.30")
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:3.0.4")
     //HikariCP
@@ -32,14 +32,15 @@ dependencies {
     //Paper 1.18+
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     //shadeOnly("org.bstats:bstats-bukkit:3.0.0")
+    //compileOnly("net.ritasister:wgrp:0.7.1-pre10")
 }
 
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            groupId = project.group as String?
-            artifactId = project.group as String?
-            version = project.version as String?
+            groupId = rootProject.group as String?
+            artifactId = "wgrp"
+            version = rootProject.version as String?
 
             from(components["java"])
         }
@@ -49,7 +50,7 @@ publishing {
         val mavenUrl: String? by project
         val mavenSnapshotUrl: String? by project
 
-        (if(version.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
+        (if(rootProject.version.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
             maven(url) {
                 val mavenUsername: String? by project
                 val mavenPassword: String? by project
