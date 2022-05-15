@@ -20,9 +20,8 @@ public class UtilConfigMessage {
 	public String configMsgReloaded;
 	public String configMsgNotFound;
 
-	public String sendAdminInfoIfUsedCommandWithRG;
-	public String sendAdminInfoIfBreakInRegion;
-	public String sendAdminInfoIfPlaceInRegion;
+	public String sendAdminInfoIfUsedCommandInRG;
+	public String sendAdminInfoIfActionInRegion;
 
 	public String pluralDay1;
 	public String pluralDay2;
@@ -69,9 +68,8 @@ public class UtilConfigMessage {
 			configMsgReloaded = ChatApi.getColorCode(getMessageConfig().getString("messages.Configs.configMsgReloaded", configMsgReloaded));
 			configMsgNotFound = ChatApi.getColorCode(getMessageConfig().getString("messages.Configs.configMsgNotFound", configMsgNotFound));
 
-			sendAdminInfoIfUsedCommandWithRG = ChatApi.getColorCode(getMessageConfig().getString("messages.Notify.sendAdminInfoIfUsedCommandWithRG", configMsgNotFound));
-			sendAdminInfoIfBreakInRegion = ChatApi.getColorCode(getMessageConfig().getString("messages.Notify.sendAdminInfoIfBreakInRegion", configMsgNotFound));
-			sendAdminInfoIfPlaceInRegion = ChatApi.getColorCode(getMessageConfig().getString("messages.Notify.sendAdminInfoIfPlaceInRegion", configMsgNotFound));
+			sendAdminInfoIfUsedCommandInRG = ChatApi.getColorCode(getMessageConfig().getString("messages.Notify.sendAdminInfoIfUsedCommandInRG", sendAdminInfoIfUsedCommandInRG));
+			sendAdminInfoIfActionInRegion = ChatApi.getColorCode(getMessageConfig().getString("messages.Notify.sendAdminInfoIfActionInRegion", sendAdminInfoIfActionInRegion));
 
 			pluralDay1 = ChatApi.getColorCode(getMessageConfig().getString("messages.PluralTime.day.pluralDay1", wgrpMsg));
 			pluralDay2 = ChatApi.getColorCode(getMessageConfig().getString("messages.PluralTime.day.pluralDay2", wgrpMsg));
@@ -98,7 +96,7 @@ public class UtilConfigMessage {
 	}
 
 	public String getConfigVersion() {
-		return "1.1";
+		return "1.0";
 	}
 
 	private ConfigurationSection getMessageConfig() {
