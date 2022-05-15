@@ -1,5 +1,6 @@
 package net.ritasister.command;
 
+import net.ritasister.rslibs.api.Action;
 import net.ritasister.rslibs.api.CmdExecutor;
 import net.ritasister.rslibs.api.RSApi;
 import net.ritasister.rslibs.chat.api.ChatApi;
@@ -22,7 +23,9 @@ public class CommandWGRP extends CmdExecutor {
 
 	private final List<String> subCommand = Collections.singletonList("reload, admin, add, remove, spycmd");
 
-	public CommandWGRP() {super(UtilCommandList.worldGuardRegionProtect);}
+	public CommandWGRP() {
+		super(UtilCommandList.WGRP.toString());
+	}
 
 	@Override
 	protected void run(CommandSender sender, Command cmd, String[] args) {
@@ -30,7 +33,8 @@ public class CommandWGRP extends CmdExecutor {
 		UtilConfig configPatch = WorldGuardRegionProtect.utilConfig;
 		FileConfiguration getConfig = WorldGuardRegionProtect.getInstance().getConfig();
 		if(sp && !RSApi.isSenderCommandsPermission((Player)sender, cmd, IUtilPermissions.commandWGRP,
-				WorldGuardRegionProtect.utilConfigMessage.noPerm)) {return;}{
+				WorldGuardRegionProtect.utilConfigMessage.noPerm)) {
+		}else{
 			if(args.length <= 1) {
 				runCommand(sender, cmd, args, configPatch, getConfig);
 			}else{
@@ -47,7 +51,7 @@ public class CommandWGRP extends CmdExecutor {
 			sender.sendMessage(ChatApi.getDoubleTabSpaceWithColor("&b======================================================================================================================================\n&aHi! If you need help from this plugin, you can contact with me on: \n&ehttps://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333/\n&ehttp://rubukkit.org/threads/sec-worldguardregionprotect-0-7-0-pre2-dop-zaschita-dlja-regionov-wg-1-13-1-17.171324/page-4#post-1678435\n&b======================================================================================================================================\n&aBut if you find any error or you want to send me any idea for this plugin&b, \n&aso you can create issues on github: &ehttps://github.com/RitaSister/WorldGuardRegionProtect/issues\n&6your welcome!"));
 		}
 		if(args[0].equalsIgnoreCase("reload")) {
-			WorldGuardRegionProtect.utilConfig = new UtilConfig(WorldGuardRegionProtect.getInstance());
+			WorldGuardRegionProtect.getInstance().saveDefaultConfig();
 			sender.sendMessage(WorldGuardRegionProtect.utilConfigMessage.configReloaded);
 		}
 		if(args[0].equalsIgnoreCase("reloadmsg")) {
