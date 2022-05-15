@@ -7,6 +7,8 @@ plugins {
     id("xyz.jpenilla.run-paper") version "1.0.6"
 }
 
+defaultTasks("clean", "build")
+
 repositories {
     maven ("https://repo.codemc.org/repository/maven-public")
     //WorldGuard
@@ -31,18 +33,19 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Paper 1.18+
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
-    //shadeOnly("org.bstats:bstats-bukkit:3.0.0")
-    //compileOnly("net.ritasister:wgrp:0.7.1-pre10")
 }
 
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            groupId = rootProject.group as String?
-            artifactId = "wgrp"
-            version = rootProject.version as String?
-
             from(components["java"])
+            artifactId = "wgrp"
+
+            subprojects {
+                tasks.withType<ShadowJar> {
+                    artifact(this)
+                }
+            }
         }
     }
 
