@@ -4,9 +4,8 @@ import net.ritasister.register.RegisterCommand;
 import net.ritasister.register.RegisterListener;
 import net.ritasister.rslibs.api.RSApi;
 import net.ritasister.rslibs.api.RSLogger;
+import net.ritasister.rslibs.api.RSStorage;
 import net.ritasister.rslibs.datasource.Storage;
-import net.ritasister.rslibs.datasource.StorageDataBase;
-import net.ritasister.rslibs.datasource.StorageDataSource;
 import net.ritasister.rslibs.util.Metrics;
 import net.ritasister.rslibs.util.UpdateChecker;
 import net.ritasister.util.UtilLoadConfig;
@@ -16,15 +15,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 public class WorldGuardRegionProtect extends JavaPlugin {
 
     /** Instance of this class */
     private static WorldGuardRegionProtect instance;
-
-    public WorldGuardRegionProtect() {}
 
     /**
      * Returns instance of this class
@@ -46,8 +40,9 @@ public class WorldGuardRegionProtect extends JavaPlugin {
 
     private final PluginManager pluginManager = getServer().getPluginManager();
     private final String pluginVersion = getDescription().getVersion();
-    public static StorageDataSource dbLogsSource;
-    public static HashMap<UUID, StorageDataBase> dbLogs = new HashMap<>();
+
+    //DataBase
+    public RSStorage rsStorage = new RSStorage();
 
     //Configs
     public static UtilConfig utilConfig;
@@ -64,15 +59,13 @@ public class WorldGuardRegionProtect extends JavaPlugin {
         RegisterListener.RegisterEvents(pluginManager);
         this.loadDataBase();
         this.notifyPreBuild();
-        RSLogger.info("&2created by &8[&5RitaSister&8]");
         this.checkUpdate();
     }
-
     private void notifyPreBuild() {
         if(getInstance().pluginVersion.contains("pre")) {
             RSLogger.warn("This is a test build. This building may be unstable!");
         } else {
-            RSLogger.info("This is the latest stable  building.");
+            RSLogger.info("This is the latest stable building.");
         }
     }
     private void checkStartUpVersionServer() {
@@ -104,12 +97,9 @@ public class WorldGuardRegionProtect extends JavaPlugin {
     private void loadDataBase() {
         if(utilConfig.databaseEnable) {
             final long duration_time_start = System.currentTimeMillis();
-            dbLogsSource = new Storage();
-            dbLogs.clear();
-            if(dbLogsSource == null) {
-                RSLogger.err("[DataBase] Unable to connect to the database!");
-            }
-            if(dbLogsSource.load()) {
+        rsStorage.dbLogsSource = new Storage(getInstance(), utilConfig, utilConfigMessage);
+            rsStorage.dbLogs.clear();
+            if (rsStorage.dbLogsSource.load()) {
                 RSLogger.info("[DataBase] The player base is loaded.");
                 this.postEnable();
                 RSLogger.info("[DataBase] Startup duration: {TIME} мс.".replace("{TIME}", String.valueOf(System.currentTimeMillis() - duration_time_start)));
@@ -119,7 +109,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
     private void postEnable() {
         Bukkit.getServer().getScheduler().cancelTasks(this);
         if (utilConfig.intervalReload > 0) {
-            dbLogsSource.loadAsync();
+            rsStorage.dbLogsSource.loadAsync();
             RSLogger.info("[DataBase] The base is loaded asynchronously.");
         }
     }
