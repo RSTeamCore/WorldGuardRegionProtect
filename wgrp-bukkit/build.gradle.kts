@@ -67,9 +67,6 @@ publishing {
 
 tasks {
     runServer {
-        // Configure the Minecraft version for our task.
-        // This is the only required configuration besides applying the plugin.
-        // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("1.18.2")
     }
 }
@@ -100,12 +97,6 @@ tasks.named<ShadowJar>("shadowJar") {
 
     dependencies {
         include(dependency(":wgrp-api"))
-        /*relocate ("org.bstats", "org.bstats") {
-            include(dependency("org.bstats:bstats-bukkit"))
-        }*/
-        /*relocate ("com.zaxxer.hikari", "") {
-            include(dependency("com.zaxxer:hikari"))
-        }*/
     }
 }
 
@@ -113,6 +104,10 @@ tasks.withType<Jar>() {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     configurations["compileClasspath"].forEach { file: File ->
         if(file.name.contains("HikariCP"))
+            from(zipTree(file.absoluteFile))
+    }
+    configurations["compileClasspath"].forEach { file: File ->
+        if(file.name.contains("mariadb-java-client"))
             from(zipTree(file.absoluteFile))
     }
 }
