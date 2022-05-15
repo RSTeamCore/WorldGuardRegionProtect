@@ -7,7 +7,7 @@ public interface StorageDataSource {
 
 	boolean load();
 	void loadAsync();
-	void logAction(String nickname, UUID uniqueId, String time, String action, String region, String world, Double x, Double y, Double z, Float yaw, Float pitch);
+	void logAction(String nickname, UUID uniqueId, long time, String action, String region, String world, Double x, Double y, Double z);
 	void close();
 	void reload();
 }

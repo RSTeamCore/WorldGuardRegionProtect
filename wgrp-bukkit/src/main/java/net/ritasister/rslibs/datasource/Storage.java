@@ -68,7 +68,7 @@ public class Storage implements StorageDataSource {
 		PreparedStatement pst = null;
 		try(Connection conn = Storage.this.getConnection()) {
 			pst = conn.prepareStatement(
-					"CREATE TABLE IF NOT EXISTS <table> (id INT AUTO_INCREMENT, nickname VARCHAR(16) NOT NULL UNIQUE, uniqueId VARCHAR(36) NOT NULL UNIQUE, time VARCHAR(15) NULL, action VARCHAR(5) NULL, region VARCHAR(60) NULL, world VARCHAR(60), x DOUBLE NOT NULL DEFAULT '0', y DOUBLE NOT NULL DEFAULT '0', z DOUBLE NOT NULL DEFAULT '0', yaw FLOAT NOT NULL DEFAULT '0', pitch FLOAT NOT NULL DEFAULT '0', CONSTRAINT table_const_prim PRIMARY KEY (id, nickname, uniqueId));"
+					"CREATE TABLE IF NOT EXISTS <table> (id INT AUTO_INCREMENT, nickname VARCHAR(16) NOT NULL UNIQUE, uniqueId VARCHAR(36) NOT NULL UNIQUE, time BIGINT(20) NOT NULL DEFAULT '0', action VARCHAR(5) NULL, region VARCHAR(60) NULL, world VARCHAR(60), x DOUBLE NOT NULL DEFAULT '0', y DOUBLE NOT NULL DEFAULT '0', z DOUBLE NOT NULL DEFAULT '0', CONSTRAINT table_const_prim PRIMARY KEY (id, nickname, uniqueId));"
 					.replace("<table>", WorldGuardRegionProtect.utilConfig.table));
 			pst.execute();
 			pst.close();
@@ -92,15 +92,13 @@ public class Storage implements StorageDataSource {
 						rs.getInt("id"),
 						rs.getString("nickname"),
 						uniqueId,
-						rs.getString("time"),
+						rs.getLong("time"),
 						rs.getString("action"),
 						rs.getString("region"),
 						rs.getString("world"),
 						rs.getDouble("x"),
 						rs.getDouble("y"),
-						rs.getDouble("z"),
-						rs.getFloat("yaw"),
-						rs.getFloat("pitch"));
+						rs.getDouble("z"));
 				WorldGuardRegionProtect.dbLogs.put(uniqueId, dataBase);
 			}
 			return true;
@@ -124,20 +122,18 @@ public class Storage implements StorageDataSource {
 						rs = pst.executeQuery();
 						while (rs.next()) {
 							UUID uniqueId = UUID.fromString(rs.getString("uuid"));
-							StorageDataBase current_dataBase = (StorageDataBase) WorldGuardRegionProtect.dbLogs.get(uniqueId);
+							StorageDataBase current_dataBase = WorldGuardRegionProtect.dbLogs.get(uniqueId);
 							StorageDataBase dataBase = new StorageDataBase(
 									rs.getInt("id"),
 									rs.getString("nickname"),
 									uniqueId,
-									rs.getString("time"),
+									rs.getLong("time"),
 									rs.getString("action"),
 									rs.getString("region"),
 									rs.getString("world"),
 									rs.getDouble("x"),
 									rs.getDouble("y"),
-									rs.getDouble("z"),
-									rs.getFloat("yaw"),
-									rs.getFloat("pitch"));
+									rs.getDouble("z"));
 							tmp_players.put(uniqueId, dataBase);
 						}
 						WorldGuardRegionProtect.dbLogs = new HashMap<>(tmp_players);
@@ -153,22 +149,20 @@ public class Storage implements StorageDataSource {
 	}
 
 	@Override
-	public void logAction(String nickname, UUID uniqueId, String time, String action, String region, String world, Double x, Double y, Double z, Float yaw, Float pitch) {
+	public void logAction(String nickname, UUID uniqueId, long time, String action, String region, String world, Double x, Double y, Double z) {
 		PreparedStatement pst = null;
 		try(Connection conn = this.getConnection()) {
-				pst = conn.prepareStatement("INSERT INTO <table> (nickname, uniqueId, time, action, region, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+				pst = conn.prepareStatement("INSERT INTO <table> (nickname, uniqueId, time, action, region, world, x, y, z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
 						.replace("<table>", WorldGuardRegionProtect.utilConfig.table));
 				pst.setString(1, nickname);
 				pst.setString(2, uniqueId.toString());
-				pst.setString(3, time);
+				pst.setLong(3, time);
 				pst.setString(4, action);
 				pst.setString(5, region);
 				pst.setString(6, world);
 				pst.setDouble(7, x);
 				pst.setDouble(8, y);
 				pst.setDouble(9, z);
-				pst.setFloat(10, yaw);
-				pst.setFloat(11, pitch);
 				pst.executeUpdate();
 			} catch (SQLException ex) {
 			RSLogger.err("[MySQL]  <id> "+uniqueId.toString()
@@ -185,6 +179,7 @@ public class Storage implements StorageDataSource {
 			RSLogger.err("[MariaDB|PlayerData] Failed to end preparedstatement!");
 		}
 	}
+
 	public void close(final ResultSet rs) {
 		try{
 			if (rs != null) {rs.close();}
@@ -194,11 +189,17 @@ public class Storage implements StorageDataSource {
 	}
 	
 	public void reload() {
-        if (ds != null) {ds.close();}
+        if (ds != null) {
+			ds.close();
+		}
         connect();
 		RSLogger.info("[MariaDB|PlayerData] Hikari ConnectionPool arguments reloaded!");
     }
 	
 	@Override
-    public void close() {if (ds != null && !ds.isClosed()) {ds.close();}}
+    public void close() {
+		if (ds != null && !ds.isClosed()) {
+			ds.close();
+		}
+	}
 }
