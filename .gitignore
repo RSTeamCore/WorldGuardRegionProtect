@@ -1,22 +1,6 @@
 .gradle/
 build/
 
-# Eclipse stuff
-.classpath
-.project
-.settings/
-
-# we use maven!
-build.xml
-
-# maven
-target/
-dependency-reduced-pom.xml
-
-# Mac filesystem dust
-.DS_Store/
-.DS_Store
-
 # intellij
 *.iml
 *.ipr
@@ -28,7 +12,8 @@ out/
 *~
 
 # other stuff
-run/
 /wgrp-api/build/
 /wgrp-bukkit/build/
-/plugin-test/
+/wgrp-bukkit/run/
+/logs/
+/libraries/
