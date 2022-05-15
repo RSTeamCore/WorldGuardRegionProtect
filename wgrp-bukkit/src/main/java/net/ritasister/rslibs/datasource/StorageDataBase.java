@@ -1,10 +1,13 @@
 package net.ritasister.rslibs.datasource;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
 public class StorageDataBase {
+
+    private WorldGuardRegionProtect worldGuardRegionProtect;
 
     private int id;
     private String nickname;
@@ -29,30 +32,7 @@ public class StorageDataBase {
         this.y=y;
         this.z=z;
     }
-    public void setLogAction(String nickname, UUID uniqueId, long time, String action, String region, String world,
-                             double x,
-                             double y,
-                             double z) {
-        this.nickname=nickname;
-        this.uniqueId=uniqueId;
-        this.time=time;
-        this.action=action;
-        this.region=region;
-        this.world=world;
-        this.x=x;
-        this.y=y;
-        this.z=z;
-        WorldGuardRegionProtect.dbLogsSource.logAction(
-                this.nickname,
-                this.uniqueId,
-                this.time,
-                this.action,
-                this.region,
-                this.world,
-                this.x,
-                this.y,
-                this.z);
-    }
+
     public String getLogAction() {
         return null;
     }
