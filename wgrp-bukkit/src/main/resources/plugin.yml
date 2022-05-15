@@ -1,4 +1,5 @@
 name: WorldGuardRegionProtect
+prefix: WGRP
 author: RitaSister
 version: ${internalVersion}
 main: net.ritasister.wgrp.WorldGuardRegionProtect
@@ -6,6 +7,7 @@ softdepend: [ WorldGuard ]
 description: Protect your region on the server.
 website: 'https://github.com/RitaSister/WorldGuardRegionProtect'
 api-version: 1.18
+load: STARTUP
 commands:
   worldguardregionprotect:
    aliases: [wgrp]
