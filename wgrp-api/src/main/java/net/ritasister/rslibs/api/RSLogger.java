@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class RSLogger {
-	final static Logger logger = Logger.getLogger("RSLibrary-Logger");
+	final static Logger logger = Logger.getLogger("WGRP");
 
 	public static void info(final String msg) {
 		logger.info(ChatApi.getColorCode(msg));

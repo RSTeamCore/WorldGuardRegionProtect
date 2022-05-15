@@ -8,9 +8,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 public class UtilLoadConfig {
 
@@ -26,7 +23,7 @@ public class UtilLoadConfig {
 
 	public static void initConfig() {
 		LoadConfig(WorldGuardRegionProtect.getInstance(), true);
-		WorldGuardRegionProtect.utilConfig = new UtilConfig(WorldGuardRegionProtect.getInstance());
+		WorldGuardRegionProtect.utilConfig = new UtilConfig();
 
 		LoadMSGConfig(WorldGuardRegionProtect.getInstance(), true);
 		WorldGuardRegionProtect.utilConfigMessage = new UtilConfigMessage();
@@ -40,19 +37,19 @@ public class UtilLoadConfig {
 			if (copy) {
 				worldGuardRegionProtect.saveResource("config.yml", false);
 				RSLogger.LoadConfigMsgSuccess(configf);
-			}else{
+			} else {
 				try {
 					configf.createNewFile();
-				}catch(Exception ex){
-					RSLogger.err(configf+ex.getMessage());
+				} catch (Exception ex) {
+					RSLogger.err(configf + ex.getMessage());
 					ex.printStackTrace();
 				}
 			}
 		}
 		try {
 			config = YamlConfiguration.loadConfiguration(configf);
-		}catch(NullPointerException e){
-			RSLogger.err(configf+e.getMessage());
+		} catch (NullPointerException e) {
+			RSLogger.err(configf + e.getMessage());
 			e.printStackTrace();
 		}
 		RSLogger.LoadConfigMsgSuccess(messagesf);
@@ -81,22 +78,6 @@ public class UtilLoadConfig {
 		}
 		RSLogger.LoadConfigMsgSuccess(messagesf);
 	}
-
-	/*public static void saveMsgConfig() {
-		if(!messagesf.exists()) {
-			LoadMSGConfig(WorldGuardRegionProtect.getInstance(), true);
-		}try{
-			messages = YamlConfiguration.loadConfiguration(messagesf);
-		}catch(NullPointerException e){
-			RSLogger.err("Could not save " + e.getMessage());
-			e.printStackTrace();
-		}try{
-			messages.save(messagesf);
-		}catch(IOException e){
-			RSLogger.err("Could not load config. " + e.getMessage());
-			e.printStackTrace();
-		}
-	}*/
 
 	public static WorldGuardRegionProtect getWorldGuardRegionProtect() {
 		return worldGuardRegionProtect;

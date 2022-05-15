@@ -36,8 +36,8 @@ public class wg7 implements Iwg {
         this.we = (WorldEditPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
     }
     @Override
-    public boolean wg(final World w, final Location l) {
-        final ApplicableRegionSet set = this.getApplicableRegions(l);
+    public boolean wg(final World world, final Location locatin) {
+        final ApplicableRegionSet set = this.getApplicableRegions(locatin);
         for (final ProtectedRegion rg : set) {
             for(final Object region : WorldGuardRegionProtect.utilConfig.regionProtect) {
                 if (rg.getId().equalsIgnoreCase(region.toString())) {
