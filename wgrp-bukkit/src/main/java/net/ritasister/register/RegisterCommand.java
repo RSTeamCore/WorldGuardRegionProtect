@@ -5,13 +5,11 @@ import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.util.UtilCommandList;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 
-import java.util.Objects;
-
 public class RegisterCommand {
 
 	public static void RegisterCommands() {
 		try{
-			Objects.requireNonNull(WorldGuardRegionProtect.getInstance().getCommand(UtilCommandList.worldGuardRegionProtect)).setExecutor(new CommandWGRP());
+			WorldGuardRegionProtect.getInstance().getCommand(UtilCommandList.WGRP.toString()).setExecutor(new CommandWGRP());
 			RSLogger.info("&2All commands load successfully!");
 		}catch(NullPointerException e){
 			RSLogger.err("&cCommand cannot be &4null.");
