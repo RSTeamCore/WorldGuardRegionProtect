@@ -1,7 +1,6 @@
 package net.ritasister.util.config;
 
 import net.ritasister.util.UtilLoadConfig;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
@@ -9,11 +8,9 @@ import java.util.List;
 
 public final class UtilConfig {
 	public String configVersion;
-
 	public List<String> regionProtect;
 	public List<String> regionProtectAllow;
 	public List<String> regionProtectOnlyBreakAllow;
-	//public List<String> spawnEntityType;
 	public List<String> interactType;
 	public List<String> spyCommand;
 	public List<String> cmdWe;
@@ -30,30 +27,29 @@ public final class UtilConfig {
 	public String spyCommandNotifyAdminPlaySound;
 	public boolean spyCommandNotifyAdminPlaySoundEnable;
 
-	public final boolean databaseEnable;
-	public final String database;
-	public final String jdbcDriver;
-	public final String host;
-	public final String port;
-	public final String user;
-	public final String password;
-	public final String table;
-	public final boolean useSsl;
+	public boolean databaseEnable;
+	public String database;
+	public String jdbcDriver;
+	public String host;
+	public String port;
+	public String user;
+	public String password;
+	public String table;
+	public boolean useSsl;
 
 	//Pool settings
-	public final int maxPoolSize;
-	public final int maxLifetime;
-	public final int connectionTimeout;
-	public final int intervalReload;
+	public int maxPoolSize;
+	public int maxLifetime;
+	public int connectionTimeout;
+	public int intervalReload;
 
 	@SuppressWarnings("unchecked")
-	public UtilConfig(WorldGuardRegionProtect instance) {
-		this.configVersion = instance.getConfig().getString("config_version");
+	public UtilConfig() {
+		this.configVersion = getPatch().getString("config_version");
 
 		this.regionProtect = (List<String>) getPatch().getList("region_protect", new ArrayList<String>());
 		this.regionProtectAllow = (List<String>) getPatch().getList("region_protect_allow", new ArrayList<String>());
-		this.regionProtectOnlyBreakAllow = (List<String>) getPatch().getList(".region_protect_only_break_allow", new ArrayList<String>());
-		//this.spawnEntityType = (List<String>) getPatch().getList("spawn_entity_type", new ArrayList<String>());
+		this.regionProtectOnlyBreakAllow = (List<String>) getPatch().getList("region_protect_only_break_allow", new ArrayList<String>());
 		this.interactType = (List<String>) getPatch().getList("interact_type", new ArrayList<String>());
 
 		this.cmdWe = (List<String>) getPatch().getList("no_protect_cmd.command_we", new ArrayList<String>());
@@ -74,11 +70,11 @@ public final class UtilConfig {
 
 		this.databaseEnable = getPatch().getBoolean("dataSource.enable");
 		this.database = getPatch().getString("dataSource.database");
-		this.jdbcDriver = getPatch().getString("dataSource.host");
-		this.host = getPatch().getString("dataSource.port");
-		this.port = getPatch().getString("dataSource.user");
-		this.user = getPatch().getString("dataSource.password");
-		this.password = getPatch().getString("dataSource.");
+		this.jdbcDriver = getPatch().getString("dataSource.jdbcdriver");
+		this.host = getPatch().getString("dataSource.host");
+		this.port = getPatch().getString("dataSource.port");
+		this.user = getPatch().getString("dataSource.user");
+		this.password = getPatch().getString("dataSource.password");
 		this.table = getPatch().getString("dataSource.table");
 		this.useSsl = getPatch().getBoolean("dataSource.useSsl");
 
@@ -87,11 +83,8 @@ public final class UtilConfig {
 		this.connectionTimeout = getPatch().getInt("dataSource.connectionTimeout");
 		this.intervalReload = getPatch().getInt("dataSource.intervalReload");
 	}
+
 	private ConfigurationSection getPatch() {
 		return UtilLoadConfig.config.getConfigurationSection("worldguard_protect_region.");
-	}
-
-	public String getConfigVersion() {
-		return configVersion;
 	}
 }
