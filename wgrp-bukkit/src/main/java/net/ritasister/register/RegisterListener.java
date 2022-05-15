@@ -1,13 +1,12 @@
 package net.ritasister.register;
 
 import net.ritasister.listener.protect.RegionProtect;
-import net.ritasister.rslibs.api.RSApi;
 import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.plugin.PluginManager;
 
 public class RegisterListener {
-	
+
 	public static void RegisterEvents(PluginManager pm) {
 		try{
 			final RegionProtect regionProtect = new RegionProtect(WorldGuardRegionProtect.getInstance());
