@@ -38,14 +38,11 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            from(components["java"])
+            groupId = rootProject.group as String?
             artifactId = "wgrp"
+            version = rootProject.version as String?
 
-            subprojects {
-                tasks.withType<ShadowJar> {
-                    artifact(this)
-                }
-            }
+            from(components["java"])
         }
     }
 
