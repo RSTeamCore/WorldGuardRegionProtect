@@ -4,117 +4,196 @@ import net.ritasister.register.RegisterCommand;
 import net.ritasister.register.RegisterListener;
 import net.ritasister.rslibs.api.RSApi;
 import net.ritasister.rslibs.api.RSLogger;
+import net.ritasister.rslibs.api.RSRegion;
 import net.ritasister.rslibs.api.RSStorage;
+import net.ritasister.rslibs.chat.api.ChatApi;
 import net.ritasister.rslibs.datasource.Storage;
 import net.ritasister.rslibs.util.Metrics;
 import net.ritasister.rslibs.util.UpdateChecker;
 import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class WorldGuardRegionProtect extends JavaPlugin {
 
-    /** Instance of this class */
+    /** Instance of the API */
     private static WorldGuardRegionProtect instance;
 
     /**
-     * Returns instance of this class
+     * Instance setter for internal use by the plugin only.
      *
-     * @return instance of this class
-     */
-    public static WorldGuardRegionProtect getInstance() {
-        return instance;
-    }
-
-    /**
-     * Changes instance of this class to new value
-     *
-     * @param instance Instance to set variable to
+     * @param   instance
+     *          API instance
      */
     public static void setInstance(WorldGuardRegionProtect instance) {
         WorldGuardRegionProtect.instance = instance;
     }
 
-    private final PluginManager pluginManager = getServer().getPluginManager();
+    /**
+     * Returns API instance. If instance was not set by the plugin, throws
+     * {@code IllegalStateException}. This is usually caused by shading the API
+     * into own project, which is not allowed. Another option is calling the method
+     * before plugin was able to load.
+     *
+     * @return  API instance
+     * @throws  IllegalStateException
+     *          If instance is {@code null}
+     */
+    public static WorldGuardRegionProtect getInstance() {
+        if (instance == null) throw new IllegalStateException("API instance is null. This likely means you shaded WGRP's API into your project" +
+                " instead of only using it, which is not allowed.");
+        return instance;
+    }
+
     private final String pluginVersion = getDescription().getVersion();
+    private final PluginManager pluginManager = getServer().getPluginManager();
 
+    //Implements
+    public RegisterListener registerListener;
+    public RegisterCommand registerCommand;
     //DataBase
-    public RSStorage rsStorage = new RSStorage();
-
+    public RSStorage rsStorage;
+    public ChatApi chatApi;
+    public RSApi rsApi;
+    public RSRegion rsRegion;
+    public RSLogger rsLogger;
     //Configs
-    public static UtilConfig utilConfig;
-    public static UtilConfigMessage utilConfigMessage;
+    public UtilConfig utilConfig;
+    public UtilConfigMessage utilConfigMessage;
+    public UtilLoadConfig utilLoadConfig;
+
+    public LoadLibs loadLibs;
 
     @Override
     public void onEnable() {
         setInstance(this);
+        this.rsApi = new RSApi(this);
+        this.chatApi = new ChatApi();
+        this.rsLogger = new RSLogger(this.chatApi);
         this.checkStartUpVersionServer();
         this.loadMetrics();
-        LoadLibs.loadWorldGuard();
-        UtilLoadConfig.initConfig();
-        RegisterCommand.RegisterCommands();
-        RegisterListener.RegisterEvents(pluginManager);
-        this.loadDataBase();
+        this.loadAnotherClassAndMethods();
+        //this.loadDataBase();
         this.notifyPreBuild();
         this.checkUpdate();
     }
-    private void notifyPreBuild() {
-        if(getInstance().pluginVersion.contains("pre")) {
-            RSLogger.warn("This is a test build. This building may be unstable!");
-        } else {
-            RSLogger.info("This is the latest stable building.");
-        }
+
+    /**
+     * Call all classes file to start.
+     */
+    private void loadAnotherClassAndMethods() {
+        this.loadLibs = new LoadLibs();
+        this.loadLibs.loadWorldGuard();
+        this.rsRegion = new RSRegion();
+        this.utilLoadConfig = new UtilLoadConfig(this);
+        this.utilLoadConfig.initConfig();
+        //this.utilConfig = new UtilConfig();
+        //this.utilConfigMessage = new UtilConfigMessage();
+        this.registerListener = new RegisterListener();
+        this.registerListener.registerListener(this.pluginManager);
+        this.registerCommand = new RegisterCommand();
+        this.registerCommand.registerCommand();
+        this.rsStorage = new RSStorage();
     }
+
     private void checkStartUpVersionServer() {
-        if (!RSApi.isVersionSupported()) {
-            RSLogger.err("This plugin version works only on 1.18+!");
-            RSLogger.err("Please read this thread: https://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-18.81321/");
-            RSLogger.err("The main post on spigotmc and please download the correct version.");
-            Bukkit.getPluginManager().disablePlugin(this);
+        if (!this.getRsApi().isVersionSupported()) {
+            getRsApi().getLogger().error("This plugin version works only on 1.18+!");
+            getRsApi().getLogger().error("Please read this thread: https://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-18.81321/");
+            getRsApi().getLogger().error("The main post on spigotmc and please download the correct version.");
+            WorldGuardRegionProtect.getInstance().getServer().getPluginManager().disablePlugin(this);
+            getLogger().info("");
         }
     }
+
+    private void notifyPreBuild() {
+        if(this.pluginVersion.contains("pre")) {
+            getRsApi().getLogger().warn("This is a test build. This building may be unstable!");
+        } else {
+            getRsApi().getLogger().info("This is the latest stable building.");
+        }
+    }
+
     private void checkUpdate() {
         new UpdateChecker(this, 81321).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-                RSLogger.info("&6==============================================");
-                RSLogger.info("&2Current version: &b<pl_ver>".replace("<pl_ver>", pluginVersion));
-                RSLogger.info("&2This is the latest version of plugin.");
-                RSLogger.info("&6==============================================");
+                getRsApi().getLogger().info("&6==============================================");
+                getRsApi().getLogger().info("&2Current version: &b<pl_ver>".replace("<pl_ver>", pluginVersion));
+                getRsApi().getLogger().info("&2This is the latest version of plugin.");
+                getRsApi().getLogger().info("&6==============================================");
             }else{
-                RSLogger.info("&6==============================================");
-                RSLogger.info("&eThere is a new version update available.");
-                RSLogger.info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", pluginVersion));
-                RSLogger.info("&3New version: &b<new_pl_ver>".replace("<new_pl_ver>", version));
-                RSLogger.info("&eDownload new version here:");
-                RSLogger.info("&ehttps://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-17.81321/");
-                RSLogger.info("&6==============================================");
+                getRsApi().getLogger().info("&6==============================================");
+                getRsApi().getLogger().info("&eThere is a new version update available.");
+                getRsApi().getLogger().info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", pluginVersion));
+                getRsApi().getLogger().info("&3New version: &b<new_pl_ver>".replace("<new_pl_ver>", version));
+                getRsApi().getLogger().info("&eDownload new version here:");
+                getRsApi().getLogger().info("&ehttps://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-17.81321/");
+                getRsApi().getLogger().info("&6==============================================");
             }
         });
     }
+
     private void loadDataBase() {
-        if(utilConfig.databaseEnable) {
+        if(this.utilConfig.databaseEnable) {
             final long duration_time_start = System.currentTimeMillis();
-        rsStorage.dbLogsSource = new Storage(getInstance(), utilConfig, utilConfigMessage);
-            rsStorage.dbLogs.clear();
-            if (rsStorage.dbLogsSource.load()) {
-                RSLogger.info("[DataBase] The player base is loaded.");
+            this.rsStorage.dbLogsSource = new Storage(this, utilConfig, utilConfigMessage);
+            this.rsStorage.dbLogs.clear();
+            if (this.rsStorage.dbLogsSource.load()) {
+                getRsApi().getLogger().info("[DataBase] The player base is loaded.");
                 this.postEnable();
-                RSLogger.info("[DataBase] Startup duration: {TIME} мс.".replace("{TIME}", String.valueOf(System.currentTimeMillis() - duration_time_start)));
+                getRsApi().getLogger().info("[DataBase] Startup duration: {TIME} мс.".replace("{TIME}", String.valueOf(System.currentTimeMillis() - duration_time_start)));
             }
         }
     }
+
     private void postEnable() {
-        Bukkit.getServer().getScheduler().cancelTasks(this);
-        if (utilConfig.intervalReload > 0) {
+        getServer().getScheduler().cancelTasks(this);
+        if (WorldGuardRegionProtect.getInstance().utilConfig.intervalReload > 0) {
             rsStorage.dbLogsSource.loadAsync();
-            RSLogger.info("[DataBase] The base is loaded asynchronously.");
+            getRsApi().getLogger().info("[DataBase] The base is loaded asynchronously.");
         }
     }
+
     private void loadMetrics() {
         int pluginId = 12975;
         new Metrics(this, pluginId);
+    }
+
+    @NotNull
+    public RSApi getRsApi() {
+        return this.rsApi;
+    }
+    @NotNull
+    public RSRegion getRsRegion() {
+        return this.rsRegion;
+    }
+
+    @NotNull
+    public RSStorage getRsStorage() {
+        return this.rsStorage;
+    }
+
+    @NotNull
+    public ChatApi getChatApi() {
+        return this.chatApi;
+    }
+
+    @NotNull
+    public UtilLoadConfig getUtilLoadConfig() {
+        return utilLoadConfig;
+    }
+
+    @NotNull
+    public UtilConfigMessage getUtilConfigMessage() {
+        return utilConfigMessage;
+    }
+
+    @NotNull
+    public UtilConfig getUtilConfig() {
+        return  utilConfig;
     }
 }
