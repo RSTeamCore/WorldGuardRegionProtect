@@ -1,85 +1,101 @@
 package net.ritasister.util;
 
-import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class UtilLoadConfig {
 
-	public static File configf, messagesf;
-	public static FileConfiguration config, messages;
-	private static WorldGuardRegionProtect worldGuardRegionProtect;
-	private static UtilConfigMessage utilConfigMessage;
+	private final WorldGuardRegionProtect worldGuardRegionProtect;
+	public FileConfiguration config, messages;
+	public File configFile, messagesFile;
 
-	public UtilLoadConfig(WorldGuardRegionProtect worldGuardRegionProtect, UtilConfig utilConfig, UtilConfigMessage utilConfigMessage) {
-		UtilLoadConfig.worldGuardRegionProtect=worldGuardRegionProtect;
-		UtilLoadConfig.utilConfigMessage=utilConfigMessage;
+	public UtilLoadConfig(WorldGuardRegionProtect worldGuardRegionProtect) {
+		this.worldGuardRegionProtect=worldGuardRegionProtect;
 	}
 
-	public static void initConfig() {
-		LoadConfig(WorldGuardRegionProtect.getInstance(), true);
-		WorldGuardRegionProtect.utilConfig = new UtilConfig();
+	public void initConfig() {
+		loadConfig(WorldGuardRegionProtect.getInstance(), true);
+		WorldGuardRegionProtect.getInstance().utilConfig = new UtilConfig();
 
-		LoadMSGConfig(WorldGuardRegionProtect.getInstance(), true);
-		WorldGuardRegionProtect.utilConfigMessage = new UtilConfigMessage();
+		loadMSGConfig(WorldGuardRegionProtect.getInstance(), true);
+		WorldGuardRegionProtect.getInstance().utilConfigMessage = new UtilConfigMessage();
 
-		RSLogger.info("&2All configs load successfully!");
+		worldGuardRegionProtect.getRsApi().getLogger().info("&2All configs load successfully!");
 	}
 
-	public static void LoadConfig(WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
-		configf = new File(worldGuardRegionProtect.getDataFolder(), "config.yml");
-		if (!configf.exists()) {
+	private void loadConfig(@NotNull WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
+		configFile = new File(worldGuardRegionProtect.getDataFolder(), "config.yml");
+		config = YamlConfiguration.loadConfiguration(configFile);
+		if (!configFile.exists()) {
 			if (copy) {
 				worldGuardRegionProtect.saveResource("config.yml", false);
-				RSLogger.LoadConfigMsgSuccess(configf);
+				//RSLogger.updateConfigMsgSuccess(configFile);
 			} else {
 				try {
-					configf.createNewFile();
+					configFile.createNewFile();
 				} catch (Exception ex) {
-					RSLogger.err(configf + ex.getMessage());
+					worldGuardRegionProtect.getRsApi().getLogger().error(configFile + ex.getMessage());
 					ex.printStackTrace();
 				}
 			}
 		}
-		try {
-			config = YamlConfiguration.loadConfiguration(configf);
+		/*if (configFile.exists() && !worldGuardRegionProtect.utilConfig.configVersion.equals("1.0")) {
+			try {
+				Files.move(configFile.toPath(), new File(configFile.getParentFile(), "config-old-" + worldGuardRegionProtect.getRsApi().getPathTime() + ".yml").toPath(),
+						StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			worldGuardRegionProtect.reloadConfig();
+		}*/
+			try {
+			config = YamlConfiguration.loadConfiguration(configFile);
 		} catch (NullPointerException e) {
-			RSLogger.err(configf + e.getMessage());
+			worldGuardRegionProtect.getRsApi().getLogger().error(configFile + e.getMessage());
 			e.printStackTrace();
 		}
-		RSLogger.LoadConfigMsgSuccess(messagesf);
+		worldGuardRegionProtect.getRsApi().getLogger().loadConfigMsgSuccess(configFile);
 	}
 
-	public static void LoadMSGConfig(WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
-		messagesf = new File(worldGuardRegionProtect.getDataFolder(), "messages.yml");
-		if (!messagesf.exists()) {
+	private void loadMSGConfig(@NotNull WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
+		messagesFile = new File(worldGuardRegionProtect.getDataFolder(), "messages.yml");
+		/*if (messagesFile.exists() && worldGuardRegionProtect.utilConfigMessage.configMsgReloaded == null
+				|| !worldGuardRegionProtect.utilConfigMessage.configMsgReloaded.equals("1.0")) {
+			try {
+				Files.move(messagesFile.toPath(), new File(messagesFile.getParentFile(), "config-old-" + worldGuardRegionProtect.getRsApi().getPathTime() + ".yml").toPath(),
+						StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			worldGuardRegionProtect.reloadConfig();
+		}*/
+		if (!messagesFile.exists()) {
 			if (copy) {
 				worldGuardRegionProtect.saveResource("messages.yml", false);
-				RSLogger.LoadConfigMsgSuccess(messagesf);
-			}else{
+				//RSLogger.updateConfigMsgSuccess(configFile);
+			} else {
 				try {
-					messagesf.createNewFile();
-				}catch(Exception ex){
-					RSLogger.err(messagesf+ex.getMessage());
+					messagesFile.createNewFile();
+				} catch (Exception ex) {
+					worldGuardRegionProtect.getRsApi().getLogger().error(messagesFile + ex.getMessage());
 					ex.printStackTrace();
 				}
 			}
 		}
 		try {
-			messages = YamlConfiguration.loadConfiguration(messagesf);
-		}catch(NullPointerException e){
-			RSLogger.err(messagesf+e.getMessage());
+			messages = YamlConfiguration.loadConfiguration(messagesFile);
+		} catch (NullPointerException e) {
+			worldGuardRegionProtect.getRsApi().getLogger().error(messagesFile + e.getMessage());
 			e.printStackTrace();
 		}
-		RSLogger.LoadConfigMsgSuccess(messagesf);
-	}
-
-	public static WorldGuardRegionProtect getWorldGuardRegionProtect() {
-		return worldGuardRegionProtect;
 	}
 }
