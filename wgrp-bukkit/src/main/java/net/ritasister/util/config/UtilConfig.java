@@ -1,13 +1,15 @@
 package net.ritasister.util.config;
 
-import net.ritasister.util.UtilLoadConfig;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class UtilConfig {
-	public String configVersion;
+public class UtilConfig {
+
+	public String configVersion = "1.0";
 	public List<String> regionProtect;
 	public List<String> regionProtectAllow;
 	public List<String> regionProtectOnlyBreakAllow;
@@ -43,48 +45,55 @@ public final class UtilConfig {
 	public int connectionTimeout;
 	public int intervalReload;
 
-	@SuppressWarnings("unchecked")
-	public UtilConfig() {
-		this.configVersion = getPatch().getString("config_version");
-
-		this.regionProtect = (List<String>) getPatch().getList("region_protect", new ArrayList<String>());
-		this.regionProtectAllow = (List<String>) getPatch().getList("region_protect_allow", new ArrayList<String>());
-		this.regionProtectOnlyBreakAllow = (List<String>) getPatch().getList("region_protect_only_break_allow", new ArrayList<String>());
-		this.interactType = (List<String>) getPatch().getList("interact_type", new ArrayList<String>());
-
-		this.cmdWe = (List<String>) getPatch().getList("no_protect_cmd.command_we", new ArrayList<String>());
-		this.cmdWeC = (List<String>) getPatch().getList("no_protect_cmd.command_c", new ArrayList<String>());
-		this.cmdWeP = (List<String>) getPatch().getList("no_protect_cmd.command_p", new ArrayList<String>());
-		this.cmdWeS = (List<String>) getPatch().getList("no_protect_cmd.command_s", new ArrayList<String>());
-		this.cmdWeU = (List<String>) getPatch().getList("no_protect_cmd.command_u", new ArrayList<String>());
-		this.cmdWeCP = (List<String>) getPatch().getList("no_protect_cmd.command_cp", new ArrayList<String>());
-		this.cmdWeB = (List<String>) getPatch().getList("no_protect_cmd.command_b", new ArrayList<String>());
-		this.spyCommand = (List<String>) getPatch().getList("spy_command.command_list", new ArrayList<String>());
-
-		this.regionMessageProtect = getPatch().getBoolean("protect_message");
-		this.regionMessageProtectWe = getPatch().getBoolean("protect_we_message");
-		this.spyCommandNotifyConsole = getPatch().getBoolean("spy_command.notify.console");
-		this.spyCommandNotifyAdmin = getPatch().getBoolean("spy_command.notify.admin");
-		this.spyCommandNotifyAdminPlaySoundEnable = getPatch().getBoolean("spy_command.notify.admin.sound");
-		this.spyCommandNotifyAdminPlaySound = getPatch().getString("spy_command.notify.admin.sound.type");
-
-		this.databaseEnable = getPatch().getBoolean("dataSource.enable");
-		this.database = getPatch().getString("dataSource.database");
-		this.jdbcDriver = getPatch().getString("dataSource.jdbcdriver");
-		this.host = getPatch().getString("dataSource.host");
-		this.port = getPatch().getString("dataSource.port");
-		this.user = getPatch().getString("dataSource.user");
-		this.password = getPatch().getString("dataSource.password");
-		this.table = getPatch().getString("dataSource.table");
-		this.useSsl = getPatch().getBoolean("dataSource.useSsl");
-
-		this.maxPoolSize = getPatch().getInt("dataSource.maxPoolSize");
-		this.maxLifetime = getPatch().getInt("dataSource.maxLifetime");
-		this.connectionTimeout = getPatch().getInt("dataSource.connectionTimeout");
-		this.intervalReload = getPatch().getInt("dataSource.intervalReload");
+	public String getConfigVersion() {
+		return this.configVersion;
 	}
 
-	private ConfigurationSection getPatch() {
-		return UtilLoadConfig.config.getConfigurationSection("worldguard_protect_region.");
+	@SuppressWarnings("unchecked")
+	public UtilConfig() {
+		try {
+			this.configVersion = getConfigPatch().getString("config_version", configVersion);
+			this.regionProtect = (List<String>) getConfigPatch().getList("region_protect", new ArrayList<String>());
+			this.regionProtectAllow = (List<String>) getConfigPatch().getList("region_protect_allow", new ArrayList<String>());
+			this.regionProtectOnlyBreakAllow = (List<String>) getConfigPatch().getList("region_protect_only_break_allow", new ArrayList<String>());
+			this.interactType = (List<String>) getConfigPatch().getList("interact_type", new ArrayList<String>());
+
+			this.cmdWe = (List<String>) getConfigPatch().getList("no_protect_cmd.command_we", new ArrayList<String>());
+			this.cmdWeC = (List<String>) getConfigPatch().getList("no_protect_cmd.command_c", new ArrayList<String>());
+			this.cmdWeP = (List<String>) getConfigPatch().getList("no_protect_cmd.command_p", new ArrayList<String>());
+			this.cmdWeS = (List<String>) getConfigPatch().getList("no_protect_cmd.command_s", new ArrayList<String>());
+			this.cmdWeU = (List<String>) getConfigPatch().getList("no_protect_cmd.command_u", new ArrayList<String>());
+			this.cmdWeCP = (List<String>) getConfigPatch().getList("no_protect_cmd.command_cp", new ArrayList<String>());
+			this.cmdWeB = (List<String>) getConfigPatch().getList("no_protect_cmd.command_b", new ArrayList<String>());
+			this.spyCommand = (List<String>) getConfigPatch().getList("spy_command.command_list", new ArrayList<String>());
+
+			this.regionMessageProtect = getConfigPatch().getBoolean("protect_message", true);
+			this.regionMessageProtectWe = getConfigPatch().getBoolean("protect_we_message", true);
+			this.spyCommandNotifyConsole = getConfigPatch().getBoolean("spy_command.notify.console", true);
+			this.spyCommandNotifyAdmin = getConfigPatch().getBoolean("spy_command.notify.admin", true);
+			this.spyCommandNotifyAdminPlaySoundEnable = getConfigPatch().getBoolean("spy_command.notify.admin.sound", true);
+			this.spyCommandNotifyAdminPlaySound = getConfigPatch().getString("spy_command.notify.admin.sound.type", "BLOCK_ANVIL_PLACE");
+
+			this.databaseEnable = getConfigPatch().getBoolean("dataSource.enable", false);
+			this.database = getConfigPatch().getString("dataSource.database", "wgrp_core");
+			this.jdbcDriver = getConfigPatch().getString("dataSource.jdbcdriver", "mariadb");
+			this.host = getConfigPatch().getString("dataSource.host", "localhost");
+			this.port = getConfigPatch().getString("dataSource.port", "3306");
+			this.user = getConfigPatch().getString("dataSource.user", "root");
+			this.password = getConfigPatch().getString("dataSource.password", "root");
+			this.table = getConfigPatch().getString("dataSource.table", "wgrp_logs");
+			this.useSsl = getConfigPatch().getBoolean("dataSource.useSsl", true);
+
+			this.maxPoolSize = getConfigPatch().getInt("dataSource.maxPoolSize", 10);
+			this.maxLifetime = getConfigPatch().getInt("dataSource.maxLifetime", 1800);
+			this.connectionTimeout = getConfigPatch().getInt("dataSource.connectionTimeout", 5000);
+			this.intervalReload = getConfigPatch().getInt("dataSource.intervalReload", 60);
+		}catch(IllegalArgumentException e){
+			WorldGuardRegionProtect.getInstance().getRsApi().getLogger().warn("&ePlease update your config.");
+		}
+	}
+
+	private ConfigurationSection getConfigPatch() {
+		return WorldGuardRegionProtect.getInstance().getUtilLoadConfig().config.getConfigurationSection("worldguard_protect_region.");
 	}
 }
