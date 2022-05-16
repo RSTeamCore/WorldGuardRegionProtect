@@ -1,10 +1,13 @@
 messages:
-  config-version: 1.0
+  #-------------------------------------------------------------
+  # Do not touch this!
+  # Current config version!
+  #-------------------------------------------------------------
+  config_version: 1.0
   ServerMsg:
     wgrpMsg: '&8[&cWGRP&8] &aThis region is protect by server!'
-    wgrpMsg_We: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
+    wgrpMsgWe: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
     noPerm: '&cYou don''t have permissions to use this command.'
-    sendAminInfo: '&8[&4!&8] &cAttention! &e<player> &ctry used command &5<cmd> &cin region: &3<rg>'
   Configs:
     configReloaded: '&8[&cWGRP&8] &aFile &6config.yml &areload success!'
     configNotFound: '&8[&cWGRP&8] &cFile &6config.yml &cnot found, created new!'
