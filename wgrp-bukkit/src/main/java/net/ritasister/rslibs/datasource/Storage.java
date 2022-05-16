@@ -8,16 +8,12 @@ import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Storage implements StorageDataSource {
@@ -72,7 +68,7 @@ public class Storage implements StorageDataSource {
 
 	public Connection getConnection() throws SQLException {
 		if (!this.ds.getConnection().isValid(3)) {
-			RSLogger.err(utilConfigMessage.dbReconnect);
+			worldGuardRegionProtect.getRsApi().getLogger().error(utilConfigMessage.dbReconnect);
 			this.connect();
 		}
 		return this.ds.getConnection();
@@ -87,7 +83,7 @@ public class Storage implements StorageDataSource {
 			pst.execute();
 			pst.close();
 		}catch(SQLException ex){
-			RSLogger.err(utilConfigMessage.dbConnectFailed);
+			worldGuardRegionProtect.getRsApi().getLogger().error(utilConfigMessage.dbConnectFailed);
 		}finally{
 			this.close(pst);
 		}
@@ -117,7 +113,7 @@ public class Storage implements StorageDataSource {
 			}
 			return true;
 		}catch(SQLException ex){
-			RSLogger.err(utilConfigMessage.dbLoadError);
+			worldGuardRegionProtect.getRsApi().getLogger().error(utilConfigMessage.dbLoadError);
 			ex.printStackTrace();
 		}finally{
 			this.close(rs);
@@ -152,7 +148,7 @@ public class Storage implements StorageDataSource {
 						}
 						worldGuardRegionProtect.rsStorage.dbLogs = new ConcurrentHashMap<>(tempDataBase);
 					} catch (SQLException ex) {
-						RSLogger.err(utilConfigMessage.dbLoadAsyncError);
+						worldGuardRegionProtect.getRsApi().getLogger().error(utilConfigMessage.dbLoadAsyncError);
 						ex.printStackTrace();
 					} finally {
 						Storage.this.close(rs);
@@ -179,7 +175,7 @@ public class Storage implements StorageDataSource {
 				pst.setDouble(9, z);
 				pst.executeUpdate();
 			} catch (SQLException ex) {
-			RSLogger.err("[MySQL] <id> "+uniqueId.toString()
+			worldGuardRegionProtect.getRsApi().getLogger().error("[MySQL] <id> "+uniqueId.toString()
 					.replace("<id>", uniqueId.toString())+ ex);
 		} finally {
 			this.close(pst);
@@ -192,7 +188,7 @@ public class Storage implements StorageDataSource {
 				pst.close();
 			}
 		}catch(SQLException ex){
-			RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbClosePSTError);
+			worldGuardRegionProtect.getRsApi().getLogger().error(worldGuardRegionProtect.utilConfigMessage.dbClosePSTError);
 		}
 	}
 
@@ -202,7 +198,7 @@ public class Storage implements StorageDataSource {
 				rs.close();
 			}
 		}catch(SQLException ex){
-			RSLogger.err(WorldGuardRegionProtect.utilConfigMessage.dbCloseRSError);
+			worldGuardRegionProtect.getRsApi().getLogger().error(worldGuardRegionProtect.utilConfigMessage.dbCloseRSError);
 		}
 	}
 	
@@ -211,7 +207,7 @@ public class Storage implements StorageDataSource {
 			ds.close();
 		}
         connect();
-		RSLogger.info(WorldGuardRegionProtect.utilConfigMessage.dbConnectSuccessfull);
+		worldGuardRegionProtect.getRsApi().getLogger().info(worldGuardRegionProtect.utilConfigMessage.dbConnectSuccessfull);
     }
 	
 	@Override

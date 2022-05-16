@@ -10,9 +10,8 @@ public enum UtilCommandList {
 		this.slot = slot;
 	}
 
-	public String getSlot() {
+	public String getCommand() {
 		return slot;
 	}
 
-	//public static final String worldGuardRegionProtect=("worldguardregionprotect");
 }

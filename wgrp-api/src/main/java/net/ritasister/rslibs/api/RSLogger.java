@@ -1,39 +1,36 @@
 package net.ritasister.rslibs.api;
 
+import net.ritasister.rslibs.api.interfaces.IRSLogger;
 import net.ritasister.rslibs.chat.api.ChatApi;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Logger;
 
-public class RSLogger {
-	final static Logger logger = Logger.getLogger("WGRP");
+public class RSLogger implements IRSLogger {
 
-	public static void info(final String msg) {
-		logger.info(ChatApi.getColorCode(msg));
+	private final ChatApi chatApi;
+
+	public RSLogger(ChatApi chatApi) {
+		this.chatApi=chatApi;
 	}
 
-	public static void warn(final String msg) {
-		logger.warning(ChatApi.getColorCode(msg));
+	public void info(final String msg) {
+		ROOT_LOGGER_NAME.info(chatApi.getColorCode(msg));
 	}
 
-	public static void warn(final String msg, IOException exception) {
-		logger.warning(ChatApi.getColorCode(msg));
+	public void warn(final String msg) {
+		ROOT_LOGGER_NAME.warning(chatApi.getColorCode(msg));
 	}
 
-	public static void warn(final String msg, Exception exception) {
-		logger.warning(ChatApi.getColorCode(msg));
+	public void error(final String msg) {
+		ROOT_LOGGER_NAME.severe(chatApi.getColorCode(msg));
 	}
 
-	public static void err(final String msg) {
-		logger.severe(ChatApi.getColorCode(msg));
+	public void loadConfigMsgSuccess(final File fileName) {
+		this.info("&2Config: &a<fileName> &2loaded success!"
+				.replace("<fileName>", String.valueOf(fileName)));
 	}
-
-	public static void err(final String msg, Exception exception) {
-		logger.severe(ChatApi.getColorCode(msg));
-	}
-
-	public static void LoadConfigMsgSuccess(final File fileName) {
-		RSLogger.info("&2Config: &a<config> &2loaded success!".replace("<config>", String.valueOf(fileName)));
+	public void updateConfigMsgSuccess(final File fileName) {
+		this.info("&2Config: &a<fileName> &2has been updated. Please check new updated fields in <fileName>"
+				.replace("<fileName>", String.valueOf(fileName)));
 	}
 }

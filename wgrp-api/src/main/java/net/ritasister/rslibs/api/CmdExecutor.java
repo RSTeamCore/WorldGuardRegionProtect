@@ -9,12 +9,17 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+/**
+
+ */
 public abstract class CmdExecutor implements CommandExecutor, TabExecutor {
 
     private final transient String name;
     private Player p;
     
-    protected CmdExecutor(String name) {this.name = name;}
+    protected CmdExecutor(String name) {
+		this.name = name;
+	}
     /**
 	 * Constructor for command.
 	 * 

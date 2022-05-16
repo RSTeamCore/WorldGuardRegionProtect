@@ -1,15 +1,16 @@
 package net.ritasister.rslibs.chat.api;
 
+import net.ritasister.rslibs.api.interfaces.IChatApi;
 import org.bukkit.ChatColor;
 
-public class ChatApi {
+public class ChatApi implements IChatApi {
 
     /**
      * Get colour for any message.
      *
      * @return message
      */
-    public static String getColorCode(String message) {
+    public String getColorCode(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
     /**
@@ -17,7 +18,7 @@ public class ChatApi {
      *
      * @return message
      */
-    public static String getDoubleTabSpaceWithoutColor(String message) {
+    public String getDoubleTabSpaceWithoutColor(String message) {
         return message.replace("\\n", "\n");
     }
     /**
@@ -25,7 +26,7 @@ public class ChatApi {
      *
      * @return message
      */
-    public static String getDoubleTabSpaceWithColor(String message) {
+    public String getDoubleTabSpaceWithColor(String message) {
         return getColorCode(message.replace("\\n", "\n"));
     }
 }
