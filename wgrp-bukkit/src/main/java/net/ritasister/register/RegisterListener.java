@@ -1,20 +1,19 @@
 package net.ritasister.register;
 
 import net.ritasister.listener.protect.RegionProtect;
-import net.ritasister.rslibs.api.RSLogger;
+import net.ritasister.rslibs.api.interfaces.IRegisterListener;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.plugin.PluginManager;
+import org.jetbrains.annotations.NotNull;
 
-public class RegisterListener {
+public class RegisterListener implements IRegisterListener {
 
-	public static void RegisterEvents(PluginManager pm) {
-		try{
-			final RegionProtect regionProtect = new RegionProtect(WorldGuardRegionProtect.getInstance());
-			pm.registerEvents(regionProtect, WorldGuardRegionProtect.getInstance());
-			RSLogger.info("&2All listeners load successfully!");
-		}catch(Exception e){
-            RSLogger.err("Could load all listeners... We have a error!");
-            e.fillInStackTrace();
-        }
+	@Override
+	public void registerListener(@NotNull PluginManager pluginManager) {
+		//RegionProtect
+		final RegionProtect regionProtect = new RegionProtect(WorldGuardRegionProtect.getInstance());
+		pluginManager.registerEvents(regionProtect, WorldGuardRegionProtect.getPlugin(WorldGuardRegionProtect.class));
+
+		WorldGuardRegionProtect.getInstance().rsApi.getLogger().info("&2All listeners registered successfully!");
 	}
 }
