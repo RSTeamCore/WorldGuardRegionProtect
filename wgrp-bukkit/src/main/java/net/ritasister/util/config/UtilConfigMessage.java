@@ -54,40 +54,40 @@ public class UtilConfigMessage {
 
 	public UtilConfigMessage() {
 		try {
-			wgrpMsg = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.ServerMsg.wgrpMsg", wgrpMsg));
-			wgrpMsgWe = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.ServerMsg.wgrpMsgWe", wgrpMsgWe));
-			noPerm = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.ServerMsg.noPerm", noPerm));
-			wgrpUseHelp = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.ExampleUseCommand.wgrpUseHelp", wgrpUseHelp));
+			wgrpMsg = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.ServerMsg.wgrpMsg", wgrpMsg));
+			wgrpMsgWe = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.ServerMsg.wgrpMsgWe", wgrpMsgWe));
+			noPerm = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.ServerMsg.noPerm", noPerm));
+			wgrpUseHelp = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.ExampleUseCommand.wgrpUseHelp", wgrpUseHelp));
 
-			configReloaded = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.Configs.configReloaded", configReloaded));
-			configNotFound = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.Configs.configNotFound", configNotFound));
-			configMsgReloaded = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.Configs.configMsgReloaded", configMsgReloaded));
-			configMsgNotFound = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.Configs.configMsgNotFound", configMsgNotFound));
+			configReloaded = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.Configs.configReloaded", configReloaded));
+			configNotFound = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.Configs.configNotFound", configNotFound));
+			configMsgReloaded = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.Configs.configMsgReloaded", configMsgReloaded));
+			configMsgNotFound = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.Configs.configMsgNotFound", configMsgNotFound));
 
-			sendAdminInfoIfUsedCommandInRG = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.Notify.sendAdminInfoIfUsedCommandInRG", sendAdminInfoIfUsedCommandInRG));
-			sendAdminInfoIfActionInRegion = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.Notify.sendAdminInfoIfActionInRegion", sendAdminInfoIfActionInRegion));
+			sendAdminInfoIfUsedCommandInRG = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.Notify.sendAdminInfoIfUsedCommandInRG", sendAdminInfoIfUsedCommandInRG));
+			sendAdminInfoIfActionInRegion = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.Notify.sendAdminInfoIfActionInRegion", sendAdminInfoIfActionInRegion));
 
-			pluralDay1 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.day.pluralDay1", pluralDay1));
-			pluralDay2 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.day.pluralDay2", pluralDay2));
-			pluralDay3 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.day.pluralDay3", pluralDay3));
+			pluralDay1 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.day.pluralDay1", pluralDay1));
+			pluralDay2 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.day.pluralDay2", pluralDay2));
+			pluralDay3 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.day.pluralDay3", pluralDay3));
 
-			pluralHour1 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.hour.pluralHour1", pluralHour1));
-			pluralHour2 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.hour.pluralHour2", pluralHour2));
-			pluralHour3 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.hour.pluralHour3", pluralHour3));
+			pluralHour1 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.hour.pluralHour1", pluralHour1));
+			pluralHour2 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.hour.pluralHour2", pluralHour2));
+			pluralHour3 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.hour.pluralHour3", pluralHour3));
 
-			pluralMinute1 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.minute.pluralMinute1", pluralMinute1));
-			pluralMinute2 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.minute.pluralMinute2", pluralMinute2));
-			pluralMinute3 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.minute.pluralMinute3", pluralMinute3));
-			pluralMinute4 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.minute.pluralMinute4", pluralMinute4));
+			pluralMinute1 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.minute.pluralMinute1", pluralMinute1));
+			pluralMinute2 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.minute.pluralMinute2", pluralMinute2));
+			pluralMinute3 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.minute.pluralMinute3", pluralMinute3));
+			pluralMinute4 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.minute.pluralMinute4", pluralMinute4));
 
-			pluralSecond1 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.second.pluralSecond1", pluralSecond1));
-			pluralSecond2 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.second.pluralSecond2", pluralSecond2));
-			pluralSecond3 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.second.pluralSecond3", pluralSecond3));
-			pluralSecond4 = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.second.pluralSecond4", pluralSecond4));
+			pluralSecond1 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.second.pluralSecond1", pluralSecond1));
+			pluralSecond2 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.second.pluralSecond2", pluralSecond2));
+			pluralSecond3 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.second.pluralSecond3", pluralSecond3));
+			pluralSecond4 = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.second.pluralSecond4", pluralSecond4));
 
-			pluralTimeEmpty = WorldGuardRegionProtect.getInstance().chatApi.getColorCode(getMessagePatch().getString("messages.PluralTime.timeEmpty.pluralTimeEmpty", pluralTimeEmpty));
+			pluralTimeEmpty = WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(getMessagePatch().getString("messages.PluralTime.timeEmpty.pluralTimeEmpty", pluralTimeEmpty));
 		}catch(IllegalArgumentException e){
-			WorldGuardRegionProtect.getInstance().getRsApi().getLogger().warn("&ePlease update your config.");
+			WorldGuardRegionProtect.getInstance().getRsApi().getLogger().warn("&cPlease update your config!!!");
 		}
 	}
 

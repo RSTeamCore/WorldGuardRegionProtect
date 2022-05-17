@@ -1,7 +1,6 @@
 package net.ritasister.util.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
@@ -89,7 +88,7 @@ public class UtilConfig {
 			this.connectionTimeout = getConfigPatch().getInt("dataSource.connectionTimeout", 5000);
 			this.intervalReload = getConfigPatch().getInt("dataSource.intervalReload", 60);
 		}catch(IllegalArgumentException e){
-			WorldGuardRegionProtect.getInstance().getRsApi().getLogger().warn("&ePlease update your config.");
+			WorldGuardRegionProtect.getInstance().getRsApi().getLogger().warn("&cPlease update your config.");
 		}
 	}
 
