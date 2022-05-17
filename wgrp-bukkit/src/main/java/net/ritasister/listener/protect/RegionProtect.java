@@ -129,13 +129,11 @@ public class RegionProtect implements Listener {
 	private void denyUseBucket(final @NotNull PlayerBucketEmptyEvent e) {
 		final Player p = e.getPlayer();
 		final Location loc = e.getBlockClicked().getLocation();
+		final Material bucketType = e.getBlockClicked().getType();
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(p, IUtilPermissions.REGION_PROTECT, wgRegionProtect.getUtilConfigMessage().wgrpMsg))return;{
-				if (e.getBlockClicked().getType() == Material.LAVA_BUCKET
-						|| e.getBlockClicked().getType() == Material.WATER_BUCKET
-						|| e.getBlockClicked().getType() == Material.BUCKET) {
-					e.setCancelled(true);
-				}e.setCancelled(true);
+					switch (bucketType) { case LAVA_BUCKET, WATER_BUCKET, BUCKET -> e.setCancelled(true);
+				}
 			}
 		}
 	}
@@ -147,25 +145,20 @@ public class RegionProtect implements Listener {
 		final Location loc = entity.getLocation();
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(attacker, IUtilPermissions.REGION_PROTECT, null))return;{
-				if (entity instanceof ArmorStand
-						|| entity instanceof ItemFrame
-						|| entity instanceof Painting
-						|| entity instanceof EnderCrystal) {
-					if (attacker instanceof Player || attacker instanceof Creeper
-							|| attacker instanceof Wither | attacker instanceof WitherSkeleton
-							|| attacker instanceof Ghast || attacker instanceof Snowman
-							|| attacker instanceof ShulkerBullet || attacker instanceof Drowned
-							|| attacker instanceof Skeleton || attacker instanceof Stray) {
-						e.setCancelled(true);
-					}else if (attacker instanceof Projectile){
-						attacker = ((Projectile) attacker).getShooter() instanceof Entity
-								? (Entity) ((Projectile) attacker).getShooter() : null;
-						if (attacker instanceof Player || attacker instanceof Creeper
-								|| attacker instanceof Wither | attacker instanceof WitherSkeleton
-								|| attacker instanceof Ghast || attacker instanceof Snowman
-								|| attacker instanceof ShulkerBullet || attacker instanceof Drowned
-								|| attacker instanceof Skeleton || attacker instanceof Stray) {
-							e.setCancelled(true);
+				if (entity instanceof ArmorStand || entity instanceof ItemFrame
+						|| entity instanceof Painting || entity instanceof EnderCrystal) {
+					switch(attacker.getType()) {
+						case PLAYER, CREEPER, ENDER_CRYSTAL, WITHER, WITHER_SKELETON, GHAST,
+								SNOWMAN, SHULKER_BULLET, DROWNED, SKELETON, STRAY -> e.setCancelled(true);
+						default -> {
+							if(attacker instanceof Projectile) {
+								attacker = ((Projectile) attacker).getShooter() instanceof Entity
+										? (Entity) ((Projectile) attacker).getShooter() : null;
+								switch (Objects.requireNonNull(attacker).getType()) {
+									case PLAYER, CREEPER, ENDER_CRYSTAL, WITHER, WITHER_SKELETON, GHAST, SNOWMAN,
+											SHULKER_BULLET, DROWNED, SKELETON, STRAY -> e.setCancelled(true);
+								}
+							}
 						}
 					}
 				}
@@ -181,27 +174,20 @@ public class RegionProtect implements Listener {
 		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
 			assert attacker != null;
 			if (wgRegionProtect.getRsApi().isSenderListenerPermission(attacker, IUtilPermissions.REGION_PROTECT, null)) return; {
-				if (Objects.requireNonNull(e.getRemover()).getType() == EntityType.PLAYER) {
-					e.setCancelled(true);
-				}
 				if (entity instanceof ItemFrame || entity instanceof Painting) {
-					if (attacker instanceof Player || attacker instanceof Creeper
-							|| attacker instanceof Wither | attacker instanceof WitherSkeleton
-							|| attacker instanceof Ghast || attacker instanceof Snowman
-							|| attacker instanceof ShulkerBullet || attacker instanceof Drowned
-							|| attacker instanceof Skeleton || attacker instanceof Stray) {
-						if (attacker instanceof Projectile) {
-							attacker = ((Projectile) attacker).getShooter() instanceof Entity ? (Entity) ((Projectile) attacker).getShooter() : null;
-							if (attacker instanceof Player || attacker instanceof Creeper
-									|| attacker instanceof Wither | attacker instanceof WitherSkeleton
-									|| attacker instanceof Ghast || attacker instanceof Snowman
-									|| attacker instanceof ShulkerBullet || attacker instanceof Drowned
-									|| attacker instanceof Skeleton || attacker instanceof Stray)  {
-								e.setCancelled(true);
+					switch(attacker.getType()) {
+						case PLAYER, CREEPER, ENDER_CRYSTAL, WITHER, WITHER_SKELETON, GHAST,
+								SNOWMAN, SHULKER_BULLET, DROWNED, SKELETON, STRAY -> e.setCancelled(true);
+						default -> {
+							if(attacker instanceof Projectile) {
+								attacker = ((Projectile) attacker).getShooter() instanceof Entity
+										? (Entity) ((Projectile) attacker).getShooter() : null;
+								switch (Objects.requireNonNull(attacker).getType()) {
+									case PLAYER, CREEPER, ENDER_CRYSTAL, WITHER, WITHER_SKELETON, GHAST, SNOWMAN,
+											SHULKER_BULLET, DROWNED, SKELETON, STRAY -> e.setCancelled(true);
+								}
 							}
 						}
-					} else {
-						e.setCancelled(true);
 					}
 				}
 			}
@@ -247,9 +233,7 @@ public class RegionProtect implements Listener {
 	private void denyInteract(final @NotNull PlayerInteractEvent e) {
 		if (e.getItem() != null) {
 			Player player = e.getPlayer();
-			org.bukkit.event.block.Action action = e.getAction();
-			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;
-			{
+			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
 				for (String spawnEntityType : wgRegionProtect.getUtilConfig().interactType) {
 					if (e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase())
 							&& e.getClickedBlock() != null
@@ -273,12 +257,9 @@ public class RegionProtect implements Listener {
 		final Location loc = entity.getLocation();
 		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
 			assert player != null;
-			if (wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null)) return;
-			{
-				if (player.getInventory().getItemInMainHand().getType() == Material.ITEM_FRAME
-						|| player.getInventory().getItemInMainHand().getType() == Material.GLOW_ITEM_FRAME
-						|| player.getInventory().getItemInMainHand().getType() == Material.PAINTING) {
-					e.setCancelled(true);
+			if (wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null)) return;{
+				switch (player.getInventory().getItemInMainHand().getType()) {
+					case ITEM_FRAME, GLOW_ITEM_FRAME, PAINTING -> e.setCancelled(true);
 				}
 			}
 		}
@@ -287,15 +268,11 @@ public class RegionProtect implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyExplode(final @NotNull EntityExplodeEvent e) {
 		final Entity entity = e.getEntity();
+		final EntityType entityType = e.getEntityType();
 		final Location loc = entity.getLocation();
 		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
-			if (e.getEntityType() == EntityType.PRIMED_TNT
-					|| e.getEntityType() == EntityType.ENDER_CRYSTAL
-					|| e.getEntityType() == EntityType.MINECART_TNT
-					|| e.getEntityType() == EntityType.CREEPER
-					|| e.getEntityType() == EntityType.FIREBALL
-					|| e.getEntityType() == EntityType.WITHER_SKULL) {
-				e.blockList().clear();
+			switch (entityType) {
+				case PRIMED_TNT, ENDER_CRYSTAL, MINECART_TNT, CREEPER, FIREBALL, WITHER_SKULL -> e.setCancelled(true);
 			}
 		}
 	}
