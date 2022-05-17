@@ -19,10 +19,10 @@ import java.util.List;
  */
 public class RSApi {
 
-	private final WorldGuardRegionProtect worldGuardRegionProtect;
+	private final WorldGuardRegionProtect wgRegionProtect;
 
 	public RSApi(WorldGuardRegionProtect worldGuardRegionProtect) {
-		this.worldGuardRegionProtect=worldGuardRegionProtect;
+		this.wgRegionProtect =worldGuardRegionProtect;
 	}
 
 	/**
@@ -37,12 +37,12 @@ public class RSApi {
 	public boolean isSenderCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull IUtilPermissions perm, String message) {
 		if (!sender.hasPermission(perm.getPermissionName()) || !sender.isPermissionSet(perm.getPermissionName())) {
 			if (message != null) {
-				sender.sendMessage(worldGuardRegionProtect.chatApi.getColorCode(message));
+				sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
 
 			}
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class RSApi {
 	public boolean isSenderListenerPermission(@NotNull CommandSender sender, @NotNull IUtilPermissions perm, String message) {
 		if (!sender.hasPermission(perm.getPermissionName()) || !sender.isPermissionSet(perm.getPermissionName())) {
 			if (message != null) {
-				sender.sendMessage(WorldGuardRegionProtect.getInstance().chatApi.getColorCode(message));
+				sender.sendMessage(WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(message));
 			}
 			return false;
 		}
@@ -83,13 +83,13 @@ public class RSApi {
 	 * @param regionName    return region name, if player attempts to use command in region.
 	 */
 	public void notify(Player player, String playerName, String senderCommand, String regionName) {
-		if (worldGuardRegionProtect.utilConfig.spyCommandNotifyAdmin
+		if (wgRegionProtect.getUtilConfig().spyCommandNotifyAdmin
 				&& this.isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT_NOTIFY_ADMIN, null)) {
-			for (String cmd : worldGuardRegionProtect.utilConfig.spyCommand) {
+			for (String cmd : wgRegionProtect.getUtilConfig().spyCommand) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())
-						&& worldGuardRegionProtect.utilConfig.spyCommandNotifyAdminPlaySoundEnable) {
-					player.playSound(player.getLocation(), worldGuardRegionProtect.utilConfig.spyCommandNotifyAdminPlaySound, 1, 1);
-					player.sendMessage(worldGuardRegionProtect.utilConfigMessage.sendAdminInfoIfUsedCommandInRG
+						&& wgRegionProtect.getUtilConfig().spyCommandNotifyAdminPlaySoundEnable) {
+					player.playSound(player.getLocation(), wgRegionProtect.getUtilConfig().spyCommandNotifyAdminPlaySound, 1, 1);
+					player.sendMessage(wgRegionProtect.getUtilConfigMessage().sendAdminInfoIfUsedCommandInRG
 							.replace("<player>", playerName)
 							.replace("<cmd>", cmd)
 							.replace("<rg>", regionName));
@@ -106,10 +106,10 @@ public class RSApi {
 	 * @param regionName    return region name, if player attempts to use command in region.
 	 */
 	public void notify(String playerName, String senderCommand, String regionName) {
-		if (worldGuardRegionProtect.utilConfig.spyCommandNotifyConsole) {
-			for (String cmd : worldGuardRegionProtect.utilConfig.spyCommand) {
+		if (wgRegionProtect.getUtilConfig().spyCommandNotifyConsole) {
+			for (String cmd : wgRegionProtect.getUtilConfig().spyCommand) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-					Bukkit.getConsoleSender().sendMessage(worldGuardRegionProtect.utilConfigMessage.sendAdminInfoIfUsedCommandInRG
+					Bukkit.getConsoleSender().sendMessage(wgRegionProtect.getUtilConfigMessage().sendAdminInfoIfUsedCommandInRG
 							.replace("<player>", playerName)
 							.replace("<cmd>", cmd)
 							.replace("<region>", regionName));
@@ -134,8 +134,8 @@ public class RSApi {
 	 */
 	public void notifyIfActionInRegion(Player admin, Player suspect, String time, String suspectName, Action action, String regionName, double x, double y, double z, String world) {
 		if (this.isSenderListenerPermission(suspect, IUtilPermissions.SPY_INSPECT_FOR_SUSPECT, null)
-				&& worldGuardRegionProtect.utilConfig.spyCommandNotifyAdmin) {
-				admin.sendMessage(worldGuardRegionProtect.utilConfigMessage.sendAdminInfoIfActionInRegion
+				&& wgRegionProtect.getUtilConfig().spyCommandNotifyAdmin) {
+				admin.sendMessage(wgRegionProtect.getUtilConfigMessage().sendAdminInfoIfActionInRegion
 						.replace("<time>", time).replace("<player>", suspectName)
 					.replace("<action>", action.getAction())
 					.replace("<region>", regionName)
@@ -159,7 +159,7 @@ public class RSApi {
 		try {
 			long time = System.currentTimeMillis();
 			if (supportedVersions.contains(serverPackage)) {
-				WorldGuardRegionProtect.getInstance().rsApi.getLogger().info("&7Loaded NMS hook in " + (System.currentTimeMillis()-time) + "ms");
+				WorldGuardRegionProtect.getInstance().getRsApi().getLogger().info("&7Loaded NMS hook in " + (System.currentTimeMillis()-time) + "ms");
 				return true;
 			} else {
 				getLogger().info("&cNo compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + "). Disabling just to stay safe.");
@@ -187,10 +187,10 @@ public class RSApi {
 	}
 
 	public String getProtectRegionName(Location loc) {
-		return worldGuardRegionProtect.getRsRegion().getProtectRegion(loc);
+		return wgRegionProtect.getRsRegion().getProtectRegion(loc);
 	}
 
 	public RSLogger getLogger() {
-		return worldGuardRegionProtect.rsLogger;
+		return this.wgRegionProtect.rsLogger;
 	}
 }

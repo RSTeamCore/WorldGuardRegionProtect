@@ -1,13 +1,8 @@
 package net.ritasister.rslibs.datasource;
 
-import net.ritasister.wgrp.WorldGuardRegionProtect;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.UUID;
 
 public class StorageDataBase {
-
-    private WorldGuardRegionProtect worldGuardRegionProtect;
 
     private int id;
     private String nickname;
