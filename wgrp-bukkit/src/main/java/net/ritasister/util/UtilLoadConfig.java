@@ -14,12 +14,12 @@ import java.nio.file.StandardCopyOption;
 
 public class UtilLoadConfig {
 
-	private final WorldGuardRegionProtect worldGuardRegionProtect;
+	private final WorldGuardRegionProtect wgRegionProtect;
 	public FileConfiguration config, messages;
 	public File configFile, messagesFile;
 
 	public UtilLoadConfig(WorldGuardRegionProtect worldGuardRegionProtect) {
-		this.worldGuardRegionProtect=worldGuardRegionProtect;
+		this.wgRegionProtect=worldGuardRegionProtect;
 	}
 
 	public void initConfig() {
@@ -29,7 +29,7 @@ public class UtilLoadConfig {
 		loadMSGConfig(WorldGuardRegionProtect.getInstance(), true);
 		WorldGuardRegionProtect.getInstance().utilConfigMessage = new UtilConfigMessage();
 
-		worldGuardRegionProtect.getRsApi().getLogger().info("&2All configs load successfully!");
+		wgRegionProtect.getRsApi().getLogger().info("&2All configs load successfully!");
 	}
 
 	private void loadConfig(@NotNull WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
@@ -90,8 +90,7 @@ public class UtilLoadConfig {
 					ex.printStackTrace();
 				}
 			}
-		}
-		try {
+		}try {
 			messages = YamlConfiguration.loadConfiguration(messagesFile);
 		} catch (NullPointerException e) {
 			worldGuardRegionProtect.getRsApi().getLogger().error(messagesFile + e.getMessage());
