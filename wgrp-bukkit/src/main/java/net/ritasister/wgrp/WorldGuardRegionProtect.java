@@ -2,10 +2,7 @@ package net.ritasister.wgrp;
 
 import net.ritasister.register.RegisterCommand;
 import net.ritasister.register.RegisterListener;
-import net.ritasister.rslibs.api.RSApi;
-import net.ritasister.rslibs.api.RSLogger;
-import net.ritasister.rslibs.api.RSRegion;
-import net.ritasister.rslibs.api.RSStorage;
+import net.ritasister.rslibs.api.*;
 import net.ritasister.rslibs.chat.api.ChatApi;
 import net.ritasister.rslibs.datasource.Storage;
 import net.ritasister.rslibs.util.Metrics;
@@ -13,10 +10,13 @@ import net.ritasister.rslibs.util.UpdateChecker;
 import net.ritasister.util.UtilLoadConfig;
 import net.ritasister.util.config.UtilConfig;
 import net.ritasister.util.config.UtilConfigMessage;
+import net.ritasister.util.wg.wg7;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class WorldGuardRegionProtect extends JavaPlugin {
 
@@ -44,29 +44,35 @@ public class WorldGuardRegionProtect extends JavaPlugin {
      *          If instance is {@code null}
      */
     public static WorldGuardRegionProtect getInstance() {
-        if (instance == null) throw new IllegalStateException("API instance is null. This likely means you shaded WGRP's API into your project" +
-                " instead of only using it, which is not allowed.");
+        if (instance == null)
+            throw new IllegalStateException("API instance is null. This likely means you shaded WGRP's API into your project" +
+                    " instead of only using it, which is not allowed.");
         return instance;
     }
+
+    public ArrayList<UUID> spyLog = new ArrayList<>();
+    public Functions functions;
 
     private final String pluginVersion = getDescription().getVersion();
     private final PluginManager pluginManager = getServer().getPluginManager();
 
-    //Implements
-    public RegisterListener registerListener;
-    public RegisterCommand registerCommand;
+    public wg7 wg7;
+
     //DataBase
-    public RSStorage rsStorage;
-    public ChatApi chatApi;
-    public RSApi rsApi;
-    public RSRegion rsRegion;
+    private RSStorage rsStorage;
+    private ChatApi chatApi;
+    private RSApi rsApi;
+    private RSRegion rsRegion;
     public RSLogger rsLogger;
+
     //Configs
     public UtilConfig utilConfig;
     public UtilConfigMessage utilConfigMessage;
-    public UtilLoadConfig utilLoadConfig;
+    private UtilLoadConfig utilLoadConfig;
 
     public LoadLibs loadLibs;
+
+    public String name;
 
     @Override
     public void onEnable() {
@@ -88,15 +94,16 @@ public class WorldGuardRegionProtect extends JavaPlugin {
     private void loadAnotherClassAndMethods() {
         this.loadLibs = new LoadLibs();
         this.loadLibs.loadWorldGuard();
+        this.functions = new Functions(this);
         this.rsRegion = new RSRegion();
+        this.wg7 = new wg7(this);
         this.utilLoadConfig = new UtilLoadConfig(this);
         this.utilLoadConfig.initConfig();
-        //this.utilConfig = new UtilConfig();
-        //this.utilConfigMessage = new UtilConfigMessage();
-        this.registerListener = new RegisterListener();
-        this.registerListener.registerListener(this.pluginManager);
-        this.registerCommand = new RegisterCommand();
-        this.registerCommand.registerCommand();
+        //Implements
+        RegisterListener registerListener = new RegisterListener();
+        registerListener.registerListener(this.pluginManager);
+        RegisterCommand registerCommand = new RegisterCommand();
+        registerCommand.registerCommand();
         this.rsStorage = new RSStorage();
     }
 
@@ -140,7 +147,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
     private void loadDataBase() {
         if(this.utilConfig.databaseEnable) {
             final long duration_time_start = System.currentTimeMillis();
-            this.rsStorage.dbLogsSource = new Storage(this, utilConfig, utilConfigMessage);
+            this.rsStorage.dbLogsSource = new Storage(this);
             this.rsStorage.dbLogs.clear();
             if (this.rsStorage.dbLogsSource.load()) {
                 getRsApi().getLogger().info("[DataBase] The player base is loaded.");
@@ -167,6 +174,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
     public RSApi getRsApi() {
         return this.rsApi;
     }
+
     @NotNull
     public RSRegion getRsRegion() {
         return this.rsRegion;
@@ -196,4 +204,10 @@ public class WorldGuardRegionProtect extends JavaPlugin {
     public UtilConfig getUtilConfig() {
         return  utilConfig;
     }
+
+    @NotNull
+    public wg7 getWG7() {
+        return wg7;
+    }
+
 }
