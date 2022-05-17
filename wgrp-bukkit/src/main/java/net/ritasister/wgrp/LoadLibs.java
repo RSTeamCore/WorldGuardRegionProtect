@@ -17,6 +17,6 @@ public class LoadLibs {
         }
     }
 	private static void msgSuccess() {
-        WorldGuardRegionProtect.getInstance().rsApi.getLogger().info("&2Plugin: WorldGuard loaded successful!.");
+        WorldGuardRegionProtect.getInstance().getRsApi().getLogger().info("&2Plugin: WorldGuard loaded successful!.");
     }
 }
