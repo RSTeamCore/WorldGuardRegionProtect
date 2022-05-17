@@ -14,6 +14,6 @@ public class RegisterListener implements IRegisterListener {
 		final RegionProtect regionProtect = new RegionProtect(WorldGuardRegionProtect.getInstance());
 		pluginManager.registerEvents(regionProtect, WorldGuardRegionProtect.getPlugin(WorldGuardRegionProtect.class));
 
-		WorldGuardRegionProtect.getInstance().rsApi.getLogger().info("&2All listeners registered successfully!");
+		WorldGuardRegionProtect.getInstance().getRsApi().getLogger().info("&2All listeners registered successfully!");
 	}
 }
