@@ -5,8 +5,9 @@ public enum IUtilPermissions {
 	COMMAND_WGRP("wgrp.command.wgrpbase"),
 	REGION_PROTECT("wgrp.command.wgrpbase"),
 	REGION_PROTECT_NOTIFY_ADMIN("wgrp.notify.admin"),
-	SPY_INSPECT_FOR_SUSPECT("wgrp.spy.spyinspectforsuspect"),
-	SPY_ADMIN_FOR_SUSPECT("Owner");
+	SPY_INSPECT_FOR_SUSPECT("wgrp.spy.suspect"),
+	SPY_INSPECT_ADMIN_COMMAND("wgrp.command.spy.admin"),
+	SPY_INSPECT_ADMIN_LISTENER("wgrp.spy.admin");
 
 	public final String permissionName;
 
