@@ -51,7 +51,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
     }
 
     public ArrayList<UUID> spyLog = new ArrayList<>();
-    public Functions functions;
+    //public Functions functions;
 
     private final String pluginVersion = getDescription().getVersion();
     private final PluginManager pluginManager = getServer().getPluginManager();
