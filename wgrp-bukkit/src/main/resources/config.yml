@@ -18,25 +18,25 @@ worldguard_protect_region:
   # region_protect: []
   #-------------------------------------------------------------
   region_protect:
-  - spawn
-  - pvp
+    - spawn
+    - pvp
 
   #--------------------------------------------------------------------------------------
-  # List of protected regions where breaking is allowed with the 'build allow' flag.
+  # List of protected regions where breaking is allowed.
   # If regions are not needed, specify an empty parameter:
   # region_protect_allow: []
   #--------------------------------------------------------------------------------------
-  # Список защищенных регионов в которых разрешено ломать с флагом 'build allow'.
+  # Список защищенных регионов в которых разрешено ломать.
   # Если регионы не нужны, укажите пустой параметр:
   # region_protect_allow: []
   region_protect_allow: []
 
   #--------------------------------------------------------------------------------------
-  # List of protected regions where only breaking is allowed with the 'build allow' flag.
+  # List of protected regions where only breaking is allowed.
   # If regions are not needed, specify an empty parameter:
   # region_protect_only_break_allow: []
   #-------------------------------------------------------------
-  # Список защищенных регионов в которых разрешено только ломать с флагом 'build allow'.
+  # Список защищенных регионов в которых разрешено только ломать.
   # Если регионы не нужны, укажите пустой параметр:
   # region_protect_only_break_allow: []
   #--------------------------------------------------------------------------------------
