@@ -94,7 +94,7 @@ public class WorldGuardRegionProtect extends JavaPlugin {
     private void loadAnotherClassAndMethods() {
         this.loadLibs = new LoadLibs();
         this.loadLibs.loadWorldGuard();
-        this.functions = new Functions(this);
+        //this.functions = new Functions(this);
         this.rsRegion = new RSRegion();
         this.wg7 = new wg7(this);
         this.utilLoadConfig = new UtilLoadConfig(this);
