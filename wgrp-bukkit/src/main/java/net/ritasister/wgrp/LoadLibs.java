@@ -4,19 +4,25 @@ import org.bukkit.plugin.Plugin;
 
 public class LoadLibs {
 
-	public void loadWorldGuard() {
+    private final WorldGuardRegionProtect wgRegionProtect;
+
+    public LoadLibs(WorldGuardRegionProtect wgRegionProtect) {
+        this.wgRegionProtect = wgRegionProtect;
+    }
+
+    public void loadWorldGuard() {
         final String s = "WorldGuard";
-        final Plugin plg = WorldGuardRegionProtect.getInstance().getServer().getPluginManager().getPlugin(s);
+        final Plugin plg = wgRegionProtect.getWgrpBukkitPlugin().getServer().getPluginManager().getPlugin(s);
         if (plg != null && plg.isEnabled()) {
             try{
                 msgSuccess();
             }catch(NullPointerException | ClassCastException | NoClassDefFoundError ex){
                 final Throwable exception = null;
-                WorldGuardRegionProtect.getInstance().getRsApi().getLogger().error(exception.getMessage());
+                wgRegionProtect.getRsApi().getLogger().error(exception.getMessage());
             }
         }
     }
-	private static void msgSuccess() {
-        WorldGuardRegionProtect.getInstance().getRsApi().getLogger().info("&2Plugin: WorldGuard loaded successful!.");
+	private void msgSuccess() {
+        wgRegionProtect.getRsApi().getLogger().info("&2Plugin: WorldGuard loaded successful!.");
     }
 }
