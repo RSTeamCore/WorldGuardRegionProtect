@@ -129,11 +129,6 @@ public class WorldGuardRegionProtect {
     }
 
     @NotNull
-    public wg7 getWG7() {
-        return wg7;
-    }
-
-    @NotNull
     public PluginManager getPluginManager() {
         return this.wgrpBukkitPlugin.getServer().getPluginManager();
     }
@@ -141,5 +136,10 @@ public class WorldGuardRegionProtect {
     @NotNull
     public String getPluginVersion() {
         return this.wgrpBukkitPlugin.getDescription().getVersion();
+    }
+
+    @NotNull
+    public wg7 getWG7() {
+        return wg7;
     }
 }

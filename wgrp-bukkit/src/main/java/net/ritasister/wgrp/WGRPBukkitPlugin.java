@@ -27,6 +27,11 @@ public class WGRPBukkitPlugin extends JavaPlugin {
         }
     }
 
+    protected void loadMetrics() {
+        int pluginId = 12975;
+        new Metrics(this, pluginId);
+    }
+
     protected void checkUpdate() {
         new UpdateChecker(this, 81321).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
@@ -65,11 +70,6 @@ public class WGRPBukkitPlugin extends JavaPlugin {
             getWgRegionProtect().getRsStorage().dbLogsSource.loadAsync();
             getWgRegionProtect().getRsApi().getLogger().info("[DataBase] The base is loaded asynchronously.");
         }
-    }
-
-    protected void loadMetrics() {
-        int pluginId = 12975;
-        new Metrics(this, pluginId);
     }
 
     private WorldGuardRegionProtect getWgRegionProtect() {
