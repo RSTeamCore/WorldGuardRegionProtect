@@ -4,7 +4,7 @@ authors:
   - IRedTea
 version: ${internalVersion}
 main: net.ritasister.wgrp.WGRPBukkitPlugin
-softdepend: [ WorldGuard ]
+depend: [ WorldGuard ]
 description: Protect your region on the server.
 website: 'https://github.com/RSTeamCore/WorldGuardRegionProtect'
 api-version: 1.18
