@@ -17,10 +17,10 @@ public class RSRegion implements IRSRegion {
     /**
      * Check access in standing region by player used region name from config.yml.
      *
-     * @param location return location of player.
+     * @param location return location of object.
      * @param list return list of regions from WorldGuard.
      *
-     * @return checkStandingRegion return location of Player.
+     * @return checkStandingRegion return location of object.
      */
     @Override
     public boolean checkStandingRegion(@NotNull Location location, List<String> list) {
@@ -37,9 +37,9 @@ public class RSRegion implements IRSRegion {
     /**
      * Check access in standing region by player without region name.
      *
-     * @param location return location of player.
+     * @param location return location of object.
      *
-     * @return checkStandingRegion return location of Player.
+     * @return checkStandingRegion return location of object.
      */
     @Override
     public boolean checkStandingRegion(@NotNull Location location) {
@@ -63,9 +63,9 @@ public class RSRegion implements IRSRegion {
     /**
      * Getting region name for another method.
      *
-     * @param location return location of player.
+     * @param location return location of object.
      *
-     * @return getProtectRegionName return location of Player.
+     * @return getProtectRegionName return location of Object.
      */
     public String getProtectRegion(@NotNull Location location) {
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
@@ -75,6 +75,13 @@ public class RSRegion implements IRSRegion {
         return null;
     }
 
+    /**
+     * Getting applicable region for set.
+     *
+     * @param location return location of Object.
+     *
+     * @return getApplicableRegions return location of Object.
+     */
     private ApplicableRegionSet getApplicableRegions(final Location location) {
         return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(location.getWorld())))
                 .getApplicableRegions(BukkitAdapter.asBlockVector(location));
