@@ -1,10 +1,8 @@
 package net.ritasister.wgrp.listener.protect;
 
+import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.Action;
 import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
-import net.ritasister.wgrp.rslibs.util.wg.Iwg;
-import net.ritasister.wgrp.util.wg.wg7;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -255,8 +253,15 @@ public class RegionProtect implements Listener {
 		final EntityType entityType = e.getEntityType();
 		final Location loc = entity.getLocation();
 		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
-			switch (entityType) {
-				case PRIMED_TNT, ENDER_CRYSTAL, MINECART_TNT, CREEPER, FIREBALL, WITHER_SKULL -> e.setCancelled(true);
+			if(wgRegionProtect.getUtilConfig().explodeEntity) {
+				switch (entityType) {
+					case PRIMED_TNT, ENDER_CRYSTAL, MINECART_TNT, CREEPER, FIREBALL, WITHER_SKULL -> e.blockList().clear();
+					default -> e.setCancelled(true);
+				}
+			} else {
+				switch (entityType) {
+					case PRIMED_TNT, ENDER_CRYSTAL, MINECART_TNT, CREEPER, FIREBALL, WITHER_SKULL -> e.setCancelled(true);
+				}
 			}
 		}
 	}
