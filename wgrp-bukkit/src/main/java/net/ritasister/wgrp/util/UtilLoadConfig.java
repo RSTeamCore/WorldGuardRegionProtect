@@ -1,16 +1,13 @@
-package net.ritasister.util;
+package net.ritasister.wgrp.util;
 
-import net.ritasister.util.config.UtilConfig;
-import net.ritasister.util.config.UtilConfigMessage;
+import net.ritasister.wgrp.util.config.UtilConfig;
+import net.ritasister.wgrp.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 public class UtilLoadConfig {
 
@@ -18,26 +15,26 @@ public class UtilLoadConfig {
 	public FileConfiguration config, messages;
 	public File configFile, messagesFile;
 
-	public UtilLoadConfig(WorldGuardRegionProtect worldGuardRegionProtect) {
-		this.wgRegionProtect=worldGuardRegionProtect;
+	public UtilLoadConfig(WorldGuardRegionProtect wgRegionProtect) {
+		this.wgRegionProtect=wgRegionProtect;
 	}
 
-	public void initConfig() {
-		loadConfig(WorldGuardRegionProtect.getInstance(), true);
-		WorldGuardRegionProtect.getInstance().utilConfig = new UtilConfig();
+	public void initConfig(WorldGuardRegionProtect wgRegionProtect) {
+		loadConfig(wgRegionProtect, true);
+		wgRegionProtect.utilConfig = new UtilConfig(wgRegionProtect);
 
-		loadMSGConfig(WorldGuardRegionProtect.getInstance(), true);
-		WorldGuardRegionProtect.getInstance().utilConfigMessage = new UtilConfigMessage();
+		loadMSGConfig(wgRegionProtect, true);
+		wgRegionProtect.utilConfigMessage = new UtilConfigMessage(wgRegionProtect);
 
 		wgRegionProtect.getRsApi().getLogger().info("&2All configs load successfully!");
 	}
 
 	private void loadConfig(@NotNull WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
-		configFile = new File(worldGuardRegionProtect.getDataFolder(), "config.yml");
+		configFile = new File(wgRegionProtect.getWgrpBukkitPlugin().getDataFolder(), "config.yml");
 		config = YamlConfiguration.loadConfiguration(configFile);
 		if (!configFile.exists()) {
 			if (copy) {
-				worldGuardRegionProtect.saveResource("config.yml", false);
+				wgRegionProtect.getWgrpBukkitPlugin().saveResource("config.yml", false);
 				//RSLogger.updateConfigMsgSuccess(configFile);
 			} else {
 				try {
@@ -67,7 +64,7 @@ public class UtilLoadConfig {
 	}
 
 	private void loadMSGConfig(@NotNull WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
-		messagesFile = new File(worldGuardRegionProtect.getDataFolder(), "messages.yml");
+		messagesFile = new File(wgRegionProtect.getWgrpBukkitPlugin().getDataFolder(), "messages.yml");
 		/*if (messagesFile.exists() && worldGuardRegionProtect.utilConfigMessage.configMsgReloaded == null
 				|| !worldGuardRegionProtect.utilConfigMessage.configMsgReloaded.equals("1.0")) {
 			try {
@@ -80,7 +77,7 @@ public class UtilLoadConfig {
 		}*/
 		if (!messagesFile.exists()) {
 			if (copy) {
-				worldGuardRegionProtect.saveResource("messages.yml", false);
+				wgRegionProtect.getWgrpBukkitPlugin().saveResource("messages.yml", false);
 				//RSLogger.updateConfigMsgSuccess(configFile);
 			} else {
 				try {

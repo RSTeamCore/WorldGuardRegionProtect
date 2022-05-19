@@ -1,8 +1,8 @@
-package net.ritasister.command;
+package net.ritasister.wgrp.command;
 
 import net.ritasister.rslibs.api.CmdExecutor;
 import net.ritasister.rslibs.permissions.IUtilPermissions;
-import net.ritasister.util.UtilCommandList;
+import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -28,17 +28,17 @@ public final class CommandWGRP extends CmdExecutor {
 	protected void run(CommandSender sender, Command cmd, String[] args) {
 		final boolean sp = sender instanceof Player;
 		FileConfiguration configPatch = wgRegionProtect.getUtilLoadConfig().config;
-		FileConfiguration getConfig = WorldGuardRegionProtect.getInstance().getConfig();
+		FileConfiguration getConfig = wgRegionProtect.getWgrpBukkitPlugin().getConfig();
 		if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission((Player) sender, cmd, IUtilPermissions.COMMAND_WGRP,
                 wgRegionProtect.utilConfigMessage.noPerm))return; {}
 		if(args.length > 0) {
 			runCommand(sender, cmd, args, configPatch, getConfig);
 		}else{
-			sender.sendMessage(WorldGuardRegionProtect.getInstance().utilConfigMessage.wgrpUseHelp);
+			sender.sendMessage(wgRegionProtect.utilConfigMessage.wgrpUseHelp);
 		}
 	}
 
-	private void runCommand(CommandSender sender, Command cmd, String[] args, FileConfiguration configPatch, FileConfiguration getConfig) {
+	private void runCommand(CommandSender sender, Command cmd, String @NotNull [] args, FileConfiguration configPatch, FileConfiguration getConfig) {
 		final boolean sp = sender instanceof Player;
 		if (args[0].equalsIgnoreCase("help")) {
 			sender.sendMessage(wgRegionProtect.getChatApi().getDoubleTabSpaceWithColor("sub-commands:\n/wgrp about\n/wgrp spy - enable or disable spying for log who interact with region.\n/wgrp add protect|protect-allow|only-break-allow <region name>"));
@@ -50,10 +50,10 @@ public final class CommandWGRP extends CmdExecutor {
 				@NotNull UUID uniqueId = Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getUniqueId();
 				if (wgRegionProtect.spyLog.contains(uniqueId)) {
 					wgRegionProtect.spyLog.remove(uniqueId);
-					sender.sendMessage("You disable spy logging!");
+					sender.sendMessage("You are disable spy logging!");
 				} else {
 					wgRegionProtect.spyLog.add(uniqueId);
-					sender.sendMessage("You enable spy logging!");
+					sender.sendMessage("You are enable spy logging!");
 				}
 			}
 		}
@@ -79,7 +79,7 @@ public final class CommandWGRP extends CmdExecutor {
 	}
 
 	@Override
-	public List<String> onTabComplete(CommandSender sender, Player player, Command cmd, String label, String[] args) {
+	public List<String> onTabComplete(CommandSender sender, Player player, Command cmd, String label, String @NotNull [] args) {
 		if (args.length == 1 && wgRegionProtect.getRsApi().isSenderCommandsPermissionOnTab(sender, IUtilPermissions.COMMAND_WGRP)) {
 			return wgRegionProtect.getRsApi().isSenderCommandsPermissionOnTab(sender, IUtilPermissions.COMMAND_WGRP) && sender instanceof Player ?
 					StringUtil.copyPartialMatches(args[0], subCommand, new ArrayList<>()) : new ArrayList<>();

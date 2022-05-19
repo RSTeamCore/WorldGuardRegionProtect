@@ -1,9 +1,7 @@
-package net.ritasister.rslibs.api;
+package net.ritasister.wgrp.rslibs.api;
 
-import net.ritasister.rslibs.datasource.StorageDataBase;
-import net.ritasister.rslibs.datasource.StorageDataSource;
-import net.ritasister.util.config.UtilConfig;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.rslibs.datasource.StorageDataBase;
+import net.ritasister.wgrp.rslibs.datasource.StorageDataSource;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;

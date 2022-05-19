@@ -1,4 +1,4 @@
-package net.ritasister.rslibs.api;
+package net.ritasister.wgrp.rslibs.api;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
@@ -8,6 +8,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -71,4 +72,19 @@ public class RSRegion {
         }
         return null;
     }
+
+    /*public void paginate(CommandSender sender, String[] args, boolean mine) {
+        int page = 1;
+        final List<List<String>> lists = mine
+                ? ProtectedMine.getSplitedNames()
+                : ProtectedRG.getSplitedNames();
+        if (args.length == 2 && args[1].matches("^[0-9]{1,3}$") && Integer.parseInt(args[1]) <= lists.size()) {
+            page = Integer.parseInt(args[1]);
+        }
+        sender.sendMessage("WGRP: " + " §3Page " + page + "/" + lists.size());
+        for (final String item : lists.get(page - 1)) {
+            sender.sendMessage("WGRP: " + " §2" + item);
+        }
+        sender.sendMessage("");
+    }*/
 }

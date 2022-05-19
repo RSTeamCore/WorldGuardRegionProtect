@@ -1,4 +1,4 @@
-package net.ritasister.util.config;
+package net.ritasister.wgrp.util.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.configuration.ConfigurationSection;
@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilConfig {
+
+	private final WorldGuardRegionProtect wgRegionProtect;
 
 	public String configVersion = "1.0";
 	public List<String> regionProtect;
@@ -49,7 +51,8 @@ public class UtilConfig {
 	}
 
 	@SuppressWarnings("unchecked")
-	public UtilConfig() {
+	public UtilConfig(WorldGuardRegionProtect wgRegionProtect) {
+		this.wgRegionProtect = wgRegionProtect;
 		try {
 			this.configVersion = getConfigPatch().getString("config_version", configVersion);
 			this.regionProtect = (List<String>) getConfigPatch().getList("region_protect", new ArrayList<String>());
@@ -88,11 +91,11 @@ public class UtilConfig {
 			this.connectionTimeout = getConfigPatch().getInt("dataSource.connectionTimeout", 5000);
 			this.intervalReload = getConfigPatch().getInt("dataSource.intervalReload", 60);
 		}catch(IllegalArgumentException e){
-			WorldGuardRegionProtect.getInstance().getRsApi().getLogger().warn("&cPlease update your config.");
+			wgRegionProtect.getRsApi().getLogger().warn("&cPlease update your config.");
 		}
 	}
 
 	private ConfigurationSection getConfigPatch() {
-		return WorldGuardRegionProtect.getInstance().getUtilLoadConfig().config.getConfigurationSection("worldguard_protect_region.");
+		return wgRegionProtect.getUtilLoadConfig().config.getConfigurationSection("worldguard_protect_region.");
 	}
 }

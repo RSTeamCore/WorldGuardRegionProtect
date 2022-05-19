@@ -1,10 +1,10 @@
-package net.ritasister.util;
+package net.ritasister.wgrp.util;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 public class Time {
 
-    public static String getTimeToString(int time, int depth, boolean accusative) {
+    /*public static String getTimeToString(int time, int depth, boolean accusative) {
         String output = "";
         if (time > 0) {
             int day = time / 86400;
@@ -60,5 +60,5 @@ public class Time {
         }
 
         return output.trim();
-    }
+    }*/
 }

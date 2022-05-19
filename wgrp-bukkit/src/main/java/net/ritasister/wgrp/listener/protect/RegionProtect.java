@@ -1,9 +1,9 @@
-package net.ritasister.listener.protect;
+package net.ritasister.wgrp.listener.protect;
 
 import net.ritasister.rslibs.api.Action;
 import net.ritasister.rslibs.permissions.IUtilPermissions;
 import net.ritasister.rslibs.util.wg.Iwg;
-import net.ritasister.util.wg.wg7;
+import net.ritasister.wgrp.util.wg.wg7;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -50,10 +50,6 @@ public class RegionProtect implements Listener {
 		final UUID uniqueId = player.getUniqueId();
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
-		double x = b.getX();
-		double y = b.getY();
-		double z = b.getZ();
-		String world = b.getWorld().getName();
 		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(loc);
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtectAllow)
 				|| wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtectOnlyBreakAllow)) {
@@ -70,7 +66,7 @@ public class RegionProtect implements Listener {
 				wgRegionProtect.getRsApi().notifyIfActionInRegion(
 						player, player, wgRegionProtect.getRsApi().getTime(),
 						playerName, Action.BREAK, regionName,
-						x, y, z, world);
+						b.getX(), b.getY(), b.getZ(), b.getWorld().getName());
 			}
 			if(wgRegionProtect.getUtilConfig().databaseEnable) {
 				wgRegionProtect.getRsStorage().getDataSource().setLogAction(
@@ -89,10 +85,6 @@ public class RegionProtect implements Listener {
 		final UUID uniqueId = player.getUniqueId();
 		final Block b = e.getBlock();
 		final Location loc = b.getLocation();
-		double x = b.getX();
-		double y = b.getY();
-		double z = b.getZ();
-		String world = b.getWorld().getName();
 		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(loc);
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtectAllow)) {
 			e.setCancelled(false);
@@ -108,19 +100,14 @@ public class RegionProtect implements Listener {
 				wgRegionProtect.getRsApi().notifyIfActionInRegion(
 						player, player, wgRegionProtect.getRsApi().getTime(),
 						playerName, Action.PLACE, regionName,
-						x, y, z, world);
+						b.getX(), b.getY(), b.getZ(), b.getWorld().getName());
 			}
 			if(wgRegionProtect.getUtilConfig().databaseEnable) {
 				wgRegionProtect.getRsStorage().getDataSource().setLogAction(
-						playerName,
-						uniqueId,
-						System.currentTimeMillis(),
-						Action.PLACE,
-						regionName,
-						b.getWorld().getName(),
-						b.getX(),
-						b.getY(),
-						b.getZ());
+						playerName, uniqueId,
+						System.currentTimeMillis(), Action.PLACE,
+						regionName, b.getWorld().getName(), b.getX(),
+						b.getY(), b.getZ());
 			}
 		}
 	}
@@ -198,10 +185,10 @@ public class RegionProtect implements Listener {
 	private void denyInteractWithEntity(final @NotNull PlayerInteractEntityEvent e) {
 		final Player player = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
+		final @NotNull EntityType clickType = e.getRightClicked().getType();
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(clickLoc, wgRegionProtect.getUtilConfig().regionProtect)) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
-				if(e.getRightClicked().getType() == EntityType.ITEM_FRAME
-						|| e.getRightClicked().getType() == EntityType.GLOW_ITEM_FRAME
+				if(clickType == EntityType.ITEM_FRAME || clickType == EntityType.GLOW_ITEM_FRAME
 						&& this.Iwg.wg(player.getWorld(), player.getLocation())) {
 					e.setCancelled(true);
 				}
@@ -281,8 +268,9 @@ public class RegionProtect implements Listener {
 	private void denyExplodeRespawnAnchor(final @NotNull BlockExplodeEvent e) {
 		final Block block = e.getBlock();
 		final Location loc = block.getLocation();
+		final @NotNull Material blockType = block.getType();
 		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
-			if (block.getType() == Material.RESPAWN_ANCHOR && this.Iwg.wg(block.getWorld(), loc))return; {
+			if (blockType == Material.RESPAWN_ANCHOR && this.Iwg.wg(block.getWorld(), loc))return; {
 				e.setCancelled(true);
 			}
 		}

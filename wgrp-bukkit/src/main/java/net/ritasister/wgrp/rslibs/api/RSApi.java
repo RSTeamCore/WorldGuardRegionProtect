@@ -1,5 +1,7 @@
-package net.ritasister.rslibs.api;
+package net.ritasister.wgrp.rslibs.api;
 
+import net.ritasister.rslibs.api.Action;
+import net.ritasister.rslibs.api.RSLogger;
 import net.ritasister.rslibs.permissions.IUtilPermissions;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
@@ -67,7 +69,7 @@ public class RSApi {
 	public boolean isSenderListenerPermission(@NotNull CommandSender sender, @NotNull IUtilPermissions perm, String message) {
 		if (!sender.hasPermission(perm.getPermissionName()) || !sender.isPermissionSet(perm.getPermissionName())) {
 			if (message != null) {
-				sender.sendMessage(WorldGuardRegionProtect.getInstance().getChatApi().getColorCode(message));
+				sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
 			}
 			return false;
 		}
@@ -159,7 +161,7 @@ public class RSApi {
 		try {
 			long time = System.currentTimeMillis();
 			if (supportedVersions.contains(serverPackage)) {
-				WorldGuardRegionProtect.getInstance().getRsApi().getLogger().info("&7Loaded NMS hook in " + (System.currentTimeMillis()-time) + "ms");
+				wgRegionProtect.getRsApi().getLogger().info("&7Loaded NMS hook in " + (System.currentTimeMillis()-time) + "ms");
 				return true;
 			} else {
 				getLogger().info("&cNo compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + "). Disabling just to stay safe.");
@@ -191,6 +193,6 @@ public class RSApi {
 	}
 
 	public RSLogger getLogger() {
-		return this.wgRegionProtect.rsLogger;
+		return this.wgRegionProtect.getRsLogger();
 	}
 }

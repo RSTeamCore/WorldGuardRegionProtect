@@ -1,4 +1,4 @@
-package net.ritasister.util;
+package net.ritasister.wgrp.util;
 
 import org.bukkit.ChatColor;
 

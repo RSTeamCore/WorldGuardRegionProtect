@@ -1,4 +1,4 @@
-package net.ritasister.rslibs.datasource;
+package net.ritasister.wgrp.rslibs.datasource;
 
 import net.ritasister.rslibs.api.Action;
 

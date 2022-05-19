@@ -1,4 +1,4 @@
-package net.ritasister.rslibs.datasource;
+package net.ritasister.wgrp.rslibs.datasource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -115,7 +115,7 @@ public class Storage implements StorageDataSource {
 	}
 
 	public void loadAsync() {
-		Bukkit.getScheduler().runTaskTimerAsynchronously(wgRegionProtect, () -> {
+		Bukkit.getScheduler().runTaskTimerAsynchronously(wgRegionProtect.getWgrpBukkitPlugin(), () -> {
 					ConcurrentHashMap<UUID, StorageDataBase> tempDataBase = new ConcurrentHashMap<>();
 					PreparedStatement pst = null;
 					ResultSet rs = null;
