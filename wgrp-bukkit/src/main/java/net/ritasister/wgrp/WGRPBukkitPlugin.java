@@ -7,32 +7,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class WGRPBukkitPlugin extends JavaPlugin {
 
-    private final WorldGuardRegionProtect wgRegionProtect;
-
-    public WGRPBukkitPlugin(WorldGuardRegionProtect wgRegionProtect) {
-        this.wgRegionProtect = wgRegionProtect;
-    }
+    private WorldGuardRegionProtect wgRegionProtect;
 
     @Override
     public void onEnable() {
+        wgRegionProtect = new WorldGuardRegionProtect(this);
         this.getWgRegionProtect().load();
     }
 
     public void notifyPreBuild() {
-        if(this.getWgRegionProtect().getPluginVersion().contains("alpha")
-                && this.getWgRegionProtect().getPluginVersion().contains("pre")) {
+        if(this.getWgRegionProtect().getPluginVersion().contains("pre")) {
             getWgRegionProtect().getRsApi().getLogger().warn("This is a test build. This building may be unstable!");
         } else {
             getWgRegionProtect().getRsApi().getLogger().info("This is the latest stable building.");
         }
     }
 
-    protected void loadMetrics() {
-        int pluginId = 12975;
-        new Metrics(this, pluginId);
-    }
-
-    protected void checkUpdate() {
+    public void checkUpdate() {
         new UpdateChecker(this, 81321).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
                 getWgRegionProtect().getRsApi().getLogger().info("&6==============================================");
@@ -51,7 +42,7 @@ public class WGRPBukkitPlugin extends JavaPlugin {
         });
     }
 
-    protected void loadDataBase() {
+    public void loadDataBase() {
         if(this.getWgRegionProtect().getUtilConfig().databaseEnable) {
             final long duration_time_start = System.currentTimeMillis();
             this.getWgRegionProtect().getRsStorage().dbLogsSource = new Storage(this.getWgRegionProtect());
@@ -64,7 +55,7 @@ public class WGRPBukkitPlugin extends JavaPlugin {
         }
     }
 
-    protected void postEnable() {
+    public void postEnable() {
         getServer().getScheduler().cancelTasks(this);
         if (this.getWgRegionProtect().getUtilConfig().intervalReload > 0) {
             getWgRegionProtect().getRsStorage().dbLogsSource.loadAsync();
@@ -72,7 +63,13 @@ public class WGRPBukkitPlugin extends JavaPlugin {
         }
     }
 
+    public void loadMetrics() {
+        int pluginId = 12975;
+        new Metrics(this, pluginId);
+    }
+
     private WorldGuardRegionProtect getWgRegionProtect() {
         return this.wgRegionProtect;
     }
+
 }

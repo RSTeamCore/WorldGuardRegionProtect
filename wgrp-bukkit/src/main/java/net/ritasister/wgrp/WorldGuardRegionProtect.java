@@ -17,15 +17,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.UUID;
 
-//
 public class WorldGuardRegionProtect {
 
-    private final WGRPBukkitPlugin wgrpBukkitPlugin;
+    private WGRPBukkitPlugin wgrpBukkitPlugin;
 
     public ArrayList<UUID> spyLog = new ArrayList<>();
     //public Functions functions;
 
-    public net.ritasister.wgrp.util.wg.wg7 wg7;
+    public wg7 wg7;
 
     //DataBase
     private RSStorage rsStorage;
@@ -39,7 +38,7 @@ public class WorldGuardRegionProtect {
     public UtilConfigMessage utilConfigMessage;
     public UtilLoadConfig utilLoadConfig;
 
-    public LoadLibs loadLibs;
+    private LoadLibs loadLibs;
 
     public WorldGuardRegionProtect(WGRPBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
@@ -50,11 +49,11 @@ public class WorldGuardRegionProtect {
         this.chatApi = new ChatApi();
         this.rsLogger = new RSLogger(this.chatApi);
         this.checkStartUpVersionServer();
-        this.wgrpBukkitPlugin.loadMetrics();
+        this.getWgrpBukkitPlugin().loadMetrics();
         this.loadAnotherClassAndMethods();
         //this.loadDataBase();
-        this.wgrpBukkitPlugin.notifyPreBuild();
-        this.wgrpBukkitPlugin.checkUpdate();
+        this.getWgrpBukkitPlugin().notifyPreBuild();
+        this.getWgrpBukkitPlugin().checkUpdate();
     }
 
     /**
@@ -62,12 +61,12 @@ public class WorldGuardRegionProtect {
      */
     private void loadAnotherClassAndMethods() {
         this.loadLibs = new LoadLibs(this);
-        this.loadLibs.loadWorldGuard();
+        this.getLoadLibs().loadWorldGuard();
         //this.functions = new Functions(this);
         this.rsRegion = new RSRegion();
         this.wg7 = new wg7(this);
         this.utilLoadConfig = new UtilLoadConfig(this);
-        this.utilLoadConfig.initConfig(this);
+        this.getUtilLoadConfig().initConfig(this);
         //Implements
         RegisterListener registerListener = new RegisterListener(this);
         registerListener.registerListener(this.getPluginManager());
@@ -127,6 +126,11 @@ public class WorldGuardRegionProtect {
     @NotNull
     public UtilConfig getUtilConfig() {
         return  utilConfig;
+    }
+
+    @NotNull
+    public LoadLibs getLoadLibs() {
+        return this.loadLibs;
     }
 
     @NotNull
