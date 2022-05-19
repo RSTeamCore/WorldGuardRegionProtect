@@ -27,6 +27,7 @@ public class UtilConfig {
 	public boolean regionMessageProtectWe;
 	public boolean spyCommandNotifyConsole;
 	public boolean spyCommandNotifyAdmin;
+	public boolean explodeEntity;
 	public String spyCommandNotifyAdminPlaySound;
 	public boolean spyCommandNotifyAdminPlaySoundEnable;
 	public boolean databaseEnable;
@@ -67,6 +68,8 @@ public class UtilConfig {
 			this.cmdWeCP = (List<String>) getConfigPatch().getList("no_protect_cmd.command_cp", new ArrayList<String>());
 			this.cmdWeB = (List<String>) getConfigPatch().getList("no_protect_cmd.command_b", new ArrayList<String>());
 			this.spyCommand = (List<String>) getConfigPatch().getList("spy_command.command_list", new ArrayList<String>());
+
+			this.explodeEntity = getConfigPatch().getBoolean("explodeEntity.enable", true);
 
 			this.regionMessageProtect = getConfigPatch().getBoolean("protect_message", true);
 			this.regionMessageProtectWe = getConfigPatch().getBoolean("protect_we_message", true);
