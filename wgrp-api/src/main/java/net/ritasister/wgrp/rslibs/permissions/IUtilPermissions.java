@@ -1,4 +1,4 @@
-package net.ritasister.rslibs.permissions;
+package net.ritasister.wgrp.rslibs.permissions;
 
 public enum IUtilPermissions {
 

@@ -1,4 +1,4 @@
-package net.ritasister.rslibs.api;
+package net.ritasister.wgrp.rslibs.api;
 
 public class WorldGuardRegionProtectApi {
 

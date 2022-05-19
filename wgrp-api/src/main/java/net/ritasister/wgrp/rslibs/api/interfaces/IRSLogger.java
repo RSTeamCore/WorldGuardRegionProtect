@@ -1,4 +1,4 @@
-package net.ritasister.rslibs.api.interfaces;
+package net.ritasister.wgrp.rslibs.api.interfaces;
 
 import java.io.File;
 import java.util.logging.Logger;

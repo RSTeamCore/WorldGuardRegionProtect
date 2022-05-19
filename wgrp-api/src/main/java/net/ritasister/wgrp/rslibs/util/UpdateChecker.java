@@ -1,4 +1,4 @@
-package net.ritasister.rslibs.util;
+package net.ritasister.wgrp.rslibs.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -1,4 +1,4 @@
-package net.ritasister.rslibs.util.wg;
+package net.ritasister.wgrp.rslibs.util.wg;
 
 import org.bukkit.Location;
 import org.bukkit.World;

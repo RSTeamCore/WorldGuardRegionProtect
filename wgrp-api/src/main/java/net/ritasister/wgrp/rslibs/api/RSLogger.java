@@ -1,7 +1,6 @@
-package net.ritasister.rslibs.api;
+package net.ritasister.wgrp.rslibs.api;
 
-import net.ritasister.rslibs.api.interfaces.IRSLogger;
-import net.ritasister.rslibs.chat.api.ChatApi;
+import net.ritasister.wgrp.rslibs.api.interfaces.IRSLogger;
 
 import java.io.File;
 
