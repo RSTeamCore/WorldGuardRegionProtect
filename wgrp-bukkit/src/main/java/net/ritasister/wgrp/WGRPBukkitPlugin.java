@@ -1,7 +1,7 @@
 package net.ritasister.wgrp;
 
-import net.ritasister.rslibs.util.Metrics;
-import net.ritasister.rslibs.util.UpdateChecker;
+import net.ritasister.wgrp.rslibs.util.Metrics;
+import net.ritasister.wgrp.rslibs.util.UpdateChecker;
 import net.ritasister.wgrp.rslibs.datasource.Storage;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -71,5 +71,4 @@ public class WGRPBukkitPlugin extends JavaPlugin {
     private WorldGuardRegionProtect getWgRegionProtect() {
         return this.wgRegionProtect;
     }
-
 }

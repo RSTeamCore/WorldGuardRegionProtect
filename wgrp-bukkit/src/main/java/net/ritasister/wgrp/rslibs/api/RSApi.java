@@ -1,8 +1,6 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import net.ritasister.rslibs.api.Action;
-import net.ritasister.rslibs.api.RSLogger;
-import net.ritasister.rslibs.permissions.IUtilPermissions;
+import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

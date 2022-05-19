@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.datasource;
 
-import net.ritasister.rslibs.api.Action;
+import net.ritasister.wgrp.rslibs.api.Action;
 
 import java.util.UUID;
 

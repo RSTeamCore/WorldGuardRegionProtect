@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.command;
 
-import net.ritasister.rslibs.api.CmdExecutor;
-import net.ritasister.rslibs.permissions.IUtilPermissions;
+import net.ritasister.wgrp.rslibs.api.CmdExecutor;
+import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
 import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;

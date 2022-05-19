@@ -29,7 +29,6 @@ public class UtilConfig {
 	public boolean spyCommandNotifyAdmin;
 	public String spyCommandNotifyAdminPlaySound;
 	public boolean spyCommandNotifyAdminPlaySoundEnable;
-
 	public boolean databaseEnable;
 	public String database;
 	public String jdbcDriver;

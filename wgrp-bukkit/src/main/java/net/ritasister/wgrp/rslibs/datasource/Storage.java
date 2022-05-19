@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.datasource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import net.ritasister.rslibs.api.Action;
+import net.ritasister.wgrp.rslibs.api.Action;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 

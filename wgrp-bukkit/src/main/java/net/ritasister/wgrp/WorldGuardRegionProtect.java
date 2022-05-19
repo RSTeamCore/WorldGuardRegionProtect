@@ -1,12 +1,9 @@
 package net.ritasister.wgrp;
 
-import net.ritasister.rslibs.api.RSLogger;
-import net.ritasister.rslibs.chat.api.ChatApi;
+import net.ritasister.wgrp.rslibs.api.*;
 import net.ritasister.wgrp.register.RegisterCommand;
 import net.ritasister.wgrp.register.RegisterListener;
-import net.ritasister.wgrp.rslibs.api.RSApi;
-import net.ritasister.wgrp.rslibs.api.RSRegion;
-import net.ritasister.wgrp.rslibs.api.RSStorage;
+import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.util.UtilLoadConfig;
 import net.ritasister.wgrp.util.config.UtilConfig;
 import net.ritasister.wgrp.util.config.UtilConfigMessage;
@@ -19,12 +16,13 @@ import java.util.UUID;
 
 public class WorldGuardRegionProtect {
 
-    private WGRPBukkitPlugin wgrpBukkitPlugin;
+    private final WGRPBukkitPlugin wgrpBukkitPlugin;
 
-    public ArrayList<UUID> spyLog = new ArrayList<>();
     //public Functions functions;
 
-    public wg7 wg7;
+    private wg7 wg7;
+
+    private Iwg Iwg;
 
     //DataBase
     private RSStorage rsStorage;
@@ -38,7 +36,14 @@ public class WorldGuardRegionProtect {
     public UtilConfigMessage utilConfigMessage;
     public UtilLoadConfig utilLoadConfig;
 
+    //Parameters for to intercept commands from WE or FAWE.
+    private CommandWE commandWE;
+
+    //Load depends on WorldGuard
     private LoadLibs loadLibs;
+
+    //HashMap
+    public ArrayList<UUID> spyLog = new ArrayList<>();
 
     public WorldGuardRegionProtect(WGRPBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
@@ -56,23 +61,36 @@ public class WorldGuardRegionProtect {
         this.getWgrpBukkitPlugin().checkUpdate();
     }
 
-    /**
-     * Call all classes file to start.
-     */
     private void loadAnotherClassAndMethods() {
+        //Libs of WorldGuard.
         this.loadLibs = new LoadLibs(this);
         this.getLoadLibs().loadWorldGuard();
         //this.functions = new Functions(this);
+
+        //API for Regions.
         this.rsRegion = new RSRegion();
         this.wg7 = new wg7(this);
+
+        //Configs.
         this.utilLoadConfig = new UtilLoadConfig(this);
         this.getUtilLoadConfig().initConfig(this);
-        //Implements
+
+        //Parameters for to intercept commands from WE or FAWE.
+        this.commandWE = new CommandWE(this);
+        this.Iwg=this.getCommandWE().setUpWorldGuardVersionSeven();
+
+        //Commands and listeners.
+        this.loadCommandsAndListener();
+
+        //Fields for database.
+        this.rsStorage = new RSStorage();
+    }
+
+    private void loadCommandsAndListener() {
         RegisterListener registerListener = new RegisterListener(this);
         registerListener.registerListener(this.getPluginManager());
         RegisterCommand registerCommand = new RegisterCommand(this);
         registerCommand.registerCommand();
-        this.rsStorage = new RSStorage();
     }
 
     private void checkStartUpVersionServer() {
@@ -84,6 +102,7 @@ public class WorldGuardRegionProtect {
         }
     }
 
+    @NotNull
     public WGRPBukkitPlugin getWgrpBukkitPlugin() {
         return this.wgrpBukkitPlugin;
     }
@@ -134,6 +153,11 @@ public class WorldGuardRegionProtect {
     }
 
     @NotNull
+    public CommandWE getCommandWE() {
+        return this.commandWE;
+    }
+
+    @NotNull
     public PluginManager getPluginManager() {
         return this.wgrpBukkitPlugin.getServer().getPluginManager();
     }
@@ -145,6 +169,11 @@ public class WorldGuardRegionProtect {
 
     @NotNull
     public wg7 getWG7() {
-        return wg7;
+        return this.wg7;
+    }
+
+    @NotNull
+    public Iwg getIwg() {
+        return this.Iwg;
     }
 }

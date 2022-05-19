@@ -19,7 +19,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import net.ritasister.wgrp.rslibs.api.ProtectedMine;
 import net.ritasister.wgrp.rslibs.api.ProtectedRG;
-import net.ritasister.rslibs.util.wg.Iwg;
+import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -40,19 +40,6 @@ public class wg7 implements Iwg {
         this.wgRegionProtect = wgRegionProtect;
         this.wg = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
         this.we = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
-    }
-
-    @Override
-    public boolean wg(final World world, final Location locatin) {
-        final ApplicableRegionSet set = this.getApplicableRegions(locatin);
-        for (final ProtectedRegion rg : set) {
-            for (final Object region : wgRegionProtect.getUtilConfig().regionProtect) {
-                if (rg.getId().equalsIgnoreCase(region.toString())) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     @Override
