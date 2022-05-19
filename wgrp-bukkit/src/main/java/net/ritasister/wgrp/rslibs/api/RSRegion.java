@@ -1,34 +1,30 @@
 package net.ritasister.wgrp.rslibs.api;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import net.ritasister.wgrp.rslibs.api.interfaces.IRSRegion;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
-public class RSRegion {
+public class RSRegion implements IRSRegion {
 
     /**
      * Check access in standing region by player used region name from config.yml.
      *
-     * @param loc return location of player.
+     * @param location return location of player.
      * @param list return list of regions from WorldGuard.
      *
      * @return checkStandingRegion return location of Player.
      */
-    public boolean checkStandingRegion(@NotNull Location loc, List<String> list) {
-        final World world = loc.getWorld();
-        final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
-        final BlockVector3 locationBlockVector3 = BlockVector3.at(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
-        assert regionManager != null;
-        final ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(locationBlockVector3);
+    @Override
+    public boolean checkStandingRegion(@NotNull Location location, List<String> list) {
+        final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         for (ProtectedRegion protectedRegion : applicableRegionSet) {
             for (String regionName : list) {
                 if (protectedRegion.getId().equalsIgnoreCase(regionName)) {
@@ -41,36 +37,47 @@ public class RSRegion {
     /**
      * Check access in standing region by player without region name.
      *
-     * @param loc return location of player.
+     * @param location return location of player.
      *
      * @return checkStandingRegion return location of Player.
      */
-    public boolean checkStandingRegion(@NotNull Location loc) {
-        final World world = loc.getWorld();
-        final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
-        final BlockVector3 locationBlockVector3 = BlockVector3.at(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
-        assert regionManager != null;
-        final ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(locationBlockVector3);
+    @Override
+    public boolean checkStandingRegion(@NotNull Location location) {
+        final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         return (applicableRegionSet.size() != 0);
+    }
+
+    @Override
+    public boolean checkStandingRegion(World world, @NotNull Location location, List<String> list) {
+        final ApplicableRegionSet set = this.getApplicableRegions(location);
+        for (final ProtectedRegion rg : set) {
+            for (String regionName : list) {
+                if (rg.getId().equalsIgnoreCase(regionName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
      * Getting region name for another method.
      *
-     * @param loc return location of player.
+     * @param location return location of player.
      *
      * @return getProtectRegionName return location of Player.
      */
-    public String getProtectRegion(@NotNull Location loc) {
-        final World world = loc.getWorld();
-        final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(world));
-        final BlockVector3 locationBlockVector3 = BlockVector3.at(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
-        assert regionManager != null;
-        final ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(locationBlockVector3);
+    public String getProtectRegion(@NotNull Location location) {
+        final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         for (ProtectedRegion protectedRegion : applicableRegionSet) {
             return protectedRegion.getId();
         }
         return null;
+    }
+
+    private ApplicableRegionSet getApplicableRegions(final Location location) {
+        return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(location.getWorld())))
+                .getApplicableRegions(BukkitAdapter.asBlockVector(location));
     }
 
     /*public void paginate(CommandSender sender, String[] args, boolean mine) {
