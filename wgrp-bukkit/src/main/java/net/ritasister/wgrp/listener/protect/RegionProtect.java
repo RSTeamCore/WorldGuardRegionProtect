@@ -1,8 +1,8 @@
 package net.ritasister.wgrp.listener.protect;
 
-import net.ritasister.rslibs.api.Action;
-import net.ritasister.rslibs.permissions.IUtilPermissions;
-import net.ritasister.rslibs.util.wg.Iwg;
+import net.ritasister.wgrp.rslibs.api.Action;
+import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
+import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.util.wg.wg7;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Location;
@@ -31,7 +31,6 @@ import java.util.UUID;
 public class RegionProtect implements Listener {
 
 	private final WorldGuardRegionProtect wgRegionProtect;
-	private final Iwg Iwg;
 	private final List<String> regionCommandNameArgs = Arrays.asList(
 			"/rg", "/region", "/regions",
 			"/worldguard:rg", "/worldguard:region", "/worldguard:regions");
@@ -40,7 +39,6 @@ public class RegionProtect implements Listener {
 
 	public RegionProtect(WorldGuardRegionProtect worldGuardRegionProtect) {
 		this.wgRegionProtect =worldGuardRegionProtect;
-		this.Iwg=this.setUpWorldGuardVersionSeven();
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
@@ -119,7 +117,8 @@ public class RegionProtect implements Listener {
 		final Material bucketType = e.getBlockClicked().getType();
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(p, IUtilPermissions.REGION_PROTECT, wgRegionProtect.getUtilConfigMessage().wgrpMsg))return;{
-					switch (bucketType) { case LAVA_BUCKET, WATER_BUCKET, BUCKET -> e.setCancelled(true);
+					switch (bucketType) {
+						case LAVA_BUCKET, WATER_BUCKET, BUCKET -> e.setCancelled(true);
 				}
 			}
 		}
@@ -188,8 +187,7 @@ public class RegionProtect implements Listener {
 		final @NotNull EntityType clickType = e.getRightClicked().getType();
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(clickLoc, wgRegionProtect.getUtilConfig().regionProtect)) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
-				if(clickType == EntityType.ITEM_FRAME || clickType == EntityType.GLOW_ITEM_FRAME
-						&& this.Iwg.wg(player.getWorld(), player.getLocation())) {
+				if(clickType == EntityType.ITEM_FRAME || clickType == EntityType.GLOW_ITEM_FRAME) {
 					e.setCancelled(true);
 				}
 			}
@@ -202,7 +200,7 @@ public class RegionProtect implements Listener {
 		final Location clickLoc = e.getRightClicked().getLocation();
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(clickLoc, wgRegionProtect.getUtilConfig().regionProtect)) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(p, IUtilPermissions.REGION_PROTECT, null))return;{
-				if(e.getRightClicked().getType() == EntityType.ARMOR_STAND && this.Iwg.wg(p.getWorld(), clickLoc)) {
+				if(e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
 					e.setCancelled(true);
 				}
 			}
@@ -211,7 +209,7 @@ public class RegionProtect implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyStructureGrow(final @NotNull StructureGrowEvent e) {
-		if (this.Iwg.wg(e.getWorld(), e.getLocation())) {
+		if (this.wgRegionProtect.getRsRegion().checkStandingRegion(e.getWorld(), e.getLocation(), wgRegionProtect.getUtilConfig().regionProtect)) {
 			e.setCancelled(true);
 		}
 	}
@@ -220,17 +218,17 @@ public class RegionProtect implements Listener {
 	private void denyInteract(final @NotNull PlayerInteractEvent e) {
 		if (e.getItem() != null) {
 			Player player = e.getPlayer();
-			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
-				for (String spawnEntityType : wgRegionProtect.getUtilConfig().interactType) {
-					if (e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase())
-							&& e.getClickedBlock() != null
-							&& this.Iwg.wg(player.getWorld(), e.getClickedBlock().getLocation())) {
-						e.setCancelled(true);
-					} else if (player.getInventory().getItemInMainHand().getType() == Material.GLOWSTONE
-							&& e.getClickedBlock() != null
-							&& e.getClickedBlock().getType() == Material.RESPAWN_ANCHOR
-							&& this.Iwg.wg(player.getWorld(), e.getClickedBlock().getLocation())) {
-						e.setCancelled(true);
+			if(wgRegionProtect.getRsRegion().checkStandingRegion(player.getWorld(), player.getLocation(), wgRegionProtect.getUtilConfig().regionProtect)) {
+				if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
+					for (String spawnEntityType : wgRegionProtect.getUtilConfig().interactType) {
+						if (e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase())
+								&& e.getClickedBlock() != null) {
+							e.setCancelled(true);
+							} else if (player.getInventory().getItemInMainHand().getType() == Material.GLOWSTONE
+								&& e.getClickedBlock() != null
+								&& e.getClickedBlock().getType() == Material.RESPAWN_ANCHOR) {
+							e.setCancelled(true);
+						}
 					}
 				}
 			}
@@ -240,10 +238,9 @@ public class RegionProtect implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyHangingPlace(final @NotNull HangingPlaceEvent e) {
 		final Entity entity = e.getEntity();
-		final Player player = e.getPlayer();
+		@NotNull final Player player = Objects.requireNonNull(e.getPlayer());
 		final Location loc = entity.getLocation();
 		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
-			assert player != null;
 			if (wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null)) return;{
 				switch (player.getInventory().getItemInMainHand().getType()) {
 					case ITEM_FRAME, GLOW_ITEM_FRAME, PAINTING -> e.setCancelled(true);
@@ -269,10 +266,8 @@ public class RegionProtect implements Listener {
 		final Block block = e.getBlock();
 		final Location loc = block.getLocation();
 		final @NotNull Material blockType = block.getType();
-		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
-			if (blockType == Material.RESPAWN_ANCHOR && this.Iwg.wg(block.getWorld(), loc))return; {
-				e.setCancelled(true);
-			}
+		if (blockType == Material.RESPAWN_ANCHOR && wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
+			e.setCancelled(true);
 		}
 	}
 
@@ -284,44 +279,44 @@ public class RegionProtect implements Listener {
 		final String[] s = e.getMessage().toLowerCase().split(" ");
 		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
 		if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
-			if (this.cmdWE(s[0]) && !this.Iwg.checkIntersection(player)) {
+			if (this.wgRegionProtect.getCommandWE().cmdWE(s[0]) && !this.wgRegionProtect.getIwg().checkIntersection(player)) {
 				e.setCancelled(true);
 				if (wgRegionProtect.getUtilConfig().regionMessageProtectWe) {
 					player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsgWe);
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
-			}if (this.cmdWE_C(s[0]) && !this.Iwg.checkCIntersection(player, s)) {
+			}if (this.wgRegionProtect.getCommandWE().cmdWE_C(s[0]) && !this.wgRegionProtect.getIwg().checkCIntersection(player, s)) {
 				e.setCancelled(true);
 				if (wgRegionProtect.getUtilConfig().regionMessageProtectWe) {
 					player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsgWe);
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
-			}if (this.cmdWE_P(s[0]) && !this.Iwg.checkPIntersection(player, s)) {
+			}if (this.wgRegionProtect.getCommandWE().cmdWE_P(s[0]) && !this.wgRegionProtect.getIwg().checkPIntersection(player, s)) {
 				e.setCancelled(true);
 				if (wgRegionProtect.getUtilConfig().regionMessageProtectWe) {
 					player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsgWe);
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
-			}if (this.cmdWE_S(s[0]) && !this.Iwg.checkSIntersection(player, s)) {
+			}if (this.wgRegionProtect.getCommandWE().cmdWE_S(s[0]) && !this.wgRegionProtect.getIwg().checkSIntersection(player, s)) {
 				e.setCancelled(true);
 				if (wgRegionProtect.getUtilConfig().regionMessageProtectWe) {
 					player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsgWe);
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
-			}if (this.cmdWE_U(s[0]) && !this.Iwg.checkUIntersection(player, s)) {
+			}if (this.wgRegionProtect.getCommandWE().cmdWE_U(s[0]) && !this.wgRegionProtect.getIwg().checkUIntersection(player, s)) {
 				e.setCancelled(true);
 				if (wgRegionProtect.getUtilConfig().regionMessageProtectWe) {
 					player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsgWe);
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
-			}if (this.cmdWE_CP(s[0])) {
+			}if (this.wgRegionProtect.getCommandWE().cmdWE_CP(s[0])) {
 				e.setMessage(e.getMessage().replace("-o", ""));
-				if (!this.Iwg.checkCPIntersection(player, s)) {
+				if (!this.wgRegionProtect.getIwg().checkCPIntersection(player, s)) {
 					e.setCancelled(true);
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsApi().getProtectRegionName(loc));
@@ -391,69 +386,5 @@ public class RegionProtect implements Listener {
 				}
 			}
 		}
-	}
-
-	private Iwg setUpWorldGuardVersionSeven() {
-		try {
-			Class.forName("com.sk89q.worldedit.math.BlockVector3");
-			return new wg7(this.wgRegionProtect);
-		} catch (ClassNotFoundException ignored) {
-		}
-		return Iwg;
-	}
-
-	private boolean cmdWE(String s) {
-		s = s.replace("worldedit:", "");
-		for(String tmp : wgRegionProtect.getUtilConfig().cmdWe) {
-			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean cmdWE_C(String s) {
-		s = s.replace("worldedit:", "");
-		for(String tmp : wgRegionProtect.getUtilConfig().cmdWeC) {
-			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
-				return true;
-			}
-		}return false;
-	}
-
-	private boolean cmdWE_P(String s) {
-		s = s.replace("worldedit:", "");
-		for(String tmp : wgRegionProtect.getUtilConfig().cmdWeP) {
-			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
-				return true;
-			}
-		}return false;
-	}
-
-	private boolean cmdWE_S(String s) {
-		s = s.replace("worldedit:", "");
-		for(String tmp : wgRegionProtect.getUtilConfig().cmdWeS) {
-			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
-				return true;
-			}
-		}return false;
-	}
-
-	private boolean cmdWE_U(String s) {
-		s = s.replace("worldedit:", "");
-		for(String tmp : wgRegionProtect.getUtilConfig().cmdWeU) {
-			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
-				return true;
-			}
-		}return false;
-	}
-
-	private boolean cmdWE_CP(String s) {
-		s = s.replace("worldedit:", "");
-		for(String tmp : wgRegionProtect.getUtilConfig().cmdWeCP) {
-			if (tmp.equalsIgnoreCase(s.toLowerCase())) {
-				return true;
-			}
-		}return false;
 	}
 }
