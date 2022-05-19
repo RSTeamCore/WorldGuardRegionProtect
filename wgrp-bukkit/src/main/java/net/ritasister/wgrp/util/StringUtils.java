@@ -5,16 +5,11 @@ import org.bukkit.ChatColor;
 public class StringUtils {
 
     public static String formatPlural(int count, String str1, String str2, String str3) {
-        switch(count % 10 == 1 && count % 100 != 11 ? 0 : (count % 10 < 2 || count % 10 > 4 || count % 100 >= 10 && count % 100 < 20 ? 2 : 1)) {
-            case 0:
-                return str1;
-            case 1:
-                return str2;
-            case 2:
-                return str3;
-            default:
-                return str1;
-        }
+        return switch(count % 10 == 1 && count % 100 != 11 ? 0 : (count % 10 < 2 || count % 10 > 4 || count % 100 >= 10 && count % 100 < 20 ? 2 : 1)) {
+            case 1 -> str2;
+            case 2 -> str3;
+            default -> str1;
+        };
     }
 
     public static String getSpace(String symbol, int length) {
