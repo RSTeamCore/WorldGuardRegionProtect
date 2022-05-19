@@ -7,10 +7,6 @@ plugins {
     id("xyz.jpenilla.run-paper") version "1.0.6"
 }
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-}
-
 defaultTasks("clean", "build")
 
 repositories {
@@ -19,7 +15,6 @@ repositories {
     maven ("https://maven.enginehub.org/repo/")
     //PaperMC
     maven ("https://papermc.io/repo/repository/maven-public/")
-    //PlaceHolderAPI
     maven ("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     mavenCentral()
 }
@@ -30,6 +25,8 @@ configurations {
 
 dependencies {
     api(project(":wgrp-api"))
+    //implementation("org.projectlombok:lombok:1.18.22")
+    compileOnlyApi ("org.yaml:snakeyaml:1.30")
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:3.0.4")
     //HikariCP
