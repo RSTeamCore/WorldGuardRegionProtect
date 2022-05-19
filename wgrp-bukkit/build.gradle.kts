@@ -25,7 +25,7 @@ configurations {
 
 dependencies {
     api(project(":wgrp-api"))
-    implementation("org.projectlombok:lombok:1.18.22")
+    //implementation("org.projectlombok:lombok:1.18.22")
     compileOnlyApi ("org.yaml:snakeyaml:1.30")
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:3.0.4")
