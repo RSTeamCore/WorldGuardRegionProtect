@@ -1,5 +1,7 @@
 name: WorldGuardRegionProtect
 author: RitaSister
+authors:
+  - IRedTea
 version: ${internalVersion}
 main: net.ritasister.wgrp.WGRPBukkitPlugin
 softdepend: [ WorldGuard ]
