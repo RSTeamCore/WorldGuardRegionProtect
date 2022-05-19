@@ -15,6 +15,7 @@ repositories {
     maven ("https://maven.enginehub.org/repo/")
     //PaperMC
     maven ("https://papermc.io/repo/repository/maven-public/")
+    maven ("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     mavenCentral()
 }
 
@@ -30,6 +31,8 @@ dependencies {
     implementation("org.mariadb.jdbc:mariadb-java-client:3.0.4")
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
+    //PlaceholderAPI
+    compileOnly("me.clip:placeholderapi:2.11.1")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Paper 1.18+
