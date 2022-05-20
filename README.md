@@ -13,43 +13,48 @@
 
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
-* PLUGIN VERSION START OF 0.7.1-pre8 FOR 1.18 OR HIGHER CAN RUN ONLY ON JAVA 17+!
-* PLUGIN VERSION OF 0.7.1-pre5 FOR 1.16.5-1.18 OR HIGHER CAN RUN ONLY ON JAVA 16+!
-* PLUGIN VERSION OF 0.7.0 OR LOWEST FOR 1.13-1.17 CAN RUN ONLY ON JAVA 11!
+* PLUGIN VERSION START OF **0.7.1-pre8** FOR **1.18** OR HIGHER CAN RUN ONLY ON **JAVA 17+**!
+* PLUGIN VERSION OF **0.7.1-pre5** FOR **1.16.5-1.18** OR HIGHER CAN RUN ONLY ON **JAVA 16+**!
+* PLUGIN VERSION OF **0.7.0 OR** LOWEST FOR **1.13-1.17** CAN RUN ONLY ON JAVA **11**!
 
 ## IMPORTANT FOR MINECRAFT JAVA EDITION 1.12.2!!!
-* PLUGIN VERSION OF 0.7.1-pre1 FOR 1.12.2 CAN RUN ONLY ON JAVA 8 AND MC 1.12.2!
+* PLUGIN VERSION OF **0.7.1-pre1** FOR **1.12.2** CAN RUN ONLY ON **JAVA 8**!
 
-## Opportunities
+## Opportunities of plugin
 
-* By entering the name of the region in the plugin config.yml, you will added it protection by plugin. No one can break any blocks in the region that is registered in config.yml. Even the operators are not able to do this!
+* By entering the name of the region in the plugin config.yml, you will add it protection by plugin. Nobody can interact with the region that is registered in config.yml. Even the operators are not able to do this!
 
-(This plugin is for extended protection of an existing region from worldguard. For example from possible damage regions from the administration(who have permission access from plugin), or from operators.)
+This plugin is for extended protection of an existing region from worldguard. For example from possible damage regions from the administration(who have permission access from plugin WorldGuard), or from operators.
 
-## With plugin you can do advanced protect from
+## With plugin, you can do advanced protect your region
 
-1. Cannot place or break any block on region.
-2. Protect frame, painting from any damage(arrows, trident, snowball, eggs, enderpearl and damaged from player).
-3. Protect from any change in the frame (and glow frame from 1.18).
-4. Cannot taking or damage armor from/on armor stand.
-5. Cannot use lava/water bucket in region.
-6. TNT, minecart with tnt, Respawn Anchor and ender crystal cant damaged any blocks in region.
-7. Support for banned dangerous commands. Separate commands were added and tested used by FastAsyncWorldEdit\WorldEdit in the protected region.
-8. Cannot anyone remove region or change flags in protected region. Example just using like "/rg rem your_rg" and etc.
-9. Create a special region inside the protected region in which you can break and place or only break (specified in config.yml)
+1. Nobody cannot break or place blocks in region.
+2. Protecting frame, painting from any damage from arrows, trident, snowball, eggs, enderpearl and player.
+3. Protect from any change in the frame (On 1.18 MC glow frame too).
+4. Nobody cannot damage armor stand and taking or place armor from it.
+5. Cannot use none of the buckets in region.
+6. Creeper, Wither, Ghast, Primed TNT, cannot damage in the region.
+7. TNT, minecart with TNT, Respawn Anchor and ender crystal can't damage any blocks/frames in region.
+8. Support for banned dangerous commands. Separate commands were added and tested used by FastAsyncWorldEdit\WorldEdit in the protected region.
+9. Nobody cannot remove region or change flags in protected region. Just example using like: 
+- "/rg rem spawn", 
+- "/rg rem -f spawn", 
+- "/rg rem -f spawn -w  world", 
+- "/rg addowner spawn Steve" etc.
+10. You can specify a special region inside the protected region in which you can "break and place" or "only break" (specified in config.yml)
 
 ## Permissions
 
-1. If you need give access into region for Builder team or any member, just add permissions on LuckPerms or PermissionsEx: wgrp.regionprotect
-2. The star permissions in LuckPerms or PermissionsEx may will be gived access to protected region by WGRP.
-3. All operators are not allowed access into the region.
+1. If you need give access to region for Builder team or any member from your staff, just add permissions on LuckPerms or PermissionsEx: wgrp.regionprotect
+2. Who has the permissions star, I mean '*' in LuckPerms or PermissionsEx may will be given access to protected region by WGRP.
+3. By default, all who is operators are not allowed access into the region.
 
 ## Metrics
 [bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect/12975)
-![bStats](https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg)
+<img alt="bStats" src="https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg"/>
 
 ## Old version 1.12.2!
- You can find there:
+ You can find here:
 * [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
 * [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)
 * [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect)
