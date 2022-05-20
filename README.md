@@ -5,9 +5,9 @@
 </p>
 <p align="center">
 <a href="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/"><img src="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/badge/icon" alt="Build Status"></a>
-<a href="https://github.com/RitaSister/WorldGuardRegionProtect/releases"><img src="https://img.shields.io/github/release/RitaSister/WorldGuardRegionProtect.svg" alt="Current Release"></a>
-<a href="https://github.com/RitaSister/WorldGuardRegionProtect/graphs/contributors"><img src="https://img.shields.io/github/contributors/RitaSister/WorldGuardRegionProtect.svg" alt="Contributors"></a>
-<a href="https://github.com/RitaSister/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>
+<a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/releases"><img src="https://img.shields.io/github/release/RitaSister/WorldGuardRegionProtect.svg" alt="Current Release"></a>
+<a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/graphs/contributors"><img src="https://img.shields.io/github/contributors/RitaSister/WorldGuardRegionProtect.svg" alt="Contributors"></a>
+<a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>
 </p>
 <p align="center"><a href="https://discord.com/invite/kvqvA3GTVF"><img src="https://discordapp.com/api/guilds/918677001479540787/embed.png" alt="Discord embed"></a></p>
 
@@ -22,9 +22,8 @@
 
 ## Opportunities of plugin
 
-* By entering the name of the region in the plugin config.yml, you will add it protection by plugin. Nobody can interact with the region that is registered in config.yml. Even the operators are not able to do this!
-
-This plugin is for extended protection of an existing region from worldguard. For example from possible damage regions from the administration(who have permission access from plugin WorldGuard), or from operators.
+* By entering the name of the region in the plugin config.yml, you will add protection by plugin. Nobody can interact with the region that is registered in config.yml. Even the operators are not able to do this!
+* This plugin is for extended protection of an existing region from WorldGuard. For example, possible damage region from the administration. Who has permission access from plugin WorldGuard, or from operators.
 
 ## With plugin, you can do advanced protect your region
 
@@ -33,7 +32,7 @@ This plugin is for extended protection of an existing region from worldguard. Fo
 3. Protect from any change in the frame (On 1.18 MC glow frame too).
 4. Nobody cannot damage armor stand and taking or place armor from it.
 5. Cannot use none of the buckets in region.
-6. Creeper, Wither, Ghast, Primed TNT, cannot damage in the region.
+6. Creeper, Wither, Ghast, Primed TNT, cannot blowing up stuff in the region. Skeleton, Stray and Shulker bullet cannot destroy frame/glow frame and painting.
 7. TNT, minecart with TNT, Respawn Anchor and ender crystal can't damage any blocks/frames in region.
 8. Support for banned dangerous commands. Separate commands were added and tested used by FastAsyncWorldEdit\WorldEdit in the protected region.
 9. Nobody cannot remove region or change flags in protected region. Just example using like:
