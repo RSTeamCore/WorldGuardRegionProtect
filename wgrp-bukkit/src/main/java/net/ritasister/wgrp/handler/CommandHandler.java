@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.register;
+package net.ritasister.wgrp.handler;
 
 import net.ritasister.wgrp.command.CommandWGRP;
 import net.ritasister.wgrp.rslibs.api.interfaces.ICommandHandler;
