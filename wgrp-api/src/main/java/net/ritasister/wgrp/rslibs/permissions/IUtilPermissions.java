@@ -3,7 +3,7 @@ package net.ritasister.wgrp.rslibs.permissions;
 public enum IUtilPermissions {
 
 	COMMAND_WGRP("wgrp.command.wgrpbase"),
-	REGION_PROTECT("wgrp.command.wgrpbase"),
+	REGION_PROTECT("wgrp.regionprotect"),
 	REGION_PROTECT_NOTIFY_ADMIN("wgrp.notify.admin"),
 	SPY_INSPECT_FOR_SUSPECT("wgrp.spy.suspect"),
 	SPY_INSPECT_ADMIN_COMMAND("wgrp.command.spy.admin"),
