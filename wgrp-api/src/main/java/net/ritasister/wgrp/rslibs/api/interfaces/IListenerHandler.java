@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.api.interfaces;
 
 import org.bukkit.plugin.PluginManager;
 
-public interface IRegisterListener {
+public interface IListenerHandler {
 
-    void registerListener(PluginManager pluginManager);
+    void listenerHandler(PluginManager pluginManager);
 }
