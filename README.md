@@ -36,10 +36,10 @@ This plugin is for extended protection of an existing region from worldguard. Fo
 6. Creeper, Wither, Ghast, Primed TNT, cannot damage in the region.
 7. TNT, minecart with TNT, Respawn Anchor and ender crystal can't damage any blocks/frames in region.
 8. Support for banned dangerous commands. Separate commands were added and tested used by FastAsyncWorldEdit\WorldEdit in the protected region.
-9. Nobody cannot remove region or change flags in protected region. Just example using like: 
-- "/rg rem spawn", 
-- "/rg rem -f spawn", 
-- "/rg rem -f spawn -w  world", 
+9. Nobody cannot remove region or change flags in protected region. Just example using like:
+- "/rg rem spawn",
+- "/rg rem -f spawn",
+- "/rg rem -f spawn -w  world",
 - "/rg addowner spawn Steve" etc.
 10. You can specify a special region inside the protected region in which you can "break and place" or "only break" (specified in config.yml)
 
@@ -54,7 +54,7 @@ This plugin is for extended protection of an existing region from worldguard. Fo
 <img alt="bStats" src="https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg"/>
 
 ## Old version 1.12.2!
- You can find here:
+You can find here:
 * [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
 * [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)
 * [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect)
