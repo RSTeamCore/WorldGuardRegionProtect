@@ -73,10 +73,10 @@ public class UtilConfig {
 
 			this.regionMessageProtect = getConfigPatch().getBoolean("protect_message", true);
 			this.regionMessageProtectWe = getConfigPatch().getBoolean("protect_we_message", true);
-			this.spyCommandNotifyConsole = getConfigPatch().getBoolean("spy_command.notify.console", true);
-			this.spyCommandNotifyAdmin = getConfigPatch().getBoolean("spy_command.notify.admin", true);
-			this.spyCommandNotifyAdminPlaySoundEnable = getConfigPatch().getBoolean("spy_command.notify.admin.sound", true);
-			this.spyCommandNotifyAdminPlaySound = getConfigPatch().getString("spy_command.notify.admin.sound.type", "BLOCK_ANVIL_PLACE");
+			this.spyCommandNotifyConsole = getConfigPatch().getBoolean("spy_command.notify.console.enable", true);
+			this.spyCommandNotifyAdmin = getConfigPatch().getBoolean("spy_command.notify.admin.enable", true);
+			this.spyCommandNotifyAdminPlaySoundEnable = getConfigPatch().getBoolean("spy_command.notify.sound.enable", true);
+			this.spyCommandNotifyAdminPlaySound = getConfigPatch().getString("spy_command.notify.sound.type", "BLOCK_ANVIL_PLACE");
 
 			this.databaseEnable = getConfigPatch().getBoolean("dataSource.enable", false);
 			this.database = getConfigPatch().getString("dataSource.database", "wgrp_core");
