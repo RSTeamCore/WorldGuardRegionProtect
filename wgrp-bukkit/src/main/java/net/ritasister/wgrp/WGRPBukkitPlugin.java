@@ -17,7 +17,15 @@ public class WGRPBukkitPlugin extends JavaPlugin {
 
     public void notifyPreBuild() {
         if(this.getWgRegionProtect().getPluginVersion().contains("pre")) {
-            getWgRegionProtect().getRsApi().getLogger().warn("This is a test build. This building may be unstable!");
+            getWgRegionProtect().getRsApi().getLogger().warn(
+                    """
+                    This is a test build. This building may be unstable!
+                    When reporting a bug:
+                    Use the issue tracker! Don't report bugs in the reviews.
+                    Please search for duplicates before reporting a new https://github.com/RSTeamCore/WorldGuardRegionProtect/issues!
+                    Provide as much information as possible.
+                    Provide your WorldGuardRegionProtect version and Spigot/Paper version.
+                    Provide any stack traces or "errors" using pastebin.""");
         } else {
             getWgRegionProtect().getRsApi().getLogger().info("This is the latest stable building.");
         }
