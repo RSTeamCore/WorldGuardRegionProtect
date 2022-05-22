@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.api;
 
 import net.ritasister.wgrp.rslibs.api.interfaces.IChatApi;
 import org.bukkit.ChatColor;
+import org.jetbrains.annotations.NotNull;
 
 public class ChatApi implements IChatApi {
 
@@ -10,7 +11,7 @@ public class ChatApi implements IChatApi {
      *
      * @return message
      */
-    public String getColorCode(String message) {
+    public String getColorCode(@NotNull String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
@@ -19,7 +20,7 @@ public class ChatApi implements IChatApi {
      *
      * @return message
      */
-    public String getDoubleTabSpaceWithoutColor(String message) {
+    public String getDoubleTabSpaceWithoutColor(@NotNull String message) {
         return message.replace("\\n", "\n");
     }
 
@@ -28,7 +29,7 @@ public class ChatApi implements IChatApi {
      *
      * @return message
      */
-    public String getDoubleTabSpaceWithColor(String message) {
+    public String getDoubleTabSpaceWithColor(@NotNull String message) {
         return getColorCode(message.replace("\\n", "\n"));
     }
 }
