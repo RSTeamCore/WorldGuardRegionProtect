@@ -4,6 +4,7 @@ import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -88,11 +89,11 @@ public class RSApi {
 			for (String cmd : wgRegionProtect.getUtilConfig().spyCommand) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())
 						&& wgRegionProtect.getUtilConfig().spyCommandNotifyAdminPlaySoundEnable) {
-					player.playSound(player.getLocation(), wgRegionProtect.getUtilConfig().spyCommandNotifyAdminPlaySound, 1, 1);
+					player.playSound(player.getLocation(), wgRegionProtect.getUtilConfig().spyCommandNotifyAdminPlaySound.toLowerCase(), 1, 1);
 					player.sendMessage(wgRegionProtect.getUtilConfigMessage().sendAdminInfoIfUsedCommandInRG
 							.replace("<player>", playerName)
 							.replace("<cmd>", cmd)
-							.replace("<rg>", regionName));
+							.replace("<region>", regionName));
 				}
 			}
 		}
@@ -184,10 +185,6 @@ public class RSApi {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy-HH-mm");
 		Date resultDate = new Date(System.currentTimeMillis());
 		return sdf.format(resultDate);
-	}
-
-	public String getProtectRegionName(Location loc) {
-		return wgRegionProtect.getRsRegion().getProtectRegion(loc);
 	}
 
 	public RSLogger getLogger() {
