@@ -7,6 +7,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import net.ritasister.wgrp.rslibs.api.interfaces.IRSRegion;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class RSRegion implements IRSRegion {
         for (ProtectedRegion protectedRegion : applicableRegionSet) {
             return protectedRegion.getId();
         }
-        return null;
+        return getProtectRegion(location);
     }
 
     /**
@@ -82,23 +83,13 @@ public class RSRegion implements IRSRegion {
      *
      * @return getApplicableRegions return location of Object.
      */
-    private ApplicableRegionSet getApplicableRegions(final Location location) {
+    @Contract("_ -> new")
+    private @NotNull ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
         return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(location.getWorld())))
                 .getApplicableRegions(BukkitAdapter.asBlockVector(location));
     }
 
-    /*public void paginate(CommandSender sender, String[] args, boolean mine) {
-        int page = 1;
-        final List<List<String>> lists = mine
-                ? ProtectedMine.getSplitedNames()
-                : ProtectedRG.getSplitedNames();
-        if (args.length == 2 && args[1].matches("^[0-9]{1,3}$") && Integer.parseInt(args[1]) <= lists.size()) {
-            page = Integer.parseInt(args[1]);
-        }
-        sender.sendMessage("WGRP: " + " §3Page " + page + "/" + lists.size());
-        for (final String item : lists.get(page - 1)) {
-            sender.sendMessage("WGRP: " + " §2" + item);
-        }
-        sender.sendMessage("");
-    }*/
+    public String getProtectRegionName(@NotNull Location loc) {
+        return this.getProtectRegion(loc);
+    }
 }
