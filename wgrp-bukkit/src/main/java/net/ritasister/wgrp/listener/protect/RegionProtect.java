@@ -1,6 +1,5 @@
 package net.ritasister.wgrp.listener.protect;
 
-import com.destroystokyo.paper.event.block.AnvilDamagedEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.Action;
 import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
@@ -19,8 +18,9 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.event.vehicle.VehicleCreateEvent;
+import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -31,23 +31,23 @@ import java.util.UUID;
 public class RegionProtect implements Listener {
 
 	private final WorldGuardRegionProtect wgRegionProtect;
+
+	public RegionProtect(WorldGuardRegionProtect worldGuardRegionProtect) {
+		this.wgRegionProtect =worldGuardRegionProtect;
+	}
 	private final List<String> regionCommandNameArgs = Arrays.asList(
 			"/rg", "/region", "/regions",
 			"/worldguard:rg", "/worldguard:region", "/worldguard:regions");
 	private final List<String> regionEditArgs = Arrays.asList("f", "flag");
 	private final List<String> regionEditArgsFlags = Arrays.asList("-f", "-u", "-n", "-g", "-a");
 
-	public RegionProtect(WorldGuardRegionProtect worldGuardRegionProtect) {
-		this.wgRegionProtect =worldGuardRegionProtect;
-	}
-
 	@EventHandler(priority = EventPriority.LOW)
 	private void denyBreak(final @NotNull BlockBreakEvent e) {
 		final Player player = e.getPlayer();
 		final String playerName = e.getPlayer().getPlayerProfile().getName();
 		final UUID uniqueId = player.getUniqueId();
-		final Block b = e.getBlock();
-		final Location loc = b.getLocation();
+		final Block block = e.getBlock();
+		final Location loc = block.getLocation();
 		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(loc);
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtectAllow)
 				|| wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtectOnlyBreakAllow)) {
@@ -64,14 +64,14 @@ public class RegionProtect implements Listener {
 				wgRegionProtect.getRsApi().notifyIfActionInRegion(
 						player, player, wgRegionProtect.getRsApi().getTime(),
 						playerName, Action.BREAK, regionName,
-						b.getX(), b.getY(), b.getZ(), b.getWorld().getName());
+						block.getX(), block.getY(), block.getZ(), block.getWorld().getName());
 			}
 			if(wgRegionProtect.getUtilConfig().databaseEnable) {
 				wgRegionProtect.getRsStorage().getDataSource().setLogAction(
 						playerName, uniqueId,
 						System.currentTimeMillis(), Action.BREAK,
-						regionName, b.getWorld().getName(), b.getX(),
-						b.getY(), b.getZ());
+						regionName, block.getWorld().getName(), block.getX(),
+						block.getY(), block.getZ());
 			}
 		}
 	}
@@ -81,8 +81,8 @@ public class RegionProtect implements Listener {
 		final Player player = e.getPlayer();
 		final String playerName = e.getPlayer().getPlayerProfile().getName();
 		final UUID uniqueId = player.getUniqueId();
-		final Block b = e.getBlock();
-		final Location loc = b.getLocation();
+		final Block block = e.getBlock();
+		final Location loc = block.getLocation();
 		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(loc);
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtectAllow)) {
 			e.setCancelled(false);
@@ -98,34 +98,45 @@ public class RegionProtect implements Listener {
 				wgRegionProtect.getRsApi().notifyIfActionInRegion(
 						player, player, wgRegionProtect.getRsApi().getTime(),
 						playerName, Action.PLACE, regionName,
-						b.getX(), b.getY(), b.getZ(), b.getWorld().getName());
+						block.getX(), block.getY(), block.getZ(), block.getWorld().getName());
 			}
 			if(wgRegionProtect.getUtilConfig().databaseEnable) {
 				wgRegionProtect.getRsStorage().getDataSource().setLogAction(
 						playerName, uniqueId,
 						System.currentTimeMillis(), Action.PLACE,
-						regionName, b.getWorld().getName(), b.getX(),
-						b.getY(), b.getZ());
+						regionName, block.getWorld().getName(), block.getX(),
+						block.getY(), block.getZ());
 			}
 		}
 	}
 
-	/*@EventHandler(priority = EventPriority.LOWEST)
-	private void denyVehicleCreate(final @NotNull VehicleCreateEvent e) {
-		final Entity entityBoat = e.getVehicle();
-		//final Location locationVehicle = e.getVehicle().getLocation();
-		if (entityBoat instanceof Player player && wgRegionProtect.getRsRegion().checkStandingRegion(player.getLocation())) {
-			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
-				if(player.getInventory().getItemInMainHand().getType() == Material.OAK_BOAT) {
-					//e.setCancelled(true);
-				}
-				switch(player.getInventory().getItemInMainHand().getType()) {
-					case OAK_BOAT, SPRUCE_BOAT, BIRCH_BOAT, JUNGLE_BOAT, ACACIA_BOAT,
-							DARK_OAK_BOAT -> e.setCancelled(true);
+	@EventHandler(priority = EventPriority.LOW)
+	private void denyVehicleCollision(@NotNull VehicleEntityCollisionEvent e) {
+		Entity vehicle = e.getVehicle();
+		Entity entity = e.getEntity();
+		Location vehicleLocation = vehicle.getLocation();
+		if (wgRegionProtect.getRsRegion().checkStandingRegion(vehicleLocation)) {
+			switch(entity.getType()) {
+				case ITEM_FRAME, GLOW_ITEM_FRAME -> e.setCollisionCancelled(true);
+				default -> {
+					if (vehicle.getType() == EntityType.BOAT) {
+						e.setCollisionCancelled(true);
+					}
 				}
 			}
 		}
-	}*/
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	private void denyPlayerTakeLecternBook(final @NotNull PlayerTakeLecternBookEvent e) {
+		Player player = e.getPlayer();
+		Location location = e.getLectern().getLocation();
+		if (wgRegionProtect.getRsRegion().checkStandingRegion(location)) {
+			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
+				e.setCancelled(true);
+			}
+		}
+	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyBucketEmpty(final @NotNull PlayerBucketEmptyEvent e) {
