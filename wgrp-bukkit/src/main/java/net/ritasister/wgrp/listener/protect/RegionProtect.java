@@ -1,5 +1,6 @@
 package net.ritasister.wgrp.listener.protect;
 
+import com.destroystokyo.paper.event.block.AnvilDamagedEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.Action;
 import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
@@ -18,6 +19,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.vehicle.VehicleCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -108,15 +110,47 @@ public class RegionProtect implements Listener {
 		}
 	}
 
+	/*@EventHandler(priority = EventPriority.LOWEST)
+	private void denyVehicleCreate(final @NotNull VehicleCreateEvent e) {
+		final Entity entityBoat = e.getVehicle();
+		//final Location locationVehicle = e.getVehicle().getLocation();
+		if (entityBoat instanceof Player player && wgRegionProtect.getRsRegion().checkStandingRegion(player.getLocation())) {
+			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
+				if(player.getInventory().getItemInMainHand().getType() == Material.OAK_BOAT) {
+					//e.setCancelled(true);
+				}
+				switch(player.getInventory().getItemInMainHand().getType()) {
+					case OAK_BOAT, SPRUCE_BOAT, BIRCH_BOAT, JUNGLE_BOAT, ACACIA_BOAT,
+							DARK_OAK_BOAT -> e.setCancelled(true);
+				}
+			}
+		}
+	}*/
+
 	@EventHandler(priority = EventPriority.LOWEST)
-	private void denyUseBucket(final @NotNull PlayerBucketEmptyEvent e) {
+	private void denyBucketEmpty(final @NotNull PlayerBucketEmptyEvent e) {
 		final Player p = e.getPlayer();
 		final Location loc = e.getBlockClicked().getLocation();
-		final Material bucketType = e.getBlockClicked().getType();
+		final Material bucketType = e.getBucket();
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
-			if(wgRegionProtect.getRsApi().isSenderListenerPermission(p, IUtilPermissions.REGION_PROTECT, wgRegionProtect.getUtilConfigMessage().wgrpMsg))return;{
-					switch (bucketType) {
-						case LAVA_BUCKET, WATER_BUCKET, BUCKET -> e.setCancelled(true);
+			if(wgRegionProtect.getRsApi().isSenderListenerPermission(p, IUtilPermissions.REGION_PROTECT, null))return;{
+				switch (bucketType) {
+					case LAVA_BUCKET, WATER_BUCKET, TROPICAL_FISH_BUCKET, PUFFERFISH_BUCKET,
+							AXOLOTL_BUCKET, COD_BUCKET, SALMON_BUCKET -> e.setCancelled(true);
+				}
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	private void denyPlayerBucketEntity(final @NotNull PlayerBucketEntityEvent e) {
+		final Player player = e.getPlayer();
+		final Location loc = e.getEntity().getLocation();
+		final Material bucketInHand = player.getInventory().getItemInMainHand().getType();
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().regionProtect)) {
+			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
+				if (bucketInHand == Material.WATER_BUCKET) {
+					e.setCancelled(true);
 				}
 			}
 		}
