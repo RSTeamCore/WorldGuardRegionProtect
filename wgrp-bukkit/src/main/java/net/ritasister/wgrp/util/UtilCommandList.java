@@ -4,14 +4,14 @@ public enum UtilCommandList {
 
 	WGRP("worldguardregionprotect");
 
-	private final String slot;
+	private final String command;
 
-	UtilCommandList(String slot) {
-		this.slot = slot;
+	UtilCommandList(String command) {
+		this.command = command;
 	}
 
 	public String getCommand() {
-		return slot;
+		return command;
 	}
 
 }
