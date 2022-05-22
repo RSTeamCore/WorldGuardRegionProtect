@@ -73,7 +73,7 @@ public class RSRegion implements IRSRegion {
         for (ProtectedRegion protectedRegion : applicableRegionSet) {
             return protectedRegion.getId();
         }
-        return getProtectRegion(location);
+        return null;
     }
 
     /**
