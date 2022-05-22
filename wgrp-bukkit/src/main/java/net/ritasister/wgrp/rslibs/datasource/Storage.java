@@ -25,7 +25,7 @@ public class Storage implements StorageDataSource {
 		this.initialize();
 	}
 
-	public void connect() {
+	private void connect() {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("org.mariadb.jdbc.Driver");
 		config.setJdbcUrl("jdbc:mariadb://"
@@ -59,8 +59,8 @@ public class Storage implements StorageDataSource {
 		ds = new HikariDataSource(config);
 	}
 
-	public Connection getConnection() throws SQLException {
-		if (!this.ds.getConnection().isValid(3)) {
+	private Connection getConnection() throws SQLException {
+		if (!this.ds.getConnection().isValid(6)) {
 			wgRegionProtect.getRsApi().getLogger().error(wgRegionProtect.getUtilConfigMessage().dbReconnect);
 			this.connect();
 		}
