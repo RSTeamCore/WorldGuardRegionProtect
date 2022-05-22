@@ -36,7 +36,7 @@ public class WGRPBukkitPlugin extends JavaPlugin {
                 getWgRegionProtect().getRsApi().getLogger().info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", getWgRegionProtect().getPluginVersion()));
                 getWgRegionProtect().getRsApi().getLogger().info("&3New version: &b<new_pl_ver>".replace("<new_pl_ver>", version));
                 getWgRegionProtect().getRsApi().getLogger().info("&eDownload new version here:");
-                getWgRegionProtect().getRsApi().getLogger().info("&ehttps://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-17.81321/");
+                getWgRegionProtect().getRsApi().getLogger().info("&ehttps://www.spigotmc.org/resources/worldguardregionprotect-1-18-1-18-2.81321/");
                 getWgRegionProtect().getRsApi().getLogger().info("&6==============================================");
             }
         });
