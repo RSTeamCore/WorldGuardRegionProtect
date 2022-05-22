@@ -14,7 +14,7 @@ messages:
     configMsgReloaded: '&8[&cWGRP&8] &aFile &6messages.yml &areload success!'
     configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml &cnot found, created new!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player> &cused command &5<cmd> &cin region: &3<region>'
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player> &ctrying to using command &5<cmd> &cin region: &3<region>'
     sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &b[<time>] &e<player> &6<action> &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>'
   PluralTime:
     day:
