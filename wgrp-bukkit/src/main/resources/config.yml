@@ -137,16 +137,19 @@ worldguard_protect_region:
   #--------------------------------------------------------------------------------------
   spy_command:
     notify:
-      # Enable notify to console and admin.
+      # Enable notify of action for admin and console.
       # Включение оповещения в консоль и администратору.
-      console: true
-      admin: true
-      # Sound notify to admin.
+      console:
+        enable: true
+      admin:
+        enable: true
+      # Settings of sound for admin.
       # Звуковое оповещение администратора.
-      sound: true
-      # All sounds can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
-      # Все звуки из 1.18.2 могут быть найдены тут: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
-      type: BLOCK_ANVIL_PLACE
+      sound:
+        enable: true
+        # All sounds can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+        # Все звуки из 1.18.2 могут быть найдены тут: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+        type: BLOCK_ANVIL_PLACE
     command_list:
     - //set
     - //replace
