@@ -1,8 +1,8 @@
 package net.ritasister.wgrp;
 
+import net.ritasister.wgrp.handler.CommandHandler;
+import net.ritasister.wgrp.handler.ListenerHandler;
 import net.ritasister.wgrp.rslibs.api.*;
-import net.ritasister.wgrp.register.RegisterCommand;
-import net.ritasister.wgrp.register.RegisterListener;
 import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.util.UtilLoadConfig;
 import net.ritasister.wgrp.util.config.UtilConfig;
@@ -87,10 +87,10 @@ public class WorldGuardRegionProtect {
     }
 
     private void loadCommandsAndListener() {
-        RegisterListener registerListener = new RegisterListener(this);
-        registerListener.registerListener(this.getPluginManager());
-        RegisterCommand registerCommand = new RegisterCommand(this);
-        registerCommand.registerCommand();
+        ListenerHandler registerListener = new ListenerHandler(this);
+        registerListener.listenerHandler(this.getPluginManager());
+        CommandHandler commandHandler = new CommandHandler(this);
+        commandHandler.commandHandler();
     }
 
     private void checkStartUpVersionServer() {
