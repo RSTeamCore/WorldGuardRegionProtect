@@ -1,11 +1,11 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import net.ritasister.wgrp.rslibs.api.interfaces.IRSLogger;
-
 import java.io.File;
+import java.util.logging.Logger;
 
-public class RSLogger implements IRSLogger {
+public class RSLogger {
 
+	private final Logger ROOT_LOGGER_NAME = Logger.getLogger("WGRP");
 	private final ChatApi chatApi;
 
 	public RSLogger(ChatApi chatApi) {
