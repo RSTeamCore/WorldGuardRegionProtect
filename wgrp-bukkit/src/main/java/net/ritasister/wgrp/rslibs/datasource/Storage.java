@@ -2,9 +2,10 @@ package net.ritasister.wgrp.rslibs.datasource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import net.ritasister.wgrp.rslibs.api.Action;
+import net.ritasister.wgrp.rslibs.api.RegionAction;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,16 +30,16 @@ public class Storage implements StorageDataSource {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("org.mariadb.jdbc.Driver");
 		config.setJdbcUrl("jdbc:mariadb://"
-				+ wgRegionProtect.getUtilConfig().host + ":"
-				+ wgRegionProtect.getUtilConfig().port + "/"
-				+ wgRegionProtect.getUtilConfig().database);
-		config.setUsername(wgRegionProtect.getUtilConfig().user);
-		config.setPassword(wgRegionProtect.getUtilConfig().password);
+				+ wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getHost() + ":"
+				+ wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getPort() + "/"
+				+ wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getName());
+		config.setUsername(wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getUser());
+		config.setPassword(wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getPassword());
 		
 		// Pool settings
-        config.setMaximumPoolSize(wgRegionProtect.getUtilConfig().maxPoolSize);
-        config.setMaxLifetime(wgRegionProtect.getUtilConfig().maxLifetime * 1000L);
-        config.setConnectionTimeout(wgRegionProtect.getUtilConfig().connectionTimeout);
+        config.setMaximumPoolSize(wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getMaxPoolSize());
+        config.setMaxLifetime(wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getMaxLifetime() * 1000L);
+        config.setConnectionTimeout(wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getConnectionTimeout());
 				
 		config.setPoolName("MariaDBPool");
 		
@@ -72,7 +73,7 @@ public class Storage implements StorageDataSource {
 		try(Connection conn = Storage.this.getConnection()) {
 			pst = conn.prepareStatement(
 					"CREATE TABLE IF NOT EXISTS <table> (id INT AUTO_INCREMENT, nickname VARCHAR(16) NULL, uniqueId VARCHAR(36) NULL, time BIGINT(20) NOT NULL DEFAULT '0', action VARCHAR(5) NULL, region VARCHAR(60) NULL, world VARCHAR(60), x DOUBLE NOT NULL DEFAULT '0', y DOUBLE NOT NULL DEFAULT '0', z DOUBLE NOT NULL DEFAULT '0', CONSTRAINT table_const_prim PRIMARY KEY (id));"
-					.replace("<table>", wgRegionProtect.getUtilConfig().table));
+					.replace("<table>", wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getTable()));
 			pst.execute();
 			pst.close();
 		}catch(SQLException ex){
@@ -87,7 +88,7 @@ public class Storage implements StorageDataSource {
 		ResultSet rs = null;
 		try(Connection conn = this.getConnection()) {
 			pst = conn.prepareStatement("SELECT * FROM <table>;"
-					.replace("<table>", wgRegionProtect.getUtilConfig().table));
+					.replace("<table>", wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getTable()));
 			rs = pst.executeQuery();
 			while(rs.next()) {
 				UUID uniqueId = UUID.fromString(rs.getString("uniqueId"));
@@ -122,7 +123,7 @@ public class Storage implements StorageDataSource {
 					try (Connection conn = Storage.this.getConnection()) {
 						pst = conn.prepareStatement(
 								"SELECT * FROM <table>;"
-										.replace("<table>", wgRegionProtect.getUtilConfig().table));
+										.replace("<table>", wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getTable()));
 						rs = pst.executeQuery();
 						while (rs.next()) {
 							UUID uniqueId = UUID.fromString(rs.getString("uniqueId"));
@@ -147,16 +148,16 @@ public class Storage implements StorageDataSource {
 						Storage.this.close(rs);
 						Storage.this.close(pst);
 					}
-				}, wgRegionProtect.getUtilConfig().intervalReload * 20L,
-				wgRegionProtect.getUtilConfig().intervalReload * 20L);
+				}, wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getIntervalReload() * 20L,
+				wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getIntervalReload() * 20L);
 	}
 
 	@Override
-	public void setLogAction(String nickname, UUID uniqueId, long time, Action action, String region, String world, int x, int y, int z) {
+	public void setLogAction(String nickname, @NotNull UUID uniqueId, long time, @NotNull RegionAction action, String region, String world, int x, int y, int z) {
 		PreparedStatement pst = null;
 		try(Connection conn = this.getConnection()) {
 				pst = conn.prepareStatement("INSERT INTO <table> (nickname, uniqueId, time, action, region, world, x, y, z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
-						.replace("<table>", wgRegionProtect.getUtilConfig().table));
+						.replace("<table>", wgRegionProtect.getUtilLoadConfig().getConfig().getMySQLSettings().getTable()));
 				pst.setString(1, nickname);
 				pst.setString(2, uniqueId.toString());
 				pst.setLong(3, time);
