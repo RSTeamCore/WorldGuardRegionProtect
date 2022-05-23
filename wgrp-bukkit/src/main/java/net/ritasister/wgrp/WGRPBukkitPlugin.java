@@ -17,7 +17,7 @@ public final class WGRPBukkitPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getWgRegionProtect().getUtilLoadConfig().getConfig().saveConfig();
+        getWgRegionProtect().getUtilConfig().getConfig().saveConfig();
     }
 
     public void notifyPreBuild() {
@@ -56,7 +56,7 @@ public final class WGRPBukkitPlugin extends JavaPlugin {
     }
 
     public void loadDataBase() {
-        if(this.getWgRegionProtect().getUtilLoadConfig().getConfig().getDataBaseEnable()) {
+        if(this.getWgRegionProtect().getUtilConfig().getConfig().getDataBaseEnable()) {
             final long duration_time_start = System.currentTimeMillis();
             this.getWgRegionProtect().getRsStorage().dbLogsSource = new Storage(this.getWgRegionProtect());
             this.getWgRegionProtect().getRsStorage().dbLogs.clear();
@@ -70,7 +70,7 @@ public final class WGRPBukkitPlugin extends JavaPlugin {
 
     public void postEnable() {
         getServer().getScheduler().cancelTasks(this);
-        if (this.getWgRegionProtect().getUtilLoadConfig().getConfig().getMySQLSettings().getIntervalReload() > 0) {
+        if (this.getWgRegionProtect().getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() > 0) {
             getWgRegionProtect().getRsStorage().dbLogsSource.loadAsync();
             getWgRegionProtect().getRsApi().getLogger().info("[DataBase] The base is loaded asynchronously.");
         }
