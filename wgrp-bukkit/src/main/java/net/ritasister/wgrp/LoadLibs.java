@@ -1,10 +1,14 @@
 package net.ritasister.wgrp;
 
+import net.ritasister.wgrp.rslibs.papi.PlaceholderAPIExpansion;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class LoadLibs {
 
     private final WorldGuardRegionProtect wgRegionProtect;
+
+    public boolean PlaceholderAPIEnabled = false;
 
     public LoadLibs(WorldGuardRegionProtect wgRegionProtect) {
         this.wgRegionProtect = wgRegionProtect;
@@ -20,6 +24,12 @@ public class LoadLibs {
                 final Throwable exception = null;
                 wgRegionProtect.getRsApi().getLogger().error(exception.getMessage());
             }
+        }
+    }
+
+    public void loadPlaceholderAPI() {
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new PlaceholderAPIExpansion(wgRegionProtect).register(); PlaceholderAPIEnabled=true;
         }
     }
 	private void msgSuccess() {
