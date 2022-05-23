@@ -3,8 +3,6 @@ package net.ritasister.wgrp.rslibs.api;
 import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
-
+ *
  */
 public class RSApi {
 
@@ -84,12 +82,12 @@ public class RSApi {
 	 * @param regionName    return region name, if player attempts to use command in region.
 	 */
 	public void notify(Player player, String playerName, String senderCommand, String regionName) {
-		if (wgRegionProtect.getUtilConfig().spyCommandNotifyAdmin
+		if (wgRegionProtect.getUtilLoadConfig().getConfig().getSpyCommandNotifyAdmin()
 				&& this.isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT_NOTIFY_ADMIN, null)) {
-			for (String cmd : wgRegionProtect.getUtilConfig().spyCommand) {
+			for (String cmd : wgRegionProtect.getUtilLoadConfig().getConfig().getSpyCommand()) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())
-						&& wgRegionProtect.getUtilConfig().spyCommandNotifyAdminPlaySoundEnable) {
-					player.playSound(player.getLocation(), wgRegionProtect.getUtilConfig().spyCommandNotifyAdminPlaySound.toLowerCase(), 1, 1);
+						&& wgRegionProtect.getUtilLoadConfig().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
+					player.playSound(player.getLocation(), wgRegionProtect.getUtilLoadConfig().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
 					player.sendMessage(wgRegionProtect.getUtilConfigMessage().sendAdminInfoIfUsedCommandInRG
 							.replace("<player>", playerName)
 							.replace("<cmd>", cmd)
@@ -107,8 +105,8 @@ public class RSApi {
 	 * @param regionName    return region name, if player attempts to use command in region.
 	 */
 	public void notify(String playerName, String senderCommand, String regionName) {
-		if (wgRegionProtect.getUtilConfig().spyCommandNotifyConsole) {
-			for (String cmd : wgRegionProtect.getUtilConfig().spyCommand) {
+		if (wgRegionProtect.getUtilLoadConfig().getConfig().getSpyCommandNotifyConsole()) {
+			for (String cmd : wgRegionProtect.getUtilLoadConfig().getConfig().getSpyCommand()) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
 					Bukkit.getConsoleSender().sendMessage(wgRegionProtect.getUtilConfigMessage().sendAdminInfoIfUsedCommandInRG
 							.replace("<player>", playerName)
@@ -133,9 +131,9 @@ public class RSApi {
 	 * @param z           return Z position of block.
 	 * @param world       return world position of block.
 	 */
-	public void notifyIfActionInRegion(Player admin, Player suspect, String time, String suspectName, Action action, String regionName, double x, double y, double z, String world) {
+	public void notifyIfActionInRegion(Player admin, Player suspect, String time, String suspectName, RegionAction action, String regionName, double x, double y, double z, String world) {
 		if (this.isSenderListenerPermission(suspect, IUtilPermissions.SPY_INSPECT_FOR_SUSPECT, null)
-				&& wgRegionProtect.getUtilConfig().spyCommandNotifyAdmin) {
+				&& wgRegionProtect.getUtilLoadConfig().getConfig().getSpyCommandNotifyAdmin()) {
 				admin.sendMessage(wgRegionProtect.getUtilConfigMessage().sendAdminInfoIfActionInRegion
 						.replace("<time>", time).replace("<player>", suspectName)
 					.replace("<action>", action.getAction())
