@@ -5,7 +5,7 @@ import net.ritasister.wgrp.rslibs.util.UpdateChecker;
 import net.ritasister.wgrp.rslibs.datasource.Storage;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class WGRPBukkitPlugin extends JavaPlugin {
+public final class WGRPBukkitPlugin extends JavaPlugin {
 
     private WorldGuardRegionProtect wgRegionProtect;
 
@@ -15,17 +15,22 @@ public class WGRPBukkitPlugin extends JavaPlugin {
         this.getWgRegionProtect().load();
     }
 
+    @Override
+    public void onDisable() {
+        getWgRegionProtect().getUtilLoadConfig().getConfig().saveConfig();
+    }
+
     public void notifyPreBuild() {
         if(this.getWgRegionProtect().getPluginVersion().contains("pre")) {
             getWgRegionProtect().getRsApi().getLogger().warn(
                     """
-                    This is a test build. This building may be unstable!
-                    When reporting a bug:
-                    Use the issue tracker! Don't report bugs in the reviews.
-                    Please search for duplicates before reporting a new https://github.com/RSTeamCore/WorldGuardRegionProtect/issues!
-                    Provide as much information as possible.
-                    Provide your WorldGuardRegionProtect version and Spigot/Paper version.
-                    Provide any stack traces or "errors" using pastebin.""");
+                        This is a test build. This building may be unstable!
+                        When reporting a bug:
+                        Use the issue tracker! Don't report bugs in the reviews.
+                        Please search for duplicates before reporting a new https://github.com/RSTeamCore/WorldGuardRegionProtect/issues!
+                        Provide as much information as possible.
+                        Provide your WorldGuardRegionProtect version and Spigot/Paper version.
+                        Provide any stack traces or "errors" using pastebin.""");
         } else {
             getWgRegionProtect().getRsApi().getLogger().info("This is the latest stable building.");
         }
@@ -44,14 +49,14 @@ public class WGRPBukkitPlugin extends JavaPlugin {
                 getWgRegionProtect().getRsApi().getLogger().info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", getWgRegionProtect().getPluginVersion()));
                 getWgRegionProtect().getRsApi().getLogger().info("&3New version: &b<new_pl_ver>".replace("<new_pl_ver>", version));
                 getWgRegionProtect().getRsApi().getLogger().info("&eDownload new version here:");
-                getWgRegionProtect().getRsApi().getLogger().info("&ehttps://www.spigotmc.org/resources/worldguardregionprotect-1-18-1-18-2.81321/");
+                getWgRegionProtect().getRsApi().getLogger().info("&ehttps://www.spigotmc.org/resources/81321/");
                 getWgRegionProtect().getRsApi().getLogger().info("&6==============================================");
             }
         });
     }
 
     public void loadDataBase() {
-        if(this.getWgRegionProtect().getUtilConfig().databaseEnable) {
+        if(this.getWgRegionProtect().getUtilLoadConfig().getConfig().getDataBaseEnable()) {
             final long duration_time_start = System.currentTimeMillis();
             this.getWgRegionProtect().getRsStorage().dbLogsSource = new Storage(this.getWgRegionProtect());
             this.getWgRegionProtect().getRsStorage().dbLogs.clear();
@@ -65,7 +70,7 @@ public class WGRPBukkitPlugin extends JavaPlugin {
 
     public void postEnable() {
         getServer().getScheduler().cancelTasks(this);
-        if (this.getWgRegionProtect().getUtilConfig().intervalReload > 0) {
+        if (this.getWgRegionProtect().getUtilLoadConfig().getConfig().getMySQLSettings().getIntervalReload() > 0) {
             getWgRegionProtect().getRsStorage().dbLogsSource.loadAsync();
             getWgRegionProtect().getRsApi().getLogger().info("[DataBase] The base is loaded asynchronously.");
         }
