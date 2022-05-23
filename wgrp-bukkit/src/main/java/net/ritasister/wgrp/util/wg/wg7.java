@@ -60,14 +60,14 @@ public class wg7 implements Iwg {
             assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) {
-                for (final Object region : wgRegionProtect.getUtilConfig().regionProtect) {
+                for (final Object region : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect()) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }
                 }
             }
             for (final ProtectedRegion rg : set) {
-                for (final Object region : wgRegionProtect.getUtilConfig().regionProtectOnlyBreakAllow) {
+                for (final Object region : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }
