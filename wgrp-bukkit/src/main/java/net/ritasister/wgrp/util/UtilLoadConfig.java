@@ -16,7 +16,7 @@ public class UtilLoadConfig {
 
 	private Config conf;
 
-	public File configFile, messagesFile;
+	public File messagesFile;
 
 	public UtilLoadConfig(WorldGuardRegionProtect wgRegionProtect) {
 		this.wgRegionProtect=wgRegionProtect;
