@@ -29,8 +29,8 @@ public final class CommandWGRP extends CmdExecutor {
 	@Override
 	protected void run(CommandSender sender, Command cmd, String[] args) {
 		final boolean sp = sender instanceof Player;
-		if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission(sender, cmd, IUtilPermissions.COMMAND_WGRP,
-				Message.noPerm.toString()))return; {}
+		/*if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission((Player)sender, cmd, IUtilPermissions.COMMAND_WGRP,
+				Message.noPerm.toString()))return; {}*/
 		if(args.length > 0) {
 			runCommand(sender, cmd, args);
 		}else{
@@ -40,22 +40,21 @@ public final class CommandWGRP extends CmdExecutor {
 
 	private void runCommand(@NotNull CommandSender sender, Command cmd, String @NotNull [] args) {
 		final boolean sp = sender instanceof Player;
-		if(args.length == 2) {
-			if (args[0].equalsIgnoreCase("reload")) {
-				wgRegionProtect.getUtilConfig().getConfig().reload();
-				sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configReloaded.toString()));
-			} else if (args[1].equalsIgnoreCase("msg")) {
-				sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configMsgReloaded.toString()));
-			}
-		}
-		if(args[0].equalsIgnoreCase("help")) {
+		if (args[0].equalsIgnoreCase("reload")) {
+			wgRegionProtect.getUtilConfig().getConfig().reload();
+			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configReloaded.toString()));
+		} if (args[0].equalsIgnoreCase("reloadmsg")) {
+			Message.load(wgRegionProtect.getUtilConfig().getMessages(),
+					wgRegionProtect.getLoadLibs().PlaceholderAPIEnabled);
+			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configMsgReloaded.toString()));
+		} if(args[0].equalsIgnoreCase("help")) {
 			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode("""
 									sub-commands:
 									/wgrp about
 									/wgrp spy - enable or disable spying for log who interact with region.
 									/wgrp add protect|protect-allow|only-break-allow <region name>
 									"""));
-		} else if(args[0].equalsIgnoreCase("about")) {
+		} if(args[0].equalsIgnoreCase("about")) {
 			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode("""
 									&b=======================================================================
 									&aHi! If you need help from this plugin, you can contact with me on:
@@ -66,7 +65,7 @@ public final class CommandWGRP extends CmdExecutor {
 									&aso you can create issues on github:&e https://github.com/RSTeamCore/WorldGuardRegionProtect
 									&6your welcome!
 									"""));
-		} else if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission((Player) sender, cmd, IUtilPermissions.SPY_INSPECT_ADMIN_COMMAND,
+		} if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission((Player)sender, cmd, IUtilPermissions.SPY_INSPECT_ADMIN_COMMAND,
 				Message.noPerm.toString()))return; {
 			if(args[0].equalsIgnoreCase("spy")) {
 				@NotNull UUID uniqueId = Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getUniqueId();

@@ -14,6 +14,7 @@ import java.io.InputStream;
 public class UtilConfig {
 
 	private Config config;
+	private File messages;
 
 	public void initConfig(WorldGuardRegionProtect wgRegionProtect) {
 		config = new Config(wgRegionProtect, wgRegionProtect.getWgrpBukkitPlugin().getConfig());
@@ -23,7 +24,7 @@ public class UtilConfig {
 	}
 
 	private void loadMessages(@NotNull WorldGuardRegionProtect wgRegionProtect) {
-		File messages = new File(wgRegionProtect.getWgrpBukkitPlugin().getDataFolder() + File.separator + "messages.yml");
+		messages = new File(wgRegionProtect.getWgrpBukkitPlugin().getDataFolder() + File.separator + "messages.yml");
 		if(!messages.exists()) {
 			try {
 				messages.createNewFile();
@@ -48,5 +49,9 @@ public class UtilConfig {
 
 	public Config getConfig() {
 		return this.config;
+	}
+
+	public File getMessages() {
+		return this.messages;
 	}
 }
