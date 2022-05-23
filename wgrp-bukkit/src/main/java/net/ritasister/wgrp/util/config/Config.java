@@ -200,6 +200,7 @@ public class Config {
         return cmdWeCP;
     }
 
+
     public boolean getRegionMessageProtect() {
         return regionMessageProtect;
     }
@@ -228,6 +229,7 @@ public class Config {
         return spyCommandNotifyAdminPlaySoundEnable;
     }
 
+
     public boolean getDataBaseEnable() {
         return databaseEnable;
     }
@@ -238,6 +240,28 @@ public class Config {
 
     public void saveConfig() {
         try {
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.region_protect", regionProtect);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.region_protect_allow", regionProtectAllow);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.region_protect_only_break_allow", regionProtectOnlyBreakAllow);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.interact_type", interactType);
+
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_we", cmdWe);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_c", cmdWeC);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_p", cmdWeP);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_s", cmdWeS);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_u", cmdWeU);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_cp", cmdWeCP);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_list", spyCommand);
+
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.explodeEntity.enable", explodeEntity);
+
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.protect_message", regionMessageProtect);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.protect_we_message", regionMessageProtectWe);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.spy_command.notify.console.enable", spyCommandNotifyConsole);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.spy_command.notify.admin.enable", spyCommandNotifyAdmin);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.spy_command.notify.sound.enable", spyCommandNotifyAdminPlaySoundEnable );
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.spy_command.notify.sound.type", spyCommandNotifyAdminPlaySound);
+
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.dataSource.databaseEnable", databaseEnable);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.dataSource.host", mysqlsettings.getHost());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.dataSource.port", mysqlsettings.getPort());
