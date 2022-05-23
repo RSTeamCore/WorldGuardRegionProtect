@@ -3,6 +3,7 @@ package net.ritasister.wgrp.listener.protect;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
 import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
+import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -50,14 +51,14 @@ public class RegionProtect implements Listener {
 		final Block block = e.getBlock();
 		final Location loc = block.getLocation();
 		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(loc);
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtectAllow())
-				|| wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtectOnlyBreakAllow())) {
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllow())
+				|| wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow())) {
 			e.setCancelled(false);
-		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())
+		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())
 				&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null)) {
 			e.setCancelled(true);
-			if (wgRegionProtect.getUtilLoadConfig().getConfig().getRegionMessageProtect()) {
-				player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsg);
+			if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtect()) {
+				player.sendMessage(Message.wgrpMsg.toString());
 			}
 		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc)
 				&& wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.SPY_INSPECT_ADMIN_LISTENER, null)) {
@@ -67,7 +68,7 @@ public class RegionProtect implements Listener {
 						playerName, RegionAction.BREAK, regionName,
 						block.getX(), block.getY(), block.getZ(), block.getWorld().getName());
 			}
-			if(wgRegionProtect.getUtilLoadConfig().getConfig().getDataBaseEnable()) {
+			if(wgRegionProtect.getUtilConfig().getConfig().getDataBaseEnable()) {
 				wgRegionProtect.getRsStorage().getDataSource().setLogAction(
 						playerName, uniqueId,
 						System.currentTimeMillis(), RegionAction.BREAK,
@@ -85,13 +86,13 @@ public class RegionProtect implements Listener {
 		final Block block = e.getBlock();
 		final Location loc = block.getLocation();
 		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(loc);
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtectAllow())) {
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllow())) {
 			e.setCancelled(false);
-		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())
+		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())
 				&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null)) {
 			e.setCancelled(true);
-			if (wgRegionProtect.getUtilLoadConfig().getConfig().getRegionMessageProtect()) {
-				player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsg);
+			if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtect()) {
+				player.sendMessage(Message.wgrpMsg.toString());
 			}
 		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc)
 				&& wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.SPY_INSPECT_ADMIN_LISTENER, null)) {
@@ -101,7 +102,7 @@ public class RegionProtect implements Listener {
 						playerName, RegionAction.PLACE, regionName,
 						block.getX(), block.getY(), block.getZ(), block.getWorld().getName());
 			}
-			if(wgRegionProtect.getUtilLoadConfig().getConfig().getRegionMessageProtect()) {
+			if(wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtect()) {
 				wgRegionProtect.getRsStorage().getDataSource().setLogAction(
 						playerName, uniqueId,
 						System.currentTimeMillis(), RegionAction.PLACE,
@@ -140,7 +141,7 @@ public class RegionProtect implements Listener {
 		final Player p = e.getPlayer();
 		final Location loc = e.getBlockClicked().getLocation();
 		final Material bucketType = e.getBucket();
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(p, IUtilPermissions.REGION_PROTECT, null))return;{
 				switch (bucketType) {
 					case LAVA_BUCKET, WATER_BUCKET, TROPICAL_FISH_BUCKET, PUFFERFISH_BUCKET,
@@ -155,7 +156,7 @@ public class RegionProtect implements Listener {
 		final Player player = e.getPlayer();
 		final Location loc = e.getEntity().getLocation();
 		final Material bucketInHand = player.getInventory().getItemInMainHand().getType();
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
 				if (bucketInHand == Material.WATER_BUCKET) {
 					e.setCancelled(true);
@@ -169,7 +170,7 @@ public class RegionProtect implements Listener {
 		Entity entity = e.getEntity();
 		Entity attacker = e.getDamager();
 		final Location loc = entity.getLocation();
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(attacker, IUtilPermissions.REGION_PROTECT, null))return;{
 				switch(entity.getType()) {
 					case ARMOR_STAND, ITEM_FRAME, GLOW_ITEM_FRAME, TROPICAL_FISH, AXOLOTL,
@@ -202,7 +203,7 @@ public class RegionProtect implements Listener {
 		Entity entity = e.getEntity();
 		Entity attacker = e.getRemover();
 		final Location loc = entity.getLocation();
-		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
+		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			assert attacker != null;
 			if (wgRegionProtect.getRsApi().isSenderListenerPermission(attacker, IUtilPermissions.REGION_PROTECT, null)) return; {
 				switch(entity.getType()) {
@@ -234,9 +235,9 @@ public class RegionProtect implements Listener {
 	private void denyInteract(final @NotNull PlayerInteractEvent e) {
 		if (e.getItem() != null) {
 			Player player = e.getPlayer();
-			if(wgRegionProtect.getRsRegion().checkStandingRegion(player.getWorld(), player.getLocation(), wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
+			if(wgRegionProtect.getRsRegion().checkStandingRegion(player.getWorld(), player.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 				if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
-					for (String spawnEntityType : wgRegionProtect.getUtilLoadConfig().getConfig().getInteractType()) {
+					for (String spawnEntityType : wgRegionProtect.getUtilConfig().getConfig().getInteractType()) {
 						if (e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase())
 								&& e.getClickedBlock() != null) {
 							e.setCancelled(true);
@@ -256,7 +257,7 @@ public class RegionProtect implements Listener {
 		final Player player = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
 		final @NotNull EntityType clickType = e.getRightClicked().getType();
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(clickLoc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(clickLoc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
 				if(clickType == EntityType.ITEM_FRAME || clickType == EntityType.GLOW_ITEM_FRAME) {
 					e.setCancelled(true);
@@ -269,7 +270,7 @@ public class RegionProtect implements Listener {
 	private void denyManipulateArmorStand(final @NotNull PlayerArmorStandManipulateEvent e) {
 		final Player p = e.getPlayer();
 		final Location clickLoc = e.getRightClicked().getLocation();
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(clickLoc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(clickLoc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			if(wgRegionProtect.getRsApi().isSenderListenerPermission(p, IUtilPermissions.REGION_PROTECT, null))return;{
 				if(e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
 					e.setCancelled(true);
@@ -280,7 +281,7 @@ public class RegionProtect implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyStructureGrow(final @NotNull StructureGrowEvent e) {
-		if (this.wgRegionProtect.getRsRegion().checkStandingRegion(e.getWorld(), e.getLocation(), wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
+		if (this.wgRegionProtect.getRsRegion().checkStandingRegion(e.getWorld(), e.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			e.setCancelled(true);
 		}
 	}
@@ -290,7 +291,7 @@ public class RegionProtect implements Listener {
 		final Entity entity = e.getEntity();
 		@NotNull final Player player = Objects.requireNonNull(e.getPlayer());
 		final Location loc = entity.getLocation();
-		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
+		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			if (wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null)) return;{
 				switch (player.getInventory().getItemInMainHand().getType()) {
 					case ITEM_FRAME, GLOW_ITEM_FRAME, PAINTING -> e.setCancelled(true);
@@ -304,8 +305,8 @@ public class RegionProtect implements Listener {
 		final Entity entity = e.getEntity();
 		final EntityType entityType = e.getEntityType();
 		final Location loc = entity.getLocation();
-		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
-			if(wgRegionProtect.getUtilLoadConfig().getConfig().getExplodeEntity()) {
+		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
+			if(wgRegionProtect.getUtilConfig().getConfig().getExplodeEntity()) {
 				switch (entityType) {
 					case PRIMED_TNT, ENDER_CRYSTAL, MINECART_TNT, CREEPER, FIREBALL, WITHER_SKULL -> e.blockList().clear();
 					default -> e.setCancelled(true);
@@ -323,7 +324,7 @@ public class RegionProtect implements Listener {
 		final Block block = e.getBlock();
 		final Location loc = block.getLocation();
 		final @NotNull Material blockType = block.getType();
-		if (blockType == Material.RESPAWN_ANCHOR && wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect())) {
+		if (blockType == Material.RESPAWN_ANCHOR && wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			e.setCancelled(true);
 		}
 	}
@@ -338,36 +339,36 @@ public class RegionProtect implements Listener {
 		if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null))return;{
 			if (this.wgRegionProtect.getCommandWE().cmdWE(s[0]) && !this.wgRegionProtect.getIwg().checkIntersection(player)) {
 				e.setCancelled(true);
-				if (wgRegionProtect.getUtilLoadConfig().getConfig().getRegionMessageProtectWe()) {
-					player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsgWe);
+				if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+					player.sendMessage(Message.wgrpMsgWe.toString());
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
 			}if (this.wgRegionProtect.getCommandWE().cmdWE_C(s[0]) && !this.wgRegionProtect.getIwg().checkCIntersection(player, s)) {
 				e.setCancelled(true);
-				if (wgRegionProtect.getUtilLoadConfig().getConfig().getRegionMessageProtectWe()) {
-					player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsgWe);
+				if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+					player.sendMessage(Message.wgrpMsgWe.toString());
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
 			}if (this.wgRegionProtect.getCommandWE().cmdWE_P(s[0]) && !this.wgRegionProtect.getIwg().checkPIntersection(player, s)) {
 				e.setCancelled(true);
-				if (wgRegionProtect.getUtilLoadConfig().getConfig().getRegionMessageProtectWe()) {
-					player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsgWe);
+				if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+					player.sendMessage(Message.wgrpMsgWe.toString());
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
 			}if (this.wgRegionProtect.getCommandWE().cmdWE_S(s[0]) && !this.wgRegionProtect.getIwg().checkSIntersection(player, s)) {
 				e.setCancelled(true);
-				if (wgRegionProtect.getUtilLoadConfig().getConfig().getRegionMessageProtectWe()) {
-					player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsgWe);
+				if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+					player.sendMessage(Message.wgrpMsgWe.toString());
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
 			}if (this.wgRegionProtect.getCommandWE().cmdWE_U(s[0]) && !this.wgRegionProtect.getIwg().checkUIntersection(player, s)) {
 				e.setCancelled(true);
-				if (wgRegionProtect.getUtilLoadConfig().getConfig().getRegionMessageProtectWe()) {
-					player.sendMessage(wgRegionProtect.getUtilConfigMessage().wgrpMsgWe);
+				if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+					player.sendMessage(Message.wgrpMsgWe.toString());
 				}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
@@ -380,22 +381,22 @@ public class RegionProtect implements Listener {
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(loc));
 			}
 			if (this.regionCommandNameArgs.contains(s[0]) && s.length > 2) {
-				for (final String list : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect()) {
+				for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtect()) {
 					if (list.equalsIgnoreCase(s[2])) {
 						e.setCancelled(true);
 					}
-				}for (final String list : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
+				}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
 					if (list.equalsIgnoreCase(s[2])) {
 						e.setCancelled(true);
 					}
 				}
 				if (s.length > 3 && this.regionEditArgs.contains(s[2].toLowerCase())
 						|| s.length > 3 && this.regionEditArgsFlags.contains(s[2].toLowerCase())) {
-					for (final String list : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect()) {
+					for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtect()) {
 						if (list.equalsIgnoreCase(s[3])) {
 							e.setCancelled(true);
 						}
-					}for (final String list : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
+					}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
 						if (list.equalsIgnoreCase(s[3])) {
 							e.setCancelled(true);
 						}
@@ -403,11 +404,11 @@ public class RegionProtect implements Listener {
 				}
 				if (s.length > 4 && s[2].equalsIgnoreCase("-w")
 						|| s.length > 4 && this.regionEditArgsFlags.contains(s[2].toLowerCase())) {
-					for (final String list : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect()) {
+					for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtect()) {
 						if (list.equalsIgnoreCase(s[4])) {
 							e.setCancelled(true);
 						}
-					}for (final String list : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
+					}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
 						if (list.equalsIgnoreCase(s[4])) {
 							e.setCancelled(true);
 						}
@@ -416,11 +417,11 @@ public class RegionProtect implements Listener {
 				if (s.length > 5 && s[3].equalsIgnoreCase("-w")
 						|| s.length > 5 && this.regionEditArgs.contains(s[4].toLowerCase())
 						|| s.length > 5 && this.regionEditArgsFlags.contains(s[4].toLowerCase())) {
-					for (final String list : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect()) {
+					for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtect()) {
 						if (list.equalsIgnoreCase(s[5])) {
 							e.setCancelled(true);
 						}
-					}for (final String list : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
+					}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
 						if (list.equalsIgnoreCase(s[5])) {
 							e.setCancelled(true);
 						}
@@ -430,12 +431,12 @@ public class RegionProtect implements Listener {
 						|| s.length > 6 && s[4].equalsIgnoreCase("-h")
 						|| s.length > 6 && this.regionEditArgs.contains(s[5].toLowerCase())
 						|| s.length > 6 && this.regionEditArgsFlags.contains(s[5].toLowerCase())) {
-					for (final String list : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtect()) {
+					for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtect()) {
 						if (list.equalsIgnoreCase(s[6])) {
 							e.setCancelled(true);
 						}
 					}
-					for (final String list : wgRegionProtect.getUtilLoadConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
+					for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
 						if (list.equalsIgnoreCase(s[6])) {
 							e.setCancelled(false);
 						}

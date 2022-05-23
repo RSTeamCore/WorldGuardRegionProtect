@@ -4,10 +4,12 @@ import net.ritasister.wgrp.rslibs.api.CmdExecutor;
 import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
 import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
@@ -27,22 +29,24 @@ public final class CommandWGRP extends CmdExecutor {
 	@Override
 	protected void run(CommandSender sender, Command cmd, String[] args) {
 		final boolean sp = sender instanceof Player;
-		FileConfiguration configPatch = wgRegionProtect.getUtilLoadConfig().config;
-		FileConfiguration getConfig = wgRegionProtect.getWgrpBukkitPlugin().getConfig();
 		if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission(sender, cmd, IUtilPermissions.COMMAND_WGRP,
-                wgRegionProtect.utilConfigMessage.noPerm))return; {}
+				Message.noPerm.toString()))return; {}
 		if(args.length > 0) {
-			runCommand(sender, cmd, args, configPatch, getConfig);
+			runCommand(sender, cmd, args);
 		}else{
-			sender.sendMessage(wgRegionProtect.utilConfigMessage.wgrpUseHelp);
+			sender.sendMessage(Message.wgrpUseHelp.toString());
 		}
 	}
 
-	private void runCommand(@NotNull CommandSender sender, Command cmd, String @NotNull [] args, FileConfiguration configPatch, FileConfiguration getConfig) {
+	private void runCommand(@NotNull CommandSender sender, Command cmd, String @NotNull [] args) {
 		final boolean sp = sender instanceof Player;
-		if(args[0].equalsIgnoreCase("reload")) {
-			wgRegionProtect.getUtilLoadConfig().getConfig().reload();
-			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(wgRegionProtect.getUtilConfigMessage().configReloaded));
+		if(args.length == 2) {
+			if (args[0].equalsIgnoreCase("reload")) {
+				wgRegionProtect.getUtilConfig().getConfig().reload();
+				sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configReloaded.toString()));
+			} else if (args[1].equalsIgnoreCase("msg")) {
+				sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configMsgReloaded.toString()));
+			}
 		}
 		if(args[0].equalsIgnoreCase("help")) {
 			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode("""
@@ -63,7 +67,7 @@ public final class CommandWGRP extends CmdExecutor {
 									&6your welcome!
 									"""));
 		} else if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission((Player) sender, cmd, IUtilPermissions.SPY_INSPECT_ADMIN_COMMAND,
-                wgRegionProtect.utilConfigMessage.noPerm))return; {
+				Message.noPerm.toString()))return; {
 			if(args[0].equalsIgnoreCase("spy")) {
 				@NotNull UUID uniqueId = Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getUniqueId();
 				if (wgRegionProtect.spyLog.contains(uniqueId)) {
