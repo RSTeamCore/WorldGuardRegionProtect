@@ -5,7 +5,6 @@ import net.ritasister.wgrp.handler.ListenerHandler;
 import net.ritasister.wgrp.rslibs.api.*;
 import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.util.UtilLoadConfig;
-import net.ritasister.wgrp.util.config.UtilConfig;
 import net.ritasister.wgrp.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.util.wg.wg7;
 import org.bukkit.plugin.PluginManager;
@@ -32,7 +31,6 @@ public class WorldGuardRegionProtect {
     private RSLogger rsLogger;
 
     //Configs
-    public UtilConfig utilConfig;
     public UtilConfigMessage utilConfigMessage;
     public UtilLoadConfig utilLoadConfig;
 
@@ -96,7 +94,7 @@ public class WorldGuardRegionProtect {
     private void checkStartUpVersionServer() {
         if (!this.getRsApi().isVersionSupported()) {
             getRsApi().getLogger().error("This plugin version works only on 1.18+!");
-            getRsApi().getLogger().error("Please read this thread: https://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-18.81321/");
+            getRsApi().getLogger().error("Please read this thread: https://www.spigotmc.org/resources/81321/");
             getRsApi().getLogger().error("The main post on spigotmc and please download the correct version.");
             getWgrpBukkitPlugin().getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin);
         }
@@ -143,11 +141,6 @@ public class WorldGuardRegionProtect {
     }
 
     @NotNull
-    public UtilConfig getUtilConfig() {
-        return  utilConfig;
-    }
-
-    @NotNull
     public LoadLibs getLoadLibs() {
         return this.loadLibs;
     }
@@ -176,4 +169,5 @@ public class WorldGuardRegionProtect {
     public Iwg getIwg() {
         return this.Iwg;
     }
+
 }
