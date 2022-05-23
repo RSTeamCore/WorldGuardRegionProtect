@@ -1,9 +1,10 @@
 package net.ritasister.wgrp.rslibs.api;
 
 /**
-
+ *
+ *
  */
-public enum Action {
+public enum RegionAction {
 
     BREAK("break"),
     PLACE("place"),
@@ -11,7 +12,7 @@ public enum Action {
 
     private final String action;
 
-    Action(String action) {
+    RegionAction(String action) {
         this.action = action;
     }
 
