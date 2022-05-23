@@ -1,13 +1,8 @@
 #-------------------------------------------------------------
-# WorldGuardProtectRegion - Protection of regions by the plugin.
-# WorldGuardProtectRegion - Защита регионов плагином.
+# Basic configuration settings for the plugin.
+# Основные настройки конфигурации плагина.
 #-------------------------------------------------------------
 wg_region_protect:
-  #-------------------------------------------------------------
-  # Do not touch this!
-  # Current config version!
-  #-------------------------------------------------------------
-  config_version: 1.0
   #-------------------------------------------------------------
   # List of protected regions.
   # If regions are not needed, specify an empty parameter:
