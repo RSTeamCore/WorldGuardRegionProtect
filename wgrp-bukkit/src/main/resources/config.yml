@@ -2,7 +2,7 @@
 # WorldGuardProtectRegion - Protection of regions by the plugin.
 # WorldGuardProtectRegion - Защита регионов плагином.
 #-------------------------------------------------------------
-worldguard_protect_region:
+wg_region_protect:
   #-------------------------------------------------------------
   # Do not touch this!
   # Current config version!
