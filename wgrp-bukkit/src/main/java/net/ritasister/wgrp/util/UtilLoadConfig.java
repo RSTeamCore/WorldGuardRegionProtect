@@ -1,8 +1,8 @@
 package net.ritasister.wgrp.util;
 
-import net.ritasister.wgrp.util.config.UtilConfig;
-import net.ritasister.wgrp.util.config.UtilConfigMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.util.config.UtilConfigMessage;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +13,9 @@ public class UtilLoadConfig {
 
 	private final WorldGuardRegionProtect wgRegionProtect;
 	public FileConfiguration config, messages;
+
+	private Config conf;
+
 	public File configFile, messagesFile;
 
 	public UtilLoadConfig(WorldGuardRegionProtect wgRegionProtect) {
@@ -20,8 +23,7 @@ public class UtilLoadConfig {
 	}
 
 	public void initConfig(WorldGuardRegionProtect wgRegionProtect) {
-		loadConfig(wgRegionProtect, true);
-		wgRegionProtect.utilConfig = new UtilConfig(wgRegionProtect);
+		conf = new Config(wgRegionProtect, wgRegionProtect.getWgrpBukkitPlugin().getConfig());
 
 		loadMSGConfig(wgRegionProtect, true);
 		wgRegionProtect.utilConfigMessage = new UtilConfigMessage(wgRegionProtect);
@@ -29,38 +31,8 @@ public class UtilLoadConfig {
 		wgRegionProtect.getRsApi().getLogger().info("&2All configs load successfully!");
 	}
 
-	private void loadConfig(@NotNull WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
-		configFile = new File(wgRegionProtect.getWgrpBukkitPlugin().getDataFolder(), "config.yml");
-		config = YamlConfiguration.loadConfiguration(configFile);
-		if (!configFile.exists()) {
-			if (copy) {
-				wgRegionProtect.getWgrpBukkitPlugin().saveResource("config.yml", false);
-				//RSLogger.updateConfigMsgSuccess(configFile);
-			} else {
-				try {
-					configFile.createNewFile();
-				} catch (Exception ex) {
-					worldGuardRegionProtect.getRsApi().getLogger().error(configFile + ex.getMessage());
-					ex.printStackTrace();
-				}
-			}
-		}
-		/*if (configFile.exists() && !worldGuardRegionProtect.utilConfig.configVersion.equals("1.0")) {
-			try {
-				Files.move(configFile.toPath(), new File(configFile.getParentFile(), "config-old-" + worldGuardRegionProtect.getRsApi().getPathTime() + ".yml").toPath(),
-						StandardCopyOption.REPLACE_EXISTING);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			worldGuardRegionProtect.reloadConfig();
-		}*/
-			try {
-			config = YamlConfiguration.loadConfiguration(configFile);
-		} catch (NullPointerException e) {
-			worldGuardRegionProtect.getRsApi().getLogger().error(configFile + e.getMessage());
-			e.printStackTrace();
-		}
-		worldGuardRegionProtect.getRsApi().getLogger().loadConfigMsgSuccess(configFile);
+	public Config getConfig() {
+		return this.conf;
 	}
 
 	private void loadMSGConfig(@NotNull WorldGuardRegionProtect worldGuardRegionProtect, boolean copy) {
