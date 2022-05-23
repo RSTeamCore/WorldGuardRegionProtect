@@ -30,3 +30,4 @@ out/
 /wgrp-api/build
 /wgrp-bukkit/build
 /wgrp-bukkit/run
+/build/tmp/jar/MANIFEST.MF
