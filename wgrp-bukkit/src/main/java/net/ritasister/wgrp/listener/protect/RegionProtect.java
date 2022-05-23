@@ -3,7 +3,6 @@ package net.ritasister.wgrp.listener.protect;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
 import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
-import net.ritasister.wgrp.util.UpdateNotify;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -124,11 +123,6 @@ public class RegionProtect implements Listener {
 			}
 		}
 	}*/
-
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onJoin(@NotNull PlayerJoinEvent event) {
-		UpdateNotify.doUpdateCheck(event.getPlayer());
-	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyPlayerTakeLecternBook(final @NotNull PlayerTakeLecternBookEvent e) {
