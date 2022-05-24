@@ -14,11 +14,12 @@ java {
 defaultTasks("clean", "build")
 
 repositories {
-    maven ("https://repo.codemc.org/repository/maven-public")
+    //CodeMc
+    maven ("https://repo.codemc.org/repository/maven-public/")
     //WorldGuard
     maven ("https://maven.enginehub.org/repo/")
     //PaperMC
-    maven ("https://papermc.io/repo/repository/maven-public/")
+    maven ("https://repo.papermc.io/repo/repository/maven-public/")
     //PlaceHolderAPI
     maven ("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     mavenCentral()
