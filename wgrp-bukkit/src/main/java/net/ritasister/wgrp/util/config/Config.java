@@ -16,7 +16,7 @@ public class Config {
     private List<String> regionProtectAllow;
     private List<String> regionProtectOnlyBreakAllow;
     private List<String> interactType;
-    private List<String> spyCommand;
+    private List<String> spyCommandList;
     private List<String> cmdWe;
     private List<String> cmdWeC;
     private List<String> cmdWeP;
@@ -57,7 +57,6 @@ public class Config {
             cmdWeS = (List<String>)config.getList("wg_region_protect.no_protect_cmd.command_s");
             cmdWeU = (List<String>)config.getList("wg_region_protect.no_protect_cmd.command_u");
             cmdWeCP = (List<String>)config.getList("wg_region_protect.no_protect_cmd.command_cp");
-            spyCommand = (List<String>)config.getList("wg_region_protect.no_protect_cmd.command_list");
 
             explodeEntity = config.getBoolean("wg_region_protect.explodeEntity.enable");
 
@@ -67,6 +66,7 @@ public class Config {
             spyCommandNotifyAdmin = config.getBoolean("wg_region_protect.spy_command.notify.admin.enable");
             spyCommandNotifyAdminPlaySoundEnable = config.getBoolean("wg_region_protect.spy_command.notify.sound.enable");
             spyCommandNotifyAdminPlaySound = config.getString("wg_region_protect.spy_command.notify.sound.type");
+            spyCommandList = (List<String>)config.getList("wg_region_protect.spy_command.spy_command_list");
 
             //Database settings.
             databaseEnable = config.getBoolean("wg_region_protect.dataSource.databaseEnable");
@@ -119,11 +119,6 @@ public class Config {
                                 "//up", "/up");
                         case "cmdWeCP" -> cmdWeCP = List.of(
                                 "//paste", "//place", "//replacenear", "//hollow");
-                        case "spyCommand" -> spyCommand = List.of(
-                                "", "", "",
-                                "", "", "",
-                                "", "", "",
-                                "", "", "");
 
                         case "explodeEntity" -> explodeEntity = true;
 
@@ -133,6 +128,12 @@ public class Config {
                         case "spyCommandNotifyAdmin" -> spyCommandNotifyAdmin = true;
                         case "spyCommandNotifyAdminPlaySoundEnable" -> spyCommandNotifyAdminPlaySoundEnable = true;
                         case "spyCommandNotifyAdminPlaySound" -> spyCommandNotifyAdminPlaySound = "BLOCK_ANVIL_PLACE";
+                        case "spyCommandList" -> spyCommandList = List.of(
+                                "//set", "//replace", "//overlay",
+                                "//walls", "//deform", "//fill",
+                                "//fillr", "//fixlava", "//hollow",
+                                "//move", "//stack", "//smooth",
+                                "//cut", "//replacenear");
 
                         //Database settings.
                         case "databaseEnable" -> databaseEnable = false;
@@ -171,8 +172,8 @@ public class Config {
         return interactType;
     }
 
-    public List<String> getSpyCommand() {
-        return spyCommand;
+    public List<String> getSpyCommandList() {
+        return spyCommandList;
     }
 
 
@@ -251,7 +252,6 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_s", cmdWeS);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_u", cmdWeU);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_cp", cmdWeCP);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.no_protect_cmd.command_list", spyCommand);
 
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.explodeEntity.enable", explodeEntity);
 
@@ -261,6 +261,7 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.spy_command.notify.admin.enable", spyCommandNotifyAdmin);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.spy_command.notify.sound.enable", spyCommandNotifyAdminPlaySoundEnable );
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.spy_command.notify.sound.type", spyCommandNotifyAdminPlaySound);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.spy_command.spy_command_list", spyCommandList);
 
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.dataSource.databaseEnable", databaseEnable);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.dataSource.host", mysqlsettings.getHost());
