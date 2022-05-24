@@ -28,11 +28,7 @@ public enum Message {
     pluralDay1, pluralDay2, pluralDay3,
     pluralHour1, pluralHour2, pluralHour3,
     pluralMinute1, pluralMinute2, pluralMinute3, pluralMinute4,
-    pluralSecond1, pluralSecond2, pluralSecond3, pluralSecond4, pluralTimeEmpty,
-
-    dbConnectSuccessful, dbConnectError, dbConnectFailed, dbReconnect,
-
-    dbClosePSTError, dbCloseRSError, dbCloseDBError, dbLoadError, dbLoadAsyncError;
+    pluralSecond1, pluralSecond2, pluralSecond3, pluralSecond4, pluralTimeEmpty;
 
     private List<String> msg;
 
@@ -55,7 +51,6 @@ public enum Message {
                 needRecover = true;
             }
             if(needRecover) recover(file);
-
         }
     }
 
@@ -80,6 +75,9 @@ public enum Message {
                     value = defaultMsgFile.get(path);
                 } catch (Throwable e) {
                     value = 0;
+                    e.printStackTrace();
+                } finally {
+                    tempFile.delete();
                 }
                 c.set(path, value);
             }
