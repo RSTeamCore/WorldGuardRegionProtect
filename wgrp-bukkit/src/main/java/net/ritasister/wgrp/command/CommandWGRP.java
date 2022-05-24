@@ -43,9 +43,8 @@ public final class CommandWGRP extends CmdExecutor {
 		if (args[0].equalsIgnoreCase("reload")) {
 			wgRegionProtect.getUtilConfig().getConfig().reload();
 			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configReloaded.toString()));
-		} if (args[0].equalsIgnoreCase("reloadmsg")) {
-			Message.load(wgRegionProtect.getUtilConfig().getMessages(),
-					wgRegionProtect.getLoadLibs().PlaceholderAPIEnabled);
+		} if(args[0].equalsIgnoreCase("reloadmsg")) {
+			wgRegionProtect.getUtilConfig().loadMessages(wgRegionProtect);
 			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configMsgReloaded.toString()));
 		} if(args[0].equalsIgnoreCase("help")) {
 			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode("""
