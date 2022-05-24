@@ -1,8 +1,7 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import net.kyori.adventure.text.ComponentLike;
-import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
 import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -86,7 +85,7 @@ public class RSApi {
 	public void notify(Player player, String playerName, String senderCommand, String regionName) {
 		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdmin()
 				&& this.isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT_NOTIFY_ADMIN, null)) {
-			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommand()) {
+			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())
 						&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
 					player.playSound(player.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
@@ -108,7 +107,7 @@ public class RSApi {
 	 */
 	public void notify(String playerName, String senderCommand, String regionName) {
 		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyConsole()) {
-			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommand()) {
+			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
 					Bukkit.getConsoleSender().sendMessage(Message.sendAdminInfoIfUsedCommandInRG.toString()
 							.replace("<player>", playerName)
