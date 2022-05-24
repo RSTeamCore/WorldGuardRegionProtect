@@ -7,10 +7,8 @@ import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -22,6 +20,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -111,19 +110,22 @@ public class RegionProtect implements Listener {
 			}
 		}
 	}
-	/*@EventHandler(priority = EventPriority.LOW)
+
+	@EventHandler(priority = EventPriority.LOW)
 	private void denyVehicleCollision(@NotNull VehicleEntityCollisionEvent e) {
 		Entity entity = e.getEntity();
 		Entity vehicle = e.getVehicle();
-		Location vehicleLocation = e.getVehicle().getLocation();
-		if (wgRegionProtect.getRsRegion().checkStandingRegion(vehicleLocation)) {
-			if(entity instanceof ItemFrame) {
-				if(vehicle instanceof Boat) {
-					e.setCancelled(true);
+		final Location location = e.getEntity().getLocation();
+		if(entity instanceof Player) {
+			if(wgRegionProtect.getRsRegion().checkStandingRegion(location)
+					&& !wgRegionProtect.getRsApi().isSenderListenerPermission(e.getEntity(), IUtilPermissions.REGION_PROTECT, null)) {
+				switch (vehicle.getType()) {
+					case BOAT, MINECART, MINECART_HOPPER, MINECART_CHEST, MINECART_COMMAND,
+							MINECART_FURNACE, MINECART_TNT, MINECART_MOB_SPAWNER -> e.setCancelled(true);
 				}
 			}
 		}
-	}*/
+	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyPlayerTakeLecternBook(final @NotNull PlayerTakeLecternBookEvent e) {
@@ -169,8 +171,8 @@ public class RegionProtect implements Listener {
 	private void denyEntityDamageByEntityEvent(final @NotNull EntityDamageByEntityEvent e) {
 		Entity entity = e.getEntity();
 		Entity attacker = e.getDamager();
-		final Location loc = entity.getLocation();
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
+		final Location location = entity.getLocation();
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			if(!wgRegionProtect.getRsApi().isSenderListenerPermission(attacker, IUtilPermissions.REGION_PROTECT, null)) {
 				switch(entity.getType()) {
 					case ARMOR_STAND, ITEM_FRAME, GLOW_ITEM_FRAME, TROPICAL_FISH, AXOLOTL,
@@ -179,15 +181,17 @@ public class RegionProtect implements Listener {
 						switch(attacker.getType()) {
 							case PLAYER, CREEPER, PRIMED_TNT, ENDER_CRYSTAL, WITHER,
 									WITHER_SKELETON, GHAST, SNOWMAN, SHULKER_BULLET,
-									DROWNED, SKELETON, STRAY -> e.setCancelled(true);
+									DROWNED, SKELETON, STRAY, BOAT -> e.setCancelled(true);
 							default -> {
 								if(attacker instanceof Projectile) {
 									attacker = ((Projectile) attacker).getShooter() instanceof Entity
 											? (Entity) ((Projectile) attacker).getShooter() : null;
-									switch (Objects.requireNonNull(attacker).getType()) {
-										case PLAYER, CREEPER, PRIMED_TNT, ENDER_CRYSTAL, WITHER,
-												WITHER_SKELETON, GHAST, SNOWMAN, SHULKER_BULLET,
-												DROWNED, SKELETON, STRAY -> e.setCancelled(true);
+									if (attacker != null) {
+										switch(attacker.getType()) {
+											case PLAYER, CREEPER, PRIMED_TNT, ENDER_CRYSTAL, WITHER,
+													WITHER_SKELETON, GHAST, SNOWMAN, SHULKER_BULLET,
+													DROWNED, SKELETON, STRAY -> e.setCancelled(true);
+										}
 									}
 								}
 							}
@@ -201,10 +205,9 @@ public class RegionProtect implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyHangingBreakByEntity(final @NotNull HangingBreakByEntityEvent e) {
 		Entity entity = e.getEntity();
-		Entity attacker = e.getRemover();
+		Entity attacker = Objects.requireNonNull(e.getRemover());
 		final Location loc = entity.getLocation();
 		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
-			assert attacker != null;
 			if (!wgRegionProtect.getRsApi().isSenderListenerPermission(attacker, IUtilPermissions.REGION_PROTECT, null)) {
 				switch(entity.getType()) {
 					case ITEM_FRAME, GLOW_ITEM_FRAME, PAINTING -> e.setCancelled(true);
@@ -214,15 +217,15 @@ public class RegionProtect implements Listener {
 										WITHER_SKELETON, GHAST, SNOWMAN, SHULKER_BULLET,
 										DROWNED, SKELETON, STRAY -> e.setCancelled(true);
 								default -> {
-									if(attacker instanceof Projectile) {
+									if (attacker instanceof Projectile) {
 										attacker = ((Projectile) attacker).getShooter() instanceof Entity
 												? (Entity) ((Projectile) attacker).getShooter() : null;
 										switch (Objects.requireNonNull(attacker).getType()) {
 											case PLAYER, CREEPER, PRIMED_TNT, ENDER_CRYSTAL, WITHER,
 													WITHER_SKELETON, GHAST, SNOWMAN, SHULKER_BULLET,
 													DROWNED, SKELETON, STRAY -> e.setCancelled(true);
+										}
 									}
-								}
 							}
 						}
 					}
@@ -281,11 +284,13 @@ public class RegionProtect implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyStructureGrow(final @NotNull StructureGrowEvent e) {
-		final Player player = e.getPlayer();
-		assert player != null;
-		if (wgRegionProtect.getRsRegion().checkStandingRegion(e.getWorld(), e.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())
-			&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null)) {
-			e.setCancelled(true);
+		if(e.getPlayer() != null) {
+			final Player player = e.getPlayer();
+			if (wgRegionProtect.getRsRegion().checkStandingRegion(e.getWorld(), e.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
+				if (!wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null)) {
+					e.setCancelled(true);
+				}
+			}
 		}
 	}
 
@@ -311,7 +316,8 @@ public class RegionProtect implements Listener {
 		if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			if(wgRegionProtect.getUtilConfig().getConfig().getExplodeEntity()) {
 				switch (entityType) {
-					case PRIMED_TNT, ENDER_CRYSTAL, MINECART_TNT, CREEPER, FIREBALL, WITHER_SKULL -> e.blockList().clear();
+					case PRIMED_TNT, ENDER_CRYSTAL, MINECART_TNT, CREEPER, FIREBALL, WITHER_SKULL
+							-> e.blockList().clear();
 					default -> e.setCancelled(true);
 				}
 			} else {
