@@ -37,47 +37,56 @@ wg_region_protect:
   #--------------------------------------------------------------------------------------
   region_protect_only_break_allow: []
 
-  #--------------------------------------------------------------------------------------
+  # --------------------------------------------------------------------------------------
   # List of prohibited entity / block for interaction in the protected region.
   # If you don't want to block it, specify an empty parameter:
   #
   # Attention! In interact_type, the block IDs\items are different from Minecraft!
   # list of blocks prohibited by default\items:
-  # - explosive_minecart
-  # - command_minecart
+  # - armor_stand
+  # - end_crystal
+  # - minecart
+  # - tnt_minecart
+  # - command_block_minecart
   # - hopper_minecart
-  # - storage_minecart
-  # - powered_minecart
-  # - boat_spruce
-  # - boat_birch
-  # - boat_jungle
-  # - boat_acacia
-  # - boat_dark_oak
+  # - chest_minecart
+  # - furnace_minecart
+  # - oak_boat
+  # - acacia_boat
+  # - spruce_boat
+  # - birch_boat
+  # - jungle_boat
+  # - jungle_boat
+  # - dark_oak_boat
+  # - bucket
+  # - water_bucket
+  # - lava_bucket
   #
   # interact_type: []
-  #--------------------------------------------------------------------------------------
+  # --------------------------------------------------------------------------------------
   # Список запрещенных entity/block для взаимодействия в защищенном регионе.
   # Если не нужно блокировать, то укажите пустой параметр:
   # interact_type: []
-  #--------------------------------------------------------------------------------------
+  # --------------------------------------------------------------------------------------
   interact_type:
-  - armor_stand
-  - end_crystal
-  - minecart
-  - explosive_minecart
-  - command_minecart
-  - hopper_minecart
-  - storage_minecart
-  - powered_minecart
-  - boat
-  - boat_spruce
-  - boat_birch
-  - boat_jungle
-  - boat_acacia
-  - boat_dark_oak
-  - bucket
-  - water_bucket
-  - lava_bucket
+    - armor_stand
+    - end_crystal
+    - minecart
+    - tnt_minecart
+    - command_block_minecart
+    - hopper_minecart
+    - chest_minecart
+    - furnace_minecart
+    - oak_boat
+    - acacia_boat
+    - spruce_boat
+    - birch_boat
+    - jungle_boat
+    - jungle_boat
+    - dark_oak_boat
+    - bucket
+    - water_bucket
+    - lava_bucket
 
   #--------------------------------------------------------------------------------------
   # List of forbidden commands from WE / FAWE.
