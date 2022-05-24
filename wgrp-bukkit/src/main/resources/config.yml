@@ -145,21 +145,23 @@ wg_region_protect:
         # All sounds can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
         # Все звуки из 1.18.2 могут быть найдены тут: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
         type: BLOCK_ANVIL_PLACE
-    command_list:
-    - //set
-    - //replace
-    - //overlay
-    - //walls
-    - //deform
-    - //fill
-    - //fillr
-    - //fixlava
-    - //hollow
-    - //move
-    - //stack
-    - //smooth
-    - //cut
-    - //replacenear
+    # A list of commands that will be tracked in the /wgrp spy command
+    # Список команд которые будут отслеживаться в команде /wgrp spy
+    spy_command_list:
+      - //set
+      - //replace
+      - //overlay
+      - //walls
+      - //deform
+      - //fill
+      - //fillr
+      - //fixlava
+      - //hollow
+      - //move
+      - //stack
+      - //smooth
+      - //cut
+      - //replacenear
 
   #--------------------------------------------------------------------------------------
   # Turn Enable/Disable the protected region message.
