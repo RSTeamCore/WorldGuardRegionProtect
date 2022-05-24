@@ -9,10 +9,11 @@
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/graphs/contributors"><img src="https://img.shields.io/github/contributors/RitaSister/WorldGuardRegionProtect.svg" alt="Contributors"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>
 
-# Resources on other site:
-* [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect)
+<p align="center"><a href="https://discord.com/invite/kvqvA3GTVF"><img src="https://discordapp.com/api/guilds/918677001479540787/embed.png" alt="Discord embed"></a>
 </p>
-<p align="center"><a href="https://discord.com/invite/kvqvA3GTVF"><img src="https://discordapp.com/api/guilds/918677001479540787/embed.png" alt="Discord embed"></a></p>
+
+## Resources on other site:
+* [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect)
 
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
