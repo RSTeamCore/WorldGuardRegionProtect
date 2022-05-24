@@ -63,7 +63,7 @@ public class Storage implements StorageDataSource {
 
 	private Connection getConnection() throws SQLException {
 		if (!this.ds.getConnection().isValid(6)) {
-			wgRegionProtect.getRsApi().getLogger().error(Message.dbReconnect.toString());
+			wgRegionProtect.getRsApi().getLogger().error("Lost connection to database. Retrying connect...");
 			this.connect();
 		}
 		return this.ds.getConnection();
@@ -77,9 +77,9 @@ public class Storage implements StorageDataSource {
 					.replace("<table>", wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getTable()));
 			pst.execute();
 			pst.close();
-		}catch(SQLException ex){
-			wgRegionProtect.getRsApi().getLogger().error(Message.dbConnectFailed.toString());
-		}finally{
+		} catch(SQLException ex){
+			wgRegionProtect.getRsApi().getLogger().error("Failed connect to database! Error code: " + ex.getErrorCode());
+		} finally {
 			this.close(pst);
 		}
 	}
@@ -108,7 +108,7 @@ public class Storage implements StorageDataSource {
 			}
 			return true;
 		}catch(SQLException ex){
-			wgRegionProtect.getRsApi().getLogger().error(Message.dbLoadError.toString());
+			wgRegionProtect.getRsApi().getLogger().error("Failed to load from database!");
 			ex.printStackTrace();
 		}finally{
 			this.close(rs);
@@ -143,7 +143,7 @@ public class Storage implements StorageDataSource {
 						}
 						wgRegionProtect.getRsStorage().dbLogs = new ConcurrentHashMap<>(tempDataBase);
 					} catch (SQLException ex) {
-						wgRegionProtect.getRsApi().getLogger().error(Message.dbLoadAsyncError.toString());
+						wgRegionProtect.getRsApi().getLogger().error("Failed to load database asynchronous!");
 						ex.printStackTrace();
 					} finally {
 						Storage.this.close(rs);
@@ -183,7 +183,7 @@ public class Storage implements StorageDataSource {
 				pst.close();
 			}
 		}catch(SQLException ex){
-			wgRegionProtect.getRsApi().getLogger().error(Message.dbClosePSTError.toString());
+			wgRegionProtect.getRsApi().getLogger().error("Failed to close prepared statement");
 		}
 	}
 
@@ -193,7 +193,7 @@ public class Storage implements StorageDataSource {
 				rs.close();
 			}
 		}catch(SQLException ex){
-			wgRegionProtect.getRsApi().getLogger().error(Message.dbCloseRSError.toString());
+			wgRegionProtect.getRsApi().getLogger().error("Failed to close result set");
 		}
 	}
 
@@ -202,7 +202,7 @@ public class Storage implements StorageDataSource {
 			ds.close();
 		}
         connect();
-		wgRegionProtect.getRsApi().getLogger().info(Message.dbConnectSuccessful.toString());
+		wgRegionProtect.getRsApi().getLogger().info("Successfully reloaded!");
     }
 	
 	@Override
