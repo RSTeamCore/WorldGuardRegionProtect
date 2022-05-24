@@ -12,16 +12,16 @@ public class RSLogger {
 		this.chatApi=chatApi;
 	}
 
-	public void info(final String msg) {
-		ROOT_LOGGER_NAME.info(chatApi.getColorCode(msg));
+	public void info(final String message) {
+		ROOT_LOGGER_NAME.info(chatApi.getColorCode(message));
 	}
 
-	public void warn(final String msg) {
-		ROOT_LOGGER_NAME.warning(chatApi.getColorCode(msg));
+	public void warn(final String message) {
+		ROOT_LOGGER_NAME.warning(chatApi.getColorCode(message));
 	}
 
-	public void error(final String msg) {
-		ROOT_LOGGER_NAME.severe(chatApi.getColorCode(msg));
+	public void error(final String message) {
+		ROOT_LOGGER_NAME.severe(chatApi.getColorCode(message));
 	}
 
 	public void loadConfigMsgSuccess(final File fileName) {
