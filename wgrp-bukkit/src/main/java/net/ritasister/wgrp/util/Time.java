@@ -1,10 +1,11 @@
 package net.ritasister.wgrp.util;
 
-import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.util.config.Message;
+import org.jetbrains.annotations.NotNull;
 
 public class Time {
 
-    /*public static String getTimeToString(int time, int depth, boolean accusative) {
+    public static @NotNull String getTimeToString(int time, int depth, boolean accusative) {
         String output = "";
         if (time > 0) {
             int day = time / 86400;
@@ -15,50 +16,43 @@ public class Time {
                 output = String.valueOf(day);
                 output = output + " ";
                 output = output + StringUtils.formatPlural(day,
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralDay1,
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralDay2,
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralDay3);
+                        Message.pluralDay1.toString(),
+                        Message.pluralDay2.toString(),
+                        Message.pluralDay3.toString());
                 output = output + " ";
                 --depth;
-            }
-
-            if (hour > 0 && depth > 0) {
+            } if (hour > 0 && depth > 0) {
                 output = output + hour;
                 output = output + " ";
                 output = output + StringUtils.formatPlural(hour,
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralHour1,
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralHour2,
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralHour3);
+                        Message.pluralHour1.toString(),
+                        Message.pluralHour2.toString(),
+                        Message.pluralHour3.toString());
                 output = output + " ";
                 --depth;
-            }
-
-            if (min > 0 && depth > 0) {
+            } if (min > 0 && depth > 0) {
                 output = output + min;
                 output = output + " ";
                 output = output + StringUtils.formatPlural(min, accusative ?
-                                WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralMinute1 :
-                                WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralMinute2,
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralMinute3,
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralMinute4);
+                                Message.pluralMinute1.toString() :
+                                Message.pluralMinute2.toString(),
+                        Message.pluralMinute3.toString(),
+                        Message.pluralMinute4.toString());
                 output = output + " ";
                 --depth;
-            }
-
-            if (sec > 0 && depth > 0) {
+            } if (sec > 0 && depth > 0) {
                 output = output + sec;
                 output = output + " ";
                 output = output + StringUtils.formatPlural(sec, accusative ?
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralSecond1 :
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralSecond2,
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralSecond3,
-                        WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralSecond4);
+                                Message.pluralSecond1.toString() :
+                                Message.pluralSecond2.toString(),
+                        Message.pluralSecond3.toString(),
+                        Message.pluralSecond4.toString());
                 --depth;
             }
         } else {
-            output = WorldGuardRegionProtect.getInstance().getUtilConfigMessage().pluralTimeEmpty;
+            output = Message.pluralTimeEmpty.toString();
         }
-
         return output.trim();
-    }*/
+    }
 }

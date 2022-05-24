@@ -1,6 +1,7 @@
 package net.ritasister.wgrp.util;
 
 import org.bukkit.ChatColor;
+import org.jetbrains.annotations.NotNull;
 
 public class StringUtils {
 
@@ -12,21 +13,17 @@ public class StringUtils {
         };
     }
 
-    public static String getSpace(String symbol, int length) {
-        StringBuilder sb = new StringBuilder();
-
-        for(int i = 0; i < length; ++i) {
-            sb.append(symbol);
-        }
-        return sb.toString();
+    public static @NotNull String getSpace(String symbol, int length) {
+        return String.valueOf(symbol).repeat(Math.max(0, length));
     }
 
-    public static String getCenterText(String base, String text) {
+    public static @NotNull String getCenterText(String base, String text) {
         String base_no_color = ChatColor.stripColor(base);
         String color_code = base.substring(0, base.length() - base_no_color.length());
         String symbol = base.substring(base_no_color.length() - 1);
         int i = (base_no_color.length() - (ChatColor.stripColor(text).length() + 2)) / 2;
-        String output = color_code + base_no_color.substring(0, i) + " " + text + " " + color_code + base_no_color.substring(base_no_color.length() - i);
+        String output = color_code + base_no_color.substring(0, i) + " " + text + " "
+                + color_code + base_no_color.substring(base_no_color.length() - i);
         if (output.length() < base_no_color.length()) {
             output = output + symbol;
         }
