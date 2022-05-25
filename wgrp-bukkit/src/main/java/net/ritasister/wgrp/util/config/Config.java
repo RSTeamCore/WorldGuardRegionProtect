@@ -283,7 +283,7 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectAllow", regionProtectAllow);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow", regionProtectOnlyBreakAllow);
 
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract", interactType);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.interactType", interactType);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.collisionWithVehicle", collisionWithVehicle);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle", canSitAsPassengerInVehicle);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canDamageVehicle", canDamageVehicle);
