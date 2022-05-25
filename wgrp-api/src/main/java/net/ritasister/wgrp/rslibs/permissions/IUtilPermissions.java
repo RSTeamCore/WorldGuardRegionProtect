@@ -3,6 +3,8 @@ package net.ritasister.wgrp.rslibs.permissions;
 public enum IUtilPermissions {
 
 	COMMAND_WGRP("wgrp.command.wgrpbase"),
+	COMMAND_WGRP_RELOAD_CONFIG("wgrp.command.reload"),
+	COMMAND_WGRP_RELOAD_CONFIG_MESSAGE("wgrp.command.reloadmsg"),
 	REGION_PROTECT("wgrp.regionprotect"),
 	REGION_PROTECT_NOTIFY_ADMIN("wgrp.notify.admin"),
 	SPY_INSPECT_FOR_SUSPECT("wgrp.spy.suspect"),
