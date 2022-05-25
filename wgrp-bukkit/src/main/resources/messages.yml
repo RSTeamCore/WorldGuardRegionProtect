@@ -26,7 +26,7 @@ messages:
   # Оповещение администрации о действиях игрока в регионе или использование команды в защищенном регионе.
   #--------------------------------------------------------------------------------------
   sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player> &ctrying to using command &5<cmd> &cin region: &3<region>'
-  sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &b[<time>] &e<player> &6<action> &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>'
+  sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &e<player> &6<action> &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>'
 
   #--------------------------------------------------------------------------------------
   # Setting up the time plurals.
