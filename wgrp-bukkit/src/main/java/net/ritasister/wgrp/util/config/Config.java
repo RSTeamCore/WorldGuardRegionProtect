@@ -12,6 +12,8 @@ public class Config {
     private final WorldGuardRegionProtect wgRegionProtect;
     private FileConfiguration config;
 
+
+    private String lang;
     private List<String> regionProtect;
     private List<String> regionProtectAllow;
     private List<String> regionProtectOnlyBreakAllow;
@@ -32,7 +34,6 @@ public class Config {
     private boolean spyCommandNotifyAdminPlaySoundEnable;
     private boolean databaseEnable;
 
-    private String lang;
     private MySQLSettings mysqlsettings;
 
     public Config(WorldGuardRegionProtect wgRegionProtect, FileConfiguration config) {

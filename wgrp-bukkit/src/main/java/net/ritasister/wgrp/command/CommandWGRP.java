@@ -43,22 +43,21 @@ public final class CommandWGRP extends CmdExecutor {
 		if (args[0].equalsIgnoreCase("reload")) {
 			wgRegionProtect.getUtilConfig().getConfig().reload();
 			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configReloaded.toString()));
-		} if(args[0].equalsIgnoreCase("reloadmsg")) {
 			wgRegionProtect.getUtilConfig().loadMessages(wgRegionProtect);
 			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configMsgReloaded.toString()));
 		} if(args[0].equalsIgnoreCase("help")) {
 			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode("""
-									sub-commands:
-									/wgrp about
-									/wgrp spy - enable or disable spying for log who interact with region.
-									/wgrp add protect|protect-allow|only-break-allow <region name>
+									&8[&cWGRP&8] &aCommand list:
+									&a/wgrp reload -&e reload the configuration files
+									&a/wgrp help -&e general help on the plugin and commands.
+									&a/wgrp about -&6 very useful information here!
+									&a/wgrp spy - enable or disable spying for log who interact with region.
 									"""));
 		} if(args[0].equalsIgnoreCase("about")) {
 			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode("""
 									&b=======================================================================
 									&aHi! If you need help from this plugin, you can contact with me on:
-									&ehttps://www.spigotmc.org/resources/wgRegionProtect-1-12.81333/
-									&ehttp://rubukkit.org/threads/sec-wgRegionProtect-0-7-0-pre2-dop-zaschita-dlja-regionov-wg-1-13-1-17.171324/page-4#post-1678435
+									&e https://www.spigotmc.org/resources/wgRegionProtect-1-12.81333/
 									&b=======================================================================
 									&aBut if you find any error or you want to send me any idea for this plugin&b,
 									&aso you can create issues on github:&e https://github.com/RSTeamCore/WorldGuardRegionProtect

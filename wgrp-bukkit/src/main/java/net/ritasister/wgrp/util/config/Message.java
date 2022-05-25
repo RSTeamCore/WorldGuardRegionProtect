@@ -43,8 +43,7 @@ public enum Message {
             String language = c.getString("langTitle.language");
             String author = c.getString("langTitle.author");
             String version = c.getString("langTitle.version");
-            String pluginVersion = c.getString("langTitle.pluginVersion");
-            langProperties = new LangProperties(language, author, version, pluginVersion);
+            langProperties = new LangProperties(language, author, version);
             if(langProperties.getLanguage() == null) lang = "en";
         } catch (Throwable e) {
             lang = "en";
@@ -68,23 +67,24 @@ public enum Message {
         }
     }
 
-    public static FileConfiguration initLang(WGRPBukkitPlugin plugin, String lang) {
-        File folder = new File(plugin.getDataFolder() + File.separator + "lang");
+    public static @NotNull FileConfiguration initLang(@NotNull WGRPBukkitPlugin plugin, String lang) {
+        File folder = new File(
+                plugin.getDataFolder() + File.separator + "lang" + File.separator);
         if(!folder.exists()) {
             try {
+                folder.mkdirs();
                 folder.createNewFile();
-                folder.mkdir();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        File langFile = new File(plugin.getDataFolder() + "/lang/"  +
-                lang + ".yml");
+        File langFile = new File(
+                plugin.getDataFolder() + File.separator + "lang" + File.separator + lang + ".yml");
         if(!langFile.exists()) {
             try {
                 langFile.createNewFile();
-                InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream("lang/" + lang +".yml");
+                InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream("lang/" + lang + ".yml");
                 try (FileOutputStream fos = new FileOutputStream(langFile)) {
                     byte[] buf = new byte[2048];
                     int r;
@@ -102,15 +102,15 @@ public enum Message {
     }
 
 
-    public static void recover(WGRPBukkitPlugin plugin, String lang) {
-        File langFile = new File(plugin.getDataFolder() + "/lang/" + lang + ".yml");
+    public static void recover(@NotNull WGRPBukkitPlugin plugin, String lang) {
+        File langFile = new File(
+                plugin.getDataFolder() + File.separator + "lang" + File.separator + lang + ".yml");
         FileConfiguration c = YamlConfiguration.loadConfiguration(langFile);
         for(Message message : Message.values()) {
             boolean recover = false;
             String path = "messages." + message.name().replace("_", ".");
             try {
                 Object obj = c.get(path);
-                File tempFile = new File("cache_file");
                 if(obj == null) recover = true;
             } catch (Throwable e) {
                 recover = true;
@@ -123,7 +123,8 @@ public enum Message {
                 } catch (Throwable e) {
                     e.printStackTrace();
                 } try {
-                    InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream("lang/" + lang + ".yml");
+                    InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream(
+                            "lang/" + lang + ".yml");
                     try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                         byte[] buf = new byte[2048];
                         int r;
@@ -246,13 +247,10 @@ public enum Message {
 
         private final String version;
 
-        private final String pluginVersion;
-
-        public LangProperties(String language, String author, String version, String pluginVersion) {
+        public LangProperties(String language, String author, String version) {
             this.language = language;
             this.author = author;
             this.version = version;
-            this.pluginVersion = pluginVersion;
         }
 
         public String getAuthor() {
@@ -261,10 +259,6 @@ public enum Message {
 
         public String getLanguage() {
             return language;
-        }
-
-        public String getPluginVersion() {
-            return pluginVersion;
         }
 
         public String getVersion() {
