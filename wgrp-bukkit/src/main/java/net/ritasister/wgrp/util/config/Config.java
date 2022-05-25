@@ -154,6 +154,7 @@ public class Config {
                 throw new RuntimeException(e);
             }
         }
+        saveConfig();
     }
 
     public List<String> getRegionProtect() {

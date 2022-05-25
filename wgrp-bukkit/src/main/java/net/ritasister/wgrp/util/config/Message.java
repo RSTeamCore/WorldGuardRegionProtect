@@ -39,7 +39,7 @@ public enum Message {
         FileConfiguration c = YamlConfiguration.loadConfiguration(file);
         for(Message message : Message.values()) {
             message.PAPI = PAPIEnabled;
-            boolean needRecover = false;
+            boolean needRecover;
             try {
                 Object obj = c.get("messages." + message.name().replace("_", "."));
                 if(obj instanceof List) {
@@ -47,6 +47,8 @@ public enum Message {
                 } else {
                     message.msg = Lists.newArrayList(obj == null ? "" : ChatColor.translateAlternateColorCodes('&', obj.toString()));
                 }
+                needRecover = message.msg == null || message.msg.equals("") || obj.equals(null);
+
             } catch (NullPointerException e) {
                 needRecover = true;
             }
@@ -67,11 +69,25 @@ public enum Message {
             }
             if(recover) {
                 Object value;
+                File tempFile = new File("cache_file");
                 try {
-                    InputStream inputStream = WGRPBukkitPlugin.class.getResourceAsStream("messages.yml");
-                    assert inputStream != null;
-                    Reader reader = new BufferedReader(new InputStreamReader(inputStream));
-                    FileConfiguration defaultMsgFile = YamlConfiguration.loadConfiguration(reader);
+                    tempFile.createNewFile();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                } try {
+                    InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream("messages.yml");
+                    try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                        byte[] buf = new byte[2048];
+                        int r;
+                        if (ddlStream != null) {
+                            while(-1 != (r = ddlStream.read(buf))) {
+                                fos.write(buf, 0, r);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    FileConfiguration defaultMsgFile = YamlConfiguration.loadConfiguration(tempFile);
                     value = defaultMsgFile.get(path);
                 } catch (Throwable e) {
                     value = 0;
