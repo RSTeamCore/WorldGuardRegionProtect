@@ -2,7 +2,8 @@ name: WorldGuardRegionProtect
 authors: [RitaSister, IRedTea]
 version: ${internalVersion}
 main: net.ritasister.wgrp.WGRPBukkitPlugin
-depend: [ WorldGuard, PlaceholderAPI]
+depend: [ WorldGuard ]
+softdepend: [ PlaceholderAPI ]
 description: Protect your region on the server.
 website: 'https://github.com/RSTeamCore/WorldGuardRegionProtect'
 api-version: 1.18
