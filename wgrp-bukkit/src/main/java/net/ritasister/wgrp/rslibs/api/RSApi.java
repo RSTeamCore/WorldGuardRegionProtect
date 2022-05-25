@@ -114,7 +114,7 @@ public class RSApi {
 	}
 
 	/**
-	 * Check if a entity has permission for use Listener.
+	 * Check if an entity has permission for use Listener.
 	 *
 	 * @param entity  Who send this command.
 	 * @param perm    Permission to check.
@@ -158,9 +158,9 @@ public class RSApi {
 	/**
 	 * Send notify to admin.
 	 *
-	 * @param playerName    return player object.
-	 * @param senderCommand return name command if player attempt to use in region.
-	 * @param regionName    return region name, if player attempts to use command in region.
+	 * @param playerName player object.
+	 * @param senderCommand name command if player attempt to use in region.
+	 * @param regionName region name, if player attempts to use command in region.
 	 */
 	public void notify(String playerName, String senderCommand, String regionName) {
 		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyConsole()) {
@@ -178,15 +178,15 @@ public class RSApi {
 	/**
 	 * Send notification if player attempts to interact with region from WorldGuard.
 	 *
-	 * @param admin       return message for admin who destroys region.
-	 * @param suspect     return object player for method.
-	 * @param suspectName return player name who's interacting with region.
-	 * @param action	  return type of Actions.
-	 * @param regionName  return region name.
-	 * @param x           return X position of block.
-	 * @param y           return Y position of block.
-	 * @param z           return Z position of block.
-	 * @param world       return world position of block.
+	 * @param admin message for admin who destroys region.
+	 * @param suspect object player for method.
+	 * @param suspectName player name who's interacting with region.
+	 * @param action type of actions.
+	 * @param regionName region name.
+	 * @param x position of block.
+	 * @param y position of block.
+	 * @param z position of block.
+	 * @param world position of block.
 	 */
 	public void notifyIfActionInRegion(Player admin, Player suspect, String suspectName, RegionAction action, String regionName, double x, double y, double z, String world) {
 		if (this.isSenderListenerPermission(suspect, IUtilPermissions.SPY_INSPECT_FOR_SUSPECT, null)
