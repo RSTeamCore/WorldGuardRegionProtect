@@ -63,7 +63,7 @@ public final class WGRPBukkitPlugin extends JavaPlugin {
             if (this.getWgRegionProtect().getRsStorage().dbLogsSource.load()) {
                 getWgRegionProtect(). getRsApi().getLogger().info("[DataBase] The player base is loaded.");
                 this.postEnable();
-                getWgRegionProtect().getRsApi().getLogger().info("[DataBase] Startup duration: {TIME} мс.".replace("{TIME}", String.valueOf(System.currentTimeMillis() - duration_time_start)));
+                getWgRegionProtect().getRsApi().getLogger().info("[DataBase] Startup duration: <TIME> мс.".replace("<TIME>", String.valueOf(System.currentTimeMillis() - duration_time_start)));
             }
         }
     }
