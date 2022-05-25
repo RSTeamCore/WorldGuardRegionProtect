@@ -1,26 +1,20 @@
 package net.ritasister.wgrp;
 
+import net.ritasister.wgrp.handler.CommandHandler;
+import net.ritasister.wgrp.handler.ListenerHandler;
 import net.ritasister.wgrp.rslibs.api.*;
-import net.ritasister.wgrp.register.RegisterCommand;
-import net.ritasister.wgrp.register.RegisterListener;
 import net.ritasister.wgrp.rslibs.util.wg.Iwg;
-import net.ritasister.wgrp.util.UtilLoadConfig;
-import net.ritasister.wgrp.util.config.UtilConfig;
-import net.ritasister.wgrp.util.config.UtilConfigMessage;
-import net.ritasister.wgrp.util.wg.wg7;
+import net.ritasister.wgrp.util.UtilConfig;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class WorldGuardRegionProtect {
 
     private final WGRPBukkitPlugin wgrpBukkitPlugin;
-
-    //public Functions functions;
-
-    private wg7 wg7;
 
     private Iwg Iwg;
 
@@ -32,9 +26,7 @@ public class WorldGuardRegionProtect {
     private RSLogger rsLogger;
 
     //Configs
-    public UtilConfig utilConfig;
-    public UtilConfigMessage utilConfigMessage;
-    public UtilLoadConfig utilLoadConfig;
+    private UtilConfig utilConfig;
 
     //Parameters for to intercept commands from WE or FAWE.
     private CommandWE commandWE;
@@ -56,7 +48,7 @@ public class WorldGuardRegionProtect {
         this.checkStartUpVersionServer();
         this.getWgrpBukkitPlugin().loadMetrics();
         this.loadAnotherClassAndMethods();
-        //this.loadDataBase();
+        this.getWgrpBukkitPlugin().loadDataBase();
         this.getWgrpBukkitPlugin().notifyPreBuild();
         this.getWgrpBukkitPlugin().checkUpdate();
     }
@@ -64,16 +56,15 @@ public class WorldGuardRegionProtect {
     private void loadAnotherClassAndMethods() {
         //Libs of WorldGuard.
         this.loadLibs = new LoadLibs(this);
+        this.getLoadLibs().loadPlaceholderAPI();
         this.getLoadLibs().loadWorldGuard();
-        //this.functions = new Functions(this);
 
         //API for Regions.
         this.rsRegion = new RSRegion();
-        this.wg7 = new wg7(this);
 
         //Configs.
-        this.utilLoadConfig = new UtilLoadConfig(this);
-        this.getUtilLoadConfig().initConfig(this);
+        this.utilConfig = new UtilConfig();
+        this.getUtilConfig().initConfig(this);
 
         //Parameters for to intercept commands from WE or FAWE.
         this.commandWE = new CommandWE(this);
@@ -87,16 +78,16 @@ public class WorldGuardRegionProtect {
     }
 
     private void loadCommandsAndListener() {
-        RegisterListener registerListener = new RegisterListener(this);
-        registerListener.registerListener(this.getPluginManager());
-        RegisterCommand registerCommand = new RegisterCommand(this);
-        registerCommand.registerCommand();
+        ListenerHandler registerListener = new ListenerHandler(this);
+        registerListener.listenerHandler(this.getPluginManager());
+        CommandHandler commandHandler = new CommandHandler(this);
+        commandHandler.commandHandler();
     }
 
     private void checkStartUpVersionServer() {
         if (!this.getRsApi().isVersionSupported()) {
             getRsApi().getLogger().error("This plugin version works only on 1.18+!");
-            getRsApi().getLogger().error("Please read this thread: https://www.spigotmc.org/resources/worldguardregionprotect-1-13-1-18.81321/");
+            getRsApi().getLogger().error("Please read this thread: https://www.spigotmc.org/resources/81321/");
             getRsApi().getLogger().error("The main post on spigotmc and please download the correct version.");
             getWgrpBukkitPlugin().getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin);
         }
@@ -133,18 +124,8 @@ public class WorldGuardRegionProtect {
     }
 
     @NotNull
-    public UtilLoadConfig getUtilLoadConfig() {
-        return utilLoadConfig;
-    }
-
-    @NotNull
-    public UtilConfigMessage getUtilConfigMessage() {
-        return utilConfigMessage;
-    }
-
-    @NotNull
     public UtilConfig getUtilConfig() {
-        return  utilConfig;
+        return utilConfig;
     }
 
     @NotNull
@@ -167,9 +148,8 @@ public class WorldGuardRegionProtect {
         return this.wgrpBukkitPlugin.getDescription().getVersion();
     }
 
-    @NotNull
-    public wg7 getWG7() {
-        return this.wg7;
+    public List<String> getPluginAuthors() {
+        return this.wgrpBukkitPlugin.getDescription().getAuthors();
     }
 
     @NotNull

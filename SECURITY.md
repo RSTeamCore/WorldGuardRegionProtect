@@ -3,7 +3,7 @@
 ## Supported and Unsupported of Versions
 | List of Versions WorldGuardRegionProtect              | Supported          |
 |-------------------------------------------------------|--------------------|
-| **0.7.1 - pre9** *and newest versions on* **java 17** | :white_check_mark: |
+| **0.7.1 - pre8** *and newest versions on* **java 17** | :white_check_mark: |
 | **0.7.0 [1.13-1.17]** / java 11                       | :x:                |
 | **0.6.1 [1.13-1.17]** / java 11                       | :x:                |
 | **0.6.0 [1.13-1.17]** / java 11                       | :x:                |

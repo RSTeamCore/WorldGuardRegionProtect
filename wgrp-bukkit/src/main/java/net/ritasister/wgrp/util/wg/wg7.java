@@ -17,18 +17,14 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import net.ritasister.wgrp.rslibs.api.ProtectedMine;
-import net.ritasister.wgrp.rslibs.api.ProtectedRG;
-import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
-
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class wg7 implements Iwg {
 
@@ -61,16 +57,17 @@ public class wg7 implements Iwg {
             final RegionContainer rc = WorldGuard.getInstance().getPlatform().getRegionContainer();
             final RegionManager regions = rc.get(sel.getWorld());
             final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", min, max);
+            assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) {
-                for (final Object region : wgRegionProtect.getUtilConfig().regionProtect) {
+                for (final Object region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtect()) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }
                 }
             }
             for (final ProtectedRegion rg : set) {
-                for (final Object region : wgRegionProtect.getUtilConfig().regionProtectOnlyBreakAllow) {
+                for (final Object region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }
@@ -111,7 +108,8 @@ public class wg7 implements Iwg {
         return this.checkIntersection(sel);
     }
 
-    private CuboidRegion getCylSelection(final Player player, final String... args) {
+    @Contract("_, _ -> new")
+    private @NotNull CuboidRegion getCylSelection(final Player player, final String... args) {
         int x = 1;
         int y = 1;
         int z = 0;
@@ -130,7 +128,7 @@ public class wg7 implements Iwg {
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
     }
 
-    private CuboidRegion getPyramidSelection(final Player player, final String... args) {
+    private @Nullable CuboidRegion getPyramidSelection(final Player player, final String... args) {
         if (args.length < 3) {
             return null;
         }
@@ -144,7 +142,7 @@ public class wg7 implements Iwg {
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
     }
 
-    private CuboidRegion getSphereSelection(final Player player, final String... args) {
+    private @Nullable CuboidRegion getSphereSelection(final Player player, final String... args) {
         if (args.length < 3) {
             return null;
         }
@@ -162,7 +160,7 @@ public class wg7 implements Iwg {
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asBlockVector(loc1), BukkitAdapter.asBlockVector(loc2));
     }
 
-    private CuboidRegion getUpSelection(final Player player, final String... args) {
+    private @Nullable CuboidRegion getUpSelection(final Player player, final String... args) {
         try {
             final int v = Integer.parseInt(args[1]);
             final Location loc1 = player.getLocation().add(0.0, v, 0.0);
@@ -173,7 +171,7 @@ public class wg7 implements Iwg {
         }
     }
 
-    private CuboidRegion getPasteSelection(final Player player, final String... args) {
+    private @Nullable CuboidRegion getPasteSelection(final Player player, final String... args) {
         try {
             final LocalSession session = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
             final ClipboardHolder holder = session.getClipboard();
@@ -185,42 +183,5 @@ public class wg7 implements Iwg {
         } catch (Exception e) {
             return null;
         }
-    }
-
-    private ApplicableRegionSet getApplicableRegions(final Location l) {
-        return WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(l.getWorld())).getApplicableRegions(BukkitAdapter.asBlockVector(l));
-    }
-
-    public boolean isProtectedRegion(final World w, final Location l) {
-        ApplicableRegionSet regions = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(w))
-                .getApplicableRegions(BukkitAdapter.asBlockVector(l));
-        return regions.getRegions().stream().anyMatch(x -> isRegionInConfig(x, false));
-    }
-
-    public boolean isProtectedMine(final World w, final Location l) {
-        ApplicableRegionSet regions = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(w))
-                .getApplicableRegions(BukkitAdapter.asBlockVector(l));
-        return regions.getRegions().stream().anyMatch(x -> isRegionInConfig(x, true));
-    }
-
-    public boolean isRegionInConfig(ProtectedRegion region, boolean checkMine) {
-        if (checkMine)
-            return ProtectedMine.atConfig(region.getId());
-        else
-            return ProtectedRG.atConfig(region.getId());
-    }
-
-    public boolean isWorldGuardRegion(World w, String regionName) {
-        Map<String, ProtectedRegion> regions = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(w)).getRegions();
-        return regions.containsKey(regionName);
-    }
-
-    public String getRegionOwner(World w, String regionName) {
-        Set<String> ownerSet = new HashSet<>();
-        ownerSet = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(w))
-                .getRegion(regionName).getOwners().getPlayers();
-        if (ownerSet.isEmpty())
-            return "empty";
-        return ownerSet.toArray(new String[ownerSet.size()])[0];
     }
 }

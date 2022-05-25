@@ -1,11 +1,12 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
+import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
-
+ *
  */
 public class RSApi {
 
@@ -26,13 +27,13 @@ public class RSApi {
 	}
 
 	/**
-	 * Check if a player has permissions for commands.
+	 * Check if a sender has permissions for commands.
 	 *
 	 * @param sender  Who send this command.
 	 * @param cmd     Name command.
 	 * @param perm    Permission to check.
 	 * @param message return custom message for sender.
-	 * @return isSenderCommandsPermission if Sender can use commands.
+	 * @return if Sender can use commands.
 	 */
 	public boolean isSenderCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull IUtilPermissions perm, String message) {
 		if (!sender.hasPermission(perm.getPermissionName()) || !sender.isPermissionSet(perm.getPermissionName())) {
@@ -46,28 +47,84 @@ public class RSApi {
 	}
 
 	/**
-	 * Check if a player has permission for use TAB.
+	 * Check if a sender has permissions for commands.
+	 *
+	 * @param player  Who send this command.
+	 * @param cmd     Name command.
+	 * @param perm    Permission to check.
+	 * @param message return custom message for sender.
+	 * @return if Sender can use commands.
+	 */
+	public boolean isSenderCommandsPermission(@NotNull Player player, @NotNull Command cmd, @NotNull IUtilPermissions perm, String message) {
+		if (!player.hasPermission(perm.getPermissionName()) || !player.isPermissionSet(perm.getPermissionName())) {
+			if (message != null) {
+				player.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
+
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Check if a sender has permission for use TAB.
 	 *
 	 * @param sender Who send this command.
 	 * @param perm   Permission to check.
-	 * @return isAuthCommandsPermissionsOnTab if Sender can use TAB.
+	 * @return if Sender can use TAB.
 	 */
 	public boolean isSenderCommandsPermissionOnTab(@NotNull CommandSender sender, @NotNull IUtilPermissions perm) {
 		return sender.hasPermission(perm.getPermissionName()) && sender.isPermissionSet(perm.getPermissionName());
 	}
 
 	/**
-	 * Check if a player has permission for use Listener.
+	 * Check if a sender has permission for use Listener.
 	 *
 	 * @param sender  Who send this command.
 	 * @param perm    Permission to check.
 	 * @param message return custom message for sender.
-	 * @return isAuthListenerPermission if Sender can use Events.
+	 * @return if Sender can use Events.
 	 */
 	public boolean isSenderListenerPermission(@NotNull CommandSender sender, @NotNull IUtilPermissions perm, String message) {
 		if (!sender.hasPermission(perm.getPermissionName()) || !sender.isPermissionSet(perm.getPermissionName())) {
 			if (message != null) {
 				sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Check if a player has permission for use Listener.
+	 *
+	 * @param player  Who send this command.
+	 * @param perm    Permission to check.
+	 * @param message return custom message for sender.
+	 * @return if Sender can use Events.
+	 */
+	public boolean isSenderListenerPermission(@NotNull Player player, @NotNull IUtilPermissions perm, String message) {
+		if (!player.hasPermission(perm.getPermissionName()) || !player.isPermissionSet(perm.getPermissionName())) {
+			if (message != null) {
+				player.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Check if a entity has permission for use Listener.
+	 *
+	 * @param entity  Who send this command.
+	 * @param perm    Permission to check.
+	 * @param message return custom message for sender.
+	 * @return if Sender can use Events.
+	 */
+	public boolean isSenderListenerPermission(@NotNull Entity entity, @NotNull IUtilPermissions perm, String message) {
+		if (!entity.hasPermission(perm.getPermissionName()) || !entity.isPermissionSet(perm.getPermissionName())) {
+			if (message != null) {
+				entity.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
 			}
 			return false;
 		}
@@ -83,16 +140,16 @@ public class RSApi {
 	 * @param regionName    return region name, if player attempts to use command in region.
 	 */
 	public void notify(Player player, String playerName, String senderCommand, String regionName) {
-		if (wgRegionProtect.getUtilConfig().spyCommandNotifyAdmin
+		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdmin()
 				&& this.isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT_NOTIFY_ADMIN, null)) {
-			for (String cmd : wgRegionProtect.getUtilConfig().spyCommand) {
+			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())
-						&& wgRegionProtect.getUtilConfig().spyCommandNotifyAdminPlaySoundEnable) {
-					player.playSound(player.getLocation(), wgRegionProtect.getUtilConfig().spyCommandNotifyAdminPlaySound, 1, 1);
-					player.sendMessage(wgRegionProtect.getUtilConfigMessage().sendAdminInfoIfUsedCommandInRG
+						&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
+					player.playSound(player.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
+					player.sendMessage(Message.sendAdminInfoIfUsedCommandInRG.toString()
 							.replace("<player>", playerName)
 							.replace("<cmd>", cmd)
-							.replace("<rg>", regionName));
+							.replace("<region>", regionName));
 				}
 			}
 		}
@@ -106,10 +163,10 @@ public class RSApi {
 	 * @param regionName    return region name, if player attempts to use command in region.
 	 */
 	public void notify(String playerName, String senderCommand, String regionName) {
-		if (wgRegionProtect.getUtilConfig().spyCommandNotifyConsole) {
-			for (String cmd : wgRegionProtect.getUtilConfig().spyCommand) {
+		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyConsole()) {
+			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-					Bukkit.getConsoleSender().sendMessage(wgRegionProtect.getUtilConfigMessage().sendAdminInfoIfUsedCommandInRG
+					Bukkit.getConsoleSender().sendMessage(Message.sendAdminInfoIfUsedCommandInRG.toString()
 							.replace("<player>", playerName)
 							.replace("<cmd>", cmd)
 							.replace("<region>", regionName));
@@ -123,7 +180,6 @@ public class RSApi {
 	 *
 	 * @param admin       return message for admin who destroys region.
 	 * @param suspect     return object player for method.
-	 * @param time        return time if a region is broken of player.
 	 * @param suspectName return player name who's interacting with region.
 	 * @param action	  return type of Actions.
 	 * @param regionName  return region name.
@@ -132,11 +188,11 @@ public class RSApi {
 	 * @param z           return Z position of block.
 	 * @param world       return world position of block.
 	 */
-	public void notifyIfActionInRegion(Player admin, Player suspect, String time, String suspectName, Action action, String regionName, double x, double y, double z, String world) {
+	public void notifyIfActionInRegion(Player admin, Player suspect, String suspectName, RegionAction action, String regionName, double x, double y, double z, String world) {
 		if (this.isSenderListenerPermission(suspect, IUtilPermissions.SPY_INSPECT_FOR_SUSPECT, null)
-				&& wgRegionProtect.getUtilConfig().spyCommandNotifyAdmin) {
-				admin.sendMessage(wgRegionProtect.getUtilConfigMessage().sendAdminInfoIfActionInRegion
-						.replace("<time>", time).replace("<player>", suspectName)
+				&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdmin()) {
+				admin.sendMessage(Message.sendAdminInfoIfActionInRegion.toString()
+						.replace("<player>", suspectName)
 					.replace("<action>", action.getAction())
 					.replace("<region>", regionName)
 					.replace("<x>", String.valueOf(x))
@@ -184,10 +240,6 @@ public class RSApi {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy-HH-mm");
 		Date resultDate = new Date(System.currentTimeMillis());
 		return sdf.format(resultDate);
-	}
-
-	public String getProtectRegionName(Location loc) {
-		return wgRegionProtect.getRsRegion().getProtectRegion(loc);
 	}
 
 	public RSLogger getLogger() {

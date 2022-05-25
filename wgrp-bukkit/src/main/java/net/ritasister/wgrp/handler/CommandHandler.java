@@ -1,16 +1,14 @@
-package net.ritasister.wgrp.register;
+package net.ritasister.wgrp.handler;
 
 import net.ritasister.wgrp.command.CommandWGRP;
-import net.ritasister.wgrp.rslibs.api.interfaces.IRegisterCommand;
 import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 
 import java.util.Objects;
 
-public record RegisterCommand(WorldGuardRegionProtect wgRegionProtect) implements IRegisterCommand {
+public record CommandHandler(WorldGuardRegionProtect wgRegionProtect) {
 
-	@Override
-	public void registerCommand() {
+	public void commandHandler() {
 		try{
 			Objects.requireNonNull(wgRegionProtect.getWgrpBukkitPlugin().getCommand(UtilCommandList.WGRP.getCommand()))
 					.setExecutor(new CommandWGRP(wgRegionProtect));

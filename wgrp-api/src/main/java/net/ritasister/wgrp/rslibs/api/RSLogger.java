@@ -1,27 +1,27 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import net.ritasister.wgrp.rslibs.api.interfaces.IRSLogger;
-
 import java.io.File;
+import java.util.logging.Logger;
 
-public class RSLogger implements IRSLogger {
+public class RSLogger {
 
+	private final Logger ROOT_LOGGER_NAME = Logger.getLogger("WGRP");
 	private final ChatApi chatApi;
 
 	public RSLogger(ChatApi chatApi) {
 		this.chatApi=chatApi;
 	}
 
-	public void info(final String msg) {
-		ROOT_LOGGER_NAME.info(chatApi.getColorCode(msg));
+	public void info(final String message) {
+		ROOT_LOGGER_NAME.info(chatApi.getColorCode(message));
 	}
 
-	public void warn(final String msg) {
-		ROOT_LOGGER_NAME.warning(chatApi.getColorCode(msg));
+	public void warn(final String message) {
+		ROOT_LOGGER_NAME.warning(chatApi.getColorCode(message));
 	}
 
-	public void error(final String msg) {
-		ROOT_LOGGER_NAME.severe(chatApi.getColorCode(msg));
+	public void error(final String message) {
+		ROOT_LOGGER_NAME.severe(chatApi.getColorCode(message));
 	}
 
 	public void loadConfigMsgSuccess(final File fileName) {
