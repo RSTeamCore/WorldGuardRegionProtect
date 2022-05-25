@@ -63,8 +63,7 @@ public class RegionProtect implements Listener {
 				&& wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.SPY_INSPECT_ADMIN_LISTENER, null)) {
 			if(wgRegionProtect.spyLog.contains(uniqueId)) {
 				wgRegionProtect.getRsApi().notifyIfActionInRegion(
-						player, player, wgRegionProtect.getRsApi().getTime(),
-						playerName, RegionAction.BREAK, regionName,
+						player, player, playerName, RegionAction.BREAK, regionName,
 						block.getX(), block.getY(), block.getZ(), block.getWorld().getName());
 			}
 			if(wgRegionProtect.getUtilConfig().getConfig().getDataBaseEnable()) {
@@ -97,8 +96,7 @@ public class RegionProtect implements Listener {
 				&& wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.SPY_INSPECT_ADMIN_LISTENER, null)) {
 			if(wgRegionProtect.spyLog.contains(uniqueId)) {
 				wgRegionProtect.getRsApi().notifyIfActionInRegion(
-						player, player, wgRegionProtect.getRsApi().getTime(),
-						playerName, RegionAction.PLACE, regionName,
+						player, player, playerName, RegionAction.PLACE, regionName,
 						block.getX(), block.getY(), block.getZ(), block.getWorld().getName());
 			}
 			if(wgRegionProtect.getUtilConfig().getConfig().getDataBaseEnable()) {

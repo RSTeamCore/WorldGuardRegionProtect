@@ -47,6 +47,26 @@ public class RSApi {
 	}
 
 	/**
+	 * Check if a sender has permissions for commands.
+	 *
+	 * @param player  Who send this command.
+	 * @param cmd     Name command.
+	 * @param perm    Permission to check.
+	 * @param message return custom message for sender.
+	 * @return if Sender can use commands.
+	 */
+	public boolean isSenderCommandsPermission(@NotNull Player player, @NotNull Command cmd, @NotNull IUtilPermissions perm, String message) {
+		if (!player.hasPermission(perm.getPermissionName()) || !player.isPermissionSet(perm.getPermissionName())) {
+			if (message != null) {
+				player.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
+
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Check if a sender has permission for use TAB.
 	 *
 	 * @param sender Who send this command.
@@ -160,7 +180,6 @@ public class RSApi {
 	 *
 	 * @param admin       return message for admin who destroys region.
 	 * @param suspect     return object player for method.
-	 * @param time        return time if a region is broken of player.
 	 * @param suspectName return player name who's interacting with region.
 	 * @param action	  return type of Actions.
 	 * @param regionName  return region name.
@@ -169,11 +188,11 @@ public class RSApi {
 	 * @param z           return Z position of block.
 	 * @param world       return world position of block.
 	 */
-	public void notifyIfActionInRegion(Player admin, Player suspect, String time, String suspectName, RegionAction action, String regionName, double x, double y, double z, String world) {
+	public void notifyIfActionInRegion(Player admin, Player suspect, String suspectName, RegionAction action, String regionName, double x, double y, double z, String world) {
 		if (this.isSenderListenerPermission(suspect, IUtilPermissions.SPY_INSPECT_FOR_SUSPECT, null)
 				&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdmin()) {
 				admin.sendMessage(Message.sendAdminInfoIfActionInRegion.toString()
-						.replace("<time>", time).replace("<player>", suspectName)
+						.replace("<player>", suspectName)
 					.replace("<action>", action.getAction())
 					.replace("<region>", regionName)
 					.replace("<x>", String.valueOf(x))
