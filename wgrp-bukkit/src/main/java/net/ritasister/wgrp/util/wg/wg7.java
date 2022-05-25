@@ -128,7 +128,7 @@ public class wg7 implements Iwg {
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
     }
 
-    private @Nullable CuboidRegion getPyramidSelection(final Player player, final String... args) {
+    private @Nullable CuboidRegion getPyramidSelection(final Player player, final String @NotNull ... args) {
         if (args.length < 3) {
             return null;
         }
@@ -142,7 +142,7 @@ public class wg7 implements Iwg {
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
     }
 
-    private @Nullable CuboidRegion getSphereSelection(final Player player, final String... args) {
+    private @Nullable CuboidRegion getSphereSelection(final Player player, final String @NotNull ... args) {
         if (args.length < 3) {
             return null;
         }
