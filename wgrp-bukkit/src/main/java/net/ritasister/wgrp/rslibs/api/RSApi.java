@@ -6,6 +6,7 @@ import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,13 +27,13 @@ public class RSApi {
 	}
 
 	/**
-	 * Check if a player has permissions for commands.
+	 * Check if a sender has permissions for commands.
 	 *
 	 * @param sender  Who send this command.
 	 * @param cmd     Name command.
 	 * @param perm    Permission to check.
 	 * @param message return custom message for sender.
-	 * @return isSenderCommandsPermission if Sender can use commands.
+	 * @return if Sender can use commands.
 	 */
 	public boolean isSenderCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull IUtilPermissions perm, String message) {
 		if (!sender.hasPermission(perm.getPermissionName()) || !sender.isPermissionSet(perm.getPermissionName())) {
@@ -46,28 +47,64 @@ public class RSApi {
 	}
 
 	/**
-	 * Check if a player has permission for use TAB.
+	 * Check if a sender has permission for use TAB.
 	 *
 	 * @param sender Who send this command.
 	 * @param perm   Permission to check.
-	 * @return isAuthCommandsPermissionsOnTab if Sender can use TAB.
+	 * @return if Sender can use TAB.
 	 */
 	public boolean isSenderCommandsPermissionOnTab(@NotNull CommandSender sender, @NotNull IUtilPermissions perm) {
 		return sender.hasPermission(perm.getPermissionName()) && sender.isPermissionSet(perm.getPermissionName());
 	}
 
 	/**
-	 * Check if a player has permission for use Listener.
+	 * Check if a sender has permission for use Listener.
 	 *
 	 * @param sender  Who send this command.
 	 * @param perm    Permission to check.
 	 * @param message return custom message for sender.
-	 * @return isAuthListenerPermission if Sender can use Events.
+	 * @return if Sender can use Events.
 	 */
 	public boolean isSenderListenerPermission(@NotNull CommandSender sender, @NotNull IUtilPermissions perm, String message) {
 		if (!sender.hasPermission(perm.getPermissionName()) || !sender.isPermissionSet(perm.getPermissionName())) {
 			if (message != null) {
 				sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Check if a player has permission for use Listener.
+	 *
+	 * @param player  Who send this command.
+	 * @param perm    Permission to check.
+	 * @param message return custom message for sender.
+	 * @return if Sender can use Events.
+	 */
+	public boolean isSenderListenerPermission(@NotNull Player player, @NotNull IUtilPermissions perm, String message) {
+		if (!player.hasPermission(perm.getPermissionName()) || !player.isPermissionSet(perm.getPermissionName())) {
+			if (message != null) {
+				player.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Check if a entity has permission for use Listener.
+	 *
+	 * @param entity  Who send this command.
+	 * @param perm    Permission to check.
+	 * @param message return custom message for sender.
+	 * @return if Sender can use Events.
+	 */
+	public boolean isSenderListenerPermission(@NotNull Entity entity, @NotNull IUtilPermissions perm, String message) {
+		if (!entity.hasPermission(perm.getPermissionName()) || !entity.isPermissionSet(perm.getPermissionName())) {
+			if (message != null) {
+				entity.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
 			}
 			return false;
 		}
