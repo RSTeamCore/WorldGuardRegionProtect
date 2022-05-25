@@ -1,23 +1,19 @@
 #-------------------------------------------------------------
 # Basic settings of the plugin's messages.
-# Основные настройки сообщений плагина.
 #-------------------------------------------------------------
 
 langTitle:
-  #What language is localization written in?
-  language: en
-  #Author of this localization
+  # What language is localization written in?
+  language: english
+  # Author of this localization.
   author: RSTeamCore
-  #Version of this localization
+  # Version of this localization.
   version: 1.0
-  #Version of this plugin
-  pluginVersion: 0.0.0.0
 
 messages:
 
   #--------------------------------------------------------------------------------------
   # Main messages of the plugin.
-  # Основные сообщения плагина.
   #--------------------------------------------------------------------------------------
   wgrpMsg: '&8[&cWGRP&8] &aThis region is protect by server!'
   wgrpMsgWe: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
@@ -25,7 +21,6 @@ messages:
 
   #--------------------------------------------------------------------------------------
   # Notification of successful reloading of configuration files.
-  # Оповещение об успешной перезагрузки конфигурационных файлов.
   #--------------------------------------------------------------------------------------
   configReloaded: '&8[&cWGRP&8] &aFile &6config.yml &areload success!'
   configNotFound: '&8[&cWGRP&8] &cFile &6config.yml &cnot found, created new!'
@@ -34,14 +29,12 @@ messages:
 
   #--------------------------------------------------------------------------------------
   # Notification of the administration of the player's actions in the region or the use of the team in a protected region.
-  # Оповещение администрации о действиях игрока в регионе или использование команды в защищенном регионе.
   #--------------------------------------------------------------------------------------
   sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player> &ctrying to using command &5<cmd> &cin region: &3<region>'
   sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &e<player> &6<action> &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>'
 
   #--------------------------------------------------------------------------------------
   # Setting up the time plurals.
-  # Настройка множественного число времени.
   #--------------------------------------------------------------------------------------
   pluralDay1: 'day'
   pluralDay2: 'of the day'
@@ -65,6 +58,5 @@ messages:
 
   #--------------------------------------------------------------------------------------
   # An example of the use of the command can be changed.
-  # Пример использование команды можно изменить.
   #--------------------------------------------------------------------------------------
   wgrpUseHelp: '&aUse: &e/wgrp help'
