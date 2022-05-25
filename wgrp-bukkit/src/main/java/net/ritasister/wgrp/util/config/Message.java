@@ -32,11 +32,23 @@ public enum Message {
 
     private List<String> msg;
 
-    private boolean PAPI;
+    private static LangProperties langProperties;
+
+    private static boolean PAPI;
 
     @SuppressWarnings("unchecked")
-    public static void load(File file, boolean PAPIEnabled) {
-        FileConfiguration c = YamlConfiguration.loadConfiguration(file);
+    public static void load(WGRPBukkitPlugin plugin, String lang, boolean PAPIEnabled) {
+        FileConfiguration c = initLang(plugin, lang);
+        try {
+            String language = c.getString("langTitle.language");
+            String author = c.getString("langTitle.author");
+            String version = c.getString("langTitle.version");
+            String pluginVersion = c.getString("langTitle.pluginVersion");
+            langProperties = new LangProperties(language, author, version, pluginVersion);
+            if(langProperties.getLanguage() == null) lang = "en";
+        } catch (Throwable e) {
+            lang = "en";
+        }
         for(Message message : Message.values()) {
             message.PAPI = PAPIEnabled;
             boolean needRecover;
@@ -52,17 +64,53 @@ public enum Message {
             } catch (NullPointerException e) {
                 needRecover = true;
             }
-            if(needRecover) recover(file);
+            if(needRecover) recover(plugin, lang);
         }
     }
 
-    public static void recover(File file) {
-        FileConfiguration c = YamlConfiguration.loadConfiguration(file);
+    public static FileConfiguration initLang(WGRPBukkitPlugin plugin, String lang) {
+        File folder = new File(plugin.getDataFolder() + File.separator + "lang");
+        if(!folder.exists()) {
+            try {
+                folder.createNewFile();
+                folder.mkdir();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        File langFile = new File(plugin.getDataFolder() + "/lang/"  +
+                lang + ".yml");
+        if(!langFile.exists()) {
+            try {
+                langFile.createNewFile();
+                InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream("lang/" + lang +".yml");
+                try (FileOutputStream fos = new FileOutputStream(langFile)) {
+                    byte[] buf = new byte[2048];
+                    int r;
+                    while(-1 != (r = ddlStream.read(buf))) {
+                        fos.write(buf, 0, r);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return YamlConfiguration.loadConfiguration(langFile);
+    }
+
+
+    public static void recover(WGRPBukkitPlugin plugin, String lang) {
+        File langFile = new File(plugin.getDataFolder() + "/lang/" + lang + ".yml");
+        FileConfiguration c = YamlConfiguration.loadConfiguration(langFile);
         for(Message message : Message.values()) {
             boolean recover = false;
             String path = "messages." + message.name().replace("_", ".");
             try {
                 Object obj = c.get(path);
+                File tempFile = new File("cache_file");
                 if(obj == null) recover = true;
             } catch (Throwable e) {
                 recover = true;
@@ -75,7 +123,7 @@ public enum Message {
                 } catch (Throwable e) {
                     e.printStackTrace();
                 } try {
-                    InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream("messages.yml");
+                    InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream("lang/" + lang + ".yml");
                     try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                         byte[] buf = new byte[2048];
                         int r;
@@ -98,7 +146,8 @@ public enum Message {
                 c.set(path, value);
             }
         } try {
-            c.save(file);
+            c.save(langFile);
+            Message.load(plugin, lang, PAPI);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -183,6 +232,43 @@ public enum Message {
                 list.add(ChatColor.translateAlternateColorCodes('&', replacePlaceholders(s)));
             }
             return list;
+        }
+    }
+
+    public static LangProperties getLangProperties() {
+        return langProperties;
+    }
+
+    public static class LangProperties {
+        private final String language;
+
+        private final String author;
+
+        private final String version;
+
+        private final String pluginVersion;
+
+        public LangProperties(String language, String author, String version, String pluginVersion) {
+            this.language = language;
+            this.author = author;
+            this.version = version;
+            this.pluginVersion = pluginVersion;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public String getLanguage() {
+            return language;
+        }
+
+        public String getPluginVersion() {
+            return pluginVersion;
+        }
+
+        public String getVersion() {
+            return version;
         }
     }
 }

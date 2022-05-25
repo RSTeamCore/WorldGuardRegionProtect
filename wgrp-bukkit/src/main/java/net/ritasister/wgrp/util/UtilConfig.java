@@ -24,11 +24,11 @@ public class UtilConfig {
 	}
 
 	public void loadMessages(@NotNull WorldGuardRegionProtect wgRegionProtect) {
-		messages = new File(wgRegionProtect.getWgrpBukkitPlugin().getDataFolder() + File.separator + "messages.yml");
+		messages = new File(wgRegionProtect.getWgrpBukkitPlugin().getDataFolder() + File.separator + "lang/en.yml");
 		if(!messages.exists()) {
 			try {
 				messages.createNewFile();
-				InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream("messages.yml");
+				InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream("lang/en.yml");
 				try (FileOutputStream fos = new FileOutputStream(messages)) {
 					byte[] buf = new byte[2048];
 					int r;
@@ -44,7 +44,7 @@ public class UtilConfig {
 				throw new RuntimeException(e);
 			}
 		}
-		Message.load(messages, wgRegionProtect.getLoadLibs().PlaceholderAPIEnabled);
+		Message.load(wgRegionProtect.getWgrpBukkitPlugin(), config.getLang(), wgRegionProtect.getLoadLibs().PlaceholderAPIEnabled);
 	}
 
 	public Config getConfig() {

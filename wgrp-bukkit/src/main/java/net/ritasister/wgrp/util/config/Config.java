@@ -31,6 +31,8 @@ public class Config {
     private String spyCommandNotifyAdminPlaySound;
     private boolean spyCommandNotifyAdminPlaySoundEnable;
     private boolean databaseEnable;
+
+    private String lang;
     private MySQLSettings mysqlsettings;
 
     public Config(WorldGuardRegionProtect wgRegionProtect, FileConfiguration config) {
@@ -46,6 +48,7 @@ public class Config {
         config = wgRegionProtect.getWgrpBukkitPlugin().getConfig();
 
         try {
+            lang = config.getString("wg_region_protect.lang");
             regionProtect = (List<String>)config.getList("wg_region_protect.region_protect");
             regionProtectAllow = (List<String>)config.getList("wg_region_protect.region_protect_allow");
             regionProtectOnlyBreakAllow = (List<String>)config.getList("wg_region_protect.region_protect_only_break_allow");
@@ -280,6 +283,10 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getLogger().severe("Could not save config.yml! Error: " + e.getLocalizedMessage());
             e.printStackTrace();
         }
+    }
+
+    public String getLang() {
+        return lang;
     }
 
     public static class MySQLSettings {
