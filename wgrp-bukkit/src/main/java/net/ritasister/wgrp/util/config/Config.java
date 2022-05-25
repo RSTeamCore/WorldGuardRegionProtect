@@ -96,6 +96,7 @@ public class Config {
             try {
                 if(f.get(this.getClass()).equals(null)) {
                     switch (f.getName()) {
+                        case "lang" -> lang = "en";
                         case "regionProtect" -> regionProtect = List.of("spawn", "pvp");
                         case "regionProtectAllow" -> regionProtectAllow = new ArrayList<>();
                         case "regionProtectOnlyBreakAllow" -> regionProtectOnlyBreakAllow = new ArrayList<>();
@@ -279,6 +280,7 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.dataSource.maxLifetime", mysqlsettings.getMaxLifetime());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.dataSource.connectionTimeout", mysqlsettings.getConnectionTimeout());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.dataSource.intervalReload", mysqlsettings.getIntervalReload());
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wg_region_protect.lang", lang);
             wgRegionProtect.getWgrpBukkitPlugin().saveConfig();
         } catch (Exception e) {
             wgRegionProtect.getWgrpBukkitPlugin().getLogger().severe("Could not save config.yml! Error: " + e.getLocalizedMessage());
