@@ -146,12 +146,32 @@ public enum Message {
                 }
                 c.set(path, value);
             }
+
         } try {
             c.save(langFile);
-            Message.load(plugin, lang, PAPI);
+            updateValues(c);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean updateValues(FileConfiguration c) {
+        boolean result = false;
+            for(Message message : Message.values()) {
+                try {
+                    Object obj = c.get("messages." + message.name().replace("_", "."));
+                    if (obj instanceof List) {
+                        message.msg = (((List<String>) obj)).stream().map(m -> ChatColor.translateAlternateColorCodes('&', m)).collect(Collectors.toList());
+                    } else {
+                        message.msg = Lists.newArrayList(obj == null ? "" : ChatColor.translateAlternateColorCodes('&', obj.toString()));
+                    }
+                    result = message.msg == null || message.msg.equals("") || obj.equals(null);
+
+                } catch (NullPointerException e) {
+                    result = true;
+                }
+            }
+        return result;
     }
 
     public Sender replace(String from, String to) {
