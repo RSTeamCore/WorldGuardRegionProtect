@@ -172,13 +172,13 @@ public class RegionProtect implements Listener {
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtect())) {
 			if(!(attacker instanceof Player)) {
 				switch(entity.getType()) {
-					case ARMOR_STAND, ITEM_FRAME, GLOW_ITEM_FRAME, TROPICAL_FISH, AXOLOTL,
+					case ARMOR_STAND, ENDER_CRYSTAL, ITEM_FRAME, GLOW_ITEM_FRAME, TROPICAL_FISH, AXOLOTL,
 							TURTLE, FOX -> e.setCancelled(true);
 				}
 			} else if (!wgRegionProtect.getRsApi().isSenderListenerPermission(
 					(Player) attacker, IUtilPermissions.REGION_PROTECT, null)) {
 				switch(entity.getType()) {
-					case ARMOR_STAND, ITEM_FRAME, GLOW_ITEM_FRAME, TROPICAL_FISH, AXOLOTL,
+					case ARMOR_STAND, ENDER_CRYSTAL, ITEM_FRAME, GLOW_ITEM_FRAME, TROPICAL_FISH, AXOLOTL,
 							TURTLE, FOX -> e.setCancelled(true);
 				}
 			}
@@ -196,7 +196,7 @@ public class RegionProtect implements Listener {
 					case ITEM_FRAME, GLOW_ITEM_FRAME, PAINTING -> e.setCancelled(true);
 				}
 			} else if (!wgRegionProtect.getRsApi().isSenderListenerPermission(
-						(Player) attacker, IUtilPermissions.REGION_PROTECT, null)) {
+					(Player) attacker, IUtilPermissions.REGION_PROTECT, null)) {
 				switch(entity.getType()) {
 					case ITEM_FRAME, GLOW_ITEM_FRAME, PAINTING -> e.setCancelled(true);
 				}
@@ -217,6 +217,10 @@ public class RegionProtect implements Listener {
 						} else if (player.getInventory().getItemInMainHand().getType() == Material.GLOWSTONE
 								&& e.getClickedBlock() != null
 								&& e.getClickedBlock().getType() == Material.RESPAWN_ANCHOR) {
+							e.setCancelled(true);
+						} else if (player.getInventory().getItemInMainHand().getType() == Material.FLINT_AND_STEEL
+								&& e.getClickedBlock() != null
+								&& e.getClickedBlock().getType() == Material.TNT) {
 							e.setCancelled(true);
 						}
 					}
