@@ -90,7 +90,7 @@ public class Config {
 
         for(Field f : this.getClass().getFields()) {
             try {
-                if(f.get(this.getClass()) == null) {
+                if(f.get(this.getClass()).equals(null)) {
                     switch (f.getName()) {
                         case "regionProtect" -> regionProtect = List.of("spawn", "pvp");
                         case "regionProtectAllow" -> regionProtectAllow = new ArrayList<>();
