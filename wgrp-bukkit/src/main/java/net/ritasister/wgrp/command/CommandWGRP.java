@@ -29,8 +29,8 @@ public final class CommandWGRP extends CmdExecutor {
 	@Override
 	protected void run(CommandSender sender, Command cmd, String[] args) {
 		final boolean sp = sender instanceof Player;
-		/*if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission((Player)sender, cmd, IUtilPermissions.COMMAND_WGRP,
-				Message.noPerm.toString()))return; {}*/
+		if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission((Player)sender, cmd, IUtilPermissions.COMMAND_WGRP,
+				Message.noPerm.toString()))return; {}
 		if(args.length > 0) {
 			runCommand(sender, cmd, args);
 		}else{
