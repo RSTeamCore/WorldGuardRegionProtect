@@ -21,7 +21,7 @@ public class RSRegion implements IRSRegion {
      * @param location return location of object.
      * @param list return list of regions from WorldGuard.
      *
-     * @return checkStandingRegion return location of object.
+     * @return location of object.
      */
     @Override
     public boolean checkStandingRegion(@NotNull Location location, List<String> list) {
@@ -40,7 +40,7 @@ public class RSRegion implements IRSRegion {
      *
      * @param location return location of object.
      *
-     * @return checkStandingRegion return location of object.
+     * @return location of object.
      */
     @Override
     public boolean checkStandingRegion(@NotNull Location location) {
@@ -66,7 +66,7 @@ public class RSRegion implements IRSRegion {
      *
      * @param location return location of object.
      *
-     * @return getProtectRegionName return location of Object.
+     * @return location of Object.
      */
     public String getProtectRegion(@NotNull Location location) {
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
@@ -81,7 +81,7 @@ public class RSRegion implements IRSRegion {
      *
      * @param location return location of Object.
      *
-     * @return getApplicableRegions return location of Object.
+     * @return location of Object.
      */
     @Contract("_ -> new")
     private @NotNull ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
