@@ -21,6 +21,7 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.vehicle.VehicleDamageEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.jetbrains.annotations.NotNull;
@@ -118,7 +119,24 @@ public class RegionProtect implements Listener {
 		if(entity instanceof Player) {
 			if(wgRegionProtect.getRsRegion().checkStandingRegion(location)
 					&& !wgRegionProtect.getRsApi().isSenderListenerPermission(e.getEntity(), IUtilPermissions.REGION_PROTECT, null)) {
-				if(vehicle instanceof Minecart || vehicle instanceof  Boat) e.setCancelled(true);
+				if(wgRegionProtect.getUtilConfig().getConfig().getCollisionWithVehicle()) {
+					if (vehicle instanceof Minecart || vehicle instanceof Boat) e.setCancelled(true);
+				}
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.LOW)
+	private void denyVehicleEnter(@NotNull VehicleEnterEvent e) {
+		Entity vehicle = e.getVehicle();
+		Entity entered = e.getEntered();
+		final Location location = vehicle.getLocation();
+		if(entered instanceof Player) {
+			if(wgRegionProtect.getRsRegion().checkStandingRegion(location)
+					&& !wgRegionProtect.getRsApi().isSenderListenerPermission(entered, IUtilPermissions.REGION_PROTECT, null)) {
+				if(wgRegionProtect.getUtilConfig().getConfig().getCanSitAsPassengerInVehicle()) {
+					if (vehicle instanceof Minecart || vehicle instanceof Boat) e.setCancelled(true);
+				}
 			}
 		}
 	}
@@ -131,7 +149,9 @@ public class RegionProtect implements Listener {
 		if(attacker instanceof Player) {
 			if(wgRegionProtect.getRsRegion().checkStandingRegion(location)
 					&& !wgRegionProtect.getRsApi().isSenderListenerPermission(attacker, IUtilPermissions.REGION_PROTECT, null)) {
-				if(vehicle instanceof Minecart || vehicle instanceof  Boat) e.setCancelled(true);
+				if(wgRegionProtect.getUtilConfig().getConfig().getCanDamageVehicle()) {
+					if (vehicle instanceof Minecart || vehicle instanceof Boat) e.setCancelled(true);
+				}
 			}
 		}
 	}
@@ -141,8 +161,10 @@ public class RegionProtect implements Listener {
 		Player player = e.getPlayer();
 		Location location = e.getLectern().getLocation();
 		if (wgRegionProtect.getRsRegion().checkStandingRegion(location)) {
-			if(!wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null)) {
-				e.setCancelled(true);
+			if(wgRegionProtect.getUtilConfig().getConfig().getCanTakeLecternBook()) {
+				if (!wgRegionProtect.getRsApi().isSenderListenerPermission(player, IUtilPermissions.REGION_PROTECT, null)) {
+					e.setCancelled(true);
+				}
 			}
 		}
 	}
