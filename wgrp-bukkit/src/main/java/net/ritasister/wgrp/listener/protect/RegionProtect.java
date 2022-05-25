@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.vehicle.VehicleDamageEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.jetbrains.annotations.NotNull;
@@ -113,10 +114,23 @@ public class RegionProtect implements Listener {
 	private void denyVehicleCollision(@NotNull VehicleEntityCollisionEvent e) {
 		Entity entity = e.getEntity();
 		Entity vehicle = e.getVehicle();
-		final Location location = e.getEntity().getLocation();
+		final Location location = vehicle.getLocation();
 		if(entity instanceof Player) {
 			if(wgRegionProtect.getRsRegion().checkStandingRegion(location)
-					&& wgRegionProtect.getRsApi().isSenderListenerPermission(e.getEntity(), IUtilPermissions.REGION_PROTECT, null)) {
+					&& !wgRegionProtect.getRsApi().isSenderListenerPermission(e.getEntity(), IUtilPermissions.REGION_PROTECT, null)) {
+				if(vehicle instanceof Minecart || vehicle instanceof  Boat) e.setCancelled(true);
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.LOW)
+	private void denyVehicleDamage(@NotNull VehicleDamageEvent e) {
+		Entity vehicle = e.getVehicle();
+		Entity attacker = e.getAttacker();
+		final Location location = vehicle.getLocation();
+		if(attacker instanceof Player) {
+			if(wgRegionProtect.getRsRegion().checkStandingRegion(location)
+					&& !wgRegionProtect.getRsApi().isSenderListenerPermission(attacker, IUtilPermissions.REGION_PROTECT, null)) {
 				if(vehicle instanceof Minecart || vehicle instanceof  Boat) e.setCancelled(true);
 			}
 		}
