@@ -20,15 +20,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum Message {
-    wgrpMsg, wgrpMsgWe, wgrpUseHelp, noPerm,
-
-    configReloaded, configNotFound, configMsgReloaded,
-    configMsgNotFound, sendAdminInfoIfUsedCommandInRG, sendAdminInfoIfActionInRegion,
-
-    pluralDay1, pluralDay2, pluralDay3,
-    pluralHour1, pluralHour2, pluralHour3,
-    pluralMinute1, pluralMinute2, pluralMinute3, pluralMinute4,
-    pluralSecond1, pluralSecond2, pluralSecond3, pluralSecond4, pluralTimeEmpty;
+    ServerMsg_wgrpMsg, ServerMsg_wgrpMsgWe, ServerMsg_wgrpUseHelp, ServerMsg_noPerm,
+    Configs_configReloaded, Configs_configNotFound, Configs_configMsgNotFound,
+    Notify_sendAdminInfoIfUsedCommandInRG, Notify_sendAdminInfoIfActionInRegion,
+    PluralTime_day_pluralDay1, PluralTime_day_pluralDay2, PluralTime_day_pluralDay3,
+    PluralTime_hour_pluralHour1, PluralTime_hour_pluralHour2, PluralTime_hour_pluralHour3,
+    PluralTime_minute_pluralMinute1, PluralTime_minute_pluralMinute2,
+    PluralTime_minute_pluralMinute3, PluralTime_minute_pluralMinute4,
+    PluralTime_second_pluralSecond1, PluralTime_second_pluralSecond2,
+    PluralTime_second_pluralSecond3, PluralTime_second_pluralSecond4, PluralTime_timeEmpty_pluralTimeEmpty,
+    subCommands_reload, subCommands_about, subCommands_spy,
+    usage_format, usage_title;
 
     private List<String> msg;
 
@@ -36,36 +38,31 @@ public enum Message {
 
     private static boolean PAPI;
 
-    @SuppressWarnings("unchecked")
-    public static void load(WGRPBukkitPlugin plugin, String lang, boolean PAPIEnabled) {
-        FileConfiguration c = initLang(plugin, lang);
+    public static void load(WGRPBukkitPlugin wgrpBukkitPlugin, String lang, boolean PAPIEnabled) {
+        FileConfiguration c = initLang(wgrpBukkitPlugin, lang);
         try {
             String language = c.getString("langTitle.language");
             String author = c.getString("langTitle.author");
             String version = c.getString("langTitle.version");
             langProperties = new LangProperties(language, author, version);
             if(langProperties.getLanguage() == null) lang = "en";
+            wgrpBukkitPlugin.getSLF4JLogger().info("Loaded language: " + lang);
+            wgrpBukkitPlugin.getSLF4JLogger().info("Author of language: " + author);
+            wgrpBukkitPlugin.getSLF4JLogger().info("language version: " + version);
         } catch (Throwable e) {
             lang = "en";
         }
-        for(Message message : Message.values()) {
-            message.PAPI = PAPIEnabled;
-            boolean needRecover;
-            try {
-                Object obj = c.get("messages." + message.name().replace("_", "."));
-                if(obj instanceof List) {
-                    message.msg = (((List<String>) obj)).stream().map(m -> ChatColor.translateAlternateColorCodes('&', m)).collect(Collectors.toList());
-                } else {
-                    message.msg = Lists.newArrayList(obj == null ? "" : ChatColor.translateAlternateColorCodes('&', obj.toString()));
-                }
-                needRecover = message.msg == null || message.msg.equals("") || obj.equals(null);
-
-            } catch (NullPointerException e) {
-                needRecover = true;
-            }
-            if(needRecover) recover(plugin, lang);
-        }
+        PAPI = PAPIEnabled;
+        if(updateValues(c)) recover(wgrpBukkitPlugin, lang);
     }
+
+    /**
+     *a cmd vrode ne rabotayet
+     * сообщение появились
+     * я ща дебагер поставлю один и рестартани
+     * //restart?
+     *
+     */
 
     public static @NotNull FileConfiguration initLang(@NotNull WGRPBukkitPlugin plugin, String lang) {
         File folder = new File(
@@ -78,13 +75,12 @@ public enum Message {
                 throw new RuntimeException(e);
             }
         }
-
         File langFile = new File(
                 plugin.getDataFolder() + File.separator + "lang" + File.separator + lang + ".yml");
         if(!langFile.exists()) {
             try {
                 langFile.createNewFile();
-                InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream("lang/" + lang + ".yml");
+                InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream(lang + ".yml");
                 try (FileOutputStream fos = new FileOutputStream(langFile)) {
                     byte[] buf = new byte[2048];
                     int r;
@@ -123,8 +119,7 @@ public enum Message {
                 } catch (Throwable e) {
                     e.printStackTrace();
                 } try {
-                    InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream(
-                            "lang/" + lang + ".yml");
+                    InputStream ddlStream = WGRPBukkitPlugin.class.getClassLoader().getResourceAsStream(lang + ".yml");
                     try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                         byte[] buf = new byte[2048];
                         int r;
