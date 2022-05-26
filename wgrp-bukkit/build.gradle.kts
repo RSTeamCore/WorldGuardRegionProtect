@@ -47,7 +47,7 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             groupId = rootProject.group as String?
-            artifactId = "wgrp"
+            artifactId = "WorldGuardRegionProtect"
             version = rootProject.version as String?
 
             from(components["java"])
@@ -101,7 +101,7 @@ tasks.named<Jar>("jar") {
 
 tasks.named<ShadowJar>("shadowJar") {
     configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
-    archiveFileName.set("${project.name}-${project.version}.${archiveExtension.getOrElse("jar")}")
+    archiveFileName.set("${rootProject.name}-bukkit-${rootProject.version}.${archiveExtension.getOrElse("jar")}")
 
     dependencies {
         include(dependency(":wgrp-api"))
