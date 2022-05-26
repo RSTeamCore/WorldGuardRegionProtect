@@ -110,6 +110,15 @@ public class RegionProtect implements Listener {
 		}
 	}
 
+	@EventHandler(priority = EventPriority.NORMAL)
+	private void joinNeedUpdate(@NotNull PlayerJoinEvent e) {
+		Player player = e.getPlayer();
+		if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.PERMISSION_STAR, null)
+				&& e.getPlayer().isOp()) {
+			wgRegionProtect.getWgrpBukkitPlugin().checkUpdateNotifyPlayer(player);
+		}
+	}
+
 	@EventHandler(priority = EventPriority.LOW)
 	private void denyVehicleCollision(@NotNull VehicleEntityCollisionEvent e) {
 		Entity entity = e.getEntity();
