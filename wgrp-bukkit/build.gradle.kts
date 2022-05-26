@@ -18,10 +18,10 @@ repositories {
     maven ("https://repo.codemc.org/repository/maven-public/")
     //WorldGuard
     maven ("https://maven.enginehub.org/repo/")
-    //PaperMC
-    maven ("https://repo.papermc.io/repo/repository/maven-public/")
     //PlaceHolderAPI
     maven ("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    //PaperMC
+    maven ("https://repo.papermc.io/repo/repository/maven-public/")
     mavenCentral()
 }
 
@@ -101,7 +101,7 @@ tasks.named<Jar>("jar") {
 
 tasks.named<ShadowJar>("shadowJar") {
     configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
-    archiveFileName.set("${project.name}-${project.version}-SNAPSHOT.${archiveExtension.getOrElse("jar")}")
+    archiveFileName.set("${project.name}-${project.version}.${archiveExtension.getOrElse("jar")}")
 
     dependencies {
         include(dependency(":wgrp-api"))
