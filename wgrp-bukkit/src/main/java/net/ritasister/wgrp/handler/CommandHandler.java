@@ -1,10 +1,7 @@
 package net.ritasister.wgrp.handler;
 
-import net.ritasister.wgrp.command.CommandWGRP;
-import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-
-import java.util.Objects;
+import net.ritasister.wgrp.command.extend.CommandWGRP;
 
 public record CommandHandler(WorldGuardRegionProtect wgRegionProtect) {
 
