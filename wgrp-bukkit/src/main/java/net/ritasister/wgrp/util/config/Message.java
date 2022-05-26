@@ -55,15 +55,6 @@ public enum Message {
         PAPI = PAPIEnabled;
         if(updateValues(c)) recover(wgrpBukkitPlugin, lang);
     }
-
-    /**
-     *a cmd vrode ne rabotayet
-     * сообщение появились
-     * я ща дебагер поставлю один и рестартани
-     * //restart?
-     *
-     */
-
     public static @NotNull FileConfiguration initLang(@NotNull WGRPBukkitPlugin plugin, String lang) {
         File folder = new File(
                 plugin.getDataFolder() + File.separator + "lang" + File.separator);
@@ -147,6 +138,8 @@ public enum Message {
             throw new RuntimeException(e);
         }
     }
+
+    @SuppressWarnings("unchecked")
     public static boolean updateValues(FileConfiguration c) {
         boolean result = false;
             for(Message message : Message.values()) {
