@@ -3,6 +3,7 @@ package net.ritasister.wgrp;
 import net.ritasister.wgrp.rslibs.util.Metrics;
 import net.ritasister.wgrp.rslibs.util.UpdateChecker;
 import net.ritasister.wgrp.rslibs.datasource.Storage;
+import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WGRPBukkitPlugin extends JavaPlugin {
@@ -34,6 +35,14 @@ public final class WGRPBukkitPlugin extends JavaPlugin {
         } else {
             getWgRegionProtect().getRsApi().getLogger().info("This is the latest stable building.");
         }
+        getWgRegionProtect().getRsApi().getLogger().info(
+                String.format("""
+                        Using %s language version %s
+                        Author of this localization - %s
+                        """,
+                        Message.getLangProperties().getLanguage(),
+                        Message.getLangProperties().getVersion(),
+                        Message.getLangProperties().getAuthor()));
     }
 
     public void checkUpdate() {

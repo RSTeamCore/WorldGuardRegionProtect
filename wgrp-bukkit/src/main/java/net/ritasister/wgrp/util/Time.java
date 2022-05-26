@@ -16,42 +16,42 @@ public class Time {
                 output = String.valueOf(day);
                 output = output + " ";
                 output = output + StringUtils.formatPlural(day,
-                        Message.pluralDay1.toString(),
-                        Message.pluralDay2.toString(),
-                        Message.pluralDay3.toString());
+                        Message.PluralTime_day_pluralDay1.toString(),
+                        Message.PluralTime_day_pluralDay2.toString(),
+                        Message.PluralTime_day_pluralDay3.toString());
                 output = output + " ";
                 --depth;
             } if (hour > 0 && depth > 0) {
                 output = output + hour;
                 output = output + " ";
                 output = output + StringUtils.formatPlural(hour,
-                        Message.pluralHour1.toString(),
-                        Message.pluralHour2.toString(),
-                        Message.pluralHour3.toString());
+                        Message.PluralTime_hour_pluralHour1.toString(),
+                        Message.PluralTime_hour_pluralHour2.toString(),
+                        Message.PluralTime_hour_pluralHour3.toString());
                 output = output + " ";
                 --depth;
             } if (min > 0 && depth > 0) {
                 output = output + min;
                 output = output + " ";
                 output = output + StringUtils.formatPlural(min, accusative ?
-                                Message.pluralMinute1.toString() :
-                                Message.pluralMinute2.toString(),
-                        Message.pluralMinute3.toString(),
-                        Message.pluralMinute4.toString());
+                                Message.PluralTime_minute_pluralMinute1.toString() :
+                                Message.PluralTime_minute_pluralMinute2.toString(),
+                        Message.PluralTime_minute_pluralMinute3.toString(),
+                        Message.PluralTime_minute_pluralMinute4.toString());
                 output = output + " ";
                 --depth;
             } if (sec > 0 && depth > 0) {
                 output = output + sec;
                 output = output + " ";
                 output = output + StringUtils.formatPlural(sec, accusative ?
-                                Message.pluralSecond1.toString() :
-                                Message.pluralSecond2.toString(),
-                        Message.pluralSecond3.toString(),
-                        Message.pluralSecond4.toString());
+                                Message.PluralTime_second_pluralSecond1.toString() :
+                                Message.PluralTime_second_pluralSecond2.toString(),
+                        Message.PluralTime_second_pluralSecond3.toString(),
+                        Message.PluralTime_second_pluralSecond4.toString());
                 --depth;
             }
         } else {
-            output = Message.pluralTimeEmpty.toString();
+            output = Message.PluralTime_timeEmpty_pluralTimeEmpty.toString();
         }
         return output.trim();
     }

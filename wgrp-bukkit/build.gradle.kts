@@ -18,10 +18,10 @@ repositories {
     maven ("https://repo.codemc.org/repository/maven-public/")
     //WorldGuard
     maven ("https://maven.enginehub.org/repo/")
-    //PaperMC
-    maven ("https://repo.papermc.io/repo/repository/maven-public/")
     //PlaceHolderAPI
     maven ("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    //PaperMC
+    maven ("https://repo.papermc.io/repo/repository/maven-public/")
     mavenCentral()
 }
 
@@ -47,7 +47,7 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             groupId = rootProject.group as String?
-            artifactId = "wgrp"
+            artifactId = "WorldGuardRegionProtect"
             version = rootProject.version as String?
 
             from(components["java"])
@@ -101,7 +101,7 @@ tasks.named<Jar>("jar") {
 
 tasks.named<ShadowJar>("shadowJar") {
     configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
-    archiveFileName.set("${project.name}-${project.version}-SNAPSHOT.${archiveExtension.getOrElse("jar")}")
+    archiveFileName.set("${rootProject.name}-bukkit-${rootProject.version}.${archiveExtension.getOrElse("jar")}")
 
     dependencies {
         include(dependency(":wgrp-api"))

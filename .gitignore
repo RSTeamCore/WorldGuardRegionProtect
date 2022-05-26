@@ -31,3 +31,4 @@ out/
 /wgrp-bukkit/build
 /wgrp-bukkit/run
 /build/tmp/jar/MANIFEST.MF
+/build/libs/

@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 public record ListenerHandler(WorldGuardRegionProtect wgRegionProtect) {
 
 	public void listenerHandler(@NotNull PluginManager pluginManager) {
-		//RegionProtect
 		final RegionProtect regionProtect = new RegionProtect(wgRegionProtect);
 		pluginManager.registerEvents(regionProtect, wgRegionProtect.getWgrpBukkitPlugin());
 
