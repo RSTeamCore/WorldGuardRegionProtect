@@ -1,5 +1,6 @@
 package net.ritasister.wgrp.command;
 
+import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Message;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +14,7 @@ import java.lang.annotation.Target;
 public @interface SubCommand {
     String name();
 
-    @NotNull String permission() default "";
+    @NotNull UtilPermissions permission() default UtilPermissions.NULL_PERM;
 
     String[] aliases() default {};
 

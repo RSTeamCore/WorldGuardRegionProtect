@@ -17,7 +17,7 @@ public class CommandWGRP extends AbstractCommand {
     private final WorldGuardRegionProtect wgRegionProtect;
 
     public CommandWGRP(@NotNull WorldGuardRegionProtect wgRegionProtect) {
-        super(UtilCommandList.WGRP.toString(), wgRegionProtect.getWgrpBukkitPlugin());
+        super("wgregionprotect", wgRegionProtect);
         this.wgRegionProtect = wgRegionProtect;
     }
 

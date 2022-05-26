@@ -1,6 +1,7 @@
 package net.ritasister.wgrp.command;
 
-import net.ritasister.wgrp.WGRPBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.command.*;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +11,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 

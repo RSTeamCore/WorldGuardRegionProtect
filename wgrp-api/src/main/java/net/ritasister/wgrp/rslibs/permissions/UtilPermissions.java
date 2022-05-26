@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.permissions;
 
 public enum UtilPermissions {
 
+	NULL_PERM(""),
 	COMMAND_WGRP("wgrp.command.wgrpbase"),
 	COMMAND_WGRP_RELOAD_CONFIGS("wgrp.command.reload"),
 	COMMAND_SPY_INSPECT_ADMIN("wgrp.command.spy"),
