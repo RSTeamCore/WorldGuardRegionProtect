@@ -1,7 +1,6 @@
-package net.ritasister.wgrp.command.executor;
+package net.ritasister.wgrp.command;
 
 import net.ritasister.wgrp.WGRPBukkitPlugin;
-import net.ritasister.wgrp.command.executor.SubCommand;
 import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.command.*;
 import org.jetbrains.annotations.NotNull;
@@ -71,7 +70,8 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
                 if(isMustBeProcessed) {
                     if(!Objects.equals((sub.permission()), "")) {
-                        if(sender.hasPermission(sub.permission())) {
+                        if(sender.hasPermission(sub.permission())
+                            || sender.isPermissionSet(sub.permission())) {
                             try {
                                 m.invoke(this, sender, subArgs);
                                 break;
@@ -80,7 +80,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                             }
                         } else Message.ServerMsg_noPerm.send(sender);
                     } try {
-                        m.invoke(sender, (Object) subArgs);
+                        m.invoke(this, sender, subArgs);
                         break;
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         throw new RuntimeException(e);

@@ -1,8 +1,6 @@
 package net.ritasister.wgrp.command;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.command.executor.AbstractCommand;
-import net.ritasister.wgrp.command.executor.SubCommand;
 import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.Bukkit;

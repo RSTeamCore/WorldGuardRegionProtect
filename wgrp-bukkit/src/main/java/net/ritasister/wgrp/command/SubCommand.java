@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.command.executor;
+package net.ritasister.wgrp.command;
 
 import net.ritasister.wgrp.util.config.Message;
 import org.jetbrains.annotations.NotNull;
