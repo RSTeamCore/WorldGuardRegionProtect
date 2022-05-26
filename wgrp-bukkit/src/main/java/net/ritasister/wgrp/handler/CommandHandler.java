@@ -10,8 +10,8 @@ public record CommandHandler(WorldGuardRegionProtect wgRegionProtect) {
 
 	public void commandHandler() {
 		try{
-			Objects.requireNonNull(wgRegionProtect.getWgrpBukkitPlugin().getCommand(UtilCommandList.WGRP.getCommand()))
-					.setExecutor(new CommandWGRP(wgRegionProtect));
+			new CommandWGRP(wgRegionProtect);
+
 			wgRegionProtect.getRsApi().getLogger().info("&2All commands registered successfully!");
 		}catch(NullPointerException e) {
 			wgRegionProtect.getRsApi().getLogger().error("&cCommand cannot be &4null.");

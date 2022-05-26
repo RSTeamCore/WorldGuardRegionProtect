@@ -1,60 +1,46 @@
 package net.ritasister.wgrp.command;
 
-import net.ritasister.wgrp.rslibs.api.CmdExecutor;
-import net.ritasister.wgrp.rslibs.permissions.IUtilPermissions;
-import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.command.executor.AbstractCommand;
+import net.ritasister.wgrp.command.executor.SubCommand;
+import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
+import java.util.Objects;
+import java.util.UUID;
 
-import java.util.*;
+public class CommandWGRP extends AbstractCommand {
 
-public final class CommandWGRP extends CmdExecutor {
+    private final WorldGuardRegionProtect wgRegionProtect;
 
-	private final WorldGuardRegionProtect wgRegionProtect;
-	private final List<String> subCommand = List.of("reload", "help", "about", "spy");
+    public CommandWGRP(@NotNull WorldGuardRegionProtect wgRegionProtect) {
+        super(UtilCommandList.WGRP.toString(), wgRegionProtect.getWgrpBukkitPlugin());
+        this.wgRegionProtect = wgRegionProtect;
+    }
 
-	public CommandWGRP(WorldGuardRegionProtect wgRegionProtect) {
-		super(UtilCommandList.WGRP.toString());
-		this.wgRegionProtect=wgRegionProtect;
-	}
+    @SubCommand(
+            name = "reload",
+            description = Message.subCommands_reload,
+            permission = "wgrp.command.reload")
+    public void wgrpReload(@NotNull CommandSender sender, String[] args) {
+        long timeInitStart = System.currentTimeMillis();
 
-	@Override
-	protected void run(CommandSender sender, Command cmd, String[] args) {
-		final boolean sp = sender instanceof Player;
-		if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission((Player)sender, cmd, IUtilPermissions.COMMAND_WGRP,
-				Message.noPerm.toString()))return; {}
-		if(args.length > 0) {
-			runCommand(sender, cmd, args);
-		}else{
-			sender.sendMessage(Message.wgrpUseHelp.toString());
-		}
-	}
+        wgRegionProtect.getUtilConfig().getConfig().reload();
+        wgRegionProtect.getUtilConfig().loadMessages(wgRegionProtect);
 
-	private void runCommand(@NotNull CommandSender sender, Command cmd, String @NotNull [] args) {
-		final boolean sp = sender instanceof Player;
-		if (args[0].equalsIgnoreCase("reload")) {
-			wgRegionProtect.getUtilConfig().getConfig().reload();
-			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configReloaded.toString()));
-			wgRegionProtect.getUtilConfig().loadMessages(wgRegionProtect);
-			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(Message.configMsgReloaded.toString()));
-		} if(args[0].equalsIgnoreCase("help")) {
-			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode("""
-									&8[&cWGRP&8] &aCommand list:
-									&a/wgrp reload -&e reload the configuration files
-									&a/wgrp help -&e general help on the plugin and commands.
-									&a/wgrp about -&6 very useful information here!
-									&a/wgrp spy - enable or disable spying for log who interact with region.
-									"""));
-		} if(args[0].equalsIgnoreCase("about")) {
-			sender.sendMessage(wgRegionProtect.getChatApi().getColorCode("""
+        long timeReload = (System.currentTimeMillis() - timeInitStart);
+        Message.Configs_configReloaded.replace("<time>", String.valueOf(timeReload)).send(sender);
+    }
+
+    @SubCommand(
+            name = "about",
+            aliases = {"credits", "authors"},
+            description = Message.subCommands_about,
+            permission = "wgrp.command.wgrpbase")
+    public void wgrpAbout(@NotNull CommandSender sender, String[] args) {
+        sender.sendMessage(wgRegionProtect.getChatApi().getColorCode("""
 									&b=======================================================================
 									&aHi! If you need help from this plugin, you can contact with me on:
 									&e https://www.spigotmc.org/resources/wgRegionProtect-1-12.81333/
@@ -63,28 +49,81 @@ public final class CommandWGRP extends CmdExecutor {
 									&aso you can create issues on github:&e https://github.com/RSTeamCore/WorldGuardRegionProtect
 									&6your welcome!
 									"""));
-		} if(sp && wgRegionProtect.getRsApi().isSenderCommandsPermission((Player)sender, cmd, IUtilPermissions.SPY_INSPECT_ADMIN_COMMAND,
-				Message.noPerm.toString()))return; {
-			if(args[0].equalsIgnoreCase("spy")) {
-				@NotNull UUID uniqueId = Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getUniqueId();
-				if (wgRegionProtect.spyLog.contains(uniqueId)) {
-					wgRegionProtect.spyLog.remove(uniqueId);
-					sender.sendMessage("You are disable spy logging!");
-				} else {
-					wgRegionProtect.spyLog.add(uniqueId);
-					sender.sendMessage("You are enable spy logging!");
-				}
-			}
-		}
-	}
+    }
 
-	@Override
-	public List<String> onTabComplete(CommandSender sender, Player player, Command cmd, String label, String @NotNull [] args) {
-		if (args.length == 1 && wgRegionProtect.getRsApi().isSenderCommandsPermissionOnTab(sender, IUtilPermissions.COMMAND_WGRP)) {
-			return wgRegionProtect.getRsApi().isSenderCommandsPermissionOnTab(sender, IUtilPermissions.COMMAND_WGRP) && sender instanceof Player ?
-					StringUtil.copyPartialMatches(args[0], subCommand, new ArrayList<>()) : new ArrayList<>();
-		}else{
-			return Collections.emptyList();
-		}
-	}
+    @SubCommand(
+            name = "spy",
+            description = Message.subCommands_spy,
+            permission = "wgrp.command.spy.admin")
+    public void wgrpSpy(@NotNull CommandSender sender, String[] args) {
+        @NotNull UUID uniqueId = Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getUniqueId();
+        if (wgRegionProtect.spyLog.contains(uniqueId)) {
+            wgRegionProtect.spyLog.remove(uniqueId);
+            sender.sendMessage("You are disable spy logging!");
+        } else {
+            wgRegionProtect.spyLog.add(uniqueId);
+            sender.sendMessage("You are enable spy logging!");
+        }
+    }
+
+    /*
+    @Override //рефлексия - такое дерьмо :)
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
+        if(args.length == 0 || args[0].equalsIgnoreCase("help")) {
+            ArrayList<String> messages = new ArrayList<>(Message.usage_title.replace("%command%", command.getName()).toList());
+            for (Method m : this.getClass().getDeclaredMethods()) {
+                if (m.isAnnotationPresent(SubCommand.class)) {
+                    SubCommand sub = m.getAnnotation(SubCommand.class);
+                    messages.addAll(Message.usage_format.replace("%command%", command.getName()).replace("%alias%", sub.name()).
+                            replace("%description%", sub.description().toString()).toList());
+                }
+            }
+            for(String message : messages) {
+                sender.sendMessage(message);
+            }
+        } else for (Method m : this.getClass().getDeclaredMethods()) {
+            if (m.isAnnotationPresent(SubCommand.class)) {
+                SubCommand sub = m.getAnnotation(SubCommand.class);
+
+                boolean isMustBeProcessed = false;
+
+                if(args[0].equalsIgnoreCase(sub.name())) {
+                    isMustBeProcessed = true;
+                } else {
+                    for(String alias : sub.aliases()) {
+                        if (args[0].equalsIgnoreCase(alias)) {
+                            isMustBeProcessed = true;
+                            break;
+                        }
+                    }
+                }
+
+                String[] subArgs = {};
+                if(args.length > 1) subArgs = Arrays.copyOfRange(args, 1, args.length-1);
+
+
+                if(isMustBeProcessed) {
+                    if(!Objects.equals(sub.permission(), "")) {
+                        if(sender.hasPermission(sub.permission())) {
+                            try {
+                                m.invoke(this, sender, subArgs);
+                                break;
+                            } catch (IllegalAccessException | InvocationTargetException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else Message.ServerMsg_noPerm.send(sender);
+                    }
+                    try {
+                        m.invoke(sender, (Object) subArgs);
+                        break;
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+     */
 }
