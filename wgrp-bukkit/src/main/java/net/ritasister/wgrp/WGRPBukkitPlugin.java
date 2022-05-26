@@ -4,6 +4,7 @@ import net.ritasister.wgrp.rslibs.util.Metrics;
 import net.ritasister.wgrp.rslibs.util.UpdateChecker;
 import net.ritasister.wgrp.rslibs.datasource.Storage;
 import net.ritasister.wgrp.util.config.Message;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WGRPBukkitPlugin extends JavaPlugin {
@@ -57,9 +58,32 @@ public final class WGRPBukkitPlugin extends JavaPlugin {
                 getWgRegionProtect().getRsApi().getLogger().info("&eThere is a new version update available.");
                 getWgRegionProtect().getRsApi().getLogger().info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", getWgRegionProtect().getPluginVersion()));
                 getWgRegionProtect().getRsApi().getLogger().info("&3New version: &b<new_pl_ver>".replace("<new_pl_ver>", version));
-                getWgRegionProtect().getRsApi().getLogger().info("&eDownload new version here:");
+                getWgRegionProtect().getRsApi().getLogger().info("&ePlease, download new version here:");
                 getWgRegionProtect().getRsApi().getLogger().info("&ehttps://www.spigotmc.org/resources/81321/");
                 getWgRegionProtect().getRsApi().getLogger().info("&6==============================================");
+            }
+        });
+    }
+
+    public void checkUpdateNotifyPlayer(Player player) {
+        new UpdateChecker(this, 81321).getVersion(version -> {
+            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+                player.sendMessage(String.format(wgRegionProtect.getChatApi().getColorCode("""
+                &e======&8[&cWorldGuardRegionProtect&8]&e======
+                          &6Current version: &b%s
+                       &6You are using the latest version.
+                &e===================================
+                """), version));
+            }else{
+                player.sendMessage(String.format(wgRegionProtect.getChatApi().getColorCode("""
+                &e========&8[&cWorldGuardRegionProtect&8]&e========
+                &6 There is a new version update available.
+                &c        Current version: &4%s
+                &3          New version: &b%s
+                &6   Please, download new version here
+                &6 https://www.spigotmc.org/resources/81321/
+                &e=======================================
+                """), getWgRegionProtect().getPluginVersion(), version));
             }
         });
     }
