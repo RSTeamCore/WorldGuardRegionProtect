@@ -14,8 +14,8 @@ import java.util.Objects;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
-    public AbstractCommand(String command, @NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {
-        PluginCommand pluginCommand = wgrpBukkitPlugin.getCommand(command);
+    public AbstractCommand(String command, @NotNull WorldGuardRegionProtect wgRegionProtect) {
+        PluginCommand pluginCommand = wgRegionProtect.getWgrpBukkitPlugin().getCommand(command);
         if(pluginCommand != null) {
             pluginCommand.setExecutor(this);
             pluginCommand.setTabCompleter(this);
@@ -37,7 +37,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
-        if(args.length == 0 || args[0].equalsIgnoreCase("help")) {
+        if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
             ArrayList<String> messages = new ArrayList<>(Message.usage_title.replace("%command%", command.getName()).toList());
             for (Method m : this.getClass().getDeclaredMethods()) {
                 if (m.isAnnotationPresent(SubCommand.class)) {
@@ -45,8 +45,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                     messages.addAll(Message.usage_format.replace("%command%", command.getName()).replace("%alias%", sub.name()).
                             replace("%description%", sub.description().toString()).toList());
                 }
-            }
-            for(String message : messages) {
+            } for (String message : messages) {
                 sender.sendMessage(message);
             }
         } else for (Method m : this.getClass().getDeclaredMethods()) {
@@ -55,10 +54,10 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
                 boolean isMustBeProcessed = false;
 
-                if(args[0].equalsIgnoreCase(sub.name())) {
+                if (args[0].equalsIgnoreCase(sub.name())) {
                     isMustBeProcessed = true;
                 } else {
-                    for(String alias : sub.aliases()) {
+                    for (String alias : sub.aliases()) {
                         if (args[0].equalsIgnoreCase(alias)) {
                             isMustBeProcessed = true;
                             break;
@@ -66,12 +65,10 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                     }
                 }
                 String[] subArgs = {};
-                if(args.length > 1) subArgs = Arrays.copyOfRange(args, 1, args.length-1);
-
-                if(isMustBeProcessed) {
-                    if(!Objects.equals((sub.permission()), "")) {
-                        if(sender.hasPermission(sub.permission())
-                            || sender.isPermissionSet(sub.permission())) {
+                if (args.length > 1) subArgs = Arrays.copyOfRange(args, 1, args.length - 1);
+                if (isMustBeProcessed) {
+                    if (!sub.permission().equals(UtilPermissions.NULL_PERM)) {
+                        if (sender.hasPermission(sub.permission().getPermissionName()))  {
                             try {
                                 m.invoke(this, sender, subArgs);
                                 break;
@@ -79,7 +76,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                                 throw new RuntimeException(e);
                             }
                         } else Message.ServerMsg_noPerm.send(sender);
-                    } try {
+                    } else try {
                         m.invoke(this, sender, subArgs);
                         break;
                     } catch (IllegalAccessException | InvocationTargetException e) {
