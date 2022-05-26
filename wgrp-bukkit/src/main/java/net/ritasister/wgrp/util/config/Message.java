@@ -96,8 +96,6 @@ public enum Message {
         }
         return YamlConfiguration.loadConfiguration(langFile);
     }
-
-
     public static void recover(@NotNull WGRPBukkitPlugin plugin, String lang) {
         File langFile = new File(
                 plugin.getDataFolder() + File.separator + "lang" + File.separator + lang + ".yml");
@@ -149,7 +147,6 @@ public enum Message {
             throw new RuntimeException(e);
         }
     }
-
     public static boolean updateValues(FileConfiguration c) {
         boolean result = false;
             for(Message message : Message.values()) {
@@ -173,11 +170,9 @@ public enum Message {
         Sender sender = new Sender();
         return sender.replace(from, to);
     }
-
     public void send(CommandSender player) {
         new Sender().send(player);
     }
-
     @Override
     public @NotNull String toString() {
         StringBuilder str = new StringBuilder();
@@ -186,7 +181,6 @@ public enum Message {
         }
         return ChatColor.translateAlternateColorCodes('&', str.toString());
     }
-
     public @NotNull List<String> toList() {
         ArrayList<String> result = new ArrayList<>();
         for(String m : msg) {
@@ -194,29 +188,24 @@ public enum Message {
         }
         return result;
     }
-
     public class Sender {
         private final Map<String, String> placeholders = new HashMap<>();
-
         public void send(CommandSender player) {
-            if(PAPI && player instanceof Player) {
-                for(String message : Message.this.msg) {
+            if (PAPI && player instanceof Player) {
+                for (String message : Message.this.msg) {
                     Player p = ((Player) player).getPlayer();
                     sendMessage(player, PlaceholderAPI.setPlaceholders(p, replacePlaceholders(message)));
                 }
             } else {
-                for(String message : Message.this.msg) {
+                for (String message : Message.this.msg) {
                     sendMessage(player, replacePlaceholders(message));
                 }
             }
-
         }
-
         public Sender replace(String from, String to) {
             placeholders.put(from, to);
             return this;
         }
-
         private void sendMessage(CommandSender player, @NotNull String message) {
             if(message.startsWith("json:")) {
                 final TextComponent textComponent = Component.text(message.substring(5));
@@ -225,14 +214,12 @@ public enum Message {
                 player.sendMessage(message);
             }
         }
-
         private String replacePlaceholders(String message) {
             for(Map.Entry<String, String> entry : placeholders.entrySet()) {
                 message = message.replace(entry.getKey(), entry.getValue());
             }
             return message;
         }
-
         @Override
         public String toString() {
             StringBuilder str = new StringBuilder();
@@ -241,7 +228,6 @@ public enum Message {
             }
             return ChatColor.translateAlternateColorCodes('&', str.toString());
         }
-
         public List<String> toList() {
             ArrayList<String> list = new ArrayList<>();
             for(String s : Message.this.msg) {
@@ -250,24 +236,20 @@ public enum Message {
             return list;
         }
     }
-
     public static LangProperties getLangProperties() {
         return langProperties;
     }
-
     public static class LangProperties {
         private final String language;
 
         private final String author;
 
         private final String version;
-
         public LangProperties(String language, String author, String version) {
             this.language = language;
             this.author = author;
             this.version = version;
         }
-
         public String getAuthor() {
             return author;
         }
