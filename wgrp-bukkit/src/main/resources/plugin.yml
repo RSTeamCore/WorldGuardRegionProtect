@@ -8,6 +8,27 @@ description: Protect your region on the server.
 website: 'https://github.com/RSTeamCore/WorldGuardRegionProtect'
 api-version: 1.18
 load: STARTUP
+
+permissions:
+  wgrp.admin:
+    description: All permissions of this plugin
+    children:
+      - wgrp.command.wgrpbase
+      - wgrp.command.reload
+      - wgrp.regionprotect
+      - wgrp.notify.admin
+  wgrp.*:
+    description: Alias for wgrp.admin
+  wgrp.command.wgrpbase:
+    description: Access for /wgrp command
+  wgrp.command.reload:
+    description: Access for /wgrp reload command
+  wgrp.regionprotect:
+    description: Bypass region protect
+  wgrp.notify.admin:
+    description: See notifies for admins
+
 commands:
-  worldguardregionprotect:
-   aliases: [wgrp]
+  wgregionprotect:
+    aliases: [wgrp]
+    description: "WGRP Command - main command of WGRP plugin."
