@@ -1,44 +1,20 @@
 ---
-#-------------------------------------------------------------
-#Basic settings of the plugin's messages.
-#-------------------------------------------------------------
 langTitle:
-  #-------------------------------------------------------------
-  #What language is localization written in?
-  #-------------------------------------------------------------
   language: english
-  #-------------------------------------------------------------
-  #Author of this localization.
-  #-------------------------------------------------------------
   author: RSTeamCore
-  #-------------------------------------------------------------
-  #Version of this localization.
-  #-------------------------------------------------------------
   version: 1.0
 messages:
-  #--------------------------------------------------------------------------------------
-  #Main messages of the plugin.
-  #--------------------------------------------------------------------------------------
   ServerMsg:
     wgrpMsg: '&8[&cWGRP&8] &aThis region is protect by server!'
     wgrpMsgWe: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
-    noPerm: '&cYou don''t have permissions to use this command.'
-  #--------------------------------------------------------------------------------------
-  #Notification of successful reloading of configuration files.
-  #--------------------------------------------------------------------------------------
-  Configs:
-    configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
-    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml &cnot found, created new!'
-    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml &cnot found, created new!'
-  #--------------------------------------------------------------------------------------
-  #Notification of the administration of the player's actions in the region or the use of the team in a protected region.
-  #--------------------------------------------------------------------------------------
+    noPerm: '&cYou don''t have permission to use this command!'
+Configs:
+  configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
+  configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
+  configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml&c not found, created new!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player> &ctrying to using command &5<cmd> &cin region: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &e<player> &6<action> &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>'
-  #--------------------------------------------------------------------------------------
-  #Setting up the time plurals.
-  #--------------------------------------------------------------------------------------
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player>&c trying to using command &5<cmd>&c in region: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &e<player> &6<action>&c block in region: &3<region>&c Location &3<x> <y> <z> <world>'
   PluralTime:
     day:
       pluralDay1: 'day'
@@ -60,21 +36,12 @@ messages:
       pluralSecond4: 'seconds'
     timeEmpty:
       pluralTimeEmpty: '0 second'
-  #--------------------------------------------------------------------------------------
-  #An example of the use of the command can be changed.
-  #--------------------------------------------------------------------------------------
   ExampleUseCommand:
     wgrpUseHelp: '&aUse: &e/wgrp help'
-  #--------------------------------------------------------------------------------------
-  #Invalid usage messages.
-  #--------------------------------------------------------------------------------------
   usage:
-    title: '&8[&cWGRP&8] &eUsage for command &6%command% '
+    title: '&8[&cWGRP&8]&e Usage for command &6%command% '
     format: '&a&e/%command% %alias% -&e %description%'
     invalidUsage: 'Incorrect use of a command! Write /wgrp help, to see a list of commands.'
-  #--------------------------------------------------------------------------------------
-  #Descriptions of subCommands.
-  #--------------------------------------------------------------------------------------
   subCommands:
     reload: 'Reload configuration files.'
     about: 'Seeing info about authors'
