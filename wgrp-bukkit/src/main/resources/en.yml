@@ -11,12 +11,12 @@ messages:
 
 Configs:
     configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
-    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml &cnot found, created new!'
-    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml &cnot found, created new!'
+    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
+    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml&c not found, created new!'
 
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player> &ctrying to using command &5<cmd> &cin region: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &e<player> &6<action> &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player>&c trying to using command &5<cmd>&c in region: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &e<player> &6<action>&c block in region: &3<region>&c Location &3<x> <y> <z> <world>'
 
   PluralTime:
     day:
@@ -48,7 +48,7 @@ Configs:
     wgrpUseHelp: '&aUse: &e/wgrp help'
 
   usage:
-    title: '&8[&cWGRP&8] &eUsage for command &6%command% '
+    title: '&8[&cWGRP&8]&e Usage for command &6%command% '
     format: '&a&e/%command% %alias% -&e %description%'
     invalidUsage: 'Incorrect use of a command! Write /wgrp help, to see a list of commands.'
 

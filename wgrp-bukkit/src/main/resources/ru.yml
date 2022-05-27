@@ -11,12 +11,12 @@ messages:
 
   Configs:
     configReloaded: '&8[&cWGRP&8] &aВсе файлы плагина перезагружены за <time> мс!'
-    configNotFound: '&8[&cWGRP&8] &cФайл &6config.yml &cnot found, created new!'
-    configMsgNotFound: '&8[&cWGRP&8] &cФайл &6messages.yml &cnot found, created new!'
+    configNotFound: '&8[&cWGRP&8] &cФайл &6config.yml&c not found, created new!'
+    configMsgNotFound: '&8[&cWGRP&8] &cФайл &6messages.yml&c not found, created new!'
 
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cВнимание! &e<player> &cпопытался использовать &5<cmd> &cв регионе: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cВнимание! &e<player> &6<action> &cблок в регионе: &3<region> &cКоординаты &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cВнимание! &e<player>&c попытался использовать &5<cmd>&c в регионе: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cВнимание! &e<player> &6<action>&c блок в регионе: &3<region>&c Координаты &3<x> <y> <z> <world>'
 
   PluralTime:
     day:
