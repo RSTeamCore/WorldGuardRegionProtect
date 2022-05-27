@@ -7,7 +7,7 @@ messages:
   ServerMsg:
     wgrpMsg: '&8[&cWGRP&8] &aThis region is protect by server!'
     wgrpMsgWe: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
-    noPerm: '&cYou don''t have permission to use this command!'
+    noPerm: '&cYou don''t have permissions to use this command.'
 Configs:
   configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
   configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
