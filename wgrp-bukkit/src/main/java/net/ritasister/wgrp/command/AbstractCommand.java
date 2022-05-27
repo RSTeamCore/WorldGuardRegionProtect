@@ -37,17 +37,8 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
-        if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
-            ArrayList<String> messages = new ArrayList<>(Message.usage_title.replace("%command%", command.getName()).toList());
-            for (Method m : this.getClass().getDeclaredMethods()) {
-                if (m.isAnnotationPresent(SubCommand.class)) {
-                    SubCommand sub = m.getAnnotation(SubCommand.class);
-                    messages.addAll(Message.usage_format.replace("%command%", command.getName()).replace("%alias%", sub.name()).
-                            replace("%description%", sub.description().toString()).toList());
-                }
-            } for (String message : messages) {
-                sender.sendMessage(message);
-            }
+        if (args.length == 0) {
+            Message.usage_invalidUsage.send(sender);
         } else for (Method m : this.getClass().getDeclaredMethods()) {
             if (m.isAnnotationPresent(SubCommand.class)) {
                 SubCommand sub = m.getAnnotation(SubCommand.class);
