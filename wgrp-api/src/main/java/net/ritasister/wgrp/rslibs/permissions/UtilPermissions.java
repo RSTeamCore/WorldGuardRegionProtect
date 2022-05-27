@@ -11,6 +11,8 @@ public enum UtilPermissions {
 	COMMAND_ADDREGION("wgrp.command.addregion"),
 	COMMAND_REMOVEREGION("wgrp.command.removeregion"),
 
+	COMMAND_ADDREGION("wgrp.addregion"),
+
 	//Listeners permission
 	REGION_PROTECT("wgrp.regionprotect"),
 	REGION_PROTECT_NOTIFY_ADMIN("wgrp.notify.admin"),
