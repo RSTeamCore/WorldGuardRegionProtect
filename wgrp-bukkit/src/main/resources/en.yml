@@ -11,8 +11,6 @@ messages:
 
   Configs:
     configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
-    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
-    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml&c not found, created new!'
 
   Notify:
     sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player>&c trying to using command &5<cmd>&c in region: &3<region>'
