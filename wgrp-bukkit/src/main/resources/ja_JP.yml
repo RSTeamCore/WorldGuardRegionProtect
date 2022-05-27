@@ -1,80 +1,47 @@
 ---
-#-------------------------------------------------------------
-#Basic settings of the plugin's messages.
-#-------------------------------------------------------------
 langTitle:
-  #-------------------------------------------------------------
-  #What language is localization written in?
-  #-------------------------------------------------------------
   language: 日本語
-  #-------------------------------------------------------------
-  #Author of this localization.
-  #-------------------------------------------------------------
   author: RSTeamコア
-  #-------------------------------------------------------------
-  #Version of this localization.
-  #-------------------------------------------------------------
   version: 1.0
 messages:
-  #--------------------------------------------------------------------------------------
-  #Main messages of the plugin.
-  #--------------------------------------------------------------------------------------
   ServerMsg:
     wgrpMsg: '&8[&cWGRP&8] &aこのリージョンはサーバーによって保護されています！'
     wgrpMsgWe: '&8[&cWGRP&8] &cWorldEditコマンドはここでは使用できません！'
     noPerm: 'このコマンドを使用する権限がありません。'
-  #--------------------------------------------------------------------------------------
-  #Notification of successful reloading of configuration files.
-  #--------------------------------------------------------------------------------------
-  Configs:
-    configReloaded: '&8[&cWGRP&8] &a <time> msですべてのファイルが再読み込みされました！'
-    configNotFound: '&8[&cWGRP&8] &cファイル &6config.yml &cが見つかりませんでした。'
-    configMsgNotFound: '&8[&cWGRP&8] &cファイル &6messages.yml &cが見つかりませんでした。'
-  #--------------------------------------------------------------------------------------
-  #Notification of the administration of the player's actions in the region or the use of the team in a protected region.
-  #--------------------------------------------------------------------------------------
+Configs:
+  configReloaded: '&8[&cWGRP&8] &a <time> msですべてのファイルが再読み込みされました！'
+  configNotFound: '&8[&cWGRP&8] &cファイル &6config.yml&c が見つかりません。新規作成しました！'
+  configMsgNotFound: '&8[&cWGRP&8] &cファイル &6messages.yml&c が見つかりません。新規作成しました！'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &c注意! &e<player> &cコマンド&5<cmd> &c領域: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &e<player> &6<action> &cブロックリージョン: &3<region> &cLocation &3<x> <y> <z> <world>'
-  #--------------------------------------------------------------------------------------
-  #Setting up the time plurals.
-  #--------------------------------------------------------------------------------------
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &c注意! &e<player>&c コマンド&5<cmd>&c リージョン: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8] &c注意！&e<player> &6<action>&c ブロックリージョン: &3<region>&c ロケーション&3<x> <y> <z> <world>'
   PluralTime:
     day:
       pluralDay1: '日'
       pluralDay2: '日の'
       pluralDay3: '日'
     hour:
-      pluralHour1: '時間'
-      pluralHour2: '時間'
-      pluralHour3: '時間'
+      pluralHour1: 'hour'
+      pluralHour2: 'hours'
+      pluralHour3: 'hours'
     minute:
-      pluralMinute1: '分'
-      pluralMinute2: '分'
-      pluralMinute3: '分'
-      pluralMinute4: '分'
+      pluralMinute1: 'minute'
+      pluralMinute2: 'minute'
+      pluralMinute3: 'minutes'
+      pluralMinute4: 'minutes'
     second:
-      pluralSecond1: '秒'
-      pluralSecond2: '秒'
-      pluralSecond3: '秒間'
-      pluralSecond4: '秒間'
+      pluralSecond1: 'second'
+      pluralSecond2: 'second'
+      pluralSecond3: 'seconds'
+      pluralSecond4: 'seconds'
     timeEmpty:
-      pluralTimeEmpty: '0 秒'
-  #--------------------------------------------------------------------------------------
-  #An example of the use of the command can be changed.
-  #--------------------------------------------------------------------------------------
+      pluralTimeEmpty: '0 second'
   ExampleUseCommand:
     wgrpUseHelp: '&aUse: &e/wgrp help'
-  #--------------------------------------------------------------------------------------
-  #Invalid usage messages.
-  #--------------------------------------------------------------------------------------
   usage:
-    title: '&8[&cWGRP&8] &eコマンド &6%command% の使い方 '
+    title: '&8[&cWGRP&8]&e コマンド &6%command% の使用法 '
     format: '&a&e/%command% %alias% -&e %description%'
     invalidUsage: 'コマンドの使用方法が正しくありません！/wgrp ヘルプを書いて、コマンドのリストを表示します。'
-  #--------------------------------------------------------------------------------------
-  #Descriptions of subCommands.
-  #--------------------------------------------------------------------------------------
   subCommands:
     reload: '設定ファイル群をリロードします'
     about: '著者に関する情報を見る'
