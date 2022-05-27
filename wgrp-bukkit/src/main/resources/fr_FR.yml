@@ -1,48 +1,38 @@
 ---
-langTitle:
-  language: french
-  author: RSTeamCore
-  version: 1.0
-messages:
-  ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8] &aCette région est protégée par le serveur !'
-    wgrpMsgWe: '&8[&cWGRP&8] &cVous ne pouvez pas utiliser la commande WorldEdit ici !'
-    noPerm: '&cVous n''êtes pas autorisé à utiliser cette commande.'
-  Configs:
-    configReloaded: '&8[&cWGRP&8] &aTous les fichiers rechargés à <time> ms!'
-    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
-    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml&c not found, created new!'
-  Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention ! &e<player>&c en essayant d''utiliser la commande &5<cmd>&c dans la région : &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention ! &e<player> &6<action>&c bloc dans la région : &3<region>&c Localisation &3<x> <y> <z> <world>'
-  PluralTime:
-    day:
-      pluralDay1: 'jour'
-      pluralDay2: 'du jour'
-      pluralDay3: 'jours'
-    hour:
-      pluralHour1: 'heure'
-      pluralHour2: 'heures'
-      pluralHour3: 'heures'
-    minute:
-      pluralMinute1: 'minute'
-      pluralMinute2: 'minute'
-      pluralMinute3: 'minutes'
-      pluralMinute4: 'minutes'
-    second:
-      pluralSecond1: 'seconde'
-      pluralSecond2: 'seconde'
-      pluralSecond3: 'secondes'
-      pluralSecond4: 'secondes'
-    timeEmpty:
-      pluralTimeEmpty: '0 secondes'
-  ExampleUseCommand:
-    wgrpUseHelp: '&aExemple: &e/wgrp aider'
-  usage:
-    title: '&8[&cWGRP&8]&e Utilisation pour la commande &6%command% '
-    format: '&a&e/%command% %alias% -&e %description%'
-    invalidUsage: 'Utilisation incorrecte d''une commande ! Écrivez /wgrp aide, pour voir une liste de commandes.'
-  subCommands:
-    reload: 'Recharge la configuration.'
-    about: 'Voir les informations sur les auteurs'
-    spy: 'Très bientôt...'
+name: WorldGuardRegionProtect
+authors:
+  - RitaSister
+  - IRedTea
+version: '${internalVersion}'
+main: net.ritasister.wgrp.WGRPBukkitPlugin
+depend:
+  - WorldGuard
+softdepend:
+  - PlaceholderAPI
+description: Protect your region on the server.
+website: 'https://github.com/RSTeamCore/WorldGuardRegionProtect'
+api-version: 1.18
+load: STARTUP
+permissions:
+  wgrp.admin:
+    description: All permissions of this plugin
+    children:
+      - wgrp.command.wgrpbase
+      - wgrp.command.reload
+      - wgrp.regionprotect
+      - wgrp.notify.admin
+  wgrp.*:
+    description: Alias for wgrp.admin
+  wgrp.command.wgrpbase:
+    description: Access for /wgrp command
+  wgrp.command.reload:
+    description: Access for /wgrp reload command
+  wgrp.regionprotect:
+    description: Bypass region protect
+  wgrp.notify.admin:
+    description: See notifies for admins
+commands:
+  wgregionprotect:
+    aliases:
+      - wgrp
+    description: "WGRP Command - main command of WGRP plugin."
