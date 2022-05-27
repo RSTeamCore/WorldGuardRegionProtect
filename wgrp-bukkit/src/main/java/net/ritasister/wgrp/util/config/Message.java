@@ -29,8 +29,11 @@ public enum Message {
     PluralTime_minute_pluralMinute3, PluralTime_minute_pluralMinute4,
     PluralTime_second_pluralSecond1, PluralTime_second_pluralSecond2,
     PluralTime_second_pluralSecond3, PluralTime_second_pluralSecond4, PluralTime_timeEmpty_pluralTimeEmpty,
-    subCommands_reload, subCommands_about, subCommands_spy,
-    usage_format, usage_title;
+    subCommands_reload, subCommands_about, subCommands_spy, subCommands_addregion, subCommands_removeregion,
+    subCommands_help,
+    usage_format, usage_title, usage_invalidUsage,
+    regionManagement_add, regionManagement_remove, regionManagement_notContains
+    ;
 
     private List<String> msg;
 

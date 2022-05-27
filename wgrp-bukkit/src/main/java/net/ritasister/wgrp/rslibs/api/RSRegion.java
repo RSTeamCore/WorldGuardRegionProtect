@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,15 +20,15 @@ public class RSRegion implements IRSRegion {
      * Check access in standing region by player used region name from config.yml.
      *
      * @param location return location of object.
-     * @param list return list of regions from WorldGuard.
+     * @param regions return maps of regions from WorldGuard.
      *
      * @return location of object.
      */
     @Override
-    public boolean checkStandingRegion(@NotNull Location location, List<String> list) {
+    public boolean checkStandingRegion(@NotNull Location location, HashMap<String, List<String>> regions) {
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         for (ProtectedRegion protectedRegion : applicableRegionSet) {
-            for (String regionName : list) {
+            for (String regionName : regions.get(location.getWorld().getName())) {
                 if (protectedRegion.getId().equalsIgnoreCase(regionName)) {
                     return true;
                 }
@@ -49,10 +50,10 @@ public class RSRegion implements IRSRegion {
     }
 
     @Override
-    public boolean checkStandingRegion(World world, @NotNull Location location, List<String> list) {
+    public boolean checkStandingRegion(World world, @NotNull Location location, HashMap<String, List<String>> regions) {
         final ApplicableRegionSet set = this.getApplicableRegions(location);
         for (final ProtectedRegion rg : set) {
-            for (String regionName : list) {
+            for (String regionName : regions.get(world.getName())) {
                 if (rg.getId().equalsIgnoreCase(regionName)) {
                     return true;
                 }

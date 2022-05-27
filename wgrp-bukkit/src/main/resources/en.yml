@@ -46,7 +46,7 @@ messages:
     wgrpUseHelp: '&aUse: &e/wgrp help'
 
   usage:
-    title: '&8[&cWGRP&8]&e Usage for command &6%command% '
+    title: '&8[&cWGRP&8]&e Usage for commands '
     format: '&a&e/%command% %alias% -&e %description%'
     invalidUsage: 'Incorrect use of a command! Write /wgrp help, to see a list of commands.'
 
@@ -54,3 +54,11 @@ messages:
     reload: 'Reload configuration files.'
     about: 'Seeing info about authors'
     spy: 'Coming soon...'
+    addregion: 'Add region into config'
+    removeregion: 'Remove region from config'
+    help: 'Help command'
+
+  regionManagement:
+    add: "region <region> added to config"
+    remove: "region <region> removed to config"
+    notContains: "could not remove region from protect list! region <region> is not protected!"

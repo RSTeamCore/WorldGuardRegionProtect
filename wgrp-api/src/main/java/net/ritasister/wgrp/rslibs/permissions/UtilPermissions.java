@@ -9,6 +9,8 @@ public enum UtilPermissions {
 	COMMAND_WGRP_RELOAD_CONFIGS("wgrp.command.reload"),
 	COMMAND_SPY_INSPECT_ADMIN("wgrp.command.spy"),
 
+	COMMAND_ADDREGION("wgrp.addregion"),
+
 	//Listeners permission
 	REGION_PROTECT("wgrp.regionprotect"),
 	REGION_PROTECT_NOTIFY_ADMIN("wgrp.notify.admin"),
