@@ -47,10 +47,10 @@ public class wg7 implements Iwg {
         } catch (IncompleteRegionException e) {
             e.printStackTrace();
         }
-        return this.checkIntersection(sel);
+        return this.checkIntersection(sel, player);
     }
 
-    private boolean checkIntersection(final Region sel) {
+    private boolean checkIntersection(final Region sel, Player p) {
         if (sel instanceof CuboidRegion) {
             final BlockVector3 min = sel.getMinimumPoint();
             final BlockVector3 max = sel.getMaximumPoint();
@@ -60,14 +60,14 @@ public class wg7 implements Iwg {
             assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) {
-                for (final Object region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtect()) {
+                for (final Object region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap().get(p.getWorld().getName())) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }
                 }
             }
             for (final ProtectedRegion rg : set) {
-                for (final Object region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow()) {
+                for (final Object region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow().get(p.getWorld().getName())) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }
@@ -81,31 +81,31 @@ public class wg7 implements Iwg {
     @Override
     public boolean checkCIntersection(final Player player, final String... args) {
         final Region sel = this.getCylSelection(player, args);
-        return this.checkIntersection(sel);
+        return this.checkIntersection(sel, player);
     }
 
     @Override
     public boolean checkPIntersection(final Player player, final String... args) {
         final Region sel = this.getPyramidSelection(player, args);
-        return this.checkIntersection(sel);
+        return this.checkIntersection(sel, player);
     }
 
     @Override
     public boolean checkSIntersection(final Player player, final String... args) {
         final Region sel = this.getSphereSelection(player, args);
-        return this.checkIntersection(sel);
+        return this.checkIntersection(sel, player);
     }
 
     @Override
     public boolean checkUIntersection(final Player player, final String... args) {
         final Region sel = this.getUpSelection(player, args);
-        return this.checkIntersection(sel);
+        return this.checkIntersection(sel, player);
     }
 
     @Override
     public boolean checkCPIntersection(final Player player, final String... args) {
         final Region sel = this.getPasteSelection(player, args);
-        return this.checkIntersection(sel);
+        return this.checkIntersection(sel, player);
     }
 
     @Contract("_, _ -> new")
