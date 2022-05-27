@@ -22,7 +22,7 @@ messages:
   ServerMsg:
     wgrpMsg: '&8[&cWGRP&8] &aThis region is protect by server!'
     wgrpMsgWe: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
-    noPerm: '&cYou don''t have permission to use this command.'
+    noPerm: '&cYou don''t have permissions to use this command.'
   #--------------------------------------------------------------------------------------
   #Notification of successful reloading of configuration files.
   #--------------------------------------------------------------------------------------
