@@ -17,10 +17,16 @@ permissions:
       - wgrp.command.reload
       - wgrp.regionprotect
       - wgrp.notify.admin
+      - wgrp.command.addregion
+      - wgrp.command.removeregion
   wgrp.*:
     description: Alias for wgrp.admin
   wgrp.command.wgrpbase:
     description: Access for /wgrp command
+  wgrp.command.addregion:
+    description: Access for /wgrp addregion
+  wgrp.command.removeregion:
+    description: Access for /wgrp removeregion
   wgrp.command.reload:
     description: Access for /wgrp reload command
   wgrp.regionprotect:
