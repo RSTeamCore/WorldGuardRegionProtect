@@ -8,6 +8,7 @@
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/releases"><img src="https://img.shields.io/github/release/RitaSister/WorldGuardRegionProtect.svg" alt="Current Release"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/graphs/contributors"><img src="https://img.shields.io/github/contributors/RitaSister/WorldGuardRegionProtect.svg" alt="Contributors"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>
+<a title="Crowdin" target="_blank" href="https://crowdin.com/project/worldguardregionprotect"><img src="https://badges.crowdin.net/worldguardregionprotect/localized.svg"></a>
 
 <p align="center"><a href="https://discord.com/invite/kvqvA3GTVF"><img src="https://discordapp.com/api/guilds/918677001479540787/embed.png" alt="Discord embed"></a>
 </p>
