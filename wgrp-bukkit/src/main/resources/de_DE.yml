@@ -1,38 +1,48 @@
 ---
-name: WorldGuardRegionProtect
-authors:
-  - RitaSister
-  - IRedTea
-version: '${internalVersion}'
-main: net.ritasister.wgrp.WGRPBukkitPlugin
-depend:
-  - WorldGuard
-softdepend:
-  - PlaceholderAPI
-description: Protect your region on the server.
-website: 'https://github.com/RSTeamCore/WorldGuardRegionProtect'
-api-version: 1.18
-load: STARTUP
-permissions:
-  wgrp.admin:
-    description: All permissions of this plugin
-    children:
-      - wgrp.command.wgrpbase
-      - wgrp.command.reload
-      - wgrp.regionprotect
-      - wgrp.notify.admin
-  wgrp.*:
-    description: Alias for wgrp.admin
-  wgrp.command.wgrpbase:
-    description: Access for /wgrp command
-  wgrp.command.reload:
-    description: Access for /wgrp reload command
-  wgrp.regionprotect:
-    description: Bypass region protect
-  wgrp.notify.admin:
-    description: See notifies for admins
-commands:
-  wgregionprotect:
-    aliases:
-      - wgrp
-    description: "WGRP Command - main command of WGRP plugin."
+langTitle:
+  language: deutsch
+  author: RSTeamKern
+  version: 1.0
+messages:
+  ServerMsg:
+    wgrpMsg: '&8[&cWGRP&8] &aDiese Region ist vom Server geschützt!'
+    wgrpMsgWe: '&8[&cWGRP&8] &cSie können WorldEdit hier nicht benutzen!'
+    noPerm: 'Du hast keine Berechtigung, diesen Befehl zu verwenden.'
+  Configs:
+    configReloaded: '&8[&cWGRP&8] &aAlle Dateien neu geladen unter <time> ms!'
+    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
+    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml&c not found, created new!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAchtung! &e<player>&c versucht Befehl &5<cmd>&c in der Region zu verwenden: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAchtung! &e<player> &6<action>&c Block in der Region: &3<region>&c Standort &3<x> <y> <z> <world>'
+  PluralTime:
+    day:
+      pluralDay1: 'day'
+      pluralDay2: 'of the day'
+      pluralDay3: 'days'
+    hour:
+      pluralHour1: 'hour'
+      pluralHour2: 'hours'
+      pluralHour3: 'hours'
+    minute:
+      pluralMinute1: 'minute'
+      pluralMinute2: 'minute'
+      pluralMinute3: 'minutes'
+      pluralMinute4: 'minutes'
+    second:
+      pluralSecond1: 'second'
+      pluralSecond2: 'second'
+      pluralSecond3: 'seconds'
+      pluralSecond4: 'seconds'
+    timeEmpty:
+      pluralTimeEmpty: '0 second'
+  ExampleUseCommand:
+    wgrpUseHelp: '&Grundierung: &e/wgrp Hilfe'
+  usage:
+    title: '&8[&cWGRP&8]&e Verwendung für Befehl &6%command% '
+    format: '&a&e/%command% %alias% -&e %description%'
+    invalidUsage: 'Falsche Verwendung eines Befehls! Schreiben Sie /wgrp, um eine Liste von Befehlen zu sehen.'
+  subCommands:
+    reload: 'Ladet die Konfigurations Dateien neu.'
+    about: 'Informationen über Autoren anzeigen'
+    spy: 'Demnächst...'
