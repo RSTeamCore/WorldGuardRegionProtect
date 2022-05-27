@@ -1,38 +1,48 @@
 ---
-name: WorldGuardRegionProtect
-authors:
-  - RitaSister
-  - IRedTea
-version: '${internalVersion}'
-main: net.ritasister.wgrp.WGRPBukkitPlugin
-depend:
-  - WorldGuard
-softdepend:
-  - PlaceholderAPI
-description: Protect your region on the server.
-website: 'https://github.com/RSTeamCore/WorldGuardRegionProtect'
-api-version: 1.18
-load: STARTUP
-permissions:
-  wgrp.admin:
-    description: All permissions of this plugin
-    children:
-      - wgrp.command.wgrpbase
-      - wgrp.command.reload
-      - wgrp.regionprotect
-      - wgrp.notify.admin
-  wgrp.*:
-    description: Alias for wgrp.admin
-  wgrp.command.wgrpbase:
-    description: Access for /wgrp command
-  wgrp.command.reload:
-    description: Access for /wgrp reload command
-  wgrp.regionprotect:
-    description: Bypass region protect
-  wgrp.notify.admin:
-    description: See notifies for admins
-commands:
-  wgregionprotect:
-    aliases:
-      - wgrp
-    description: "WGRP Command - main command of WGRP plugin."
+langTitle:
+  language: русский
+  author: RSTeamCore
+  version: 1.0
+messages:
+  ServerMsg:
+    wgrpMsg: '&8[&cWGRP&8] &aЭтот регион защищён сервером!'
+    wgrpMsgWe: '&8[&cWGRP&8] &cЗдесь нельзя использовать команду WorldEdit!'
+    noPerm: '&cУ вас нет разрешения на использование этой команды.'
+  Configs:
+    configReloaded: '&8[&cWGRP&8] &aВсе файлы перезагружены за <time> мс!'
+    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
+    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml&c not found, created new!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cВнимание! &e<player>&c пытается использовать команду &5<cmd>&c в регионе: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cВнимание! &e<player> &6<action>блок в регионе: &3<region>&c Расположение &3<x> <y> <z> <world>'
+  PluralTime:
+    day:
+      pluralDay1: 'день'
+      pluralDay2: 'день'
+      pluralDay3: 'дней'
+    hour:
+      pluralHour1: 'час'
+      pluralHour2: 'часы'
+      pluralHour3: 'часов'
+    minute:
+      pluralMinute1: 'минута'
+      pluralMinute2: 'минут'
+      pluralMinute3: 'минуты'
+      pluralMinute4: 'минут'
+    second:
+      pluralSecond1: 'секунда'
+      pluralSecond2: 'секунд'
+      pluralSecond3: 'секунды'
+      pluralSecond4: 'секунды'
+    timeEmpty:
+      pluralTimeEmpty: '0 секунд'
+  ExampleUseCommand:
+    wgrpUseHelp: '&aИспользовать: &e/wgrp help'
+  usage:
+    title: '&8[&cWGRP&8]&e Использование команд &6%command% '
+    format: '&a&е/%command% %alias% -&e %description%'
+    invalidUsage: 'Неправильное использование команды! Напишите /wgrp help, чтобы увидеть список команд.'
+  subCommands:
+    reload: 'Перезагружает конфигурационные файлы.'
+    about: 'Увидеть информацию об авторах'
+    spy: 'Ожидается в ближайшее время...'
