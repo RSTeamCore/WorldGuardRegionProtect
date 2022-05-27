@@ -1,0 +1,48 @@
+---
+langTitle:
+  language: українська
+  author: RSTeamCore
+  version: 1.0
+messages:
+  ServerMsg:
+    wgrpMsg: '&8[&cWGRP&8] &a цей регіон захищено сервером!'
+    wgrpMsgWe: '&8[&cWGRP&8] &сВи не можете використовувати команду WorldEdit тут!'
+    noPerm: 'У вас недостатньо прав для виконання цієї команди.'
+  Configs:
+    configReloaded: '&8[&cWGRP&8] &aВсі файли перезавантажено за <time> мс!'
+    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
+    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml&c not found, created new!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cУвага! &e<player>&c намагається використовувати команду &5<cmd>&c в регіоні: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cУвага! &e<player> &6<action>&c блок в регіоні &3<region>&c Місцезнаходження &3<x> <y> <z> <world>'
+  PluralTime:
+    day:
+      pluralDay1: 'день'
+      pluralDay2: 'дня'
+      pluralDay3: 'днів'
+    hour:
+      pluralHour1: 'годин'
+      pluralHour2: 'години'
+      pluralHour3: 'години'
+    minute:
+      pluralMinute1: 'хвилина'
+      pluralMinute2: 'хвилина'
+      pluralMinute3: 'хвилини'
+      pluralMinute4: 'хвилини'
+    second:
+      pluralSecond1: 'секунд'
+      pluralSecond2: 'секунд'
+      pluralSecond3: 'секунди'
+      pluralSecond4: 'секунди'
+    timeEmpty:
+      pluralTimeEmpty: '0 секунд'
+  ExampleUseCommand:
+    wgrpUseHelp: '&aВикористання: &e/wgrp'
+  usage:
+    title: '&8[&cWGRP&8]&e Використання для команди &6%command% '
+    format: '&a&е/%command% %alias% -&е %description%'
+    invalidUsage: 'Неправильне використання команди! Пишіть /wgrp, щоб переглянути список команд.'
+  subCommands:
+    reload: 'Перезавантажує файл конфіґурації.'
+    about: 'Перегляд інформації про авторів.'
+    spy: 'Найближчим часом...'
