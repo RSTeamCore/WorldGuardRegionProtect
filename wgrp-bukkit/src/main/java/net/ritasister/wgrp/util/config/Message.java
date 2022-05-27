@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public enum Message {
     ServerMsg_wgrpMsg, ServerMsg_wgrpMsgWe, ServerMsg_wgrpUseHelp, ServerMsg_noPerm,
-    Configs_configReloaded, Configs_configNotFound, Configs_configMsgNotFound,
+    Configs_configReloaded,
     Notify_sendAdminInfoIfUsedCommandInRG, Notify_sendAdminInfoIfActionInRegion,
     PluralTime_day_pluralDay1, PluralTime_day_pluralDay2, PluralTime_day_pluralDay3,
     PluralTime_hour_pluralHour1, PluralTime_hour_pluralHour2, PluralTime_hour_pluralHour3,
