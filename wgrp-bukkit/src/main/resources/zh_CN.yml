@@ -1,34 +1,232 @@
 ---
-langTitle:
-  language: 汉语
-  author: RSTeamCore
-  version: 1.0
-messages:
-  ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8]&a 此区域是由服务器保护的!'
-    wgrpMsgWe: '&8[&cWGRP&8]&c 你不能在这里使用世界编辑命令！'
-    noPerm: '您没有使用此命令的权限。'
-  regionManagement:
-    add: "&e 区域&6<region>&a 添加到配置。"
-    remove: "&c区域&6<region>&c 已从配置中删除。"
-    notContains: "&c无法从保护列表中移除区域，因为&6<region> &cis 未受保护！"
-    invalidWorld: "&cWorld &6<world>&c 未找到。您确定输入的世界名称正确吗？"
-    invalidRegion: "&c区域&6<region>&c 未找到。您确定输入了正确的区域名称吗？"
-  Configs:
-    configReloaded: '&8[&cWGRP&8] &a所有文件重新加载于 <time> 毫秒!'
-  Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8]&cAttention! &e<player>&c 正在尝试使用区域命令 &5<cmd>&c: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8]&c Attention! &e<player> &6<action>&c 区域块: &3<region>&c 位置 &3<x> <y> <z> <world>'
-  usage:
-    title: '&8[&cWGRP&8]&3 命令使用 &6/%command%'
-    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
-    wgrpUseHelp: '&a使用方法：&e/wgrp help - &6查看命令列表。'
-    addRegionFromConsole: '&aUsage: &e/wgrp addregion &2[region] [world]'
-    removeRegionFromConsole: '&aUsage: &e/wgrp removeregion &2[region] [world]'
-  subCommands:
-    reload: '重新加载配置文件。'
-    about: '查看有关作者的信息。'
-    spy: '为谁与区域交互的间谍。'
-    help: '用于查看帮助。'
-    addRegion: '将区域添加到配置以保护。'
-    removeRegion: '从配置中移除该区域以移除保护。'
+#-------------------------------------------------------------
+#Basic configuration settings for the plugin.
+#Основные настройки конфигурации плагина.
+#-------------------------------------------------------------
+wgRegionProtect:
+  #-------------------------------------------------------------
+  #Language of this plugins.
+  #Loaded languages uploaded in "lang" folder.
+  #Default languages: en, ru
+  #-------------------------------------------------------------
+  #Локализации плагина.
+  #Загруженные локализации находятся в папке "lang"
+  #Локализации, доступные по умолчанию: en, ru
+  #-------------------------------------------------------------
+  lang: en
+  #-------------------------------------------------------------
+  #List of protected regions.
+  #If regions are not needed, specify an empty parameter:
+  #regionProtect: []
+  #-------------------------------------------------------------
+  #Список защищенных регионов.
+  #Если регионы не нужны, укажите пустой параметр:
+  #regionProtect: []
+  #-------------------------------------------------------------
+  regionProtect:
+    - spawn
+    - pvp
+  #--------------------------------------------------------------------------------------
+  #List of protected regions where breaking is allowed.
+  #If regions are not needed, specify an empty parameter:
+  #regionProtectAllow: []
+  #--------------------------------------------------------------------------------------
+  #Список защищенных регионов в которых разрешено ломать.
+  #Если регионы не нужны, укажите пустой параметр:
+  #regionProtectAllow: []
+  #--------------------------------------------------------------------------------------
+  regionProtectAllow: [ ]
+  #--------------------------------------------------------------------------------------
+  #List of protected regions where only breaking is allowed.
+  #If regions are not needed, specify an empty parameter:
+  #regionProtectOnlyBreakAllow: []
+  #-------------------------------------------------------------
+  #Список защищенных регионов в которых разрешено только ломать.
+  #Если регионы не нужны, укажите пустой параметр:
+  #regionProtectOnlyBreakAllow: []
+  #--------------------------------------------------------------------------------------
+  regionProtectOnlyBreakAllow: [ ]
+  #--------------------------------------------------------------------------------------
+  #List of prohibited entity / block for interaction in the protected region.
+  #If you don't want to block it, specify an empty parameter:
+  #Attention! In interact_type, the block IDs\items are different from Minecraft!
+  #list of blocks prohibited by default\items:
+  #- armor_stand
+  #- end_crystal
+  #- minecart
+  #- tnt_minecart
+  #- command_block_minecart
+  #- hopper_minecart
+  #- chest_minecart
+  #- furnace_minecart
+  #- oak_boat
+  #- acacia_boat
+  #- spruce_boat
+  #- birch_boat
+  #- jungle_boat
+  #- jungle_boat
+  #- dark_oak_boat
+  #- bucket
+  #- water_bucket
+  #- lava_bucket
+  #interactType: []
+  #--------------------------------------------------------------------------------------
+  #Список запрещенных entity/block для взаимодействия в защищенном регионе.
+  #Если не нужно блокировать, то укажите пустой параметр:
+  #interactType: []
+  #--------------------------------------------------------------------------------------
+  protectInteract:
+    interactType:
+      - armor_stand
+      - end_crystal
+      - minecart
+      - tnt_minecart
+      - command_block_minecart
+      - hopper_minecart
+      - chest_minecart
+      - furnace_minecart
+      - oak_boat
+      - acacia_boat
+      - spruce_boat
+      - birch_boat
+      - jungle_boat
+      - jungle_boat
+      - dark_oak_boat
+      - bucket
+      - water_bucket
+      - lava_bucket
+    #--------------------------------------------------------------------------------------
+    #collisionWithVehicle - может ли игрок сталкиваться с транспортом. (Лодка, Вагонетка и т.п.)
+    #canSitAsPassengerInVehicle - может ли игрок садиться пассажиром в транспорт.
+    #canDamageVehicle - может ли наносить урон игрок транспорту.
+    #canTakeLecternBook - может ли игрок брать книгу из кафедры.
+    #--------------------------------------------------------------------------------------
+    #collisionWithVehicle - whether the player can collide with a vehicle. (Boat, Wagon, etc.)
+    #canSitAsPassengerInVehicle - whether the player can sit as a passenger in the vehicle.
+    #canDamageVehicle - whether the player can damage the vehicle.
+    #canTakeLecternBookle - whether the player can take a book from the pulpit.
+    #--------------------------------------------------------------------------------------
+    player:
+      collisionWithVehicle: true
+      canSitAsPassengerInVehicle: true
+      canDamageVehicle: true
+      canTakeLecternBook: true
+  #--------------------------------------------------------------------------------------
+  #List of forbidden commands from WE / FAWE.
+  #Список запрещенных команд от WE / FAWE.
+  #--------------------------------------------------------------------------------------
+  noProtectCmd:
+    cmdWe:
+      - //set
+      - //replace
+      - //overlay
+      - //walls
+      - //deform
+      - //fill
+      - //fillr
+      - //fixlava
+      - //hollow
+      - //move
+      - //stack
+      - //smooth
+      - //cut
+      - //replacenear
+    cmdWeC:
+      - //cyl
+      - //hcyl
+      - //drain
+      - //rep
+    cmdWeP:
+      - //pyramid
+      - //hpyramid
+    cmdWeS:
+      - //sphere
+      - //hsphere
+    cmdWeU:
+      - //up
+      - /up
+    cmdWeCP:
+      - //paste
+      - //place
+      - //replacenear
+      - //hollow
+  #--------------------------------------------------------------------------------------
+  #Turn Enable/Disable the exploding from Entity(tnt, creeper and etc.).
+  #Включить/Выключить эффект взрыва от энтити(динамит, крипер и подобных).
+  #--------------------------------------------------------------------------------------
+  explodeEntity:
+    enable: true
+  #--------------------------------------------------------------------------------------
+  #Turn Enable/Disable the notification if player try to use in the protected region WE\FAWE command.
+  #Включить/Выключить оповещение в консоль и админу если игрок попытался использовать команду в защищенном регионе.
+  #--------------------------------------------------------------------------------------
+  spySettings:
+    notify:
+      #--------------------------------------------------------------------------------------
+      #Enable notify of action for admin and console.
+      #Включение оповещения в консоль и администратору.
+      #--------------------------------------------------------------------------------------
+      console:
+        enable: true
+      admin:
+        enable: true
+      #--------------------------------------------------------------------------------------
+      #Settings of sound for admin.
+      #Звуковое оповещение администратора.
+      #--------------------------------------------------------------------------------------
+      sound:
+        enable: true
+        #--------------------------------------------------------------------------------------
+        #All sounds can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+        #Все звуки из 1.18.2 могут быть найдены тут: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+        #--------------------------------------------------------------------------------------
+        type: BLOCK_ANVIL_PLACE
+    #--------------------------------------------------------------------------------------
+    #A list of commands that will be tracked in the /wgrp spy command
+    #Список команд которые будут отслеживаться в команде /wgrp spy
+    #--------------------------------------------------------------------------------------
+    spyCommandList:
+      - //set
+      - //replace
+      - //overlay
+      - //walls
+      - //deform
+      - //fill
+      - //fillr
+      - //fixlava
+      - //hollow
+      - //move
+      - //stack
+      - //smooth
+      - //cut
+      - //replacenear
+  #--------------------------------------------------------------------------------------
+  #Turn Enable/Disable the protected region message.
+  #Включить/Выключить сообщение о защищенном регионе.
+  #--------------------------------------------------------------------------------------
+  regionMessageProtect: true
+  #--------------------------------------------------------------------------------------
+  #Turn Enable/Disable the protected region message when using the WE\FAWE commands.
+  #Включить/Выключить сообщение о защищенном регионе при использовании команд WE\FAWE.
+  #--------------------------------------------------------------------------------------
+  regionMessageProtectWe: true
+  #--------------------------------------------------------------------------------------
+  #Settings of database.
+  #Настройки базы данных.
+  #--------------------------------------------------------------------------------------
+  dataSource:
+    enable: false
+    database: wgrp_core
+    host: localhost
+    port: 3306
+    user: root
+    password: root
+    table: wgrp_logs
+    useSsl: true
+    #--------------------------------------------------------------------------------------
+    #Pool settings...
+    #--------------------------------------------------------------------------------------
+    maxPoolSize: 10
+    maxLifetime: 1800
+    connectionTimeout: 5000
+    intervalReload: 60
