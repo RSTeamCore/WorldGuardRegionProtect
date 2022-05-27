@@ -1,0 +1,3 @@
+files:
+  - source: wgrp-bukkit/src/main/resources/
+    translation: '%language%'
