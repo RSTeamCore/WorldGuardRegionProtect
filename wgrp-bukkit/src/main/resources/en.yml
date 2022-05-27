@@ -9,7 +9,7 @@ messages:
     wgrpMsgWe: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
     noPerm: '&cYou don''t have permissions to use this command.'
 
-Configs:
+  Configs:
     configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
     configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
     configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml&c not found, created new!'
