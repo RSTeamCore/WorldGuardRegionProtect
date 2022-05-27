@@ -31,8 +31,6 @@ messages:
   #--------------------------------------------------------------------------------------
   Configs:
     configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
-    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml &cnot found, created new!'
-    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml &cnot found, created new!'
 
   #--------------------------------------------------------------------------------------
   # Notification of the administration of the player's actions in the region or the use of the team in a protected region.

@@ -6,9 +6,9 @@ wgRegionProtect:
   #-------------------------------------------------------------
   # Language of this plugins.
   # Loaded languages uploaded in "lang" folder.
-  # Default languages: en, ru
+  # Default languages: en_US, de_DE, ru_RU, uk_UA,
   #-------------------------------------------------------------
-  lang: en
+  lang: en_US
 
   #-------------------------------------------------------------
   # List of protected regions.
