@@ -15,6 +15,8 @@
 ## Resources on other site:
 * [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect)
 
+* Do you speak multiple languages? If so, we always welcome contributions to our [Crowdin project](https://crowdin.com/project/worldguardregionprotect).
+
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
 * PLUGIN VERSION OF **0.7.1** FOR **1.18** CAN RUN ONLY ON **JAVA 17+**!
