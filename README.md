@@ -30,19 +30,20 @@
 ## With plugin, you can do advanced protect your region
 
 1. Nobody cannot break or place blocks in region.
-2. Protecting frame, painting from any damage from arrows, trident, snowball, eggs, enderpearl and player.
-3. Protect from any change in the frame (On 1.18 MC glow frame too).
-4. Nobody cannot damage armor stand and taking or place armor from it.
-5. Cannot use none of the buckets in region.
-6. Creeper, Wither, Ghast, Primed TNT, cannot blowing up stuff in the region. Skeleton, Stray and Shulker bullet cannot destroy frame/glow frame and painting.
-7. TNT, minecart with TNT, Respawn Anchor and ender crystal can't damage any blocks/frames in region.
-8. Support for banned dangerous commands. Separate commands were added and tested used by FastAsyncWorldEdit\WorldEdit in the protected region.
-9. Nobody cannot remove region or change flags in protected region. Just example using like:
+2. It is possible to enable/disable the limitation of interaction with the transport.
+3. Protecting frame, painting from any damage from arrows, trident, snowball, eggs, enderpearl and player.
+4. Protect from any change in the frame (On 1.18 MC glow frame too).
+5. Nobody cannot damage armor stand and taking or place armor from it.
+6. Cannot use none of the buckets in region.
+7. Creeper, Wither, Ghast, Primed TNT, cannot blowing up stuff in the region. Skeleton, Stray and Shulker bullet cannot destroy frame/glow frame and painting.
+8. TNT, minecart with TNT, Respawn Anchor and ender crystal can't damage any blocks/frames in region.
+9. Support for banned dangerous commands. Separate commands were added and tested used by FastAsyncWorldEdit\WorldEdit in the protected region.
+10. Nobody cannot remove region or change flags in protected region. Just example using like:
 - "/rg rem spawn",
 - "/rg rem -f spawn",
 - "/rg rem -f spawn -w  world",
 - "/rg addowner spawn Steve" etc.
-10. You can specify a special region inside the protected region in which you can "break and place" or "only break" (specified in config.yml)
+11. You can specify a special region inside the protected region in which you can "break and place" or "only break" (specified in config.yml)
 ---
 ## Permissions
 
