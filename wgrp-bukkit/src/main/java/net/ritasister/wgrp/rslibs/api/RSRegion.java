@@ -20,7 +20,7 @@ public class RSRegion implements IRSRegion {
      * Check access in standing region by player used region name from config.yml.
      *
      * @param location return location of object.
-     * @param regions return maps of regions from WorldGuard.
+     * @param regions maps of regions from WorldGuard.
      *
      * @return location of object.
      */
@@ -35,20 +35,6 @@ public class RSRegion implements IRSRegion {
             }
         }return false;
     }
-
-    /**
-     * Check access in standing region by player without region name.
-     *
-     * @param location return location of object.
-     *
-     * @return location of object.
-     */
-    @Override
-    public boolean checkStandingRegion(@NotNull Location location) {
-        final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
-        return (applicableRegionSet.size() != 0);
-    }
-
     @Override
     public boolean checkStandingRegion(World world, @NotNull Location location, HashMap<String, List<String>> regions) {
         final ApplicableRegionSet set = this.getApplicableRegions(location);
@@ -63,9 +49,22 @@ public class RSRegion implements IRSRegion {
     }
 
     /**
+     * Check access in standing region by player without region name.
+     *
+     * @param location location of object.
+     *
+     * @return location of object.
+     */
+    @Override
+    public boolean checkStandingRegion(@NotNull Location location) {
+        final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
+        return (applicableRegionSet.size() != 0);
+    }
+
+    /**
      * Getting region name for another method.
      *
-     * @param location return location of object.
+     * @param location location of object.
      *
      * @return location of Object.
      */
@@ -80,7 +79,7 @@ public class RSRegion implements IRSRegion {
     /**
      * Getting applicable region for set.
      *
-     * @param location return location of Object.
+     * @param location location of Object.
      *
      * @return location of Object.
      */

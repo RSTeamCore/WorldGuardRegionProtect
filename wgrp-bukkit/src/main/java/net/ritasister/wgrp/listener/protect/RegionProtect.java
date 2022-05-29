@@ -85,7 +85,7 @@ public class RegionProtect implements Listener {
 		final Block block = e.getBlock();
 		final Location loc = block.getLocation();
 		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(loc);
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllow())) {
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())) {
 			e.setCancelled(false);
 		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
 				&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
@@ -413,7 +413,7 @@ public class RegionProtect implements Listener {
 					if (list.equalsIgnoreCase(s[2])) {
 						e.setCancelled(true);
 					}
-				}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow().get(location.getWorld().getName())) {
+				}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(location.getWorld().getName())) {
 					if (list.equalsIgnoreCase(s[2])) {
 						e.setCancelled(true);
 					}
@@ -424,7 +424,7 @@ public class RegionProtect implements Listener {
 						if (list.equalsIgnoreCase(s[3])) {
 							e.setCancelled(true);
 						}
-					}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow().get(location.getWorld().getName())) {
+					}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(location.getWorld().getName())) {
 						if (list.equalsIgnoreCase(s[3])) {
 							e.setCancelled(true);
 						}
@@ -436,7 +436,7 @@ public class RegionProtect implements Listener {
 						if (list.equalsIgnoreCase(s[4])) {
 							e.setCancelled(true);
 						}
-					}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow().get(location.getWorld().getName())) {
+					}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(location.getWorld().getName())) {
 						if (list.equalsIgnoreCase(s[4])) {
 							e.setCancelled(true);
 						}
@@ -449,7 +449,7 @@ public class RegionProtect implements Listener {
 						if (list.equalsIgnoreCase(s[5])) {
 							e.setCancelled(true);
 						}
-					}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow().get(location.getWorld().getName())) {
+					}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(location.getWorld().getName())) {
 						if (list.equalsIgnoreCase(s[5])) {
 							e.setCancelled(true);
 						}
@@ -464,7 +464,7 @@ public class RegionProtect implements Listener {
 							e.setCancelled(true);
 						}
 					}
-					for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow().get(location.getWorld().getName())) {
+					for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(location.getWorld().getName())) {
 						if (list.equalsIgnoreCase(s[6])) {
 							e.setCancelled(false);
 						}
