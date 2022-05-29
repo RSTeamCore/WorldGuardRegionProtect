@@ -1,91 +1,40 @@
-#-------------------------------------------------------------
-# Basic settings of the plugin's messages.
-#-------------------------------------------------------------
-
 langTitle:
-  #-------------------------------------------------------------
-  # What language is localization written in?
-  #-------------------------------------------------------------
-  language: english
-  #-------------------------------------------------------------
-  # Author of this localization.
-  #-------------------------------------------------------------
+  language: English
   author: RSTeamCore
-  #-------------------------------------------------------------
-  # Version of this localization.
-  #-------------------------------------------------------------
   version: 1.0
 
 messages:
 
-  #--------------------------------------------------------------------------------------
-  # Main messages of the plugin.
-  #--------------------------------------------------------------------------------------
   ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8] &aThis region is protect by server!'
-    wgrpMsgWe: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
+    wgrpMsg: '&8[&cWGRP&8]&a This region is protected by server!'
+    wgrpMsgWe: '&8[&cWGRP&8]&c You can''t use here the worldedit command!'
     noPerm: '&cYou don''t have permissions to use this command.'
 
-  #--------------------------------------------------------------------------------------
-  # Notification of successful reloading of configuration files.
-  #--------------------------------------------------------------------------------------
+  regionManagement:
+    add: "&eRegion &6<region>&a added to config."
+    remove: "&cRegion &6<region>&c removed from config."
+    notContains: "&cCould not remove region from protect list, because &6<region> &cis not protected!"
+    invalidWorld: "&cWorld &6<world>&c not found. Are you sure you entered the name of the world correctly?"
+    invalidRegion: "&cRegion &6<region>&c not found. Are you sure you entered the correct region name?"
+
   Configs:
     configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
 
-  #--------------------------------------------------------------------------------------
-  # Notification of the administration of the player's actions in the region or the use of the team in a protected region.
-  #--------------------------------------------------------------------------------------
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player> &ctrying to using command &5<cmd> &cin region: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &e<player> &6<action> &cblock in region: &3<region> &cLocation &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8]&cAttention! &e<player>&c trying to using command &5<cmd>&c in region: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8]&cAttention! &e<player> &6<action>&c block in region: &3<region>&c Location &3<x> <y> <z> <world>'
 
-  #--------------------------------------------------------------------------------------
-  # Setting up the time plurals.
-  #--------------------------------------------------------------------------------------
-  PluralTime:
-    day:
-      pluralDay1: 'day'
-      pluralDay2: 'of the day'
-      pluralDay3: 'days'
-
-    hour:
-      pluralHour1: 'hour'
-      pluralHour2: 'hours'
-      pluralHour3: 'hours'
-
-    minute:
-      pluralMinute1: 'minute'
-      pluralMinute2: 'minute'
-      pluralMinute3: 'minutes'
-      pluralMinute4: 'minutes'
-
-    second:
-      pluralSecond1: 'second'
-      pluralSecond2: 'second'
-      pluralSecond3: 'seconds'
-      pluralSecond4: 'seconds'
-
-    timeEmpty:
-      pluralTimeEmpty: '0 second'
-
-  #--------------------------------------------------------------------------------------
-  # An example of the use of the command can be changed.
-  #--------------------------------------------------------------------------------------
-  ExampleUseCommand:
-    wgrpUseHelp: '&aUse: &e/wgrp help'
-
-  #--------------------------------------------------------------------------------------
-  # Invalid usage messages.
-  #--------------------------------------------------------------------------------------
   usage:
-    title: '&8[&cWGRP&8] &eUsage for command &6%command% '
-    format: '&a&e/%command% %alias% -&e %description%'
-    invalidUsage: 'Incorrect use of a command! Write /wgrp help, to see a list of commands.'
+    title: '&8[&cWGRP&8]&3 Usage for command &6%command%'
+    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
+    wgrpUseHelp: '&aUsage: &e/wgrp help - &6to see a list of commands.'
+    addRegionFromConsole: '&aUsage: &e/wgrp addregion &2[region] [world]'
+    removeRegionFromConsole: '&aUsage: &e/wgrp removeregion &2[region] [world]'
 
-  #--------------------------------------------------------------------------------------
-  # Descriptions of subCommands.
-  #--------------------------------------------------------------------------------------
   subCommands:
-    reload: 'Reload configuration files.'
-    about: 'Seeing info about authors'
-    spy: 'Coming soon...'
+    reload: 'reload the configuration files.'
+    about: 'seeing info about authors.'
+    spy: 'spy for who interact with region.'
+    help: 'for seen helping.'
+    addRegion: 'add a region to the config to protect.'
+    removeRegion: 'remove the region from the config to remove the protection.'
