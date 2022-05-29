@@ -18,5 +18,7 @@ public @interface SubCommand {
 
     String[] aliases() default {};
 
+    String[] tabArgs() default {};
+
     Message description();
 }
