@@ -1,3 +1,4 @@
+---
 langTitle:
   language: 汉语
   author: RSTeamCore
@@ -8,7 +9,7 @@ messages:
     wgrpMsgWe: '&8[&cWGRP&8]&c 你不能在这里使用世界编辑命令！'
     noPerm: '你没有权限。'
   regionManagement:
-    add: "&a 区域&6<region>&a 添加到配置。"
+    add: "&aRegion &6<region>&a added to config."
     remove: "&c区域&6<region>&c 已从配置中删除。"
     notContains: "&c无法从保护列表中移除区域，因为&6<region> &cis 未受保护！"
     invalidWorld: "&cWorld &6<world>&c 未找到。您确定输入的世界名称正确吗？"
