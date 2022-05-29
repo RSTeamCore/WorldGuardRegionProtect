@@ -2,9 +2,10 @@ package net.ritasister.wgrp.util.config;
 
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemoryConfiguration;
-
+import org.jetbrains.annotations.NotNull;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -18,19 +19,22 @@ import java.util.Map;
 public class Config {
 
     private final WorldGuardRegionProtect wgRegionProtect;
-    private WGRPBukkitPlugin plugin;
+    private final WGRPBukkitPlugin plugin;
 
-    private HashMap<String, List<String>> regionsProtectMap; //<world, list of regions>
+    @CanRecover
+    private HashMap<String, List<String>> regionProtect; //<world, list of regions>
 
-    private HashMap<String, List<String>> regionsProtectAllowMap; //<world, list of regions>
+    @CanRecover
+    private HashMap<String, List<String>> regionProtectAllow; //<world, list of regions>
 
-    private HashMap<String, List<String>> regionsOnlyBreakAllowMap; //<world, list of regions>
+    @CanRecover
+    private HashMap<String, List<String>> regionProtectOnlyBreakAllow; //<world, list of regions>
 
     @CanRecover
     private String lang;
 
-    @CanRecover
-    private ConfigurationSection regionProtect; //TODO
+    /*@CanRecover
+    private ConfigurationSection regionProtect;
 
     @CanRecover
     private ConfigurationSection regionProtectAllow;
@@ -114,27 +118,50 @@ public class Config {
         try {
             lang = plugin.getConfig().getString("wgRegionProtect.lang");
 
-            regionProtect = plugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtect");
-            //Start getting regions
-            regionsProtectMap = new HashMap<>();
-            for(String world : regionProtect.getKeys(false)) {
-                regionsProtectMap.put(world, plugin.getConfig().getStringList("wgRegionProtect.regionProtect." + world));
+            //start getting regions.
+            ConfigurationSection regionProtectSection = plugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtect");
+            if (regionProtectSection != null) {
+                try {
+                    for (String world : regionProtectSection.getKeys(false)) {
+                        regionProtect.put(world, plugin.getConfig().getStringList("wgRegionProtect.regionProtect." + world));
+                    }
+                } catch (Throwable ignored) {}
             }
-            //End getting regions
-
-            regionProtectAllow = plugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtectAllow");
-            //Start getting regions
-            regionsProtectAllowMap = new HashMap<>();
-            for(String world : regionProtectAllow.getKeys(false)) {
-                regionsProtectAllowMap.put(world, plugin.getConfig().getStringList("wgRegionProtect.regionProtectAllow." + world));
+            for(World w : Bukkit.getWorlds()) {
+                ArrayList<String> l = new ArrayList<>();
+                if(!regionProtect.containsKey(w.getName())) {
+                    regionProtect.put(w.getName(), l);
+                }
             }
-            //End getting regions
 
-            regionProtectOnlyBreakAllow = plugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtectOnlyBreakAllow");
-            //Start getting regions
-            regionsOnlyBreakAllowMap = new HashMap<>();
-            for(String world : regionProtectOnlyBreakAllow.getKeys(false)) {
-                regionsOnlyBreakAllowMap.put(world, plugin.getConfig().getStringList("wgRegionProtect.regionProtectOnlyBreakAllow." + world));
+            ConfigurationSection regionProtectAllowSection = plugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtectAllow");
+            if (regionProtectAllowSection != null) {
+                try {
+                    for (String world : regionProtectAllowSection.getKeys(false)) {
+                        regionProtectAllow.put(world, plugin.getConfig().getStringList("wgRegionProtect.regionProtectAllow." + world));
+                    }
+                } catch (Throwable ignored) {}
+            }
+            for(World w : Bukkit.getWorlds()) {
+                ArrayList<String> l = new ArrayList<>();
+                if(!regionProtectAllow.containsKey(w.getName())) {
+                    regionProtectAllow.put(w.getName(), l);
+                }
+            }
+
+            ConfigurationSection regionProtectOnlyBreakAllowSection = plugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtectOnlyBreakAllow");
+            if (regionProtectOnlyBreakAllowSection != null) {
+                try {
+                    for (String world : regionProtectOnlyBreakAllowSection.getKeys(false)) {
+                        regionProtectOnlyBreakAllow.put(world, plugin.getConfig().getStringList("wgRegionProtect.regionProtectOnlyBreakAllow." + world));
+                    }
+                }  catch (Throwable ignored) {}
+            }
+            for(World w : Bukkit.getWorlds()) {
+                ArrayList<String> l = new ArrayList<>();
+                if(!regionProtectOnlyBreakAllow.containsKey(w.getName())) {
+                    regionProtectOnlyBreakAllow.put(w.getName(), l);
+                }
             }
             //End getting regions
 
@@ -167,7 +194,7 @@ public class Config {
             mysqlsettings = new MySQLSettings(
                     plugin.getConfig().getString("wgRegionProtect.dataSource.host"),
                     plugin.getConfig().getInt("wgRegionProtect.dataSource.port"),
-                    plugin.getConfig().getString("wgRegionProtect.dataSource.name"),
+                    plugin.getConfig().getString("wgRegionProtect.dataSource.database"),
                     plugin.getConfig().getString("wgRegionProtect.dataSource.user"),
                     plugin.getConfig().getString("wgRegionProtect.dataSource.password"),
                     plugin.getConfig().getString("wgRegionProtect.dataSource.table"),
@@ -180,7 +207,6 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
             e.printStackTrace();
         }
-
 
         for(Field f : this.getClass().getFields()) {
             if(f.isAnnotationPresent(CanRecover.class)) {
@@ -283,26 +309,21 @@ public class Config {
         saveConfig();
     }
 
-    public HashMap<String, List<String>> getRegionProtectAllowMap() {
-        return regionsProtectAllowMap;
-    }
-
-    public void setRegionProtectAllowMap(HashMap<String, List<String>> value) {
-        regionsProtectAllowMap = value;
-        for(Map.Entry<String, List<String>> entry : value.entrySet()) {
-            regionProtectAllow.set(entry.getKey(), entry.getValue());
-        }
-    }
-
     public HashMap<String, List<String>> getRegionProtectMap() {
-        return regionsProtectMap;
+        return regionProtect;
     }
 
-    public void setRegionProtectMap(HashMap<String, List<String>> value) {
-        regionsProtectMap = value;
-        for(Map.Entry<String, List<String>> entry : value.entrySet()) {
-            regionProtect.set(entry.getKey(), entry.getValue());
-        }
+    public HashMap<String, List<String>> getRegionProtectAllowMap() {
+        return regionProtectAllow;
+    }
+
+    public HashMap<String, List<String>> getRegionProtectOnlyBreakAllowMap() {
+        return regionProtectOnlyBreakAllow;
+    }
+
+    public void setRegionProtectMap(@NotNull HashMap<String, List<String>> value) {
+        regionProtect = value;
+        saveConfig();
     }
 
     public HashMap<String, List<String>> getRegionProtectAllow() {
@@ -313,11 +334,9 @@ public class Config {
         return regionsOnlyBreakAllowMap;
     }
 
-    public void setRegionProtectOnlyBreakAllow(HashMap<String, List<String>> value) {
-        regionsOnlyBreakAllowMap = value;
-        for (Map.Entry<String, List<String>> entry : value.entrySet()) {
-            regionProtectAllow.set(entry.getKey(), entry.getValue());
-        }
+    public void setRegionProtectOnlyBreakAllow(@NotNull HashMap<String, List<String>> value) {
+        regionProtectOnlyBreakAllow = value;
+        saveConfig();
     }
 
     public List<String> getInteractType() {
@@ -440,7 +459,7 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.databaseEnable", databaseEnable);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.host", mysqlsettings.getHost());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.port", mysqlsettings.getPort());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.name", mysqlsettings.getName());
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.database", mysqlsettings.getDataBase());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.user", mysqlsettings.getUser());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.password", mysqlsettings.getPassword());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.table", mysqlsettings.getTable());
@@ -463,7 +482,7 @@ public class Config {
     public static class MySQLSettings {
         private final String host;
         private final int port;
-        private final String name;
+        private final String database;
         private final String user;
         private final String password;
         private final String table;
@@ -472,11 +491,11 @@ public class Config {
         private final int connectionTimeout;
         private final int intervalReload;
 
-        MySQLSettings(String host, int port, String name, String user, String password, String table,
+        MySQLSettings(String host, int port, String database, String user, String password, String table,
                       int maxPoolSize, int maxLifetime, int connectionTimeout, int intervalReload) {
             this.host = host;
             this.port = port;
-            this.name = name;
+            this.database = database;
             this.user = user;
             this.password = password;
             this.table = table;
@@ -494,8 +513,8 @@ public class Config {
             return port;
         }
 
-        public String getName() {
-            return name;
+        public String getDataBase() {
+            return database;
         }
 
         public String getUser() {
