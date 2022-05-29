@@ -1,6 +1,6 @@
 name: Feature request
-description: Suggest an idea for this project
-labels: [Status: needs triage]
+description: Suggest an idea for WorldGuardRegionProtect
+labels: ["status: needs triage", "feature request"]
 
 body:
   - type: markdown
