@@ -31,8 +31,9 @@ public enum Message {
     PluralTime_second_pluralSecond3, PluralTime_second_pluralSecond4, PluralTime_timeEmpty_pluralTimeEmpty,
     subCommands_reload, subCommands_about, subCommands_spy, subCommands_addRegion, subCommands_removeRegion,
     subCommands_help,
-    usage_format, usage_title, usage_wgrpUseHelp,
-    regionManagement_add, regionManagement_remove, regionManagement_notContains
+    usage_format, usage_title, usage_wgrpUseHelp, usage_addRegionFromConsole, usage_removeRegionFromConsole,
+    regionManagement_add, regionManagement_remove, regionManagement_notContains, regionManagement_invalidWorld,
+    regionManagement_invalidRegion
     ;
 
     private List<String> msg;
