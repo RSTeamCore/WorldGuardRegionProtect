@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Time {
 
-    public static @NotNull String getTimeToString(int time, int depth, boolean accusative) {
+    /*public static @NotNull String getTimeToString(int time, int depth, boolean accusative) {
         String output = "";
         if (time > 0) {
             int day = time / 86400;
@@ -54,5 +54,5 @@ public class Time {
             output = Message.PluralTime_timeEmpty_pluralTimeEmpty.toString();
         }
         return output.trim();
-    }
+    }*/
 }
