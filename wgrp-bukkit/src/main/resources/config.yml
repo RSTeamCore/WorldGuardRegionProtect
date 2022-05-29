@@ -17,7 +17,7 @@ wgRegionProtect:
   # Do not delete all worlds, always leave one world,
   # otherwise the structure of the configuration is broken!
   # regionProtect: []
-  #   example_world: []
+  #   another_world: []
   #-------------------------------------------------------------
   regionProtect:
     world:
