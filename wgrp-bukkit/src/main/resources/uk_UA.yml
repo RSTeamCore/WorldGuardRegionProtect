@@ -8,7 +8,7 @@ messages:
     wgrpMsgWe: '&8[&cWGRP&8] &сВи не можете використовувати команду WorldEdit тут!'
     noPerm: '&cУ вас недостатньо прав для виконання цієї команди.'
   regionManagement:
-    add: "&eРегіон &6<region>&a доданий до конфігурації."
+    add: "&aРегіон &6<region>&a доданий до конфігурації."
     remove: "&eРегіон &6<region>&a вилучено з конфігурації."
     notContains: "&cНе вдалося вилучити регіон із списку захисту, тому що &6<region> &cis не захищений!"
     invalidWorld: "&cWorld &6<world>&c not found. Are you sure you entered the name of the world correctly?"

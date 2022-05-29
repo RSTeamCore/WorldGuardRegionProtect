@@ -8,7 +8,7 @@ messages:
     wgrpMsgWe: '&8[&cWGRP&8] &cWorldEditコマンドはここでは使用できません！'
     noPerm: '&cこのコマンドを使用する権限がありません。'
   regionManagement:
-    add: "&eリージョン&6<region>&a が設定に追加されました。"
+    add: "&aリージョン&6<region>&a が設定に追加されました。"
     remove: "&cリージョン&6<region>&c が設定から削除されました。"
     notContains: "&c&6<region> &cが保護されていないため、保護リストからリージョンを削除できませんでした！"
     invalidWorld: "&cワールド &6<world>&c が見つかりません。ワールドの名前を正しく入力していますか？"
