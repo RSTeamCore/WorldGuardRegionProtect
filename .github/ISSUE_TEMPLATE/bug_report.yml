@@ -1,6 +1,6 @@
 name: Bug report
 description: Create a report to help us improve
-labels: 'Required approved'
+labels: [Bug]
 
 body:
   - type: markdown
@@ -17,8 +17,8 @@ body:
       options:
         - Spigot
         - Paper
-        - Tuinity
         - Purpur
+        - Pufferfish
     validations:
       required: true
 
@@ -74,7 +74,7 @@ body:
     attributes:
       label: WorldGuardRegionProtect version
       description: What version of WorldGuardRegionProtect are you running? (`/version WorldGuardRegionProtect`)
-      placeholder: "For example: WorldGuardRegionProtect version 0.7.1"
+      placeholder: "For example: WorldGuardRegionProtect version 0.7.2"
     validations:
       required: true
       
