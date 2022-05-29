@@ -1,0 +1,34 @@
+---
+langTitle:
+  language: Deutsch
+  author: RSTeamKern
+  version: 1.0
+messages:
+  ServerMsg:
+    wgrpMsg: '&8[&cWGRP&8]&a Diese Region ist vom Server geschützt!'
+    wgrpMsgWe: '&8[&cWGRP&8]&c Du kannst hier nicht den Worldedit Befehl verwenden!'
+    noPerm: 'Du hast keine Berechtigung, diesen Befehl zu verwenden.'
+  regionManagement:
+    add: "&eRegion &6<region>&zur Konfiguration hinzugefügt."
+    remove: "&cRegion &6<region>&c aus der Konfiguration entfernt."
+    notContains: "&cKonnte Region nicht von der Schutzliste entfernen, da &6<region> &cnicht geschützt ist!"
+    invalidWorld: "&cWelt &6<world>&c nicht gefunden. Bist du sicher, dass du den Namen der Welt korrekt eingegeben hast?"
+    invalidRegion: "&cRegion &6<region>&c nicht gefunden. Sind Sie sicher, dass Sie den richtigen Regionalnamen eingegeben haben?"
+  Configs:
+    configReloaded: '&8[&cWGRP&8] &aAlle Dateien neu geladen unter <time> ms!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAchtung! &e<player>&c versucht Befehl &5<cmd>&c in der Region zu verwenden: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8]&cAchtung! &e<player> &6<action>&c Block in Region: &3<region>&c Ort &3<x> <y> <z> <world>'
+  usage:
+    title: '&8[&cWGRP&8]&e Verwendung für Befehl &6%command%'
+    format: ' &%command% %alias% &2%tabArgs%&3-&e%description%'
+    wgrpUseHelp: '&aVerwendung: &e/wgrp help - &6um eine Liste von Befehlen anzuzeigen.'
+    addRegionFromConsole: '&aVerwendung: &e/wgrp addregion &2[region] [world]'
+    removeRegionFromConsole: '&aVerwendung: &e/wgrp entfernte &2[region] [world]'
+  subCommands:
+    reload: 'ladet die Konfigurations Dateien neu.'
+    about: 'zeige Informationen über Autoren.'
+    spy: 'spion für wer mit der Region interagiert.'
+    help: 'für gesehen Hilfe.'
+    addRegion: 'fügen Sie eine Region zur Konfiguration zum Schutz hinzu.'
+    removeRegion: 'entfernen Sie die Region aus der Konfiguration, um den Schutz zu entfernen.'

@@ -1,0 +1,34 @@
+---
+langTitle:
+  language: Suomi
+  author: RSTeamCore
+  version: 1.0
+messages:
+  ServerMsg:
+    wgrpMsg: '&8[&cWGRP&8] &aTämä alue on suojattu palvelimelta!'
+    wgrpMsgWe: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
+    noPerm: '&cSinulla ei ole oikeuksia käyttää tätä komentoa.'
+  regionManagement:
+    add: "&eRegion &6<region>&a lisätty asetukseen."
+    remove: "&cAlue &6<region>&c poistettu asetuksesta."
+    notContains: "&cEi voitu poistaa aluetta suojelulistalta, koska &6<region> &cis ei ole suojattu!"
+    invalidWorld: "&cMaailman- &6<world>&c ei löytynyt. Oletko varma, että syötit maailman nimen oikein?"
+    invalidRegion: "&cAlue &6<region>&c ei löytynyt. Oletko varma, että syötit oikean aluenimen?"
+  Configs:
+    configReloaded: '&8[&cWGRP&8] &aKaikki tiedostot ladataan <time> ms!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player>&c trying to using command &5<cmd>&c in region: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &e<player> &6<action>&c block in region: &3<region>&c Location &3<x> <y> <z> <world>'
+  usage:
+    title: '&8[&cWGRP&8]&e Usage for command &6%command% '
+    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
+    wgrpUseHelp: '&aKäyttö: &e/wgrp help - &6nähdäksesi komentoluettelon.'
+    addRegionFromConsole: '&aKäyttö: &e/wgrp addregion &2[region] [world]'
+    removeRegionFromConsole: '&aKäyttö: &e/wgrp removeregion &2[region] [world]'
+  subCommands:
+    reload: 'lataa konfiguraatiotiedostot uudelleen.'
+    about: 'nähdä tietoja kirjoittajista.'
+    spy: 'vakoilkaa, kuka vuorovaikutuksessa alueen kanssa.'
+    help: 'nähty apua.'
+    addRegion: 'lisätä alueen config jotta suojelu.'
+    removeRegion: 'poista alue asetuksesta poistaaksesi suojauksen ja poistaaksesi sen.'
