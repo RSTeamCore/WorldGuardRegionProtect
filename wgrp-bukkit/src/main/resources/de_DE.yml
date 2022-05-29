@@ -8,7 +8,7 @@ messages:
     wgrpMsgWe: '&8[&cWGRP&8]&c Du kannst hier nicht den Worldedit Befehl verwenden!'
     noPerm: '&cDu hast keine Rechte, um diesen Befehl zu nutzen.'
   regionManagement:
-    add: "&eRegion &6<region>&zur Konfiguration hinzugefügt."
+    add: "&aRegion &6<region>&a zur Konfiguration hinzugefügt."
     remove: "&cRegion &6<region>&c aus der Konfiguration entfernt."
     notContains: "&cKonnte Region nicht von der Schutzliste entfernen, da &6<region> &cnicht geschützt ist!"
     invalidWorld: "&cWelt &6<world>&c nicht gefunden. Bist du sicher, dass du den Namen der Welt korrekt eingegeben hast?"
