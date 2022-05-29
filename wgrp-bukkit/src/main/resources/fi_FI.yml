@@ -8,41 +8,27 @@ messages:
     wgrpMsg: '&8[&cWGRP&8] &aTämä alue on suojattu palvelimelta!'
     wgrpMsgWe: '&8[&cWGRP&8] &cYou can''t used WorldEdit command here!'
     noPerm: '&cSinulla ei ole oikeuksia käyttää tätä komentoa.'
+  regionManagement:
+    add: "&eRegion &6<region>&a lisätty asetukseen."
+    remove: "&cAlue &6<region>&c poistettu asetuksesta."
+    notContains: "&cEi voitu poistaa aluetta suojelulistalta, koska &6<region> &cis ei ole suojattu!"
+    invalidWorld: "&cMaailman- &6<world>&c ei löytynyt. Oletko varma, että syötit maailman nimen oikein?"
+    invalidRegion: "&cAlue &6<region>&c ei löytynyt. Oletko varma, että syötit oikean aluenimen?"
   Configs:
-    configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
-    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
-    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml&c not found, created new!'
+    configReloaded: '&8[&cWGRP&8] &aKaikki tiedostot ladataan <time> ms!'
   Notify:
     sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAttention! &e<player>&c trying to using command &5<cmd>&c in region: &3<region>'
     sendAdminInfoIfActionInRegion: '&8[&4!&8] &cAttention! &e<player> &6<action>&c block in region: &3<region>&c Location &3<x> <y> <z> <world>'
-  PluralTime:
-    day:
-      pluralDay1: 'day'
-      pluralDay2: 'of the day'
-      pluralDay3: 'days'
-    hour:
-      pluralHour1: 'hour'
-      pluralHour2: 'hours'
-      pluralHour3: 'hours'
-    minute:
-      pluralMinute1: 'minute'
-      pluralMinute2: 'minute'
-      pluralMinute3: 'minutes'
-      pluralMinute4: 'minutes'
-    second:
-      pluralSecond1: 'second'
-      pluralSecond2: 'second'
-      pluralSecond3: 'seconds'
-      pluralSecond4: 'seconds'
-    timeEmpty:
-      pluralTimeEmpty: '0 second'
-  ExampleUseCommand:
-    wgrpUseHelp: '&aUse: &e/wgrp help'
   usage:
     title: '&8[&cWGRP&8]&e Usage for command &6%command% '
     format: '&a&e/%command% %alias% -&e %description%'
-    invalidUsage: 'Incorrect use of a command! Write /wgrp help, to see a list of commands.'
+    wgrpUseHelp: '&aKäyttö: &e/wgrp help - &6nähdäksesi komentoluettelon.'
+    addRegionFromConsole: '&aKäyttö: &e/wgrp addregion &2[region] [world]'
+    removeRegionFromConsole: '&aKäyttö: &e/wgrp removeregion &2[region] [world]'
   subCommands:
     reload: 'Reload configuration files.'
     about: 'Seeing info about authors'
     spy: 'Tulossa pian...'
+    help: 'nähty apua.'
+    addRegion: 'lisätä alueen config jotta suojelu.'
+    removeRegion: 'poista alue asetuksesta poistaaksesi suojauksen ja poistaaksesi sen.'
