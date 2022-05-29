@@ -6,7 +6,7 @@ messages:
   ServerMsg:
     wgrpMsg: '&8[&cWGRP&8]&a This region is protected by server!'
     wgrpMsgWe: '&8[&cWGRP&8]&c You can''t use here the worldedit command!'
-    noPerm: '&cYou don''t have permissions to use this command.'
+    noPerm: '&cYou don''t have permission to use this command.'
   regionManagement:
     add: "&eRegion &6<region>&a added to config."
     remove: "&cRegion &6<region>&c removed from config."
