@@ -14,6 +14,8 @@ wgRegionProtect:
   #-------------------------------------------------------------
   # List of protected regions.
   # If regions are not needed, specify an empty parameter:
+  # Do not delete all worlds, always leave one world,
+  # otherwise the structure of the configuration is broken!
   # regionProtect: []
   #   example_world: []
   #-------------------------------------------------------------
@@ -25,20 +27,24 @@ wgRegionProtect:
   #--------------------------------------------------------------------------------------
   # List of protected regions where breaking is allowed.
   # If regions are not needed, specify an empty parameter:
+  # Do not delete all worlds, always leave one world,
+  # otherwise the structure of the configuration is broken!
   # regionProtectAllow: []
-  #   example_world: []
+  #   another_world: []
   #--------------------------------------------------------------------------------------
   regionProtectAllow:
-    example_world: []
+    another_world: []
 
   #--------------------------------------------------------------------------------------
   # List of protected regions where only breaking is allowed.
   # If regions are not needed, specify an empty parameter:
+  # Do not delete all worlds, always leave one world,
+  # otherwise the structure of the configuration is broken!
   # regionProtectOnlyBreakAllow:
-  #   example_world: []
+  #   another_world: []
   #--------------------------------------------------------------------------------------
   regionProtectOnlyBreakAllow:
-    example_world: []
+    another_world: []
 
   #--------------------------------------------------------------------------------------
   # List of prohibited entity / block for interaction in the protected region.
