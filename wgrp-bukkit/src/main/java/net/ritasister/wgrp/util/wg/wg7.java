@@ -67,7 +67,7 @@ public class wg7 implements Iwg {
                 }
             }
             for (final ProtectedRegion rg : set) {
-                for (final Object region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow().get(p.getWorld().getName())) {
+                for (final Object region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(p.getWorld().getName())) {
                     if (rg.getId().equalsIgnoreCase(region.toString())) {
                         return false;
                     }

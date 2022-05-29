@@ -68,13 +68,12 @@ public class CommandWGRP extends AbstractCommand {
                 String region = args[0];
                 String world = Objects.requireNonNull(((Player) sender).getPlayer()).getLocation().getWorld().getName();
                 ArrayList<String> newRegionList = new ArrayList<>();
-                if(rgMap.containsKey(world)) newRegionList.addAll(rgMap.get(world));
+                if(rgMap.containsKey(world) && !rgMap.get(world).contains(region)) newRegionList.addAll(rgMap.get(world));
                 newRegionList.add(region);
                 rgMap.put(world, newRegionList);
                 wgRegionProtect.getUtilConfig().getConfig().setRegionProtectMap(rgMap);
                 Message.regionManagement_add.replace("<region>", region).send(sender);
-            } else {
-                if(args.length > 2) {
+            } else if(args.length == 2) {
                     String region = args[0];
                     String world = args[1];
                     ArrayList<String> newRegionList = new ArrayList<>();
@@ -109,7 +108,7 @@ public class CommandWGRP extends AbstractCommand {
                     Message.regionManagement_remove.replace("<region>", region).send(sender);
                 } else Message.regionManagement_notContains.replace("<region>", region).send(sender);
             } else {
-                if(args.length > 2) {
+                if(args.length == 2) {
                     String region = args[0];
                     String world = args[1];
                     ArrayList<String> newRegionList = new ArrayList<>();
