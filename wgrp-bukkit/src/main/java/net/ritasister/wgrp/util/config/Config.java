@@ -22,26 +22,16 @@ public class Config {
     private final WGRPBukkitPlugin plugin;
 
     @CanRecover
-    private HashMap<String, List<String>> regionProtect; //<world, list of regions>
+    private HashMap<String, List<String>> regionProtect;
 
     @CanRecover
-    private HashMap<String, List<String>> regionProtectAllow; //<world, list of regions>
+    private HashMap<String, List<String>> regionProtectAllow;
 
     @CanRecover
-    private HashMap<String, List<String>> regionProtectOnlyBreakAllow; //<world, list of regions>
+    private HashMap<String, List<String>> regionProtectOnlyBreakAllow;
 
     @CanRecover
     private String lang;
-
-    /*@CanRecover
-    private ConfigurationSection regionProtect;
-
-    @CanRecover
-    private ConfigurationSection regionProtectAllow;
-
-    @CanRecover
-    private ConfigurationSection regionProtectOnlyBreakAllow;
-    */
     @CanRecover
     private List<String> interactType;
 
