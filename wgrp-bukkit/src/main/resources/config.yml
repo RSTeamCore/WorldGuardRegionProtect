@@ -21,8 +21,8 @@ wgRegionProtect:
   #-------------------------------------------------------------
   regionProtect:
     world:
-      - spawn
-      - pvp
+    - spawn
+    - pvp
 
   #--------------------------------------------------------------------------------------
   # List of protected regions where breaking is allowed.

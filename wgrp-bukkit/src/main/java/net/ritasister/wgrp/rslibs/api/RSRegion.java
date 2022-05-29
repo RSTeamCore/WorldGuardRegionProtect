@@ -26,7 +26,6 @@ public class RSRegion implements IRSRegion {
      */
     @Override
     public boolean checkStandingRegion(@NotNull Location location, HashMap<String, List<String>> regions) {
-        if(regions == null) return false;
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         for (ProtectedRegion protectedRegion : applicableRegionSet) {
             for (String regionName : regions.get(location.getWorld().getName())) {

@@ -8,7 +8,7 @@ messages:
     wgrpMsgWe: '&8[&cWGRP&8]&c Et voi käyttää WorldEdit komentoa täällä!'
     noPerm: '&cSinulla ei ole oikeuksia käyttää tätä komentoa.'
   regionManagement:
-    add: "&cAlue &6<region>&c poistettu asetuksesta."
+    add: "&aAlue &6<region>&a lisätty configiin."
     remove: "&cAlue &6<region>&c poistettu asetuksesta."
     notContains: "&cEi voitu poistaa aluetta suojelulistalta, koska &6<region> &cis ei ole suojattu!"
     invalidWorld: "&cMaailman- &6<world>&c ei löytynyt. Oletko varma, että syötit maailman nimen oikein?"

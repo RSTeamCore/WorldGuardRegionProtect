@@ -8,7 +8,7 @@ messages:
     wgrpMsgWe: '&8[&cWGRP&8]&c You can''t use here the worldedit command!'
     noPerm: '&cYou don''t have permission to use this command.'
   regionManagement:
-    add: "&eRegion &6<region>&a added to config."
+    add: "&aRegion &6<region>&a added to config."
     remove: "&cRegion &6<region>&c removed from config."
     notContains: "&cCould not remove region from protect list, because &6<region> &cis not protected!"
     invalidWorld: "&cWorld &6<world>&c not found. Are you sure you entered the name of the world correctly?"
