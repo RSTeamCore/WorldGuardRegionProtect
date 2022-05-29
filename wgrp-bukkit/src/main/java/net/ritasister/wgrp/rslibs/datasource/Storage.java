@@ -33,7 +33,7 @@ public class Storage implements StorageDataSource {
 		config.setJdbcUrl("jdbc:mariadb://"
 				+ wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getHost() + ":"
 				+ wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getPort() + "/"
-				+ wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getName());
+				+ wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getDataBase());
 		config.setUsername(wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getUser());
 		config.setPassword(wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getPassword());
 		
