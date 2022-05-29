@@ -3,8 +3,13 @@ package net.ritasister.wgrp;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
 import net.ritasister.wgrp.rslibs.api.*;
+import net.ritasister.wgrp.rslibs.datasource.Storage;
+import net.ritasister.wgrp.rslibs.util.Metrics;
+import net.ritasister.wgrp.rslibs.util.UpdateChecker;
 import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.util.UtilConfig;
+import net.ritasister.wgrp.util.config.Message;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,11 +51,11 @@ public class WorldGuardRegionProtect {
         this.chatApi = new ChatApi();
         this.rsLogger = new RSLogger(this.chatApi);
         this.checkStartUpVersionServer();
-        this.getWgrpBukkitPlugin().loadMetrics();
+        this.loadMetrics();
         this.loadAnotherClassAndMethods();
-        this.getWgrpBukkitPlugin().loadDataBase();
-        this.getWgrpBukkitPlugin().notifyPreBuild();
-        this.getWgrpBukkitPlugin().checkUpdate();
+        this.loadDataBase();
+        this.notifyPreBuild();
+        this.checkUpdate();
     }
 
     private void loadAnotherClassAndMethods() {
@@ -84,6 +89,48 @@ public class WorldGuardRegionProtect {
         commandHandler.commandHandler();
     }
 
+    public void checkUpdate() {
+        new UpdateChecker(this.getWgrpBukkitPlugin(), 81321).getVersion(version -> {
+            if (this.getWgrpBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
+                this.getRsApi().getLogger().info("&6==============================================");
+                this.getRsApi().getLogger().info("&2Current version: &b<pl_ver>".replace("<pl_ver>", this.getPluginVersion()));
+                this.getRsApi().getLogger().info("&2This is the latest version of plugin.");
+                this.getRsApi().getLogger().info("&6==============================================");
+            }else{
+                this.getRsApi().getLogger().info("&6==============================================");
+                this.getRsApi().getLogger().info("&eThere is a new version update available.");
+                this.getRsApi().getLogger().info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", this.getPluginVersion()));
+                this.getRsApi().getLogger().info("&3New version: &b<new_pl_ver>".replace("<new_pl_ver>", version));
+                this.getRsApi().getLogger().info("&ePlease, download new version here:");
+                this.getRsApi().getLogger().info("&ehttps://www.spigotmc.org/resources/81321/");
+                this.getRsApi().getLogger().info("&6==============================================");
+            }
+        });
+    }
+
+    public void checkUpdateNotifyPlayer(Player player) {
+        new UpdateChecker(this.getWgrpBukkitPlugin(), 81321).getVersion(version -> {
+            if (this.getWgrpBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
+                player.sendMessage(String.format(this.getChatApi().getColorCode("""
+                &e======&8[&cWorldGuardRegionProtect&8]&e======
+                          &6Current version: &b%s
+                       &6You are using the latest version.
+                &e===================================
+                """), version));
+            }else{
+                player.sendMessage(String.format(this.getChatApi().getColorCode("""
+                &e========&8[&cWorldGuardRegionProtect&8]&e========
+                &6 There is a new version update available.
+                &c        Current version: &4%s
+                &3          New version: &b%s
+                &6   Please, download new version here
+                &6 https://www.spigotmc.org/resources/81321/
+                &e=======================================
+                """), this.getPluginVersion(), version));
+            }
+        });
+    }
+
     private void checkStartUpVersionServer() {
         if (!this.getRsApi().isVersionSupported()) {
             getRsApi().getLogger().error("This plugin version works only on 1.18+!");
@@ -91,6 +138,56 @@ public class WorldGuardRegionProtect {
             getRsApi().getLogger().error("The main post on spigotmc and please download the correct version.");
             getWgrpBukkitPlugin().getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin);
         }
+    }
+
+    public void notifyPreBuild() {
+        if(this.getPluginVersion().contains("pre")) {
+            this.getRsApi().getLogger().warn(
+                    """
+                        This is a test build. This building may be unstable!
+                        When reporting a bug:
+                        Use the issue tracker! Don't report bugs in the reviews.
+                        Please search for duplicates before reporting a new https://github.com/RSTeamCore/WorldGuardRegionProtect/issues!
+                        Provide as much information as possible.
+                        Provide your WorldGuardRegionProtect version and Spigot/Paper version.
+                        Provide any stack traces or "errors" using pastebin.""");
+        } else {
+            this.getRsApi().getLogger().info("This is the latest stable building.");
+        }
+        this.getRsApi().getLogger().info(
+                String.format("""
+                        Using %s language version %s
+                        Author of this localization - %s
+                        """,
+                        Message.getLangProperties().getLanguage(),
+                        Message.getLangProperties().getVersion(),
+                        Message.getLangProperties().getAuthor()));
+    }
+
+    public void loadDataBase() {
+        if(this.getUtilConfig().getConfig().getDataBaseEnable()) {
+            final long duration_time_start = System.currentTimeMillis();
+            this.getRsStorage().dbLogsSource = new Storage(this);
+            this.getRsStorage().dbLogs.clear();
+            if (this.getRsStorage().dbLogsSource.load()) {
+                this.getRsApi().getLogger().info("[DataBase] The player base is loaded.");
+                this.postEnable();
+                this.getRsApi().getLogger().info("[DataBase] Startup duration: <TIME> мс.".replace("<TIME>", String.valueOf(System.currentTimeMillis() - duration_time_start)));
+            }
+        }
+    }
+
+    public void postEnable() {
+        this.getWgrpBukkitPlugin().getServer().getScheduler().cancelTasks(this.getWgrpBukkitPlugin());
+        if (this.getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() > 0) {
+            this.getRsStorage().dbLogsSource.loadAsync();
+            this.getRsApi().getLogger().info("[DataBase] The base is loaded asynchronously.");
+        }
+    }
+
+    public void loadMetrics() {
+        int pluginId = 12975;
+        new Metrics(this.getWgrpBukkitPlugin(), pluginId);
     }
 
     @NotNull

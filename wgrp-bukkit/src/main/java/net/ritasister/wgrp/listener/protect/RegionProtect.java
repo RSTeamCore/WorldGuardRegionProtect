@@ -115,7 +115,7 @@ public class RegionProtect implements Listener {
 		Player player = e.getPlayer();
 		if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.PERMISSION_STAR, null)
 				&& e.getPlayer().isOp()) {
-			wgRegionProtect.getWgrpBukkitPlugin().checkUpdateNotifyPlayer(player);
+			wgRegionProtect.checkUpdateNotifyPlayer(player);
 		}
 	}
 
