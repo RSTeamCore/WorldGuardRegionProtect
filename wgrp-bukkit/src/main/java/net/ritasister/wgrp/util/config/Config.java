@@ -41,7 +41,7 @@ public class Config {
 
     @CanRecover
     private ConfigurationSection regionProtectOnlyBreakAllow;
-
+    */
     @CanRecover
     private List<String> interactType;
 
@@ -112,6 +112,10 @@ public class Config {
 
     @SuppressWarnings("unchecked")
     public void reload() {
+        regionProtect = new HashMap<>();
+        regionProtectAllow = new HashMap<>();
+        regionProtectOnlyBreakAllow = new HashMap<>();
+
         wgRegionProtect.getWgrpBukkitPlugin().saveDefaultConfig();
         wgRegionProtect.getWgrpBukkitPlugin().reloadConfig();
 
@@ -203,6 +207,7 @@ public class Config {
                     plugin.getConfig().getInt("wgRegionProtect.dataSource.connectionTimeout"),
                     plugin.getConfig().getInt("wgRegionProtect.dataSource.intervalReload")
             );
+
         } catch (Exception e) {
             wgRegionProtect.getWgrpBukkitPlugin().getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
             e.printStackTrace();
@@ -214,33 +219,6 @@ public class Config {
                     if(f.get(this.getClass()).equals(null)) {
                         switch (f.getName()) {
                             case "lang" -> lang = "en";
-                            case "regionProtect" -> {
-                                ConfigurationSection section = new MemoryConfiguration();
-                                ArrayList<String> exampleRegions = new ArrayList<>();
-                                exampleRegions.add("spawn");
-                                exampleRegions.add("pvp");
-                                section.set("world", exampleRegions);
-                                section.set("spawn", exampleRegions);
-                                regionProtect = section;
-                            }
-                            case "regionProtectAllow"  -> {
-                                ConfigurationSection section = new MemoryConfiguration();
-                                ArrayList<String> exampleRegions = new ArrayList<>();
-                                exampleRegions.add("spawn");
-                                exampleRegions.add("pvp");
-                                section.set("world", exampleRegions);
-                                section.set("spawn", exampleRegions);
-                                regionProtectAllow = section;
-                            }
-                            case "regionProtectOnlyBreakAllow"  -> {
-                                ConfigurationSection section = new MemoryConfiguration();
-                                ArrayList<String> exampleRegions = new ArrayList<>();
-                                exampleRegions.add("spawn");
-                                exampleRegions.add("pvp");
-                                section.set("world", exampleRegions);
-                                section.set("spawn", exampleRegions);
-                                regionProtectOnlyBreakAllow = section;
-                            }
 
                             case "interactType" -> interactType = List.of(
                                     "armor_stand", "end_crystal", "minecart",
@@ -307,6 +285,7 @@ public class Config {
             }
         }
         saveConfig();
+
     }
 
     public HashMap<String, List<String>> getRegionProtectMap() {
@@ -326,12 +305,9 @@ public class Config {
         saveConfig();
     }
 
-    public HashMap<String, List<String>> getRegionProtectAllow() {
-        return regionsProtectAllowMap;
-    }
-
-    public HashMap<String, List<String>> getRegionProtectOnlyBreakAllow() {
-        return regionsOnlyBreakAllowMap;
+    public void setRegionProtectAllowMap(@NotNull HashMap<String, List<String>> value) {
+        regionProtectAllow = value;
+        saveConfig();
     }
 
     public void setRegionProtectOnlyBreakAllow(@NotNull HashMap<String, List<String>> value) {
@@ -429,9 +405,18 @@ public class Config {
 
     public void saveConfig() {
         try {
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtect", regionProtect);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectAllow", regionProtectAllow);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow", regionProtectOnlyBreakAllow);
+            if(regionProtect.isEmpty()) wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtect", new ArrayList<>());
+            for(Map.Entry<String, List<String>> entry : regionProtect.entrySet()) {
+                wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtect." + entry.getKey(), entry.getValue());
+            }
+            if(regionProtectAllow.isEmpty()) wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectAllow", new ArrayList<>());
+            for(Map.Entry<String, List<String>> entry : regionProtectAllow.entrySet()) {
+                wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectAllow." + entry.getKey(), entry.getValue());
+            }
+            if(regionProtectOnlyBreakAllow.isEmpty()) wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow", new ArrayList<>());
+            for(Map.Entry<String, List<String>> entry : regionProtectOnlyBreakAllow.entrySet()) {
+                wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow." + entry.getKey(), entry.getValue());
+            }
 
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.interactType", interactType);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.collisionWithVehicle", collisionWithVehicle);
