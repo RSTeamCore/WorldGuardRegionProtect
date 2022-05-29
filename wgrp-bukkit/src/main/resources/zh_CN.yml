@@ -1,38 +1,34 @@
 ---
-name: WorldGuardRegionProtect
-authors:
-  - RitaSister
-  - IRedTea
-version: '${internalVersion}'
-main: net.ritasister.wgrp.WGRPBukkitPlugin
-depend:
-  - WorldGuard
-softdepend:
-  - PlaceholderAPI
-description: Protect your region on the server.
-website: 'https://github.com/RSTeamCore/WorldGuardRegionProtect'
-api-version: 1.18
-load: STARTUP
-permissions:
-  wgrp.admin:
-    description: All permissions of this plugin
-    children:
-      - wgrp.command.wgrpbase
-      - wgrp.command.reload
-      - wgrp.regionprotect
-      - wgrp.notify.admin
-  wgrp.*:
-    description: Alias for wgrp.admin
-  wgrp.command.wgrpbase:
-    description: Access for /wgrp command
-  wgrp.command.reload:
-    description: Access for /wgrp reload command
-  wgrp.regionprotect:
-    description: Bypass region protect
-  wgrp.notify.admin:
-    description: See notifies for admins
-commands:
-  wgregionprotect:
-    aliases:
-      - wgrp
-    description: "WGRP Command - main command of WGRP plugin."
+langTitle:
+  language: 汉语
+  author: RSTeamCore
+  version: 1.0
+messages:
+  ServerMsg:
+    wgrpMsg: '&8[&cWGRP&8]&a 此区域是由服务器保护的!'
+    wgrpMsgWe: '&8[&cWGRP&8]&c 你不能在这里使用世界编辑命令！'
+    noPerm: '您没有使用此命令的权限。'
+  regionManagement:
+    add: "&e 区域&6<region>&a 添加到配置。"
+    remove: "&c区域&6<region>&c 已从配置中删除。"
+    notContains: "&c无法从保护列表中移除区域，因为&6<region> &cis 未受保护！"
+    invalidWorld: "&cWorld &6<world>&c 未找到。您确定输入的世界名称正确吗？"
+    invalidRegion: "&c区域&6<region>&c 未找到。您确定输入了正确的区域名称吗？"
+  Configs:
+    configReloaded: '&8[&cWGRP&8] &a所有文件重新加载于 <time> 毫秒!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8]&cAttention! &e<player>&c 正在尝试使用区域命令 &5<cmd>&c: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8]&c Attention! &e<player> &6<action>&c 区域块: &3<region>&c 位置 &3<x> <y> <z> <world>'
+  usage:
+    title: '&8[&cWGRP&8]&3 命令使用 &6/%command%'
+    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
+    wgrpUseHelp: '&a使用方法：&e/wgrp help - &6查看命令列表。'
+    addRegionFromConsole: '&aUsage: &e/wgrp addregion &2[region] [world]'
+    removeRegionFromConsole: '&aUsage: &e/wgrp removeregion &2[region] [world]'
+  subCommands:
+    reload: '重新加载配置文件。'
+    about: '查看有关作者的信息。'
+    spy: '为谁与区域交互的间谍。'
+    help: '用于查看帮助。'
+    addRegion: '将区域添加到配置以保护。'
+    removeRegion: '从配置中移除该区域以移除保护。'
