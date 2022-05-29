@@ -6,7 +6,8 @@ wgRegionProtect:
   #-------------------------------------------------------------
   # Language of this plugins.
   # Loaded languages uploaded in "lang" folder.
-  # Default languages: en_US, de_DE, ru_RU, uk_UA,
+  # Languages available:
+  # en_US, de_DE, fi_FI, fr_FR, ru_RU, zh_CN, uk_UA, ja_JP
   #-------------------------------------------------------------
   lang: en_US
 
@@ -14,27 +15,30 @@ wgRegionProtect:
   # List of protected regions.
   # If regions are not needed, specify an empty parameter:
   # regionProtect: []
+  #   example_world: []
   #-------------------------------------------------------------
   regionProtect:
     world:
       - spawn
       - pvp
-    spawn:
-      - spawn
 
   #--------------------------------------------------------------------------------------
   # List of protected regions where breaking is allowed.
   # If regions are not needed, specify an empty parameter:
   # regionProtectAllow: []
+  #   example_world: []
   #--------------------------------------------------------------------------------------
-  regionProtectAllow: []
+  regionProtectAllow:
+    example_world: []
 
   #--------------------------------------------------------------------------------------
   # List of protected regions where only breaking is allowed.
   # If regions are not needed, specify an empty parameter:
-  # regionProtectOnlyBreakAllow: []
-  #-------------------------------------------------------------
-  regionProtectOnlyBreakAllow: []
+  # regionProtectOnlyBreakAllow:
+  #   example_world: []
+  #--------------------------------------------------------------------------------------
+  regionProtectOnlyBreakAllow:
+    example_world: []
 
   #--------------------------------------------------------------------------------------
   # List of prohibited entity / block for interaction in the protected region.
