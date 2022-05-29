@@ -97,8 +97,7 @@ public class CommandWGRP extends AbstractCommand {
             HashMap<String, List<String>> rgMap = wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap();
             if(sender instanceof Player) {
                 String region = args[0];
-                String world = args[1];
-                //String world = Objects.requireNonNull(((Player) sender).getPlayer()).getLocation().getWorld().getName();
+                String world = Objects.requireNonNull(((Player) sender).getPlayer()).getLocation().getWorld().getName();
                 ArrayList<String> newRegionList = new ArrayList<>();
                 if(rgMap.containsKey(world) && rgMap.get(world).contains(region)) {
                     newRegionList.addAll(rgMap.get(world));
