@@ -88,6 +88,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     private @NotNull List<String> filter(List<String> list, String @NotNull [] args) {
         String last = args[args.length - 1];
+        if(args.length - 1 != 0) return Collections.emptyList();
         List<String> result = new ArrayList<>();
         for(String arg : list) {
             if(arg.toLowerCase().startsWith(last.toLowerCase())) result.add(arg);

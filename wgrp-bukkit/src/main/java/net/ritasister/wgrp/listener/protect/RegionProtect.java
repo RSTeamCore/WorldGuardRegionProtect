@@ -51,8 +51,8 @@ public class RegionProtect implements Listener {
 		final Block block = e.getBlock();
 		final Location loc = block.getLocation();
 		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(loc);
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllow())
-				|| wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllow())) {
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())
+				|| wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap())) {
 			e.setCancelled(false);
 		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
 			&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
