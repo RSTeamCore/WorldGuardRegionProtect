@@ -22,17 +22,24 @@ import java.util.stream.Collectors;
 public enum Message {
     ServerMsg_wgrpMsg, ServerMsg_wgrpMsgWe, ServerMsg_wgrpUseHelp, ServerMsg_noPerm,
     Configs_configReloaded,
+
     Notify_sendAdminInfoIfUsedCommandInRG, Notify_sendAdminInfoIfActionInRegion,
-    PluralTime_day_pluralDay1, PluralTime_day_pluralDay2, PluralTime_day_pluralDay3,
+
+    /*PluralTime_day_pluralDay1, PluralTime_day_pluralDay2, PluralTime_day_pluralDay3,
     PluralTime_hour_pluralHour1, PluralTime_hour_pluralHour2, PluralTime_hour_pluralHour3,
     PluralTime_minute_pluralMinute1, PluralTime_minute_pluralMinute2,
     PluralTime_minute_pluralMinute3, PluralTime_minute_pluralMinute4,
     PluralTime_second_pluralSecond1, PluralTime_second_pluralSecond2,
-    PluralTime_second_pluralSecond3, PluralTime_second_pluralSecond4, PluralTime_timeEmpty_pluralTimeEmpty,
+    PluralTime_second_pluralSecond3, PluralTime_second_pluralSecond4, PluralTime_timeEmpty_pluralTimeEmpty,*/
+
     subCommands_reload, subCommands_about, subCommands_spy, subCommands_addRegion, subCommands_removeRegion,
+
     subCommands_help,
+
     usage_format, usage_title, usage_wgrpUseHelp, usage_addRegionFromConsole, usage_removeRegionFromConsole,
+
     regionManagement_add, regionManagement_remove, regionManagement_notContains, regionManagement_invalidWorld,
+
     regionManagement_invalidRegion
     ;
 
