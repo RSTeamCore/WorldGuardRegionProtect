@@ -8,41 +8,27 @@ messages:
     wgrpMsg: '&8[&cWGRP&8] &aЭтот регион защищён сервером!'
     wgrpMsgWe: '&8[&cWGRP&8] &cЗдесь нельзя использовать команду WorldEdit!'
     noPerm: '&cУ вас нет разрешения на использование этой команды.'
+  regionManagement:
+    add: "&eРегион &6<region>&добавлен в конфигурацию."
+    remove: "&cРегион &6<region>удален из конфигурации."
+    notContains: "&cНе удалось удалить регион из списка защиты, так как &6<region> &cне защищен!"
+    invalidWorld: "&cМир &6<world>&c не найден. Вы уверены, что ввели название мира правильно?"
+    invalidRegion: "&cРегион &6<region>&c не найден. Вы уверены, что ввели корректное название региона?"
   Configs:
     configReloaded: '&8[&cWGRP&8] &aВсе файлы перезагружены за <time> мс!'
-    configNotFound: '&8[&cWGRP&8] &cFile &6config.yml&c not found, created new!'
-    configMsgNotFound: '&8[&cWGRP&8] &cFile &6messages.yml&c not found, created new!'
   Notify:
     sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cВнимание! &e<player>&c пытается использовать команду &5<cmd>&c в регионе: &3<region>'
     sendAdminInfoIfActionInRegion: '&8[&4!&8] &cВнимание! &e<player> &6<action>блок в регионе: &3<region>&c Расположение &3<x> <y> <z> <world>'
-  PluralTime:
-    day:
-      pluralDay1: 'день'
-      pluralDay2: 'день'
-      pluralDay3: 'дней'
-    hour:
-      pluralHour1: 'час'
-      pluralHour2: 'часы'
-      pluralHour3: 'часов'
-    minute:
-      pluralMinute1: 'минута'
-      pluralMinute2: 'минут'
-      pluralMinute3: 'минуты'
-      pluralMinute4: 'минут'
-    second:
-      pluralSecond1: 'секунда'
-      pluralSecond2: 'секунд'
-      pluralSecond3: 'секунды'
-      pluralSecond4: 'секунды'
-    timeEmpty:
-      pluralTimeEmpty: '0 секунд'
-  ExampleUseCommand:
-    wgrpUseHelp: '&aИспользовать: &e/wgrp help'
   usage:
     title: '&8[&cWGRP&8]&e Использование команд &6%command% '
     format: '&a&е/%command% %alias% -&e %description%'
-    invalidUsage: 'Неправильное использование команды! Напишите /wgrp help, чтобы увидеть список команд.'
+    wgrpUseHelp: '&aИспользование: &e/wgrp help - &6для просмотра списка команд.'
+    addRegionFromConsole: '&aИспользование: &e/wgrp addregion &2[region] [world]'
+    removeRegionFromConsole: '&aИспользование: &e/wgrp addregion &2[region] [world]'
   subCommands:
     reload: 'Перезагружает конфигурационные файлы.'
     about: 'Увидеть информацию об авторах'
     spy: 'Ожидается в ближайшее время...'
+    help: 'для просмотра помощи.'
+    addRegion: 'добавить регион в конфигурацию для защиты.'
+    removeRegion: 'удалить регион из конфигурации, чтобы снять защиту.'
