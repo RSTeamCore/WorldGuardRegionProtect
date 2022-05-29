@@ -1,0 +1,34 @@
+---
+langTitle:
+  language: українська
+  author: RSTeamCore
+  version: 1.0
+messages:
+  ServerMsg:
+    wgrpMsg: '&8[&cWGRP&8] &a цей регіон захищено сервером!'
+    wgrpMsgWe: '&8[&cWGRP&8] &сВи не можете використовувати команду WorldEdit тут!'
+    noPerm: 'У вас недостатньо прав для виконання цієї команди.'
+  regionManagement:
+    add: "&eРегіон &6<region>&a доданий до конфігурації."
+    remove: "&eРегіон &6<region>&a вилучено з конфігурації."
+    notContains: "&cНе вдалося вилучити регіон із списку захисту, тому що &6<region> &cis не захищений!"
+    invalidWorld: "&cWorld &6<world>&c not found. Are you sure you entered the name of the world correctly?"
+    invalidRegion: "&cRegion &6<region>&c not found. Are you sure you entered the correct region name?"
+  Configs:
+    configReloaded: '&8[&cWGRP&8] &aВсі файли перезавантажено за <time> мс!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8]&cУвага! &e<player>&c намагається використовувати команду &5<cmd>&c в регіоні: &3<region>'
+    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cУвага! &e<player> &6<action>&c блок в регіоні &3<region>&c Місцезнаходження &3<x> <y> <z> <world>'
+  usage:
+    title: '&8[&cWGRP&8]&e Використання для команди &6%command% '
+    format: ' &a%command% %alias% &2%tabArgs%&3-е &е%description%'
+    wgrpUseHelp: '&aВикористання: &e/wgrp help - &6для перегляду списку команд.'
+    addRegionFromConsole: '&aUsage: &e/wgrp addregion &2[region] [world]'
+    removeRegionFromConsole: '&aUsage: &e/wgrp removeregion &2[region] [world]'
+  subCommands:
+    reload: 'Перезавантажує файл конфіґурації.'
+    about: 'Перегляд інформації про авторів.'
+    spy: 'Найближчим часом...'
+    help: 'щоб подивитись допомогу по командам.'
+    addRegion: 'додати регіон до конфігурації, щоб захистити.'
+    removeRegion: 'видалити регіон з конфігурації, щоб зняти захист.'
