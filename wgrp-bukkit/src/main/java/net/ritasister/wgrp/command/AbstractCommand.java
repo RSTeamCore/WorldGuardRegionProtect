@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
@@ -38,7 +39,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) {
-            Message.usage_invalidUsage.send(sender);
+            Message.usage_wgrpUseHelp.send(sender);
         } else for (Method m : this.getClass().getDeclaredMethods()) {
             if (m.isAnnotationPresent(SubCommand.class)) {
                 SubCommand sub = m.getAnnotation(SubCommand.class);
@@ -56,7 +57,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                     }
                 }
                 String[] subArgs = {};
-                if (args.length > 1) subArgs = Arrays.copyOfRange(args, 1, args.length - 1);
+                if (args.length > 1) subArgs = Arrays.copyOfRange(args, 1, args.length);
                 if (isMustBeProcessed) {
                     if (!sub.permission().equals(UtilPermissions.NULL_PERM)) {
                         if (sender.hasPermission(sub.permission().getPermissionName()))  {
@@ -81,12 +82,11 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public
-    List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
+    List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String @NotNull [] args) {
         return filter(complete(), args);
     }
 
-    private List<String> filter(List<String> list, String[] args) {
-        if(list == null) return null;
+    private @NotNull List<String> filter(List<String> list, String @NotNull [] args) {
         String last = args[args.length - 1];
         List<String> result = new ArrayList<>();
         for(String arg : list) {
