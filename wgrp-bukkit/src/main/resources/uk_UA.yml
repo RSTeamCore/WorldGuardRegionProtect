@@ -14,7 +14,7 @@ messages:
     invalidWorld: "&cWorld &6<world>&c not found. Are you sure you entered the name of the world correctly?"
     invalidRegion: "&cRegion &6<region>&c not found. Are you sure you entered the correct region name?"
   Configs:
-    configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
+    configReloaded: '&8[&cWGRP&8] &aУсі файли перезавантажені за <ms> мс!'
   Notify:
     sendAdminInfoIfUsedCommandInRG: '&8[&4!&8]&cУвага! &e<player>&c намагається використовувати команду &5<cmd>&c в регіоні: &3<region>'
     sendAdminInfoIfActionInRegion: '&8[&4!&8] &cУвага! &e<player> &6<action>&c блок в регіоні &3<region>&c Місцезнаходження &3<x> <y> <z> <world>'
