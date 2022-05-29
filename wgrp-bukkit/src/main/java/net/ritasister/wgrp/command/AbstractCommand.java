@@ -8,10 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
@@ -88,7 +85,18 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     private @NotNull List<String> filter(List<String> list, String @NotNull [] args) {
         String last = args[args.length - 1];
-        if(args.length - 1 != 0) return Collections.emptyList();
+        if(args.length - 1 != 0) {
+            String subCmdStr = args[0];
+            for(Method m : this.getClass().getDeclaredMethods()) {
+                if(m.isAnnotationPresent(SubCommand.class)) {
+                    SubCommand subCommand = m.getAnnotation(SubCommand.class);
+                    if(subCommand.name().equalsIgnoreCase(subCmdStr)) {
+                        return Arrays.asList(subCommand.tabArgs()[args.length]);
+                    }
+                }
+            }
+            return Collections.emptyList();
+        }
         List<String> result = new ArrayList<>();
         for(String arg : list) {
             if(arg.toLowerCase().startsWith(last.toLowerCase())) result.add(arg);

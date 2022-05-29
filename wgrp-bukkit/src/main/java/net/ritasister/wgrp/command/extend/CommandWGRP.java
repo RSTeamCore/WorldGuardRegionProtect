@@ -67,6 +67,7 @@ public class CommandWGRP extends AbstractCommand {
             if(sender instanceof Player) {
                 String region = args[0];
                 String world = Objects.requireNonNull(((Player) sender).getPlayer()).getLocation().getWorld().getName();
+                if(args.length == 2) world = args[1];
                 ArrayList<String> newRegionList = new ArrayList<>();
                 if(rgMap.containsKey(world) && !rgMap.get(world).contains(region)) newRegionList.addAll(rgMap.get(world));
                 newRegionList.add(region);
@@ -98,6 +99,7 @@ public class CommandWGRP extends AbstractCommand {
             if(sender instanceof Player) {
                 String region = args[0];
                 String world = Objects.requireNonNull(((Player) sender).getPlayer()).getLocation().getWorld().getName();
+                if(args.length == 2) world = args[1];
                 ArrayList<String> newRegionList = new ArrayList<>();
                 if(rgMap.containsKey(world) && rgMap.get(world).contains(region)) {
                     newRegionList.addAll(rgMap.get(world));
