@@ -62,13 +62,6 @@ body:
     validations:
       required: true
 
-  - type: textarea
-    attributes:
-      label: Screenshots / Videos
-      description: If applicable, add screenshots to help explain your problem.
-    validations:
-        required: true
-
   - type: input
     attributes:
       label: Error log (if applicable)
