@@ -20,7 +20,7 @@
 
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
-* Versions after **0.7.1** FOR **1.18+** require **JAVA 17+**!
+* Versions after **0.7.1** for **1.18+** require **JAVA 17+**!
 ---
 ## Opportunities of plugin
 
