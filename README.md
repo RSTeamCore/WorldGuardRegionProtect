@@ -20,7 +20,7 @@
 
 ## IMPORTANT
 * [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
-* PLUGIN VERSION OF **0.7.1** FOR **1.18** CAN RUN ONLY ON **JAVA 17+**!
+* Versions after **0.7.1** FOR **1.18+** require **JAVA 17+**!
 ---
 ## Opportunities of plugin
 
@@ -56,11 +56,6 @@
 [bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect/12975)
 <img alt="bStats" src="https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg"/>
 ---
-
-# Old versions of 1.12-1.17 are no longer supported!
-* PLUGIN VERSION OF **0.7.1-pre5** FOR **1.16.5-1.18** OR HIGHER CAN RUN ONLY ON **JAVA 16+**!
-* PLUGIN VERSION OF **0.7.0 OR** LOWEST FOR **1.13-1.17** CAN RUN ONLY ON JAVA **11**!
-* PLUGIN VERSION OF **0.7.1-pre1** FOR **1.12.2** CAN RUN ONLY ON **JAVA 8**!
 
 # Old version 1.12.2!
 You can find here:
