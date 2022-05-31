@@ -8,7 +8,7 @@ messages:
     wgrpMsgWe: '&8[&cWGRP&8] &cWorldEditコマンドはここでは使用できません！'
     noPerm: '&cこのコマンドを使用する権限がありません。'
   regionManagement:
-    add: "&aRegion &6<region>&a added to config."
+    add: "&eリージョン&6<region>&a が設定に追加されました。"
     remove: "&cリージョン&6<region>&c が設定から削除されました。"
     notContains: "&c&6<region> &cが保護されていないため、保護リストからリージョンを削除できませんでした！"
     invalidWorld: "&cワールド &6<world>&c が見つかりません。ワールドの名前を正しく入力していますか？"
@@ -28,6 +28,6 @@ messages:
     reload: '設定ファイルを再読み込みします。'
     about: '著者に関する情報を見る。'
     spy: 'リージョンと交流するスパイだ'
-    help: 'for seen helping.'
+    help: 'チーム一覧を見る。'
     addRegion: '設定にリージョンを追加して保護します。'
     removeRegion: '設定からリージョンを削除して保護を解除します。'
