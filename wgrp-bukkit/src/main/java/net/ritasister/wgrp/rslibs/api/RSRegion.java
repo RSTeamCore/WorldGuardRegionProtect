@@ -4,6 +4,7 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.interfaces.IRSRegion;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -13,8 +14,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class RSRegion implements IRSRegion {
+
+    private final WorldGuardRegionProtect wgRegionProtect;
+
+    public RSRegion(WorldGuardRegionProtect wgRegionProtect) {
+        this.wgRegionProtect=wgRegionProtect;
+    }
 
     /**
      * Check access in standing region by player used region name from config.yml.
@@ -25,25 +33,14 @@ public class RSRegion implements IRSRegion {
      * @return location of object.
      */
     @Override
-    public boolean checkStandingRegion(@NotNull Location location, HashMap<String, List<String>> regions) {
+    public boolean checkStandingRegion(@NotNull Location location, @NotNull HashMap<String, List<String>> regions) {
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
-        for (ProtectedRegion protectedRegion : applicableRegionSet) {
-            for (String regionName : regions.get(location.getWorld().getName())) {
-                if (protectedRegion.getId().equalsIgnoreCase(regionName)) {
-                    return true;
-                }
-            }
-        }return false;
-    }
-    @Override
-    public boolean checkStandingRegion(World world, @NotNull Location location, HashMap<String, List<String>> regions) {
-        if(regions == null) return false;
-        final ApplicableRegionSet set = this.getApplicableRegions(location);
-        for (final ProtectedRegion rg : set) {
-            for (String regionName : regions.get(world.getName())) {
-                if (rg.getId().equalsIgnoreCase(regionName)) {
-                    return true;
-                }
+        for (String regionName : regions.get(location.getWorld().getName())) {
+            if (applicableRegionSet
+                    .getRegions()
+                    .stream()
+                    .anyMatch(region -> regionName.equalsIgnoreCase(region.getId()))) {
+                return true;
             }
         }
         return false;
@@ -71,11 +68,11 @@ public class RSRegion implements IRSRegion {
      */
     public String getProtectRegion(@NotNull Location location) {
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
-        for (ProtectedRegion protectedRegion : applicableRegionSet) {
-            return protectedRegion.getId();
-
-        }
-        return null;
+        return applicableRegionSet
+                .getRegions()
+                .stream()
+                .map(ProtectedRegion::getId)
+                .collect(Collectors.joining());
     }
 
     /**
@@ -91,7 +88,7 @@ public class RSRegion implements IRSRegion {
                 .getApplicableRegions(BukkitAdapter.asBlockVector(location));
     }
 
-    public String getProtectRegionName(@NotNull Location loc) {
-        return this.getProtectRegion(loc);
+    public String getProtectRegionName(@NotNull Location location) {
+        return this.getProtectRegion(location);
     }
 }
