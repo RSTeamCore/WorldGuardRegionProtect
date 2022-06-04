@@ -11,9 +11,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
@@ -49,18 +47,18 @@ public class RegionProtect implements Listener {
 		final String playerName = player.getPlayerProfile().getName();
 		final UUID uniqueId = player.getPlayerProfile().getId();
 		final Block block = e.getBlock();
-		final Location loc = block.getLocation();
-		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(loc);
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())
-				|| wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap())) {
+		final Location location = block.getLocation();
+		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(location);
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())
+				|| wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap())) {
 			e.setCancelled(false);
-		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
+		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
 			&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
 			e.setCancelled(true);
 			if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtect()) {
 				player.sendMessage(Message.ServerMsg_wgrpMsg.toString());
 			}
-		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc)
+		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(location)
 				&& wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER, null)) {
 			if(wgRegionProtect.spyLog.contains(uniqueId)) {
 				wgRegionProtect.getRsApi().notifyIfActionInRegion(
@@ -83,17 +81,17 @@ public class RegionProtect implements Listener {
 		final String playerName = player.getPlayerProfile().getName();
 		final UUID uniqueId = player.getPlayerProfile().getId();
 		final Block block = e.getBlock();
-		final Location loc = block.getLocation();
-		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(loc);
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())) {
+		final Location location = block.getLocation();
+		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(location);
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())) {
 			e.setCancelled(false);
-		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
+		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
 				&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
 			e.setCancelled(true);
 			if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtect()) {
 				player.sendMessage(Message.ServerMsg_wgrpMsg.toString());
 			}
-		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(loc)
+		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(location)
 				&& wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER, null)) {
 			if(wgRegionProtect.spyLog.contains(uniqueId)) {
 				wgRegionProtect.getRsApi().notifyIfActionInRegion(
@@ -125,8 +123,8 @@ public class RegionProtect implements Listener {
 		Entity vehicle = e.getVehicle();
 		final Location location = vehicle.getLocation();
 		if(entity instanceof Player) {
-			if(wgRegionProtect.getRsRegion().checkStandingRegion(location)
-					&& wgRegionProtect.getRsApi().isSenderListenerPermission(e.getEntity(), UtilPermissions.REGION_PROTECT, null)) {
+			if(wgRegionProtect.getRsApi().isSenderListenerPermission(entity, UtilPermissions.REGION_PROTECT, null)
+					&&	wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())) {
 				if(wgRegionProtect.getUtilConfig().getConfig().getCollisionWithVehicle()) {
 					if (vehicle instanceof Minecart || vehicle instanceof Boat) e.setCancelled(true);
 				}
@@ -140,7 +138,7 @@ public class RegionProtect implements Listener {
 		Entity entered = e.getEntered();
 		final Location location = vehicle.getLocation();
 		if(entered instanceof Player) {
-			if(wgRegionProtect.getRsRegion().checkStandingRegion(location)
+			if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())
 					&& wgRegionProtect.getRsApi().isSenderListenerPermission(entered, UtilPermissions.REGION_PROTECT, null)) {
 				if(wgRegionProtect.getUtilConfig().getConfig().getCanSitAsPassengerInVehicle()) {
 					if (vehicle instanceof Minecart || vehicle instanceof Boat) e.setCancelled(true);
@@ -155,7 +153,7 @@ public class RegionProtect implements Listener {
 		Entity attacker = e.getAttacker();
 		final Location location = vehicle.getLocation();
 		if(attacker instanceof Player) {
-			if(wgRegionProtect.getRsRegion().checkStandingRegion(location)
+			if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())
 					&& wgRegionProtect.getRsApi().isSenderListenerPermission(attacker, UtilPermissions.REGION_PROTECT, null)) {
 				if(wgRegionProtect.getUtilConfig().getConfig().getCanDamageVehicle()) {
 					if (vehicle instanceof Minecart || vehicle instanceof Boat) e.setCancelled(true);
@@ -168,26 +166,10 @@ public class RegionProtect implements Listener {
 	private void denyPlayerTakeLecternBook(final @NotNull PlayerTakeLecternBookEvent e) {
 		Player player = e.getPlayer();
 		Location location = e.getLectern().getLocation();
-		if (wgRegionProtect.getRsRegion().checkStandingRegion(location)) {
-			if(wgRegionProtect.getUtilConfig().getConfig().getCanTakeLecternBook()) {
-				if (!wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
+		if(wgRegionProtect.getUtilConfig().getConfig().getCanTakeLecternBook()) {
+			if (wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())
+					|| !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
 					e.setCancelled(true);
-				}
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.LOWEST)
-	private void denyBucketEmpty(final @NotNull PlayerBucketEmptyEvent e) {
-		final Player p = e.getPlayer();
-		final Location loc = e.getBlockClicked().getLocation();
-		final Material bucketType = e.getBucket();
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())) {
-			if(!wgRegionProtect.getRsApi().isSenderListenerPermission(p, UtilPermissions.REGION_PROTECT, null)) {
-				switch (bucketType) {
-					case LAVA_BUCKET, WATER_BUCKET, TROPICAL_FISH_BUCKET, PUFFERFISH_BUCKET,
-							AXOLOTL_BUCKET, COD_BUCKET, SALMON_BUCKET -> e.setCancelled(true);
-				}
 			}
 		}
 	}
@@ -195,13 +177,12 @@ public class RegionProtect implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyPlayerBucketEntity(final @NotNull PlayerBucketEntityEvent e) {
 		final Player player = e.getPlayer();
-		final Location loc = e.getEntity().getLocation();
+		final Location location = e.getEntity().getLocation();
 		final Material bucketInHand = player.getInventory().getItemInMainHand().getType();
-		if(wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())) {
-			if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) return; {
-				if (bucketInHand == Material.WATER_BUCKET) {
-					e.setCancelled(true);
-				}
+		if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
+			|| wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
+			if (bucketInHand == Material.WATER_BUCKET) {
+				e.setCancelled(true);
 			}
 		}
 	}
@@ -246,25 +227,38 @@ public class RegionProtect implements Listener {
 		}
 	}
 
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	private void denyBlockFromTo(@NotNull BlockFromToEvent e) {
+		Block block = e.getBlock();
+		Location location = e.getToBlock().getLocation();
+		if (wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())) {
+			if (wgRegionProtect.getUtilConfig().getConfig().isDenyWaterFlowToRegion() && block.getType() == Material.WATER) {
+				e.setCancelled(true);
+			} else if(wgRegionProtect.getUtilConfig().getConfig().isDenyLavaFlowToRegion() && block.getType() == Material.LAVA) {
+				e.setCancelled(true);
+			}
+		}
+	}
+
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyInteract(final @NotNull PlayerInteractEvent e) {
-		if (e.getItem() != null) {
+		if (e.getItem() != null && e.getClickedBlock() != null) {
 			Player player = e.getPlayer();
-			if(wgRegionProtect.getRsRegion().checkStandingRegion(player.getWorld(), player.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())) {
-				if(!wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
-					for (String spawnEntityType : wgRegionProtect.getUtilConfig().getConfig().getInteractType()) {
-						if (e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase())
-								&& e.getClickedBlock() != null) {
-							e.setCancelled(true);
-						} else if (player.getInventory().getItemInMainHand().getType() == Material.GLOWSTONE
-								&& e.getClickedBlock() != null
-								&& e.getClickedBlock().getType() == Material.RESPAWN_ANCHOR) {
-							e.setCancelled(true);
-						} else if (player.getInventory().getItemInMainHand().getType() == Material.FLINT_AND_STEEL
-								&& e.getClickedBlock() != null
-								&& e.getClickedBlock().getType() == Material.TNT) {
-							e.setCancelled(true);
-						}
+			Location location = e.getClickedBlock().getLocation();
+			if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
+				&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
+				for (String spawnEntityType : wgRegionProtect.getUtilConfig().getConfig().getInteractType()) {
+					if (e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase())
+							&& e.getClickedBlock() != null) {
+						e.setCancelled(true);
+					} else if (player.getInventory().getItemInMainHand().getType() == Material.GLOWSTONE
+							&& e.getClickedBlock() != null
+							&& e.getClickedBlock().getType() == Material.RESPAWN_ANCHOR) {
+						e.setCancelled(true);
+					} else if (player.getInventory().getItemInMainHand().getType() == Material.FLINT_AND_STEEL
+							&& e.getClickedBlock() != null
+							&& e.getClickedBlock().getType() == Material.TNT) {
+						e.setCancelled(true);
 					}
 				}
 			}
@@ -302,7 +296,7 @@ public class RegionProtect implements Listener {
 	private void denyStructureGrow(final @NotNull StructureGrowEvent e) {
 		if(e.getPlayer() != null) {
 			final Player player = e.getPlayer();
-			if (wgRegionProtect.getRsRegion().checkStandingRegion(e.getWorld(), e.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())) {
+			if (wgRegionProtect.getRsRegion().checkStandingRegion(e.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())) {
 				if (!wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
 					e.setCancelled(true);
 				}
