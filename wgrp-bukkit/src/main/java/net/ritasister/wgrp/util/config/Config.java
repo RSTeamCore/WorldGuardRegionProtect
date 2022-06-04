@@ -48,6 +48,12 @@ public class Config {
     private boolean canTakeLecternBook;
 
     @CanRecover
+    private boolean denyWaterFlowToRegion;
+
+    @CanRecover
+    private boolean denyLavaFlowToRegion;
+
+    @CanRecover
     private List<String> spyCommandList;
 
     @CanRecover
@@ -164,6 +170,8 @@ public class Config {
             canSitAsPassengerInVehicle = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle");
             canDamageVehicle = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canDamageVehicle");
             canTakeLecternBook = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canTakeLecternBook");
+            denyWaterFlowToRegion = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion");
+            denyLavaFlowToRegion = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.other.denyLavaFlowToRegion");
 
             cmdWe = plugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWe");
             cmdWeC = plugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeC");
@@ -195,6 +203,7 @@ public class Config {
                     plugin.getConfig().getInt("wgRegionProtect.dataSource.maxPoolSize"),
                     plugin.getConfig().getInt("wgRegionProtect.dataSource.maxLifetime"),
                     plugin.getConfig().getInt("wgRegionProtect.dataSource.connectionTimeout"),
+                    plugin.getConfig().getBoolean("wgRegionProtect.dataSource.useSsl"),
                     plugin.getConfig().getInt("wgRegionProtect.dataSource.intervalReload")
             );
 
@@ -266,6 +275,7 @@ public class Config {
                                     10,
                                     1800,
                                     5000,
+                                    true,
                                     60);
                         }
                     }
@@ -326,10 +336,15 @@ public class Config {
     }
 
 
+    public boolean isDenyWaterFlowToRegion() { return denyWaterFlowToRegion; }
+
+    public boolean isDenyLavaFlowToRegion() {
+        return denyLavaFlowToRegion;
+    }
+
     public List<String> getSpyCommandList() {
         return spyCommandList;
     }
-
 
     public List<String> getCmdWe() {
         return cmdWe;
@@ -413,6 +428,8 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle", canSitAsPassengerInVehicle);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canDamageVehicle", canDamageVehicle);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canTakeLecternBook", canTakeLecternBook);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion", denyWaterFlowToRegion);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.other.denyLavaFlowToRegion", denyLavaFlowToRegion);
 
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWe", cmdWe);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeC", cmdWeC);
@@ -441,6 +458,7 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.maxPoolSize", mysqlsettings.getMaxPoolSize());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.maxLifetime", mysqlsettings.getMaxLifetime());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.connectionTimeout", mysqlsettings.getConnectionTimeout());
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.useSsl", mysqlsettings.getUseSsl());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.intervalReload", mysqlsettings.getIntervalReload());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.lang", lang);
             wgRegionProtect.getWgrpBukkitPlugin().saveConfig();
@@ -464,10 +482,11 @@ public class Config {
         private final int maxPoolSize;
         private final int maxLifetime;
         private final int connectionTimeout;
+        private final boolean useSsl;
         private final int intervalReload;
 
         MySQLSettings(String host, int port, String database, String user, String password, String table,
-                      int maxPoolSize, int maxLifetime, int connectionTimeout, int intervalReload) {
+                      int maxPoolSize, int maxLifetime, int connectionTimeout, boolean useSsl, int intervalReload) {
             this.host = host;
             this.port = port;
             this.database = database;
@@ -477,6 +496,7 @@ public class Config {
             this.maxPoolSize = maxPoolSize;
             this.maxLifetime = maxLifetime;
             this.connectionTimeout = connectionTimeout;
+            this.useSsl = useSsl;
             this.intervalReload = intervalReload;
         }
 
@@ -514,6 +534,10 @@ public class Config {
 
         public int getConnectionTimeout() {
             return connectionTimeout;
+        }
+
+        public boolean getUseSsl() {
+            return useSsl;
         }
 
         public int getIntervalReload() {

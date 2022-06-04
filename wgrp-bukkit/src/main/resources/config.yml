@@ -70,6 +70,11 @@ wgRegionProtect:
   # - bucket
   # - water_bucket
   # - lava_bucket
+  # - tropical_fish_bucket
+  # - pufferfish_bucket
+  # - axolotl_bucket
+  # - cod_bucket
+  # - salmon_bucket
   #
   # interactType: []
   #--------------------------------------------------------------------------------------
@@ -93,6 +98,11 @@ wgRegionProtect:
       - bucket
       - water_bucket
       - lava_bucket
+      - tropical_fish_bucket
+      - pufferfish_bucket
+      - axolotl_bucket
+      - cod_bucket
+      - salmon_bucket
     #--------------------------------------------------------------------------------------
     # collisionWithVehicle - whether the player can collide with a vehicle. (Boat, Wagon, etc.)
     # canSitAsPassengerInVehicle - whether the player can sit as a passenger in the vehicle.
@@ -104,6 +114,9 @@ wgRegionProtect:
       canSitAsPassengerInVehicle: true
       canDamageVehicle: true
       canTakeLecternBook: true
+    other:
+      denyWaterFlowToRegion: true
+      denyLavaFlowToRegion: true
 
   #--------------------------------------------------------------------------------------
   # List of forbidden commands from WE / FAWE.
@@ -218,6 +231,6 @@ wgRegionProtect:
     # Pool settings...
     #--------------------------------------------------------------------------------------
     maxPoolSize: 10
-    maxLifetime: 1800
-    connectionTimeout: 5000
-    intervalReload: 60
+    maxLifetime: 1800 # 30 minutes
+    connectionTimeout: 5000 # 5 second
+    intervalReload: 60 #in seconds
