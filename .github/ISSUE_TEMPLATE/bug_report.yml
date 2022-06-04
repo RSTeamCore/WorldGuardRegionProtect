@@ -67,6 +67,8 @@ body:
       label: Error log (if applicable)
       description: If you are reporting a console error, upload any relevant log excerpts to either https://paste.gg/ or https://gist.github.com, save and the paste the link in this box.
       placeholder: "Example: https://paste.gg/p/anonymous/109dd6a10a734a3aa430d5a351ea5210"
+    validations:
+      required: true
 
   - type: input
     attributes:
