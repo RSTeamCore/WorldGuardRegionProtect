@@ -11,5 +11,4 @@ public interface IRSRegion {
 
     boolean checkStandingRegion(@NotNull Location location, HashMap<String, List<String>> regions);
     boolean checkStandingRegion(@NotNull Location location);
-    boolean checkStandingRegion(World world, @NotNull Location location, HashMap<String, List<String>> regions);
 }
