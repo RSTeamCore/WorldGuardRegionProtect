@@ -64,12 +64,12 @@ public class WorldGuardRegionProtect {
         this.getLoadLibs().loadPlaceholderAPI();
         this.getLoadLibs().loadWorldGuard();
 
-        //API for Regions.
-        this.rsRegion = new RSRegion();
-
         //Configs.
         this.utilConfig = new UtilConfig();
         this.getUtilConfig().initConfig(this);
+
+        //API for Regions.
+        this.rsRegion = new RSRegion();
 
         //Parameters for to intercept commands from WE or FAWE.
         this.commandWE = new CommandWE(this);
@@ -96,7 +96,7 @@ public class WorldGuardRegionProtect {
                 this.getRsApi().getLogger().info("&2Current version: &b<pl_ver>".replace("<pl_ver>", this.getPluginVersion()));
                 this.getRsApi().getLogger().info("&2This is the latest version of plugin.");
                 this.getRsApi().getLogger().info("&6==============================================");
-            }else{
+            } else {
                 this.getRsApi().getLogger().info("&6==============================================");
                 this.getRsApi().getLogger().info("&eThere is a new version update available.");
                 this.getRsApi().getLogger().info("&cCurrent version: &4<pl_ver>".replace("<pl_ver>", this.getPluginVersion()));
