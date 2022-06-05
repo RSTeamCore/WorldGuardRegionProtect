@@ -1,12 +1,13 @@
 package net.ritasister.wgrp.rslibs.util.wg;
 
+import com.sk89q.worldedit.IncompleteRegionException;
 import org.bukkit.entity.Player;
 
 public interface Iwg {
-   boolean checkIntersection(Player var1);
-   boolean checkCIntersection(Player var1, String... var2);
-   boolean checkPIntersection(Player var1, String... var2);
-   boolean checkSIntersection(Player var1, String... var2);
-   boolean checkUIntersection(Player var1, String... var2);
-   boolean checkCPIntersection(Player var1, String... var2);
+   boolean checkIntersection(Player player) throws IncompleteRegionException;
+   boolean checkCIntersection(Player player, String... args) throws IncompleteRegionException;
+   boolean checkPIntersection(Player player, String... args) throws IncompleteRegionException;
+   boolean checkSIntersection(Player player, String... args) throws IncompleteRegionException;
+   boolean checkUIntersection(Player player, String... args) throws IncompleteRegionException;
+   boolean checkCPIntersection(Player player, String... args) throws IncompleteRegionException;
 }
