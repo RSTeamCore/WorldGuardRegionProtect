@@ -33,7 +33,7 @@ public class RSApi {
 	 * @return if Sender can use commands.
 	 */
 	public boolean isSenderCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull UtilPermissions perm, String message) {
-		if (!sender.hasPermission(perm.getPermissionName()) || !sender.isPermissionSet(perm.getPermissionName())) {
+		if (!sender.hasPermission(perm.getPermissionName())) {
 			if (message != null) {
 				sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
 
@@ -53,7 +53,7 @@ public class RSApi {
 	 * @return if Sender can use commands.
 	 */
 	public boolean isSenderCommandsPermission(@NotNull Player player, @NotNull Command cmd, @NotNull UtilPermissions perm, String message) {
-		if (!player.hasPermission(perm.getPermissionName()) || !player.isPermissionSet(perm.getPermissionName())) {
+		if (!player.hasPermission(perm.getPermissionName())) {
 			if (message != null) {
 				player.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
 
@@ -71,7 +71,7 @@ public class RSApi {
 	 * @return if Sender can use TAB.
 	 */
 	public boolean isSenderCommandsPermissionOnTab(@NotNull CommandSender sender, @NotNull UtilPermissions perm) {
-		return sender.hasPermission(perm.getPermissionName()) && sender.isPermissionSet(perm.getPermissionName());
+		return sender.hasPermission(perm.getPermissionName());
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class RSApi {
 	 * @return if Sender can use Events.
 	 */
 	public boolean isSenderListenerPermission(@NotNull CommandSender sender, @NotNull UtilPermissions perm, String message) {
-		if (!sender.hasPermission(perm.getPermissionName()) || !sender.isPermissionSet(perm.getPermissionName())) {
+		if (!sender.hasPermission(perm.getPermissionName())) {
 			if (message != null) {
 				sender.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
 			}
@@ -101,7 +101,7 @@ public class RSApi {
 	 * @return if Sender can use Events.
 	 */
 	public boolean isSenderListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm, String message) {
-		if (!player.hasPermission(perm.getPermissionName()) || !player.isPermissionSet(perm.getPermissionName())) {
+		if (!player.hasPermission(perm.getPermissionName())) {
 			if (message != null) {
 				player.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
 			}
@@ -119,13 +119,13 @@ public class RSApi {
 	 * @return if Sender can use Events.
 	 */
 	public boolean isSenderListenerPermission(@NotNull Entity entity, @NotNull UtilPermissions perm, String message) {
-		if (!entity.hasPermission(perm.getPermissionName()) || !entity.isPermissionSet(perm.getPermissionName())) {
+		if (entity.hasPermission(perm.getPermissionName())) {
 			if (message != null) {
 				entity.sendMessage(wgRegionProtect.getChatApi().getColorCode(message));
 			}
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -137,6 +137,7 @@ public class RSApi {
 	 * @param regionName    return region name, if player attempts to use command in region.
 	 */
 	public void notify(Player player, String playerName, String senderCommand, String regionName) {
+		if(regionName == null) return;
 		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdmin()
 				&& this.isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN, null)) {
 			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
@@ -160,6 +161,7 @@ public class RSApi {
 	 * @param regionName region name, if player attempts to use command in region.
 	 */
 	public void notify(String playerName, String senderCommand, String regionName) {
+		if(regionName == null) return;
 		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyConsole()) {
 			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
