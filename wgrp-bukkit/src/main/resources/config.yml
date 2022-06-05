@@ -114,6 +114,10 @@ wgRegionProtect:
       canSitAsPassengerInVehicle: true
       canDamageVehicle: true
       canTakeLecternBook: true
+    #--------------------------------------------------------------------------------------
+    # denyWaterFlowToRegion - Whether to allow water to flow into protected regions.
+    # denyLavaFlowToRegion - Whether to allow lava to flow into protected regions.
+    #--------------------------------------------------------------------------------------
     other:
       denyWaterFlowToRegion: true
       denyLavaFlowToRegion: true

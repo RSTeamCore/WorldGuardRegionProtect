@@ -192,7 +192,7 @@ public class Config {
             spyCommandList = plugin.getConfig().getStringList("wgRegionProtect.spySettings.spyCommandList");
 
             //Database settings.
-            databaseEnable = plugin.getConfig().getBoolean("wgRegionProtect.dataSource.databaseEnable");
+            databaseEnable = plugin.getConfig().getBoolean("wgRegionProtect.dataSource.enable");
             mysqlsettings = new MySQLSettings(
                     plugin.getConfig().getString("wgRegionProtect.dataSource.host"),
                     plugin.getConfig().getInt("wgRegionProtect.dataSource.port"),
@@ -264,7 +264,7 @@ public class Config {
                                     "//cut", "//replacenear");
 
                             //Database settings.
-                            case "databaseEnable" -> databaseEnable = false;
+                            case "enable" -> databaseEnable = false;
                             case "mysqlsettings" -> mysqlsettings = new MySQLSettings(
                                     "localhost",
                                     3306,
@@ -448,7 +448,7 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.sound.type", spyCommandNotifyAdminPlaySound);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.spyCommandList", spyCommandList);
 
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.databaseEnable", databaseEnable);
+            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.enable", databaseEnable);
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.host", mysqlsettings.getHost());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.port", mysqlsettings.getPort());
             wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.database", mysqlsettings.getDataBase());
