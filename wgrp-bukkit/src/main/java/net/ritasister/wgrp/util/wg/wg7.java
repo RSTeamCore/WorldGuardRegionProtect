@@ -4,14 +4,12 @@ import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
@@ -19,7 +17,6 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.util.wg.Iwg;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
@@ -29,28 +26,19 @@ import org.jetbrains.annotations.Nullable;
 public class wg7 implements Iwg {
 
     public WorldGuardRegionProtect wgRegionProtect;
-    public WorldGuardPlugin wg;
-    public WorldEditPlugin we;
 
     public wg7(final WorldGuardRegionProtect wgRegionProtect) {
         this.wgRegionProtect = wgRegionProtect;
-        this.wg = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
-        this.we = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
     }
 
     @Override
-    public boolean checkIntersection(final Player player) {
-        final LocalSession l = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
-        Region sel = null;
-        try {
-            sel = l.getSelection(BukkitAdapter.adapt(player.getWorld()));
-        } catch (IncompleteRegionException e) {
-            e.printStackTrace();
-        }
-        return this.checkIntersection(sel, player);
+    public boolean checkIntersection(final Player player) throws IncompleteRegionException {
+        LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
+        Region selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
+        return checkIntersection(selection, player);
     }
 
-    private boolean checkIntersection(final Region sel, Player p) {
+    private boolean checkIntersection(final Region sel, Player player) {
         if (sel instanceof CuboidRegion) {
             final BlockVector3 min = sel.getMinimumPoint();
             final BlockVector3 max = sel.getMaximumPoint();
@@ -60,15 +48,15 @@ public class wg7 implements Iwg {
             assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) {
-                for (final Object region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap().get(p.getWorld().getName())) {
-                    if (rg.getId().equalsIgnoreCase(region.toString())) {
+                for (final String region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap().get(player.getWorld().getName())) {
+                    if (rg.getId().equalsIgnoreCase(region)) {
                         return false;
                     }
                 }
             }
             for (final ProtectedRegion rg : set) {
-                for (final Object region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(p.getWorld().getName())) {
-                    if (rg.getId().equalsIgnoreCase(region.toString())) {
+                for (final String region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(player.getWorld().getName())) {
+                    if (rg.getId().equalsIgnoreCase(region)) {
                         return false;
                     }
                 }
