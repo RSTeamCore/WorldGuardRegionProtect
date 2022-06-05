@@ -32,7 +32,7 @@
 1. Nobody cannot break or place blocks in region.
 2. It is possible to enable/disable the limitation of interaction with the transport.
 3. Protecting frame, painting from any damage from arrows, trident, snowball, eggs, enderpearl and player.
-4. Protect from any change in the frame (On 1.18 MC glow frame too).
+4. Protect from any change in the frame (From since 1.18 MC glow frame too).
 5. Nobody cannot damage armor stand and taking or place armor from it.
 6. Cannot use none of the buckets in region.
 7. Creeper, Wither, Ghast, Primed TNT, cannot blowing up stuff in the region. Skeleton, Stray and Shulker bullet cannot destroy frame/glow frame and painting.
@@ -57,7 +57,7 @@
 <img alt="bStats" src="https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg"/>
 ---
 
-# Old version 1.12.2!
+# For legacy users. Old version of 1.12.2!
 You can find here:
 * [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
 * [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)
