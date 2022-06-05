@@ -4,11 +4,8 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.interfaces.IRSRegion;
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -17,12 +14,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RSRegion implements IRSRegion {
-
-    private final WorldGuardRegionProtect wgRegionProtect;
-
-    public RSRegion(WorldGuardRegionProtect wgRegionProtect) {
-        this.wgRegionProtect=wgRegionProtect;
-    }
 
     /**
      * Check access in standing region by player used region name from config.yml.
@@ -34,6 +25,7 @@ public class RSRegion implements IRSRegion {
      */
     @Override
     public boolean checkStandingRegion(@NotNull Location location, @NotNull HashMap<String, List<String>> regions) {
+        if (regions.get(location.getWorld().getName()) == null) return false;
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         for (String regionName : regions.get(location.getWorld().getName())) {
             if (applicableRegionSet
@@ -60,13 +52,13 @@ public class RSRegion implements IRSRegion {
     }
 
     /**
-     * Getting region name for another method.
+     * Get region name.
      *
      * @param location location of object.
      *
      * @return location of Object.
      */
-    public String getProtectRegion(@NotNull Location location) {
+    public String getProtectRegionName(@NotNull Location location) {
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         return applicableRegionSet
                 .getRegions()
@@ -82,13 +74,8 @@ public class RSRegion implements IRSRegion {
      *
      * @return location of Object.
      */
-    @Contract("_ -> new")
     private @NotNull ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
         return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(location.getWorld())))
                 .getApplicableRegions(BukkitAdapter.asBlockVector(location));
-    }
-
-    public String getProtectRegionName(@NotNull Location location) {
-        return this.getProtectRegion(location);
     }
 }

@@ -48,7 +48,7 @@ public class RegionProtect implements Listener {
 		final UUID uniqueId = player.getPlayerProfile().getId();
 		final Block block = e.getBlock();
 		final Location location = block.getLocation();
-		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(location);
+		String regionName = wgRegionProtect.getRsRegion().getProtectRegionName(location);
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())
 				|| wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap())) {
 			e.setCancelled(false);
@@ -82,7 +82,7 @@ public class RegionProtect implements Listener {
 		final UUID uniqueId = player.getPlayerProfile().getId();
 		final Block block = e.getBlock();
 		final Location location = block.getLocation();
-		String regionName = wgRegionProtect.getRsRegion().getProtectRegion(location);
+		String regionName = wgRegionProtect.getRsRegion().getProtectRegionName(location);
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())) {
 			e.setCancelled(false);
 		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
