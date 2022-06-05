@@ -83,6 +83,22 @@ public class RSRegion implements IRSRegion {
     /**
      * Get region name.
      *
+     * @param location get location of Object in the region.
+     *
+     * @return location of Object.
+     */
+    public String getProtectRegionName(@NotNull Location location) {
+        final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
+        return applicableRegionSet
+                .getRegions()
+                .stream()
+                .map(ProtectedRegion::getId)
+                .collect(Collectors.joining());
+    }
+
+    /**
+     * Get region name.
+     *
      * @param selection get selection in the region by player.
      *
      * @return location of Object.
@@ -103,22 +119,6 @@ public class RSRegion implements IRSRegion {
                     .collect(Collectors.joining());
         }
         throw new NoSelectionException();
-    }
-
-    /**
-     * Get region name.
-     *
-     * @param location get location of Object in the region.
-     *
-     * @return location of Object.
-     */
-    public String getProtectName(@NotNull Location location) {
-        final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
-        return applicableRegionSet
-                .getRegions()
-                .stream()
-                .map(ProtectedRegion::getId)
-                .collect(Collectors.joining());
     }
 
     /**

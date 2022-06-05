@@ -1,5 +1,6 @@
 package net.ritasister.wgrp.listener.protect;
 
+import com.sk89q.worldedit.IncompleteRegionException;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
@@ -35,6 +36,7 @@ public class RegionProtect implements Listener {
 	public RegionProtect(WorldGuardRegionProtect worldGuardRegionProtect) {
 		this.wgRegionProtect =worldGuardRegionProtect;
 	}
+
 	private final List<String> regionCommandNameArgs = Arrays.asList(
 			"/rg", "/region", "/regions",
 			"/worldguard:rg", "/worldguard:region", "/worldguard:regions");
@@ -109,53 +111,54 @@ public class RegionProtect implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
-	private void joinNeedUpdate(@NotNull PlayerJoinEvent e) {
+	private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
 		Player player = e.getPlayer();
-		if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.PERMISSION_STAR, null)
-				&& e.getPlayer().isOp()) {
+		if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.PERMISSION_STAR, null) || e.getPlayer().isOp()) {
 			wgRegionProtect.checkUpdateNotifyPlayer(player);
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyVehicleCollision(@NotNull VehicleEntityCollisionEvent e) {
-		Entity entity = e.getEntity();
-		Entity vehicle = e.getVehicle();
-		final Location location = vehicle.getLocation();
-		if(entity instanceof Player) {
-			if(wgRegionProtect.getRsApi().isSenderListenerPermission(entity, UtilPermissions.REGION_PROTECT, null)
-					&&	wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())) {
-				if(wgRegionProtect.getUtilConfig().getConfig().getCollisionWithVehicle()) {
+		if(wgRegionProtect.getUtilConfig().getConfig().getCollisionWithVehicle()) {
+			Entity entity = e.getEntity();
+			Entity vehicle = e.getVehicle();
+			final Location location = vehicle.getLocation();
+			if(entity instanceof Player) {
+				if (wgRegionProtect.getRsRegion().checkStandingRegion(location, this.wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
+						&& wgRegionProtect.getRsApi().isSenderListenerPermission(entity, UtilPermissions.REGION_PROTECT, null)) {
 					if (vehicle instanceof Minecart || vehicle instanceof Boat) e.setCancelled(true);
 				}
 			}
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOW)
+
+
+	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyVehicleEnter(@NotNull VehicleEnterEvent e) {
-		Entity vehicle = e.getVehicle();
-		Entity entered = e.getEntered();
-		final Location location = vehicle.getLocation();
-		if(entered instanceof Player) {
-			if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())
+		if(wgRegionProtect.getUtilConfig().getConfig().getCanSitAsPassengerInVehicle()) {
+			Entity vehicle = e.getVehicle();
+			Entity entered = e.getEntered();
+			final Location location = vehicle.getLocation();
+			if(entered instanceof Player) {
+				if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
 					&& wgRegionProtect.getRsApi().isSenderListenerPermission(entered, UtilPermissions.REGION_PROTECT, null)) {
-				if(wgRegionProtect.getUtilConfig().getConfig().getCanSitAsPassengerInVehicle()) {
 					if (vehicle instanceof Minecart || vehicle instanceof Boat) e.setCancelled(true);
 				}
 			}
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyVehicleDamage(@NotNull VehicleDamageEvent e) {
-		Entity vehicle = e.getVehicle();
-		Entity attacker = e.getAttacker();
-		final Location location = vehicle.getLocation();
-		if(attacker instanceof Player) {
-			if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())
+		if(wgRegionProtect.getUtilConfig().getConfig().getCanDamageVehicle()) {
+			Entity vehicle = e.getVehicle();
+			Entity attacker = e.getAttacker();
+			final Location location = vehicle.getLocation();
+			if(attacker instanceof Player) {
+				if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
 					&& wgRegionProtect.getRsApi().isSenderListenerPermission(attacker, UtilPermissions.REGION_PROTECT, null)) {
-				if(wgRegionProtect.getUtilConfig().getConfig().getCanDamageVehicle()) {
 					if (vehicle instanceof Minecart || vehicle instanceof Boat) e.setCancelled(true);
 				}
 			}
@@ -167,8 +170,8 @@ public class RegionProtect implements Listener {
 		Player player = e.getPlayer();
 		Location location = e.getLectern().getLocation();
 		if(wgRegionProtect.getUtilConfig().getConfig().getCanTakeLecternBook()) {
-			if (wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectAllowMap())
-					|| !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
+			if (wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
+					&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
 					e.setCancelled(true);
 			}
 		}
@@ -180,7 +183,7 @@ public class RegionProtect implements Listener {
 		final Location location = e.getEntity().getLocation();
 		final Material bucketInHand = player.getInventory().getItemInMainHand().getType();
 		if(wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
-			|| wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
+			&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
 			if (bucketInHand == Material.WATER_BUCKET) {
 				e.setCancelled(true);
 			}
@@ -227,7 +230,7 @@ public class RegionProtect implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOW)
 	private void denyBlockFromTo(@NotNull BlockFromToEvent e) {
 		Block block = e.getBlock();
 		Location location = e.getToBlock().getLocation();
@@ -350,7 +353,7 @@ public class RegionProtect implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOW)
 	private void denyUseWEAndIwgCommand(final @NotNull PlayerCommandPreprocessEvent e) {
 		final Player player = e.getPlayer();
 		final String playerName = player.getName();
@@ -358,48 +361,65 @@ public class RegionProtect implements Listener {
 		final String[] s = e.getMessage().toLowerCase().split(" ");
 		final String cmd = e.getMessage().split(" ")[0].toLowerCase();
 		if(!wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
-			if (this.wgRegionProtect.getCommandWE().cmdWE(s[0]) && !this.wgRegionProtect.getIwg().checkIntersection(player)) {
-				e.setCancelled(true);
-				if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-					player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
-				}
-				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-			}if (this.wgRegionProtect.getCommandWE().cmdWE_C(s[0]) && !this.wgRegionProtect.getIwg().checkCIntersection(player, s)) {
-				e.setCancelled(true);
-				if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-					player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
-				}
-				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-			}if (this.wgRegionProtect.getCommandWE().cmdWE_P(s[0]) && !this.wgRegionProtect.getIwg().checkPIntersection(player, s)) {
-				e.setCancelled(true);
-				if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-					player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
-				}
-				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-			}if (this.wgRegionProtect.getCommandWE().cmdWE_S(s[0]) && !this.wgRegionProtect.getIwg().checkSIntersection(player, s)) {
-				e.setCancelled(true);
-				if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-					player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
-				}
-				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-			}if (this.wgRegionProtect.getCommandWE().cmdWE_U(s[0]) && !this.wgRegionProtect.getIwg().checkUIntersection(player, s)) {
-				e.setCancelled(true);
-				if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-					player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
-				}
-				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-			}if (this.wgRegionProtect.getCommandWE().cmdWE_CP(s[0])) {
-				e.setMessage(e.getMessage().replace("-o", ""));
-				if (!this.wgRegionProtect.getIwg().checkCPIntersection(player, s)) {
+			try {
+				if (this.wgRegionProtect.getCommandWE().cmdWE(s[0]) && !this.wgRegionProtect.getIwg().checkIntersection(player)) {
 					e.setCancelled(true);
+					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+						player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
+					}
+					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 				}
-				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
-				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(location));
+			} catch (IncompleteRegionException ignored) {}
+			try {
+				if (this.wgRegionProtect.getCommandWE().cmdWE_C(s[0]) && !this.wgRegionProtect.getIwg().checkCIntersection(player, s)) {
+					e.setCancelled(true);
+					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+						player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
+					}
+					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+				}
+			} catch (IncompleteRegionException ignored) {}
+			try {
+				if (this.wgRegionProtect.getCommandWE().cmdWE_P(s[0]) && !this.wgRegionProtect.getIwg().checkPIntersection(player, s)) {
+					e.setCancelled(true);
+					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+						player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
+					}
+					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+				}
+			} catch (IncompleteRegionException ignored) {}
+			try {
+				if (this.wgRegionProtect.getCommandWE().cmdWE_S(s[0]) && !this.wgRegionProtect.getIwg().checkSIntersection(player, s)) {
+					e.setCancelled(true);
+					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+						player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
+					}
+					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+				}
+			} catch (IncompleteRegionException ignored) {}
+			try {
+				if (this.wgRegionProtect.getCommandWE().cmdWE_U(s[0]) && !this.wgRegionProtect.getIwg().checkUIntersection(player, s)) {
+					e.setCancelled(true);
+					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+						player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
+					}
+					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+				}
+			} catch (IncompleteRegionException ignored) {}
+			if (this.wgRegionProtect.getCommandWE().cmdWE_CP(s[0])) {
+				e.setMessage(e.getMessage().replace("-o", ""));
+				try {
+					if (!this.wgRegionProtect.getIwg().checkCPIntersection(player, s)) {
+						e.setCancelled(true);
+					}
+				} catch (IncompleteRegionException ignored) {}
+				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 			}
 			if (this.regionCommandNameArgs.contains(s[0]) && s.length > 2) {
 
