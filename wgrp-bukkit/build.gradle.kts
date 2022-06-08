@@ -1,10 +1,7 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     `java-library`
-    `maven-publish`
-    id("com.github.johnrengelman.shadow") version "7.1.2"
     id("xyz.jpenilla.run-paper") version "1.0.6"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 java {
@@ -21,55 +18,83 @@ repositories {
     //PlaceHolderAPI
     maven ("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     //PaperMC
-    maven ("https://repo.papermc.io/repo/repository/maven-public/")
+    //maven ("https://repo.papermc.io/repo/repository/maven-public/")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    /*
+     As Spigot-API depends on the BungeeCord ChatComponent-API,
+    we need to add the Sonatype OSS repository, as Gradle,
+    in comparison to maven, doesn't want to understand the ~/.m2
+    directory unless added using mavenLocal(). Maven usually just gets
+    it from there, as most people have run the BuildTools at least once.
+    This is therefore not needed if you're using the full Spigot/CraftBukkit,
+    or if you're using the Bukkit API.
+    */
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://oss.sonatype.org/content/repositories/central")
     mavenCentral()
 }
 
-configurations {
-    compileClasspath.get().extendsFrom(create("shadeOnly"))
-}
-
 dependencies {
-    api(project(":wgrp-api"))
-    //MariaDB for DataBase
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.0.4")
+    implementation(project(":wgrp-api"))
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("org.bstats:bstats-bukkit:3.0.0")
+    //MariaDB for DataBase
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.0.4")
+    //Inject
+    implementation("com.google.inject:guice:5.1.0")
+
+    //Annotations
+    compileOnly("org.jetbrains:annotations:23.0.0")
+    compileOnly("org.projectlombok:lombok:1.18.24")
+    compileOnly("net.kyori:adventure-api:4.11.0")
     //PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.1")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
-    //Paper 1.18+
-    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    //SpigotMC 1.19+
+    compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            groupId = rootProject.group as String?
-            artifactId = "WorldGuardRegionProtect"
-            version = rootProject.version as String?
+tasks {
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
+    jar {
+        archiveFileName.set("${rootProject.name}-bukkit-no-shade-${rootProject.version}.${archiveExtension.getOrElse("jar")}")
+    }
+    shadowJar {
+        archiveFileName.set("${rootProject.name}-bukkit-${rootProject.version}.${archiveExtension.getOrElse("jarinjar")}")
+    }
+    build {
+        dependsOn(shadowJar)
+    }
+}
 
-            from(components["java"])
+tasks {
+    processResources {
+        filesMatching("plugin.yml") {
+            expand(
+                "name" to rootProject.name,
+                "version" to project.version,
+                "group" to project.group,
+                "author" to project.property("author"),
+                "description" to project.property("description"),
+            )
         }
     }
+    shadowJar {
+        //Shaded components
+        relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
+        relocate("com.google.inject", "${project.group}.wgrp.rslibs.lib.inject")
 
-    repositories {
-        val mavenUrl: String? by project
-        val mavenSnapshotUrl: String? by project
-
-        (if(rootProject.version.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
-            maven(url) {
-                val mavenUsername: String? by project
-                val mavenPassword: String? by project
-                if(mavenUsername != null && mavenPassword != null) {
-                    credentials {
-                        username = mavenUsername
-                        password = mavenPassword
-                    }
-                }
-            }
-        }
+        //Storage based relocations
+        relocate("com.zaxxer.hikari", "${project.group}.wgrp.rslibs.lib.hikari")
+        relocate("org.mariadb.jdbc", "${project.group}.wgrp.rslibs.lib.mariadb")
+        exclude(":wgrp-api")
+    }
+    artifacts {
+        archives(shadowJar);
     }
 }
 
@@ -79,47 +104,29 @@ tasks {
     }
 }
 
-tasks.compileJava {
-    options.encoding = "UTF-8"
-}
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifactId = "WorldGuardRegionProtect"
+            groupId = rootProject.group as String?
+            version = rootProject.version as String?
 
-tasks.named<Copy>("processResources") {
-    val internalVersion = project.version
-    inputs.property("internalVersion", internalVersion)
-    filesMatching("plugin.yml") {
-        expand("internalVersion" to internalVersion)
+            from(components["java"])
+        }
     }
-}
 
-tasks.named<Jar>("jar") {
-    val projectVersion = project.version
-    inputs.property("projectVersion", projectVersion)
-    manifest {
-        attributes("Implementation-Version" to projectVersion)
+    repositories {
+        val mavenUrl = "https://repo.codemc.io/repository/maven-releases/"
+
+        maven(mavenUrl) {
+            val mavenUsername: String? by project
+            val mavenPassword: String? by project
+            if (mavenUsername != null && mavenPassword != null) {
+                credentials {
+                    username = mavenUsername
+                    password = mavenPassword
+                }
+            }
+        }
     }
-}
-
-tasks.named<ShadowJar>("shadowJar") {
-    configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
-    archiveFileName.set("${rootProject.name}-bukkit-${rootProject.version}.${archiveExtension.getOrElse("jar")}")
-
-    dependencies {
-        include(dependency(":wgrp-api"))
-    }
-}
-
-tasks.withType<Jar>() {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    configurations["compileClasspath"].forEach { file: File ->
-        if(file.name.contains("HikariCP"))
-            from(zipTree(file.absoluteFile))
-    }
-    configurations["compileClasspath"].forEach { file: File ->
-        if(file.name.contains("mariadb-java-client"))
-            from(zipTree(file.absoluteFile))
-    }
-}
-
-tasks.named("assemble").configure {
-    dependsOn("shadowJar")
 }
