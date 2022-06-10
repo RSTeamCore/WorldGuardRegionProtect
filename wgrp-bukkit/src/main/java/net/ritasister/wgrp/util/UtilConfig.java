@@ -13,7 +13,7 @@ public class UtilConfig {
 	private File messages;
 
 	public void initConfig(WorldGuardRegionProtect wgRegionProtect) {
-		config = new Config(wgRegionProtect, wgRegionProtect.getWgrpBukkitPlugin());
+		config = new Config();
 		loadMessages(wgRegionProtect);
 
 		wgRegionProtect.getRsApi().getLogger().info("&2All configs load successfully!");
