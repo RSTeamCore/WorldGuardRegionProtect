@@ -1,5 +1,6 @@
 package net.ritasister.wgrp.command.extend;
 
+import com.google.inject.Inject;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.command.AbstractCommand;
 import net.ritasister.wgrp.command.SubCommand;
@@ -17,7 +18,8 @@ import java.util.*;
 
 public class CommandWGRP extends AbstractCommand {
 
-    private final WorldGuardRegionProtect wgRegionProtect;
+    @Inject
+    private WorldGuardRegionProtect wgRegionProtect;
 
     public CommandWGRP(@NotNull WorldGuardRegionProtect wgRegionProtect) {
         super(UtilCommandList.WGRP.getCommand(), wgRegionProtect);
@@ -43,17 +45,17 @@ public class CommandWGRP extends AbstractCommand {
             aliases = {"credits", "authors"},
             description = Message.subCommands_about)
     public void wgrpAbout(@NotNull CommandSender sender, String[] args) {
-        sender.sendMessage(wgRegionProtect.getChatApi().getColorCode("""
-									&b======&8[&cWorldGuardRegionProtect&8]&b======
-									&eHi! If you need help from this plugin,
-									&eyou can contact with me on:
-									&6 https://www.spigotmc.org/resources/81321/
-									&eBut if you find any error or you want send
-									&eme any idea for this plugin so you can create
-									&eissues on github:
-									&6 https://github.com/RSTeamCore/WorldGuardRegionProtect
-									&5Your welcome!
-									"""));
+        sender.sendMessage("""
+                            &b======&8[&cWorldGuardRegionProtect&8]&b======
+                            &eHi! If you need help from this plugin,
+                            &eyou can contact with me on:
+                            &6 https://www.spigotmc.org/resources/81321/
+                            &eBut if you find any error or you want send
+                            &eme any idea for this plugin so you can create
+                            &eissues on github:
+                            &6 https://github.com/RSTeamCore/WorldGuardRegionProtect
+                            &5Your welcome!
+                            """);
     }
 
     @SubCommand(
@@ -112,7 +114,7 @@ public class CommandWGRP extends AbstractCommand {
             HashMap<String, List<String>> rgMap = wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap();
             if(sender instanceof Player) {
                 String region = args[0];
-                String world = Objects.requireNonNull(((Player) sender).getPlayer()).getLocation().getWorld().getName();
+                String world = ((Player) sender).getPlayer().getLocation().getWorld().getName();
                 if(args.length == 2) world = args[1];
                 ArrayList<String> newRegionList = new ArrayList<>();
                 if(rgMap.containsKey(world) && rgMap.get(world).contains(region)) {

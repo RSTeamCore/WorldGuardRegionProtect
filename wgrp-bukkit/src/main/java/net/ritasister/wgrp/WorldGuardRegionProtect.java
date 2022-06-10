@@ -1,14 +1,15 @@
 package net.ritasister.wgrp;
 
+import com.google.inject.Inject;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
 import net.ritasister.wgrp.rslibs.api.*;
 import net.ritasister.wgrp.rslibs.datasource.Storage;
-import net.ritasister.wgrp.rslibs.util.Metrics;
 import net.ritasister.wgrp.rslibs.util.UpdateChecker;
 import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.util.UtilConfig;
 import net.ritasister.wgrp.util.config.Message;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
@@ -19,13 +20,13 @@ import java.util.UUID;
 
 public class WorldGuardRegionProtect {
 
-    private final WGRPBukkitPlugin wgrpBukkitPlugin;
+    @Inject
+    private WGRPBukkitPlugin wgrpBukkitPlugin;
 
     private Iwg Iwg;
 
     //DataBase
     private RSStorage rsStorage;
-    private ChatApi chatApi;
     private RSApi rsApi;
     private RSRegion rsRegion;
     private RSLogger rsLogger;
@@ -42,14 +43,9 @@ public class WorldGuardRegionProtect {
     //HashMap
     public ArrayList<UUID> spyLog = new ArrayList<>();
 
-    public WorldGuardRegionProtect(WGRPBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
-    }
-
     public void load() {
-        this.rsApi = new RSApi(this);
-        this.chatApi = new ChatApi();
-        this.rsLogger = new RSLogger(this.chatApi);
+        this.rsApi = new RSApi();
+        this.rsLogger = new RSLogger();
         this.checkStartUpVersionServer();
         this.loadMetrics();
         this.loadAnotherClassAndMethods();
@@ -60,7 +56,7 @@ public class WorldGuardRegionProtect {
 
     private void loadAnotherClassAndMethods() {
         //Libs of WorldGuard.
-        this.loadLibs = new LoadLibs(this);
+        this.loadLibs = new LoadLibs();
         this.getLoadLibs().loadPlaceholderAPI();
         this.getLoadLibs().loadWorldGuard();
 
@@ -72,7 +68,7 @@ public class WorldGuardRegionProtect {
         this.rsRegion = new RSRegion();
 
         //Parameters for to intercept commands from WE or FAWE.
-        this.commandWE = new CommandWE(this);
+        this.commandWE = new CommandWE();
         this.Iwg=this.getCommandWE().setUpWorldGuardVersionSeven();
 
         //Commands and listeners.
@@ -83,9 +79,9 @@ public class WorldGuardRegionProtect {
     }
 
     private void loadCommandsAndListener() {
-        ListenerHandler registerListener = new ListenerHandler(this);
+        ListenerHandler registerListener = new ListenerHandler();
         registerListener.listenerHandler(this.getPluginManager());
-        CommandHandler commandHandler = new CommandHandler(this);
+        CommandHandler commandHandler = new CommandHandler();
         commandHandler.commandHandler();
     }
 
@@ -111,14 +107,14 @@ public class WorldGuardRegionProtect {
     public void checkUpdateNotifyPlayer(Player player) {
         new UpdateChecker(this.getWgrpBukkitPlugin(), 81321).getVersion(version -> {
             if (this.getWgrpBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
-                player.sendMessage(String.format(this.getChatApi().getColorCode("""
+                player.sendMessage("""
                 &e======&8[&cWorldGuardRegionProtect&8]&e======
                           &6Current version: &b%s
                        &6You are using the latest version.
                 &e===================================
-                """), version));
+                """, version);
             }else{
-                player.sendMessage(String.format(this.getChatApi().getColorCode("""
+                player.sendMessage("""
                 &e========&8[&cWorldGuardRegionProtect&8]&e========
                 &6 There is a new version update available.
                 &c        Current version: &4%s
@@ -126,14 +122,14 @@ public class WorldGuardRegionProtect {
                 &6   Please, download new version here
                 &6 https://www.spigotmc.org/resources/81321/
                 &e=======================================
-                """), this.getPluginVersion(), version));
+                """, this.getPluginVersion(), version);
             }
         });
     }
 
     private void checkStartUpVersionServer() {
         if (!this.getRsApi().isVersionSupported()) {
-            getRsApi().getLogger().error("This plugin version works only on 1.18+!");
+            getRsApi().getLogger().error("This plugin version works only on 1.19+!");
             getRsApi().getLogger().error("Please read this thread: https://www.spigotmc.org/resources/81321/");
             getRsApi().getLogger().error("The main post on spigotmc and please download the correct version.");
             getWgrpBukkitPlugin().getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin);
@@ -142,15 +138,15 @@ public class WorldGuardRegionProtect {
 
     public void notifyPreBuild() {
         if(this.getPluginVersion().contains("pre")) {
-            this.getRsApi().getLogger().warn(
-                    """
+            this.getRsApi().getLogger().warn("""
                         This is a test build. This building may be unstable!
                         When reporting a bug:
                         Use the issue tracker! Don't report bugs in the reviews.
                         Please search for duplicates before reporting a new https://github.com/RSTeamCore/WorldGuardRegionProtect/issues!
                         Provide as much information as possible.
                         Provide your WorldGuardRegionProtect version and Spigot/Paper version.
-                        Provide any stack traces or "errors" using pastebin.""");
+                        Provide any stack traces or "errors" using pastebin.
+                       """);
         } else {
             this.getRsApi().getLogger().info("This is the latest stable building.");
         }
@@ -213,11 +209,6 @@ public class WorldGuardRegionProtect {
     @NotNull
     public RSStorage getRsStorage() {
         return this.rsStorage;
-    }
-
-    @NotNull
-    public ChatApi getChatApi() {
-        return this.chatApi;
     }
 
     @NotNull

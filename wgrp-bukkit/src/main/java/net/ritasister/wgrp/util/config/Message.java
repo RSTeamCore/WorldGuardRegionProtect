@@ -25,13 +25,6 @@ public enum Message {
 
     Notify_sendAdminInfoIfUsedCommandInRG, Notify_sendAdminInfoIfActionInRegion,
 
-    /*PluralTime_day_pluralDay1, PluralTime_day_pluralDay2, PluralTime_day_pluralDay3,
-    PluralTime_hour_pluralHour1, PluralTime_hour_pluralHour2, PluralTime_hour_pluralHour3,
-    PluralTime_minute_pluralMinute1, PluralTime_minute_pluralMinute2,
-    PluralTime_minute_pluralMinute3, PluralTime_minute_pluralMinute4,
-    PluralTime_second_pluralSecond1, PluralTime_second_pluralSecond2,
-    PluralTime_second_pluralSecond3, PluralTime_second_pluralSecond4, PluralTime_timeEmpty_pluralTimeEmpty,*/
-
     subCommands_reload, subCommands_about, subCommands_spy, subCommands_addRegion, subCommands_removeRegion,
 
     subCommands_help,
@@ -57,9 +50,9 @@ public enum Message {
             String version = c.getString("langTitle.version");
             langProperties = new LangProperties(language, author, version);
             if(langProperties.getLanguage() == null) lang = "en";
-            wgrpBukkitPlugin.getSLF4JLogger().info("Loaded language: " + lang);
-            wgrpBukkitPlugin.getSLF4JLogger().info("Author of language: " + author);
-            wgrpBukkitPlugin.getSLF4JLogger().info("language version: " + version);
+            wgrpBukkitPlugin.getLogger().info("Loaded language: " + lang);
+            wgrpBukkitPlugin.getLogger().info("Author of language: " + author);
+            wgrpBukkitPlugin.getLogger().info("language version: " + version);
         } catch (Throwable e) {
             lang = "en";
         }
@@ -213,7 +206,7 @@ public enum Message {
         private void sendMessage(CommandSender player, @NotNull String message) {
             if(message.startsWith("json:")) {
                 final TextComponent textComponent = Component.text(message.substring(5));
-                player.sendMessage(textComponent);
+                player.sendMessage(textComponent.toString());
             } else {
                 player.sendMessage(message);
             }

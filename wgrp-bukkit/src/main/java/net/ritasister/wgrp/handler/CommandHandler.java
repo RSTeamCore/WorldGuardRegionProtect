@@ -1,14 +1,18 @@
 package net.ritasister.wgrp.handler;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.command.extend.CommandWGRP;
 
-public record CommandHandler(WorldGuardRegionProtect wgRegionProtect) {
+@Singleton
+public final class CommandHandler {
+	@Inject
+	private WorldGuardRegionProtect wgRegionProtect;
 
 	public void commandHandler() {
 		try{
 			new CommandWGRP(wgRegionProtect);
-
 			wgRegionProtect.getRsApi().getLogger().info("&2All commands registered successfully!");
 		}catch(NullPointerException e) {
 			wgRegionProtect.getRsApi().getLogger().error("&cCommand cannot be &4null.");

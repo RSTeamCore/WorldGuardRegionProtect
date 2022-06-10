@@ -1,5 +1,6 @@
 package net.ritasister.wgrp.util.config;
 
+import com.google.inject.Inject;
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
@@ -18,8 +19,10 @@ import java.util.Map;
 
 public class Config {
 
-    private final WorldGuardRegionProtect wgRegionProtect;
-    private final WGRPBukkitPlugin plugin;
+    @Inject
+    private WorldGuardRegionProtect wgRegionProtect;
+    @Inject
+    private WGRPBukkitPlugin plugin;
 
     @CanRecover
     private HashMap<String, List<String>> regionProtect;
@@ -100,9 +103,7 @@ public class Config {
 
     private MySQLSettings mysqlsettings;
 
-    public Config(WorldGuardRegionProtect wgRegionProtect, WGRPBukkitPlugin plugin) {
-        this.wgRegionProtect = wgRegionProtect;
-        this.plugin = plugin;
+    public Config() {
         reload();
     }
 
