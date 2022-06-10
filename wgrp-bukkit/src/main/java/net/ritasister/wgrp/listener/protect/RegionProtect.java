@@ -1,5 +1,7 @@
 package net.ritasister.wgrp.listener.protect;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.sk89q.worldedit.IncompleteRegionException;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
@@ -29,13 +31,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Singleton
 public class RegionProtect implements Listener {
 
-	private final WorldGuardRegionProtect wgRegionProtect;
-
-	public RegionProtect(WorldGuardRegionProtect worldGuardRegionProtect) {
-		this.wgRegionProtect =worldGuardRegionProtect;
-	}
+	@Inject
+	private WorldGuardRegionProtect wgRegionProtect;
 
 	private final List<String> regionCommandNameArgs = Arrays.asList(
 			"/rg", "/region", "/regions",
@@ -132,8 +132,6 @@ public class RegionProtect implements Listener {
 			}
 		}
 	}
-
-
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	private void denyVehicleEnter(@NotNull VehicleEnterEvent e) {
