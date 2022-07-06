@@ -1,6 +1,5 @@
 package net.ritasister.wgrp.util.config;
 
-import com.google.inject.Inject;
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import org.bukkit.Bukkit;
@@ -19,10 +18,9 @@ import java.util.Map;
 
 public class Config {
 
-    @Inject
-    private WorldGuardRegionProtect wgRegionProtect;
-    @Inject
-    private WGRPBukkitPlugin plugin;
+    private final WorldGuardRegionProtect wgRegionProtect;
+
+    private final WGRPBukkitPlugin wgrpBukkitPlugin;
 
     @CanRecover
     private HashMap<String, List<String>> regionProtect;
@@ -35,6 +33,9 @@ public class Config {
 
     @CanRecover
     private String lang;
+
+    @CanRecover
+    private boolean updateChecker;
     @CanRecover
     private List<String> interactType;
 
@@ -103,7 +104,9 @@ public class Config {
 
     private MySQLSettings mysqlsettings;
 
-    public Config() {
+    public Config(WorldGuardRegionProtect wgRegionProtect, WGRPBukkitPlugin wgrpBukkitPlugin) {
+        this.wgRegionProtect=wgRegionProtect;
+        this.wgrpBukkitPlugin=wgrpBukkitPlugin;
         reload();
     }
 
@@ -117,14 +120,15 @@ public class Config {
         wgRegionProtect.getWgrpBukkitPlugin().reloadConfig();
 
         try {
-            lang = plugin.getConfig().getString("wgRegionProtect.lang");
+            lang = wgrpBukkitPlugin.getConfig().getString("wgRegionProtect.lang");
+            updateChecker = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.updateChecker");
 
             //start getting regions.
-            ConfigurationSection regionProtectSection = plugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtect");
+            ConfigurationSection regionProtectSection = wgrpBukkitPlugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtect");
             if (regionProtectSection != null) {
                 try {
                     for (String world : regionProtectSection.getKeys(false)) {
-                        regionProtect.put(world, plugin.getConfig().getStringList("wgRegionProtect.regionProtect." + world));
+                        regionProtect.put(world, wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.regionProtect." + world));
                     }
                 } catch (Throwable ignored) {}
             }
@@ -135,11 +139,11 @@ public class Config {
                 }
             }
 
-            ConfigurationSection regionProtectAllowSection = plugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtectAllow");
+            ConfigurationSection regionProtectAllowSection = wgrpBukkitPlugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtectAllow");
             if (regionProtectAllowSection != null) {
                 try {
                     for (String world : regionProtectAllowSection.getKeys(false)) {
-                        regionProtectAllow.put(world, plugin.getConfig().getStringList("wgRegionProtect.regionProtectAllow." + world));
+                        regionProtectAllow.put(world, wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.regionProtectAllow." + world));
                     }
                 } catch (Throwable ignored) {}
             }
@@ -150,11 +154,11 @@ public class Config {
                 }
             }
 
-            ConfigurationSection regionProtectOnlyBreakAllowSection = plugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtectOnlyBreakAllow");
+            ConfigurationSection regionProtectOnlyBreakAllowSection = wgrpBukkitPlugin.getConfig().getConfigurationSection("wgRegionProtect.regionProtectOnlyBreakAllow");
             if (regionProtectOnlyBreakAllowSection != null) {
                 try {
                     for (String world : regionProtectOnlyBreakAllowSection.getKeys(false)) {
-                        regionProtectOnlyBreakAllow.put(world, plugin.getConfig().getStringList("wgRegionProtect.regionProtectOnlyBreakAllow." + world));
+                        regionProtectOnlyBreakAllow.put(world, wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.regionProtectOnlyBreakAllow." + world));
                     }
                 }  catch (Throwable ignored) {}
             }
@@ -166,46 +170,46 @@ public class Config {
             }
             //End getting regions
 
-            interactType = (List<String>)plugin.getConfig().getList("wgRegionProtect.protectInteract.interactType");
-            collisionWithVehicle = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.collisionWithVehicle");
-            canSitAsPassengerInVehicle = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle");
-            canDamageVehicle = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canDamageVehicle");
-            canTakeLecternBook = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canTakeLecternBook");
-            denyWaterFlowToRegion = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion");
-            denyLavaFlowToRegion = plugin.getConfig().getBoolean("wgRegionProtect.protectInteract.other.denyLavaFlowToRegion");
+            interactType = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.interactType");
+            collisionWithVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.collisionWithVehicle");
+            canSitAsPassengerInVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle");
+            canDamageVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canDamageVehicle");
+            canTakeLecternBook = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canTakeLecternBook");
+            denyWaterFlowToRegion = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion");
+            denyLavaFlowToRegion = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.other.denyLavaFlowToRegion");
 
-            cmdWe = plugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWe");
-            cmdWeC = plugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeC");
-            cmdWeP = plugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeP");
-            cmdWeS = plugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeS");
-            cmdWeU = plugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeU");
-            cmdWeCP = plugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeCP");
+            cmdWe = wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWe");
+            cmdWeC = wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeC");
+            cmdWeP = wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeP");
+            cmdWeS = wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeS");
+            cmdWeU = wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeU");
+            cmdWeCP = wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.noProtectCmd.cmdWeCP");
 
-            explodeEntity = plugin.getConfig().getBoolean("wgRegionProtect.explodeEntity.enable");
+            explodeEntity = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.explodeEntity.enable");
 
-            regionMessageProtect = plugin.getConfig().getBoolean("wgRegionProtect.regionMessageProtect");
-            regionMessageProtectWe = plugin.getConfig().getBoolean("wgRegionProtect.regionMessageProtectWe");
+            regionMessageProtect = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.regionMessageProtect");
+            regionMessageProtectWe = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.regionMessageProtectWe");
 
-            spyCommandNotifyConsole = plugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.console.enable");
-            spyCommandNotifyAdmin = plugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.admin.enable");
-            spyCommandNotifyAdminPlaySoundEnable = plugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.sound.enable");
-            spyCommandNotifyAdminPlaySound = plugin.getConfig().getString("wgRegionProtect.spySettings.notify.sound.type");
-            spyCommandList = plugin.getConfig().getStringList("wgRegionProtect.spySettings.spyCommandList");
+            spyCommandNotifyConsole = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.console.enable");
+            spyCommandNotifyAdmin = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.admin.enable");
+            spyCommandNotifyAdminPlaySoundEnable = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.sound.enable");
+            spyCommandNotifyAdminPlaySound = wgrpBukkitPlugin.getConfig().getString("wgRegionProtect.spySettings.notify.sound.type");
+            spyCommandList = wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.spySettings.spyCommandList");
 
             //Database settings.
-            databaseEnable = plugin.getConfig().getBoolean("wgRegionProtect.dataSource.enable");
+            databaseEnable = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.dataSource.enable");
             mysqlsettings = new MySQLSettings(
-                    plugin.getConfig().getString("wgRegionProtect.dataSource.host"),
-                    plugin.getConfig().getInt("wgRegionProtect.dataSource.port"),
-                    plugin.getConfig().getString("wgRegionProtect.dataSource.database"),
-                    plugin.getConfig().getString("wgRegionProtect.dataSource.user"),
-                    plugin.getConfig().getString("wgRegionProtect.dataSource.password"),
-                    plugin.getConfig().getString("wgRegionProtect.dataSource.table"),
-                    plugin.getConfig().getInt("wgRegionProtect.dataSource.maxPoolSize"),
-                    plugin.getConfig().getInt("wgRegionProtect.dataSource.maxLifetime"),
-                    plugin.getConfig().getInt("wgRegionProtect.dataSource.connectionTimeout"),
-                    plugin.getConfig().getBoolean("wgRegionProtect.dataSource.useSsl"),
-                    plugin.getConfig().getInt("wgRegionProtect.dataSource.intervalReload")
+                    wgrpBukkitPlugin.getConfig().getString("wgRegionProtect.dataSource.host"),
+                    wgrpBukkitPlugin.getConfig().getInt("wgRegionProtect.dataSource.port"),
+                    wgrpBukkitPlugin.getConfig().getString("wgRegionProtect.dataSource.database"),
+                    wgrpBukkitPlugin.getConfig().getString("wgRegionProtect.dataSource.user"),
+                    wgrpBukkitPlugin.getConfig().getString("wgRegionProtect.dataSource.password"),
+                    wgrpBukkitPlugin.getConfig().getString("wgRegionProtect.dataSource.table"),
+                    wgrpBukkitPlugin.getConfig().getInt("wgRegionProtect.dataSource.maxPoolSize"),
+                    wgrpBukkitPlugin.getConfig().getInt("wgRegionProtect.dataSource.maxLifetime"),
+                    wgrpBukkitPlugin.getConfig().getInt("wgRegionProtect.dataSource.connectionTimeout"),
+                    wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.dataSource.useSsl"),
+                    wgrpBukkitPlugin.getConfig().getInt("wgRegionProtect.dataSource.intervalReload")
             );
 
         } catch (Exception e) {
@@ -219,6 +223,7 @@ public class Config {
                     if(f.get(this.getClass()).equals(null)) {
                         switch (f.getName()) {
                             case "lang" -> lang = "en";
+                            case "updateChecker" -> updateChecker = true;
 
                             case "interactType" -> interactType = List.of(
                                     "armor_stand", "end_crystal", "minecart",
@@ -286,8 +291,13 @@ public class Config {
             }
         }
         saveConfig();
-
     }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public boolean getUpdateChecker() { return updateChecker; }
 
     public HashMap<String, List<String>> getRegionProtectMap() {
         return regionProtect;
@@ -467,10 +477,6 @@ public class Config {
             wgRegionProtect.getWgrpBukkitPlugin().getLogger().severe("Could not save config.yml! Error: " + e.getLocalizedMessage());
             e.printStackTrace();
         }
-    }
-
-    public String getLang() {
-        return lang;
     }
 
     public static class MySQLSettings {
