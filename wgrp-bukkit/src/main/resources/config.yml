@@ -12,6 +12,11 @@ wgRegionProtect:
   lang: en_US
 
   #-------------------------------------------------------------
+  # Let the admin know if he updated the plugin to the latest version.
+  #-------------------------------------------------------------
+  updateChecker: true
+
+  #-------------------------------------------------------------
   # List of protected regions.
   # If regions are not needed, specify an empty parameter:
   # Do not delete all worlds, always leave one world,
@@ -112,10 +117,10 @@ wgRegionProtect:
       - salmon_bucket
       - tadpole_bucket
     #--------------------------------------------------------------------------------------
-    # collisionWithVehicle - whether the player can collide with a vehicle. (Boat, Wagon, etc.)
-    # canSitAsPassengerInVehicle - whether the player can sit as a passenger in the vehicle.
-    # canDamageVehicle - whether the player can damage the vehicle.
-    # canTakeLecternBookle - whether the player can take a book from the pulpit.
+    # collisionWithVehicle — whether the player can collide with a vehicle. (Boat, Wagon, etc.)
+    # canSitAsPassengerInVehicle — whether the player can sit as a passenger in the vehicle.
+    # canDamageVehicle — whether the player can damage the vehicle.
+    # canTakeLecternBook — whether the player can take a book from the pulpit.
     #--------------------------------------------------------------------------------------
     player:
       collisionWithVehicle: true
@@ -123,8 +128,8 @@ wgRegionProtect:
       canDamageVehicle: true
       canTakeLecternBook: true
     #--------------------------------------------------------------------------------------
-    # denyWaterFlowToRegion - Whether to allow water to flow into protected regions.
-    # denyLavaFlowToRegion - Whether to allow lava to flow into protected regions.
+    # denyWaterFlowToRegion — Whether to allow water to flow into protected regions.
+    # denyLavaFlowToRegion — Whether to allow lava to flow into protected regions.
     #--------------------------------------------------------------------------------------
     other:
       denyWaterFlowToRegion: true
