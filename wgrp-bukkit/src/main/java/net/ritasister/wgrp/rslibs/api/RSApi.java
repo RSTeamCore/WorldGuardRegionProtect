@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import com.google.inject.Inject;
+import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Message;
@@ -12,17 +12,18 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * A class that contains methods about rights, notification and other
  */
 public class RSApi {
 
-	@Inject
-	private WorldGuardRegionProtect wgRegionProtect;
+	private final WorldGuardRegionProtect wgRegionProtect;
+
+	public RSApi(WorldGuardRegionProtect wgRegionProtect) {
+		this.wgRegionProtect=wgRegionProtect;
+	}
 
 	/**
 	 * Check if a sender has permissions for commands.
@@ -36,7 +37,7 @@ public class RSApi {
 	public boolean isSenderCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull UtilPermissions perm, String message) {
 		if (!sender.hasPermission(perm.getPermissionName())) {
 			if (message != null) {
-				sender.sendMessage(message);
+				sender.sendMessage(Component.text(message));
 			}
 			return true;
 		}
@@ -55,7 +56,7 @@ public class RSApi {
 	public boolean isSenderCommandsPermission(@NotNull Player player, @NotNull Command cmd, @NotNull UtilPermissions perm, String message) {
 		if (!player.hasPermission(perm.getPermissionName())) {
 			if (message != null) {
-				player.sendMessage(message);
+				player.sendMessage(Component.text(message));
 			}
 			return true;
 		}
@@ -84,7 +85,7 @@ public class RSApi {
 	public boolean isSenderListenerPermission(@NotNull CommandSender sender, @NotNull UtilPermissions perm, String message) {
 		if (!sender.hasPermission(perm.getPermissionName())) {
 			if (message != null) {
-				sender.sendMessage(message);
+				sender.sendMessage(Component.text(message));
 			}
 			return false;
 		}
@@ -102,7 +103,7 @@ public class RSApi {
 	public boolean isSenderListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm, String message) {
 		if (!player.hasPermission(perm.getPermissionName())) {
 			if (message != null) {
-				player.sendMessage(message);
+				player.sendMessage(Component.text(message));
 			}
 			return false;
 		}
@@ -120,7 +121,7 @@ public class RSApi {
 	public boolean isSenderListenerPermission(@NotNull Entity entity, @NotNull UtilPermissions perm, String message) {
 		if (entity.hasPermission(perm.getPermissionName())) {
 			if (message != null) {
-				entity.sendMessage(message);
+				entity.sendMessage(Component.text(message));
 			}
 			return false;
 		}
@@ -177,7 +178,7 @@ public class RSApi {
 	 * Send a notification to the administrator if Player attempts to interact with a region from WorldGuard.
 	 *
 	 * @param admin Message for an admin who destroys a region.
-	 * @param suspect Object player for method.
+	 * @param suspectPlayer Object player for method.
 	 * @param suspectName Player name who interacting with a region.
 	 * @param action Get the actions.
 	 * @param regionName Region name.
@@ -207,21 +208,21 @@ public class RSApi {
 	 * @return    {@code true} if server version compatible, {@code false} if not
 	 */
 	public boolean isVersionSupported(){
-		List<String> supportedVersions = List.of("v1_19_R1");
+		String supportedVersions = "v1_19_R1";
 		String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 		try {
 			long time = System.currentTimeMillis();
 			if (supportedVersions.contains(serverPackage)) {
-				wgRegionProtect.getRsApi().getLogger().info("&7Loaded NMS hook in " + (System.currentTimeMillis()-time) + "ms");
+				wgRegionProtect.getLogger().info(Component.text("&7Loaded NMS hook in " + (System.currentTimeMillis()-time) + "ms"));
 				return true;
 			} else {
-				getLogger().info("&cNo compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + "). Disabling just to stay safe.");
+				wgRegionProtect.getLogger().info(Component.text("&cNo compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ")."));
 			}
 		} catch (Exception ex) {
 			if (supportedVersions.contains(serverPackage)) {
-				getLogger().error("&cYour server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
+				wgRegionProtect.getLogger().error(Component.text("&cYour server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)"));
 			} else {
-				getLogger().error("&cYour server version is completely unsupported. Disabling.");
+				wgRegionProtect.getLogger().error(Component.text("&cYour server version is completely unsupported. Disabling."));
 			}
 		}
 		return false;
@@ -231,15 +232,5 @@ public class RSApi {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy - HH:mm");
 		Date resultDate = new Date(System.currentTimeMillis());
 		return sdf.format(resultDate);
-	}
-
-	public String getPathTime() {
-		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy-HH-mm");
-		Date resultDate = new Date(System.currentTimeMillis());
-		return sdf.format(resultDate);
-	}
-
-	public RSLogger getLogger() {
-		return this.wgRegionProtect.getRsLogger();
 	}
 }

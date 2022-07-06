@@ -1,14 +1,17 @@
 package net.ritasister.wgrp;
 
-import com.google.inject.Inject;
+import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.rslibs.papi.PlaceholderAPIExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class LoadLibs {
 
-    @Inject
-    private WorldGuardRegionProtect wgRegionProtect;
+    private final WorldGuardRegionProtect wgRegionProtect;
+
+    public LoadLibs(WorldGuardRegionProtect wgRegionProtect) {
+        this.wgRegionProtect=wgRegionProtect;
+    }
 
     public boolean PlaceholderAPIEnabled = false;
 
@@ -18,9 +21,8 @@ public class LoadLibs {
         if (plg != null && plg.isEnabled()) {
             try {
                 msgSuccess();
-            } catch(NullPointerException | ClassCastException | NoClassDefFoundError ex) {
-                final Throwable exception = null;
-                wgRegionProtect.getRsApi().getLogger().error(exception.getMessage());
+            } catch(NullPointerException | ClassCastException | NoClassDefFoundError exception) {
+                wgRegionProtect.getLogger().error(Component.text(exception.getMessage()));
             }
         }
     }
@@ -31,6 +33,6 @@ public class LoadLibs {
         }
     }
 	private void msgSuccess() {
-        wgRegionProtect.getRsApi().getLogger().info("&2Plugin: WorldGuard loaded successful!.");
+        wgRegionProtect.getLogger().info(Component.text("&2Plugin: WorldGuard loaded successful!."));
     }
 }

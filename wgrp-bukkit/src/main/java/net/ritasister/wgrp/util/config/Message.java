@@ -49,7 +49,7 @@ public enum Message {
             String author = c.getString("langTitle.author");
             String version = c.getString("langTitle.version");
             langProperties = new LangProperties(language, author, version);
-            if(langProperties.getLanguage() == null) lang = "en";
+            if(langProperties.language() == null) lang = "en";
             wgrpBukkitPlugin.getLogger().info("Loaded language: " + lang);
             wgrpBukkitPlugin.getLogger().info("Author of language: " + author);
             wgrpBukkitPlugin.getLogger().info("language version: " + version);
@@ -170,6 +170,7 @@ public enum Message {
     public void send(CommandSender player) {
         new Sender().send(player);
     }
+
     @Override
     public @NotNull String toString() {
         StringBuilder str = new StringBuilder();
@@ -178,6 +179,7 @@ public enum Message {
         }
         return ChatColor.translateAlternateColorCodes('&', str.toString());
     }
+
     public @NotNull List<String> toList() {
         ArrayList<String> result = new ArrayList<>();
         for(String m : msg) {
@@ -236,27 +238,6 @@ public enum Message {
     public static LangProperties getLangProperties() {
         return langProperties;
     }
-    public static class LangProperties {
-        private final String language;
 
-        private final String author;
-
-        private final String version;
-        public LangProperties(String language, String author, String version) {
-            this.language = language;
-            this.author = author;
-            this.version = version;
-        }
-        public String getAuthor() {
-            return author;
-        }
-
-        public String getLanguage() {
-            return language;
-        }
-
-        public String getVersion() {
-            return version;
-        }
-    }
+    public record LangProperties(String language, String author, String version) { }
 }

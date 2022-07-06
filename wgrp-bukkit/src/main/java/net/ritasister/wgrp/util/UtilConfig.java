@@ -1,5 +1,7 @@
 package net.ritasister.wgrp.util;
 
+import net.kyori.adventure.text.Component;
+import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.Message;
@@ -12,11 +14,11 @@ public class UtilConfig {
 	private Config config;
 	private File messages;
 
-	public void initConfig(WorldGuardRegionProtect wgRegionProtect) {
-		config = new Config();
+	public void initConfig(WorldGuardRegionProtect wgRegionProtect, WGRPBukkitPlugin wgrpBukkitPlugin) {
+		config = new Config(wgRegionProtect, wgrpBukkitPlugin);
 		loadMessages(wgRegionProtect);
 
-		wgRegionProtect.getRsApi().getLogger().info("&2All configs load successfully!");
+		wgRegionProtect.getLogger().info(Component.text("&2All configs load successfully!"));
 	}
 
 	public void loadMessages(@NotNull WorldGuardRegionProtect wgRegionProtect) {

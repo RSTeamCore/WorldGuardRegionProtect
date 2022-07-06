@@ -1,7 +1,5 @@
 package net.ritasister.wgrp.listener.protect;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.sk89q.worldedit.IncompleteRegionException;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
@@ -14,7 +12,10 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
@@ -31,11 +32,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@Singleton
 public class RegionProtect implements Listener {
 
-	@Inject
-	private WorldGuardRegionProtect wgRegionProtect;
+	private final WorldGuardRegionProtect wgRegionProtect;
+
+	public RegionProtect(WorldGuardRegionProtect wgRegionProtect) {
+		this.wgRegionProtect=wgRegionProtect;
+	}
 
 	private final List<String> regionCommandNameArgs = Arrays.asList(
 			"/rg", "/region", "/regions",
