@@ -29,7 +29,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.bstats:bstats-bukkit:3.0.0")
     //MariaDB for DataBase
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.0.4")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.0.5")
     //Inject
     implementation("com.google.inject:guice:5.1.0")
 
@@ -38,7 +38,7 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.24")
     compileOnly("net.kyori:adventure-api:4.11.0")
     //PlaceholderAPI
-    compileOnly("me.clip:placeholderapi:2.11.1")
+    compileOnly("me.clip:placeholderapi:2.11.2")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Paper 1.19
@@ -98,7 +98,7 @@ tasks {
         exclude(":wgrp-api")
     }
     artifacts {
-        archives(shadowJar);
+        archives(shadowJar)
     }
 }
 
