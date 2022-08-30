@@ -2,7 +2,6 @@ plugins {
     `java-library`
     id("xyz.jpenilla.run-paper") version "1.0.6"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    //id("io.papermc.paperweight.userdev") version "1.3.6"
 }
 
 java {
@@ -29,7 +28,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.bstats:bstats-bukkit:3.0.0")
     //MariaDB for DataBase
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.0.5")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.0.6")
     //Inject
     implementation("com.google.inject:guice:5.1.0")
 
@@ -42,16 +41,12 @@ dependencies {
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Paper 1.19
-    compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
 
-    //paperDevBundle("1.19-R0.1-SNAPSHOT")
 }
 
 tasks {
     // Configure reobfJar to run when invoking the build task
-    /*assemble {
-        dependsOn(reobfJar)
-    }*/
     withType<JavaCompile> {
         options.encoding = "UTF-8"
     }
@@ -104,7 +99,7 @@ tasks {
 
 tasks {
     runServer {
-        minecraftVersion("1.19")
+        minecraftVersion("1.19.2")
     }
 }
 
