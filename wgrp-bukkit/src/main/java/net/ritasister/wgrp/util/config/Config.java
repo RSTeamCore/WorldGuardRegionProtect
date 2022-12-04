@@ -116,8 +116,8 @@ public class Config {
         regionProtectAllow = new HashMap<>();
         regionProtectOnlyBreakAllow = new HashMap<>();
 
-        wgRegionProtect.getWgrpBukkitPlugin().saveDefaultConfig();
-        wgRegionProtect.getWgrpBukkitPlugin().reloadConfig();
+        wgRegionProtect.getWGRPBukkitPlugin().saveDefaultConfig();
+        wgRegionProtect.getWGRPBukkitPlugin().reloadConfig();
 
         try {
             lang = wgrpBukkitPlugin.getConfig().getString("wgRegionProtect.lang");
@@ -213,7 +213,7 @@ public class Config {
             );
 
         } catch (Exception e) {
-            wgRegionProtect.getWgrpBukkitPlugin().getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
+            wgRegionProtect.getWGRPBukkitPlugin().getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
             e.printStackTrace();
         }
 
@@ -421,60 +421,60 @@ public class Config {
 
     public void saveConfig() {
         try {
-            if(regionProtect.isEmpty()) wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtect", new ArrayList<>());
+            if(regionProtect.isEmpty()) wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.regionProtect", new ArrayList<>());
             for(Map.Entry<String, List<String>> entry : regionProtect.entrySet()) {
-                wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtect." + entry.getKey(), entry.getValue());
+                wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.regionProtect." + entry.getKey(), entry.getValue());
             }
-            if(regionProtectAllow.isEmpty()) wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectAllow", new ArrayList<>());
+            if(regionProtectAllow.isEmpty()) wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectAllow", new ArrayList<>());
             for(Map.Entry<String, List<String>> entry : regionProtectAllow.entrySet()) {
-                wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectAllow." + entry.getKey(), entry.getValue());
+                wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectAllow." + entry.getKey(), entry.getValue());
             }
-            if(regionProtectOnlyBreakAllow.isEmpty()) wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow", new ArrayList<>());
+            if(regionProtectOnlyBreakAllow.isEmpty()) wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow", new ArrayList<>());
             for(Map.Entry<String, List<String>> entry : regionProtectOnlyBreakAllow.entrySet()) {
-                wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow." + entry.getKey(), entry.getValue());
+                wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow." + entry.getKey(), entry.getValue());
             }
 
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.interactType", interactType);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.collisionWithVehicle", collisionWithVehicle);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle", canSitAsPassengerInVehicle);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canDamageVehicle", canDamageVehicle);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canTakeLecternBook", canTakeLecternBook);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion", denyWaterFlowToRegion);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.other.denyLavaFlowToRegion", denyLavaFlowToRegion);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.interactType", interactType);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.collisionWithVehicle", collisionWithVehicle);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle", canSitAsPassengerInVehicle);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canDamageVehicle", canDamageVehicle);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canTakeLecternBook", canTakeLecternBook);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion", denyWaterFlowToRegion);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.other.denyLavaFlowToRegion", denyLavaFlowToRegion);
 
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWe", cmdWe);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeC", cmdWeC);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeP", cmdWeP);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeS", cmdWeS);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeU", cmdWeU);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeCP", cmdWeCP);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWe", cmdWe);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeC", cmdWeC);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeP", cmdWeP);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeS", cmdWeS);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeU", cmdWeU);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.noProtectCmd.cmdWeCP", cmdWeCP);
 
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.explodeEntity.enable", explodeEntity);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.explodeEntity.enable", explodeEntity);
 
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionMessageProtect", regionMessageProtect);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.regionMessageProtectWe", regionMessageProtectWe);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.console.enable", spyCommandNotifyConsole);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.admin.enable", spyCommandNotifyAdmin);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.sound.enable", spyCommandNotifyAdminPlaySoundEnable );
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.sound.type", spyCommandNotifyAdminPlaySound);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.spyCommandList", spyCommandList);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.regionMessageProtect", regionMessageProtect);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.regionMessageProtectWe", regionMessageProtectWe);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.console.enable", spyCommandNotifyConsole);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.admin.enable", spyCommandNotifyAdmin);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.sound.enable", spyCommandNotifyAdminPlaySoundEnable );
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.sound.type", spyCommandNotifyAdminPlaySound);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.spyCommandList", spyCommandList);
 
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.enable", databaseEnable);
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.host", mysqlsettings.getHost());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.port", mysqlsettings.getPort());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.database", mysqlsettings.getDataBase());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.user", mysqlsettings.getUser());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.password", mysqlsettings.getPassword());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.table", mysqlsettings.getTable());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.maxPoolSize", mysqlsettings.getMaxPoolSize());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.maxLifetime", mysqlsettings.getMaxLifetime());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.connectionTimeout", mysqlsettings.getConnectionTimeout());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.useSsl", mysqlsettings.getUseSsl());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.intervalReload", mysqlsettings.getIntervalReload());
-            wgRegionProtect.getWgrpBukkitPlugin().getConfig().set("wgRegionProtect.lang", lang);
-            wgRegionProtect.getWgrpBukkitPlugin().saveConfig();
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.enable", databaseEnable);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.host", mysqlsettings.getHost());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.port", mysqlsettings.getPort());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.database", mysqlsettings.getDataBase());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.user", mysqlsettings.getUser());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.password", mysqlsettings.getPassword());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.table", mysqlsettings.getTable());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.maxPoolSize", mysqlsettings.getMaxPoolSize());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.maxLifetime", mysqlsettings.getMaxLifetime());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.connectionTimeout", mysqlsettings.getConnectionTimeout());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.useSsl", mysqlsettings.getUseSsl());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.dataSource.intervalReload", mysqlsettings.getIntervalReload());
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.lang", lang);
+            wgRegionProtect.getWGRPBukkitPlugin().saveConfig();
         } catch (Exception e) {
-            wgRegionProtect.getWgrpBukkitPlugin().getLogger().severe("Could not save config.yml! Error: " + e.getLocalizedMessage());
+            wgRegionProtect.getWGRPBukkitPlugin().getLogger().severe("Could not save config.yml! Error: " + e.getLocalizedMessage());
             e.printStackTrace();
         }
     }

@@ -1,6 +1,8 @@
 package net.ritasister.wgrp;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import lombok.AllArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
@@ -20,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Singleton
+@AllArgsConstructor(onConstructor_ = @Inject)
 public class WorldGuardRegionProtect implements IWGRPBukkit {
 
-    @Inject
     private WGRPBukkitPlugin wgrpBukkitPlugin;
 
     private Iwg Iwg;
@@ -43,7 +46,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
     private LoadLibs loadLibs;
 
     //HashMap
-    public ArrayList<UUID> spyLog = new ArrayList<>();
+    public ArrayList<UUID> spyLog;
 
     public void load() {
         this.rsApi = new RSApi(this);

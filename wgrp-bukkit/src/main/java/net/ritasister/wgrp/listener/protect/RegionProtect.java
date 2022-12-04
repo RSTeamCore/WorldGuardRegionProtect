@@ -1,7 +1,9 @@
 package net.ritasister.wgrp.listener.protect;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.sk89q.worldedit.IncompleteRegionException;
+import lombok.AllArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
@@ -33,9 +35,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Singleton
+@AllArgsConstructor(onConstructor_ = @Inject)
 public class RegionProtect implements Listener {
 
-	@Inject
 	private WorldGuardRegionProtect wgRegionProtect;
 
 	private final List<String> regionCommandNameArgs = Arrays.asList(

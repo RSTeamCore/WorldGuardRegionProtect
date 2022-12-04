@@ -1,5 +1,8 @@
 package net.ritasister.wgrp.rslibs.api;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import lombok.AllArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
@@ -17,13 +20,11 @@ import java.util.Date;
 /**
  * A class that contains methods about rights, notification and other
  */
+@AllArgsConstructor(onConstructor_ = @Inject)
+@Singleton
 public class RSApi {
 
 	private final WorldGuardRegionProtect wgRegionProtect;
-
-	public RSApi(WorldGuardRegionProtect wgRegionProtect) {
-		this.wgRegionProtect=wgRegionProtect;
-	}
 
 	/**
 	 * Check if a sender has permissions for commands.

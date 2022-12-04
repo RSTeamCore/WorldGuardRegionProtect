@@ -4,6 +4,7 @@ public enum UtilPermissions {
 
 	NULL_PERM(""),
 	PERMISSION_STAR("*"),
+
 	//Command permission
 	COMMAND_WGRP("wgrp.command.wgrpbase"),
 	COMMAND_WGRP_RELOAD_CONFIGS("wgrp.command.reload"),

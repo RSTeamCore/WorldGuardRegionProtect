@@ -1,5 +1,8 @@
 package net.ritasister.wgrp.command;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import lombok.AllArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Message;
@@ -16,7 +19,7 @@ import java.util.List;
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     public AbstractCommand(String command, @NotNull WorldGuardRegionProtect wgRegionProtect) {
-        PluginCommand pluginCommand = wgRegionProtect.getWgrpBukkitPlugin().getCommand(command);
+        PluginCommand pluginCommand = wgRegionProtect.getWGRPBukkitPlugin().getCommand(command);
         if(pluginCommand != null) {
             pluginCommand.setExecutor(this);
             pluginCommand.setTabCompleter(this);
