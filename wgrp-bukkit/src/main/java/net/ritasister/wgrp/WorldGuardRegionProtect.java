@@ -1,5 +1,6 @@
 package net.ritasister.wgrp;
 
+import com.google.inject.Inject;
 import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
@@ -19,13 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class WorldGuardRegionProtect {
+public class WorldGuardRegionProtect implements IWGRPBukkit {
 
-    private final WGRPBukkitPlugin wgrpBukkitPlugin;
-
-    public WorldGuardRegionProtect(WGRPBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin=wgrpBukkitPlugin;
-    }
+    @Inject
+    private WGRPBukkitPlugin wgrpBukkitPlugin;
 
     private Iwg Iwg;
 
@@ -77,7 +75,7 @@ public class WorldGuardRegionProtect {
         //Configs.
         this.utilConfig = new UtilConfig();
         if (this.getUtilConfig() != null) {
-            this.getUtilConfig().initConfig(this, getWgrpBukkitPlugin());
+            this.getUtilConfig().initConfig(this, getWGRPBukkitPlugin());
         }
 
         //API for Regions.
@@ -102,15 +100,15 @@ public class WorldGuardRegionProtect {
     }
 
     public void checkUpdate() {
-        new UpdateChecker(this.getWgrpBukkitPlugin(), 81321).getVersion(version -> {
-            if (this.getWgrpBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
+        new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
+            if (this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
                 Bukkit.getConsoleSender().sendMessage(String.format("""
                 &e======&8[&cWorldGuardRegionProtect&8]&e======
                           &6Current version: &b%s
                        &6You are using the latest version.
                 &e===================================
                 """, version));
-            }else{
+            } else {
                 Bukkit.getConsoleSender().sendMessage(String.format("""
                 &e========&8[&cWorldGuardRegionProtect&8]&e========
                 &6 There is a new version update available.
@@ -125,8 +123,8 @@ public class WorldGuardRegionProtect {
     }
 
     public void checkUpdateNotifyPlayer(Player player) {
-        new UpdateChecker(this.getWgrpBukkitPlugin(), 81321).getVersion(version -> {
-            if (this.getUtilConfig().getConfig().getUpdateChecker() && this.getWgrpBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
+        new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
+            if (this.getUtilConfig().getConfig().getUpdateChecker() && this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
                 player.sendMessage(String.format("""
                 &e======&8[&cWorldGuardRegionProtect&8]&e======
                           &6Current version: &b%s
@@ -154,7 +152,7 @@ public class WorldGuardRegionProtect {
             Please read this thread: https://www.spigotmc.org/resources/81321/
             The main post on spigotmc and please download the correct version.
             """));
-            getWgrpBukkitPlugin().getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin);
+            getWGRPBukkitPlugin().getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin);
         }
     }
 
@@ -197,7 +195,7 @@ public class WorldGuardRegionProtect {
     }
 
     public void postEnable() {
-        this.getWgrpBukkitPlugin().getServer().getScheduler().cancelTasks(this.getWgrpBukkitPlugin());
+        this.getWGRPBukkitPlugin().getServer().getScheduler().cancelTasks(this.getWGRPBukkitPlugin());
         if (this.getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() > 0) {
             this.getRsStorage().dbLogsSource.loadAsync();
             this.getLogger().info(Component.text("[DataBase] The database is loaded asynchronously."));
@@ -206,10 +204,11 @@ public class WorldGuardRegionProtect {
 
     public void loadMetrics() {
         int pluginId = 12975;
-        new Metrics(this.getWgrpBukkitPlugin(), pluginId);
+        new Metrics(this.getWGRPBukkitPlugin(), pluginId);
     }
 
-    public WGRPBukkitPlugin getWgrpBukkitPlugin() {
+    @Override
+    public WGRPBukkitPlugin getWGRPBukkitPlugin() {
         return this.wgrpBukkitPlugin;
     }
 

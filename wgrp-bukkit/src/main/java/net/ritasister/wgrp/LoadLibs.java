@@ -17,7 +17,7 @@ public class LoadLibs {
 
     public void loadWorldGuard() {
         final String s = "WorldGuard";
-        final Plugin plg = wgRegionProtect.getWgrpBukkitPlugin().getServer().getPluginManager().getPlugin(s);
+        final Plugin plg = wgRegionProtect.getWGRPBukkitPlugin().getServer().getPluginManager().getPlugin(s);
         if (plg != null && plg.isEnabled()) {
             try {
                 msgSuccess();

@@ -22,7 +22,7 @@ public class UtilConfig {
 	}
 
 	public void loadMessages(@NotNull WorldGuardRegionProtect wgRegionProtect) {
-		Message.load(wgRegionProtect.getWgrpBukkitPlugin(), config.getLang(), wgRegionProtect.getLoadLibs().PlaceholderAPIEnabled);
+		Message.load(wgRegionProtect.getWGRPBukkitPlugin(), config.getLang(), wgRegionProtect.getLoadLibs().PlaceholderAPIEnabled);
 	}
 
 	public Config getConfig() {

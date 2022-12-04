@@ -116,7 +116,7 @@ public class Storage implements StorageDataSource {
 	}
 
 	public void loadAsync() {
-		Bukkit.getScheduler().runTaskTimerAsynchronously(wgRegionProtect.getWgrpBukkitPlugin(), () -> {
+		Bukkit.getScheduler().runTaskTimerAsynchronously(wgRegionProtect.getWGRPBukkitPlugin(), () -> {
 			ConcurrentHashMap<UUID, StorageDataBase> tempDataBase = new ConcurrentHashMap<>();
 			PreparedStatement pst = null;
 			ResultSet rs = null;
@@ -154,7 +154,7 @@ public class Storage implements StorageDataSource {
 
 	@Override
 	public void setLogAction(String nickname, @NotNull UUID uniqueId, long time, @NotNull RegionAction action, String region, String world, int x, int y, int z) {
-		Bukkit.getScheduler().runTaskAsynchronously(wgRegionProtect.getWgrpBukkitPlugin(), () -> {
+		Bukkit.getScheduler().runTaskAsynchronously(wgRegionProtect.getWGRPBukkitPlugin(), () -> {
 			PreparedStatement pst = null;
 			try(Connection conn = this.getConnection()) {
 				pst = conn.prepareStatement("INSERT INTO <table> (nickname, uniqueId, time, action, region, world, x, y, z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"

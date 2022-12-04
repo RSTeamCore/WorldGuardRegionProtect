@@ -1,5 +1,6 @@
 package net.ritasister.wgrp.listener.protect;
 
+import com.google.inject.Inject;
 import com.sk89q.worldedit.IncompleteRegionException;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
@@ -34,11 +35,8 @@ import java.util.UUID;
 
 public class RegionProtect implements Listener {
 
-	private final WorldGuardRegionProtect wgRegionProtect;
-
-	public RegionProtect(WorldGuardRegionProtect wgRegionProtect) {
-		this.wgRegionProtect=wgRegionProtect;
-	}
+	@Inject
+	private WorldGuardRegionProtect wgRegionProtect;
 
 	private final List<String> regionCommandNameArgs = Arrays.asList(
 			"/rg", "/region", "/regions",
@@ -371,8 +369,7 @@ public class RegionProtect implements Listener {
 					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 				}
-			} catch (IncompleteRegionException ignored) {}
-			try {
+			} catch (IncompleteRegionException ignored) {} try {
 				if (this.wgRegionProtect.getCommandWE().cmdWE_C(s[0]) && !this.wgRegionProtect.getIwg().checkCIntersection(player, s)) {
 					e.setCancelled(true);
 					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
@@ -381,8 +378,7 @@ public class RegionProtect implements Listener {
 					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 				}
-			} catch (IncompleteRegionException ignored) {}
-			try {
+			} catch (IncompleteRegionException ignored) {} try {
 				if (this.wgRegionProtect.getCommandWE().cmdWE_P(s[0]) && !this.wgRegionProtect.getIwg().checkPIntersection(player, s)) {
 					e.setCancelled(true);
 					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
@@ -391,8 +387,7 @@ public class RegionProtect implements Listener {
 					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 				}
-			} catch (IncompleteRegionException ignored) {}
-			try {
+			} catch (IncompleteRegionException ignored) {} try {
 				if (this.wgRegionProtect.getCommandWE().cmdWE_S(s[0]) && !this.wgRegionProtect.getIwg().checkSIntersection(player, s)) {
 					e.setCancelled(true);
 					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
@@ -401,8 +396,7 @@ public class RegionProtect implements Listener {
 					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 				}
-			} catch (IncompleteRegionException ignored) {}
-			try {
+			} catch (IncompleteRegionException ignored) {} try {
 				if (this.wgRegionProtect.getCommandWE().cmdWE_U(s[0]) && !this.wgRegionProtect.getIwg().checkUIntersection(player, s)) {
 					e.setCancelled(true);
 					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
@@ -411,8 +405,7 @@ public class RegionProtect implements Listener {
 					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 				}
-			} catch (IncompleteRegionException ignored) {}
-			if (this.wgRegionProtect.getCommandWE().cmdWE_CP(s[0])) {
+			} catch (IncompleteRegionException ignored) {} if (this.wgRegionProtect.getCommandWE().cmdWE_CP(s[0])) {
 				e.setMessage(e.getMessage().replace("-o", ""));
 				try {
 					if (!this.wgRegionProtect.getIwg().checkCPIntersection(player, s)) {
@@ -421,19 +414,17 @@ public class RegionProtect implements Listener {
 				} catch (IncompleteRegionException ignored) {}
 				wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 				wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
-			}
-			if (this.regionCommandNameArgs.contains(s[0]) && s.length > 2) {
+			} if (this.regionCommandNameArgs.contains(s[0]) && s.length > 2) {
 
 				for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap().get(location.getWorld().getName())) {
 					if (list.equalsIgnoreCase(s[2])) {
 						e.setCancelled(true);
 					}
-				}for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(location.getWorld().getName())) {
+				} for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(location.getWorld().getName())) {
 					if (list.equalsIgnoreCase(s[2])) {
 						e.setCancelled(true);
 					}
-				}
-				if (s.length > 3 && this.regionEditArgs.contains(s[2].toLowerCase())
+				} if (s.length > 3 && this.regionEditArgs.contains(s[2].toLowerCase())
 						|| s.length > 3 && this.regionEditArgsFlags.contains(s[2].toLowerCase())) {
 					for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap().get(location.getWorld().getName())) {
 						if (list.equalsIgnoreCase(s[3])) {
@@ -444,8 +435,7 @@ public class RegionProtect implements Listener {
 							e.setCancelled(true);
 						}
 					}
-				}
-				if (s.length > 4 && s[2].equalsIgnoreCase("-w")
+				} if (s.length > 4 && s[2].equalsIgnoreCase("-w")
 						|| s.length > 4 && this.regionEditArgsFlags.contains(s[2].toLowerCase())) {
 					for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap().get(location.getWorld().getName())) {
 						if (list.equalsIgnoreCase(s[4])) {
@@ -456,8 +446,7 @@ public class RegionProtect implements Listener {
 							e.setCancelled(true);
 						}
 					}
-				}
-				if (s.length > 5 && s[3].equalsIgnoreCase("-w")
+				} if (s.length > 5 && s[3].equalsIgnoreCase("-w")
 						|| s.length > 5 && this.regionEditArgs.contains(s[4].toLowerCase())
 						|| s.length > 5 && this.regionEditArgsFlags.contains(s[4].toLowerCase())) {
 					for (final String list : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap().get(location.getWorld().getName())) {
@@ -469,8 +458,7 @@ public class RegionProtect implements Listener {
 							e.setCancelled(true);
 						}
 					}
-				}
-				if (s.length > 6 && s[4].equalsIgnoreCase("-w")
+				} if (s.length > 6 && s[4].equalsIgnoreCase("-w")
 						|| s.length > 6 && s[4].equalsIgnoreCase("-h")
 						|| s.length > 6 && this.regionEditArgs.contains(s[5].toLowerCase())
 						|| s.length > 6 && this.regionEditArgsFlags.contains(s[5].toLowerCase())) {
