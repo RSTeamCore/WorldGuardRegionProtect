@@ -19,7 +19,7 @@
 * Do you speak multiple languages? If so, we always welcome contributions to our [Crowdin project](https://crowdin.com/project/worldguardregionprotect).
 
 ## IMPORTANT
-* [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
+* [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RSTeamCore/WorldGuardRegionProtect/blob/dev/SECURITY.md)
 * Versions after **0.7.1** for **1.18+** require **JAVA 17+**!
 ---
 ## Opportunities of plugin
