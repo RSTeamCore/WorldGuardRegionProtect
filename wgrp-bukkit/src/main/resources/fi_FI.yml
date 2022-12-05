@@ -1,34 +1,34 @@
 ---
 langTitle:
-  language: Suomalainen
+  language: English
   author: RSTeamCore
-  version: 1.0
+  version: 1.1
 messages:
   ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8]&a Tämä alue on suojattu palvelimelta!'
-    wgrpMsgWe: '&8[&cWGRP&8]&c Et voi käyttää WorldEdit komentoa täällä!'
-    noPerm: '&cSinulla ei ole oikeuksia käyttää tätä komentoa.'
+    wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by server!'
+    wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> You can''t use here the worldedit command!'
+    noPerm: '<red>You don''t have permission to use this command.'
   regionManagement:
-    add: "&aAlue &6<region>&a lisätty asetukseen."
-    remove: "&cAlue &6<region>&c poistettu asetuksesta."
-    notContains: "&cEi voitu poistaa aluetta suojelulistalta, koska &6<region> &cis ei ole suojattu!"
-    invalidWorld: "&cMaailman- &6<world>&c ei löytynyt. Oletko varma, että syötit maailman nimen oikein?"
-    invalidRegion: "&cAlue &6<region>&c ei löytynyt. Oletko varma, että syötit oikean aluenimen?"
+    add: "<green>Region <gold><region><green> added to config."
+    remove: "<red>Region <gold><region><red> removed from config."
+    notContains: "<red>Could not remove region from protect list, because <gold><region> <red>is not protected!"
+    invalidWorld: "<red>World <gold><world><red> not found. Are you sure you entered the name of the world correctly?"
+    invalidRegion: "<red>Region <gold><region><red> not found. Are you sure you entered the correct region name?"
   Configs:
-    configReloaded: '&8[&cWGRP&8] &aKaikki tiedostot ladataan <time> ms!'
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>All files reloaded at <time> ms!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cHuomio! &e<player>&c yrittää käyttää komentoa &5<cmd>&c alueella: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8]&c Huomio! &e<player> &6<action>&c lohko alueessa: &3<region>&c Sijainti &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player><red> trying to using command <dark_purple><cmd><red> in region: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player> <gold><action><red> block in region: <dark_aqua><region><red> Location <dark_aqua><x> <y> <z> <world>'
   usage:
-    title: '&8[&cWGRP&8]&3 Käyttö komennolle &6/%command%'
-    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
-    wgrpUseHelp: '&aKäyttö: &e/wgrp help - &6nähdäksesi komentoluettelon.'
-    addRegionFromConsole: '&aKäyttö: &e/wgrp addregion &2[region] [world]'
-    removeRegionFromConsole: '&aKäyttö: &e/wgrp removeregion &2[region] [world]'
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> Usage for command <gold>%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>Usage: <yellow>/wgrp help - <gold>to see a list of commands.'
+    addRegionFromConsole: '<green>Usage: <yellow>/wgrp addregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>Usage: <yellow>/wgrp removeregion <dark_green>[region] [world]'
   subCommands:
-    reload: 'lataa konfiguraatiotiedostot uudelleen.'
-    about: 'nähdä tietoja kirjoittajista.'
-    spy: 'vakoilkaa, kuka vuorovaikutuksessa alueen kanssa.'
-    help: 'nähty apua.'
-    addRegion: 'lisätä alueen config jotta suojelu.'
-    removeRegion: 'poista alue asetuksesta poistaaksesi suojauksen ja poistaaksesi sen.'
+    reload: 'reload the configuration files.'
+    about: 'seeing info about authors.'
+    spy: 'spy for who interact with region.'
+    help: 'for seen helping.'
+    addRegion: 'add a region to the config to protect.'
+    removeRegion: 'remove the region from the config to remove the protection.'
