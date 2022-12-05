@@ -1,8 +1,5 @@
 package net.ritasister.wgrp.command;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import lombok.AllArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Message;
