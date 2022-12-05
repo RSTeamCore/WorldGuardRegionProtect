@@ -1,7 +1,6 @@
 package net.ritasister.wgrp;
 
 import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.rslibs.papi.PlaceholderAPIExpansion;
@@ -12,7 +11,7 @@ import org.bukkit.plugin.Plugin;
 public class LoadLibs implements ILoadLibs {
 
     private final WorldGuardRegionProtect wgRegionProtect;
-    @Assisted public boolean placeholderAPIEnabled;
+    public boolean placeholderAPIEnabled;
 
     public void loadWorldGuard() {
         final String s = "WorldGuard";

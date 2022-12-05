@@ -2,7 +2,7 @@ package net.ritasister.wgrp;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
@@ -23,10 +23,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Singleton
-@AllArgsConstructor(onConstructor_ = @Inject)
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class WorldGuardRegionProtect implements IWGRPBukkit {
 
-    private WGRPBukkitPlugin wgrpBukkitPlugin;
+    private final WGRPBukkitPlugin wgrpBukkitPlugin;
 
     private Iwg Iwg;
 

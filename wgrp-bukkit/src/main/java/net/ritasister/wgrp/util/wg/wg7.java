@@ -17,7 +17,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import org.bukkit.Location;
@@ -26,10 +26,11 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@AllArgsConstructor(onConstructor_ = @Inject)
+@Singleton
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class wg7 implements Iwg {
 
-    public WorldGuardRegionProtect wgRegionProtect;
+    public final WorldGuardRegionProtect wgRegionProtect;
 
     @Override
     public boolean checkIntersection(final Player player) throws IncompleteRegionException {

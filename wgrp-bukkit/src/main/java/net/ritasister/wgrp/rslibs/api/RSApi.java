@@ -20,8 +20,8 @@ import java.util.Date;
 /**
  * A class that contains methods about rights, notification and other
  */
-@AllArgsConstructor(onConstructor_ = @Inject)
 @Singleton
+@AllArgsConstructor(onConstructor_ = @Inject)
 public class RSApi {
 
 	private final WorldGuardRegionProtect wgRegionProtect;
