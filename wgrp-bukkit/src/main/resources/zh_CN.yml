@@ -1,34 +1,34 @@
 ---
 langTitle:
-  language: 汉语
+  language: English
   author: RSTeamCore
-  version: 1.0
+  version: 1.1
 messages:
   ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8]&a 此区域是由服务器保护的!'
-    wgrpMsgWe: '&8[&cWGRP&8]&c 你不能在这里使用世界编辑命令！'
-    noPerm: '你没有权限。'
+    wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by server!'
+    wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> You can''t use here the worldedit command!'
+    noPerm: '<red>You don''t have permission to use this command.'
   regionManagement:
-    add: "&e 区域&6<region>&a 添加到配置。"
-    remove: "&c区域&6<region>&c 已从配置中删除。"
-    notContains: "&c无法从保护列表中移除区域，因为&6<region> &cis 未受保护！"
-    invalidWorld: "&cWorld &6<world>&c 未找到。您确定输入的世界名称正确吗？"
-    invalidRegion: "&c区域&6<region>&c 未找到。您确定输入了正确的区域名称吗？"
+    add: "<green>Region <gold><region><green> added to config."
+    remove: "<red>Region <gold><region><red> removed from config."
+    notContains: "<red>Could not remove region from protect list, because <gold><region> <red>is not protected!"
+    invalidWorld: "<red>World <gold><world><red> not found. Are you sure you entered the name of the world correctly?"
+    invalidRegion: "<red>Region <gold><region><red> not found. Are you sure you entered the correct region name?"
   Configs:
-    configReloaded: '&8[&cWGRP&8] &a所有文件重新加载于 <time> 毫秒!'
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>All files reloaded at <time> ms!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8]&cAttention! &e<player>&c 正在尝试使用区域命令 &5<cmd>&c: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8]&c Attention! &e<player> &6<action>&c 区域块: &3<region>&c 位置 &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player><red> trying to using command <dark_purple><cmd><red> in region: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player> <gold><action><red> block in region: <dark_aqua><region><red> Location <dark_aqua><x> <y> <z> <world>'
   usage:
-    title: '&8[&cWGRP&8]&3 命令使用 &6/%command%'
-    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
-    wgrpUseHelp: '&a使用方法：&e/wgrp help - &6查看命令列表。'
-    addRegionFromConsole: '&a使用方法: &e/wgrp addregion &2[region] [world]'
-    removeRegionFromConsole: '&a使用方法: &e/wgrp removeregion &2[region] [world]'
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> Usage for command <gold>%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>Usage: <yellow>/wgrp help - <gold>to see a list of commands.'
+    addRegionFromConsole: '<green>Usage: <yellow>/wgrp addregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>Usage: <yellow>/wgrp removeregion <dark_green>[region] [world]'
   subCommands:
-    reload: '重新加载配置文件。'
-    about: '查看有关作者的信息。'
-    spy: '为谁与区域交互的间谍。'
-    help: '用于查看帮助。'
-    addRegion: '将区域添加到配置以保护。'
-    removeRegion: '从配置中移除该区域以移除保护。'
+    reload: 'reload the configuration files.'
+    about: 'seeing info about authors.'
+    spy: 'spy for who interact with region.'
+    help: 'for seen helping.'
+    addRegion: 'add a region to the config to protect.'
+    removeRegion: 'remove the region from the config to remove the protection.'
