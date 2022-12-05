@@ -1,6 +1,8 @@
 package net.ritasister.wgrp.command.extend;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.command.AbstractCommand;
 import net.ritasister.wgrp.command.SubCommand;
@@ -16,14 +18,13 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Method;
 import java.util.*;
 
+@Singleton
 public class CommandWGRP extends AbstractCommand {
 
-    @Inject
-    private WorldGuardRegionProtect wgRegionProtect;
+    @Inject private WorldGuardRegionProtect wgRegionProtect;
 
     public CommandWGRP(@NotNull WorldGuardRegionProtect wgRegionProtect) {
         super(UtilCommandList.WGRP.getCommand(), wgRegionProtect);
-        this.wgRegionProtect = wgRegionProtect;
     }
 
     @SubCommand(
