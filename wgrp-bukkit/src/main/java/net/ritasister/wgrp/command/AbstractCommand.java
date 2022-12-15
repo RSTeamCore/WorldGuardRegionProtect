@@ -2,7 +2,6 @@ package net.ritasister.wgrp.command;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.command.*;
 import org.jetbrains.annotations.NotNull;
 

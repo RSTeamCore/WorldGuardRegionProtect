@@ -13,5 +13,4 @@ public enum UtilCommandList {
 	public String getCommand() {
 		return command;
 	}
-
 }
