@@ -1,29 +1,29 @@
 langTitle:
   language: Українська
   author: RSTeamCore
-  version: 1,0
+  version: 1.1
 messages:
   ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8] &a Цей регіон захищено сервером!'
-    wgrpMsgWe: '&8[&cWGRP&8] &сВи не можете використовувати команду WorldEdit тут!'
-    noPerm: '&cУ вас недостатньо прав для виконання цієї команди.'
+    wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> Цей регіон захищено сервером!'
+    wgrpMsgWe: '<dark_gray>[<red>WGRP<dark_gray>]<red> Ви не можете використовувати команду WorldEdit тут!'
+    noPerm: '<red>У вас недостатньо прав для виконання цієї команди.'
   regionManagement:
-    add: "&aРегіон &6<region>&a додано до конфігурації."
-    remove: "&eРегіон &6<region>&a вилучено з конфігурації."
-    notContains: "&cНе вдалося вилучити регіон із списку захисту, тому що &6<region> &cis не захищений!"
-    invalidWorld: "&cСвіт &6<world>&c не знайдено. Ви впевнені, що правильно ввели назву світу?"
-    invalidRegion: "&cRegion &6<region>&c не знайдено. Ви впевнені, що ввели правильну назву регіону?"
+    add: "<green>Регіон <gold><region><green> додано до конфігурації."
+    remove: "<yellow>Регіон <gold><region><green> вилучено з конфігурації."
+    notContains: "<red>Не вдалося вилучити регіон із списку захисту, тому що <gold><region> <red>is не захищений!"
+    invalidWorld: "<red>Світ <gold><world><red> не знайдено. Ви впевнені, що правильно ввели назву світу?"
+    invalidRegion: "<red>Region <gold><region><red> не знайдено. Ви впевнені, що ввели правильну назву регіону?"
   Configs:
-    configReloaded: '&8[&cWGRP&8] &aВсі файли перезавантажено за <time> мс!'
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>]<green> Всі файли перезавантажено за <time> мс!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8]&cУвага! &e<player>&c намагається використовувати команду &5<cmd>&c в регіоні: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8] &cУвага! &e<player> &6<action>&c блок в регіоні &3<region>&c Місцезнаходження &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>Увага! <yellow><player><red> намагається використовувати команду <dark_purple><cmd><red> в регіоні: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>] <red>Увага! <yellow><player> <gold><action><red> блок в регіоні <dark_aqua><region><red> Місцезнаходження <dark_aqua><x> <y> <z> <world>'
   usage:
-    title: '&8[&cWGRP&8]&3 Використання для команди &6%command%'
-    format: ' &a%command% %alias% &2%tabArgs%&3-е &е%description%'
-    wgrpUseHelp: '&aВикористання: &e/wgrp help - &6для перегляду списку команд.'
-    addRegionFromConsole: '&aВикористання: &e/wgrp removeregion &2[region] [world]'
-    removeRegionFromConsole: '&aВикористання: &e/wgrp removeregion &2[region] [world]'
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> Використання для команди <gold>%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-е <yellow>%description%'
+    wgrpUseHelp: '<green>Використання: <yellow>/wgrp help - <gold>для перегляду списку команд.'
+    addRegionFromConsole: '<green>Використання: <yellow>/wgrp removeregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>Використання: <yellow>/wgrp removeregion <dark_green>[region] [world]'
   subCommands:
     reload: 'перезавантажити файли конфігурації.'
     about: 'див. інформацію про авторів.'

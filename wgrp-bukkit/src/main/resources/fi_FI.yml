@@ -4,26 +4,26 @@ langTitle:
   version: 1.0
 messages:
   ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8]&a Tämä alue on suojattu palvelimelta!'
-    wgrpMsgWe: '&8[&cWGRP&8]&c Et voi käyttää WorldEdit komentoa täällä!'
-    noPerm: '&cSinulla ei ole oikeuksia käyttää tätä komentoa.'
+    wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> Tämä alue on suojattu palvelimelta!'
+    wgrpMsgWe: '<dark_gray>[<red>WGRP<dark_gray>]<red> Et voi käyttää WorldEdit komentoa täällä!'
+    noPerm: '<red>Sinulla ei ole oikeuksia käyttää tätä komentoa.'
   regionManagement:
-    add: "&aAlue &6<region>&a lisätty asetukseen."
-    remove: "&cAlue &6<region>&c poistettu asetuksesta."
-    notContains: "&cEi voitu poistaa aluetta suojelulistalta, koska &6<region> &cis ei ole suojattu!"
-    invalidWorld: "&cMaailman- &6<world>&c ei löytynyt. Oletko varma, että syötit maailman nimen oikein?"
-    invalidRegion: "&cAlue &6<region>&c ei löytynyt. Oletko varma, että syötit oikean aluenimen?"
+    add: "<green>Alue <gold><region><green> lisätty asetukseen."
+    remove: "<red>Alue <gold><region><red> poistettu asetuksesta."
+    notContains: "<red>Ei voitu poistaa aluetta suojelulistalta, koska <gold><region> <red>is ei ole suojattu!"
+    invalidWorld: "<red>Maailman- <gold><world><red> ei löytynyt. Oletko varma, että syötit maailman nimen oikein?"
+    invalidRegion: "<red>Alue <gold><region><red> ei löytynyt. Oletko varma, että syötit oikean aluenimen?"
   Configs:
-    configReloaded: '&8[&cWGRP&8] &aKaikki tiedostot ladataan <time> ms!'
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>Kaikki tiedostot ladataan <time> ms!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cHuomio! &e<player>&c yrittää käyttää komentoa &5<cmd>&c alueella: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8]&c Huomio! &e<player> &6<action>&c lohko alueessa: &3<region>&c Sijainti &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>] <red>Huomio! <yellow><player><red> yrittää käyttää komentoa <dark_purple><cmd><red> alueella: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red> Huomio! <yellow><player> <gold><action><red> lohko alueessa: <dark_aqua><region><red> Sijainti <dark_aqua><x> <y> <z> <world>'
   usage:
-    title: '&8[&cWGRP&8]&3 Käyttö komennolle &6/%command%'
-    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
-    wgrpUseHelp: '&aKäyttö: &e/wgrp help - &6nähdäksesi komentoluettelon.'
-    addRegionFromConsole: '&aKäyttö: &e/wgrp addregion &2[region] [world]'
-    removeRegionFromConsole: '&aKäyttö: &e/wgrp removeregion &2[region] [world]'
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> Käyttö komennolle <gold>/%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>Käyttö: <yellow>/wgrp help - <gold>nähdäksesi komentoluettelon.'
+    addRegionFromConsole: '<green>Käyttö: <yellow>/wgrp addregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>Käyttö: <yellow>/wgrp removeregion <dark_green>[region] [world]'
   subCommands:
     reload: 'lataa konfiguraatiotiedostot uudelleen.'
     about: 'nähdä tietoja kirjoittajista.'

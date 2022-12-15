@@ -1,29 +1,29 @@
 langTitle:
   language: Deutsch
   author: RSTeamCore
-  version: 1.0
+  version: 1.1
 messages:
   ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8]&a Diese Region ist vom Server geschützt!'
-    wgrpMsgWe: '&8[&cWGRP&8]&c Du kannst hier nicht den Worldedit Befehl verwenden!'
-    noPerm: '&cDu hast keine Rechte, um diesen Befehl zu nutzen.'
+    wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> Diese Region ist vom Server geschützt!'
+    wgrpMsgWe: '<dark_gray>[<red>WGRP<dark_gray>]<red> Du kannst hier nicht den Worldedit Befehl verwenden!'
+    noPerm: '<red>Du hast keine Rechte, um diesen Befehl zu nutzen.'
   regionManagement:
-    add: "&eRegion &6<region>&a zur Konfiguration hinzugefügt."
-    remove: "&cRegion &6<region>&c aus der Konfiguration entfernt."
-    notContains: "&cKonnte Region nicht von der Schutzliste entfernen, da &6<region> &cnicht geschützt ist!"
-    invalidWorld: "&cWelt &6<world>&c nicht gefunden. Bist du sicher, dass du den Namen der Welt korrekt eingegeben hast?"
-    invalidRegion: "&cRegion &6<region>&c nicht gefunden. Sind Sie sicher, dass Sie den richtigen Regionalnamen eingegeben haben?"
+    add: "<yellow>Region <gold><region><green> zur Konfiguration hinzugefügt."
+    remove: "<red>Region <gold><region><red> aus der Konfiguration entfernt."
+    notContains: "<red>Konnte Region nicht von der Schutzliste entfernen, da <gold><region> <red>nicht geschützt ist!"
+    invalidWorld: "<red>Welt <gold><world><red> nicht gefunden. Bist du sicher, dass du den Namen der Welt korrekt eingegeben hast?"
+    invalidRegion: "<red>Region <gold><region><red> nicht gefunden. Sind Sie sicher, dass Sie den richtigen Regionalnamen eingegeben haben?"
   Configs:
-    configReloaded: '&8[&cWGRP&8] &aAlle Dateien neu geladen unter <time> ms!'
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>Alle Dateien neu geladen unter <time> ms!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8] &cAchtung! &e<player>&C versucht Befehl &5<cmd>&C in der Region zu verwenden: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8]&cAchtung! &e<player> &6<action>&c Block in Region: &3<region>&c Ort &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>] <red>Achtung! <yellow><player><red> versucht Befehl <dark_purple><cmd><red> in der Region zu verwenden: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>Achtung! <yellow><player> <gold><action><red> Block in Region: <dark_aqua><region><red> Ort <dark_aqua><x> <y> <z> <world>'
   usage:
-    title: '&8[&cWGRP&8]&e Verwendung für Befehl &6%command%'
-    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
-    wgrpUseHelp: '&aNutzung: &e/wgrp help - &6um eine Liste von Befehlen anzuzeigen.'
-    addRegionFromConsole: '&aNutzung: &e/wgrp addregion &2[region] [world]'
-    removeRegionFromConsole: '&aNutzung: &e/wgrp removeregion &2[region] [world]'
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<yellow> Verwendung für Befehl <gold>%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>Nutzung: <yellow>/wgrp help - <gold>um eine Liste von Befehlen anzuzeigen.'
+    addRegionFromConsole: '<green>Nutzung: <yellow>/wgrp addregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>Nutzung: <yellow>/wgrp removeregion <dark_green>[region] [world]'
   subCommands:
     reload: 'ladet die Konfigurations Dateien neu.'
     about: 'zeige Informationen über Autoren.'

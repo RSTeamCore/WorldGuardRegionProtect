@@ -1,29 +1,29 @@
 langTitle:
   language: 汉语
   author: RSTeamCore
-  version: 1.0
+  version: 1.1
 messages:
   ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8]&a 此区域是由服务器保护的!'
-    wgrpMsgWe: '&8[&cWGRP&8]&c 你不能在这里使用世界编辑命令！'
+    wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> 此区域是由服务器保护的!'
+    wgrpMsgWe: '<dark_gray>[<red>WGRP<dark_gray>]<red> 你不能在这里使用世界编辑命令！'
     noPerm: '你没有权限。'
   regionManagement:
-    add: "&e 区域&6<region>&a 添加到配置。"
-    remove: "&c区域&6<region>&c 已从配置中删除。"
-    notContains: "&c无法从保护列表中移除区域，因为&6<region> &cis 未受保护！"
-    invalidWorld: "&cWorld &6<world>&c 未找到。您确定输入的世界名称正确吗？"
-    invalidRegion: "&c区域&6<region>&c 未找到。您确定输入了正确的区域名称吗？"
+    add: "<yellow> 区域<gold><region><green> 添加到配置。"
+    remove: "<red>区域<gold><region><red> 已从配置中删除。"
+    notContains: "<red>无法从保护列表中移除区域，因为<gold><region> <red>is 未受保护！"
+    invalidWorld: "<red>World <gold><world><red> 未找到。您确定输入的世界名称正确吗？"
+    invalidRegion: "<red>区域<gold><region><red> 未找到。您确定输入了正确的区域名称吗？"
   Configs:
-    configReloaded: '&8[&cWGRP&8] &a所有文件重新加载于 <time> 毫秒!'
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>所有文件重新加载于 <time> 毫秒!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8]&cAttention! &e<player>&c 正在尝试使用区域命令 &5<cmd>&c: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8]&c Attention! &e<player> &6<action>&c 区域块: &3<region>&c 位置 &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player><red> 正在尝试使用区域命令 <dark_purple><cmd><red>: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red> Attention! <yellow><player> <gold><action><red> 区域块: <dark_aqua><region><red> 位置 <dark_aqua><x> <y> <z> <world>'
   usage:
-    title: '&8[&cWGRP&8]&3 命令使用 &6/%command%'
-    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
-    wgrpUseHelp: '&a使用方法：&e/wgrp help - &6查看命令列表。'
-    addRegionFromConsole: '&a使用方法: &e/wgrp addregion &2[region] [world]'
-    removeRegionFromConsole: '&a使用方法: &e/wgrp removeregion &2[region] [world]'
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> 命令使用 <gold>/%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>使用方法：<yellow>/wgrp help - <gold>查看命令列表。'
+    addRegionFromConsole: '<green>使用方法: <yellow>/wgrp addregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>使用方法: <yellow>/wgrp removeregion <dark_green>[region] [world]'
   subCommands:
     reload: '重新加载配置文件。'
     about: '查看有关作者的信息。'

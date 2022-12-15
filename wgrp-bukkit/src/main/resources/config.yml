@@ -51,38 +51,46 @@ wgRegionProtect:
   regionProtectOnlyBreakAllow:
     another_world: []
 
-  #--------------------------------------------------------------------------------------
+  # --------------------------------------------------------------------------------------
   # List of prohibited entity / block for interaction in the protected region.
   # If you don't want to block it, specify an empty parameter:
   #
   # Attention! In interact_type, the block IDs\items are different from Minecraft!
   # list of blocks prohibited by default\items:
   # - armor_stand
-  # - end_crystal
-  # - minecart
-  # - tnt_minecart
-  # - command_block_minecart
-  # - hopper_minecart
-  # - chest_minecart
-  # - furnace_minecart
-  # - oak_boat
-  # - acacia_boat
-  # - spruce_boat
-  # - birch_boat
-  # - jungle_boat
-  # - jungle_boat
-  # - dark_oak_boat
-  # - bucket
-  # - water_bucket
-  # - lava_bucket
-  # - tropical_fish_bucket
-  # - pufferfish_bucket
-  # - axolotl_bucket
-  # - cod_bucket
-  # - salmon_bucket
+  #    - end_crystal
+  #    - minecart
+  #    - tnt_minecart
+  #    - command_block_minecart
+  #    - hopper_minecart
+  #    - chest_minecart
+  #    - furnace_minecart
+  #    - oak_boat
+  #    - oak_chest_boat
+  #    - spruce_boat
+  #    - spruce_chest_boat
+  #    - birch_boat
+  #    - birch_chest_boat
+  #    - jungle_boat
+  #    - jungle_chest_boat
+  #    - acacia_boat
+  #    - acacia_chest_boat
+  #    - dark_oak_boat
+  #    - dark_oak_chest_boat
+  #    - mangrove_boat
+  #    - mangrove_chest_boat
+  #    - bucket
+  #    - water_bucket
+  #    - lava_bucket
+  #    - tropical_fish_bucket
+  #    - pufferfish_bucket
+  #    - axolotl_bucket
+  #    - cod_bucket
+  #    - salmon_bucket
+  #    - tadpole_bucket
   #
   # interactType: []
-  #--------------------------------------------------------------------------------------
+  # --------------------------------------------------------------------------------------
   protectInteract:
     interactType:
       - armor_stand

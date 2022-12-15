@@ -1,29 +1,29 @@
 langTitle:
   language: English
   author: RSTeamCore
-  version: 1.0
+  version: 1.1
 messages:
   ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8]&a This region is protected by server!'
-    wgrpMsgWe: '&8[&cWGRP&8]&c You can''t use here the worldedit command!'
-    noPerm: '&cYou don''t have permission to use this command.'
+    wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by server!'
+    wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> You can''t use here the worldedit command!'
+    noPerm: '<red>You don''t have permission to use this command.'
   regionManagement:
-    add: "&aRegion &6<region>&a added to config."
-    remove: "&cRegion &6<region>&c removed from config."
-    notContains: "&cCould not remove region from protect list, because &6<region> &cis not protected!"
-    invalidWorld: "&cWorld &6<world>&c not found. Are you sure you entered the name of the world correctly?"
-    invalidRegion: "&cRegion &6<region>&c not found. Are you sure you entered the correct region name?"
+    add: "<green>Region <gold><region><green> added to config."
+    remove: "<red>Region <gold><region><red> removed from config."
+    notContains: "<red>Could not remove region from protect list, because <gold><region> <red>is not protected!"
+    invalidWorld: "<red>World <gold><world><red> not found. Are you sure you entered the name of the world correctly?"
+    invalidRegion: "<red>Region <gold><region><red> not found. Are you sure you entered the correct region name?"
   Configs:
-    configReloaded: '&8[&cWGRP&8] &aAll files reloaded at <time> ms!'
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>All files reloaded at <time> ms!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8]&cAttention! &e<player>&c trying to using command &5<cmd>&c in region: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8]&cAttention! &e<player> &6<action>&c block in region: &3<region>&c Location &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player><red> trying to using command <dark_purple><cmd><red> in region: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player> <gold><action><red> block in region: <dark_aqua><region><red> Location <dark_aqua><x> <y> <z> <world>'
   usage:
-    title: '&8[&cWGRP&8]&3 Usage for command &6%command%'
-    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
-    wgrpUseHelp: '&aUsage: &e/wgrp help - &6to see a list of commands.'
-    addRegionFromConsole: '&aUsage: &e/wgrp addregion &2[region] [world]'
-    removeRegionFromConsole: '&aUsage: &e/wgrp removeregion &2[region] [world]'
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> Usage for command <gold>%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>Usage: <yellow>/wgrp help - <gold>to see a list of commands.'
+    addRegionFromConsole: '<green>Usage: <yellow>/wgrp addregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>Usage: <yellow>/wgrp removeregion <dark_green>[region] [world]'
   subCommands:
     reload: 'reload the configuration files.'
     about: 'seeing info about authors.'
