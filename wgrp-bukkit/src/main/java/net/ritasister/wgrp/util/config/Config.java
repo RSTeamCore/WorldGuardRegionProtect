@@ -554,5 +554,5 @@ public class Config {
 
     @Target(ElementType.FIELD)
     @Retention(RetentionPolicy.RUNTIME)
-    private @interface CanRecover { }
+    private @interface CanRecover {}
 }
