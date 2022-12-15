@@ -1,7 +1,10 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     `java-library`
     id("xyz.jpenilla.run-paper") version "1.0.6"
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    kotlin("jvm") version "1.8.0-Beta"
 }
 
 java {
@@ -43,12 +46,14 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
 
     compileOnly("net.kyori:adventure-api:4.12.0")
+    implementation("net.kyori:adventure-text-minimessage:4.12.0")
     //PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.2")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Paper 1.19
     compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
+    implementation(kotlin("stdlib-jdk8"))
 
 }
 
@@ -135,4 +140,12 @@ publishing {
             }
         }
     }
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
