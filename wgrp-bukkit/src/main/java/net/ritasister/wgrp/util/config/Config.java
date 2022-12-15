@@ -85,10 +85,10 @@ public class Config {
     private boolean regionMessageProtectWe;
 
     @CanRecover
-    private boolean spyCommandNotifyConsole;
+    private boolean isSpyCommandNotifyConsoleEnable;
 
     @CanRecover
-    private boolean spyCommandNotifyAdmin;
+    private boolean isSpyCommandNotifyAdminEnable;
 
     @CanRecover
     private boolean explodeEntity;
@@ -190,8 +190,8 @@ public class Config {
             regionMessageProtect = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.regionMessageProtect");
             regionMessageProtectWe = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.regionMessageProtectWe");
 
-            spyCommandNotifyConsole = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.console.enable");
-            spyCommandNotifyAdmin = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.admin.enable");
+            isSpyCommandNotifyConsoleEnable = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.console.enable");
+            isSpyCommandNotifyAdminEnable = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.admin.enable");
             spyCommandNotifyAdminPlaySoundEnable = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.spySettings.notify.sound.enable");
             spyCommandNotifyAdminPlaySound = wgrpBukkitPlugin.getConfig().getString("wgRegionProtect.spySettings.notify.sound.type");
             spyCommandList = wgrpBukkitPlugin.getConfig().getStringList("wgRegionProtect.spySettings.spyCommandList");
@@ -258,8 +258,8 @@ public class Config {
 
                             case "regionMessageProtect" -> regionMessageProtect = true;
                             case "regionMessageProtectWe" -> regionMessageProtectWe = true;
-                            case "spyCommandNotifyConsole" -> spyCommandNotifyConsole = true;
-                            case "spyCommandNotifyAdmin" -> spyCommandNotifyAdmin = true;
+                            case "spyCommandNotifyConsole" -> isSpyCommandNotifyConsoleEnable = true;
+                            case "spyCommandNotifyAdmin" -> isSpyCommandNotifyAdminEnable = true;
                             case "spyCommandNotifyAdminPlaySoundEnable" -> spyCommandNotifyAdminPlaySoundEnable = true;
                             case "spyCommandNotifyAdminPlaySound" -> spyCommandNotifyAdminPlaySound = "BLOCK_ANVIL_PLACE";
                             case "spyCommandList" -> spyCommandList = List.of(
@@ -390,12 +390,12 @@ public class Config {
         return regionMessageProtectWe;
     }
 
-    public boolean getSpyCommandNotifyConsole() {
-        return spyCommandNotifyConsole;
+    public boolean getSpyCommandNotifyConsoleEnable() {
+        return isSpyCommandNotifyConsoleEnable;
     }
 
-    public boolean getSpyCommandNotifyAdmin() {
-        return spyCommandNotifyAdmin;
+    public boolean getSpyCommandNotifyAdminEnable() {
+        return isSpyCommandNotifyAdminEnable;
     }
 
     public boolean getExplodeEntity() {
@@ -453,9 +453,9 @@ public class Config {
 
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.regionMessageProtect", regionMessageProtect);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.regionMessageProtectWe", regionMessageProtectWe);
-            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.console.enable", spyCommandNotifyConsole);
-            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.admin.enable", spyCommandNotifyAdmin);
-            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.sound.enable", spyCommandNotifyAdminPlaySoundEnable );
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.console.enable", isSpyCommandNotifyConsoleEnable);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.admin.enable", isSpyCommandNotifyAdminEnable);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.sound.enable", spyCommandNotifyAdminPlaySoundEnable);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.notify.sound.type", spyCommandNotifyAdminPlaySound);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.spySettings.spyCommandList", spyCommandList);
 
