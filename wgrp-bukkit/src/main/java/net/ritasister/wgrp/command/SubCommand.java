@@ -1,7 +1,6 @@
 package net.ritasister.wgrp.command;
 
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.config.Message;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;
@@ -20,5 +19,5 @@ public @interface SubCommand {
 
     String[] tabArgs() default {};
 
-    Message description();
+    String description();
 }

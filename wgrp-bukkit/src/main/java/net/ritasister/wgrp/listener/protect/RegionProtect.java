@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -59,10 +58,10 @@ public class RegionProtect implements Listener {
 				|| wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap())) {
 			e.setCancelled(false);
 		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())
-			&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
+				&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
 			e.setCancelled(true);
 			if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtect()) {
-				player.sendMessage(Message.ServerMsg_wgrpMsg.toString());
+				wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.wgrpMsg").send(player);
 			}
 		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(location)
 				&& wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER, null)) {
@@ -95,7 +94,7 @@ public class RegionProtect implements Listener {
 				&& !wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT, null)) {
 			e.setCancelled(true);
 			if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtect()) {
-				player.sendMessage(Message.ServerMsg_wgrpMsg.toString());
+				wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.wgrpMsg").send(player);
 			}
 		} else if (wgRegionProtect.getRsRegion().checkStandingRegion(location)
 				&& wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER, null)) {
@@ -367,7 +366,7 @@ public class RegionProtect implements Listener {
 				if (this.wgRegionProtect.getCommandWE().cmdWE(s[0]) && !this.wgRegionProtect.getIwg().checkIntersection(player)) {
 					e.setCancelled(true);
 					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-						player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
+						wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.wgrpMsgWe").send(player);
 					}
 					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
@@ -376,7 +375,7 @@ public class RegionProtect implements Listener {
 				if (this.wgRegionProtect.getCommandWE().cmdWE_C(s[0]) && !this.wgRegionProtect.getIwg().checkCIntersection(player, s)) {
 					e.setCancelled(true);
 					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-						player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
+						wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.wgrpMsgWe").send(player);
 					}
 					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
@@ -385,7 +384,7 @@ public class RegionProtect implements Listener {
 				if (this.wgRegionProtect.getCommandWE().cmdWE_P(s[0]) && !this.wgRegionProtect.getIwg().checkPIntersection(player, s)) {
 					e.setCancelled(true);
 					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-						player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
+						wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.wgrpMsgWe").send(player);
 					}
 					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
@@ -394,7 +393,7 @@ public class RegionProtect implements Listener {
 				if (this.wgRegionProtect.getCommandWE().cmdWE_S(s[0]) && !this.wgRegionProtect.getIwg().checkSIntersection(player, s)) {
 					e.setCancelled(true);
 					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-						player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
+						wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.wgrpMsgWe").send(player);
 					}
 					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
@@ -403,7 +402,7 @@ public class RegionProtect implements Listener {
 				if (this.wgRegionProtect.getCommandWE().cmdWE_U(s[0]) && !this.wgRegionProtect.getIwg().checkUIntersection(player, s)) {
 					e.setCancelled(true);
 					if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-						player.sendMessage(Message.ServerMsg_wgrpMsgWe.toString());
+						wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.wgrpMsgWe").send(player);
 					}
 					wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
 					wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));

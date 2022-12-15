@@ -9,7 +9,7 @@ class Container(section: ConfigurationSection) {
     private val DEFAULT_NULLABLE_MESSAGE = ComponentWrapper("", this)
 
     var prefix: String? = null
-    var mm: MiniMessage = MiniMessage.miniMessage()
+    var miniMessage: MiniMessage = MiniMessage.miniMessage()
 
     private val messages: MutableMap<String, ComponentWrapper> = HashMap<String, ComponentWrapper>()
 
@@ -77,5 +77,4 @@ class Container(section: ConfigurationSection) {
     fun hasPrefix(): Boolean {
         return prefix != null
     }
-
 }

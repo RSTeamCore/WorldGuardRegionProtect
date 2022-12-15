@@ -11,7 +11,6 @@ import net.ritasister.wgrp.rslibs.datasource.Storage;
 import net.ritasister.wgrp.rslibs.util.UpdateChecker;
 import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.util.UtilConfig;
-import net.ritasister.wgrp.util.config.Message;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -46,7 +45,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
     private LoadLibs loadLibs;
 
     //HashMap
-    public ArrayList<UUID> spyLog;
+    public ArrayList<UUID> spyLog = new ArrayList<>();
 
     public void load() {
         this.rsApi = new RSApi(this);
@@ -55,7 +54,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         this.loadMetrics();
         this.loadAnotherClassAndMethods();
         this.loadDataBase();
-        this.notifyPreBuild();
+        this.notifyAboutBuild();
         this.checkUpdate();
     }
 
@@ -106,20 +105,20 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
             if (this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
                 Bukkit.getConsoleSender().sendMessage(String.format("""
-                &e======&8[&cWorldGuardRegionProtect&8]&e======
-                          &6Current version: &b%s
-                       &6You are using the latest version.
-                &e===================================
+                ========[WorldGuardRegionProtect]========
+                          Current version: %s
+                       You are using the latest version.
+                =======================================
                 """, version));
             } else {
                 Bukkit.getConsoleSender().sendMessage(String.format("""
-                &e========&8[&cWorldGuardRegionProtect&8]&e========
-                &6 There is a new version update available.
-                &c        Current version: &4%s
-                &3          New version: &b%s
-                &6   Please, download new version here
-                &6 https://www.spigotmc.org/resources/81321/
-                &e=======================================
+                ========[WorldGuardRegionProtect]========
+                 There is a new version update available.
+                        Current version: %s
+                          New version: %s
+                   Please, download new version here
+                 https://www.spigotmc.org/resources/81321/
+                =======================================
                 """, this.getPluginVersion(), version));
             }
         });
@@ -128,21 +127,21 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
     public void checkUpdateNotifyPlayer(Player player) {
         new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
             if (this.getUtilConfig().getConfig().getUpdateChecker() && this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
-                player.sendMessage(String.format("""
-                &e======&8[&cWorldGuardRegionProtect&8]&e======
-                          &6Current version: &b%s
-                       &6You are using the latest version.
-                &e===================================
+                getRsApi().getMessageToPlayer(player, String.format("""
+                <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
+                          <gold>Current version: <aqua>%s
+                       <gold>You are using the latest version.
+                <yellow>=======================================
                 """, version));
             }else{
-                player.sendMessage(String.format("""
-                &e========&8[&cWorldGuardRegionProtect&8]&e========
-                &6 There is a new version update available.
-                &c        Current version: &4%s
-                &3          New version: &b%s
-                &6   Please, download new version here
-                &6 https://www.spigotmc.org/resources/81321/
-                &e=======================================
+                getRsApi().getMessageToPlayer(player, String.format("""
+                <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
+                <gold> There is a new version update available.
+                <red>        Current version: <dark_red>%s
+                <dark_aqua>          New version: <aqua>%s
+                <gold>   Please, download new version here
+                <gold> https://www.spigotmc.org/resources/81321/
+                <yellow>=======================================
                 """, this.getPluginVersion(), version));
             }
         });
@@ -151,7 +150,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
     private void checkStartUpVersionServer() {
         if (!this.getRsApi().isVersionSupported()) {
             getLogger().error(Component.text("""
-            This plugin version works only on 1.19+!
+            This plugin version works only on 1.19.1+!
             Please read this thread: https://www.spigotmc.org/resources/81321/
             The main post on spigotmc and please download the correct version.
             """));
@@ -159,8 +158,8 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         }
     }
 
-    public void notifyPreBuild() {
-        if(this.getPluginVersion().contains("pre")) {
+    public void notifyAboutBuild() {
+        if(this.getPluginVersion().contains("alpha") || this.getPluginVersion().contains("beta") || this.getPluginVersion().contains("pre")) {
             this.getLogger().warn(Component.text("""
                         This is a test build. This building may be unstable!
                         When reporting a bug:
@@ -178,21 +177,21 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
                         Using %s language version %s
                         Author of this localization - %s
                         """,
-                        Message.getLangProperties().language(),
-                        Message.getLangProperties().version(),
-                        Message.getLangProperties().author())));
+                        getUtilConfig().getMessages().get("langTitle.language"),
+                        getUtilConfig().getMessages().get("langTitle.author"),
+                        getUtilConfig().getMessages().get("langTitle.version"))));
     }
 
     public void loadDataBase() {
         if(this.getUtilConfig().getConfig().getDataBaseEnable()) {
-            final long duration_time_start = System.currentTimeMillis();
+            final long durationTimeStart = System.currentTimeMillis();
             this.getRsStorage().dbLogsSource = new Storage(this);
             this.getRsStorage().dbLogs.clear();
             if (this.getRsStorage().dbLogsSource.load()) {
                 this.getLogger().info(Component.text("[DataBase] The database is loaded."));
                 this.postEnable();
                 this.getLogger().info(Component.text(String.format(
-                        "[DataBase] Startup duration: %s мс.", System.currentTimeMillis() - duration_time_start)));
+                        "[DataBase] Startup duration: %s мс.", System.currentTimeMillis() - durationTimeStart)));
             }
         }
     }

@@ -10,28 +10,31 @@ import org.bukkit.command.CommandSender
 class ComponentWrapper(private var value: MutableList<String>, private val container: Container) {
 
     constructor(string: String, container: Container) : this(mutableListOf(string), container)
+
     constructor(container: Container) : this(mutableListOf<String>(), container)
 
     var prefix = if(container.hasPrefix()) container.prefix else ""
 
-    private val mm: MiniMessage = MiniMessage.miniMessage()
+    private val miniMessage: MiniMessage = MiniMessage.miniMessage()
 
     fun toList(): List<String> = value
 
     override fun toString(): String = value.joinToString("\n")
 
     fun toComponentList(withPrefix: Boolean = false, vararg resolvers: TagResolver): List<TextComponent> = value.map {
-        (if(withPrefix) prefix else "" + it)?.let { it1 -> mm.deserialize(it1, TagResolver.resolver(resolvers.asIterable())) } as TextComponent
+        (if(withPrefix) prefix else "" + it)?.let {
+                it1 -> miniMessage.deserialize(it1, TagResolver.resolver(resolvers.asIterable()))
+        } as TextComponent
     }
 
     private fun toComponent(withPrefix: Boolean = true, vararg resolvers: TagResolver): TextComponent = ((if(withPrefix) prefix else "")?.let {
-        mm.deserialize(
+        miniMessage.deserialize(
             it
         )
     } as TextComponent).toBuilder()
         .also { component ->
             value.map {
-                mm.deserialize(it, TagResolver.resolver(resolvers.asIterable()))
+                miniMessage.deserialize(it, TagResolver.resolver(resolvers.asIterable()))
             }.mapIndexed { index, it ->
                 component.append(it)
                 if(value.size != 1 && value.lastIndex != index)
@@ -39,10 +42,12 @@ class ComponentWrapper(private var value: MutableList<String>, private val conta
             }
         }.build()
 
-    private fun toComponent(): TextComponent = (prefix?.let { mm.deserialize(it) } as TextComponent).toBuilder()
+    private fun toComponent(): TextComponent = (prefix?.let {
+        miniMessage.deserialize(it)
+    } as TextComponent).toBuilder()
         .also { component ->
             value.map {
-                mm.deserialize(it)
+                miniMessage.deserialize(it)
             }.mapIndexed { index, it ->
                 component.append(it)
                 if(value.size != 1 && value.lastIndex != index)
@@ -71,7 +76,9 @@ class ComponentWrapper(private var value: MutableList<String>, private val conta
         sender.sendMessage(toComponent(withPrefix = withPrefix))
     }
 
-    private fun replace(from: String, to: String): ComponentWrapper = ComponentWrapper(this.value.map { it.replace(from, to) }.toMutableList(), container)
+    private fun replace(from: String, to: String): ComponentWrapper = ComponentWrapper(this.value.map {
+        it.replace(from, to)
+    }.toMutableList(), container)
 
     fun replace(from: String, to: Any): ComponentWrapper =  replace(from, to.toString())
 

@@ -4,12 +4,13 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.AllArgsConstructor;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.config.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -43,6 +44,24 @@ public class RSApi {
 			return true;
 		}
 		return false;
+	}
+
+	public void getMessageToPlayer(@NotNull Player player, String message) {
+		var miniMessage = MiniMessage.miniMessage();
+		Component parsed = miniMessage.deserialize(message);
+		player.sendMessage(parsed);
+	}
+
+	public void getMessageToCommandSender(@NotNull CommandSender commandSender, String message) {
+		var miniMessage = MiniMessage.miniMessage();
+		Component parsed = miniMessage.deserialize(message);
+		commandSender.sendMessage(parsed);
+	}
+
+	public void getMessageToConsoleSender(@NotNull ConsoleCommandSender sender, String message) {
+		var miniMessage = MiniMessage.miniMessage();
+		Component parsed = miniMessage.deserialize(message);
+		sender.sendMessage(parsed);
 	}
 
 	/**
@@ -139,13 +158,14 @@ public class RSApi {
 	 */
 	public void notify(Player player, String playerName, String senderCommand, String regionName) {
 		if(regionName == null) return;
-		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdmin()
+		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminEnable()
 				&& this.isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN, null)) {
 			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())
 						&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
 					player.playSound(player.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
-					player.sendMessage(Message.Notify_sendAdminInfoIfUsedCommandInRG.toString()
+					player.sendMessage(
+							wgRegionProtect.getUtilConfig().getMessages().get("messages.Notify.sendAdminInfoIfUsedCommandInRG").toString()
 							.replace("<player>", playerName)
 							.replace("<cmd>", cmd)
 							.replace("<region>", regionName));
@@ -163,10 +183,11 @@ public class RSApi {
 	 */
 	public void notify(String playerName, String senderCommand, String regionName) {
 		if(regionName == null) return;
-		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyConsole()) {
+		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyConsoleEnable()) {
 			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-					Bukkit.getConsoleSender().sendMessage(Message.Notify_sendAdminInfoIfUsedCommandInRG.toString()
+					Bukkit.getConsoleSender().sendMessage(
+							wgRegionProtect.getUtilConfig().getMessages().get("messages.Notify.sendAdminInfoIfUsedCommandInRG").toString()
 							.replace("<player>", playerName)
 							.replace("<cmd>", cmd)
 							.replace("<region>", regionName));
@@ -190,9 +211,10 @@ public class RSApi {
 	 */
 	public void notifyIfActionInRegion(Player admin, Player suspectPlayer, String suspectName, RegionAction action, String regionName, double x, double y, double z, String world) {
 		if (this.isSenderListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT, null)
-				&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdmin()) {
-				admin.sendMessage(Message.Notify_sendAdminInfoIfActionInRegion.toString()
-						.replace("<player>", suspectName)
+				&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminEnable()) {
+				admin.sendMessage(
+						wgRegionProtect.getUtilConfig().getMessages().get("messages.Notify.sendAdminInfoIfActionInRegion").toString()
+								.replace("<player>", suspectName)
 					.replace("<action>", action.getAction())
 					.replace("<region>", regionName)
 					.replace("<x>", String.valueOf(x))

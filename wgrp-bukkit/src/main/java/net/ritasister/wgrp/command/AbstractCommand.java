@@ -14,12 +14,15 @@ import java.util.List;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
+    private final WorldGuardRegionProtect wgRegionProtect;
+
     public AbstractCommand(String command, @NotNull WorldGuardRegionProtect wgRegionProtect) {
         PluginCommand pluginCommand = wgRegionProtect.getWGRPBukkitPlugin().getCommand(command);
         if(pluginCommand != null) {
             pluginCommand.setExecutor(this);
             pluginCommand.setTabCompleter(this);
         }
+        this.wgRegionProtect=wgRegionProtect;
     }
 
     public List<String> complete() {
@@ -38,7 +41,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) {
-            Message.usage_wgrpUseHelp.send(sender);
+            wgRegionProtect.getUtilConfig().getMessages().get("messages.usage.wgrpUseHelp").send(sender);
         } else for (Method m : this.getClass().getDeclaredMethods()) {
             if (m.isAnnotationPresent(SubCommand.class)) {
                 SubCommand sub = m.getAnnotation(SubCommand.class);
@@ -66,7 +69,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                             } catch (IllegalAccessException | InvocationTargetException e) {
                                 throw new RuntimeException(e);
                             }
-                        } else Message.ServerMsg_noPerm.send(sender);
+                        } else wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.noPerm").send(sender);
                     } else try {
                         m.invoke(this, sender, subArgs);
                         break;
