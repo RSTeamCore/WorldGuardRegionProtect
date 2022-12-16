@@ -52,6 +52,35 @@
 3. By default, all who is operators are not allowed access into the region.
 ---
 
+## WorldGuardRegionProtect API
+
+##### Maven repository
+
+```xml
+<repository>
+    <id>codemc-releases</id>
+    <url>https://repo.codemc.org/repository/maven-releases/</url>
+</repository>
+
+<dependency>
+    <groupId>net.ritasister</groupId>
+    <artifactId>WorldGuardRegionProtect-api</artifactId>
+    <version>0.7.4.1</version>
+</dependency>
+```
+
+##### build.gradle.kts repository
+
+```kotlin
+repositories {
+    maven ("https://repo.codemc.org/repository/maven-public/")
+}
+
+dependencies {
+    implementation("net.ritasister:WorldGuardRegionProtect-api:0.7.4.1")
+}
+```
+
 ## Metrics
 [bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect/12975)
 <img alt="bStats" src="https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg"/>
