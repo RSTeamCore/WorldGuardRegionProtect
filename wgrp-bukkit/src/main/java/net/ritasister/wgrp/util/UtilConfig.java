@@ -38,23 +38,23 @@ public class UtilConfig {
 		return new Container(YamlConfiguration.loadConfiguration(file));
 	}
 
-	private void checkLangVersion(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) throws IOException {
+	public void checkLangVersion(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) throws IOException {
 		String lang = config.getLang();
 		File currentLangFile = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
 		InputStream inputStream = wgrpBukkitPlugin.getResource("lang/" + lang + ".yml");
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
 		String content;
 		String newVersion = null;
+		String currentVersion = getMessages().get("langTitle.version").toString();
 		while ((content = bufferedReader.readLine()) != null) {
 			if(content.contains("version")) {
 				newVersion = content.replace(" version: ", "").replace("version: ", "").replaceAll("\"", "");
 				break;
 			}
 		}
-		String currentVersion = getMessages().get("langTitle.version").toString();
-		if (currentLangFile.exists() && currentVersion.equals(newVersion) || currentVersion.isEmpty()) {
+		if (currentLangFile.exists() && (currentVersion).equals(newVersion)) {
 			Bukkit.getConsoleSender().sendMessage("[WGRP] Found new version of lang file, we are updated this now...");
-			wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", false);
+			wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", true);
 		} else {
 			Bukkit.getConsoleSender().sendMessage("[WGRP] No update is required for the lang file");
 		}
