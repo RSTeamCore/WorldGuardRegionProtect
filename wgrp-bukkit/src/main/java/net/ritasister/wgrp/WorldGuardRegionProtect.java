@@ -3,7 +3,6 @@ package net.ritasister.wgrp;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
-import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
 import net.ritasister.wgrp.rslibs.api.*;
@@ -13,7 +12,6 @@ import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.util.UtilConfig;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
@@ -126,26 +124,28 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
     }
 
     public void checkUpdateNotifyPlayer(Player player) {
-        new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
-            if (this.getUtilConfig().getConfig().getUpdateChecker() && this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
-                getRsApi().getMessageToPlayer(player, String.format("""
-                <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
-                          <gold>Current version: <aqua>%s
-                       <gold>You are using the latest version.
-                <yellow>=======================================
-                """, version));
-            }else{
-                getRsApi().getMessageToPlayer(player, String.format("""
-                <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
-                <gold> There is a new version update available.
-                <red>        Current version: <dark_red>%s
-                <dark_aqua>          New version: <aqua>%s
-                <gold>   Please, download new version here
-                <gold> https://www.spigotmc.org/resources/81321/
-                <yellow>=======================================
-                """, this.getPluginVersion(), version));
-            }
-        });
+        if(this.getUtilConfig().getConfig().getUpdateChecker()) {
+            new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
+                if (this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
+                    getRsApi().getMessageToPlayer(player, String.format("""
+                            <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
+                                      <gold>Current version: <aqua>%s
+                                   <gold>You are using the latest version.
+                            <yellow>=======================================
+                            """, version));
+                } else {
+                    getRsApi().getMessageToPlayer(player, String.format("""
+                            <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
+                            <gold> There is a new version update available.
+                            <red>        Current version: <dark_red>%s
+                            <dark_aqua>          New version: <aqua>%s
+                            <gold>   Please, download new version here
+                            <gold> https://www.spigotmc.org/resources/81321/
+                            <yellow>=======================================
+                            """, this.getPluginVersion(), version));
+                }
+            });
+        }
     }
 
     private void checkStartUpVersionServer() {
