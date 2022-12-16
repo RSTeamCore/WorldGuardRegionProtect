@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.rslibs.exceptions;
+package net.ritasister.wgrp.rslibs.api.exceptions;
 
 public class NoSelectionException extends Exception {
     public NoSelectionException() {
