@@ -30,8 +30,7 @@ import java.util.stream.Collectors;
 public class RSRegion implements IRSRegion {
 
     /**
-     * Check access in standing region by a Player used region name from a config.yml.
-     *
+     * Check access in standing region by a Player used region name from HashMap and list of regions.
      * @param location Return location of object.
      * @param regions Maps of regions from WorldGuard.
      *
@@ -54,7 +53,6 @@ public class RSRegion implements IRSRegion {
 
     /**
      * Checking the access in a region without region name.
-     *
      * @param location Location of object.
      *
      * @return Location of object(example: block, entity, Player and etc).
@@ -67,7 +65,6 @@ public class RSRegion implements IRSRegion {
 
     /**
      * Getting the name of the region where the object trying to interact with protected a region.
-     *
      * @param location Location of object.
      */
     public String getProtectRegionName(Location location) {
@@ -81,7 +78,6 @@ public class RSRegion implements IRSRegion {
 
     /**
      * Getting the name of the region where the player trying to use WorldEdit.
-     *
      * @param player Location of object.
      */
     @Override
@@ -99,7 +95,6 @@ public class RSRegion implements IRSRegion {
 
     /**
      * Check the intersection by the player for the method getProtectRegionName()
-     *
      * @param selection get selection in the region by a Player.
      *
      * @return Location of Object.
@@ -124,7 +119,6 @@ public class RSRegion implements IRSRegion {
 
     /**
      * Getting regions by location using the WG API.
-     *
      * @param location Location of Object.
      *
      * @return Location of any Object.
