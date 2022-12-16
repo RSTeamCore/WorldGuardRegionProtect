@@ -16,7 +16,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A class that contains methods about rights, notification and other
@@ -231,21 +233,21 @@ public class RSApi {
 	 * @return    {@code true} if server version compatible, {@code false} if not
 	 */
 	public boolean isVersionSupported(){
-		String supportedVersions = "v1_19_R1";
+		List<String> supportedVersions = Arrays.asList("v1_19_R1", "v1_19_R2");
 		String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 		try {
 			long time = System.currentTimeMillis();
 			if (supportedVersions.contains(serverPackage)) {
-				wgRegionProtect.getLogger().info(Component.text("&7Loaded NMS hook in " + (System.currentTimeMillis()-time) + "ms"));
+				wgRegionProtect.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis()-time) + "ms");
 				return true;
 			} else {
-				wgRegionProtect.getLogger().info(Component.text("&cNo compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ")."));
+				wgRegionProtect.getLogger().info("No compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ").");
 			}
 		} catch (Exception ex) {
 			if (supportedVersions.contains(serverPackage)) {
-				wgRegionProtect.getLogger().error(Component.text("&cYour server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)"));
+				wgRegionProtect.getLogger().error("Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
 			} else {
-				wgRegionProtect.getLogger().error(Component.text("&cYour server version is completely unsupported. Disabling."));
+				wgRegionProtect.getLogger().error("Your server version is completely unsupported. Disabling.");
 			}
 		}
 		return false;

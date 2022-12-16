@@ -76,7 +76,7 @@ public class Storage implements StorageDataSource {
 			pst.execute();
 			pst.close();
 		} catch(SQLException ex){
-			wgRegionProtect.getLogger().error(Component.text("Failed connect to database! Error code: " + ex.getErrorCode()));
+			wgRegionProtect.getLogger().error("Failed connect to database! Error code: " + ex.getErrorCode());
 		} finally {
 			this.close(pst);
 		}
@@ -107,7 +107,7 @@ public class Storage implements StorageDataSource {
 			}
 			return true;
 		}catch(SQLException ex){
-			wgRegionProtect.getLogger().error(Component.text("Failed to load from database!"));
+			wgRegionProtect.getLogger().error("Failed to load from database!");
 			ex.printStackTrace();
 		}finally{
 			this.close(rs);
@@ -142,7 +142,7 @@ public class Storage implements StorageDataSource {
 				}
 				wgRegionProtect.getRsStorage().dbLogs = new ConcurrentHashMap<>(tempDataBase);
 			} catch (SQLException ex) {
-				wgRegionProtect.getLogger().error(Component.text("Failed to load database asynchronous!"));
+				wgRegionProtect.getLogger().error("Failed to load database asynchronous!");
 				ex.printStackTrace();
 			} finally {
 				this.close(rs);
@@ -170,8 +170,8 @@ public class Storage implements StorageDataSource {
 				pst.setDouble(9, z);
 				pst.executeUpdate();
 			} catch (SQLException ex) {
-			wgRegionProtect.getLogger().error(Component.text("[DataBase] <id> "+uniqueId.toString()
-					.replace("<id>", uniqueId.toString())+ ex));
+			wgRegionProtect.getLogger().error("[DataBase] <id> "+uniqueId.toString()
+					.replace("<id>", uniqueId.toString())+ ex);
 			} finally {
 				this.close(pst);
 			}
@@ -184,7 +184,7 @@ public class Storage implements StorageDataSource {
 				pst.close();
 			}
 		}catch(SQLException ex){
-			wgRegionProtect.getLogger().error(Component.text("Failed to close prepared statement"));
+			wgRegionProtect.getLogger().error("Failed to close prepared statement");
 		}
 	}
 
@@ -194,7 +194,7 @@ public class Storage implements StorageDataSource {
 				rs.close();
 			}
 		}catch(SQLException ex){
-			wgRegionProtect.getLogger().error(Component.text("Failed to close result set"));
+			wgRegionProtect.getLogger().error("Failed to close result set");
 		}
 	}
 
@@ -203,7 +203,7 @@ public class Storage implements StorageDataSource {
 			ds.close();
 		}
         connect();
-		wgRegionProtect.getLogger().info(Component.text("Successfully reloaded!"));
+		wgRegionProtect.getLogger().info("Successfully reloaded!");
     }
 	
 	@Override

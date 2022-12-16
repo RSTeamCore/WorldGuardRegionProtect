@@ -9,15 +9,15 @@ public record CommandHandler(WorldGuardRegionProtect wgRegionProtect) {
 	public void commandHandler() {
 		try{
 			new CommandWGRP(wgRegionProtect);
-			wgRegionProtect.getLogger().info(Component.text("&2All commands registered successfully!"));
+			wgRegionProtect.getLogger().info("All commands registered successfully!");
 		}catch(NullPointerException e) {
-			wgRegionProtect.getLogger().error(Component.text("""
-						&cCommand cannot be &4null.
-						&cPossible for reason:
-						&c- command not set in &4getCommand(ucl.cmd_name).
-						&c- command not set in &4UtilCommandList.
-						&c- command not set in &4plugin.yml.
-						"""));
+			wgRegionProtect.getLogger().error("""
+						Command cannot be null.
+						Possible for reason:
+						- command not set in getCommand(ucl.cmd_name).
+						- command not set in UtilCommandList.
+						- command not set in plugin.yml.
+						""");
 		}
 	}
 }

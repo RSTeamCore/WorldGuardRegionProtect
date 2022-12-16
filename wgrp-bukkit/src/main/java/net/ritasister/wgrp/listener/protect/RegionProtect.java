@@ -115,9 +115,8 @@ public class RegionProtect implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
-		Player player = e.getPlayer();
-		if(wgRegionProtect.getRsApi().isSenderListenerPermission(player, UtilPermissions.PERMISSION_STAR, null) || e.getPlayer().isOp()) {
-			wgRegionProtect.checkUpdateNotifyPlayer(player);
+		if(wgRegionProtect.getRsApi().isSenderListenerPermission(e.getPlayer(), UtilPermissions.PERMISSION_STAR, null) || e.getPlayer().isOp()) {
+			wgRegionProtect.checkUpdateNotifyPlayer(e.getPlayer());
 		}
 	}
 

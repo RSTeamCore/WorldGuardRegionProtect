@@ -20,7 +20,7 @@ public class LoadLibs implements ILoadLibs {
             try {
                 msgSuccess();
             } catch(NullPointerException | ClassCastException | NoClassDefFoundError exception) {
-                wgRegionProtect.getLogger().error(Component.text(exception.getMessage()));
+                wgRegionProtect.getLogger().error(exception.getMessage());
             }
         }
     }
@@ -31,7 +31,7 @@ public class LoadLibs implements ILoadLibs {
         }
     }
 	private void msgSuccess() {
-        wgRegionProtect.getLogger().info(Component.text("&2Plugin: WorldGuard loaded successful!."));
+        wgRegionProtect.getLogger().info("Plugin: WorldGuard loaded successful!.");
     }
 
     @Override

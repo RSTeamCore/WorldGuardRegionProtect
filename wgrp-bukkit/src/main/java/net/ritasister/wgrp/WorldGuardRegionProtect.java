@@ -13,6 +13,7 @@ import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.util.UtilConfig;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
@@ -55,7 +56,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         this.loadAnotherClassAndMethods();
         this.loadDataBase();
         this.notifyAboutBuild();
-        this.checkUpdate();
+        this.checkUpdateNotifyConsole();
     }
 
     public void unload() {
@@ -63,7 +64,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
             try {
                 this.getUtilConfig().getConfig().saveConfig();
             } catch (NullPointerException ignored) {
-                getLogger().info(Component.text("Cannot save config, because config is not loaded!"));
+                getLogger().info("Cannot save config, because config is not loaded!");
             }
         }
     }
@@ -101,7 +102,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         commandHandler.commandHandler();
     }
 
-    public void checkUpdate() {
+    public void checkUpdateNotifyConsole() {
         new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
             if (this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
                 Bukkit.getConsoleSender().sendMessage(String.format("""
@@ -149,18 +150,18 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
 
     private void checkStartUpVersionServer() {
         if (!this.getRsApi().isVersionSupported()) {
-            getLogger().error(Component.text("""
-            This plugin version works only on 1.19.1+!
+            getLogger().error("""
+            This plugin version works only on 1.19+!
             Please read this thread: https://www.spigotmc.org/resources/81321/
             The main post on spigotmc and please download the correct version.
-            """));
+            """);
             getWGRPBukkitPlugin().getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin);
         }
     }
 
     public void notifyAboutBuild() {
         if(this.getPluginVersion().contains("alpha") || this.getPluginVersion().contains("beta") || this.getPluginVersion().contains("pre")) {
-            this.getLogger().warn(Component.text("""
+            this.getLogger().warn("""
                         This is a test build. This building may be unstable!
                         When reporting a bug:
                         Use the issue tracker! Don't report bugs in the reviews.
@@ -168,18 +169,17 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
                         Provide as much information as possible.
                         Provide your WorldGuardRegionProtect version and Spigot/Paper version.
                         Provide any stack traces or "errors" using pastebin.
-                       """));
+                       """);
         } else {
-            this.getLogger().info(Component.text("This is the latest stable building."));
+            this.getLogger().info("This is the latest stable building.");
         }
-        this.getLogger().info(Component.text(
-                String.format("""
+        Bukkit.getConsoleSender().sendMessage(String.format("""
                         Using %s language version %s
                         Author of this localization - %s
                         """,
-                        getUtilConfig().getMessages().get("langTitle.language"),
-                        getUtilConfig().getMessages().get("langTitle.author"),
-                        getUtilConfig().getMessages().get("langTitle.version"))));
+                getUtilConfig().getMessages().get("langTitle.language"),
+                getUtilConfig().getMessages().get("langTitle.version"),
+                getUtilConfig().getMessages().get("langTitle.author")));
     }
 
     public void loadDataBase() {
@@ -188,10 +188,10 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
             this.getRsStorage().dbLogsSource = new Storage(this);
             this.getRsStorage().dbLogs.clear();
             if (this.getRsStorage().dbLogsSource.load()) {
-                this.getLogger().info(Component.text("[DataBase] The database is loaded."));
+                this.getLogger().info("[DataBase] The database is loaded.");
                 this.postEnable();
-                this.getLogger().info(Component.text(String.format(
-                        "[DataBase] Startup duration: %s мс.", System.currentTimeMillis() - durationTimeStart)));
+                this.getLogger().info(String.format(
+                        "[DataBase] Startup duration: %s ms.", System.currentTimeMillis() - durationTimeStart));
             }
         }
     }
@@ -200,7 +200,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         this.getWGRPBukkitPlugin().getServer().getScheduler().cancelTasks(this.getWGRPBukkitPlugin());
         if (this.getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() > 0) {
             this.getRsStorage().dbLogsSource.loadAsync();
-            this.getLogger().info(Component.text("[DataBase] The database is loaded asynchronously."));
+            this.getLogger().info("[DataBase] The database is loaded asynchronously.");
         }
     }
 
