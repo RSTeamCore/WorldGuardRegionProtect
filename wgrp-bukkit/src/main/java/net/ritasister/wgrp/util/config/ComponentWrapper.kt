@@ -27,7 +27,7 @@ class ComponentWrapper(private var value: MutableList<String>, private val conta
         } as TextComponent
     }
 
-    private fun toComponent(withPrefix: Boolean = true, vararg resolvers: TagResolver): TextComponent = ((if(withPrefix) prefix else "")?.let {
+    fun toComponent(withPrefix: Boolean = true, vararg resolvers: TagResolver): TextComponent = ((if(withPrefix) prefix else "")?.let {
         miniMessage.deserialize(
             it
         )
@@ -42,7 +42,7 @@ class ComponentWrapper(private var value: MutableList<String>, private val conta
             }
         }.build()
 
-    private fun toComponent(): TextComponent = (prefix?.let {
+    fun toComponent(): TextComponent = (prefix?.let {
         miniMessage.deserialize(it)
     } as TextComponent).toBuilder()
         .also { component ->
@@ -76,7 +76,7 @@ class ComponentWrapper(private var value: MutableList<String>, private val conta
         sender.sendMessage(toComponent(withPrefix = withPrefix))
     }
 
-    private fun replace(from: String, to: String): ComponentWrapper = ComponentWrapper(this.value.map {
+    fun replace(from: String, to: String): ComponentWrapper = ComponentWrapper(this.value.map {
         it.replace(from, to)
     }.toMutableList(), container)
 
