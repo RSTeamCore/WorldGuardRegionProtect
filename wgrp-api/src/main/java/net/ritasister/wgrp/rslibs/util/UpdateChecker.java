@@ -19,17 +19,15 @@ public class UpdateChecker {
     }
     /**
 	 * Method checker if plugin have a last version.
-	 * 
-	 * @param consumer
-	 */
+     */
     public void getVersion(final Consumer<String> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
-            try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId)
-            		.openStream(); Scanner scanner = new Scanner(inputStream)) {
+            try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream();
+                 Scanner scanner = new Scanner(inputStream)) {
                 if(scanner.hasNext()) {
                     consumer.accept(scanner.next());
                 }
-            }catch(IOException exception){
+            } catch(IOException exception) {
                 this.plugin.getLogger().info("Cannot look for updates: " + exception.getMessage());
             }
         });

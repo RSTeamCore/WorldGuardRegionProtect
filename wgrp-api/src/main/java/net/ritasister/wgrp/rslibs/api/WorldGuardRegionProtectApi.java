@@ -1,9 +1,15 @@
 package net.ritasister.wgrp.rslibs.api;
 
-public abstract class WorldGuardRegionProtectApi {
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class WorldGuardRegionProtectApi {
 
     /** Instance of the API */
     private static WorldGuardRegionProtectApi instance;
+
+    public WorldGuardRegionProtectApi() {
+        instance=this;
+    }
 
     /**
      * Instance setter for internal use by the plugin only.
@@ -11,7 +17,7 @@ public abstract class WorldGuardRegionProtectApi {
      * @param   instance
      *          API instance
      */
-    public static void setInstance(WorldGuardRegionProtectApi instance) {
+    protected static void setInstance(WorldGuardRegionProtectApi instance) {
         WorldGuardRegionProtectApi.instance = instance;
     }
 
@@ -31,5 +37,4 @@ public abstract class WorldGuardRegionProtectApi {
                     " instead of only using it, which is not allowed.");
         return instance;
     }
-
 }

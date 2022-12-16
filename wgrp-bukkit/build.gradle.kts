@@ -54,7 +54,6 @@ dependencies {
     //Paper 1.19
     compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
     implementation(kotlin("stdlib-jdk8"))
-
 }
 
 tasks {
@@ -115,32 +114,6 @@ tasks {
     }
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            artifactId = "WorldGuardRegionProtect"
-            groupId = rootProject.group as String?
-            version = rootProject.version as String?
-
-            from(components["java"])
-        }
-    }
-
-    repositories {
-        val mavenUrl = "https://repo.codemc.io/repository/maven-releases/"
-
-        maven(mavenUrl) {
-            val mavenUsername: String? by project
-            val mavenPassword: String? by project
-            if (mavenUsername != null && mavenPassword != null) {
-                credentials {
-                    username = mavenUsername
-                    password = mavenPassword
-                }
-            }
-        }
-    }
-}
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
     jvmTarget = "1.8"

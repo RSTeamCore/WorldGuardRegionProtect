@@ -1,6 +1,5 @@
 package net.ritasister.wgrp.handler;
 
-import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.command.extend.CommandWGRP;
 

@@ -1,5 +1,7 @@
 package net.ritasister.wgrp.rslibs.util.protocol;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Enum class representing all possibly used protocol versions
  */
@@ -104,7 +106,7 @@ public enum ProtocolVersion {
      *
      * @return version or UNKNOWN_SERVER_VERSION if version is unknown
      */
-    public static ProtocolVersion fromFriendlyName(String friendlyName) {
+    public static ProtocolVersion fromFriendlyName(@NotNull String friendlyName) {
         if(friendlyName.startsWith("1.8")) return V1_8;
         try {
             return valueOf("V" + friendlyName.replace(".", "_"));

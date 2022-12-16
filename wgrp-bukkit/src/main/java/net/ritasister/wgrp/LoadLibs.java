@@ -2,7 +2,6 @@ package net.ritasister.wgrp;
 
 import com.google.inject.Inject;
 import lombok.RequiredArgsConstructor;
-import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.rslibs.papi.PlaceholderAPIExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
