@@ -34,8 +34,7 @@ public class CommandWGRP extends AbstractCommand {
         long timeInitStart = System.currentTimeMillis();
 
         wgRegionProtect.getUtilConfig().getConfig().reload();
-        wgRegionProtect.getUtilConfig().loadMessages(wgRegionProtect.getWGRPBukkitPlugin());
-        wgRegionProtect.getUtilConfig().checkLangVersion(wgRegionProtect.getWGRPBukkitPlugin());
+        wgRegionProtect.getUtilConfig().initConfig(wgRegionProtect, wgRegionProtect.getWGRPBukkitPlugin());
 
         long timeReload = (System.currentTimeMillis() - timeInitStart);
         wgRegionProtect.getUtilConfig().getMessages().get("messages.Configs.configReloaded").replace("<time>", String.valueOf(timeReload)).send(sender);

@@ -11,7 +11,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Formatter;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -20,7 +29,6 @@ public class UtilConfig {
 	@Getter private Config config;
 	@Getter private Container messages;
 
-	@SneakyThrows
 	public void initConfig(WorldGuardRegionProtect wgRegionProtect, WGRPBukkitPlugin wgrpBukkitPlugin) {
 		config = new Config(wgRegionProtect, wgrpBukkitPlugin);
 		messages = loadMessages(wgrpBukkitPlugin);
@@ -28,7 +36,6 @@ public class UtilConfig {
 		wgRegionProtect.getLogger().info("All configs load successfully!");
 	}
 
-	@SneakyThrows
 	public Container loadMessages(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {
 		String lang = config.getLang();
 		File file = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
@@ -38,22 +45,25 @@ public class UtilConfig {
 		return new Container(YamlConfiguration.loadConfiguration(file));
 	}
 
-	public void checkLangVersion(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) throws IOException {
+	@SneakyThrows
+	public void checkLangVersion(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {
 		String lang = config.getLang();
+		Date date = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd-hh.mm.ss");
 		File currentLangFile = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
-		InputStream inputStream = wgrpBukkitPlugin.getResource("lang/" + lang + ".yml");
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
-		String content;
-		String newVersion = null;
-		String currentVersion = getMessages().get("langTitle.version").toString();
-		while ((content = bufferedReader.readLine()) != null) {
-			if(content.contains("version")) {
-				newVersion = content.replace(" version: ", "").replace("version: ", "").replaceAll("\"", "");
-				break;
-			}
-		}
-		if (currentLangFile.exists() && (currentVersion).equals(newVersion)) {
+		InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitPlugin.getResource("lang/" + lang + ".yml")));
+		YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(inputStreamReader);
+		var currentYaml = YamlConfiguration.loadConfiguration(currentLangFile);
+		String currentVersion = Objects.requireNonNull(currentYaml.getString("langTitle.version"))
+				.replaceAll("\"", "")
+				.replaceAll("'", "");
+		String newVersion = Objects.requireNonNull(yamlConfiguration.getString("langTitle.version"))
+				.replaceAll("\"", "")
+				.replaceAll("'", "");
+		if (currentLangFile.exists() && !currentVersion.equals(Objects.requireNonNull(newVersion))) {
 			Bukkit.getConsoleSender().sendMessage("[WGRP] Found new version of lang file, we are updated this now...");
+			Path renameOldLang = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + "-old-" + simpleDateFormat.format(date) + ".yml").toPath();
+			Files.move(currentLangFile.toPath(),  renameOldLang, StandardCopyOption.REPLACE_EXISTING);
 			wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", true);
 		} else {
 			Bukkit.getConsoleSender().sendMessage("[WGRP] No update is required for the lang file");
