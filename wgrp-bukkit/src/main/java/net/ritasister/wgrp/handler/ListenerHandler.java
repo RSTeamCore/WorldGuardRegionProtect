@@ -12,6 +12,6 @@ public record ListenerHandler(WorldGuardRegionProtect wgRegionProtect) {
 		final RegionProtect regionProtect = new RegionProtect(wgRegionProtect);
 		pluginManager.registerEvents(regionProtect, wgRegionProtect.getWGRPBukkitPlugin());
 
-		wgRegionProtect.getLogger().info(Component.text("&2All listeners registered successfully!"));
+		wgRegionProtect.getLogger().info("All listeners registered successfully!");
 	}
 }
