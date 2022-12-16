@@ -1,5 +1,6 @@
 package net.ritasister.wgrp.command.extend;
 
+import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.command.AbstractCommand;
@@ -24,6 +25,7 @@ public class CommandWGRP extends AbstractCommand {
         this.wgRegionProtect = wgRegionProtect;
     }
 
+    @SneakyThrows
     @SubCommand(
             name = "reload",
             permission = UtilPermissions.COMMAND_WGRP_RELOAD_CONFIGS,
@@ -33,6 +35,7 @@ public class CommandWGRP extends AbstractCommand {
 
         wgRegionProtect.getUtilConfig().getConfig().reload();
         wgRegionProtect.getUtilConfig().loadMessages(wgRegionProtect.getWGRPBukkitPlugin());
+        wgRegionProtect.getUtilConfig().checkLangVersion(wgRegionProtect.getWGRPBukkitPlugin());
 
         long timeReload = (System.currentTimeMillis() - timeInitStart);
         wgRegionProtect.getUtilConfig().getMessages().get("messages.Configs.configReloaded").replace("<time>", String.valueOf(timeReload)).send(sender);
