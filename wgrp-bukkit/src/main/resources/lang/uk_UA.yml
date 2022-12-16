@@ -1,7 +1,7 @@
 langTitle:
   language: Українська
   author: RSTeamCore
-  version: 1.1
+  version: "1.1"
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> Цей регіон захищено сервером!'
@@ -10,9 +10,9 @@ messages:
   regionManagement:
     add: "<green>Регіон <gold><region><green> додано до конфігурації."
     remove: "<yellow>Регіон <gold><region><green> вилучено з конфігурації."
-    notContains: "<red>Не вдалося вилучити регіон із списку захисту, тому що <gold><region> <red>is не захищений!"
-    invalidWorld: "<red>Світ <gold><world><red> не знайдено. Ви впевнені, що правильно ввели назву світу?"
-    invalidRegion: "<red>Region <gold><region><red> не знайдено. Ви впевнені, що ввели правильну назву регіону?"
+    notContains: '<red>Не вдалося вилучити регіон із списку захисту, тому що <gold><region> <red>is не захищений!'
+    invalidWorld: '<red>Світ <gold><world><red> не знайдено. Ви впевнені, що правильно ввели назву світу?'
+    invalidRegion: '<red>Region <gold><region><red> не знайдено. Ви впевнені, що ввели правильну назву регіону?'
   Configs:
     configReloaded: '<dark_gray>[<red>WGRP<dark_gray>]<green> Всі файли перезавантажено за <time> мс!'
   Notify:

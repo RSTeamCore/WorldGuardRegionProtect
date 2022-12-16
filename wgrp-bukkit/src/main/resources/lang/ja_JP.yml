@@ -1,7 +1,7 @@
 langTitle:
   language: 日本語
   author: RSTeamCore
-  version: 1.1
+  version: '1.1'
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>] <green>このリージョンはサーバーによって保護されています！'

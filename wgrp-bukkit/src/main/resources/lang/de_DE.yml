@@ -1,7 +1,7 @@
 langTitle:
   language: Deutsch
   author: RSTeamCore
-  version: 1.1
+  version: '1.1'
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> Diese Region ist vom Server geschützt!'
@@ -10,9 +10,9 @@ messages:
   regionManagement:
     add: "<yellow>Region <gold><region><green> zur Konfiguration hinzugefügt."
     remove: "<red>Region <gold><region><red> aus der Konfiguration entfernt."
-    notContains: "<red>Konnte Region nicht von der Schutzliste entfernen, da <gold><region> <red>nicht geschützt ist!"
-    invalidWorld: "<red>Welt <gold><world><red> nicht gefunden. Bist du sicher, dass du den Namen der Welt korrekt eingegeben hast?"
-    invalidRegion: "<red>Region <gold><region><red> nicht gefunden. Sind Sie sicher, dass Sie den richtigen Regionalnamen eingegeben haben?"
+    notContains: '<red>Konnte Region nicht von der Schutzliste entfernen, da <gold><region> <red>nicht geschützt ist!'
+    invalidWorld: '<red>Welt <gold><world><red> nicht gefunden. Bist du sicher, dass du den Namen der Welt korrekt eingegeben hast?'
+    invalidRegion: '<red>Region <gold><region><red> nicht gefunden. Sind Sie sicher, dass Sie den richtigen Regionalnamen eingegeben haben?'
   Configs:
     configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>Alle Dateien neu geladen unter <time> ms!'
   Notify:

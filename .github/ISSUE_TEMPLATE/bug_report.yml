@@ -28,10 +28,10 @@ body:
       description: Which server version version you using? If your server version is not listed, it is not supported. Update to a supported version first.
       multiple: false
       options:
+        - '1.19.3'
+        - '1.19.2'
+        - '1.19.1'
         - '1.19'
-        - '1.18.2'
-        - '1.18.1'
-        - '1.18'
     validations:
       required: true
 
@@ -75,7 +75,7 @@ body:
     attributes:
       label: WorldGuardRegionProtect version
       description: What version of WorldGuardRegionProtect are you running? (`/version WorldGuardRegionProtect`)
-      placeholder: "For example: WorldGuardRegionProtect version 0.7.3"
+      placeholder: "For example: WorldGuardRegionProtect version 0.7.4"
     validations:
       required: true
       

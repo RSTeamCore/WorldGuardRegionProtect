@@ -1,7 +1,7 @@
 langTitle:
   language: 汉语
   author: RSTeamCore
-  version: 1.1
+  version: '1.1'
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> 此区域是由服务器保护的!'
@@ -10,9 +10,9 @@ messages:
   regionManagement:
     add: "<yellow> 区域<gold><region><green> 添加到配置。"
     remove: "<red>区域<gold><region><red> 已从配置中删除。"
-    notContains: "<red>无法从保护列表中移除区域，因为<gold><region> <red>is 未受保护！"
-    invalidWorld: "<red>World <gold><world><red> 未找到。您确定输入的世界名称正确吗？"
-    invalidRegion: "<red>区域<gold><region><red> 未找到。您确定输入了正确的区域名称吗？"
+    notContains: '<red>无法从保护列表中移除区域，因为<gold><region> <red>is 未受保护！'
+    invalidWorld: '<red>World <gold><world><red> 未找到。您确定输入的世界名称正确吗？'
+    invalidRegion: '<red>区域<gold><region><red> 未找到。您确定输入了正确的区域名称吗？'
   Configs:
     configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>所有文件重新加载于 <time> 毫秒!'
   Notify:

@@ -1,7 +1,7 @@
 langTitle:
   language: French
   author: RSTeamCore
-  version: 1.1
+  version: '1.1'
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> Cette région est protégée par le serveur !'
@@ -10,9 +10,9 @@ messages:
   regionManagement:
     add: "<green>Région <gold><region><green> ajoutée à la configuration."
     remove: "<red>Région <gold><region><red> retirée de la configuration."
-    notContains: "<red>Impossible de supprimer la région de la liste de protection, car <gold><region> <red>n'est pas protégé !"
-    invalidWorld: "<red>Monde <gold><world><red> introuvable. Êtes-vous sûr d'avoir entré le nom du monde correctement ?"
-    invalidRegion: "<red>Région <gold><region><red> introuvable. Êtes-vous sûr d'avoir entré le bon nom de région ?"
+    notContains: '<red>Impossible de supprimer la région de la liste de protection, car <gold><region> <red>n''est pas protégé !'
+    invalidWorld: '<red>Monde <gold><world><red> introuvable. Êtes-vous sûr d''avoir entré le nom du monde correctement ?'
+    invalidRegion: '<red>Région <gold><region><red> introuvable. Êtes-vous sûr d''avoir entré le bon nom de région ?'
   Configs:
     configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>Tous les fichiers rechargés à <time> ms!'
   Notify:
