@@ -2,18 +2,18 @@
 langTitle:
   language: English
   author: RSTeamCore
-  version: 1.1
+  version: '1.1'
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by server!'
     wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> You can''t use here the worldedit command!'
     noPerm: '<red>You don''t have permission to use this command.'
   regionManagement:
-    add: "<green>Region <gold><region><green> added to config."
-    remove: "<red>Region <gold><region><red> removed from config."
-    notContains: "<red>Could not remove region from protect list, because <gold><region> <red>is not protected!"
-    invalidWorld: "<red>World <gold><world><red> not found. Are you sure you entered the name of the world correctly?"
-    invalidRegion: "<red>Region <gold><region><red> not found. Are you sure you entered the correct region name?"
+    add: '<green>Region <gold><region><green> added to config.'
+    remove: '<red>Region <gold><region><red> removed from config.'
+    notContains: '<red>Could not remove region from protect list, because <gold><region> <red>is not protected!'
+    invalidWorld: '<red>World <gold><world><red> not found. Are you sure you entered the name of the world correctly?'
+    invalidRegion: '<red>Region <gold><region><red> not found. Are you sure you entered the correct region name?'
   Configs:
     configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>All files reloaded at <time> ms!'
   Notify:
