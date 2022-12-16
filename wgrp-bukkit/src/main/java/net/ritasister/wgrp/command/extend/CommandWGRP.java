@@ -46,7 +46,7 @@ public class CommandWGRP extends AbstractCommand {
             description = "seeing info about authors.")
     public void wgrpAbout(@NotNull CommandSender sender, String[] args) {
         wgRegionProtect.getRsApi().getMessageToCommandSender(sender, """
-                            <aqua>======<dark_gray>[&cWorldGuardRegionProtect<dark_gray>]<aqua>======
+                            <aqua>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<aqua>========
                             <yellow>Hi! If you need help from this plugin,
                             <yellow>you can contact with me on:
                             <gold> https://www.spigotmc.org/resources/81321/
@@ -145,20 +145,20 @@ public class CommandWGRP extends AbstractCommand {
             name = "help",
             description = "for seen helping.")
     public void wgrpHelp(CommandSender sender, String[] args) {
-        ArrayList<String> messages = new ArrayList<>(
-                wgRegionProtect.getUtilConfig().getMessages().get("messages.usage.title").replace("%command%", "/wgrp").toList());
+        List<Component> messages = new ArrayList<>(
+                wgRegionProtect.getUtilConfig().getMessages().get("messages.usage.title").replace("%command%", "/wgrp").toComponentList(false));
         for (Method m : this.getClass().getDeclaredMethods()) {
             if (m.isAnnotationPresent(SubCommand.class)) {
                 SubCommand sub = m.getAnnotation(SubCommand.class);
                 String tabArgs = String.join(" ", sub.tabArgs());
                 messages.addAll(wgRegionProtect.getUtilConfig().getMessages().get("messages.usage.format")
-                        .replace("%command%", Component.text("/wgrp"))
+                        .replace("%command%", "/wgrp")
                         .replace("%alias%", sub.name())
                         .replace("%description%", sub.description())
                         .replace("%tabArgs%", tabArgs.isBlank() ? "" : tabArgs + " ")
-                        .toList());
+                        .toComponentList(false));
             }
-        } for (String message : messages) {
+        } for (Component message : messages) {
             sender.sendMessage(message);
         }
     }
