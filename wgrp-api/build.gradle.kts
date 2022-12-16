@@ -35,7 +35,7 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            artifactId = "WorldGuardRegionProtect"
+            artifactId = "WorldGuardRegionProtect-api"
             groupId = rootProject.group as String?
             version = rootProject.version as String?
 
