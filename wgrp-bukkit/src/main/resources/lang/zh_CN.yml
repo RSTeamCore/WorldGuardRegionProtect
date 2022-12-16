@@ -1,0 +1,33 @@
+langTitle:
+  language: 汉语
+  author: RSTeamCore
+  version: '1.1'
+messages:
+  ServerMsg:
+    wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> 此区域是由服务器保护的!'
+    wgrpMsgWe: '<dark_gray>[<red>WGRP<dark_gray>]<red> 你不能在这里使用世界编辑命令！'
+    noPerm: '你没有权限。'
+  regionManagement:
+    add: "<yellow> 区域<gold><region><green> 添加到配置。"
+    remove: "<red>区域<gold><region><red> 已从配置中删除。"
+    notContains: '<red>无法从保护列表中移除区域，因为<gold><region> <red>is 未受保护！'
+    invalidWorld: '<red>World <gold><world><red> 未找到。您确定输入的世界名称正确吗？'
+    invalidRegion: '<red>区域<gold><region><red> 未找到。您确定输入了正确的区域名称吗？'
+  Configs:
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>所有文件重新加载于 <time> 毫秒!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player><red> 正在尝试使用区域命令 <dark_purple><cmd><red>: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red> Attention! <yellow><player> <gold><action><red> 区域块: <dark_aqua><region><red> 位置 <dark_aqua><x> <y> <z> <world>'
+  usage:
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> 命令使用 <gold>/%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>使用方法：<yellow>/wgrp help - <gold>查看命令列表。'
+    addRegionFromConsole: '<green>使用方法: <yellow>/wgrp addregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>使用方法: <yellow>/wgrp removeregion <dark_green>[region] [world]'
+  subCommands:
+    reload: '重新加载配置文件。'
+    about: '查看有关作者的信息。'
+    spy: '为谁与区域交互的间谍。'
+    help: '用于查看帮助。'
+    addRegion: '将区域添加到配置以保护。'
+    removeRegion: '从配置中移除该区域以移除保护。'

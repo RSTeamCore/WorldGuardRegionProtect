@@ -8,6 +8,7 @@
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/releases"><img src="https://img.shields.io/github/release/RitaSister/WorldGuardRegionProtect.svg" alt="Current Release"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/graphs/contributors"><img src="https://img.shields.io/github/contributors/RitaSister/WorldGuardRegionProtect.svg" alt="Contributors"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>
+<a title="Crowdin" target="_blank" href="https://crowdin.com/project/worldguardregionprotect"><img src="https://badges.crowdin.net/worldguardregionprotect/localized.svg"></a>
 
 <p align="center"><a href="https://discord.com/invite/kvqvA3GTVF"><img src="https://discordapp.com/api/guilds/918677001479540787/embed.png" alt="Discord embed"></a>
 </p>
@@ -15,9 +16,11 @@
 ## Resources on other site:
 * [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect)
 
+* Do you speak multiple languages? If so, we always welcome contributions to our [Crowdin project](https://crowdin.com/project/worldguardregionprotect).
+
 ## IMPORTANT
-* [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RitaSister/WorldGuardRegionProtect/blob/master/SECURITY.md)
-* PLUGIN VERSION START OF **0.7.1-pre8** FOR **1.18** OR HIGHER CAN RUN ONLY ON **JAVA 17+**!
+* [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RSTeamCore/WorldGuardRegionProtect/blob/dev/SECURITY.md)
+* Versions after **0.7.1** for **1.18+** require **JAVA 17+**!
 ---
 ## Opportunities of plugin
 
@@ -27,19 +30,20 @@
 ## With plugin, you can do advanced protect your region
 
 1. Nobody cannot break or place blocks in region.
-2. Protecting frame, painting from any damage from arrows, trident, snowball, eggs, enderpearl and player.
-3. Protect from any change in the frame (On 1.18 MC glow frame too).
-4. Nobody cannot damage armor stand and taking or place armor from it.
-5. Cannot use none of the buckets in region.
-6. Creeper, Wither, Ghast, Primed TNT, cannot blowing up stuff in the region. Skeleton, Stray and Shulker bullet cannot destroy frame/glow frame and painting.
-7. TNT, minecart with TNT, Respawn Anchor and ender crystal can't damage any blocks/frames in region.
-8. Support for banned dangerous commands. Separate commands were added and tested used by FastAsyncWorldEdit\WorldEdit in the protected region.
-9. Nobody cannot remove region or change flags in protected region. Just example using like:
+2. It is possible to enable/disable the limitation of interaction with the transport.
+3. Protecting frame, painting from any damage from arrows, trident, snowball, eggs, enderpearl and player.
+4. Protect from any change in the frame (From since 1.18 MC glow frame too).
+5. Nobody cannot damage armor stand and taking or place armor from it.
+6. Cannot use none of the buckets in region.
+7. Creeper, Wither, Ghast, Primed TNT, cannot blowing up stuff in the region. Skeleton, Stray and Shulker bullet cannot destroy frame/glow frame and painting.
+8. TNT, minecart with TNT, Respawn Anchor and ender crystal can't damage any blocks/frames in region.
+9. Support for banned dangerous commands. Separate commands were added and tested used by FastAsyncWorldEdit\WorldEdit in the protected region.
+10. Nobody cannot remove region or change flags in protected region. Just example using like:
 - "/rg rem spawn",
 - "/rg rem -f spawn",
 - "/rg rem -f spawn -w  world",
 - "/rg addowner spawn Steve" etc.
-10. You can specify a special region inside the protected region in which you can "break and place" or "only break" (specified in config.yml)
+11. You can specify a special region inside the protected region in which you can "break and place" or "only break" (specified in config.yml)
 ---
 ## Permissions
 
@@ -53,12 +57,7 @@
 <img alt="bStats" src="https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg"/>
 ---
 
-# Old versions of 1.12-1.17 are no longer supported!
-* PLUGIN VERSION OF **0.7.1-pre5** FOR **1.16.5-1.18** OR HIGHER CAN RUN ONLY ON **JAVA 16+**!
-* PLUGIN VERSION OF **0.7.0 OR** LOWEST FOR **1.13-1.17** CAN RUN ONLY ON JAVA **11**!
-* PLUGIN VERSION OF **0.7.1-pre1** FOR **1.12.2** CAN RUN ONLY ON **JAVA 8**!
-
-# Old version 1.12.2!
+# For legacy users. Old version of 1.12.2!
 You can find here:
 * [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
 * [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)

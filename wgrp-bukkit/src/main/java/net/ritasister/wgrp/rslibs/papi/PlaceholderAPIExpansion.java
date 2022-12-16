@@ -36,11 +36,9 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
     @Override
     public String onPlaceholderRequest(Player p, @NotNull String identifier) {
-        // %test_playername% (возвращает имя игрока)
         if (identifier.equals("playername")) {
             return p.getName();
         }
-        // %test_placeholder2% (возвращает строку "placeholder2 works")
         if (identifier.equals("placeholder2")) {
             return "placeholder2 works";
         }

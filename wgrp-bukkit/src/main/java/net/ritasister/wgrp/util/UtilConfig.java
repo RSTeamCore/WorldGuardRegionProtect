@@ -1,33 +1,72 @@
 package net.ritasister.wgrp.util;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.util.config.Config;
-import net.ritasister.wgrp.util.config.Message;
+import net.ritasister.wgrp.util.config.Container;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Formatter;
+import java.util.Objects;
 
+@RequiredArgsConstructor
 public class UtilConfig {
 
-	private Config config;
-	private File messages;
+	@Getter private Config config;
+	@Getter private Container messages;
 
-	public void initConfig(WorldGuardRegionProtect wgRegionProtect) {
-		config = new Config(wgRegionProtect, wgRegionProtect.getWgrpBukkitPlugin().getConfig());
-		loadMessages(wgRegionProtect);
-
-		wgRegionProtect.getRsApi().getLogger().info("&2All configs load successfully!");
+	public void initConfig(WorldGuardRegionProtect wgRegionProtect, WGRPBukkitPlugin wgrpBukkitPlugin) {
+		config = new Config(wgRegionProtect, wgrpBukkitPlugin);
+		messages = loadMessages(wgrpBukkitPlugin);
+		checkLangVersion(wgrpBukkitPlugin);
+		wgRegionProtect.getLogger().info("All configs load successfully!");
 	}
 
-	public void loadMessages(@NotNull WorldGuardRegionProtect wgRegionProtect) {
-		Message.load(wgRegionProtect.getWgrpBukkitPlugin(), config.getLang(), wgRegionProtect.getLoadLibs().PlaceholderAPIEnabled);
+	public Container loadMessages(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {
+		String lang = config.getLang();
+		File file = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
+		if (!file.exists()) {
+			wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", false);
+		}
+		return new Container(YamlConfiguration.loadConfiguration(file));
 	}
 
-	public Config getConfig() {
-		return this.config;
-	}
-
-	public File getMessages() {
-		return this.messages;
+	@SneakyThrows
+	public void checkLangVersion(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {
+		String lang = config.getLang();
+		Date date = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd-hh.mm.ss");
+		File currentLangFile = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
+		InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitPlugin.getResource("lang/" + lang + ".yml")));
+		YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(inputStreamReader);
+		var currentYaml = YamlConfiguration.loadConfiguration(currentLangFile);
+		String currentVersion = Objects.requireNonNull(currentYaml.getString("langTitle.version"))
+				.replaceAll("\"", "")
+				.replaceAll("'", "");
+		String newVersion = Objects.requireNonNull(yamlConfiguration.getString("langTitle.version"))
+				.replaceAll("\"", "")
+				.replaceAll("'", "");
+		if (currentLangFile.exists() && !currentVersion.equals(Objects.requireNonNull(newVersion))) {
+			Bukkit.getConsoleSender().sendMessage("[WGRP] Found new version of lang file, we are updated this now...");
+			Path renameOldLang = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + "-old-" + simpleDateFormat.format(date) + ".yml").toPath();
+			Files.move(currentLangFile.toPath(),  renameOldLang, StandardCopyOption.REPLACE_EXISTING);
+			wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", true);
+		} else {
+			Bukkit.getConsoleSender().sendMessage("[WGRP] No update is required for the lang file");
+		}
 	}
 }

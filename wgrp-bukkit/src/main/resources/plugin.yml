@@ -1,13 +1,13 @@
 name: WorldGuardRegionProtect
-authors: [RitaSister, IRedTea]
-version: ${internalVersion}
-main: net.ritasister.wgrp.WGRPBukkitPlugin
+version: ${version}
+authors: [${author}]
+main: ${group}.wgrp.WGRPBukkitPlugin
 depend: [ WorldGuard ]
 softdepend: [ PlaceholderAPI ]
-description: Protect your region on the server.
-website: 'https://github.com/RSTeamCore/WorldGuardRegionProtect'
-api-version: 1.18
-load: STARTUP
+description: ${description}
+website: https://github.com/RSTeamCore/WorldGuardRegionProtect
+api-version: 1.19
+load: POSTWORLD
 
 permissions:
   wgrp.admin:
@@ -17,10 +17,16 @@ permissions:
       - wgrp.command.reload
       - wgrp.regionprotect
       - wgrp.notify.admin
+      - wgrp.command.addregion
+      - wgrp.command.removeregion
   wgrp.*:
     description: Alias for wgrp.admin
   wgrp.command.wgrpbase:
     description: Access for /wgrp command
+  wgrp.command.addregion:
+    description: Access for /wgrp addregion
+  wgrp.command.removeregion:
+    description: Access for /wgrp removeregion
   wgrp.command.reload:
     description: Access for /wgrp reload command
   wgrp.regionprotect:

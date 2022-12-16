@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.api;
 
-public class WorldGuardRegionProtectApi {
+public abstract class WorldGuardRegionProtectApi {
 
     /** Instance of the API */
     private static WorldGuardRegionProtectApi instance;

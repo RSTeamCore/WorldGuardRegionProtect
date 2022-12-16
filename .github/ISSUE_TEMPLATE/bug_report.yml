@@ -1,6 +1,6 @@
 name: Bug report
 description: Create a report to help us improve
-labels: 'Required approved'
+labels: ["status: needs triage", "bug"]
 
 body:
   - type: markdown
@@ -17,8 +17,8 @@ body:
       options:
         - Spigot
         - Paper
-        - Tuinity
         - Purpur
+        - Pufferfish
     validations:
       required: true
 
@@ -28,9 +28,10 @@ body:
       description: Which server version version you using? If your server version is not listed, it is not supported. Update to a supported version first.
       multiple: false
       options:
-        - '1.18.2'
-        - '1.18.1'
-        - '1.18'
+        - '1.19.3'
+        - '1.19.2'
+        - '1.19.1'
+        - '1.19'
     validations:
       required: true
 
@@ -38,12 +39,14 @@ body:
     attributes:
       label: Describe the bug
       description: A clear and concise description of what the bug is.
+      placeholder:
+        For example, a player found a way to break your spawn region illegally with TNT.
     validations:
       required: true
 
   - type: textarea
     attributes:
-      label: To Reproduce
+      label: Steps to reproduce
       description: Steps to reproduce this behaviour
       placeholder: |
         1. Go to '...'
@@ -60,21 +63,19 @@ body:
     validations:
       required: true
 
-  - type: textarea
-    attributes:
-      label: Screenshots / Videos
-      description: If applicable, add screenshots to help explain your problem.
-
   - type: input
     attributes:
       label: Error log (if applicable)
       description: If you are reporting a console error, upload any relevant log excerpts to either https://paste.gg/ or https://gist.github.com, save and the paste the link in this box.
+      placeholder: "Example: https://paste.gg/p/anonymous/109dd6a10a734a3aa430d5a351ea5210"
+    validations:
+      required: true
 
   - type: input
     attributes:
       label: WorldGuardRegionProtect version
       description: What version of WorldGuardRegionProtect are you running? (`/version WorldGuardRegionProtect`)
-      placeholder: "For example: WorldGuardRegionProtect version 0.7.1"
+      placeholder: "For example: WorldGuardRegionProtect version 0.7.4"
     validations:
       required: true
       

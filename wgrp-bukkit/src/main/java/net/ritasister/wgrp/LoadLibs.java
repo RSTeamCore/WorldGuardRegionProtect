@@ -1,38 +1,41 @@
 package net.ritasister.wgrp;
 
+import com.google.inject.Inject;
+import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.rslibs.papi.PlaceholderAPIExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-public class LoadLibs {
+@RequiredArgsConstructor(onConstructor_ = @Inject)
+public class LoadLibs implements ILoadLibs {
 
     private final WorldGuardRegionProtect wgRegionProtect;
-
-    public boolean PlaceholderAPIEnabled = false;
-
-    public LoadLibs(WorldGuardRegionProtect wgRegionProtect) {
-        this.wgRegionProtect = wgRegionProtect;
-    }
+    public boolean placeholderAPIEnabled;
 
     public void loadWorldGuard() {
         final String s = "WorldGuard";
-        final Plugin plg = wgRegionProtect.getWgrpBukkitPlugin().getServer().getPluginManager().getPlugin(s);
+        final Plugin plg = wgRegionProtect.getWGRPBukkitPlugin().getServer().getPluginManager().getPlugin(s);
         if (plg != null && plg.isEnabled()) {
-            try{
+            try {
                 msgSuccess();
-            }catch(NullPointerException | ClassCastException | NoClassDefFoundError ex){
-                final Throwable exception = null;
-                wgRegionProtect.getRsApi().getLogger().error(exception.getMessage());
+            } catch(NullPointerException | ClassCastException | NoClassDefFoundError exception) {
+                wgRegionProtect.getLogger().error(exception.getMessage());
             }
         }
     }
 
     public void loadPlaceholderAPI() {
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            new PlaceholderAPIExpansion(wgRegionProtect).register(); PlaceholderAPIEnabled=true;
+            new PlaceholderAPIExpansion(wgRegionProtect).register(); placeholderAPIEnabled=true;
         }
     }
 	private void msgSuccess() {
-        wgRegionProtect.getRsApi().getLogger().info("&2Plugin: WorldGuard loaded successful!.");
+        wgRegionProtect.getLogger().info("Plugin: WorldGuard loaded successful!.");
+    }
+
+    @Override
+    public boolean isPlaceholderAPIEnabled() {
+        return this.placeholderAPIEnabled;
     }
 }
