@@ -4,7 +4,7 @@
 <a href="https://www.spigotmc.org/resources/81321/"><img src="https://img.shields.io/spiget/rating/81321?label=Spigot%20rating" alt="Spigot rating"></a>
 </p>
 <p align="center">
-<a href="https://ci.codemc.io/job/rsteamcore/job/WorldGuardRegionProtect/"><img src="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/badge/icon" alt="Build Status"></a>
+<a href="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/"><img src="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/badge/icon" alt="Build Status"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/releases"><img src="https://img.shields.io/github/release/RitaSister/WorldGuardRegionProtect.svg" alt="Current Release"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/graphs/contributors"><img src="https://img.shields.io/github/contributors/RitaSister/WorldGuardRegionProtect.svg" alt="Contributors"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>

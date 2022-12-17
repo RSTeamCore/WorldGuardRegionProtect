@@ -26,6 +26,9 @@ repositories {
 }
 
 dependencies {
+    //RSLibs by RSTeamCore
+    implementation("net.rsteamcore:RSLibs-api:0.0.6")
+    //Api for this plugin
     implementation(project(":wgrp-api"))
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
@@ -94,6 +97,8 @@ tasks {
         }
     }
     shadowJar {
+        exclude(":wgrp-api")
+        relocate("net.rsteamcore", "${project.group}.wgrp.rslibs.rsteamcore")
         //Shaded components
         relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
         relocate("com.google.inject", "${project.group}.wgrp.rslibs.lib.inject")
@@ -101,7 +106,6 @@ tasks {
         //Storage based relocations
         relocate("com.zaxxer.hikari", "${project.group}.wgrp.rslibs.lib.hikari")
         relocate("org.mariadb.jdbc", "${project.group}.wgrp.rslibs.lib.mariadb")
-        exclude(":wgrp-api")
     }
     artifacts {
         archives(shadowJar)
