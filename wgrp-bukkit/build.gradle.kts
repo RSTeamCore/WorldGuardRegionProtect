@@ -4,11 +4,20 @@ plugins {
     `java-library`
     id("xyz.jpenilla.run-paper") version "1.0.6"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    kotlin("jvm") version "1.8.0-Beta"
+    kotlin("jvm") version "1.8.0-RC2"
 }
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
 
 defaultTasks("clean", "build")
@@ -35,16 +44,16 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.0")
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:3.0.6")
-    //Inject
+    //DI google guice
     implementation("com.google.inject:guice:5.1.0")
     implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
 
     //Annotations
-    compileOnly("org.jetbrains:annotations:23.0.0")
-
+    compileOnly("org.jetbrains:annotations:23.1.0")
     implementation("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    implementation("aopalliance:aopalliance:1.0")
 
+    annotationProcessor("org.projectlombok:lombok:1.18.24")
     implementation("org.projectlombok:lombok:1.18.24")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
 
@@ -56,7 +65,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Paper 1.19
     compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
-    implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0-RC2")
 }
 
 tasks {
@@ -97,15 +106,35 @@ tasks {
         }
     }
     shadowJar {
-        exclude(":wgrp-api")
-        relocate("net.rsteamcore", "${project.group}.wgrp.rslibs.rsteamcore")
-        //Shaded components
-        relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
-        relocate("com.google.inject", "${project.group}.wgrp.rslibs.lib.inject")
-
-        //Storage based relocations
-        relocate("com.zaxxer.hikari", "${project.group}.wgrp.rslibs.lib.hikari")
-        relocate("org.mariadb.jdbc", "${project.group}.wgrp.rslibs.lib.mariadb")
+        dependencies {
+            //Main need libs from us API
+            include(dependency(":wgrp-api"))
+            include(dependency("net.rsteamcore:"))
+            //Shaded components for using bstats
+            include(dependency("org.bstats:"))
+            //DI google guice
+            include(dependency("com.google.inject:"))
+            include(dependency("com.google.inject.extensions:"))
+            include(dependency("aopalliance:aopalliance:"))
+            //Storage base
+            include(dependency("com.zaxxer.hikari:"))
+            include(dependency("org.mariadb.jdbc:"))
+            //Kotlin
+            include(dependency("org.jetbrains.kotlin:"))
+        }
+            //Main need libs from us API
+            relocate("net.rsteamcore", "${project.group}.wgrp.rslibs.rsteamcore")
+            //Shaded components for using bstats
+            relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
+            //DI google guice
+            relocate("com.google.inject", "${project.group}.wgrp.rslibs.lib.inject")
+            relocate("com.google.inject.extensions", "${project.group}.wgrp.rslibs.lib.inject.extensions")
+            relocate("org.aopalliance", "${project.group}.wgrp.rslibs.lib.aopalliance")
+            //Storage base
+            relocate("com.zaxxer.hikari", "${project.group}.wgrp.rslibs.lib.hikari")
+            relocate("org.mariadb.jdbc", "${project.group}.wgrp.rslibs.lib.mariadb")
+            //Kotlin
+            relocate("kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
     }
     artifacts {
         archives(shadowJar)
@@ -116,13 +145,4 @@ tasks {
     runServer {
         minecraftVersion("1.19.3")
     }
-}
-
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = "1.8"
-}
-val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions {
-    jvmTarget = "1.8"
 }
