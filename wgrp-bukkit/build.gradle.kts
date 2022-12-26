@@ -50,7 +50,7 @@ dependencies {
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Paper 1.19
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
+    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
     //Kyori and MiniMssage
     compileOnly("net.kyori:adventure-api:4.12.0")
     implementation("net.kyori:adventure-text-minimessage:4.12.0")
