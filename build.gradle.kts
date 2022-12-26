@@ -39,7 +39,8 @@ ext {
     }
 }
 
-version = String.format("%s-%s", rootVersion, buildNumber)
+//version = String.format("%s-%s", rootVersion, buildNumber)
+version = String.format("%s", rootVersion)
 
 if (!project.hasProperty("gitCommitHash")) {
     apply(plugin = "org.ajoberstar.grgit")
@@ -55,7 +56,7 @@ if (!project.hasProperty("gitCommitHash")) {
 tasks {
     runServer {
         minecraftVersion("1.19.3")
-        pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-$version.jar"))
+        pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
         jvmArgs("-Xms1G", "-Xmx1G")
     }
 }
