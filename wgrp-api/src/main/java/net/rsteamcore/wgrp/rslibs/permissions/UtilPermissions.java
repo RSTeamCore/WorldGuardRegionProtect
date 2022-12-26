@@ -1,5 +1,8 @@
 package net.rsteamcore.wgrp.rslibs.permissions;
 
+/**
+ * Utility class for store permissions for this plugin.
+ */
 public enum UtilPermissions {
 
 	NULL_PERM(""),

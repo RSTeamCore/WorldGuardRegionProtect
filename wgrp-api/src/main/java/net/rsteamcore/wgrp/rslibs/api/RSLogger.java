@@ -1,9 +1,11 @@
 package net.rsteamcore.wgrp.rslibs.api;
 
 import org.jetbrains.annotations.NotNull;
-
 import java.util.logging.Logger;
 
+/**
+ * Utility class for logging message this plugin.
+ */
 public class RSLogger {
 
 	private final Logger ROOT_LOGGER_NAME = Logger.getLogger("WGRP");

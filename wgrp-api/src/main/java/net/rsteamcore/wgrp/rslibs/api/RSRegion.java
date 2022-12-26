@@ -55,7 +55,7 @@ public class RSRegion implements IRSRegion {
      * Checking the access in a region without region name.
      * @param location Location of object.
      *
-     * @return Location of object(example: block, entity, Player and etc).
+     * @return location of object(example: block, entity, Player and etc).
      */
     @Override
     public boolean checkStandingRegion(@NotNull Location location) {
@@ -66,6 +66,8 @@ public class RSRegion implements IRSRegion {
     /**
      * Getting the name of the region where the object trying to interact with protected a region.
      * @param location Location of object.
+     *
+     * @return the name of the region.
      */
     public String getProtectRegionName(Location location) {
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
@@ -97,7 +99,7 @@ public class RSRegion implements IRSRegion {
      * Check the intersection by the player for the method getProtectRegionName()
      * @param selection get selection in the region by a Player.
      *
-     * @return Location of Object.
+     * @return location of Object.
      */
     public String getProtectRegionNameByIntersection(final Region selection) throws NoSelectionException {
         if (selection instanceof CuboidRegion) {
@@ -121,7 +123,7 @@ public class RSRegion implements IRSRegion {
      * Getting regions by location using the WG API.
      * @param location Location of Object.
      *
-     * @return Location of any Object.
+     * @return location of any Object.
      */
     private @NotNull ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
         return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer()
