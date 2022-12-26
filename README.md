@@ -88,6 +88,7 @@ dependencies {
 
 # For legacy users. Old version of 1.12.2!
 You can find here:
-* [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
-* [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)
+* [spigotmc.ru](https://spigotmc.ru/resources/518/)
+* [spigotmc.org](https://www.spigotmc.org/resources/81333/)
+* [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect/files)
 ---
