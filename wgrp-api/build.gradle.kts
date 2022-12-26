@@ -17,7 +17,7 @@ dependencies {
     implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
 
     //Annotations
-    compileOnly("org.jetbrains:annotations:23.0.0")
+    compileOnly("org.jetbrains:annotations:23.1.0")
 
     implementation("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
@@ -44,7 +44,7 @@ publishing {
     }
 
     repositories {
-        val mavenUrl = "https://repo.codemc.io/repository/maven-releases/"
+        val mavenUrl = "https://repo.codemc.io/repository/maven-snapshots/"
 
         maven(mavenUrl) {
             val mavenUsername: String? by project
