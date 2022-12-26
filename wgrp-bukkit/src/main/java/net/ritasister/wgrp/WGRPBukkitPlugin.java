@@ -3,6 +3,7 @@ package net.ritasister.wgrp;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import net.ritasister.wgrp.rslibs.api.WorldGuardRegionProtectApi;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WGRPBukkitPlugin extends JavaPlugin {
@@ -19,6 +20,11 @@ public final class WGRPBukkitPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.wgRegionProtect.unload();
+        try{
+            this.wgRegionProtect.unload();
+        } catch (NullPointerException exception) {
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
+            System.out.println("wgRegionProtect is null, we are disabling plugin!");
+        }
     }
 }
