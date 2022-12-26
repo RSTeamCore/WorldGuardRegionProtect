@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Api class for other classes to use the necessary methods and other.
+ * Utility api class for other classes to use the necessary methods and other.
  */
 @Singleton
 @AllArgsConstructor(onConstructor_ = @Inject)
@@ -41,9 +41,9 @@ public class RSApi {
 	/**
 	 * Check if a player has permission for use Listener.
 	 *
-	 * @param player  Who send this command.
-	 * @param perm    Permission to check.
-	 * @return If Player can use event method.
+	 * @param player who send this command.
+	 * @param perm permission to check.
+	 * @return can a player use this listener.
 	 */
 	public boolean isPlayerListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm) {
 		return player.hasPermission(perm.getPermissionName());
@@ -54,7 +54,7 @@ public class RSApi {
 	 *
 	 * @param entity who send this command.
 	 * @param perm permission to check.
-	 * @return If entity can use event method.
+	 * @return can an entity use this listener.
 	 */
 	public boolean isEntityListenerPermission(@NotNull Entity entity, @NotNull UtilPermissions perm) {
 		return !entity.hasPermission(perm.getPermissionName());
@@ -63,10 +63,10 @@ public class RSApi {
 	/**
 	 * Send notification to admin.
 	 *
-	 * @param player Player object.
-	 * @param playerName Nickname player.
-	 * @param senderCommand Name command if Player attempt to use in a region.
-	 * @param regionName The region name, if Player attempts to use command in a region.
+	 * @param player player object.
+	 * @param playerName player name.
+	 * @param senderCommand name command if player attempt to use in a region.
+	 * @param regionName the region name, if player attempts to use command in a region.
 	 */
 	public void notify(Player player, String playerName, String senderCommand, String regionName) {
 		if(regionName == null) return;
@@ -89,9 +89,9 @@ public class RSApi {
 	/**
 	 * Send notify to admin.
 	 *
-	 * @param playerName Player object.
-	 * @param senderCommand Name command if Player attempt to use in a region.
-	 * @param regionName Region name, if Player attempts to use command in a region.
+	 * @param playerName player name.
+	 * @param senderCommand name command if Player attempt to use in a region.
+	 * @param regionName region name, if Player attempts to use command in a region.
 	 */
 	public void notify(String playerName, String senderCommand, String regionName) {
 		if(regionName == null) return;
@@ -111,15 +111,15 @@ public class RSApi {
 	/**
 	 * Send a notification to the administrator if Player attempts to interact with a region from WorldGuard.
 	 *
-	 * @param admin Message for an admin who destroys a region.
-	 * @param suspectPlayer Object player for method.
-	 * @param suspectName Player name who interacting with a region.
-	 * @param action Get the actions.
-	 * @param regionName Region name.
-	 * @param x Position of block.
-	 * @param y Position of block.
-	 * @param z Position of block.
-	 * @param world Position of block.
+	 * @param admin message for an admin who destroys a region.
+	 * @param suspectPlayer object player for method.
+	 * @param suspectName player name who interacting with a region.
+	 * @param action get the actions.
+	 * @param regionName region name.
+	 * @param x position of block.
+	 * @param y position of block.
+	 * @param z position of block.
+	 * @param world position of block in world.
 	 */
 	public void notifyIfActionInRegion(Player admin, Player suspectPlayer, String suspectName, RegionAction action, String regionName, double x, double y, double z, String world) {
 		if (this.isPlayerListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)

@@ -6,6 +6,9 @@ import net.rsteamcore.wgrp.rslibs.api.WorldGuardRegionProtectApi;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * The main class for WorldGuardRegionProtect as a Bukkit plugin.
+ */
 public final class WGRPBukkitPlugin extends JavaPlugin {
 
     private WorldGuardRegionProtect wgRegionProtect;
