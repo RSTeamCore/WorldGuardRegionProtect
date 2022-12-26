@@ -45,7 +45,7 @@ public class CommandWGRP extends AbstractCommand {
             aliases = {"credits", "authors"},
             description = "seeing info about authors.")
     public void wgrpAbout(@NotNull CommandSender sender, String[] args) {
-        wgRegionProtect.getRsApi().getMessageToCommandSender(sender, """
+        wgRegionProtect.getRsApi().messageToCommandSender(sender, """
                             <aqua>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<aqua>========
                             <yellow>Hi! If you need help from this plugin,
                             <yellow>you can contact with me on:

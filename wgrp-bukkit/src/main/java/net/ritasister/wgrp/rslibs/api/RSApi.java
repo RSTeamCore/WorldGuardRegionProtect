@@ -8,20 +8,17 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
- * A class that contains methods about rights, notification and other
+ * Api class for other classes to use the necessary methods and other.
  */
 @Singleton
 @AllArgsConstructor(onConstructor_ = @Inject)
@@ -29,89 +26,16 @@ public class RSApi {
 
 	private final WorldGuardRegionProtect wgRegionProtect;
 
-	/**
-	 * Check if a sender has permissions for commands.
-	 *
-	 * @param sender Who send this command.
-	 * @param cmd Name command.
-	 * @param perm Permission to check.
-	 * @param message Return custom message for a sender.
-	 * @return If Sender can use commands.
-	 */
-	public boolean isSenderCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull UtilPermissions perm, String message) {
-		if (!sender.hasPermission(perm.getPermissionName())) {
-			if (message != null) {
-				sender.sendMessage(Component.text(message));
-			}
-			return true;
-		}
-		return false;
-	}
-
-	public void getMessageToPlayer(@NotNull Player player, String message) {
-		var miniMessage = MiniMessage.miniMessage();
-		Component parsed = miniMessage.deserialize(message);
-		player.sendMessage(parsed);
-	}
-
-	public void getMessageToCommandSender(@NotNull CommandSender commandSender, String message) {
+	public void messageToCommandSender(@NotNull CommandSender commandSender, String message) {
 		var miniMessage = MiniMessage.miniMessage();
 		Component parsed = miniMessage.deserialize(message);
 		commandSender.sendMessage(parsed);
 	}
 
-	public void getMessageToConsoleSender(@NotNull ConsoleCommandSender sender, String message) {
+	public void messageToConsoleSender(@NotNull ConsoleCommandSender sender, String message) {
 		var miniMessage = MiniMessage.miniMessage();
 		Component parsed = miniMessage.deserialize(message);
 		sender.sendMessage(parsed);
-	}
-
-	/**
-	 * Check if a Player has permissions for commands.
-	 *
-	 * @param player Who send this command.
-	 * @param cmd Name command.
-	 * @param perm Permission to check.
-	 * @param message Return custom message for a Player.
-	 * @return If sender can use commands.
-	 */
-	public boolean isSenderCommandsPermission(@NotNull Player player, @NotNull Command cmd, @NotNull UtilPermissions perm, String message) {
-		if (!player.hasPermission(perm.getPermissionName())) {
-			if (message != null) {
-				player.sendMessage(Component.text(message));
-			}
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Check if a sender has permission for use TAB.
-	 *
-	 * @param sender Who send this command.
-	 * @param perm Permission to check.
-	 * @return If sender can use TAB.
-	 */
-	public boolean isSenderCommandsPermissionOnTab(@NotNull CommandSender sender, @NotNull UtilPermissions perm) {
-		return sender.hasPermission(perm.getPermissionName());
-	}
-
-	/**
-	 * Check if a sender has permission for use Listener.
-	 *
-	 * @param sender Who send this command.
-	 * @param perm Permission to check.
-	 * @param message Return custom message for a sender.
-	 * @return If sender can use Events.
-	 */
-	public boolean isSenderListenerPermission(@NotNull CommandSender sender, @NotNull UtilPermissions perm, String message) {
-		if (!sender.hasPermission(perm.getPermissionName())) {
-			if (message != null) {
-				sender.sendMessage(Component.text(message));
-			}
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -119,17 +43,10 @@ public class RSApi {
 	 *
 	 * @param player  Who send this command.
 	 * @param perm    Permission to check.
-	 * @param message Return custom message for a player.
 	 * @return If Player can use event method.
 	 */
-	public boolean isSenderListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm, String message) {
-		if (!player.hasPermission(perm.getPermissionName())) {
-			if (message != null) {
-				player.sendMessage(Component.text(message));
-			}
-			return false;
-		}
-		return true;
+	public boolean isPlayerListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm) {
+		return player.hasPermission(perm.getPermissionName());
 	}
 
 	/**
@@ -137,17 +54,10 @@ public class RSApi {
 	 *
 	 * @param entity who send this command.
 	 * @param perm permission to check.
-	 * @param message Return custom message for an entity.
 	 * @return If entity can use event method.
 	 */
-	public boolean isSenderListenerPermission(@NotNull Entity entity, @NotNull UtilPermissions perm, String message) {
-		if (entity.hasPermission(perm.getPermissionName())) {
-			if (message != null) {
-				entity.sendMessage(Component.text(message));
-			}
-			return false;
-		}
-		return true;
+	public boolean isEntityListenerPermission(@NotNull Entity entity, @NotNull UtilPermissions perm) {
+		return !entity.hasPermission(perm.getPermissionName());
 	}
 
 	/**
@@ -160,8 +70,8 @@ public class RSApi {
 	 */
 	public void notify(Player player, String playerName, String senderCommand, String regionName) {
 		if(regionName == null) return;
-		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminEnable()
-				&& this.isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN, null)) {
+		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminEnable() &&
+				this.isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
 			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
 				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())
 						&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
@@ -212,7 +122,7 @@ public class RSApi {
 	 * @param world Position of block.
 	 */
 	public void notifyIfActionInRegion(Player admin, Player suspectPlayer, String suspectName, RegionAction action, String regionName, double x, double y, double z, String world) {
-		if (this.isSenderListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT, null)
+		if (this.isPlayerListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
 				&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminEnable()) {
 				admin.sendMessage(
 						wgRegionProtect.getUtilConfig().getMessages().get("messages.Notify.sendAdminInfoIfActionInRegion").toString()
@@ -251,11 +161,5 @@ public class RSApi {
 			}
 		}
 		return false;
-	}
-
-	public String getTime() {
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy - HH:mm");
-		Date resultDate = new Date(System.currentTimeMillis());
-		return sdf.format(resultDate);
 	}
 }

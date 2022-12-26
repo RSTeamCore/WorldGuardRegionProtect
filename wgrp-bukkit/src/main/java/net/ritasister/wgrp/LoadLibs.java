@@ -13,9 +13,8 @@ public class LoadLibs implements ILoadLibs {
     public boolean placeholderAPIEnabled;
 
     public void loadWorldGuard() {
-        final String s = "WorldGuard";
-        final Plugin plg = wgRegionProtect.getWGRPBukkitPlugin().getServer().getPluginManager().getPlugin(s);
-        if (plg != null && plg.isEnabled()) {
+        final Plugin plugin = wgRegionProtect.getWGRPBukkitPlugin().getServer().getPluginManager().getPlugin("WorldGuard");
+        if (plugin != null && plugin.isEnabled()) {
             try {
                 msgSuccess();
             } catch(NullPointerException | ClassCastException | NoClassDefFoundError exception) {
@@ -29,6 +28,7 @@ public class LoadLibs implements ILoadLibs {
             new PlaceholderAPIExpansion(wgRegionProtect).register(); placeholderAPIEnabled=true;
         }
     }
+
 	private void msgSuccess() {
         wgRegionProtect.getLogger().info("Plugin: WorldGuard loaded successful!.");
     }

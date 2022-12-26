@@ -1,7 +1,5 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import org.bukkit.plugin.java.JavaPlugin;
-
 public class WorldGuardRegionProtectApi {
 
     /** Instance of the API */

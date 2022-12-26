@@ -14,7 +14,6 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +29,11 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
 
     //DataBase
     private RSStorage rsStorage;
+
+    //Api for this plugin
     private RSApi rsApi;
     private RSRegion rsRegion;
+
     private RSLogger rsLogger;
 
     //Configs
@@ -40,10 +42,10 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
     //Parameters for to intercept commands from WE or FAWE.
     private CommandWE commandWE;
 
-    //Load depends on WorldGuard
+    //Load depends on WorldGuard.
     private LoadLibs loadLibs;
 
-    //HashMap
+    //HashMap for who spy for another player.
     public ArrayList<UUID> spyLog = new ArrayList<>();
 
     public void load() {
@@ -68,10 +70,10 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
     }
 
     private void loadAnotherClassAndMethods() {
-        //Libs of WorldGuard.
+        //Libs for this plugin.
         this.loadLibs = new LoadLibs(this);
-        this.getLoadLibs().loadPlaceholderAPI();
         this.getLoadLibs().loadWorldGuard();
+        this.getLoadLibs().loadPlaceholderAPI();
 
         //Configs.
         this.utilConfig = new UtilConfig();
@@ -79,7 +81,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
             this.getUtilConfig().initConfig(this, getWGRPBukkitPlugin());
         }
 
-        //API for Regions.
+        //Api for Regions.
         this.rsRegion = new RSRegion();
 
         //Parameters for to intercept commands from WE or FAWE.
@@ -127,14 +129,14 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         if(this.getUtilConfig().getConfig().getUpdateChecker()) {
             new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
                 if (this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
-                    getRsApi().getMessageToPlayer(player, String.format("""
+                    getRsApi().messageToCommandSender(player, String.format("""
                             <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
                                       <gold>Current version: <aqua>%s
                                    <gold>You are using the latest version.
                             <yellow>=======================================
                             """, version));
                 } else {
-                    getRsApi().getMessageToPlayer(player, String.format("""
+                    getRsApi().messageToCommandSender(player, String.format("""
                             <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
                             <gold> There is a new version update available.
                             <red>        Current version: <dark_red>%s
@@ -214,17 +216,14 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         return this.wgrpBukkitPlugin;
     }
 
-    @NotNull
     public RSApi getRsApi() {
         return this.rsApi;
     }
 
-    @NotNull
     public RSRegion getRsRegion() {
         return this.rsRegion;
     }
 
-    @NotNull
     public RSStorage getRsStorage() {
         return this.rsStorage;
     }
@@ -233,22 +232,18 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         return utilConfig;
     }
 
-    @NotNull
     public LoadLibs getLoadLibs() {
         return this.loadLibs;
     }
 
-    @NotNull
     public CommandWE getCommandWE() {
         return this.commandWE;
     }
 
-    @NotNull
     public PluginManager getPluginManager() {
         return this.wgrpBukkitPlugin.getServer().getPluginManager();
     }
 
-    @NotNull
     public String getPluginVersion() {
         return this.wgrpBukkitPlugin.getDescription().getVersion();
     }
@@ -261,7 +256,6 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         return this.rsLogger;
     }
 
-    @NotNull
     public Iwg getIwg() {
         return this.Iwg;
     }
