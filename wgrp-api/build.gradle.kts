@@ -44,15 +44,18 @@ publishing {
     }
 
     repositories {
-        val mavenUrl = "https://repo.codemc.io/repository/maven-snapshots/"
+        val mavenUrl: String? by project
+        val mavenSnapshotUrl: String? by project
 
-        maven(mavenUrl) {
-            val mavenUsername: String? by project
-            val mavenPassword: String? by project
-            if (mavenUsername != null && mavenPassword != null) {
-                credentials {
-                    username = mavenUsername
-                    password = mavenPassword
+        (if(version.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
+            maven(url) {
+                val mavenUsername: String? by project
+                val mavenPassword: String? by project
+                if(mavenUsername != null && mavenPassword != null) {
+                    credentials {
+                        username = mavenUsername
+                        password = mavenPassword
+                    }
                 }
             }
         }
