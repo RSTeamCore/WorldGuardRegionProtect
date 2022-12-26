@@ -144,5 +144,6 @@ tasks {
 tasks {
     runServer {
         minecraftVersion("1.19.3")
+        jvmArgs("-Xms1G", "-Xmx1G")
     }
 }

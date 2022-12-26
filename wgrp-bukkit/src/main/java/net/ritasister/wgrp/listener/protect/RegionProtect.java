@@ -2,7 +2,6 @@ package net.ritasister.wgrp.listener.protect;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.sk89q.worldedit.IncompleteRegionException;
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
 import io.papermc.paper.event.player.PlayerLoomPatternSelectEvent;
 import io.papermc.paper.event.player.PlayerStonecutterRecipeSelectEvent;
@@ -272,9 +271,8 @@ public class RegionProtect implements Listener {
         Block block = e.getBlock();
         Location location = e.getToBlock().getLocation();
         if (wgRegionProtect.getRsRegion().checkStandingRegion(location, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())) {
-            if (wgRegionProtect.getUtilConfig().getConfig().isDenyWaterFlowToRegion() && block.getType() == Material.WATER) {
-                e.setCancelled(true);
-            } else if(wgRegionProtect.getUtilConfig().getConfig().isDenyLavaFlowToRegion() && block.getType() == Material.LAVA) {
+            if(wgRegionProtect.getUtilConfig().getConfig().isDenyWaterFlowToRegion() && block.getType() == Material.WATER
+                || wgRegionProtect.getUtilConfig().getConfig().isDenyLavaFlowToRegion() && block.getType() == Material.LAVA) {
                 e.setCancelled(true);
             }
         }
@@ -312,8 +310,8 @@ public class RegionProtect implements Listener {
         EntityType clickType = e.getRightClicked().getType();
         if(wgRegionProtect.getRsRegion().checkStandingRegion(clickLoc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())) {
             if(!wgRegionProtect.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
-                if(clickType == EntityType.ITEM_FRAME || clickType == EntityType.GLOW_ITEM_FRAME) {
-                    e.setCancelled(true);
+                switch(clickType) {
+                    case ITEM_FRAME, GLOW_ITEM_FRAME -> e.setCancelled(true);
                 }
             }
         }
@@ -366,8 +364,7 @@ public class RegionProtect implements Listener {
         if (wgRegionProtect.getRsRegion().checkStandingRegion(loc, wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap())) {
             if(wgRegionProtect.getUtilConfig().getConfig().getExplodeEntity()) {
                 switch (entityType) {
-                    case PRIMED_TNT, ENDER_CRYSTAL, MINECART_TNT, CREEPER, FIREBALL, WITHER_SKULL
-                            -> e.blockList().clear();
+                    case PRIMED_TNT, ENDER_CRYSTAL, MINECART_TNT, CREEPER, FIREBALL, WITHER_SKULL -> e.blockList().clear();
                     default -> e.setCancelled(true);
                 }
             } else {
@@ -398,26 +395,23 @@ public class RegionProtect implements Listener {
         String[] s = e.getMessage().toLowerCase().split(" ");
         String cmd = e.getMessage().split(" ")[0].toLowerCase();
         if(!wgRegionProtect.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
-            try {
-                if (this.wgRegionProtect.getCommandWE().cmdWE(s[0]) && !this.wgRegionProtect.getIwg().checkIntersection(player)
-                        || this.wgRegionProtect.getCommandWE().cmdWE_C(s[0]) && !this.wgRegionProtect.getIwg().checkCIntersection(player, s)
-                        || this.wgRegionProtect.getCommandWE().cmdWE_P(s[0]) && !this.wgRegionProtect.getIwg().checkPIntersection(player, s)
-                        || this.wgRegionProtect.getCommandWE().cmdWE_S(s[0]) && !this.wgRegionProtect.getIwg().checkSIntersection(player, s)
-                        || this.wgRegionProtect.getCommandWE().cmdWE_U(s[0]) && !this.wgRegionProtect.getIwg().checkUIntersection(player, s)) {
-                    if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
-                        wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.wgrpMsgWe").send(player);
-                    }
-                    wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
-                    wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+            if (this.wgRegionProtect.getCommandWE().cmdWE(s[0]) && !this.wgRegionProtect.getIwg().checkIntersection(player)
+                    || this.wgRegionProtect.getCommandWE().cmdWE_C(s[0]) && !this.wgRegionProtect.getIwg().checkCIntersection(player, s)
+                    || this.wgRegionProtect.getCommandWE().cmdWE_P(s[0]) && !this.wgRegionProtect.getIwg().checkPIntersection(player, s)
+                    || this.wgRegionProtect.getCommandWE().cmdWE_S(s[0]) && !this.wgRegionProtect.getIwg().checkSIntersection(player, s)
+                    || this.wgRegionProtect.getCommandWE().cmdWE_U(s[0]) && !this.wgRegionProtect.getIwg().checkUIntersection(player, s)) {
+                if (wgRegionProtect.getUtilConfig().getConfig().getRegionMessageProtectWe()) {
+                    wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.wgrpMsgWe").send(player);
+                    e.setCancelled(true);
                 }
-            } catch (IncompleteRegionException ignored) {}
+                wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+                wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
+            }
             if (this.wgRegionProtect.getCommandWE().cmdWE_CP(s[0])) {
                 e.setMessage(e.getMessage().replace("-o", ""));
-                try {
-                    if (!this.wgRegionProtect.getIwg().checkCPIntersection(player, s)) {
-                        e.setCancelled(true);
-                    }
-                } catch (IncompleteRegionException ignored) {}
+                if (!this.wgRegionProtect.getIwg().checkCPIntersection(player, s)) {
+                    e.setCancelled(true);
+                }
                 wgRegionProtect.getRsApi().notify(player, playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
                 wgRegionProtect.getRsApi().notify(playerName, cmd, wgRegionProtect.getRsRegion().getProtectRegionName(player));
             }

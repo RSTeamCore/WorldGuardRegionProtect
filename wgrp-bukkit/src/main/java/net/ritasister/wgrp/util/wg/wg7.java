@@ -33,18 +33,23 @@ public class wg7 implements Iwg {
     public final WorldGuardRegionProtect wgRegionProtect;
 
     @Override
-    public boolean checkIntersection(final Player player) throws IncompleteRegionException {
+    public boolean checkIntersection(final Player player) {
         LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
-        Region selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
+        Region selection;
+        try {
+            selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
+        } catch (IncompleteRegionException e) {
+            throw new RuntimeException(e);
+        }
         return checkIntersection(selection, player);
     }
 
-    private boolean checkIntersection(final Region sel, Player player) {
-        if (sel instanceof CuboidRegion) {
-            final BlockVector3 min = sel.getMinimumPoint();
-            final BlockVector3 max = sel.getMaximumPoint();
+    private boolean checkIntersection(final Region selection, Player player) {
+        if (selection instanceof CuboidRegion) {
+            final BlockVector3 min = selection.getMinimumPoint();
+            final BlockVector3 max = selection.getMaximumPoint();
             final RegionContainer rc = WorldGuard.getInstance().getPlatform().getRegionContainer();
-            final RegionManager regions = rc.get(sel.getWorld());
+            final RegionManager regions = rc.get(selection.getWorld());
             final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", min, max);
             assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
@@ -69,32 +74,32 @@ public class wg7 implements Iwg {
 
     @Override
     public boolean checkCIntersection(final Player player, final String... args) {
-        final Region sel = this.getCylSelection(player, args);
-        return this.checkIntersection(sel, player);
+        final Region selection = this.getCylSelection(player, args);
+        return this.checkIntersection(selection, player);
     }
 
     @Override
     public boolean checkPIntersection(final Player player, final String... args) {
-        final Region sel = this.getPyramidSelection(player, args);
-        return this.checkIntersection(sel, player);
+        final Region selection = this.getPyramidSelection(player, args);
+        return this.checkIntersection(selection, player);
     }
 
     @Override
     public boolean checkSIntersection(final Player player, final String... args) {
-        final Region sel = this.getSphereSelection(player, args);
-        return this.checkIntersection(sel, player);
+        final Region selection = this.getSphereSelection(player, args);
+        return this.checkIntersection(selection, player);
     }
 
     @Override
     public boolean checkUIntersection(final Player player, final String... args) {
-        final Region sel = this.getUpSelection(player, args);
-        return this.checkIntersection(sel, player);
+        final Region selection = this.getUpSelection(player, args);
+        return this.checkIntersection(selection, player);
     }
 
     @Override
     public boolean checkCPIntersection(final Player player, final String... args) {
-        final Region sel = this.getPasteSelection(player, args);
-        return this.checkIntersection(sel, player);
+        final Region selection = this.getPasteSelection(player);
+        return this.checkIntersection(selection, player);
     }
 
     @Contract("_, _ -> new")
@@ -160,7 +165,7 @@ public class wg7 implements Iwg {
         }
     }
 
-    private @Nullable CuboidRegion getPasteSelection(final Player player, final String... args) {
+    private @Nullable CuboidRegion getPasteSelection(final Player player) {
         try {
             final LocalSession session = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
             final ClipboardHolder holder = session.getClipboard();
