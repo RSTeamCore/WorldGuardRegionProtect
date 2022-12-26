@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-library`
-    id("xyz.jpenilla.run-paper") version "1.0.6"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     kotlin("jvm") version "1.8.0-RC2"
 }
@@ -23,15 +22,22 @@ compileTestKotlin.kotlinOptions {
 defaultTasks("clean", "build")
 
 repositories {
-    //CodeMc
-    maven ("https://repo.codemc.org/repository/maven-public/")
-    //WorldGuard
-    maven ("https://maven.enginehub.org/repo/")
-    //PlaceHolderAPI
-    maven ("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    //PaperMC
-    maven ("https://repo.papermc.io/repository/maven-public/")
-    mavenCentral()
+    maven {
+        name = "PaperMC"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
+    }
+    maven {
+        name = "CodeMC"
+        url = uri("https://repo.codemc.org/repository/maven-public/")
+    }
+    maven {
+        name = "EngineHub"
+        url = uri("https://maven.enginehub.org/repo/")
+    }
+    maven {
+        name = "PlaceholderAPI"
+        url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    }
 }
 
 dependencies {
@@ -39,6 +45,15 @@ dependencies {
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
     //Api for this plugin
     implementation(project(":wgrp-api"))
+    //PlaceholderAPI
+    compileOnly("me.clip:placeholderapi:2.11.2")
+    //WorldGuard 7+
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
+    //Paper 1.19
+    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
+    //Kyori and MiniMssage
+    compileOnly("net.kyori:adventure-api:4.12.0")
+    implementation("net.kyori:adventure-text-minimessage:4.12.0")
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.bstats:bstats-bukkit:3.0.0")
@@ -49,7 +64,7 @@ dependencies {
     implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
 
     //Annotations
-    compileOnly("org.jetbrains:annotations:23.1.0")
+    implementation("org.jetbrains:annotations:23.1.0")
     implementation("org.projectlombok:lombok:1.18.24")
     implementation("aopalliance:aopalliance:1.0")
 
@@ -57,14 +72,6 @@ dependencies {
     implementation("org.projectlombok:lombok:1.18.24")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
 
-    compileOnly("net.kyori:adventure-api:4.12.0")
-    implementation("net.kyori:adventure-text-minimessage:4.12.0")
-    //PlaceholderAPI
-    compileOnly("me.clip:placeholderapi:2.11.2")
-    //WorldGuard 7+
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
-    //Paper 1.19
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0-RC2")
 }
 
@@ -83,10 +90,10 @@ tasks {
         filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
     }
     jar {
-        archiveFileName.set("${rootProject.name}-bukkit-no-shade-${rootProject.version}.${archiveExtension.getOrElse("jar")}")
+        archiveFileName.set("${rootProject.name}-Bukkit-no-shade-${project.version}.${archiveExtension.getOrElse("jar")}")
     }
     shadowJar {
-        archiveFileName.set("${rootProject.name}-bukkit-${rootProject.version}.${archiveExtension.getOrElse("jarinjar")}")
+        archiveFileName.set("${rootProject.name}-Bukkit-${project.version}.${archiveExtension.getOrElse("jar")}")
     }
     build {
         dependsOn(shadowJar)
@@ -138,12 +145,5 @@ tasks {
     }
     artifacts {
         archives(shadowJar)
-    }
-}
-
-tasks {
-    runServer {
-        minecraftVersion("1.19.3")
-        jvmArgs("-Xms1G", "-Xmx1G")
     }
 }
