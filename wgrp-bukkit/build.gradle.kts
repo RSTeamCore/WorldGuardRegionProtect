@@ -41,10 +41,10 @@ repositories {
 }
 
 dependencies {
+    //Api for this plugin
+    api(project(":wgrp-api"))
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
-    //Api for this plugin
-    implementation(project(":wgrp-api"))
     //PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.2")
     //WorldGuard 7+
