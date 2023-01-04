@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
+import net.ritasister.wgrp.rslibs.interfaces.IWGRPBukkit;
 import net.ritasister.wgrp.rslibs.api.*;
 import net.ritasister.wgrp.rslibs.datasource.Storage;
 import net.ritasister.wgrp.rslibs.util.wg.Iwg;
@@ -56,7 +57,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         this.loadAnotherClassAndMethods();
         this.loadDataBase();
         this.notifyAboutBuild();
-        this.checkUpdateNotifyConsole();
+        this.checkUpdateNotify();
     }
 
     public void unload() {
@@ -102,49 +103,49 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         commandHandler.commandHandler();
     }
 
-    public void checkUpdateNotifyConsole() {
-        new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
-            if (this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
-                Bukkit.getConsoleSender().sendMessage(String.format("""
+    public void checkUpdateNotify() {
+        final String noUpdate = """
                 ========[WorldGuardRegionProtect]========
                           Current version: %s
                        You are using the latest version.
-                =======================================
-                """, version));
-            } else {
-                Bukkit.getConsoleSender().sendMessage(String.format("""
+                =======================================""";
+        final String hasUpdate = """
                 ========[WorldGuardRegionProtect]========
                  There is a new version update available.
                         Current version: %s
                           New version: %s
                    Please, download new version here
                  https://www.spigotmc.org/resources/81321/
-                =======================================
-                """, this.getPluginVersion(), version));
+                =======================================""";
+        new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
+            if (this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
+                Bukkit.getConsoleSender().sendMessage(String.format(noUpdate, version));
+            } else {
+                Bukkit.getConsoleSender().sendMessage(String.format(hasUpdate, this.getPluginVersion(), version));
             }
         });
     }
 
-    public void checkUpdateNotifyPlayer(Player player) {
-        if(this.getUtilConfig().getConfig().getUpdateChecker()) {
-            new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
-                if (this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
-                    getRsApi().messageToCommandSender(player, String.format("""
-                            <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
+    public void checkUpdateNotify(Player player) {
+        final String noUpdate = """
+                <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
                                       <gold>Current version: <aqua>%s
                                    <gold>You are using the latest version.
-                            <yellow>=======================================
-                            """, version));
-                } else {
-                    getRsApi().messageToCommandSender(player, String.format("""
+                <yellow>=======================================""";
+        final String hasUpdate = """
                             <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
                             <gold> There is a new version update available.
                             <red>        Current version: <dark_red>%s
                             <dark_aqua>          New version: <aqua>%s
                             <gold>   Please, download new version here
                             <gold> https://www.spigotmc.org/resources/81321/
-                            <yellow>=======================================
-                            """, this.getPluginVersion(), version));
+                            <yellow>=======================================""";
+        if(this.getUtilConfig().getConfig().getUpdateChecker()) {
+            new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
+                if (this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
+                    getRsApi().messageToCommandSender(player, String.format(noUpdate, version));
+                } else {
+                    getRsApi().messageToCommandSender(player, String.format(hasUpdate, this.getPluginVersion(), version));
                 }
             });
         }
@@ -155,7 +156,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
             getLogger().error("""
             This plugin version works only on 1.19+!
             Please read this thread: https://www.spigotmc.org/resources/81321/
-            The main post on spigotmc and please download the correct version.
+            The main post on spigotmc and please download the correct version for your server version.
             """);
             getWGRPBukkitPlugin().getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin);
         }

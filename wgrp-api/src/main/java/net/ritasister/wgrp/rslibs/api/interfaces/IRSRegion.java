@@ -12,4 +12,5 @@ public interface IRSRegion {
     boolean checkStandingRegion(@NotNull Location location);
     boolean checkStandingRegion(@NotNull Location location, HashMap<String, List<String>> regions);
     String getProtectRegionName(Player player);
+
 }

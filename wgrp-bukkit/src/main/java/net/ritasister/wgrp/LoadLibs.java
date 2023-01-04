@@ -2,6 +2,7 @@ package net.ritasister.wgrp;
 
 import com.google.inject.Inject;
 import lombok.RequiredArgsConstructor;
+import net.ritasister.wgrp.rslibs.interfaces.ILoadLibs;
 import net.ritasister.wgrp.rslibs.papi.PlaceholderAPIExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -10,7 +11,6 @@ import org.bukkit.plugin.Plugin;
 public class LoadLibs implements ILoadLibs {
 
     private final WorldGuardRegionProtect wgRegionProtect;
-    public boolean placeholderAPIEnabled;
 
     public void loadWorldGuard() {
         final Plugin plugin = wgRegionProtect.getWGRPBukkitPlugin().getServer().getPluginManager().getPlugin("WorldGuard");
@@ -25,7 +25,7 @@ public class LoadLibs implements ILoadLibs {
 
     public void loadPlaceholderAPI() {
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            new PlaceholderAPIExpansion(wgRegionProtect).register(); placeholderAPIEnabled=true;
+            new PlaceholderAPIExpansion(wgRegionProtect).register(); isPlaceholderAPIEnabled(true);
         }
     }
 
@@ -34,7 +34,7 @@ public class LoadLibs implements ILoadLibs {
     }
 
     @Override
-    public boolean isPlaceholderAPIEnabled() {
-        return this.placeholderAPIEnabled;
+    public boolean isPlaceholderAPIEnabled(boolean placeholderAPIEnabled) {
+        return placeholderAPIEnabled;
     }
 }

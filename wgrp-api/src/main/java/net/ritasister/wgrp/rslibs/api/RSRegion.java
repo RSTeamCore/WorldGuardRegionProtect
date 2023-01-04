@@ -123,7 +123,8 @@ public class RSRegion implements IRSRegion {
      *
      * @return location of any Object.
      */
-    private @NotNull ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
+    @NotNull
+    public ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
         return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer()
                 .get(BukkitAdapter.adapt(location.getWorld())))
                 .getApplicableRegions(BukkitAdapter.asBlockVector(location));
