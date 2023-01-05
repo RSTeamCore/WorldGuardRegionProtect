@@ -2,18 +2,19 @@ package net.ritasister.wgrp.rslibs.api;
 
 public abstract class WorldGuardRegionProtectApi {
 
-    /** Instance of the API */
+    /**
+     * Instance of the API
+     */
     private static WorldGuardRegionProtectApi instance;
 
     public WorldGuardRegionProtectApi() {
-        instance=this;
+        instance = this;
     }
 
     /**
      * Instance setter for internal use by the plugin only.
      *
-     * @param   instance
-     *          API instance
+     * @param instance API instance
      */
     protected static void setInstance(WorldGuardRegionProtectApi instance) {
         WorldGuardRegionProtectApi.instance = instance;
@@ -25,14 +26,15 @@ public abstract class WorldGuardRegionProtectApi {
      * into own project, which is not allowed. Another option is calling the method
      * before plugin was able to load.
      *
-     * @return  API instance
-     * @throws  IllegalStateException
-     *          If instance is {@code null}
+     * @return API instance
+     * @throws IllegalStateException If instance is {@code null}
      */
     public static WorldGuardRegionProtectApi getInstance() {
-        if (instance == null)
+        if (instance == null) {
             throw new IllegalStateException("API instance is null. This likely means you shaded WGRP's API into your project" +
                     " instead of only using it, which is not allowed.");
+        }
         return instance;
     }
+
 }

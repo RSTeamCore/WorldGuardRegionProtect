@@ -5,12 +5,20 @@ import net.ritasister.wgrp.listener.RegionProtect;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
-public record ListenerHandler(WorldGuardRegionProtect wgRegionProtect) {
+public class ListenerHandler extends AbstractHandler<PluginManager> {
 
-    public void listenerHandler(@NotNull PluginManager pluginManager) {
+    private final WorldGuardRegionProtect wgRegionProtect;
+
+    public ListenerHandler(WorldGuardRegionProtect wgRegionProtect) {
+        this.wgRegionProtect = wgRegionProtect;
+    }
+
+    @Override
+    public void handle(final @NotNull PluginManager pluginManager) {
         final RegionProtect regionProtect = new RegionProtect(wgRegionProtect);
         pluginManager.registerEvents(regionProtect, wgRegionProtect.getWGRPBukkitPlugin());
 
         wgRegionProtect.getLogger().info("All listeners registered successfully!");
     }
+
 }

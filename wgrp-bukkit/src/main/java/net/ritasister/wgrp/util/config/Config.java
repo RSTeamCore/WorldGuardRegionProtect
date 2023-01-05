@@ -20,13 +20,13 @@ public class Config {
     private final WGRPBukkitPlugin wgrpBukkitPlugin;
 
     @CanRecover
-    private HashMap<String, List<String>> regionProtect;
+    private Map<String, List<String>> regionProtect;
 
     @CanRecover
-    private HashMap<String, List<String>> regionProtectAllow;
+    private Map<String, List<String>> regionProtectAllow;
 
     @CanRecover
-    private HashMap<String, List<String>> regionProtectOnlyBreakAllow;
+    private Map<String, List<String>> regionProtectOnlyBreakAllow;
 
     @CanRecover
     private String lang;
@@ -327,29 +327,29 @@ public class Config {
 
     public boolean getUpdateChecker() { return updateChecker; }
 
-    public HashMap<String, List<String>> getRegionProtectMap() {
+    public Map<String, List<String>> getRegionProtectMap() {
         return regionProtect;
     }
 
-    public HashMap<String, List<String>> getRegionProtectAllowMap() {
+    public Map<String, List<String>> getRegionProtectAllowMap() {
         return regionProtectAllow;
     }
 
-    public HashMap<String, List<String>> getRegionProtectOnlyBreakAllowMap() {
+    public Map<String, List<String>> getRegionProtectOnlyBreakAllowMap() {
         return regionProtectOnlyBreakAllow;
     }
 
-    public void setRegionProtectMap(@NotNull HashMap<String, List<String>> value) {
+    public void setRegionProtectMap(@NotNull Map<String, List<String>> value) {
         regionProtect = value;
         saveConfig();
     }
 
-    public void setRegionProtectAllowMap(@NotNull HashMap<String, List<String>> value) {
+    public void setRegionProtectAllowMap(@NotNull Map<String, List<String>> value) {
         regionProtectAllow = value;
         saveConfig();
     }
 
-    public void setRegionProtectOnlyBreakAllow(@NotNull HashMap<String, List<String>> value) {
+    public void setRegionProtectOnlyBreakAllow(@NotNull Map<String, List<String>> value) {
         regionProtectOnlyBreakAllow = value;
         saveConfig();
     }

@@ -11,7 +11,7 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
     private final WorldGuardRegionProtect wgRegionProtect;
 
     public PlaceholderAPIExpansion(WorldGuardRegionProtect wgRegionProtect) {
-        this.wgRegionProtect=wgRegionProtect;
+        this.wgRegionProtect = wgRegionProtect;
     }
 
     @Override
@@ -44,4 +44,5 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
         }
         return null;
     }
+
 }
