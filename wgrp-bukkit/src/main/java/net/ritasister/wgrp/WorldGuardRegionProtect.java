@@ -3,12 +3,15 @@ package net.ritasister.wgrp;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
+import net.ritasister.wgrp.handler.AbstractHandler;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
-import net.ritasister.wgrp.rslibs.interfaces.IWGRPBukkit;
+import net.ritasister.wgrp.rslibs.api.interfaces.CommandWE;
+import net.ritasister.wgrp.rslibs.api.interfaces.RSRegion;
 import net.ritasister.wgrp.rslibs.api.*;
 import net.ritasister.wgrp.rslibs.datasource.Storage;
-import net.ritasister.wgrp.rslibs.util.wg.Iwg;
+import net.ritasister.wgrp.rslibs.interfaces.LoadLibs;
+import net.ritasister.wgrp.rslibs.util.wg.wg;
 import net.ritasister.wgrp.util.UtilConfig;
 import net.rsteamcore.config.update.UpdateChecker;
 import org.bstats.bukkit.Metrics;
@@ -22,11 +25,11 @@ import java.util.UUID;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class WorldGuardRegionProtect implements IWGRPBukkit {
+public class WorldGuardRegionProtect {
 
     private final WGRPBukkitPlugin wgrpBukkitPlugin;
 
-    private Iwg Iwg;
+    private wg wg;
 
     //DataBase
     private RSStorage rsStorage;
@@ -61,7 +64,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
     }
 
     public void unload() {
-        if(getUtilConfig() == null) {
+        if (getUtilConfig() == null) {
             try {
                 this.getUtilConfig().getConfig().saveConfig();
             } catch (NullPointerException ignored) {
@@ -72,7 +75,7 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
 
     private void loadAnotherClassAndMethods() {
         //Libs for this plugin.
-        this.loadLibs = new LoadLibs(this);
+        this.loadLibs = new LoadLibsImpl(this);
         this.getLoadLibs().loadWorldGuard();
         this.getLoadLibs().loadPlaceholderAPI();
 
@@ -83,11 +86,11 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         }
 
         //Api for Regions.
-        this.rsRegion = new RSRegion();
+        this.rsRegion = new RSRegionImpl();
 
         //Parameters for to intercept commands from WE or FAWE.
-        this.commandWE = new CommandWE(this);
-        this.Iwg=this.getCommandWE().setUpWorldGuardVersionSeven();
+        this.commandWE = new CommandWEImpl(this);
+        this.wg = this.getCommandWE().setUpWorldGuardVersionSeven();
 
         //Commands and listeners.
         this.loadCommandsAndListener();
@@ -97,10 +100,11 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
     }
 
     private void loadCommandsAndListener() {
-        ListenerHandler registerListener = new ListenerHandler(this);
-        registerListener.listenerHandler(this.getPluginManager());
-        CommandHandler commandHandler = new CommandHandler(this);
-        commandHandler.commandHandler();
+        AbstractHandler<PluginManager> registerListener = new ListenerHandler(this);
+        registerListener.handle(this.getPluginManager());
+
+        AbstractHandler<Void> commandHandler = new CommandHandler(this);
+        commandHandler.handle();
     }
 
     public void checkUpdateNotify() {
@@ -133,14 +137,14 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
                                    <gold>You are using the latest version.
                 <yellow>=======================================""";
         final String hasUpdate = """
-                            <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
-                            <gold> There is a new version update available.
-                            <red>        Current version: <dark_red>%s
-                            <dark_aqua>          New version: <aqua>%s
-                            <gold>   Please, download new version here
-                            <gold> https://www.spigotmc.org/resources/81321/
-                            <yellow>=======================================""";
-        if(this.getUtilConfig().getConfig().getUpdateChecker()) {
+                <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
+                <gold> There is a new version update available.
+                <red>        Current version: <dark_red>%s
+                <dark_aqua>          New version: <aqua>%s
+                <gold>   Please, download new version here
+                <gold> https://www.spigotmc.org/resources/81321/
+                <yellow>=======================================""";
+        if (this.getUtilConfig().getConfig().getUpdateChecker()) {
             new UpdateChecker(this.getWGRPBukkitPlugin(), 81321).getVersion(version -> {
                 if (this.getWGRPBukkitPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
                     getRsApi().messageToCommandSender(player, String.format(noUpdate, version));
@@ -154,39 +158,43 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
     private void checkStartUpVersionServer() {
         if (!this.getRsApi().isVersionSupported()) {
             getLogger().error("""
-            This plugin version works only on 1.19+!
-            Please read this thread: https://www.spigotmc.org/resources/81321/
-            The main post on spigotmc and please download the correct version for your server version.
-            """);
+                    This plugin version works only on 1.19+!
+                    Please read this thread: https://www.spigotmc.org/resources/81321/
+                    The main post on spigotmc and please download the correct version for your server version.
+                    """);
             getWGRPBukkitPlugin().getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin);
         }
     }
 
     public void notifyAboutBuild() {
-        if(this.getPluginVersion().contains("alpha") || this.getPluginVersion().contains("beta") || this.getPluginVersion().contains("pre")) {
+        if (this.getPluginVersion().contains("alpha") || this.getPluginVersion().contains("beta") || this
+                .getPluginVersion()
+                .contains("pre")) {
             this.getLogger().warn("""
-                        This is a test build. This building may be unstable!
-                        When reporting a bug:
-                        Use the issue tracker! Don't report bugs in the reviews.
-                        Please search for duplicates before reporting a new https://github.com/RSTeamCore/WorldGuardRegionProtect/issues!
-                        Provide as much information as possible.
-                        Provide your WorldGuardRegionProtect version and Spigot/Paper version.
-                        Provide any stack traces or "errors" using pastebin.
-                       """);
+                     This is a test build. This building may be unstable!
+                     When reporting a bug:
+                     Use the issue tracker! Don't report bugs in the reviews.
+                     Please search for duplicates before reporting a new https://github.com/RSTeamCore/WorldGuardRegionProtect/issues!
+                     Provide as much information as possible.
+                     Provide your WorldGuardRegionProtect version and Spigot/Paper version.
+                     Provide any stack traces or "errors" using pastebin.
+                    """);
         } else {
             this.getLogger().info("This is the latest stable building.");
         }
-        Bukkit.getConsoleSender().sendMessage(String.format("""
+        Bukkit.getConsoleSender().sendMessage(String.format(
+                """
                         Using %s language version %s
                         Author of this localization - %s
                         """,
                 getUtilConfig().getMessages().get("langTitle.language"),
                 getUtilConfig().getMessages().get("langTitle.version"),
-                getUtilConfig().getMessages().get("langTitle.author")));
+                getUtilConfig().getMessages().get("langTitle.author")
+        ));
     }
 
     public void loadDataBase() {
-        if(this.getUtilConfig().getConfig().getDataBaseEnable()) {
+        if (this.getUtilConfig().getConfig().getDataBaseEnable()) {
             final long durationTimeStart = System.currentTimeMillis();
             this.getRsStorage().dbLogsSource = new Storage(this);
             this.getRsStorage().dbLogs.clear();
@@ -212,7 +220,6 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         new Metrics(this.getWGRPBukkitPlugin(), pluginId);
     }
 
-    @Override
     public WGRPBukkitPlugin getWGRPBukkitPlugin() {
         return this.wgrpBukkitPlugin;
     }
@@ -257,7 +264,8 @@ public class WorldGuardRegionProtect implements IWGRPBukkit {
         return this.rsLogger;
     }
 
-    public Iwg getIwg() {
-        return this.Iwg;
+    public wg getWg() {
+        return this.wg;
     }
+
 }

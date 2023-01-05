@@ -15,7 +15,6 @@ public class RSStorage {
 
     /**
      * @param uniqueId get player uuid from storage.
-     *
      * @return getDataStorage.
      */
     @NotNull
@@ -24,11 +23,11 @@ public class RSStorage {
     }
 
     /**
-     *
      * @return getDataSource.
      */
     @NotNull
     public StorageDataSource getDataSource() {
         return this.dbLogsSource;
     }
+
 }

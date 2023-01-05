@@ -23,43 +23,49 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class UtilConfig {
 
-	@Getter private Config config;
-	@Getter private Container messages;
+    @Getter
+    private Config config;
+    @Getter
+    private Container messages;
 
-	public void initConfig(WorldGuardRegionProtect wgRegionProtect, WGRPBukkitPlugin wgrpBukkitPlugin) {
-		config = new Config(wgRegionProtect, wgrpBukkitPlugin);
-		messages = loadMessages(wgrpBukkitPlugin);
-		checkLangVersion(wgrpBukkitPlugin);
-		wgRegionProtect.getLogger().info("All configs load successfully!");
-	}
+    public void initConfig(WorldGuardRegionProtect wgRegionProtect, WGRPBukkitPlugin wgrpBukkitPlugin) {
+        config = new Config(wgRegionProtect, wgrpBukkitPlugin);
+        messages = loadMessages(wgrpBukkitPlugin);
+        checkLangVersion(wgrpBukkitPlugin);
+        wgRegionProtect.getLogger().info("All configs load successfully!");
+    }
 
-	public Container loadMessages(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {
-		String lang = config.getLang();
-		File file = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
-		if (!file.exists()) {
-			wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", false);
-		}
-		return new Container(YamlConfiguration.loadConfiguration(file));
-	}
+    public Container loadMessages(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {
+        String lang = config.getLang();
+        File file = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
+        if (!file.exists()) {
+            wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", false);
+        }
+        return new Container(YamlConfiguration.loadConfiguration(file));
+    }
 
 
     //TODO: Need tested
-	@SneakyThrows
-	public void checkLangVersion(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {
-		String lang = config.getLang();
-		File currentLangFile = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
-		InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitPlugin.getResource("lang/" + lang + ".yml")));
-		YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(inputStreamReader);
-		var currentYaml = YamlConfiguration.loadConfiguration(currentLangFile);
-		if (currentLangFile.exists() && !getCurrentVersion(currentYaml).equals(Objects.requireNonNull(getNewVersion(yamlConfiguration)))) {
-			Bukkit.getConsoleSender().sendMessage("[WGRP] Found new version of lang file, we are updated this now...");
-			Path renameOldLang = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + "-old-" + getSimpleDateFormat() + ".yml").toPath();
-			Files.move(currentLangFile.toPath(),  renameOldLang, StandardCopyOption.REPLACE_EXISTING);
-			wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", true);
-		} else {
-			Bukkit.getConsoleSender().sendMessage("[WGRP] No update is required for the lang file");
-		}
-	}
+    @SneakyThrows
+    public void checkLangVersion(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {
+        String lang = config.getLang();
+        File currentLangFile = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
+        InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitPlugin.getResource("lang/" + lang + ".yml")));
+        YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(inputStreamReader);
+        var currentYaml = YamlConfiguration.loadConfiguration(currentLangFile);
+        if (currentLangFile.exists() && !getCurrentVersion(currentYaml).equals(Objects.requireNonNull(getNewVersion(
+                yamlConfiguration)))) {
+            Bukkit.getConsoleSender().sendMessage("[WGRP] Found new version of lang file, we are updated this now...");
+            Path renameOldLang = new File(
+                    wgrpBukkitPlugin.getDataFolder(),
+                    "lang/" + lang + "-old-" + getSimpleDateFormat() + ".yml"
+            ).toPath();
+            Files.move(currentLangFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
+            wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", true);
+        } else {
+            Bukkit.getConsoleSender().sendMessage("[WGRP] No update is required for the lang file");
+        }
+    }
 
     private @NotNull String getSimpleDateFormat() {
         Date date = new Date();
@@ -78,4 +84,5 @@ public class UtilConfig {
                 .replaceAll("\"", "")
                 .replaceAll("'", "");
     }
+
 }
