@@ -5,8 +5,8 @@ import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.interfaces.CommandWE;
-import net.ritasister.wgrp.rslibs.util.wg.Iwg;
-import net.ritasister.wgrp.util.wg.wg7;
+import net.ritasister.wgrp.rslibs.util.wg.wg;
+import net.ritasister.wgrp.util.wg.wg7Impl;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
@@ -14,14 +14,14 @@ public class CommandWEImpl implements CommandWE {
 
     private final WorldGuardRegionProtect wgRegionProtect;
 
-    public Iwg setUpWorldGuardVersionSeven() {
+    public wg setUpWorldGuardVersionSeven() {
         try {
             Class.forName("com.sk89q.worldedit.math.BlockVector3");
-                return new wg7(this.wgRegionProtect);
+                return new wg7Impl(this.wgRegionProtect);
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
         }
-        return this.wgRegionProtect.getIwg();
+        return this.wgRegionProtect.getWg();
     }
 
     public boolean cmdWE(String s) {

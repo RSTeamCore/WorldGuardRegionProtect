@@ -19,7 +19,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.rslibs.util.wg.Iwg;
+import net.ritasister.wgrp.rslibs.util.wg.wg;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class wg7 implements Iwg {
+public class wg7Impl implements wg {
 
     public final WorldGuardRegionProtect wgRegionProtect;
 
