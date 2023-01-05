@@ -1,10 +1,10 @@
 package net.ritasister.wgrp.rslibs.api.interfaces;
 
-import net.ritasister.wgrp.rslibs.util.wg.Iwg;
+import net.ritasister.wgrp.rslibs.util.wg.wg;
 
 public interface CommandWE {
 
-    Iwg setUpWorldGuardVersionSeven();
+    wg setUpWorldGuardVersionSeven();
     boolean cmdWE(String param);
     boolean cmdWE_C(String param);
     boolean cmdWE_P(String param);
