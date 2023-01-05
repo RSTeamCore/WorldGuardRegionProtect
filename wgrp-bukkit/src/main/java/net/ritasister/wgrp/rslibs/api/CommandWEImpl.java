@@ -4,13 +4,13 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.rslibs.api.interfaces.ICommandWE;
+import net.ritasister.wgrp.rslibs.api.interfaces.CommandWE;
 import net.ritasister.wgrp.rslibs.util.wg.Iwg;
 import net.ritasister.wgrp.util.wg.wg7;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class CommandWE implements ICommandWE {
+public class CommandWEImpl implements CommandWE {
 
     private final WorldGuardRegionProtect wgRegionProtect;
 

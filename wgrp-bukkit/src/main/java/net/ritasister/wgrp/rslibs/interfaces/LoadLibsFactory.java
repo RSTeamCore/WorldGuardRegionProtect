@@ -1,7 +1,5 @@
 package net.ritasister.wgrp.rslibs.interfaces;
 
-import net.ritasister.wgrp.LoadLibs;
-
-public interface ILoadLibsFactory {
+public interface LoadLibsFactory {
     LoadLibs createLoadLibs();
 }

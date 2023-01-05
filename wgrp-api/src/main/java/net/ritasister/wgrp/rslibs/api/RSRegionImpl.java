@@ -14,31 +14,33 @@ import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import net.ritasister.wgrp.rslibs.api.exceptions.NoSelectionException;
-import net.ritasister.wgrp.rslibs.api.interfaces.IRSRegion;
+import net.ritasister.wgrp.rslibs.api.interfaces.RSRegion;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
  * A class with methods for interacting with regions using the WorldGuard plugin.
  */
-public class RSRegion implements IRSRegion {
+public class RSRegionImpl implements RSRegion {
 
     /**
      * Check access in standing region by a Player used region name from HashMap and list of regions.
-     * @param location Return location of object.
-     * @param regions Maps of regions from WorldGuard.
      *
+     * @param location Return location of object.
+     * @param regions  Maps of regions from WorldGuard.
      * @return location of object(example: block, entity, Player and etc).
      */
     @Override
-    public boolean checkStandingRegion(@NotNull Location location, @NotNull HashMap<String, List<String>> regions) {
-        if (regions.get(location.getWorld().getName()) == null) return false;
+    public boolean checkStandingRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions) {
+        if (regions.get(location.getWorld().getName()) == null) {
+            return false;
+        }
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         for (String regionName : regions.get(location.getWorld().getName())) {
             if (applicableRegionSet.getRegions().stream().anyMatch(
@@ -51,8 +53,8 @@ public class RSRegion implements IRSRegion {
 
     /**
      * Checking the access in a region without region name.
-     * @param location Location of object.
      *
+     * @param location Location of object.
      * @return location of object(example: block, entity, Player and etc).
      */
     @Override
@@ -63,13 +65,12 @@ public class RSRegion implements IRSRegion {
 
     /**
      * Getting the name of the region where the object trying to interact with protected a region.
-     * @param location Location of object.
      *
+     * @param location Location of object.
      * @return the name of the region.
      */
     public String getProtectRegionName(Location location) {
-        final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
-        return applicableRegionSet
+        return this.getApplicableRegions(location)
                 .getRegions()
                 .stream()
                 .map(ProtectedRegion::getId)
@@ -78,6 +79,7 @@ public class RSRegion implements IRSRegion {
 
     /**
      * Getting the name of the region where the player trying to use WorldEdit.
+     *
      * @param player Location of object.
      */
     @Override
@@ -86,17 +88,19 @@ public class RSRegion implements IRSRegion {
         Region selection = null;
         try {
             selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
-        } catch (IncompleteRegionException ignored) {}
+        } catch (IncompleteRegionException ignored) {
+        }
         try {
             return getProtectRegionNameByIntersection(selection);
-        } catch (NoSelectionException ignored) {}
+        } catch (NoSelectionException ignored) {
+        }
         return null;
     }
 
     /**
      * Check the intersection by the player for the method getProtectRegionName()
-     * @param selection get selection in the region by a Player.
      *
+     * @param selection get selection in the region by a Player.
      * @return location of Object.
      */
     public String getProtectRegionNameByIntersection(final Region selection) throws NoSelectionException {
@@ -106,8 +110,7 @@ public class RSRegion implements IRSRegion {
             final RegionContainer rc = WorldGuard.getInstance().getPlatform().getRegionContainer();
             final RegionManager regions = rc.get(selection.getWorld());
             final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", min, max);
-            assert regions != null;
-            ApplicableRegionSet applicableRegionSet = regions.getApplicableRegions(__dummy__);
+            ApplicableRegionSet applicableRegionSet = Objects.requireNonNull(regions).getApplicableRegions(__dummy__);
             return applicableRegionSet
                     .getRegions()
                     .stream()
@@ -119,14 +122,15 @@ public class RSRegion implements IRSRegion {
 
     /**
      * Getting regions by location using the WG API.
-     * @param location Location of Object.
      *
+     * @param location Location of Object.
      * @return location of any Object.
      */
     @NotNull
     public ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
         return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer()
-                .get(BukkitAdapter.adapt(location.getWorld())))
+                        .get(BukkitAdapter.adapt(location.getWorld())))
                 .getApplicableRegions(BukkitAdapter.asBlockVector(location));
     }
+
 }
