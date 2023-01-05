@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -26,8 +25,6 @@ import java.util.List;
 public class RSApi {
 
     private final WorldGuardRegionProtect wgRegionProtect;
-
-    private final Config config = wgRegionProtect.getUtilConfig().getConfig();
 
     public void messageToCommandSender(@NotNull CommandSender commandSender, String message) {
         var miniMessage = MiniMessage.miniMessage();
@@ -75,26 +72,20 @@ public class RSApi {
         if (regionName == null) {
             return;
         }
-        if (config.getSpyCommandNotifyAdminEnable() &&
-                this.isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
-            for (String cmd : config.getSpyCommandList()) {
-                if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())
-                        && config.getSpyCommandNotifyAdminPlaySoundEnable()) {
-                    player.playSound(
-                            player.getLocation(),
-                            config.getSpyCommandNotifyAdminPlaySound().toLowerCase(),
-                            1,
-                            1
-                    );
-                    player.sendMessage(
-                            wgRegionProtect
-                                    .getUtilConfig()
-                                    .getMessages()
-                                    .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
-                                    .toString()
-                                    .replace("<player>", playerName)
-                                    .replace("<cmd>", cmd)
-                                    .replace("<region>", regionName));
+        if (wgRegionProtect.getConfig().getSpyCommandNotifyAdminEnable() && this.isPlayerListenerPermission(
+                player,
+                UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN
+        )) {
+            for (String cmd : wgRegionProtect.getConfig().getSpyCommandList()) {
+                if (cmd.equalsIgnoreCase(senderCommand.toLowerCase()) && wgRegionProtect.getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
+                    player.playSound(player.getLocation(), wgRegionProtect.getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
+                    player.sendMessage(wgRegionProtect
+                            .getMessages()
+                            .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                            .toString()
+                            .replace("<player>", playerName)
+                            .replace("<cmd>", cmd)
+                            .replace("<region>", regionName));
                 }
             }
         }
@@ -111,18 +102,16 @@ public class RSApi {
         if (regionName == null) {
             return;
         }
-        if (config.getSpyCommandNotifyConsoleEnable()) {
-            for (String cmd : config.getSpyCommandList()) {
+        if (wgRegionProtect.getConfig().getSpyCommandNotifyConsoleEnable()) {
+            for (String cmd : wgRegionProtect.getConfig().getSpyCommandList()) {
                 if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-                    Bukkit.getConsoleSender().sendMessage(
-                            wgRegionProtect
-                                    .getUtilConfig()
-                                    .getMessages()
-                                    .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
-                                    .toString()
-                                    .replace("<player>", playerName)
-                                    .replace("<cmd>", cmd)
-                                    .replace("<region>", regionName));
+                    Bukkit.getConsoleSender().sendMessage(wgRegionProtect
+                            .getMessages()
+                            .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                            .toString()
+                            .replace("<player>", playerName)
+                            .replace("<cmd>", cmd)
+                            .replace("<region>", regionName));
                 }
             }
         }
@@ -152,17 +141,21 @@ public class RSApi {
             double z,
             String world
     ) {
-        if (this.isPlayerListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
-                && config.getSpyCommandNotifyAdminEnable()) {
-            admin.sendMessage(
-                    wgRegionProtect.getUtilConfig().getMessages().get("messages.Notify.sendAdminInfoIfActionInRegion").toString()
-                            .replace("<player>", suspectName)
-                            .replace("<action>", action.getAction())
-                            .replace("<region>", regionName)
-                            .replace("<x>", String.valueOf(x))
-                            .replace("<y>", String.valueOf(y))
-                            .replace("<z>", String.valueOf(z))
-                            .replace("<world>", world));
+        if (this.isPlayerListenerPermission(
+                suspectPlayer,
+                UtilPermissions.SPY_INSPECT_FOR_SUSPECT
+        ) && wgRegionProtect.getConfig().getSpyCommandNotifyAdminEnable()) {
+            admin.sendMessage(wgRegionProtect
+                    .getMessages()
+                    .get("messages.Notify.sendAdminInfoIfActionInRegion")
+                    .toString()
+                    .replace("<player>", suspectName)
+                    .replace("<action>", action.getAction())
+                    .replace("<region>", regionName)
+                    .replace("<x>", String.valueOf(x))
+                    .replace("<y>", String.valueOf(y))
+                    .replace("<z>", String.valueOf(z))
+                    .replace("<world>", world));
         }
     }
 

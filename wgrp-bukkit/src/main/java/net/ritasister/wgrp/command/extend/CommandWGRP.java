@@ -235,11 +235,11 @@ public class CommandWGRP extends AbstractCommand {
             description = "spy for who interact with region.")
     public void wgrpSpy(@NotNull CommandSender sender, String[] args) {
         @NotNull UUID uniqueId = Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getUniqueId();
-        if (wgRegionProtect.spyLog.contains(uniqueId)) {
-            wgRegionProtect.spyLog.remove(uniqueId);
+        if (wgRegionProtect.getSpyLog().contains(uniqueId)) {
+            wgRegionProtect.getSpyLog().remove(uniqueId);
             sender.sendMessage("You are disable spy logging!");
         } else {
-            wgRegionProtect.spyLog.add(uniqueId);
+            wgRegionProtect.getSpyLog().add(uniqueId);
             sender.sendMessage("You are enable spy logging!");
         }
     }

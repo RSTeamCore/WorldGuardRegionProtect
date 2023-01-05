@@ -1,5 +1,7 @@
 package net.ritasister.wgrp.rslibs.api;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
@@ -13,10 +15,15 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.text.Component;
+import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.exceptions.NoSelectionException;
 import net.ritasister.wgrp.rslibs.api.interfaces.RSRegion;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -27,7 +34,25 @@ import java.util.stream.Collectors;
 /**
  * A class with methods for interacting with regions using the WorldGuard plugin.
  */
+@Singleton
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class RSRegionImpl implements RSRegion {
+
+    private final WorldGuardRegionProtect wgRegionProtect;
+
+    /**
+     * Getting regions by location using the WG API.
+     *
+     * @param location Location of Object.
+     * @return location of any Object.
+     */
+
+    @Contract("_ -> new")
+    private @NotNull ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
+        return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer()
+                        .get(BukkitAdapter.adapt(location.getWorld())))
+                .getApplicableRegions(BukkitAdapter.asBlockVector(location));
+    }
 
     /**
      * Check access in standing region by a Player used region name from HashMap and list of regions.
@@ -83,7 +108,7 @@ public class RSRegionImpl implements RSRegion {
      * @param player Location of object.
      */
     @Override
-    public String getProtectRegionName(final Player player) {
+    public String getProtectRegionNameBySelection(final Player player) {
         LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
         Region selection = null;
         try {
@@ -120,17 +145,22 @@ public class RSRegionImpl implements RSRegion {
         throw new NoSelectionException();
     }
 
-    /**
-     * Getting regions by location using the WG API.
-     *
-     * @param location Location of Object.
-     * @return location of any Object.
-     */
-    @NotNull
-    public ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
-        return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer()
-                        .get(BukkitAdapter.adapt(location.getWorld())))
-                .getApplicableRegions(BukkitAdapter.asBlockVector(location));
+    @Override
+    public void startActionBar() {
+        Bukkit.getScheduler().runTaskAsynchronously(wgRegionProtect.getWGRPBukkitPlugin(), () ->
+                Bukkit.getScheduler().scheduleSyncDelayedTask(wgRegionProtect.getWGRPBukkitPlugin(), () -> {
+                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                        if (checkStandingRegion(onlinePlayer.getLocation(), wgRegionProtect.getConfig().getRegionProtectMap())) {
+                            sendActionBar(onlinePlayer,
+                                    Component.text("You are stay in region: " + getProtectRegionName(onlinePlayer.getLocation())));
+                        }
+                    }
+                }));
+    }
+
+    @Override
+    public void sendActionBar(@NotNull Player player, Component message) {
+        player.sendActionBar(message);
     }
 
 }

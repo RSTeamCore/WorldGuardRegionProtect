@@ -13,6 +13,8 @@ import net.ritasister.wgrp.rslibs.datasource.Storage;
 import net.ritasister.wgrp.rslibs.interfaces.LoadLibs;
 import net.ritasister.wgrp.rslibs.util.wg.wg;
 import net.ritasister.wgrp.util.UtilConfig;
+import net.ritasister.wgrp.util.config.Config;
+import net.rsteamcore.config.Container;
 import net.rsteamcore.config.update.UpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -50,7 +52,7 @@ public class WorldGuardRegionProtect {
     private LoadLibs loadLibs;
 
     //HashMap for who spy for another player.
-    public ArrayList<UUID> spyLog = new ArrayList<>();
+    private final List<UUID> spyLog = new ArrayList<>();
 
     public void load() {
         this.rsApi = new RSApi(this);
@@ -86,7 +88,7 @@ public class WorldGuardRegionProtect {
         }
 
         //Api for Regions.
-        this.rsRegion = new RSRegionImpl();
+        this.rsRegion = new RSRegionImpl(this);
 
         //Parameters for to intercept commands from WE or FAWE.
         this.commandWE = new CommandWEImpl(this);
@@ -240,6 +242,14 @@ public class WorldGuardRegionProtect {
         return utilConfig;
     }
 
+    public Container getMessages() {
+        return getUtilConfig().getMessages();
+    }
+
+    public Config getConfig() {
+        return getUtilConfig().getConfig();
+    }
+
     public LoadLibs getLoadLibs() {
         return this.loadLibs;
     }
@@ -268,4 +278,7 @@ public class WorldGuardRegionProtect {
         return this.wg;
     }
 
+    public List<UUID> getSpyLog() {
+        return this.spyLog;
+    }
 }
