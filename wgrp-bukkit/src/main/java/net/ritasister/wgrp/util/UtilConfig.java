@@ -44,8 +44,6 @@ public class UtilConfig {
         return new Container(YamlConfiguration.loadConfiguration(file));
     }
 
-
-    //TODO: Need tested
     @SneakyThrows
     public void checkLangVersion(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {
         String lang = config.getLang();
@@ -53,13 +51,9 @@ public class UtilConfig {
         InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitPlugin.getResource("lang/" + lang + ".yml")));
         YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(inputStreamReader);
         var currentYaml = YamlConfiguration.loadConfiguration(currentLangFile);
-        if (currentLangFile.exists() && !getCurrentVersion(currentYaml).equals(Objects.requireNonNull(getNewVersion(
-                yamlConfiguration)))) {
-            Bukkit.getConsoleSender().sendMessage("[WGRP] Found new version of lang file, we are updated this now...");
-            Path renameOldLang = new File(
-                    wgrpBukkitPlugin.getDataFolder(),
-                    "lang/" + lang + "-old-" + getSimpleDateFormat() + ".yml"
-            ).toPath();
+        if (currentLangFile.exists() && !getCurrentVersion(currentYaml).equals(Objects.requireNonNull(getNewVersion(yamlConfiguration)))) {
+            Bukkit.getConsoleSender().sendMessage("[WGRP] Found new version of lang file, updating this now...");
+            Path renameOldLang = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + "-old-" + getSimpleDateFormat() + ".yml").toPath();
             Files.move(currentLangFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
             wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", true);
         } else {
