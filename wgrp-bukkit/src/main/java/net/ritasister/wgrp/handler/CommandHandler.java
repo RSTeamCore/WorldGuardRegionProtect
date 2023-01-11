@@ -1,11 +1,7 @@
 package net.ritasister.wgrp.handler;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.command.extend.CommandCredits;
-import net.ritasister.wgrp.command.extend.CommandHelp;
-import net.ritasister.wgrp.command.extend.CommandManageRegion;
-import net.ritasister.wgrp.command.extend.CommandReload;
-import net.ritasister.wgrp.command.extend.CommandSpy;
+import net.ritasister.wgrp.command.extend.CommandWGRP;
 
 public class CommandHandler extends AbstractHandler<Void> {
 
@@ -18,11 +14,7 @@ public class CommandHandler extends AbstractHandler<Void> {
     @Override
     public void handle() {
         try {
-            new CommandCredits(wgRegionProtect);
-            new CommandHelp(wgRegionProtect);
-            new CommandManageRegion(wgRegionProtect);
-            new CommandReload(wgRegionProtect);
-            new CommandSpy(wgRegionProtect);
+            new CommandWGRP(wgRegionProtect);
             wgRegionProtect.getLogger().info("All commands registered successfully!");
         } catch (NullPointerException e) {
             wgRegionProtect.getLogger().error("""
