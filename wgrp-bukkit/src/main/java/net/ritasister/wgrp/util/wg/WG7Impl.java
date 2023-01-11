@@ -18,6 +18,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.util.wg.wg;
 import org.bukkit.Location;
@@ -28,19 +29,17 @@ import org.jetbrains.annotations.Nullable;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class wg7Impl implements wg {
+public class WG7Impl implements wg {
 
     public final WorldGuardRegionProtect wgRegionProtect;
 
     @Override
     public boolean checkIntersection(final Player player) {
         LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
-        Region selection;
+        Region selection = null;
         try {
             selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
-        } catch (IncompleteRegionException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IncompleteRegionException ignored) {}
         return checkIntersection(selection, player);
     }
 
