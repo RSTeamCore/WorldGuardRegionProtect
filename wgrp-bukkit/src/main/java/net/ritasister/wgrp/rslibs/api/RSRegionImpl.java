@@ -1,7 +1,5 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
@@ -15,12 +13,8 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import lombok.RequiredArgsConstructor;
-import net.kyori.adventure.text.Component;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.exceptions.NoSelectionException;
 import net.ritasister.wgrp.rslibs.api.interfaces.RSRegion;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
@@ -31,14 +25,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**
- * A class with methods for interacting with regions using the WorldGuard plugin.
- */
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
-public class RSRegionImpl implements RSRegion {
 
-    private final WorldGuardRegionProtect wgRegionProtect;
+public class RSRegionImpl implements RSRegion {
 
     /**
      * Getting regions by location using the WG API.
