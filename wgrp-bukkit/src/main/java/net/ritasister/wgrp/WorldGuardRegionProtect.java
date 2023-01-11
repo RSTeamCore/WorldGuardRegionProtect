@@ -11,7 +11,7 @@ import net.ritasister.wgrp.rslibs.api.interfaces.RSRegion;
 import net.ritasister.wgrp.rslibs.api.*;
 import net.ritasister.wgrp.rslibs.datasource.Storage;
 import net.ritasister.wgrp.rslibs.interfaces.LoadLibs;
-import net.ritasister.wgrp.rslibs.util.wg.wg;
+import net.ritasister.wgrp.rslibs.util.wg.WG;
 import net.ritasister.wgrp.util.UtilConfig;
 import net.ritasister.wgrp.util.config.Config;
 import net.rsteamcore.config.Container;
@@ -31,7 +31,7 @@ public class WorldGuardRegionProtect {
 
     private final WGRPBukkitPlugin wgrpBukkitPlugin;
 
-    private wg wg;
+    private WG wg;
 
     //DataBase
     private RSStorage rsStorage;
@@ -88,7 +88,7 @@ public class WorldGuardRegionProtect {
         }
 
         //Api for Regions.
-        this.rsRegion = new RSRegionImpl(this);
+        this.rsRegion = new RSRegionImpl();
 
         //Parameters for to intercept commands from WE or FAWE.
         this.commandWE = new CommandWEImpl(this);
@@ -273,7 +273,7 @@ public class WorldGuardRegionProtect {
         return this.rsLogger;
     }
 
-    public wg getWg() {
+    public WG getWg() {
         return this.wg;
     }
 

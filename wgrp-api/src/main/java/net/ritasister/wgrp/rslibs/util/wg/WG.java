@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.util.wg;
 
 import org.bukkit.entity.Player;
 
-public interface wg {
+public interface WG {
 
     boolean checkIntersection(Player player);
 

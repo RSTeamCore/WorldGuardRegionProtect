@@ -18,9 +18,8 @@ import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.rslibs.util.wg.wg;
+import net.ritasister.wgrp.rslibs.util.wg.WG;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
@@ -29,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class WG7Impl implements wg {
+public class WG7Impl implements WG {
 
     public final WorldGuardRegionProtect wgRegionProtect;
 
