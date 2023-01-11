@@ -51,7 +51,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Paper 1.19
     compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
-    //Kyori and MiniMssage
+    //Kyori and MiniMessage
     compileOnly("net.kyori:adventure-api:4.12.0")
     implementation("net.kyori:adventure-text-minimessage:4.12.0")
     //HikariCP

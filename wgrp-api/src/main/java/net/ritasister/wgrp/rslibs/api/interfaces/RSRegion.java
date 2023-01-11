@@ -18,8 +18,4 @@ public interface RSRegion {
 
     String getProtectRegionName(Location location);
 
-    void startActionBar();
-
-    void sendActionBar(@NotNull Player player, Component message);
-
 }

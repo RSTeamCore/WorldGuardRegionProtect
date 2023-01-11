@@ -34,7 +34,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTakeLecternBookEvent;
 import org.bukkit.event.vehicle.VehicleDamageEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
@@ -137,11 +136,6 @@ public class RegionProtect implements Listener {
                 .isOp()) {
             wgRegionProtect.checkUpdateNotify(e.getPlayer());
         }
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    private void checkPlayerMove(PlayerMoveEvent e) {
-        wgRegionProtect.getRsRegion().startActionBar();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -444,7 +438,7 @@ public class RegionProtect implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    private void denyUseWEAndIwgCommand(@NotNull PlayerCommandPreprocessEvent e) {
+    private void denyUseWEAndWGCommand(@NotNull PlayerCommandPreprocessEvent e) {
         Player player = e.getPlayer();
         String playerName = player.getName();
         Location location = player.getLocation();
@@ -452,22 +446,10 @@ public class RegionProtect implements Listener {
         String cmd = e.getMessage().split(" ")[0].toLowerCase();
         if (!wgRegionProtect.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             if (this.wgRegionProtect.getCommandWE().cmdWE(s[0]) && !this.wgRegionProtect.getWg().checkIntersection(player)
-                    || this.wgRegionProtect.getCommandWE().cmdWE_C(s[0]) && !this.wgRegionProtect.getWg().checkCIntersection(
-                    player,
-                    s
-            )
-                    || this.wgRegionProtect.getCommandWE().cmdWE_P(s[0]) && !this.wgRegionProtect.getWg().checkPIntersection(
-                    player,
-                    s
-            )
-                    || this.wgRegionProtect.getCommandWE().cmdWE_S(s[0]) && !this.wgRegionProtect.getWg().checkSIntersection(
-                    player,
-                    s
-            )
-                    || this.wgRegionProtect.getCommandWE().cmdWE_U(s[0]) && !this.wgRegionProtect.getWg().checkUIntersection(
-                    player,
-                    s
-            )) {
+                    || this.wgRegionProtect.getCommandWE().cmdWE_C(s[0]) && !this.wgRegionProtect.getWg().checkCIntersection(player, s)
+                    || this.wgRegionProtect.getCommandWE().cmdWE_P(s[0]) && !this.wgRegionProtect.getWg().checkPIntersection(player, s)
+                    || this.wgRegionProtect.getCommandWE().cmdWE_S(s[0]) && !this.wgRegionProtect.getWg().checkSIntersection(player, s)
+                    || this.wgRegionProtect.getCommandWE().cmdWE_U(s[0]) && !this.wgRegionProtect.getWg().checkUIntersection(player, s)) {
                 if (wgRegionProtect.getConfig().getRegionMessageProtectWe()) {
                     wgRegionProtect.getMessages().get("messages.ServerMsg.wgrpMsgWe").send(player);
                     e.setCancelled(true);

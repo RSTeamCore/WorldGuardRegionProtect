@@ -145,22 +145,4 @@ public class RSRegionImpl implements RSRegion {
         throw new NoSelectionException();
     }
 
-    @Override
-    public void startActionBar() {
-        Bukkit.getScheduler().runTaskAsynchronously(wgRegionProtect.getWGRPBukkitPlugin(), () ->
-                Bukkit.getScheduler().scheduleSyncDelayedTask(wgRegionProtect.getWGRPBukkitPlugin(), () -> {
-                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                        if (checkStandingRegion(onlinePlayer.getLocation(), wgRegionProtect.getConfig().getRegionProtectMap())) {
-                            sendActionBar(onlinePlayer,
-                                    Component.text("You are stay in region: " + getProtectRegionName(onlinePlayer.getLocation())));
-                        }
-                    }
-                }));
-    }
-
-    @Override
-    public void sendActionBar(@NotNull Player player, Component message) {
-        player.sendActionBar(message);
-    }
-
 }

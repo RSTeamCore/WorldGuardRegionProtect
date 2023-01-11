@@ -164,7 +164,6 @@ public class WorldGuardRegionProtect {
                     Please read this thread: https://www.spigotmc.org/resources/81321/
                     The main post on spigotmc and please download the correct version for your server version.
                     """);
-            getWGRPBukkitPlugin().getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin);
         }
     }
 
