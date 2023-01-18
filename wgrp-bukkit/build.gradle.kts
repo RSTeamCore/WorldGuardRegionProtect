@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    kotlin("jvm") version "1.8.0-RC2"
+    kotlin("jvm") version "1.8.0"
 }
 
 java {
@@ -104,11 +104,11 @@ tasks {
     processResources {
         filesMatching("plugin.yml") {
             expand(
-                "name" to rootProject.name,
-                "version" to project.version,
-                "group" to project.group,
-                "author" to project.property("author"),
-                "description" to project.property("description"),
+                    "name" to rootProject.name,
+                    "version" to project.version,
+                    "group" to project.group,
+                    "author" to project.property("author"),
+                    "description" to project.property("description"),
             )
         }
     }
@@ -129,19 +129,19 @@ tasks {
             //Kotlin
             include(dependency("org.jetbrains.kotlin:"))
         }
-            //Main need libs from us API
-            relocate("net.rsteamcore", "${project.group}.wgrp.rslibs.rsteamcore")
-            //Shaded components for using bstats
-            relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
-            //DI google guice
-            relocate("com.google.inject", "${project.group}.wgrp.rslibs.lib.inject")
-            relocate("com.google.inject.extensions", "${project.group}.wgrp.rslibs.lib.inject.extensions")
-            relocate("org.aopalliance", "${project.group}.wgrp.rslibs.lib.aopalliance")
-            //Storage base
-            relocate("com.zaxxer.hikari", "${project.group}.wgrp.rslibs.lib.hikari")
-            relocate("org.mariadb.jdbc", "${project.group}.wgrp.rslibs.lib.mariadb")
-            //Kotlin
-            relocate("kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
+        //Main need libs from us API
+        relocate("net.rsteamcore", "${project.group}.wgrp.rslibs.rsteamcore")
+        //Shaded components for using bstats
+        relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
+        //DI google guice
+        relocate("com.google.inject", "${project.group}.wgrp.rslibs.lib.inject")
+        relocate("com.google.inject.extensions", "${project.group}.wgrp.rslibs.lib.inject.extensions")
+        relocate("org.aopalliance", "${project.group}.wgrp.rslibs.lib.aopalliance")
+        //Storage base
+        relocate("com.zaxxer.hikari", "${project.group}.wgrp.rslibs.lib.hikari")
+        relocate("org.mariadb.jdbc", "${project.group}.wgrp.rslibs.lib.mariadb")
+        //Kotlin
+        relocate("kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
     }
     artifacts {
         archives(shadowJar)
