@@ -24,8 +24,8 @@ public final class WGRPBukkitPlugin extends JavaPlugin {
         try {
             this.wgRegionProtect.unload();
         } catch (NullPointerException exception) {
-            Bukkit.getServer().getPluginManager().disablePlugin(this);
             System.out.println("wgRegionProtect is null, we are disabling plugin!");
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
     }
 

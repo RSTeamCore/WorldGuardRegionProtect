@@ -6,11 +6,13 @@ import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.handler.AbstractHandler;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
+import net.ritasister.wgrp.pluginloader.AbstractLoadLibs;
+import net.ritasister.wgrp.pluginloader.LoadPlaceholderAPI;
+import net.ritasister.wgrp.pluginloader.LoadWorldGuard;
 import net.ritasister.wgrp.rslibs.api.interfaces.CommandWE;
 import net.ritasister.wgrp.rslibs.api.interfaces.RSRegion;
 import net.ritasister.wgrp.rslibs.api.*;
 import net.ritasister.wgrp.rslibs.datasource.Storage;
-import net.ritasister.wgrp.rslibs.interfaces.LoadLibs;
 import net.ritasister.wgrp.rslibs.util.wg.WG;
 import net.ritasister.wgrp.util.UtilConfig;
 import net.ritasister.wgrp.util.config.Config;
@@ -48,9 +50,6 @@ public class WorldGuardRegionProtect {
     //Parameters for to intercept commands from WE or FAWE.
     private CommandWE commandWE;
 
-    //Load depends on WorldGuard.
-    private LoadLibs loadLibs;
-
     //HashMap for who spy for another player.
     private final List<UUID> spyLog = new ArrayList<>();
 
@@ -77,9 +76,11 @@ public class WorldGuardRegionProtect {
 
     private void loadAnotherClassAndMethods() {
         //Libs for this plugin.
-        this.loadLibs = new LoadLibsImpl(this);
-        this.getLoadLibs().loadWorldGuard();
-        this.getLoadLibs().loadPlaceholderAPI();
+        AbstractLoadLibs loadWorldGuard = new LoadWorldGuard(this);
+        loadWorldGuard.loadPlugin();
+
+        AbstractLoadLibs loadPlaceholderAPI = new LoadPlaceholderAPI(this);
+        loadPlaceholderAPI.loadPlugin();
 
         //Configs.
         this.utilConfig = new UtilConfig();
@@ -247,10 +248,6 @@ public class WorldGuardRegionProtect {
 
     public Config getConfig() {
         return getUtilConfig().getConfig();
-    }
-
-    public LoadLibs getLoadLibs() {
-        return this.loadLibs;
     }
 
     public CommandWE getCommandWE() {
