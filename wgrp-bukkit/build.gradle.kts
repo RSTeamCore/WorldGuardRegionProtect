@@ -124,7 +124,7 @@ tasks {
             include(dependency("com.google.inject.extensions:"))
             include(dependency("aopalliance:aopalliance:"))
             //Storage base
-            include(dependency("com.zaxxer.hikari:"))
+            include(dependency("com.zaxxer:"))
             include(dependency("org.mariadb.jdbc:"))
             //Kotlin
             include(dependency("org.jetbrains.kotlin:"))
@@ -138,7 +138,7 @@ tasks {
         relocate("com.google.inject.extensions", "${project.group}.wgrp.rslibs.lib.inject.extensions")
         relocate("org.aopalliance", "${project.group}.wgrp.rslibs.lib.aopalliance")
         //Storage base
-        relocate("com.zaxxer.hikari", "${project.group}.wgrp.rslibs.lib.hikari")
+        relocate("com.zaxxer", "${project.group}.wgrp.rslibs.lib.hikari")
         relocate("org.mariadb.jdbc", "${project.group}.wgrp.rslibs.lib.mariadb")
         //Kotlin
         relocate("kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
