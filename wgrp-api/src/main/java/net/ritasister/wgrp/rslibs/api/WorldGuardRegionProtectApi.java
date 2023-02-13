@@ -1,11 +1,18 @@
 package net.ritasister.wgrp.rslibs.api;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.ApiStatus;
+
+/**
+ * Provides static access to the {@link WorldGuardRegionProtectApi} API.
+ *
+ * <p>Ideally, the ServiceManager for the platform should be used to obtain an
+ * instance, however, this provider can be used if this is not viable.</p>
+ */
 public abstract class WorldGuardRegionProtectApi {
 
-    /**
-     * Instance of the API
-     */
     private static WorldGuardRegionProtectApi instance;
+
 
     public WorldGuardRegionProtectApi() {
         instance = this;
@@ -16,6 +23,7 @@ public abstract class WorldGuardRegionProtectApi {
      *
      * @param instance API instance
      */
+    @ApiStatus.Internal
     protected static void setInstance(WorldGuardRegionProtectApi instance) {
         WorldGuardRegionProtectApi.instance = instance;
     }
@@ -29,7 +37,7 @@ public abstract class WorldGuardRegionProtectApi {
      * @return API instance
      * @throws IllegalStateException If instance is {@code null}
      */
-    public static WorldGuardRegionProtectApi getInstance() {
+    public static @NonNull WorldGuardRegionProtectApi getInstance() {
         if (instance == null) {
             throw new IllegalStateException("API instance is null. This likely means you shaded WGRP's API into your project" +
                     " instead of only using it, which is not allowed.");

@@ -50,7 +50,7 @@ public class WorldGuardRegionProtect {
     //Parameters for to intercept commands from WE or FAWE.
     private CommandWE commandWE;
 
-    //HashMap for who spy for another player.
+    //List admin for who spy for another player.
     private final List<UUID> spyLog = new ArrayList<>();
 
     public void load() {
@@ -64,7 +64,7 @@ public class WorldGuardRegionProtect {
         this.checkUpdateNotify();
     }
 
-    public void unload() {
+    public void unLoad() {
         if (getUtilConfig() == null) {
             try {
                 this.getUtilConfig().getConfig().saveConfig();

@@ -1,6 +1,5 @@
 package net.ritasister.wgrp.rslibs.api.interfaces;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
