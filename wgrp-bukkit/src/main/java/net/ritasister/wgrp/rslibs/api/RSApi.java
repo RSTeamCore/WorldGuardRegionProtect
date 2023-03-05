@@ -3,13 +3,9 @@ package net.ritasister.wgrp.rslibs.api;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -25,18 +21,6 @@ import java.util.List;
 public class RSApi {
 
     private final WorldGuardRegionProtect wgRegionProtect;
-
-    public void messageToCommandSender(@NotNull CommandSender commandSender, String message) {
-        var miniMessage = MiniMessage.miniMessage();
-        Component parsed = miniMessage.deserialize(message);
-        commandSender.sendMessage(parsed);
-    }
-
-    public void messageToConsoleSender(@NotNull ConsoleCommandSender sender, String message) {
-        var miniMessage = MiniMessage.miniMessage();
-        Component parsed = miniMessage.deserialize(message);
-        sender.sendMessage(parsed);
-    }
 
     /**
      * Check if a player has permission for use Listener.
@@ -72,14 +56,14 @@ public class RSApi {
         if (regionName == null) {
             return;
         }
-        if (wgRegionProtect.getConfig().getSpyCommandNotifyAdminEnable() && this.isPlayerListenerPermission(
+        if (wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminEnable() && this.isPlayerListenerPermission(
                 player,
                 UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN
         )) {
-            for (String cmd : wgRegionProtect.getConfig().getSpyCommandList()) {
-                if (cmd.equalsIgnoreCase(senderCommand.toLowerCase()) && wgRegionProtect.getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
-                    player.playSound(player.getLocation(), wgRegionProtect.getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
-                    player.sendMessage(wgRegionProtect
+            for (String cmd : wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandList()) {
+                if (cmd.equalsIgnoreCase(senderCommand.toLowerCase()) && wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
+                    player.playSound(player.getLocation(), wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
+                    player.sendMessage(wgRegionProtect.getWgrpContainer()
                             .getMessages()
                             .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                             .toString()
@@ -102,10 +86,10 @@ public class RSApi {
         if (regionName == null) {
             return;
         }
-        if (wgRegionProtect.getConfig().getSpyCommandNotifyConsoleEnable()) {
-            for (String cmd : wgRegionProtect.getConfig().getSpyCommandList()) {
+        if (wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyConsoleEnable()) {
+            for (String cmd : wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandList()) {
                 if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-                    Bukkit.getConsoleSender().sendMessage(wgRegionProtect
+                    Bukkit.getConsoleSender().sendMessage(wgRegionProtect.getWgrpContainer()
                             .getMessages()
                             .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                             .toString()
@@ -144,8 +128,8 @@ public class RSApi {
         if (this.isPlayerListenerPermission(
                 suspectPlayer,
                 UtilPermissions.SPY_INSPECT_FOR_SUSPECT
-        ) && wgRegionProtect.getConfig().getSpyCommandNotifyAdminEnable()) {
-            admin.sendMessage(wgRegionProtect
+        ) && wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminEnable()) {
+            admin.sendMessage(wgRegionProtect.getWgrpContainer()
                     .getMessages()
                     .get("messages.Notify.sendAdminInfoIfActionInRegion")
                     .toString()
@@ -172,18 +156,18 @@ public class RSApi {
         try {
             long time = System.currentTimeMillis();
             if (supportedVersions.contains(serverPackage)) {
-                wgRegionProtect.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
+                Bukkit.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
                 return true;
             } else {
-                wgRegionProtect.getLogger().info(
+                Bukkit.getLogger().info(
                         "No compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ").");
             }
         } catch (Exception ex) {
             if (supportedVersions.contains(serverPackage)) {
-                wgRegionProtect.getLogger().error(
+                Bukkit.getLogger().severe(
                         "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
             } else {
-                wgRegionProtect.getLogger().error("Your server version is completely unsupported. Disabling.");
+                Bukkit.getLogger().severe("Your server version is completely unsupported. Disabling.");
             }
         }
         return false;

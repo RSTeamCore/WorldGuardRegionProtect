@@ -52,14 +52,14 @@ public class WG7Impl implements WG {
             assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) {
-                for (final String region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectMap().get(player.getWorld().getName())) {
+                for (final String region : wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getRegionProtectMap().get(player.getWorld().getName())) {
                     if (rg.getId().equalsIgnoreCase(region)) {
                         return false;
                     }
                 }
             }
             for (final ProtectedRegion rg : set) {
-                for (final String region : wgRegionProtect.getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(player.getWorld().getName())) {
+                for (final String region : wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getRegionProtectOnlyBreakAllowMap().get(player.getWorld().getName())) {
                     if (rg.getId().equalsIgnoreCase(region)) {
                         return false;
                     }

@@ -32,7 +32,7 @@ public class UtilConfig {
         config = new Config(wgRegionProtect, wgrpBukkitPlugin);
         messages = loadMessages(wgrpBukkitPlugin);
         checkLangVersion(wgrpBukkitPlugin);
-        wgRegionProtect.getLogger().info("All configs load successfully!");
+        Bukkit.getLogger().info("All configs load successfully!");
     }
 
     public Container loadMessages(@NotNull WGRPBukkitPlugin wgrpBukkitPlugin) {

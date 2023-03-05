@@ -42,7 +42,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) {
-            wgRegionProtect.getUtilConfig().getMessages().get("messages.usage.wgrpUseHelp").send(sender);
+            wgRegionProtect.getWgrpContainer().getUtilConfig().getMessages().get("messages.usage.wgrpUseHelp").send(sender);
         } else for (Method m : this.getClass().getDeclaredMethods()) {
             if (m.isAnnotationPresent(SubCommand.class)) {
                 SubCommand sub = m.getAnnotation(SubCommand.class);
@@ -70,7 +70,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                             } catch (IllegalAccessException | InvocationTargetException e) {
                                 throw new RuntimeException(e);
                             }
-                        } else wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.noPerm").send(sender);
+                        } else wgRegionProtect.getWgrpContainer().getUtilConfig().getMessages().get("messages.ServerMsg.noPerm").send(sender);
                     } else try {
                         m.invoke(this, sender, subArgs);
                         break;

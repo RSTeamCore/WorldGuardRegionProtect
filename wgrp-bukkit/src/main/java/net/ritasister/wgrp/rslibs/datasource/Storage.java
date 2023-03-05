@@ -22,7 +22,7 @@ public class Storage implements StorageDataSource {
 	private HikariDataSource ds;
 
 	public Storage(WorldGuardRegionProtect worldGuardRegionProtect) {
-		this.wgRegionProtect =worldGuardRegionProtect;
+		this.wgRegionProtect = worldGuardRegionProtect;
 		this.connect();
 		this.initialize();
 	}
@@ -31,17 +31,17 @@ public class Storage implements StorageDataSource {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("org.mariadb.jdbc.Driver");
 		config.setJdbcUrl("jdbc:mariadb://"
-				+ wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getHost() + ":"
-				+ wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getPort() + "/"
-				+ wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getDataBase());
-		config.setUsername(wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getUser());
-		config.setPassword(wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getPassword());
+				+ wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getHost() + ":"
+				+ wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getPort() + "/"
+				+ wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getDataBase());
+		config.setUsername(wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getUser());
+		config.setPassword(wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getPassword());
 		
 		// Pool settings
-        config.setMaximumPoolSize(wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getMaxPoolSize());
-        config.setMaxLifetime(wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getMaxLifetime() * 1000L);
-		config.addDataSourceProperty("useSSL", wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getUseSsl());
-		config.setConnectionTimeout(wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getConnectionTimeout());
+        config.setMaximumPoolSize(wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getMaxPoolSize());
+        config.setMaxLifetime(wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getMaxLifetime() * 1000L);
+		config.addDataSourceProperty("useSSL", wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getUseSsl());
+		config.setConnectionTimeout(wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getConnectionTimeout());
 
 		config.setPoolName("MariaDBPool");
 		
@@ -71,11 +71,11 @@ public class Storage implements StorageDataSource {
 		try(Connection conn = Storage.this.getConnection()) {
 			pst = conn.prepareStatement(
 					"CREATE TABLE IF NOT EXISTS <table> (id INT AUTO_INCREMENT, nickname VARCHAR(16) NULL, uniqueId VARCHAR(36) NULL, time BIGINT(20) NOT NULL DEFAULT '0', action VARCHAR(5) NULL, region VARCHAR(60) NULL, world VARCHAR(60), x DOUBLE NOT NULL DEFAULT '0', y DOUBLE NOT NULL DEFAULT '0', z DOUBLE NOT NULL DEFAULT '0', CONSTRAINT table_const_prim PRIMARY KEY (id));"
-					.replace("<table>", wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getTable()));
+					.replace("<table>", wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getTable()));
 			pst.execute();
 			pst.close();
 		} catch(SQLException ex){
-			wgRegionProtect.getLogger().error("Failed connect to database! Error code: " + ex.getErrorCode());
+			Bukkit.getLogger().severe("Failed connect to database! Error code: " + ex.getErrorCode());
 		} finally {
 			this.close(pst);
 		}
@@ -87,7 +87,7 @@ public class Storage implements StorageDataSource {
 		ResultSet rs = null;
 		try(Connection conn = this.getConnection()) {
 			pst = conn.prepareStatement("SELECT * FROM <table>;"
-					.replace("<table>", wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getTable()));
+					.replace("<table>", wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getTable()));
 			rs = pst.executeQuery();
 			while(rs.next()) {
 				UUID uniqueId = UUID.fromString(rs.getString("uniqueId"));
@@ -102,11 +102,11 @@ public class Storage implements StorageDataSource {
 						rs.getDouble("x"),
 						rs.getDouble("y"),
 						rs.getDouble("z"));
-				wgRegionProtect.getRsStorage().dbLogs.put(uniqueId, dataBase);
+				wgRegionProtect.getWgrpContainer().getRsStorage().dbLogs.put(uniqueId, dataBase);
 			}
 			return true;
 		}catch(SQLException ex){
-			wgRegionProtect.getLogger().error("Failed to load from database!");
+            Bukkit.getLogger().severe("Failed to load from database!");
 			ex.printStackTrace();
 		}finally{
 			this.close(rs);
@@ -122,7 +122,7 @@ public class Storage implements StorageDataSource {
 			try (Connection conn = Storage.this.getConnection()) {
 				pst = conn.prepareStatement(
 						"SELECT * FROM <table>;"
-								.replace("<table>", wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getTable()));
+								.replace("<table>", wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getTable()));
 				rs = pst.executeQuery();
 				while (rs.next()) {
 					UUID uniqueId = UUID.fromString(rs.getString("uniqueId"));
@@ -139,16 +139,16 @@ public class Storage implements StorageDataSource {
 							rs.getDouble("z"));
 					tempDataBase.put(uniqueId, dataBase);
 				}
-				wgRegionProtect.getRsStorage().dbLogs = new ConcurrentHashMap<>(tempDataBase);
+				wgRegionProtect.getWgrpContainer().getRsStorage().dbLogs = new ConcurrentHashMap<>(tempDataBase);
 			} catch (SQLException ex) {
-				wgRegionProtect.getLogger().error("Failed to load database asynchronous!");
+                Bukkit.getLogger().severe("Failed to load database asynchronous!");
 				ex.printStackTrace();
 			} finally {
 				this.close(rs);
 				this.close(pst);
 			}
-			}, wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() * 20L,
-				wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() * 20L);
+			}, wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() * 20L,
+				wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() * 20L);
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class Storage implements StorageDataSource {
 			PreparedStatement pst = null;
 			try(Connection conn = this.getConnection()) {
 				pst = conn.prepareStatement("INSERT INTO <table> (nickname, uniqueId, time, action, region, world, x, y, z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
-						.replace("<table>", wgRegionProtect.getUtilConfig().getConfig().getMySQLSettings().getTable()));
+						.replace("<table>", wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getTable()));
 				pst.setString(1, nickname);
 				pst.setString(2, uniqueId.toString());
 				pst.setLong(3, time);
@@ -169,7 +169,7 @@ public class Storage implements StorageDataSource {
 				pst.setDouble(9, z);
 				pst.executeUpdate();
 			} catch (SQLException ex) {
-			wgRegionProtect.getLogger().error("[DataBase] <id> "+uniqueId.toString()
+                Bukkit.getLogger().severe("[DataBase] <id> "+uniqueId.toString()
 					.replace("<id>", uniqueId.toString())+ ex);
 			} finally {
 				this.close(pst);
@@ -183,7 +183,7 @@ public class Storage implements StorageDataSource {
 				pst.close();
 			}
 		}catch(SQLException ex){
-			wgRegionProtect.getLogger().error("Failed to close prepared statement");
+            Bukkit.getLogger().severe("Failed to close prepared statement");
 		}
 	}
 
@@ -193,7 +193,7 @@ public class Storage implements StorageDataSource {
 				rs.close();
 			}
 		}catch(SQLException ex){
-			wgRegionProtect.getLogger().error("Failed to close result set");
+            Bukkit.getLogger().severe("Failed to close result set");
 		}
 	}
 
@@ -202,7 +202,7 @@ public class Storage implements StorageDataSource {
 			ds.close();
 		}
         connect();
-		wgRegionProtect.getLogger().info("Successfully reloaded!");
+        Bukkit.getLogger().info("Successfully reloaded!");
     }
 	
 	@Override
