@@ -160,11 +160,11 @@ wgRegionProtect:
     # canTakeLecternBook — whether the player can take a book from the pulpit.
     #--------------------------------------------------------------------------------------
     player:
-      collisionWithVehicle: true
-      canSitAsPassengerInVehicle: true
-      canDamageVehicle: true
-      denyTakeLecternBook: true
+      denyCollisionWithVehicle: true
+      denySitAsPassengerInVehicle: true
+      denyDamageVehicle: true
       denyTakenOrPlaceNaturalBlockOrItemIOFlowerPot: true
+      denyTakeLecternBook: true
       denyStonecutterRecipeSelect: true
       denyLoomPatternSelect: true
     #--------------------------------------------------------------------------------------
