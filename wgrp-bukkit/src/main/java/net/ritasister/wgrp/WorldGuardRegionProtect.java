@@ -30,17 +30,16 @@ public class WorldGuardRegionProtect {
 
     private WGRPContainer wgrpContainer;
 
-    private WGRPLoadDataBase wgrpLoadDataBase;
-
     public void load() {
+        checkForUsePermissionsEx();
         this.wgrpContainer = new WGRPContainer(this);
         getWgrpContainer().updateNotify = new UpdateNotify(getWGRPBukkitPlugin());
         getWgrpContainer().rsApi = new RSApi(this);
         this.checkStartUpVersionServer();
         this.loadMetrics();
         this.loadAnotherClassAndMethods();
-        this.wgrpLoadDataBase = new WGRPLoadDataBase(this);
-        this.wgrpLoadDataBase.loadDataBase();
+        WGRPLoadDataBase wgrpLoadDataBase = new WGRPLoadDataBase(this);
+        wgrpLoadDataBase.loadDataBase();
         this.notifyAboutBuild();
         getWgrpContainer().updateNotify.checkUpdateNotify(getWgrpContainer().getPluginMeta());
     }
@@ -98,6 +97,15 @@ public class WorldGuardRegionProtect {
                     Please read this thread: https://www.spigotmc.org/resources/81321/
                     The main post on spigotmc and please download the correct version for your server version.
                     """);
+        }
+    }
+
+    private void checkForUsePermissionsEx() {
+        if(!getWgrpContainer().getPluginManager().isPluginEnabled("PermissionsEx")) {
+            Bukkit.getLogger().severe("""
+                    Wea are not supported old version of permissions plugin like PermissionsEx, please use LuckPerms or another.
+                    """);
+            getWGRPBukkitPlugin().onDisable();
         }
     }
 
