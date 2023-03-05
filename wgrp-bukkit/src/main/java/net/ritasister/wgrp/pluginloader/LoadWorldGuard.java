@@ -1,23 +1,19 @@
 package net.ritasister.wgrp.pluginloader;
 
-import com.google.inject.Inject;
-import lombok.RequiredArgsConstructor;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.pluginloader.interfaces.LoadPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-@RequiredArgsConstructor(onConstructor_ = @Inject)
-public class LoadWorldGuard extends AbstractLoadLibs {
-
-    private final WorldGuardRegionProtect wgRegionProtect;
+public class LoadWorldGuard implements LoadPlugin {
 
     @Override
     public void loadPlugin() {
-        final Plugin plugin = wgRegionProtect.getWGRPBukkitPlugin().getServer().getPluginManager().getPlugin("WorldGuard");
+        final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin != null && plugin.isEnabled()) {
             try {
-                wgRegionProtect.getLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
+                Bukkit.getLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
             } catch (NullPointerException | ClassCastException | NoClassDefFoundError exception) {
-                wgRegionProtect.getLogger().error(exception.getMessage());
+                Bukkit.getLogger().severe(exception.getMessage());
             }
         }
     }
