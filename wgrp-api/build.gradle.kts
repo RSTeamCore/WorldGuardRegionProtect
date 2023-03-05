@@ -14,6 +14,8 @@ repositories {
 }
 
 dependencies {
+    //RSLibs by RSTeamCore
+    implementation("net.rsteamcore:RSLibs-api:0.0.6")
     //Inject
     implementation("com.google.inject:guice:5.1.0")
     implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")

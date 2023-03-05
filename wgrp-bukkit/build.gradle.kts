@@ -72,7 +72,7 @@ dependencies {
     implementation("org.projectlombok:lombok:1.18.24")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0-RC2")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
 }
 
 tasks {
@@ -119,29 +119,11 @@ tasks {
             include(dependency("net.rsteamcore:"))
             //Shaded components for using bstats
             include(dependency("org.bstats:"))
-            //DI google guice
-            include(dependency("com.google.inject:"))
-            include(dependency("com.google.inject.extensions:"))
-            include(dependency("aopalliance:aopalliance:"))
-            //Storage base
-            include(dependency("com.zaxxer:"))
-            include(dependency("org.mariadb.jdbc:"))
-            //Kotlin
-            include(dependency("org.jetbrains.kotlin:"))
         }
         //Main need libs from us API
         relocate("net.rsteamcore", "${project.group}.wgrp.rslibs.rsteamcore")
         //Shaded components for using bstats
         relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
-        //DI google guice
-        relocate("com.google.inject", "${project.group}.wgrp.rslibs.lib.inject")
-        relocate("com.google.inject.extensions", "${project.group}.wgrp.rslibs.lib.inject.extensions")
-        relocate("org.aopalliance", "${project.group}.wgrp.rslibs.lib.aopalliance")
-        //Storage base
-        relocate("com.zaxxer", "${project.group}.wgrp.rslibs.lib.hikari")
-        relocate("org.mariadb.jdbc", "${project.group}.wgrp.rslibs.lib.mariadb")
-        //Kotlin
-        relocate("kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
     }
     artifacts {
         archives(shadowJar)
