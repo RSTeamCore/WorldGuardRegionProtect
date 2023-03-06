@@ -1,6 +1,6 @@
-package net.ritasister.wgrp.pluginloader;
+package net.ritasister.wgrp.loader.plugin;
 
-import net.ritasister.wgrp.pluginloader.interfaces.LoadPlugin;
+import net.ritasister.wgrp.loader.plugin.interfaces.LoadPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 

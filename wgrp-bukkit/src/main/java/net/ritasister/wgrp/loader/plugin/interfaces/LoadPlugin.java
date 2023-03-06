@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.pluginloader.interfaces;
+package net.ritasister.wgrp.loader.plugin.interfaces;
 
 public interface LoadPlugin {
 

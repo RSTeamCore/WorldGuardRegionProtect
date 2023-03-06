@@ -8,6 +8,7 @@ import net.ritasister.wgrp.loader.WGRPInitialization;
 import net.ritasister.wgrp.loader.WGRPLoaderCommandsAndListeners;
 import net.ritasister.wgrp.loader.impl.InitializationImpl;
 import net.ritasister.wgrp.loader.impl.LoaderCommandsAndListenersImpl;
+import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import org.bukkit.Bukkit;
 
 @Singleton
@@ -31,9 +32,10 @@ public class WorldGuardRegionProtect {
     }
 
     public void unLoad() {
-        if (getWgrpContainer().getConfigLoader() == null) {
+        ConfigLoader configLoader = getWgrpContainer().getConfigLoader();
+        if (configLoader != null) {
             try {
-                getWgrpContainer().getConfigLoader().getConfig().saveConfig();
+                configLoader.getConfig().saveConfig();
             } catch (NullPointerException ignored) {
                 Bukkit.getLogger().info("Cannot save config, because config is not loaded!");
             }

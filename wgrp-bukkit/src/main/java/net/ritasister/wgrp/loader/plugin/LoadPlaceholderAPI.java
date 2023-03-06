@@ -1,9 +1,9 @@
-package net.ritasister.wgrp.pluginloader;
+package net.ritasister.wgrp.loader.plugin;
 
 import com.google.inject.Inject;
 import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.pluginloader.interfaces.LoadPlugin;
+import net.ritasister.wgrp.loader.plugin.interfaces.LoadPlugin;
 import net.ritasister.wgrp.rslibs.papi.PlaceholderAPIExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;

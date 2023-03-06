@@ -4,18 +4,16 @@ import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WGRPLoadDataBase;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.loader.impl.InitializationImpl;
-import net.ritasister.wgrp.pluginloader.LoadPlaceholderAPI;
-import net.ritasister.wgrp.pluginloader.LoadWorldGuard;
-import net.ritasister.wgrp.pluginloader.interfaces.LoadPlugin;
+import net.ritasister.wgrp.loader.plugin.LoadPlaceholderAPI;
+import net.ritasister.wgrp.loader.plugin.LoadWorldGuard;
+import net.ritasister.wgrp.loader.plugin.interfaces.LoadPlugin;
 import net.ritasister.wgrp.rslibs.api.CommandWEImpl;
 import net.ritasister.wgrp.rslibs.api.RSApi;
 import net.ritasister.wgrp.rslibs.api.RSRegionImpl;
 import net.ritasister.wgrp.rslibs.api.RSStorage;
 import net.ritasister.wgrp.rslibs.util.updater.UpdateNotify;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
-import net.rsteamcore.config.Container;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 public class WGRPInitialization extends InitializationImpl<WorldGuardRegionProtect> {
