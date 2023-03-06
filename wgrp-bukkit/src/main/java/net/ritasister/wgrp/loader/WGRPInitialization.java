@@ -21,15 +21,14 @@ import org.jetbrains.annotations.NotNull;
 public class WGRPInitialization extends InitializationImpl<WorldGuardRegionProtect> {
 
     @Override
-    public void wgrpInit(WorldGuardRegionProtect wgRegionProtect) {
+    public void wgrpInit(@NotNull WorldGuardRegionProtect wgRegionProtect) {
+        WGRPContainer wgrpContainer = wgRegionProtect.getWgrpContainer();
+        wgrpContainer.updateNotify = new UpdateNotify(wgRegionProtect.getWGRPBukkitPlugin());
+        wgrpContainer.rsApi = new RSApi(wgRegionProtect);
+
         WGRPChecker wgrpChecker = new WGRPChecker(wgRegionProtect);
         wgrpChecker.checkStartUpVersionServer();
         wgrpChecker.checkForUsePermissionsEx();
-
-        WGRPContainer wgrpContainer = wgRegionProtect.getWgrpContainer();
-
-        wgrpContainer.updateNotify = new UpdateNotify(wgRegionProtect.getWGRPBukkitPlugin());
-        wgrpContainer.rsApi = new RSApi(wgRegionProtect);
 
         loadMetrics(wgRegionProtect);
         loadAnotherClassAndMethods(wgRegionProtect, wgrpContainer);
@@ -37,7 +36,7 @@ public class WGRPInitialization extends InitializationImpl<WorldGuardRegionProte
         WGRPLoadDataBase wgrpLoadDataBase = new WGRPLoadDataBase(wgRegionProtect);
         wgrpLoadDataBase.loadDataBase();
 
-        notifyAboutBuild(wgrpContainer);
+        wgrpChecker.notifyAboutBuild(wgrpContainer);
 
         wgrpContainer.updateNotify.checkUpdateNotify(wgrpContainer.getPluginMeta());
     }
@@ -65,30 +64,6 @@ public class WGRPInitialization extends InitializationImpl<WorldGuardRegionProte
 
         //Fields for database.
         wgrpContainer.rsStorage = new RSStorage();
-    }
-
-    public void notifyAboutBuild(@NotNull WGRPContainer wgrpContainer) {
-        String pluginVersion = wgrpContainer.getPluginVersion();
-        Container container = wgrpContainer.getMessages();
-        if (pluginVersion.contains("alpha")
-                || pluginVersion.contains("beta")
-                || pluginVersion.contains("pre")) {
-            Bukkit.getLogger().warning("""
-                     This is a test build. This building may be unstable!
-                     When reporting a bug:
-                     Use the issue tracker! Don't report bugs in the reviews.
-                     Please search for duplicates before reporting a new https://github.com/RSTeamCore/WorldGuardRegionProtect/issues!
-                     Provide as much information as possible.
-                     Provide your WorldGuardRegionProtect version and Spigot/Paper version.
-                     Provide any stack traces or "errors" using pastebin.
-                    """);
-        } else {
-            Bukkit.getLogger().info("This is the latest stable building.");
-        }
-        Bukkit.getConsoleSender().sendMessage(String.format(""" 
-                Using %s language version %s. Author of this localization - %s.
-                """, container.get("langTitle.language"), container.get("langTitle.version"), container.get("langTitle.author")
-        ));
     }
 
     public void loadMetrics(@NotNull WorldGuardRegionProtect worldGuardRegionProtect) {
