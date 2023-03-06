@@ -16,17 +16,17 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return wgRegionProtect.getPluginVersion();
+        return wgRegionProtect.getWgrpContainer().getPluginVersion();
     }
 
     @Override
     public @NotNull String getAuthor() {
-        return wgRegionProtect.getPluginAuthors().toString();
+        return wgRegionProtect.getWgrpContainer().getPluginAuthors().toString();
     }
 
     @Override
     public @NotNull String getVersion() {
-        return wgRegionProtect.getPluginVersion();
+        return wgRegionProtect.getWgrpContainer().getPluginVersion();
     }
 
     @Override

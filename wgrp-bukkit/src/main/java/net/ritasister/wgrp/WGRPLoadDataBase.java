@@ -16,7 +16,7 @@ public class WGRPLoadDataBase {
 
     public void loadDataBase() {
         RSStorage rsStorage = worldGuardRegionProtect.getWgrpContainer().getRsStorage();
-        if (worldGuardRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getDataBaseEnable()) {
+        if (worldGuardRegionProtect.getWgrpContainer().getConfigLoader().getConfig().getDataBaseEnable()) {
             final long durationTimeStart = System.currentTimeMillis();
             rsStorage.dbLogsSource = new Storage(worldGuardRegionProtect);
             rsStorage.dbLogs.clear();
@@ -31,7 +31,7 @@ public class WGRPLoadDataBase {
 
     public void postEnable() {
         Bukkit.getServer().getScheduler().cancelTasks(this.worldGuardRegionProtect.getWGRPBukkitPlugin());
-        if (worldGuardRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() > 0) {
+        if (worldGuardRegionProtect.getWgrpContainer().getConfigLoader().getConfig().getMySQLSettings().getIntervalReload() > 0) {
             worldGuardRegionProtect.getWgrpContainer().getRsStorage().dbLogsSource.loadAsync();
             Bukkit.getLogger().info("[DataBase] The database is loaded asynchronously.");
         }

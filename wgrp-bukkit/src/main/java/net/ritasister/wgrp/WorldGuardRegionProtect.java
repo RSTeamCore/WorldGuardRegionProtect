@@ -13,10 +13,8 @@ import net.ritasister.wgrp.rslibs.api.CommandWEImpl;
 import net.ritasister.wgrp.rslibs.api.RSApi;
 import net.ritasister.wgrp.rslibs.api.RSRegionImpl;
 import net.ritasister.wgrp.rslibs.api.RSStorage;
-import net.ritasister.wgrp.rslibs.api.WorldGuardRegionProtectApi;
-import net.ritasister.wgrp.rslibs.datasource.Storage;
 import net.ritasister.wgrp.rslibs.util.updater.UpdateNotify;
-import net.ritasister.wgrp.util.UtilConfig;
+import net.ritasister.wgrp.util.ConfigLoader;
 import net.rsteamcore.config.Container;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -31,8 +29,8 @@ public class WorldGuardRegionProtect {
     private WGRPContainer wgrpContainer;
 
     public void load() {
-        checkForUsePermissionsEx();
         this.wgrpContainer = new WGRPContainer(this);
+        checkForUsePermissionsEx();
         getWgrpContainer().updateNotify = new UpdateNotify(getWGRPBukkitPlugin());
         getWgrpContainer().rsApi = new RSApi(this);
         this.checkStartUpVersionServer();
@@ -45,9 +43,9 @@ public class WorldGuardRegionProtect {
     }
 
     public void unLoad() {
-        if (getWgrpContainer().getUtilConfig() == null) {
+        if (getWgrpContainer().getConfigLoader() == null) {
             try {
-                getWgrpContainer().getUtilConfig().getConfig().saveConfig();
+                getWgrpContainer().getConfigLoader().getConfig().saveConfig();
             } catch (NullPointerException ignored) {
                 Bukkit.getLogger().info("Cannot save config, because config is not loaded!");
             }
@@ -63,9 +61,9 @@ public class WorldGuardRegionProtect {
         loadPlaceholderAPI.loadPlugin();
 
         //Configs.
-        getWgrpContainer().utilConfig = new UtilConfig();
-        if (getWgrpContainer().getUtilConfig() != null) {
-            getWgrpContainer().getUtilConfig().initConfig(this, getWGRPBukkitPlugin());
+        getWgrpContainer().configLoader = new ConfigLoader();
+        if (getWgrpContainer().getConfigLoader() != null) {
+            getWgrpContainer().getConfigLoader().initConfig(this, getWGRPBukkitPlugin());
         }
 
         //Api for Regions.
@@ -111,7 +109,7 @@ public class WorldGuardRegionProtect {
 
     public void notifyAboutBuild() {
         String pluginVersion = getWgrpContainer().getPluginVersion();
-        Container container = getWgrpContainer().getUtilConfig().getMessages();
+        Container container = getWgrpContainer().getMessages();
         if (pluginVersion.contains("alpha")
                 || pluginVersion.contains("beta")
                 || pluginVersion.contains("pre")) {

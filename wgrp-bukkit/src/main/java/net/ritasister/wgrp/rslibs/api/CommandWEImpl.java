@@ -21,12 +21,12 @@ public class CommandWEImpl implements CommandWE {
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        return this.wgRegionProtect.getWg();
+        return this.wgRegionProtect.getWgrpContainer().getWg();
     }
 
     public boolean cmdWE(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getUtilConfig().getConfig().getCmdWe()) {
+        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWe()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -36,7 +36,7 @@ public class CommandWEImpl implements CommandWE {
 
     public boolean cmdWE_C(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getUtilConfig().getConfig().getCmdWeC()) {
+        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWeC()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -46,7 +46,7 @@ public class CommandWEImpl implements CommandWE {
 
     public boolean cmdWE_P(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getUtilConfig().getConfig().getCmdWeP()) {
+        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWeP()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -56,7 +56,7 @@ public class CommandWEImpl implements CommandWE {
 
     public boolean cmdWE_S(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getUtilConfig().getConfig().getCmdWeS()) {
+        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWeS()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -66,7 +66,7 @@ public class CommandWEImpl implements CommandWE {
 
     public boolean cmdWE_U(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getUtilConfig().getConfig().getCmdWeU()) {
+        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWeU()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -76,7 +76,7 @@ public class CommandWEImpl implements CommandWE {
 
     public boolean cmdWE_CP(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getUtilConfig().getConfig().getCmdWeCP()) {
+        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWeCP()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }

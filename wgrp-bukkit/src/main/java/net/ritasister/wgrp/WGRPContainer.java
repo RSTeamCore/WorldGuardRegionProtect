@@ -10,7 +10,8 @@ import net.ritasister.wgrp.rslibs.api.interfaces.CommandWE;
 import net.ritasister.wgrp.rslibs.api.interfaces.RSRegion;
 import net.ritasister.wgrp.rslibs.util.updater.UpdateNotify;
 import net.ritasister.wgrp.rslibs.util.wg.WG;
-import net.ritasister.wgrp.util.UtilConfig;
+import net.ritasister.wgrp.util.ConfigLoader;
+import net.ritasister.wgrp.util.MessageLoader;
 import net.ritasister.wgrp.util.config.Config;
 import net.rsteamcore.config.Container;
 import org.bukkit.Bukkit;
@@ -38,7 +39,7 @@ public class WGRPContainer {
     public UpdateNotify updateNotify;
 
     //Configs
-    public UtilConfig utilConfig;
+    public ConfigLoader configLoader;
 
     //Parameters for to intercept commands from WE or FAWE.
     public CommandWE commandWE;
@@ -58,16 +59,16 @@ public class WGRPContainer {
         return rsStorage;
     }
 
-    public UtilConfig getUtilConfig() {
-        return utilConfig;
+    public ConfigLoader getConfigLoader() {
+        return configLoader;
     }
 
     public Container getMessages() {
-        return getUtilConfig().getMessages();
+        return getConfigLoader().getMessages();
     }
 
     public Config getConfig() {
-        return getUtilConfig().getConfig();
+        return getConfigLoader().getConfig();
     }
 
     public CommandWE getCommandWE() {

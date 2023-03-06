@@ -31,17 +31,17 @@ public class Storage implements StorageDataSource {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("org.mariadb.jdbc.Driver");
 		config.setJdbcUrl("jdbc:mariadb://"
-				+ wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getHost() + ":"
-				+ wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getPort() + "/"
-				+ wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getDataBase());
-		config.setUsername(wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getUser());
-		config.setPassword(wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getPassword());
+				+ wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getHost() + ":"
+				+ wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getPort() + "/"
+				+ wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getDataBase());
+		config.setUsername(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getUser());
+		config.setPassword(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getPassword());
 		
 		// Pool settings
-        config.setMaximumPoolSize(wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getMaxPoolSize());
-        config.setMaxLifetime(wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getMaxLifetime() * 1000L);
-		config.addDataSourceProperty("useSSL", wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getUseSsl());
-		config.setConnectionTimeout(wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getConnectionTimeout());
+        config.setMaximumPoolSize(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getMaxPoolSize());
+        config.setMaxLifetime(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getMaxLifetime() * 1000L);
+		config.addDataSourceProperty("useSSL", wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getUseSsl());
+		config.setConnectionTimeout(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getConnectionTimeout());
 
 		config.setPoolName("MariaDBPool");
 		
@@ -71,7 +71,7 @@ public class Storage implements StorageDataSource {
 		try(Connection conn = Storage.this.getConnection()) {
 			pst = conn.prepareStatement(
 					"CREATE TABLE IF NOT EXISTS <table> (id INT AUTO_INCREMENT, nickname VARCHAR(16) NULL, uniqueId VARCHAR(36) NULL, time BIGINT(20) NOT NULL DEFAULT '0', action VARCHAR(5) NULL, region VARCHAR(60) NULL, world VARCHAR(60), x DOUBLE NOT NULL DEFAULT '0', y DOUBLE NOT NULL DEFAULT '0', z DOUBLE NOT NULL DEFAULT '0', CONSTRAINT table_const_prim PRIMARY KEY (id));"
-					.replace("<table>", wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getTable()));
+					.replace("<table>", wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getTable()));
 			pst.execute();
 			pst.close();
 		} catch(SQLException ex){
@@ -87,7 +87,7 @@ public class Storage implements StorageDataSource {
 		ResultSet rs = null;
 		try(Connection conn = this.getConnection()) {
 			pst = conn.prepareStatement("SELECT * FROM <table>;"
-					.replace("<table>", wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getTable()));
+					.replace("<table>", wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getTable()));
 			rs = pst.executeQuery();
 			while(rs.next()) {
 				UUID uniqueId = UUID.fromString(rs.getString("uniqueId"));
@@ -122,7 +122,7 @@ public class Storage implements StorageDataSource {
 			try (Connection conn = Storage.this.getConnection()) {
 				pst = conn.prepareStatement(
 						"SELECT * FROM <table>;"
-								.replace("<table>", wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getTable()));
+								.replace("<table>", wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getTable()));
 				rs = pst.executeQuery();
 				while (rs.next()) {
 					UUID uniqueId = UUID.fromString(rs.getString("uniqueId"));
@@ -147,8 +147,8 @@ public class Storage implements StorageDataSource {
 				this.close(rs);
 				this.close(pst);
 			}
-			}, wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() * 20L,
-				wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getIntervalReload() * 20L);
+			}, wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getIntervalReload() * 20L,
+				wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getIntervalReload() * 20L);
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class Storage implements StorageDataSource {
 			PreparedStatement pst = null;
 			try(Connection conn = this.getConnection()) {
 				pst = conn.prepareStatement("INSERT INTO <table> (nickname, uniqueId, time, action, region, world, x, y, z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
-						.replace("<table>", wgRegionProtect.getWgrpContainer().getUtilConfig().getConfig().getMySQLSettings().getTable()));
+						.replace("<table>", wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getTable()));
 				pst.setString(1, nickname);
 				pst.setString(2, uniqueId.toString());
 				pst.setLong(3, time);
