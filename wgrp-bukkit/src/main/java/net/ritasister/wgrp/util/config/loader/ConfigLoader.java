@@ -4,11 +4,11 @@ import lombok.Getter;
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.util.config.Config;
-import net.ritasister.wgrp.util.config.abstracts.AbstractInitConfig;
+import net.ritasister.wgrp.util.config.abstracts.InitConfigImpl;
 import net.rsteamcore.config.Container;
 import org.bukkit.Bukkit;
 
-public class ConfigLoader extends AbstractInitConfig<WorldGuardRegionProtect> {
+public class ConfigLoader extends InitConfigImpl<WorldGuardRegionProtect> {
 
     @Getter
     private Config config;

@@ -4,7 +4,6 @@ import lombok.SneakyThrows;
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.abstracts.AbstractInitMessage;
-import net.ritasister.wgrp.util.config.interfaces.ParamsVersionCheck;
 import net.rsteamcore.config.Container;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,7 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
-public class MessageLoader extends AbstractInitMessage implements ParamsVersionCheck {
+public class MessageLoader extends AbstractInitMessage {
 
     public Container initMessages(final @NotNull WGRPBukkitPlugin wgrpBukkitPlugin, final @NotNull Config config) {
         String lang = config.getLang();
