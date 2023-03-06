@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.config.abstracts;
+package net.ritasister.wgrp.util.config.impl;
 
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.util.config.interfaces.InitConfig;
