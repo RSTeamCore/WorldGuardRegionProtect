@@ -1,8 +1,8 @@
-package net.ritasister.wgrp.util.interfaces;
+package net.ritasister.wgrp.util.config.interfaces;
 
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 
-public interface InitConfigImpl<T> {
+public interface InitConfig<T> {
 
     void initConfig(T clazz, WGRPBukkitPlugin wgrpBukkitPlugin);
 

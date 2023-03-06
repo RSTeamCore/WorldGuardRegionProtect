@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.interfaces;
+package net.ritasister.wgrp.util.config.interfaces;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public interface ParamsVersionCheckImpl {
+public interface ParamsVersionCheck {
 
     @NotNull default String getSimpleDateFormat() {
         Date date = new Date();

@@ -1,10 +1,10 @@
-package net.ritasister.wgrp.util;
+package net.ritasister.wgrp.util.config.loader;
 
 import lombok.Getter;
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.util.abstracts.AbstractInitConfig;
 import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.util.config.abstracts.AbstractInitConfig;
 import net.rsteamcore.config.Container;
 import org.bukkit.Bukkit;
 
