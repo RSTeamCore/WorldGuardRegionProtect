@@ -4,7 +4,8 @@ import lombok.Getter;
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.util.config.Config;
-import net.ritasister.wgrp.util.config.abstracts.InitConfigImpl;
+import net.ritasister.wgrp.util.config.abstracts.AbstractInitMessage;
+import net.ritasister.wgrp.util.config.impl.InitConfigImpl;
 import net.rsteamcore.config.Container;
 import org.bukkit.Bukkit;
 
@@ -18,9 +19,11 @@ public class ConfigLoader extends InitConfigImpl<WorldGuardRegionProtect> {
 
     public void initConfig(WorldGuardRegionProtect wgRegionProtect, WGRPBukkitPlugin wgrpBukkitPlugin) {
         config = new Config(wgRegionProtect, wgrpBukkitPlugin);
-        MessageLoader messageLoader = new MessageLoader();
-        messages = messageLoader.initMessages(wgrpBukkitPlugin, config);
-        messageLoader.checkVersionLang(wgrpBukkitPlugin, config);
+
+        AbstractInitMessage abstractInitMessage = new MessageLoader();
+        messages = abstractInitMessage.initMessages(wgrpBukkitPlugin, config);
+        abstractInitMessage.checkVersionLang(wgrpBukkitPlugin, config);
+
         Bukkit.getLogger().info("All configs load successfully!");
     }
 

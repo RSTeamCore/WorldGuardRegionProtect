@@ -214,25 +214,6 @@ public class RegionProtect implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    private void vvv(@NotNull InventoryClickEvent e) {
-        Player player = (Player) e.getWhoClicked();
-        if(Objects.requireNonNull(e.getClickedInventory()).getType() == InventoryType.CARTOGRAPHY) {
-            CartographyInventory cartographyInventory = (CartographyInventory) e.getInventory();
-            PlayerCartographyEvent playerCartographyEvent = new PlayerCartographyEvent(player, cartographyInventory);
-            if(!playerCartographyEvent.isCancelled()) {
-                playerCartographyEvent.callEvent();
-            }
-        }
-        if(Objects.requireNonNull(e.getClickedInventory()).getType() == InventoryType.GRINDSTONE) {
-            GrindstoneInventory grindstoneInventory = (GrindstoneInventory) e.getInventory();
-            PlayerGrindstoneEvent playerGrindstoneEvent = new PlayerGrindstoneEvent(player, grindstoneInventory);
-            if(!playerGrindstoneEvent.isCancelled()) {
-                playerGrindstoneEvent.callEvent();
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
     private void denyStonecutterRecipeSelect(@NotNull PlayerStonecutterRecipeSelectEvent e) {
         Player player = e.getPlayer();
         Location location = e.getStonecutterInventory().getLocation();
