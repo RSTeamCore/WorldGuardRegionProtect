@@ -12,7 +12,7 @@ libraries:
   - com.google.inject:guice:5.1.0
   - com.google.inject.extensions:guice-assistedinject:5.1.0
   - com.zaxxer:HikariCP:5.0.1
-  - org.mariadb.jdbc:mariadb-java-client:3.0.6
+  - org.mariadb.jdbc:mariadb-java-client:3.1.2
   - org.jetbrains.kotlin:kotlin-stdlib:1.8.0
 
 permissions:
