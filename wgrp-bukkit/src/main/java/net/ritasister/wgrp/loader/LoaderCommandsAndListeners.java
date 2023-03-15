@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.loader.interfaces;
+package net.ritasister.wgrp.loader;
 
 public interface LoaderCommandsAndListeners<T> {
 

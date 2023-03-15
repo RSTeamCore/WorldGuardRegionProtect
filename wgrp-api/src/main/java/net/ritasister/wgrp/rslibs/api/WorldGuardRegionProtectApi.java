@@ -3,7 +3,6 @@ package net.ritasister.wgrp.rslibs.api;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -54,11 +53,5 @@ public abstract class WorldGuardRegionProtectApi {
         var miniMessage = MiniMessage.miniMessage();
         Component parsed = miniMessage.deserialize(message);
         commandSender.sendMessage(parsed);
-    }
-
-    public void messageToConsoleSender(@NotNull ConsoleCommandSender sender, String message) {
-        var miniMessage = MiniMessage.miniMessage();
-        Component parsed = miniMessage.deserialize(message);
-        sender.sendMessage(parsed);
     }
 }

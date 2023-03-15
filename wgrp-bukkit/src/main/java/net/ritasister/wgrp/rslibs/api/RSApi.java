@@ -3,6 +3,7 @@ package net.ritasister.wgrp.rslibs.api;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
+import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.Bukkit;
@@ -151,23 +152,24 @@ public class RSApi {
      * @return {@code true} if server version compatible, {@code false} if not
      */
     public boolean isVersionSupported() {
-        List<String> supportedVersions = Arrays.asList("v1_19_R1", "v1_19_R2");
+        List<String> supportedVersions = Arrays.asList("v1_19_R1", "v1_19_R2", "v1_19_R3");
+        String supportedVersionRange = "1.19 - 1.19.4";
         String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
             long time = System.currentTimeMillis();
             if (supportedVersions.contains(serverPackage)) {
-                Bukkit.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
+                WGRPContainer.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
                 return true;
             } else {
-                Bukkit.getLogger().info(
+                WGRPContainer.getLogger().info(
                         "No compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ").");
             }
         } catch (Exception ex) {
             if (supportedVersions.contains(serverPackage)) {
-                Bukkit.getLogger().severe(
+                WGRPContainer.getLogger().error(
                         "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
             } else {
-                Bukkit.getLogger().severe("Your server version is completely unsupported. Disabling.");
+                WGRPContainer.getLogger().error("Your server version is completely unsupported. This plugin version only supports " + supportedVersionRange + ". Disabling.");
             }
         }
         return false;

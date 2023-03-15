@@ -4,12 +4,11 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.ritasister.wgrp.loader.InitializationImpl;
+import net.ritasister.wgrp.loader.LoaderCommandsAndListenersImpl;
 import net.ritasister.wgrp.loader.WGRPInitialization;
 import net.ritasister.wgrp.loader.WGRPLoaderCommandsAndListeners;
-import net.ritasister.wgrp.loader.impl.InitializationImpl;
-import net.ritasister.wgrp.loader.impl.LoaderCommandsAndListenersImpl;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
-import org.bukkit.Bukkit;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
@@ -37,7 +36,7 @@ public class WorldGuardRegionProtect {
             try {
                 configLoader.getConfig().saveConfig();
             } catch (NullPointerException ignored) {
-                Bukkit.getLogger().info("Cannot save config, because config is not loaded!");
+                getWgrpContainer().getLogger().info("Cannot save config, because config is not loaded!");
             }
         }
     }

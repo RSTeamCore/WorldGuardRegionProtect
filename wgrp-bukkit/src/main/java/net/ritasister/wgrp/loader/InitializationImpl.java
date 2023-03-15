@@ -1,6 +1,4 @@
-package net.ritasister.wgrp.loader.impl;
-
-import net.ritasister.wgrp.loader.interfaces.Initialization;
+package net.ritasister.wgrp.loader;
 
 public class InitializationImpl<T> implements Initialization<T> {
 

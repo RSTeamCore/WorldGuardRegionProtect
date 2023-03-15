@@ -10,11 +10,12 @@ import net.ritasister.wgrp.rslibs.api.interfaces.CommandWE;
 import net.ritasister.wgrp.rslibs.api.interfaces.RSRegion;
 import net.ritasister.wgrp.rslibs.util.updater.UpdateNotify;
 import net.ritasister.wgrp.rslibs.util.wg.WG;
-import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import net.rsteamcore.config.Container;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,10 @@ import java.util.UUID;
 public class WGRPContainer {
 
     private final WorldGuardRegionProtect worldGuardRegionProtect;
+
+    public boolean isPaper;
+
+    public static Logger logger;
 
     public WG wg;
 
@@ -94,12 +99,20 @@ public class WGRPContainer {
         return wg;
     }
 
+    public static Logger getLogger() {
+        return logger;
+    }
+
     public UpdateNotify getUpdateNotify() {
         return updateNotify;
     }
 
     public List<UUID> getSpyLog() {
         return spyLog;
+    }
+
+    public boolean isPaper() {
+        return isPaper;
     }
 
 }

@@ -15,13 +15,7 @@ public class CommandWEImpl implements CommandWE {
     private final WorldGuardRegionProtect wgRegionProtect;
 
     public WG setUpWorldGuardVersionSeven() {
-        try {
-            Class.forName("com.sk89q.worldedit.math.BlockVector3");
-            return new WG7Impl(this.wgRegionProtect);
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        return this.wgRegionProtect.getWgrpContainer().getWg();
+        return new WG7Impl(this.wgRegionProtect);
     }
 
     public boolean cmdWE(String s) {

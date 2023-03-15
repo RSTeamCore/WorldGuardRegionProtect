@@ -13,8 +13,8 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import net.ritasister.wgrp.rslibs.api.exceptions.NoSelectionException;
 import net.ritasister.wgrp.rslibs.api.interfaces.RSRegion;
+import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
@@ -105,8 +105,7 @@ public class RSRegionImpl implements RSRegion {
         }
         try {
             return getProtectRegionNameByIntersection(selection);
-        } catch (NoSelectionException ignored) {
-        }
+        } catch (NoSelectionException ignored) {}
         return null;
     }
 

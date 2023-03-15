@@ -1,9 +1,8 @@
 package net.ritasister.wgrp.handler;
 
+import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.command.extend.CommandWGRP;
-import net.ritasister.wgrp.handler.abstracts.AbstractHandler;
-import org.bukkit.Bukkit;
 
 public class CommandHandler extends AbstractHandler<Void> {
 
@@ -17,9 +16,9 @@ public class CommandHandler extends AbstractHandler<Void> {
     public void handle() {
         try {
             new CommandWGRP(wgRegionProtect);
-            Bukkit.getLogger().info("All commands registered successfully!");
+            WGRPContainer.getLogger().info("All commands registered successfully!");
         } catch (NullPointerException e) {
-            Bukkit.getLogger().severe("""
+            WGRPContainer.getLogger().error("""
                     Command cannot be null.
                     Possible for reason:
                     - command not set in getCommand(ucl.cmd_name).

@@ -3,10 +3,9 @@ package net.ritasister.wgrp.loader;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WGRPLoadDataBase;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.loader.impl.InitializationImpl;
 import net.ritasister.wgrp.loader.plugin.LoadPlaceholderAPI;
+import net.ritasister.wgrp.loader.plugin.LoadPlugin;
 import net.ritasister.wgrp.loader.plugin.LoadWorldGuard;
-import net.ritasister.wgrp.loader.plugin.interfaces.LoadPlugin;
 import net.ritasister.wgrp.rslibs.api.CommandWEImpl;
 import net.ritasister.wgrp.rslibs.api.RSApi;
 import net.ritasister.wgrp.rslibs.api.RSRegionImpl;
@@ -15,17 +14,20 @@ import net.ritasister.wgrp.rslibs.util.updater.UpdateNotify;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import org.bstats.bukkit.Metrics;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.LoggerFactory;
 
 public class WGRPInitialization extends InitializationImpl<WorldGuardRegionProtect> {
 
     @Override
     public void wgrpInit(@NotNull WorldGuardRegionProtect wgRegionProtect) {
         WGRPContainer wgrpContainer = wgRegionProtect.getWgrpContainer();
+        WGRPContainer.logger = LoggerFactory.getLogger("WGRP");
         wgrpContainer.updateNotify = new UpdateNotify(wgRegionProtect.getWGRPBukkitPlugin());
         wgrpContainer.rsApi = new RSApi(wgRegionProtect);
 
         WGRPChecker wgrpChecker = new WGRPChecker(wgRegionProtect);
         wgrpChecker.checkStartUpVersionServer();
+        wgrpChecker.checkIfRunningOnPaper();
         wgrpChecker.checkForUsePermissionsEx();
 
         loadMetrics(wgRegionProtect);
@@ -40,6 +42,7 @@ public class WGRPInitialization extends InitializationImpl<WorldGuardRegionProte
     }
 
     private void loadAnotherClassAndMethods(WorldGuardRegionProtect wgRegionProtect, @NotNull WGRPContainer wgrpContainer) {
+
         //Libs for this plugin.
         LoadPlugin loadWorldGuard = new LoadWorldGuard();
         loadWorldGuard.loadPlugin();

@@ -2,10 +2,10 @@ package net.ritasister.wgrp.util.config.loader;
 
 import lombok.SneakyThrows;
 import net.ritasister.wgrp.WGRPBukkitPlugin;
+import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.abstracts.AbstractInitMessage;
 import net.rsteamcore.config.Container;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,12 +36,12 @@ public class MessageLoader extends AbstractInitMessage {
         YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(inputStreamReader);
         var currentYaml = YamlConfiguration.loadConfiguration(currentLangFile);
         if (currentLangFile.exists() && !getCurrentVersion(currentYaml).equals(Objects.requireNonNull(getNewVersion(yamlConfiguration)))) {
-            Bukkit.getConsoleSender().sendMessage("[WGRP] Found new version of lang file, updating this now...");
+            WGRPContainer.getLogger().info("[WGRP] Found new version of lang file, updating this now...");
             Path renameOldLang = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + "-old-" + getSimpleDateFormat() + ".yml").toPath();
             Files.move(currentLangFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
             wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", true);
         } else {
-            Bukkit.getConsoleSender().sendMessage("[WGRP] No update is required for the lang file");
+            WGRPContainer.getLogger().info("[WGRP] No update is required for the lang file");
         }
     }
 

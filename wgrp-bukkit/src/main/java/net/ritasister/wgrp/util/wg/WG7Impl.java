@@ -113,8 +113,7 @@ public class WG7Impl implements WG {
                 x = Integer.parseInt(args[2]);
             }
             y = Integer.parseInt(args[3]);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
         final Location loc1 = player.getLocation().subtract(x, y, z);
         final Location loc2 = player.getLocation().add(x, y, z);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
@@ -127,8 +126,7 @@ public class WG7Impl implements WG {
         int i = 1;
         try {
             i = Integer.parseInt(args[2]);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
         final Location loc1 = player.getLocation().subtract(i, i, i);
         final Location loc2 = player.getLocation().add(i, i, i);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asVector(loc1).toBlockPoint(), BukkitAdapter.asVector(loc2).toBlockPoint());
@@ -145,8 +143,7 @@ public class WG7Impl implements WG {
         try {
             y2 = Integer.parseInt(cr[1]);
             z2 = Integer.parseInt(cr[2]);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
         final Location loc1 = player.getLocation().subtract(x2, y2, z2);
         final Location loc2 = player.getLocation().add(x2, y2, z2);
         return new CuboidRegion(BukkitAdapter.adapt(player.getWorld()), BukkitAdapter.asBlockVector(loc1), BukkitAdapter.asBlockVector(loc2));

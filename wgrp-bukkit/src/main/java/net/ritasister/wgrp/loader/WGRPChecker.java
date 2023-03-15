@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.rsteamcore.config.Container;
-import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
@@ -17,7 +16,7 @@ public class WGRPChecker {
 
     void checkStartUpVersionServer() {
         if (!worldGuardRegionProtect.getWgrpContainer().getRsApi().isVersionSupported()) {
-            Bukkit.getLogger().severe("""
+            WGRPContainer.getLogger().error("""
                     This plugin version works only on 1.19+!
                     Please read this thread: https://www.spigotmc.org/resources/81321/
                     The main post on spigotmc and please download the correct version for your server version.
@@ -25,9 +24,22 @@ public class WGRPChecker {
         }
     }
 
+    void checkIfRunningOnPaper() {
+        worldGuardRegionProtect.getWgrpContainer().isPaper = false;
+        try {
+            // Any other works, just the shortest I could find.
+            Class.forName("com.destroystokyo.paper.ParticleBuilder");
+            worldGuardRegionProtect.getWgrpContainer().isPaper = true;
+        } catch (ClassNotFoundException ignored) {
+            WGRPContainer.getLogger().info(
+                    "Better if you are running your server on paper or other forks of paper");
+        }
+        WGRPContainer.getLogger().info("Paper: " + worldGuardRegionProtect.getWgrpContainer().isPaper);
+    }
+
     void checkForUsePermissionsEx() {
         if(!worldGuardRegionProtect.getWgrpContainer().getPluginManager().isPluginEnabled("PermissionsEx")) {
-            Bukkit.getLogger().severe("""
+            WGRPContainer.getLogger().error("""
                     Wea are not supported old version of permissions plugin like PermissionsEx, please use LuckPerms or another.
                     """);
             worldGuardRegionProtect.getWGRPBukkitPlugin().onDisable();
@@ -40,7 +52,7 @@ public class WGRPChecker {
         if (pluginVersion.contains("alpha")
                 || pluginVersion.contains("beta")
                 || pluginVersion.contains("pre")) {
-            Bukkit.getLogger().warning("""
+            WGRPContainer.getLogger().warn("""
                      This is a test build. This building may be unstable!
                      When reporting a bug:
                      Use the issue tracker! Don't report bugs in the reviews.
@@ -50,9 +62,9 @@ public class WGRPChecker {
                      Provide any stack traces or "errors" using pastebin.
                     """);
         } else {
-            Bukkit.getLogger().info("This is the latest stable building.");
+            WGRPContainer.getLogger().info("This is the latest stable building.");
         }
-        Bukkit.getConsoleSender().sendMessage(String.format(""" 
+        WGRPContainer.getLogger().info(String.format(""" 
                 Using %s language version %s. Author of this localization - %s.
                 """, container.get("langTitle.language"), container.get("langTitle.version"), container.get("langTitle.author")
         ));

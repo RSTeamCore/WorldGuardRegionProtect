@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.loader.plugin.abstracts;
+package net.ritasister.wgrp.loader.plugin;
 
 public abstract class AbstractLoadPlugin<V> implements LoadPluginImpl<V> {
 

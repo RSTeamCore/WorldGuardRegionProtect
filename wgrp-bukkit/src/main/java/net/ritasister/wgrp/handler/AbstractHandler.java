@@ -1,6 +1,4 @@
-package net.ritasister.wgrp.handler.abstracts;
-
-import net.ritasister.wgrp.handler.interfaces.Handler;
+package net.ritasister.wgrp.handler;
 
 public abstract class AbstractHandler<V> implements Handler<V> {
 

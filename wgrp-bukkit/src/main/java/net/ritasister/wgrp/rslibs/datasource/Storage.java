@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.datasource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
 import org.bukkit.Bukkit;
@@ -36,7 +37,7 @@ public class Storage implements StorageDataSource {
 				+ wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getDataBase());
 		config.setUsername(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getUser());
 		config.setPassword(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getPassword());
-		
+
 		// Pool settings
         config.setMaximumPoolSize(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getMaxPoolSize());
         config.setMaxLifetime(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getMaxLifetime() * 1000L);
@@ -44,7 +45,7 @@ public class Storage implements StorageDataSource {
 		config.setConnectionTimeout(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getConnectionTimeout());
 
 		config.setPoolName("MariaDBPool");
-		
+
         // Encoding
         config.addDataSourceProperty("characterEncoding", "utf8");
         config.addDataSourceProperty("encoding", "UTF-8");
@@ -58,7 +59,7 @@ public class Storage implements StorageDataSource {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "275");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        
+
 		ds = new HikariDataSource(config);
 	}
 
@@ -75,7 +76,7 @@ public class Storage implements StorageDataSource {
 			pst.execute();
 			pst.close();
 		} catch(SQLException ex){
-			Bukkit.getLogger().severe("Failed connect to database! Error code: " + ex.getErrorCode());
+			WGRPContainer.getLogger().error("Failed connect to database! Error code: " + ex.getErrorCode());
 		} finally {
 			this.close(pst);
 		}
@@ -106,7 +107,7 @@ public class Storage implements StorageDataSource {
 			}
 			return true;
 		}catch(SQLException ex){
-            Bukkit.getLogger().severe("Failed to load from database!");
+            WGRPContainer.getLogger().error("Failed to load from database!");
 			ex.printStackTrace();
 		}finally{
 			this.close(rs);
@@ -141,7 +142,7 @@ public class Storage implements StorageDataSource {
 				}
 				wgRegionProtect.getWgrpContainer().getRsStorage().dbLogs = new ConcurrentHashMap<>(tempDataBase);
 			} catch (SQLException ex) {
-                Bukkit.getLogger().severe("Failed to load database asynchronous!");
+                WGRPContainer.getLogger().error("Failed to load database asynchronous!");
 				ex.printStackTrace();
 			} finally {
 				this.close(rs);
@@ -169,7 +170,7 @@ public class Storage implements StorageDataSource {
 				pst.setDouble(9, z);
 				pst.executeUpdate();
 			} catch (SQLException ex) {
-                Bukkit.getLogger().severe("[DataBase] <id> "+uniqueId.toString()
+                WGRPContainer.getLogger().error("[DataBase] <id> "+uniqueId.toString()
 					.replace("<id>", uniqueId.toString())+ ex);
 			} finally {
 				this.close(pst);
@@ -183,7 +184,7 @@ public class Storage implements StorageDataSource {
 				pst.close();
 			}
 		}catch(SQLException ex){
-            Bukkit.getLogger().severe("Failed to close prepared statement");
+            WGRPContainer.getLogger().error("Failed to close prepared statement");
 		}
 	}
 
@@ -193,7 +194,7 @@ public class Storage implements StorageDataSource {
 				rs.close();
 			}
 		}catch(SQLException ex){
-            Bukkit.getLogger().severe("Failed to close result set");
+            WGRPContainer.getLogger().error("Failed to close result set");
 		}
 	}
 
@@ -202,9 +203,9 @@ public class Storage implements StorageDataSource {
 			ds.close();
 		}
         connect();
-        Bukkit.getLogger().info("Successfully reloaded!");
+        WGRPContainer.getLogger().info("Successfully reloaded!");
     }
-	
+
 	@Override
     public void close() {
 		if (ds != null && !ds.isClosed()) {

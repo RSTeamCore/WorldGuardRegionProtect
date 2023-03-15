@@ -1,10 +1,9 @@
 package net.ritasister.wgrp.loader;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.handler.AbstractHandler;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
-import net.ritasister.wgrp.handler.abstracts.AbstractHandler;
-import net.ritasister.wgrp.loader.impl.LoaderCommandsAndListenersImpl;
 import org.bukkit.plugin.PluginManager;
 
 public class WGRPLoaderCommandsAndListeners extends LoaderCommandsAndListenersImpl<WorldGuardRegionProtect> {

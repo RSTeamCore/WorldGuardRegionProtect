@@ -8,8 +8,6 @@ import io.papermc.paper.event.player.PlayerStonecutterRecipeSelectEvent;
 import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
-import net.ritasister.wgrp.rslibs.api.event.PlayerCartographyEvent;
-import net.ritasister.wgrp.rslibs.api.event.PlayerGrindstoneEvent;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,8 +28,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerBucketEntityEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -43,8 +39,6 @@ import org.bukkit.event.vehicle.VehicleDamageEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.bukkit.event.world.StructureGrowEvent;
-import org.bukkit.inventory.CartographyInventory;
-import org.bukkit.inventory.GrindstoneInventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -380,9 +374,7 @@ public class RegionProtect implements Listener {
     private void denyStructureGrow(@NotNull StructureGrowEvent e) {
         if (e.getPlayer() != null) {
             Player player = e.getPlayer();
-            if (wgrpContainer.getRsRegion().checkStandingRegion(
-                    e.getLocation(),
-                    wgrpContainer.getConfig().getRegionProtectMap()
+            if (wgrpContainer.getRsRegion().checkStandingRegion(e.getLocation(), wgrpContainer.getConfig().getRegionProtectMap()
             )) {
                 if (!wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     e.setCancelled(true);
@@ -397,10 +389,7 @@ public class RegionProtect implements Listener {
         Player player = e.getPlayer();
         Location loc = entity.getLocation();
         if (wgrpContainer.getRsRegion().checkStandingRegion(loc, wgrpContainer.getConfig().getRegionProtectMap())) {
-            if (!wgrpContainer.getRsApi().isPlayerListenerPermission(
-                    Objects.requireNonNull(player),
-                    UtilPermissions.REGION_PROTECT
-            )) {
+            if (!wgrpContainer.getRsApi().isPlayerListenerPermission(Objects.requireNonNull(player), UtilPermissions.REGION_PROTECT)) {
                 switch (player.getInventory().getItemInMainHand().getType()) {
                     case ITEM_FRAME, GLOW_ITEM_FRAME, PAINTING -> e.setCancelled(true);
                 }

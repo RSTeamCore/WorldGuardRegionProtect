@@ -1,6 +1,4 @@
-package net.ritasister.wgrp.loader.impl;
-
-import net.ritasister.wgrp.loader.interfaces.LoaderCommandsAndListeners;
+package net.ritasister.wgrp.loader;
 
 public class LoaderCommandsAndListenersImpl<T> implements LoaderCommandsAndListeners<T> {
 

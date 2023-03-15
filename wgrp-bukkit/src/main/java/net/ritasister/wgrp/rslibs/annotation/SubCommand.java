@@ -1,7 +1,6 @@
 package net.ritasister.wgrp.rslibs.annotation;
 
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.rsteamcore.config.Container;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.ElementType;

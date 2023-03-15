@@ -1,9 +1,8 @@
 package net.ritasister.wgrp.handler;
 
+import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.handler.abstracts.AbstractHandler;
 import net.ritasister.wgrp.listener.RegionProtect;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +19,7 @@ public class ListenerHandler extends AbstractHandler<PluginManager> {
         final RegionProtect regionProtect = new RegionProtect(wgRegionProtect.getWgrpContainer());
         pluginManager.registerEvents(regionProtect, wgRegionProtect.getWGRPBukkitPlugin());
 
-        Bukkit.getLogger().info("All listeners registered successfully!");
+        WGRPContainer.getLogger().info("All listeners registered successfully!");
     }
 
 }
