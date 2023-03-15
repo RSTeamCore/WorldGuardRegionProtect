@@ -33,4 +33,4 @@ target
 .gradle
 forge-download
 out
-run
+wgrp-bukkit/run
