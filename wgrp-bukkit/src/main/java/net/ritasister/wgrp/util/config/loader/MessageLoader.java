@@ -36,12 +36,12 @@ public class MessageLoader extends AbstractInitMessage {
         YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(inputStreamReader);
         var currentYaml = YamlConfiguration.loadConfiguration(currentLangFile);
         if (currentLangFile.exists() && !getCurrentVersion(currentYaml).equals(Objects.requireNonNull(getNewVersion(yamlConfiguration)))) {
-            WGRPContainer.getLogger().info("[WGRP] Found new version of lang file, updating this now...");
+            WGRPContainer.getLogger().info("Found new version of lang file, updating this now...");
             Path renameOldLang = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + "-old-" + getSimpleDateFormat() + ".yml").toPath();
             Files.move(currentLangFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
             wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", true);
         } else {
-            WGRPContainer.getLogger().info("[WGRP] No update is required for the lang file");
+            WGRPContainer.getLogger().info("No update is required for the lang file");
         }
     }
 
