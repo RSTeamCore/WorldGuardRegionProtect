@@ -46,6 +46,7 @@ repositories {
 dependencies {
     //Api for this plugin
     api(project(":wgrp-api"))
+    //Alternate run-task Paper
     paperDevBundle("1.19.4-R0.1-SNAPSHOT")
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
@@ -136,7 +137,11 @@ tasks {
 
 tasks {
     runServer {
-        minecraftVersion("1.19.4")
+        minecraftVersion("1.19.3")
+        pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
+        jvmArgs("-Xms2G", "-Xmx2G")
+    }
+    runMojangMappedServer {
         pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
     }
