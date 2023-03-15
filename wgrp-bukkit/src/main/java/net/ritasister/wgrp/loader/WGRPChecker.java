@@ -21,8 +21,8 @@ public class WGRPChecker {
                     Please read this thread: https://www.spigotmc.org/resources/81321/
                     The main post on spigotmc and please download the correct version for your server version.
                     """);
+            wgRegionProtect.getWgrpContainer().getPluginManager().disablePlugin(wgRegionProtect.getWGRPBukkitPlugin());
         }
-        wgRegionProtect.getWgrpContainer().getPluginManager().disablePlugin(wgRegionProtect.getWGRPBukkitPlugin());
     }
 
     void checkIfRunningOnPaper() {
@@ -37,7 +37,7 @@ public class WGRPChecker {
                             Please don't use any untrusted forks.
                             """, wgRegionProtect.getWgrpContainer().isPaper));
         }
-        WGRPContainer.getLogger().info("Using paper or trust forks of paper? " + wgRegionProtect.getWgrpContainer().isPaper + "Nice!");
+        WGRPContainer.getLogger().info(String.format("Using paper or trust forks of paper? %s Nice!", wgRegionProtect.getWgrpContainer().isPaper));
     }
 
     public void notifyAboutBuild(@NotNull WGRPContainer wgrpContainer) {
