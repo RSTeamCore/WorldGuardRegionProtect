@@ -15,11 +15,16 @@ repositories {
         name = "EngineHub"
         url = uri("https://maven.enginehub.org/repo/")
     }
+    mavenCentral()
 }
 
 dependencies {
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
+    //WorldGuard 7+
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
+    //Paper 1.19
+    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
     //Inject
     implementation("com.google.inject:guice:5.1.0")
     implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
@@ -27,17 +32,13 @@ dependencies {
     //Annotations
     compileOnly("org.jetbrains:annotations:23.1.0")
 
-    implementation("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    implementation("org.projectlombok:lombok:1.18.26")
+    annotationProcessor("org.projectlombok:lombok:1.18.26")
 
-    implementation("org.projectlombok:lombok:1.18.24")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
+    implementation("org.projectlombok:lombok:1.18.26")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.26")
 
     compileOnly("net.kyori:adventure-api:4.12.0")
-    //WorldGuard 7+
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
-    //Paper 1.19
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 }
 
 publishing {

@@ -55,8 +55,8 @@ if (!project.hasProperty("gitCommitHash")) {
 
 tasks {
     runServer {
-        minecraftVersion("1.19.3")
+        minecraftVersion("1.19.4")
         pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
-        jvmArgs("-Xms1G", "-Xmx1G")
+        jvmArgs("-Xms2G", "-Xmx2G")
     }
 }

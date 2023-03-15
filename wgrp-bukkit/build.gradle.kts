@@ -38,6 +38,7 @@ repositories {
         name = "PlaceholderAPI"
         url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -45,34 +46,34 @@ dependencies {
     api(project(":wgrp-api"))
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
+    //Paper 1.19.4
+    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+    //Kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
     //PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.2")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
-    //Paper 1.19
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
     //Kyori and MiniMessage
     compileOnly("net.kyori:adventure-api:4.12.0")
-    implementation("net.kyori:adventure-text-minimessage:4.12.0")
+    implementation("net.kyori:adventure-text-minimessage:4.13.0")
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.bstats:bstats-bukkit:3.0.0")
     //MariaDB for DataBase
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.0.6")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.1.2")
     //DI google guice
     implementation("com.google.inject:guice:5.1.0")
     implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
 
     //Annotations
     implementation("org.jetbrains:annotations:23.1.0")
-    implementation("org.projectlombok:lombok:1.18.24")
+    implementation("org.projectlombok:lombok:1.18.26")
     implementation("aopalliance:aopalliance:1.0")
 
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
-    implementation("org.projectlombok:lombok:1.18.24")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
-
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
+    annotationProcessor("org.projectlombok:lombok:1.18.26")
+    implementation("org.projectlombok:lombok:1.18.26")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.26")
 }
 
 tasks {
