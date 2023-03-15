@@ -37,15 +37,6 @@ public class WGRPChecker {
         WGRPContainer.getLogger().info("Paper: " + worldGuardRegionProtect.getWgrpContainer().isPaper);
     }
 
-    void checkForUsePermissionsEx() {
-        if(!worldGuardRegionProtect.getWgrpContainer().getPluginManager().isPluginEnabled("PermissionsEx")) {
-            WGRPContainer.getLogger().error("""
-                    Wea are not supported old version of permissions plugin like PermissionsEx, please use LuckPerms or another.
-                    """);
-            worldGuardRegionProtect.getWGRPBukkitPlugin().onDisable();
-        }
-    }
-
     public void notifyAboutBuild(@NotNull WGRPContainer wgrpContainer) {
         String pluginVersion = wgrpContainer.getPluginVersion();
         Container container = wgrpContainer.getMessages();

@@ -28,7 +28,6 @@ public class WGRPInitialization extends InitializationImpl<WorldGuardRegionProte
         WGRPChecker wgrpChecker = new WGRPChecker(wgRegionProtect);
         wgrpChecker.checkStartUpVersionServer();
         wgrpChecker.checkIfRunningOnPaper();
-        wgrpChecker.checkForUsePermissionsEx();
 
         loadMetrics(wgRegionProtect);
         loadAnotherClassAndMethods(wgRegionProtect, wgrpContainer);
