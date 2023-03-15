@@ -12,29 +12,32 @@ import org.jetbrains.annotations.NotNull;
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class WGRPChecker {
 
-    private final WorldGuardRegionProtect worldGuardRegionProtect;
+    private final WorldGuardRegionProtect wgRegionProtect;
 
     void checkStartUpVersionServer() {
-        if (!worldGuardRegionProtect.getWgrpContainer().getRsApi().isVersionSupported()) {
+        if (!wgRegionProtect.getWgrpContainer().getRsApi().isVersionSupported()) {
             WGRPContainer.getLogger().error("""
-                    This plugin version works only on 1.19+!
+                    This plugin version works only on 1.19 - 1.19.4!
                     Please read this thread: https://www.spigotmc.org/resources/81321/
                     The main post on spigotmc and please download the correct version for your server version.
                     """);
         }
+        wgRegionProtect.getWgrpContainer().getPluginManager().disablePlugin(wgRegionProtect.getWGRPBukkitPlugin());
     }
 
     void checkIfRunningOnPaper() {
-        worldGuardRegionProtect.getWgrpContainer().isPaper = false;
+        wgRegionProtect.getWgrpContainer().isPaper = false;
         try {
-            // Any other works, just the shortest I could find.
             Class.forName("com.destroystokyo.paper.ParticleBuilder");
-            worldGuardRegionProtect.getWgrpContainer().isPaper = true;
+            wgRegionProtect.getWgrpContainer().isPaper = true;
         } catch (ClassNotFoundException ignored) {
-            WGRPContainer.getLogger().info(
-                    "Better if you are running your server on paper or other forks of paper");
+            WGRPContainer.getLogger().info(String.format("""
+                            Using paper? %s
+                            Better if you are running your server on paper or other forks of paper.
+                            Please don't use any untrusted forks.
+                            """, wgRegionProtect.getWgrpContainer().isPaper));
         }
-        WGRPContainer.getLogger().info("Paper: " + worldGuardRegionProtect.getWgrpContainer().isPaper);
+        WGRPContainer.getLogger().info("Using paper or trust forks of paper? " + wgRegionProtect.getWgrpContainer().isPaper + "Nice!");
     }
 
     public void notifyAboutBuild(@NotNull WGRPContainer wgrpContainer) {
@@ -47,7 +50,7 @@ public class WGRPChecker {
                      This is a test build. This building may be unstable!
                      When reporting a bug:
                      Use the issue tracker! Don't report bugs in the reviews.
-                     Please search for duplicates before reporting a new https://github.com/RSTeamCore/WorldGuardRegionProtect/issues!
+                     Please search for duplicates before reporting a new https://github.com/RSTeamCore/wgRegionProtect/issues!
                      Provide as much information as possible.
                      Provide your WorldGuardRegionProtect version and Spigot/Paper version.
                      Provide any stack traces or "errors" using pastebin.
