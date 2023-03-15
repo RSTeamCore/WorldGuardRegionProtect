@@ -169,7 +169,8 @@ public class RSApi {
                 WGRPContainer.getLogger().error(
                         "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
             } else {
-                WGRPContainer.getLogger().error("Your server version is completely unsupported. This plugin version only supports " + supportedVersionRange + ". Disabling.");
+                WGRPContainer.getLogger().error("Your server version is completely unsupported. This plugin version only " +
+                        "supports " + supportedVersionRange + ". Disabling.");
             }
         }
         return false;
