@@ -36,7 +36,7 @@ public class WorldGuardRegionProtect {
             try {
                 configLoader.getConfig().saveConfig();
             } catch (NullPointerException ignored) {
-                getWgrpContainer().getLogger().info("Cannot save config, because config is not loaded!");
+                WGRPContainer.getLogger().info("Cannot save config, because config is not loaded!");
             }
         }
     }
