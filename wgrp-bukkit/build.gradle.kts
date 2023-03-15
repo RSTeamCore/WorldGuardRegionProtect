@@ -3,6 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("xyz.jpenilla.run-paper") version "2.0.1"
+    id("io.papermc.paperweight.userdev") version "1.5.2"
     kotlin("jvm") version "1.8.0"
 }
 
@@ -44,6 +46,7 @@ repositories {
 dependencies {
     //Api for this plugin
     api(project(":wgrp-api"))
+    paperDevBundle("1.19.4-R0.1-SNAPSHOT")
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
     //Paper 1.19.4
@@ -128,5 +131,13 @@ tasks {
     }
     artifacts {
         archives(shadowJar)
+    }
+}
+
+tasks {
+    runServer {
+        minecraftVersion("1.19.4")
+        pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
+        jvmArgs("-Xms2G", "-Xmx2G")
     }
 }
