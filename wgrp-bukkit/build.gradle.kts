@@ -53,17 +53,17 @@ dependencies {
     //Paper 1.19.4
     compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
     //Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.10")
     //PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.2")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Kyori and MiniMessage
-    compileOnly("net.kyori:adventure-api:4.12.0")
+    compileOnly("net.kyori:adventure-api:4.13.0")
     implementation("net.kyori:adventure-text-minimessage:4.13.0")
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
-    implementation("org.bstats:bstats-bukkit:3.0.0")
+    implementation("org.bstats:bstats-bukkit:3.0.1")
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:3.1.2")
     //DI google guice

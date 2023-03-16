@@ -38,7 +38,7 @@ dependencies {
     implementation("org.projectlombok:lombok:1.18.26")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.26")
 
-    compileOnly("net.kyori:adventure-api:4.12.0")
+    compileOnly("net.kyori:adventure-api:4.13.0")
 }
 
 publishing {
