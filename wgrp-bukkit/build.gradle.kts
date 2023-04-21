@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-library`
-    id("com.github.johnrengelman.shadow") version "8.1.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
     id("xyz.jpenilla.run-paper") version "2.0.1"
     id("io.papermc.paperweight.userdev") version "1.5.2"
     kotlin("jvm") version "1.8.0"
@@ -46,8 +46,8 @@ repositories {
 dependencies {
     //Api for this plugin
     api(project(":wgrp-api"))
-    //Alternate run-task Paper
-    paperDevBundle("1.19.4-R0.1-SNAPSHOT")
+    //Alternate run-task Paper if runServer is dont updated to the new version of MC.
+    paperweightfoliaDevBundle("dev.folia", "1.19.4-R0.1-SNAPSHOT")
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
     //Paper 1.19.4
@@ -55,7 +55,7 @@ dependencies {
     //Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.10")
     //PlaceholderAPI
-    compileOnly("me.clip:placeholderapi:2.11.2")
+    compileOnly("me.clip:placeholderapi:2.11.3")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
     //Kyori and MiniMessage
@@ -137,7 +137,7 @@ tasks {
 
 tasks {
     runServer {
-        minecraftVersion("1.19.3")
+        minecraftVersion("1.19.4")
         pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
     }
