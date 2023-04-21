@@ -30,7 +30,7 @@ dependencies {
     implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
 
     //Annotations
-    compileOnly("org.jetbrains:annotations:23.1.0")
+    compileOnly("org.jetbrains:annotations:24.0.1")
 
     implementation("org.projectlombok:lombok:1.18.26")
     annotationProcessor("org.projectlombok:lombok:1.18.26")
