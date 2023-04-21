@@ -124,8 +124,7 @@ public class RSApi {
             double x,
             double y,
             double z,
-            String world
-    ) {
+            String world) {
         if (this.isPlayerListenerPermission(
                 suspectPlayer,
                 UtilPermissions.SPY_INSPECT_FOR_SUSPECT
