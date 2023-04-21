@@ -47,7 +47,7 @@ dependencies {
     //Api for this plugin
     api(project(":wgrp-api"))
     //Alternate run-task Paper if runServer is dont updated to the new version of MC.
-    paperweightfoliaDevBundle("dev.folia", "1.19.4-R0.1-SNAPSHOT")
+    paperweight.foliaDevBundle("1.19.4-R0.1-SNAPSHOT")
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
     //Paper 1.19.4
