@@ -4,7 +4,7 @@ plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("xyz.jpenilla.run-paper") version "2.0.1"
-    id("io.papermc.paperweight.userdev") version "1.5.2"
+    id("io.papermc.paperweight.userdev") version "1.5.4"
     kotlin("jvm") version "1.8.0"
 }
 
