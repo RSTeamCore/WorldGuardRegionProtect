@@ -13,12 +13,3 @@ logger.lifecycle("""
  Output files will be in [subproject]/build/libs
 *******************************************
 """)
-
-var rootVersion by extra(rootProject.version)
-var snapshot by extra("SNAPSHOT")
-var revision: String by extra("")
-var buildNumber by extra("")
-var date: String by extra("")
-
-//version = String.format("%s-%s", rootVersion, buildNumber)
-version = String.format("%s", rootVersion)
