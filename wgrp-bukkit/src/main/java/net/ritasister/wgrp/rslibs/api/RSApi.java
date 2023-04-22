@@ -2,260 +2,177 @@ package net.ritasister.wgrp.rslibs.api;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import lombok.AllArgsConstructor;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import lombok.RequiredArgsConstructor;
+import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
- * A class that contains methods about rights, notification and other
+ * Utility api class for other classes to use the necessary methods and other.
  */
 @Singleton
-@AllArgsConstructor(onConstructor_ = @Inject)
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class RSApi {
 
-	private final WorldGuardRegionProtect wgRegionProtect;
+    private final WorldGuardRegionProtect wgRegionProtect;
 
-	/**
-	 * Check if a sender has permissions for commands.
-	 *
-	 * @param sender Who send this command.
-	 * @param cmd Name command.
-	 * @param perm Permission to check.
-	 * @param message Return custom message for a sender.
-	 * @return If Sender can use commands.
-	 */
-	public boolean isSenderCommandsPermission(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull UtilPermissions perm, String message) {
-		if (!sender.hasPermission(perm.getPermissionName())) {
-			if (message != null) {
-				sender.sendMessage(Component.text(message));
-			}
-			return true;
-		}
-		return false;
-	}
+    /**
+     * Check if a player has permission for use Listener.
+     *
+     * @param player who send this command.
+     * @param perm   permission to check.
+     * @return can a player use this listener.
+     */
+    public boolean isPlayerListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm) {
+        return player.hasPermission(perm.getPermissionName());
+    }
 
-	public void getMessageToPlayer(@NotNull Player player, String message) {
-		var miniMessage = MiniMessage.miniMessage();
-		Component parsed = miniMessage.deserialize(message);
-		player.sendMessage(parsed);
-	}
+    /**
+     * Check if an entity has permission for use Listener.
+     *
+     * @param entity who send this command.
+     * @param perm   permission to check.
+     * @return can an entity use this listener.
+     */
+    public boolean isEntityListenerPermission(@NotNull Entity entity, @NotNull UtilPermissions perm) {
+        return !entity.hasPermission(perm.getPermissionName());
+    }
 
-	public void getMessageToCommandSender(@NotNull CommandSender commandSender, String message) {
-		var miniMessage = MiniMessage.miniMessage();
-		Component parsed = miniMessage.deserialize(message);
-		commandSender.sendMessage(parsed);
-	}
+    /**
+     * Send notification to admin.
+     *
+     * @param player        player object.
+     * @param playerName    player name.
+     * @param senderCommand name command if player attempt to use in a region.
+     * @param regionName    the region name, if player attempts to use command in a region.
+     */
+    public void notify(Player player, String playerName, String senderCommand, String regionName) {
+        if (regionName == null) {
+            return;
+        }
+        if (wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminEnable() && this.isPlayerListenerPermission(
+                player,
+                UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN
+        )) {
+            for (String cmd : wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandList()) {
+                if (cmd.equalsIgnoreCase(senderCommand.toLowerCase()) && wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
+                    player.playSound(player.getLocation(), wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
+                    player.sendMessage(wgRegionProtect.getWgrpContainer()
+                            .getMessages()
+                            .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                            .toString()
+                            .replace("<player>", playerName)
+                            .replace("<cmd>", cmd)
+                            .replace("<region>", regionName));
+                }
+            }
+        }
+    }
 
-	public void getMessageToConsoleSender(@NotNull ConsoleCommandSender sender, String message) {
-		var miniMessage = MiniMessage.miniMessage();
-		Component parsed = miniMessage.deserialize(message);
-		sender.sendMessage(parsed);
-	}
+    /**
+     * Send notify to admin.
+     *
+     * @param playerName    player name.
+     * @param senderCommand name command if Player attempt to use in a region.
+     * @param regionName    region name, if Player attempts to use command in a region.
+     */
+    public void notify(String playerName, String senderCommand, String regionName) {
+        if (regionName == null) {
+            return;
+        }
+        if (wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyConsoleEnable()) {
+            for (String cmd : wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandList()) {
+                if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
+                    Bukkit.getConsoleSender().sendMessage(wgRegionProtect.getWgrpContainer()
+                            .getMessages()
+                            .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                            .toString()
+                            .replace("<player>", playerName)
+                            .replace("<cmd>", cmd)
+                            .replace("<region>", regionName));
+                }
+            }
+        }
+    }
 
-	/**
-	 * Check if a Player has permissions for commands.
-	 *
-	 * @param player Who send this command.
-	 * @param cmd Name command.
-	 * @param perm Permission to check.
-	 * @param message Return custom message for a Player.
-	 * @return If sender can use commands.
-	 */
-	public boolean isSenderCommandsPermission(@NotNull Player player, @NotNull Command cmd, @NotNull UtilPermissions perm, String message) {
-		if (!player.hasPermission(perm.getPermissionName())) {
-			if (message != null) {
-				player.sendMessage(Component.text(message));
-			}
-			return true;
-		}
-		return false;
-	}
+    /**
+     * Send a notification to the administrator if Player attempts to interact with a region from WorldGuard.
+     *
+     * @param admin         message for an admin who destroys a region.
+     * @param suspectPlayer object player for method.
+     * @param suspectName   player name who interacting with a region.
+     * @param action        get the actions.
+     * @param regionName    region name.
+     * @param x             position of block.
+     * @param y             position of block.
+     * @param z             position of block.
+     * @param world         position of block in world.
+     */
+    public void notifyIfActionInRegion(
+            Player admin,
+            Player suspectPlayer,
+            String suspectName,
+            RegionAction action,
+            String regionName,
+            double x,
+            double y,
+            double z,
+            String world) {
+        if (this.isPlayerListenerPermission(
+                suspectPlayer,
+                UtilPermissions.SPY_INSPECT_FOR_SUSPECT
+        ) && wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminEnable()) {
+            admin.sendMessage(wgRegionProtect.getWgrpContainer()
+                    .getMessages()
+                    .get("messages.Notify.sendAdminInfoIfActionInRegion")
+                    .toString()
+                    .replace("<player>", suspectName)
+                    .replace("<action>", action.getAction())
+                    .replace("<region>", regionName)
+                    .replace("<x>", String.valueOf(x))
+                    .replace("<y>", String.valueOf(y))
+                    .replace("<z>", String.valueOf(z))
+                    .replace("<world>", world));
+        }
+    }
 
-	/**
-	 * Check if a sender has permission for use TAB.
-	 *
-	 * @param sender Who send this command.
-	 * @param perm Permission to check.
-	 * @return If sender can use TAB.
-	 */
-	public boolean isSenderCommandsPermissionOnTab(@NotNull CommandSender sender, @NotNull UtilPermissions perm) {
-		return sender.hasPermission(perm.getPermissionName());
-	}
+    /**
+     * Initializes all used NMS classes, constructors, fields and methods.
+     * Returns {@code true} if everything went successfully and version marked as compatible,
+     * {@code false} if anything went wrong or version not marked as compatible.
+     *
+     * @return {@code true} if server version compatible, {@code false} if not
+     */
+    public boolean isVersionSupported() {
+        List<String> supportedVersions = Arrays.asList("v1_19_R1", "v1_19_R2", "v1_19_R3");
+        String supportedVersionRange = "1.19 - 1.19.4";
+        String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+        try {
+            long time = System.currentTimeMillis();
+            if (supportedVersions.contains(serverPackage)) {
+                WGRPContainer.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
+                return true;
+            } else {
+                WGRPContainer.getLogger().info(
+                        "No compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ").");
+            }
+        } catch (Exception ex) {
+            if (supportedVersions.contains(serverPackage)) {
+                WGRPContainer.getLogger().error(
+                        "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
+            } else {
+                WGRPContainer.getLogger().error("Your server version is completely unsupported. This plugin version only " +
+                        "supports " + supportedVersionRange + ". Disabling.");
+            }
+        }
+        return false;
+    }
 
-	/**
-	 * Check if a sender has permission for use Listener.
-	 *
-	 * @param sender Who send this command.
-	 * @param perm Permission to check.
-	 * @param message Return custom message for a sender.
-	 * @return If sender can use Events.
-	 */
-	public boolean isSenderListenerPermission(@NotNull CommandSender sender, @NotNull UtilPermissions perm, String message) {
-		if (!sender.hasPermission(perm.getPermissionName())) {
-			if (message != null) {
-				sender.sendMessage(Component.text(message));
-			}
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Check if a player has permission for use Listener.
-	 *
-	 * @param player  Who send this command.
-	 * @param perm    Permission to check.
-	 * @param message Return custom message for a player.
-	 * @return If Player can use event method.
-	 */
-	public boolean isSenderListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm, String message) {
-		if (!player.hasPermission(perm.getPermissionName())) {
-			if (message != null) {
-				player.sendMessage(Component.text(message));
-			}
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Check if an entity has permission for use Listener.
-	 *
-	 * @param entity who send this command.
-	 * @param perm permission to check.
-	 * @param message Return custom message for an entity.
-	 * @return If entity can use event method.
-	 */
-	public boolean isSenderListenerPermission(@NotNull Entity entity, @NotNull UtilPermissions perm, String message) {
-		if (entity.hasPermission(perm.getPermissionName())) {
-			if (message != null) {
-				entity.sendMessage(Component.text(message));
-			}
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Send notification to admin.
-	 *
-	 * @param player Player object.
-	 * @param playerName Nickname player.
-	 * @param senderCommand Name command if Player attempt to use in a region.
-	 * @param regionName The region name, if Player attempts to use command in a region.
-	 */
-	public void notify(Player player, String playerName, String senderCommand, String regionName) {
-		if(regionName == null) return;
-		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminEnable()
-				&& this.isSenderListenerPermission(player, UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN, null)) {
-			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
-				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())
-						&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
-					player.playSound(player.getLocation(), wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
-					player.sendMessage(
-							wgRegionProtect.getUtilConfig().getMessages().get("messages.Notify.sendAdminInfoIfUsedCommandInRG").toString()
-							.replace("<player>", playerName)
-							.replace("<cmd>", cmd)
-							.replace("<region>", regionName));
-				}
-			}
-		}
-	}
-
-	/**
-	 * Send notify to admin.
-	 *
-	 * @param playerName Player object.
-	 * @param senderCommand Name command if Player attempt to use in a region.
-	 * @param regionName Region name, if Player attempts to use command in a region.
-	 */
-	public void notify(String playerName, String senderCommand, String regionName) {
-		if(regionName == null) return;
-		if (wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyConsoleEnable()) {
-			for (String cmd : wgRegionProtect.getUtilConfig().getConfig().getSpyCommandList()) {
-				if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-					Bukkit.getConsoleSender().sendMessage(
-							wgRegionProtect.getUtilConfig().getMessages().get("messages.Notify.sendAdminInfoIfUsedCommandInRG").toString()
-							.replace("<player>", playerName)
-							.replace("<cmd>", cmd)
-							.replace("<region>", regionName));
-				}
-			}
-		}
-	}
-
-	/**
-	 * Send a notification to the administrator if Player attempts to interact with a region from WorldGuard.
-	 *
-	 * @param admin Message for an admin who destroys a region.
-	 * @param suspectPlayer Object player for method.
-	 * @param suspectName Player name who interacting with a region.
-	 * @param action Get the actions.
-	 * @param regionName Region name.
-	 * @param x Position of block.
-	 * @param y Position of block.
-	 * @param z Position of block.
-	 * @param world Position of block.
-	 */
-	public void notifyIfActionInRegion(Player admin, Player suspectPlayer, String suspectName, RegionAction action, String regionName, double x, double y, double z, String world) {
-		if (this.isSenderListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT, null)
-				&& wgRegionProtect.getUtilConfig().getConfig().getSpyCommandNotifyAdminEnable()) {
-				admin.sendMessage(
-						wgRegionProtect.getUtilConfig().getMessages().get("messages.Notify.sendAdminInfoIfActionInRegion").toString()
-								.replace("<player>", suspectName)
-					.replace("<action>", action.getAction())
-					.replace("<region>", regionName)
-					.replace("<x>", String.valueOf(x))
-					.replace("<y>", String.valueOf(y))
-					.replace("<z>", String.valueOf(z))
-					.replace("<world>", world));
-		}
-	}
-
-	/**
-	 * Initializes all used NMS classes, constructors, fields and methods.
-	 * Returns {@code true} if everything went successfully and version marked as compatible,
-	 * {@code false} if anything went wrong or version not marked as compatible.
-	 * @return    {@code true} if server version compatible, {@code false} if not
-	 */
-	public boolean isVersionSupported(){
-		List<String> supportedVersions = Arrays.asList("v1_19_R1", "v1_19_R2");
-		String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-		try {
-			long time = System.currentTimeMillis();
-			if (supportedVersions.contains(serverPackage)) {
-				wgRegionProtect.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis()-time) + "ms");
-				return true;
-			} else {
-				wgRegionProtect.getLogger().info("No compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ").");
-			}
-		} catch (Exception ex) {
-			if (supportedVersions.contains(serverPackage)) {
-				wgRegionProtect.getLogger().error("Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
-			} else {
-				wgRegionProtect.getLogger().error("Your server version is completely unsupported. Disabling.");
-			}
-		}
-		return false;
-	}
-
-	public String getTime() {
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy - HH:mm");
-		Date resultDate = new Date(System.currentTimeMillis());
-		return sdf.format(resultDate);
-	}
 }

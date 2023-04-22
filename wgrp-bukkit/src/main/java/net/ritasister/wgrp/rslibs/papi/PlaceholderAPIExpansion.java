@@ -11,22 +11,22 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
     private final WorldGuardRegionProtect wgRegionProtect;
 
     public PlaceholderAPIExpansion(WorldGuardRegionProtect wgRegionProtect) {
-        this.wgRegionProtect=wgRegionProtect;
+        this.wgRegionProtect = wgRegionProtect;
     }
 
     @Override
     public @NotNull String getIdentifier() {
-        return wgRegionProtect.getPluginVersion();
+        return wgRegionProtect.getWgrpContainer().getPluginVersion();
     }
 
     @Override
     public @NotNull String getAuthor() {
-        return wgRegionProtect.getPluginAuthors().toString();
+        return wgRegionProtect.getWgrpContainer().getPluginAuthors().toString();
     }
 
     @Override
     public @NotNull String getVersion() {
-        return wgRegionProtect.getPluginVersion();
+        return wgRegionProtect.getWgrpContainer().getPluginVersion();
     }
 
     @Override
@@ -44,4 +44,5 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
         }
         return null;
     }
+
 }

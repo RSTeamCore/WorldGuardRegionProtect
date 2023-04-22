@@ -1,6 +1,7 @@
 package net.ritasister.wgrp.command;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.command.*;
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +42,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) {
-            wgRegionProtect.getUtilConfig().getMessages().get("messages.usage.wgrpUseHelp").send(sender);
+            wgRegionProtect.getWgrpContainer().getMessages().get("messages.usage.wgrpUseHelp").send(sender);
         } else for (Method m : this.getClass().getDeclaredMethods()) {
             if (m.isAnnotationPresent(SubCommand.class)) {
                 SubCommand sub = m.getAnnotation(SubCommand.class);
@@ -69,7 +70,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                             } catch (IllegalAccessException | InvocationTargetException e) {
                                 throw new RuntimeException(e);
                             }
-                        } else wgRegionProtect.getUtilConfig().getMessages().get("messages.ServerMsg.noPerm").send(sender);
+                        } else wgRegionProtect.getWgrpContainer().getMessages().get("messages.ServerMsg.noPerm").send(sender);
                     } else try {
                         m.invoke(this, sender, subArgs);
                         break;

@@ -27,11 +27,10 @@ out/
 *.rar
 
 #working directories
-/wgrp-api/build
-/wgrp-api/.gradle/
-/wgrp-bukkit/build
-/wgrp-bukkit/.gradle/
-/wgrp-bukkit/run
-/build/tmp/jar/MANIFEST.MF
-/build/libs/
-/build/kotlin/sessions/
+bin
+build
+target
+.gradle
+forge-download
+out
+wgrp-bukkit/run

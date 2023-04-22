@@ -124,6 +124,35 @@ wgRegionProtect:
       - cod_bucket
       - salmon_bucket
       - tadpole_bucket
+    naturalBlockOrItem:
+      - oak_sapling
+      - spruce_sapling
+      - birch_sapling
+      - jungle_sapling
+      - dark_oak_sapling
+      - mangrove_propagule
+      - dead_bush
+      - fern
+      - azalea
+      - flowering_azalea
+      - dandelion
+      - poppy
+      - blue_orchid
+      - allium
+      - azure_bluet
+      - red_tulip
+      - orange_tulip
+      - white_tulip
+      - pink_tulip
+      - oxeye_daisy
+      - cornflower
+      - lily_of_the_valley
+      - bamboo
+      - sugar_cane
+      - cactus
+      - wither_rose
+      - crimson_roots
+      - warped_roots
     #--------------------------------------------------------------------------------------
     # collisionWithVehicle — whether the player can collide with a vehicle. (Boat, Wagon, etc.)
     # canSitAsPassengerInVehicle — whether the player can sit as a passenger in the vehicle.
@@ -131,10 +160,13 @@ wgRegionProtect:
     # canTakeLecternBook — whether the player can take a book from the pulpit.
     #--------------------------------------------------------------------------------------
     player:
-      collisionWithVehicle: true
-      canSitAsPassengerInVehicle: true
-      canDamageVehicle: true
-      canTakeLecternBook: true
+      denyCollisionWithVehicle: true
+      denySitAsPassengerInVehicle: true
+      denyDamageVehicle: true
+      denyTakenOrPlaceNaturalBlockOrItemIOFlowerPot: true
+      denyTakeLecternBook: true
+      denyStonecutterRecipeSelect: true
+      denyLoomPatternSelect: true
     #--------------------------------------------------------------------------------------
     # denyWaterFlowToRegion — Whether to allow water to flow into protected regions.
     # denyLavaFlowToRegion — Whether to allow lava to flow into protected regions.

@@ -18,7 +18,6 @@ body:
         - Spigot
         - Paper
         - Purpur
-        - Pufferfish
     validations:
       required: true
 
@@ -28,6 +27,7 @@ body:
       description: Which server version version you using? If your server version is not listed, it is not supported. Update to a supported version first.
       multiple: false
       options:
+        - '1.19.4'
         - '1.19.3'
         - '1.19.2'
         - '1.19.1'
@@ -75,16 +75,16 @@ body:
     attributes:
       label: WorldGuardRegionProtect version
       description: What version of WorldGuardRegionProtect are you running? (`/version WorldGuardRegionProtect`)
-      placeholder: "For example: WorldGuardRegionProtect version 0.7.4"
+      placeholder: "For example: WorldGuardRegionProtect version YourVersion"
     validations:
       required: true
-      
+
   - type: checkboxes
     attributes:
       label: Checklist
       description: Make sure you have followed each of the steps outlined here.
       options:
-        - label: I am using the newest build from https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/ and the issue still persists.
+        - label: I am using the newest build from https://ci.codemc.io/job/rsteamcore/job/WorldGuardRegionProtect/ and the issue still persists.
           required: true
 
   - type: textarea

@@ -4,8 +4,8 @@
 <a href="https://www.spigotmc.org/resources/81321/"><img src="https://img.shields.io/spiget/rating/81321?label=Spigot%20rating" alt="Spigot rating"></a>
 </p>
 <p align="center">
-<a href="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/"><img src="https://ci.codemc.io/job/RitaSister/job/WorldGuardRegionProtect/badge/icon" alt="Build Status"></a>
-<a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/releases"><img src="https://img.shields.io/github/release/RitaSister/WorldGuardRegionProtect.svg" alt="Current Release"></a>
+<a href="https://ci.codemc.io/job/rsteamcore/job/WorldGuardRegionProtect/"><img src="https://ci.codemc.io/job/rsteamcore/job/WorldGuardRegionProtect/badge/icon" alt="Build Status"></a>
+<a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/releases"><img src="https://img.shields.io/github/release/RSTeamCore/WorldGuardRegionProtect.svg" alt="Current Release"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/graphs/contributors"><img src="https://img.shields.io/github/contributors/RitaSister/WorldGuardRegionProtect.svg" alt="Contributors"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>
 <a title="Crowdin" target="_blank" href="https://crowdin.com/project/worldguardregionprotect"><img src="https://badges.crowdin.net/worldguardregionprotect/localized.svg"></a>
@@ -52,6 +52,35 @@
 3. By default, all who is operators are not allowed access into the region.
 ---
 
+## WorldGuardRegionProtect API
+
+##### Maven repository
+
+```xml
+<repository>
+    <id>codemc-releases</id>
+    <url>https://repo.codemc.org/repository/maven-releases/</url>
+</repository>
+
+<dependency>
+    <groupId>net.ritasister</groupId>
+    <artifactId>WorldGuardRegionProtect-api</artifactId>
+    <version>0.7.4.1</version>
+</dependency>
+```
+
+##### build.gradle.kts repository
+
+```kotlin
+repositories {
+    maven ("https://repo.codemc.org/repository/maven-public/")
+}
+
+dependencies {
+    implementation("net.ritasister:WorldGuardRegionProtect-api:0.7.4.1")
+}
+```
+
 ## Metrics
 [bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect/12975)
 <img alt="bStats" src="https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg"/>
@@ -59,6 +88,7 @@
 
 # For legacy users. Old version of 1.12.2!
 You can find here:
-* [spigotmc.ru](https://spigotmc.ru/resources/worldguardregionprotect-1-12-x.518/)
-* [spigotmc.org](https://www.spigotmc.org/resources/worldguardregionprotect-1-12.81333//)
+* [spigotmc.ru](https://spigotmc.ru/resources/518/)
+* [spigotmc.org](https://www.spigotmc.org/resources/81333/)
+* [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect/files)
 ---

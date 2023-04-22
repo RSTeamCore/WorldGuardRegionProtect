@@ -8,6 +8,12 @@ description: ${description}
 website: https://github.com/RSTeamCore/WorldGuardRegionProtect
 api-version: 1.19
 load: POSTWORLD
+libraries:
+  - com.google.inject:guice:5.1.0
+  - com.google.inject.extensions:guice-assistedinject:5.1.0
+  - com.zaxxer:HikariCP:5.0.1
+  - org.mariadb.jdbc:mariadb-java-client:3.1.2
+  - org.jetbrains.kotlin:kotlin-stdlib:1.8.10
 
 permissions:
   wgrp.admin:
@@ -21,6 +27,7 @@ permissions:
       - wgrp.command.removeregion
   wgrp.*:
     description: Alias for wgrp.admin
+    default: false
   wgrp.command.wgrpbase:
     description: Access for /wgrp command
   wgrp.command.addregion:
@@ -31,6 +38,7 @@ permissions:
     description: Access for /wgrp reload command
   wgrp.regionprotect:
     description: Bypass region protect
+    default: false
   wgrp.notify.admin:
     description: See notifies for admins
 

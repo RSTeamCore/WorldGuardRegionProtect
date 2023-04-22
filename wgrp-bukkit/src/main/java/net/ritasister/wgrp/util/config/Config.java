@@ -2,14 +2,11 @@ package net.ritasister.wgrp.util.config;
 
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.rslibs.annotation.CanRecover;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,39 +20,52 @@ public class Config {
     private final WGRPBukkitPlugin wgrpBukkitPlugin;
 
     @CanRecover
-    private HashMap<String, List<String>> regionProtect;
+    private Map<String, List<String>> regionProtect;
 
     @CanRecover
-    private HashMap<String, List<String>> regionProtectAllow;
+    private Map<String, List<String>> regionProtectAllow;
 
     @CanRecover
-    private HashMap<String, List<String>> regionProtectOnlyBreakAllow;
+    private Map<String, List<String>> regionProtectOnlyBreakAllow;
 
     @CanRecover
     private String lang;
 
     @CanRecover
     private boolean updateChecker;
+
     @CanRecover
     private List<String> interactType;
 
     @CanRecover
-    private boolean collisionWithVehicle;
+    private List<String> naturalBlockOrItem;
 
     @CanRecover
-    private boolean canSitAsPassengerInVehicle;
+    private boolean denyCollisionWithVehicle;
 
     @CanRecover
-    private boolean canDamageVehicle;
+    private boolean denySitAsPassengerInVehicle;
 
     @CanRecover
-    private boolean canTakeLecternBook;
+    private boolean denyDamageVehicle;
+
+    @CanRecover
+    private boolean denyTakeLecternBook;
 
     @CanRecover
     private boolean denyWaterFlowToRegion;
 
     @CanRecover
     private boolean denyLavaFlowToRegion;
+
+    @CanRecover
+    private boolean denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot;
+
+    @CanRecover
+    private boolean denyStonecutterRecipeSelect;
+
+    @CanRecover
+    private boolean denyLoomPatternSelect;
 
     @CanRecover
     private List<String> spyCommandList;
@@ -171,10 +181,14 @@ public class Config {
             //End getting regions
 
             interactType = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.interactType");
-            collisionWithVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.collisionWithVehicle");
-            canSitAsPassengerInVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle");
-            canDamageVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canDamageVehicle");
-            canTakeLecternBook = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canTakeLecternBook");
+            naturalBlockOrItem = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.naturalBlockOrItem");
+            denyCollisionWithVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyCollisionWithVehicle");
+            denySitAsPassengerInVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle");
+            denyDamageVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canDamageVehicle");
+            denyTakeLecternBook = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyTakeLecternBook");
+            denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot");
+            denyStonecutterRecipeSelect = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyStonecutterRecipeSelect");
+            denyLoomPatternSelect = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyLoomPatternSelect");
             denyWaterFlowToRegion = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion");
             denyLavaFlowToRegion = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.other.denyLavaFlowToRegion");
 
@@ -232,10 +246,24 @@ public class Config {
                                     "boat_spruce", "boat_birch", "boat_jungle",
                                     "boat_acacia", "boat_dark_oak", "bucket",
                                     "water_bucket", "lava_bucket");
-                            case "collisionWithVehicle" -> collisionWithVehicle = true;
-                            case "canSitAsPassengerInVehicle" -> canSitAsPassengerInVehicle = true;
-                            case "canDamageVehicle" -> canDamageVehicle = true;
-                            case "canTakeLecternBook" -> canTakeLecternBook = true;
+                            case "naturalBlockOrItem" -> naturalBlockOrItem = List.of(
+                                    "oak_sapling", "spruce_sapling", "birch_sapling",
+                                    "jungle_sapling", "acacia_sapling", "dark_oak_sapling",
+                                    "mangrove_propagule", "dead_bush", "fern",
+                                    "azalea", "flowering_azalea",
+                                    "dandelion", "poppy", "blue_orchid", "allium", "azure_bluet",
+                                    "red_tulip", "orange_tulip", "white_tulip", "pink_tulip",
+                                    "oxeye_daisy", "cornflower", "lily_of_the_valley",
+                                    "bamboo", "sugar_cane", "cactus", "wither_rose",
+                                    "crimson_roots", "warped_roots"
+                            );
+                            case "denyCollisionWithVehicle" -> denyCollisionWithVehicle = true;
+                            case "denySitAsPassengerInVehicle" -> denySitAsPassengerInVehicle = true;
+                            case "denyDamageVehicle" -> denyDamageVehicle = true;
+                            case "denyTakeLecternBook" -> denyTakeLecternBook = true;
+                            case "denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot" -> denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot = true;
+                            case "denyStonecutterRecipeSelect" -> denyStonecutterRecipeSelect = true;
+                            case "denyLoomPatternSelect" -> denyLoomPatternSelect = true;
 
                             case "cmdWe" -> cmdWe = List.of(
                                     "//set", "//replace", "//overlay",
@@ -299,29 +327,29 @@ public class Config {
 
     public boolean getUpdateChecker() { return updateChecker; }
 
-    public HashMap<String, List<String>> getRegionProtectMap() {
+    public Map<String, List<String>> getRegionProtectMap() {
         return regionProtect;
     }
 
-    public HashMap<String, List<String>> getRegionProtectAllowMap() {
+    public Map<String, List<String>> getRegionProtectAllowMap() {
         return regionProtectAllow;
     }
 
-    public HashMap<String, List<String>> getRegionProtectOnlyBreakAllowMap() {
+    public Map<String, List<String>> getRegionProtectOnlyBreakAllowMap() {
         return regionProtectOnlyBreakAllow;
     }
 
-    public void setRegionProtectMap(@NotNull HashMap<String, List<String>> value) {
+    public void setRegionProtectMap(@NotNull Map<String, List<String>> value) {
         regionProtect = value;
         saveConfig();
     }
 
-    public void setRegionProtectAllowMap(@NotNull HashMap<String, List<String>> value) {
+    public void setRegionProtectAllowMap(@NotNull Map<String, List<String>> value) {
         regionProtectAllow = value;
         saveConfig();
     }
 
-    public void setRegionProtectOnlyBreakAllow(@NotNull HashMap<String, List<String>> value) {
+    public void setRegionProtectOnlyBreakAllow(@NotNull Map<String, List<String>> value) {
         regionProtectOnlyBreakAllow = value;
         saveConfig();
     }
@@ -330,22 +358,37 @@ public class Config {
         return interactType;
     }
 
-    public boolean getCollisionWithVehicle() {
-        return collisionWithVehicle;
+    public List<String> getNaturalBlockOrItem() {
+        return naturalBlockOrItem;
     }
 
-    public boolean getCanSitAsPassengerInVehicle() {
-        return canSitAsPassengerInVehicle;
+    public boolean isDenyCollisionWithVehicle() {
+        return denyCollisionWithVehicle;
     }
 
-    public boolean getCanDamageVehicle() {
-        return canDamageVehicle;
+    public boolean isDenySitAsPassengerInVehicle() {
+        return denySitAsPassengerInVehicle;
     }
 
-    public boolean getCanTakeLecternBook() {
-        return canTakeLecternBook;
+    public boolean isDenyDamageVehicle() {
+        return denyDamageVehicle;
     }
 
+    public boolean isDenyTakeLecternBook() {
+        return denyTakeLecternBook;
+    }
+
+    public boolean isDenyTakeOrPlaceNaturalBlockOrItemIOFlowerPot() {
+        return denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot;
+    }
+
+    public boolean isDenyStonecutterRecipeSelect() {
+        return denyStonecutterRecipeSelect;
+    }
+
+    public boolean isDenyLoomPatternSelect() {
+        return denyLoomPatternSelect;
+    }
 
     public boolean isDenyWaterFlowToRegion() { return denyWaterFlowToRegion; }
 
@@ -435,10 +478,14 @@ public class Config {
             }
 
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.interactType", interactType);
-            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.collisionWithVehicle", collisionWithVehicle);
-            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle", canSitAsPassengerInVehicle);
-            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canDamageVehicle", canDamageVehicle);
-            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.canTakeLecternBook", canTakeLecternBook);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.naturalBlockOrItem", naturalBlockOrItem);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denydenyCollisionWithVehicle", denyCollisionWithVehicle);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denySitAsPassengerInVehicle", denySitAsPassengerInVehicle);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyDamageVehicle", denyDamageVehicle);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyTakeLecternBook", denyTakeLecternBook);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot", denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyStonecutterRecipeSelect", denyStonecutterRecipeSelect);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyLoomPatternSelect", denyLoomPatternSelect);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion", denyWaterFlowToRegion);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.other.denyLavaFlowToRegion", denyLavaFlowToRegion);
 
@@ -551,8 +598,4 @@ public class Config {
             return intervalReload;
         }
     }
-
-    @Target(ElementType.FIELD)
-    @Retention(RetentionPolicy.RUNTIME)
-    private @interface CanRecover {}
 }
