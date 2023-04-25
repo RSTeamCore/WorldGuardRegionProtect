@@ -7,6 +7,7 @@ import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.Bukkit;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -64,13 +65,12 @@ public class RSApi {
             for (String cmd : wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandList()) {
                 if (cmd.equalsIgnoreCase(senderCommand.toLowerCase()) && wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
                     player.playSound(player.getLocation(), wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
-                    player.sendMessage(wgRegionProtect.getWgrpContainer()
+                    wgRegionProtect.getWgrpContainer()
                             .getMessages()
                             .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
-                            .toString()
                             .replace("<player>", playerName)
                             .replace("<cmd>", cmd)
-                            .replace("<region>", regionName));
+                            .replace("<region>", regionName).send(player);
                 }
             }
         }
@@ -90,13 +90,13 @@ public class RSApi {
         if (wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyConsoleEnable()) {
             for (String cmd : wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandList()) {
                 if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-                    Bukkit.getConsoleSender().sendMessage(wgRegionProtect.getWgrpContainer()
+                    ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
+                    wgRegionProtect.getWgrpContainer()
                             .getMessages()
                             .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
-                            .toString()
                             .replace("<player>", playerName)
                             .replace("<cmd>", cmd)
-                            .replace("<region>", regionName));
+                            .replace("<region>", regionName).send(consoleSender);
                 }
             }
         }
@@ -129,17 +129,16 @@ public class RSApi {
                 suspectPlayer,
                 UtilPermissions.SPY_INSPECT_FOR_SUSPECT
         ) && wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminEnable()) {
-            admin.sendMessage(wgRegionProtect.getWgrpContainer()
+            wgRegionProtect.getWgrpContainer()
                     .getMessages()
                     .get("messages.Notify.sendAdminInfoIfActionInRegion")
-                    .toString()
                     .replace("<player>", suspectName)
                     .replace("<action>", action.getAction())
                     .replace("<region>", regionName)
                     .replace("<x>", String.valueOf(x))
                     .replace("<y>", String.valueOf(y))
                     .replace("<z>", String.valueOf(z))
-                    .replace("<world>", world));
+                    .replace("<world>", world).send(admin);
         }
     }
 
