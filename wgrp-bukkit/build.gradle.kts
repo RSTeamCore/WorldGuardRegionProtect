@@ -53,7 +53,7 @@ dependencies {
     //Paper 1.19.4
     compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
     //Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.10")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20-RC")
     //PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.3")
     //WorldGuard 7+
@@ -71,7 +71,7 @@ dependencies {
     implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
 
     //Annotations
-    implementation("org.jetbrains:annotations:23.1.0")
+    implementation("org.jetbrains:annotations:24.0.1")
     implementation("org.projectlombok:lombok:1.18.26")
     implementation("aopalliance:aopalliance:1.0")
 
