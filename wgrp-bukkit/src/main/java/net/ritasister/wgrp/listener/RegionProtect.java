@@ -128,9 +128,8 @@ public class RegionProtect implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
-        if (!wgrpContainer.getRsApi().isPlayerListenerPermission(
-                e.getPlayer(),
-                UtilPermissions.PERMISSION_STAR) || e.getPlayer().isOp()) {
+        if (wgrpContainer.getRsApi().isPlayerListenerPermission(
+                e.getPlayer(), UtilPermissions.PERMISSION_STAR) || e.getPlayer().isOp()) {
             wgrpContainer.getUpdateNotify().checkUpdateNotify(
                     wgrpContainer.getPluginMeta(),
                     e.getPlayer(),
@@ -275,13 +274,13 @@ public class RegionProtect implements Listener {
             if (!(attacker instanceof Player)) {
                 switch (entity.getType()) {
                     case ARMOR_STAND, ENDER_CRYSTAL, ITEM_FRAME, GLOW_ITEM_FRAME, TROPICAL_FISH, AXOLOTL,
-                            TURTLE, FOX -> e.setCancelled(true);
+                            TURTLE, FOX, SNIFFER, CAMEL -> e.setCancelled(true);
                 }
             } else if (!wgrpContainer.getRsApi().isPlayerListenerPermission(
                     (Player) attacker, UtilPermissions.REGION_PROTECT)) {
                 switch (entity.getType()) {
                     case ARMOR_STAND, ENDER_CRYSTAL, ITEM_FRAME, GLOW_ITEM_FRAME, TROPICAL_FISH, AXOLOTL,
-                            TURTLE, FOX -> e.setCancelled(true);
+                            TURTLE, FOX, SNIFFER, CAMEL-> e.setCancelled(true);
                 }
             }
         }
