@@ -8,17 +8,19 @@ plugins {
     kotlin("jvm") version "1.8.0"
 }
 
+val javaVersion = 17
+
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(javaVersion))
 }
 
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = javaVersion.toString()
 }
 val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = javaVersion.toString()
 }
 
 defaultTasks("clean", "build")
@@ -120,7 +122,7 @@ tasks {
     shadowJar {
         dependencies {
             //Main need libs from us API
-            include(dependency(":wgrp-api"))
+            include(dependency(":wgrp-api:"))
             include(dependency("net.rsteamcore:"))
             //Shaded components for using bstats
             include(dependency("org.bstats:"))
