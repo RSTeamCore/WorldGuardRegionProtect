@@ -48,8 +48,6 @@ import java.util.Set;
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class RegionProtect implements Listener {
 
-    private final WGRPContainer wgrpContainer;
-
     static final Set<String> REGION_COMMANDS_NAME = Set.of(
             "/rg",
             "/region",
@@ -60,37 +58,24 @@ public class RegionProtect implements Listener {
     );
     static final Set<String> REGION_EDIT_ARGS = Set.of("f", "flag");
     static final Set<String> REGION_EDIT_ARGS_FLAGS = Set.of("-f", "-u", "-n", "-g", "-a");
+    private final WGRPContainer wgrpContainer;
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyBreak(@NotNull BlockBreakEvent e) {
         Player player = e.getPlayer();
         Location location = e.getBlock().getLocation();
-        String regionName = wgrpContainer.getRsRegion().getProtectRegionName(location);
         if (wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectAllowMap())
                 || wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectOnlyBreakAllowMap())) {
             e.setCancelled(false);
         } else if (wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectMap())
                 && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
-            if (wgrpContainer.getConfig().getRegionMessageProtect()) {
-                wgrpContainer.getMessages().get("messages.ServerMsg.wgrpMsg").send(player);
-            }
+            sendMessage(player);
         } else if (wgrpContainer.getRsRegion().checkStandingRegion(location)
                 && wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
-            if (wgrpContainer.getSpyLog().contains(player.getPlayerProfile().getId())) {
-                wgrpContainer.getRsApi().notifyIfActionInRegion(
-                        player, player, player.getPlayerProfile().getName(), RegionAction.BREAK, regionName,
-                        e.getBlock().getX(), e.getBlock().getY(), e.getBlock().getZ(), e.getBlock().getWorld().getName()
-                );
-            }
-            if (wgrpContainer.getConfig().getDataBaseEnable()) {
-                wgrpContainer.getRsStorage().getDataSource().setLogAction(
-                        player.getPlayerProfile().getName(), player.getPlayerProfile().getId(),
-                        System.currentTimeMillis(), RegionAction.BREAK,
-                        regionName, e.getBlock().getWorld().getName(), e.getBlock().getX(),
-                        e.getBlock().getY(), e.getBlock().getZ()
-                );
-            }
+
+            final RegionAction regionAction = RegionAction.BREAK;
+            spyMethod(e.getBlock(), player, location, regionAction);
         }
     }
 
@@ -98,31 +83,46 @@ public class RegionProtect implements Listener {
     private void denyPlace(@NotNull BlockPlaceEvent e) {
         Player player = e.getPlayer();
         Location location = e.getBlock().getLocation();
-        String regionName = wgrpContainer.getRsRegion().getProtectRegionName(location);
         if (wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectAllowMap())) {
             e.setCancelled(false);
         } else if (wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectMap())
                 && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
-            if (wgrpContainer.getConfig().getRegionMessageProtect()) {
-                wgrpContainer.getMessages().get("messages.ServerMsg.wgrpMsg").send(player);
-            }
+            sendMessage(player);
         } else if (wgrpContainer.getRsRegion().checkStandingRegion(location)
                 && wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
-            if (wgrpContainer.getSpyLog().contains(player.getPlayerProfile().getId())) {
-                wgrpContainer.getRsApi().notifyIfActionInRegion(
-                        player, player, player.getPlayerProfile().getName(), RegionAction.PLACE, regionName,
-                        e.getBlock().getX(), e.getBlock().getY(), e.getBlock().getZ(), e.getBlock().getWorld().getName()
-                );
-            }
-            if (wgrpContainer.getConfig().getDataBaseEnable()) {
-                wgrpContainer.getRsStorage().getDataSource().setLogAction(
-                        player.getPlayerProfile().getName(), player.getPlayerProfile().getId(),
-                        System.currentTimeMillis(), RegionAction.PLACE,
-                        regionName, e.getBlock().getWorld().getName(), e.getBlock().getX(),
-                        e.getBlock().getY(), e.getBlock().getZ()
-                );
-            }
+
+            final RegionAction regionAction = RegionAction.PLACE;
+            spyMethod(e.getBlock(), player, location, regionAction);
+        }
+    }
+
+    private void spyMethod(Block block, @NotNull Player player, Location location, RegionAction regionAction) {
+        if (wgrpContainer.getSpyLog().contains(player.getPlayerProfile().getId())) {
+            wgrpContainer.getRsApi().notifyIfActionInRegion(
+                    player,
+                    player,
+                    player.getPlayerProfile().getName(),
+                    regionAction,
+                    wgrpContainer.getRsRegion().getProtectRegionName(location),
+                    block.getX(),
+                    block.getY(),
+                    block.getZ(),
+                    block.getWorld().getName()
+            );
+        }
+        if (wgrpContainer.getConfig().getDataBaseEnable()) {
+            wgrpContainer.getRsStorage().getDataSource().setLogAction(
+                    player.getPlayerProfile().getName(), player.getPlayerProfile().getId(),
+                    System.currentTimeMillis(), regionAction,
+                    wgrpContainer.getRsRegion().getProtectRegionName(location), block.getWorld().getName(), block.getX(),
+                    block.getY(), block.getZ());
+        }
+    }
+
+    private void sendMessage(Player player) {
+        if (wgrpContainer.getConfig().getRegionMessageProtect()) {
+            wgrpContainer.getMessages().get("messages.ServerMsg.wgrpMsg").send(player);
         }
     }
 
@@ -133,7 +133,8 @@ public class RegionProtect implements Listener {
             wgrpContainer.getUpdateNotify().checkUpdateNotify(
                     wgrpContainer.getPluginMeta(),
                     e.getPlayer(),
-                    wgrpContainer.getConfig().getUpdateChecker());
+                    wgrpContainer.getConfig().getUpdateChecker()
+            );
         }
     }
 
@@ -211,7 +212,10 @@ public class RegionProtect implements Listener {
         Player player = e.getPlayer();
         Location location = e.getStonecutterInventory().getLocation();
         if (wgrpContainer.getConfig().isDenyStonecutterRecipeSelect()) {
-            if (wgrpContainer.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), wgrpContainer.getConfig().getRegionProtectMap())
+            if (wgrpContainer.getRsRegion().checkStandingRegion(
+                    Objects.requireNonNull(location),
+                    wgrpContainer.getConfig().getRegionProtectMap()
+            )
                     && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
@@ -225,7 +229,8 @@ public class RegionProtect implements Listener {
         if (wgrpContainer.getConfig().isDenyLoomPatternSelect()) {
             if (wgrpContainer.getRsRegion().checkStandingRegion(
                     Objects.requireNonNull(location),
-                    wgrpContainer.getConfig().getRegionProtectMap())
+                    wgrpContainer.getConfig().getRegionProtectMap()
+            )
                     && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
@@ -280,7 +285,7 @@ public class RegionProtect implements Listener {
                     (Player) attacker, UtilPermissions.REGION_PROTECT)) {
                 switch (entity.getType()) {
                     case ARMOR_STAND, ENDER_CRYSTAL, ITEM_FRAME, GLOW_ITEM_FRAME, TROPICAL_FISH, AXOLOTL,
-                            TURTLE, FOX, SNIFFER, CAMEL-> e.setCancelled(true);
+                            TURTLE, FOX, SNIFFER, CAMEL -> e.setCancelled(true);
                 }
             }
         }
@@ -388,7 +393,10 @@ public class RegionProtect implements Listener {
         Player player = e.getPlayer();
         Location loc = entity.getLocation();
         if (wgrpContainer.getRsRegion().checkStandingRegion(loc, wgrpContainer.getConfig().getRegionProtectMap())) {
-            if (!wgrpContainer.getRsApi().isPlayerListenerPermission(Objects.requireNonNull(player), UtilPermissions.REGION_PROTECT)) {
+            if (!wgrpContainer.getRsApi().isPlayerListenerPermission(
+                    Objects.requireNonNull(player),
+                    UtilPermissions.REGION_PROTECT
+            )) {
                 switch (player.getInventory().getItemInMainHand().getType()) {
                     case ITEM_FRAME, GLOW_ITEM_FRAME, PAINTING -> e.setCancelled(true);
                 }
@@ -397,7 +405,7 @@ public class RegionProtect implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    private void denyExplode(@NotNull EntityExplodeEvent e) {
+    private void denyExplodeEntity(@NotNull EntityExplodeEvent e) {
         Entity entity = e.getEntity();
         EntityType entityType = e.getEntityType();
         Location loc = entity.getLocation();
@@ -436,10 +444,22 @@ public class RegionProtect implements Listener {
         String cmd = e.getMessage().split(" ")[0].toLowerCase();
         if (!wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             if (this.wgrpContainer.getCommandWE().cmdWE(s[0]) && !this.wgrpContainer.getWg().checkIntersection(player)
-                    || this.wgrpContainer.getCommandWE().cmdWE_C(s[0]) && !this.wgrpContainer.getWg().checkCIntersection(player, s)
-                    || this.wgrpContainer.getCommandWE().cmdWE_P(s[0]) && !this.wgrpContainer.getWg().checkPIntersection(player, s)
-                    || this.wgrpContainer.getCommandWE().cmdWE_S(s[0]) && !this.wgrpContainer.getWg().checkSIntersection(player, s)
-                    || this.wgrpContainer.getCommandWE().cmdWE_U(s[0]) && !this.wgrpContainer.getWg().checkUIntersection(player, s)) {
+                    || this.wgrpContainer.getCommandWE().cmdWE_C(s[0]) && !this.wgrpContainer.getWg().checkCIntersection(
+                    player,
+                    s
+            )
+                    || this.wgrpContainer.getCommandWE().cmdWE_P(s[0]) && !this.wgrpContainer.getWg().checkPIntersection(
+                    player,
+                    s
+            )
+                    || this.wgrpContainer.getCommandWE().cmdWE_S(s[0]) && !this.wgrpContainer.getWg().checkSIntersection(
+                    player,
+                    s
+            )
+                    || this.wgrpContainer.getCommandWE().cmdWE_U(s[0]) && !this.wgrpContainer.getWg().checkUIntersection(
+                    player,
+                    s
+            )) {
                 if (wgrpContainer.getConfig().getRegionMessageProtectWe()) {
                     wgrpContainer.getMessages().get("messages.ServerMsg.wgrpMsgWe").send(player);
                     e.setCancelled(true);
@@ -450,7 +470,11 @@ public class RegionProtect implements Listener {
                         cmd,
                         wgrpContainer.getRsRegion().getProtectRegionNameBySelection(player)
                 );
-                wgrpContainer.getRsApi().notify(playerName, cmd, wgrpContainer.getRsRegion().getProtectRegionNameBySelection(player));
+                wgrpContainer.getRsApi().notify(
+                        playerName,
+                        cmd,
+                        wgrpContainer.getRsRegion().getProtectRegionNameBySelection(player)
+                );
             }
             if (this.wgrpContainer.getCommandWE().cmdWE_CP(s[0])) {
                 e.setMessage(e.getMessage().replace("-o", ""));
@@ -463,7 +487,11 @@ public class RegionProtect implements Listener {
                         cmd,
                         wgrpContainer.getRsRegion().getProtectRegionNameBySelection(player)
                 );
-                wgrpContainer.getRsApi().notify(playerName, cmd, wgrpContainer.getRsRegion().getProtectRegionNameBySelection(player));
+                wgrpContainer.getRsApi().notify(
+                        playerName,
+                        cmd,
+                        wgrpContainer.getRsRegion().getProtectRegionNameBySelection(player)
+                );
             }
             if (REGION_COMMANDS_NAME.contains(s[0]) && s.length > 2) {
                 for (String list : wgrpContainer.getConfig().getRegionProtectMap().get(location.getWorld().getName())) {
