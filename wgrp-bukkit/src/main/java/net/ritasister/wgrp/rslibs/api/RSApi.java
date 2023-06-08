@@ -12,7 +12,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -150,7 +149,7 @@ public class RSApi {
      * @return {@code true} if server version compatible, {@code false} if not
      */
     public boolean isVersionSupported() {
-        List<String> supportedVersions = Arrays.asList("v1_20_R1");
+        List<String> supportedVersions = List.of("v1_20_R1");
         String supportedVersionRange = "1.20";
         String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
