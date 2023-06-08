@@ -150,8 +150,8 @@ public class RSApi {
      * @return {@code true} if server version compatible, {@code false} if not
      */
     public boolean isVersionSupported() {
-        List<String> supportedVersions = Arrays.asList("v1_19_R1", "v1_19_R2", "v1_19_R3");
-        String supportedVersionRange = "1.19 - 1.19.4";
+        List<String> supportedVersions = Arrays.asList("v1_20_R1");
+        String supportedVersionRange = "1.20";
         String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
             long time = System.currentTimeMillis();
