@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("xyz.jpenilla.run-paper") version "2.0.1"
-    id("io.papermc.paperweight.userdev") version "1.5.4"
+    id("xyz.jpenilla.run-paper") version "2.1.0"
+    id("io.papermc.paperweight.userdev") version "1.5.5"
     kotlin("jvm") version "1.8.0"
 }
 
@@ -49,23 +49,23 @@ dependencies {
     //Api for this plugin
     api(project(":wgrp-api"))
     //Alternate run-task Paper if runServer is don't updated to the new version of MC.
-    paperweight.foliaDevBundle("1.19.4-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
-    //Paper 1.19.4
+    //Paper 1.20...
     compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
     //Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20-RC")
     //PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.3")
     //WorldGuard 7+
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
     //Kyori and MiniMessage
-    compileOnly("net.kyori:adventure-api:4.13.0")
-    implementation("net.kyori:adventure-text-minimessage:4.13.0")
+    compileOnly("net.kyori:adventure-api:4.14.0")
+    implementation("net.kyori:adventure-text-minimessage:4.14.0")
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
-    implementation("org.bstats:bstats-bukkit:3.0.1")
+    implementation("org.bstats:bstats-bukkit:3.0.2")
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:3.1.2")
     //DI google guice
