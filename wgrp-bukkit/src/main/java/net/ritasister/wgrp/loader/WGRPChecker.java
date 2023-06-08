@@ -32,7 +32,7 @@ public class WGRPChecker {
             wgRegionProtect.getWgrpContainer().isPaper = true;
         } catch (ClassNotFoundException ignored) {
             WGRPContainer.getLogger().info(String.format("""
-                            Using paper? %s
+                            You are not using a paper? %s
                             Better if you are running your server on paper or other forks of paper.
                             Please don't use any untrusted forks.
                             """, wgRegionProtect.getWgrpContainer().isPaper));
@@ -50,7 +50,7 @@ public class WGRPChecker {
                      This is a test build. This building may be unstable!
                      When reporting a bug:
                      Use the issue tracker! Don't report bugs in the reviews.
-                     Please search for duplicates before reporting a new https://github.com/RSTeamCore/wgRegionProtect/issues!
+                     Please search for duplicates before reporting a new https://github.com/RSTeamCore/WorldGuardRegionProtect/issues!
                      Provide as much information as possible.
                      Provide your WorldGuardRegionProtect version and Spigot/Paper version.
                      Provide any stack traces or "errors" using pastebin.
