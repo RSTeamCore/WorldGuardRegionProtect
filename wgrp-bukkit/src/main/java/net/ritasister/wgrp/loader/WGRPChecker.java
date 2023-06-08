@@ -17,9 +17,9 @@ public class WGRPChecker {
     void checkStartUpVersionServer() {
         if (!wgRegionProtect.getWgrpContainer().getRsApi().isVersionSupported()) {
             WGRPContainer.getLogger().error("""
-                    This plugin version works only on 1.19 - 1.19.4!
+                    This plugin version works only on 1.20!
                     Please read this thread: https://www.spigotmc.org/resources/81321/
-                    The main post on spigotmc and please download the correct version for your server version.
+                    The main post on spigotmc and please download the correct version of plugin for your server version.
                     """);
             wgRegionProtect.getWgrpContainer().getPluginManager().disablePlugin(wgRegionProtect.getWGRPBukkitPlugin());
         }
