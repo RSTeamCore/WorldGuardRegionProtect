@@ -4,9 +4,9 @@ import lombok.Getter;
 import net.ritasister.wgrp.WGRPBukkitPlugin;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.util.config.AbstractInitMessage;
 import net.ritasister.wgrp.util.config.Config;
-import net.ritasister.wgrp.util.config.abstracts.AbstractInitMessage;
-import net.ritasister.wgrp.util.config.impl.InitConfigImpl;
+import net.ritasister.wgrp.util.config.InitConfigImpl;
 import net.rsteamcore.config.Container;
 
 public class ConfigLoader extends InitConfigImpl<WorldGuardRegionProtect> {
