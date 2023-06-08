@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.loader.InitializationImpl;
-import net.ritasister.wgrp.loader.LoaderCommandsAndListenersImpl;
+import net.ritasister.wgrp.loader.LoadHandlersImpl;
 import net.ritasister.wgrp.loader.WGRPInitialization;
 import net.ritasister.wgrp.loader.WGRPLoaderCommandsAndListeners;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
@@ -25,9 +25,8 @@ public class WorldGuardRegionProtect {
         InitializationImpl<WorldGuardRegionProtect> wgrpInitialization = new WGRPInitialization();
         wgrpInitialization.wgrpInit(this);
 
-        LoaderCommandsAndListenersImpl<WorldGuardRegionProtect> loader = new WGRPLoaderCommandsAndListeners();
-        loader.loadCommands(this);
-        loader.loadListeners(this);
+        LoadHandlersImpl<WorldGuardRegionProtect> loader = new WGRPLoaderCommandsAndListeners();
+        loader.loadHandlers(this);
     }
 
     public void unLoad() {
