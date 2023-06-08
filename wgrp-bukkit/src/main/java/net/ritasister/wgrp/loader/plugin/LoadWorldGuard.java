@@ -4,7 +4,7 @@ import net.ritasister.wgrp.WGRPContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-public class LoadWorldGuard implements LoadPlugin {
+public class LoadWorldGuard implements LoadPluginManager {
 
     @Override
     public void loadPlugin() {

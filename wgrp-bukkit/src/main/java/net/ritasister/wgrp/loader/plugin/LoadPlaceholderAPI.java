@@ -9,10 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 @RequiredArgsConstructor(onConstructor_ = @Inject)
-public class LoadPlaceholderAPI implements LoadPlugin {
+public class LoadPlaceholderAPI implements LoadPluginManager {
 
     private final WorldGuardRegionProtect wgRegionProtect;
 
+    @Override
     public void loadPlugin() {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI");
         if (plugin != null && plugin.isEnabled()) {
