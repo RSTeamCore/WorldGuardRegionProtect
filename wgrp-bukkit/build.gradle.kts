@@ -48,14 +48,15 @@ repositories {
 dependencies {
     //Api for this plugin
     api(project(":wgrp-api"))
-    //Alternate run-task Paper if runServer is don't updated to the new version of MC.
-    paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
-    //Paper 1.20...
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
-    //Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20-RC")
+
+    //Paper
+    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT")
+    //Alternate run-task Paper if runServer is don't updated to the new version of MC.
+    paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
+
+    //Plugins
     //PlaceholderAPI
     compileOnly("me.clip:placeholderapi:2.11.3")
     //WorldGuard 7+
@@ -63,6 +64,8 @@ dependencies {
     //Kyori and MiniMessage
     compileOnly("net.kyori:adventure-api:4.14.0")
     implementation("net.kyori:adventure-text-minimessage:4.14.0")
+
+    //Libs
     //HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.bstats:bstats-bukkit:3.0.2")
@@ -71,12 +74,12 @@ dependencies {
     //DI google guice
     implementation("com.google.inject:guice:5.1.0")
     implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
-
+    //Kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20-RC")
     //Annotations
     implementation("org.jetbrains:annotations:24.0.1")
     implementation("org.projectlombok:lombok:1.18.26")
     implementation("aopalliance:aopalliance:1.0")
-
     annotationProcessor("org.projectlombok:lombok:1.18.26")
     implementation("org.projectlombok:lombok:1.18.26")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.26")
@@ -139,7 +142,7 @@ tasks {
 
 tasks {
     runServer {
-        minecraftVersion("1.19.4")
+        minecraftVersion("1.20")
         pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
     }
