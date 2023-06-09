@@ -115,6 +115,10 @@ wgRegionProtect:
       - dark_oak_chest_boat
       - mangrove_boat
       - mangrove_chest_boat
+      - cherry_boat
+      - cherry_chest_boat
+      - bamboo_raft
+      - bamboo_chest_raft
       - bucket
       - water_bucket
       - lava_bucket
@@ -154,19 +158,22 @@ wgRegionProtect:
       - crimson_roots
       - warped_roots
     #--------------------------------------------------------------------------------------
-    # collisionWithVehicle — whether the player can collide with a vehicle. (Boat, Wagon, etc.)
-    # canSitAsPassengerInVehicle — whether the player can sit as a passenger in the vehicle.
-    # canDamageVehicle — whether the player can damage the vehicle.
-    # canTakeLecternBook — whether the player can take a book from the pulpit.
+    # denyCollisionWithVehicle — whether the player can collide with a vehicle. (Boat, Wagon, etc.)
+    # denySitAsPassengerInVehicle — whether the player can sit as a passenger in the vehicle.
+    # denyDamageVehicle — whether the player can damage the vehicle.
+    # denyTakeLecternBook — whether the player can take a book from the pulpit.
+    # denyStonecutterRecipeSelect- whether the player can use stonecutter for any recipe.
+    # denyLoomPatternSelect - whether the player can use loom for select pattern for banner.
+    # denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot - whether the player can manipulate with flower pot.
     #--------------------------------------------------------------------------------------
     player:
       denyCollisionWithVehicle: true
       denySitAsPassengerInVehicle: true
       denyDamageVehicle: true
-      denyTakenOrPlaceNaturalBlockOrItemIOFlowerPot: true
       denyTakeLecternBook: true
       denyStonecutterRecipeSelect: true
       denyLoomPatternSelect: true
+      denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot: true
     #--------------------------------------------------------------------------------------
     # denyWaterFlowToRegion — Whether to allow water to flow into protected regions.
     # denyLavaFlowToRegion — Whether to allow lava to flow into protected regions.
