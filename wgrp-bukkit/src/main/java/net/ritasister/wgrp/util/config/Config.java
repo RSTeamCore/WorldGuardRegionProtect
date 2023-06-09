@@ -184,8 +184,8 @@ public class Config {
             interactType = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.interactType");
             naturalBlockOrItem = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.naturalBlockOrItem");
             denyCollisionWithVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyCollisionWithVehicle");
-            denySitAsPassengerInVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canSitAsPassengerInVehicle");
-            denyDamageVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.canDamageVehicle");
+            denySitAsPassengerInVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denySitAsPassengerInVehicle");
+            denyDamageVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyDamageVehicle");
             denyTakeLecternBook = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyTakeLecternBook");
             denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot");
             denyStonecutterRecipeSelect = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyStonecutterRecipeSelect");
