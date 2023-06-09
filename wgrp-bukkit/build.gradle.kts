@@ -99,9 +99,6 @@ tasks {
     processResources {
         filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
     }
-    jar {
-        archiveFileName.set("${rootProject.name}-Bukkit-no-shade-${project.version}.${archiveExtension.getOrElse("jar")}")
-    }
     shadowJar {
         archiveFileName.set("${rootProject.name}-Bukkit-${project.version}.${archiveExtension.getOrElse("jar")}")
     }
