@@ -130,10 +130,7 @@ public class RegionProtect implements Listener {
     private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
         if (wgrpContainer.getRsApi().isPlayerListenerPermission(
                 e.getPlayer(), UtilPermissions.PERMISSION_STAR) || e.getPlayer().isOp()) {
-            wgrpContainer.getUpdateNotify().checkUpdateNotify(
-                    wgrpContainer.getPluginMeta(),
-                    e.getPlayer(),
-                    wgrpContainer.getConfig().getUpdateChecker()
+            wgrpContainer.getUpdateNotify().checkUpdateNotify(wgrpContainer.getPluginMeta(), e.getPlayer(), wgrpContainer.getConfig().getUpdateChecker()
             );
         }
     }
@@ -144,10 +141,7 @@ public class RegionProtect implements Listener {
             Entity entity = e.getEntity();
             Entity vehicle = e.getVehicle();
             if (entity instanceof Player) {
-                if (wgrpContainer.getRsRegion().checkStandingRegion(
-                        vehicle.getLocation(),
-                        this.wgrpContainer.getConfig().getRegionProtectMap()
-                )
+                if (wgrpContainer.getRsRegion().checkStandingRegion(vehicle.getLocation(), this.wgrpContainer.getConfig().getRegionProtectMap())
                         && wgrpContainer.getRsApi().isEntityListenerPermission(entity, UtilPermissions.REGION_PROTECT)) {
                     if (vehicle instanceof Minecart || vehicle instanceof Boat) {
                         e.setCancelled(true);
@@ -163,10 +157,7 @@ public class RegionProtect implements Listener {
             Entity vehicle = e.getVehicle();
             Entity entered = e.getEntered();
             if (entered instanceof Player) {
-                if (wgrpContainer.getRsRegion().checkStandingRegion(
-                        vehicle.getLocation(),
-                        wgrpContainer.getConfig().getRegionProtectMap()
-                )
+                if (wgrpContainer.getRsRegion().checkStandingRegion(vehicle.getLocation(), wgrpContainer.getConfig().getRegionProtectMap())
                         && wgrpContainer.getRsApi().isEntityListenerPermission(entered, UtilPermissions.REGION_PROTECT)) {
                     if (vehicle instanceof Minecart || vehicle instanceof Boat) {
                         e.setCancelled(true);
@@ -182,10 +173,7 @@ public class RegionProtect implements Listener {
             Entity vehicle = e.getVehicle();
             Entity attacker = e.getAttacker();
             if (attacker instanceof Player) {
-                if (wgrpContainer.getRsRegion().checkStandingRegion(
-                        vehicle.getLocation(),
-                        wgrpContainer.getConfig().getRegionProtectMap()
-                )
+                if (wgrpContainer.getRsRegion().checkStandingRegion(vehicle.getLocation(), wgrpContainer.getConfig().getRegionProtectMap())
                         && wgrpContainer.getRsApi().isEntityListenerPermission(attacker, UtilPermissions.REGION_PROTECT)) {
                     if (vehicle instanceof Minecart || vehicle instanceof Boat) {
                         e.setCancelled(true);
@@ -212,10 +200,7 @@ public class RegionProtect implements Listener {
         Player player = e.getPlayer();
         Location location = e.getStonecutterInventory().getLocation();
         if (wgrpContainer.getConfig().isDenyStonecutterRecipeSelect()) {
-            if (wgrpContainer.getRsRegion().checkStandingRegion(
-                    Objects.requireNonNull(location),
-                    wgrpContainer.getConfig().getRegionProtectMap()
-            )
+            if (wgrpContainer.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), wgrpContainer.getConfig().getRegionProtectMap())
                     && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
@@ -242,10 +227,7 @@ public class RegionProtect implements Listener {
         Player player = e.getPlayer();
         Location location = e.getFlowerpot().getLocation();
         if (wgrpContainer.getConfig().isDenyTakeOrPlaceNaturalBlockOrItemIOFlowerPot()) {
-            if (wgrpContainer.getRsRegion().checkStandingRegion(
-                    Objects.requireNonNull(location),
-                    wgrpContainer.getConfig().getRegionProtectMap()
-            )
+            if (wgrpContainer.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), wgrpContainer.getConfig().getRegionProtectMap())
                     && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 for (String naturalBlockOrItem : wgrpContainer.getConfig().getNaturalBlockOrItem()) {
                     if (!e.isPlacing() && e.getItem().getType() == Material.getMaterial(naturalBlockOrItem.toUpperCase())) {
