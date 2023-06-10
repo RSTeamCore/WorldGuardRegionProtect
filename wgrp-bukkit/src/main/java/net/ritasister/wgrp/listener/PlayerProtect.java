@@ -57,9 +57,7 @@ public class PlayerProtect implements Listener {
             if (wgrpContainer.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), wgrpContainer.getConfig().getRegionProtectMap())
                     && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 for (String naturalBlockOrItem : wgrpContainer.getConfig().getNaturalBlockOrItem()) {
-                    if (!e.isPlacing() && e.getItem().getType() == Material.getMaterial(naturalBlockOrItem.toUpperCase())) {
-                        e.setCancelled(true);
-                    } else {
+                    if (e.getItem().getType() == Material.getMaterial(naturalBlockOrItem.toUpperCase())) {
                         e.setCancelled(true);
                     }
                 }
