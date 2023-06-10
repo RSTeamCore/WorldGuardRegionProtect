@@ -157,6 +157,8 @@ wgRegionProtect:
       - wither_rose
       - crimson_roots
       - warped_roots
+      - cherry_sapling
+      - torchflower
     #--------------------------------------------------------------------------------------
     # denyCollisionWithVehicle — whether the player can collide with a vehicle. (Boat, Wagon, etc.)
     # denySitAsPassengerInVehicle — whether the player can sit as a passenger in the vehicle.
