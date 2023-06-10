@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -22,13 +23,15 @@ public class EntityProtect implements Listener {
 
     private final WGRPContainer wgrpContainer;
 
+    private final Config config = wgrpContainer.getConfig();
+
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyExplodeEntity(@NotNull EntityExplodeEvent e) {
         Entity entity = e.getEntity();
         EntityType entityType = e.getEntityType();
         Location loc = entity.getLocation();
-        if (wgrpContainer.getRsRegion().checkStandingRegion(loc, wgrpContainer.getConfig().getRegionProtectMap())) {
-            if (wgrpContainer.getConfig().getExplodeEntity()) {
+        if (wgrpContainer.getRsRegion().checkStandingRegion(loc, config.getRegionProtectMap())) {
+            if (config.getExplodeEntity()) {
                 switch (entityType) {
                     case PRIMED_TNT, ENDER_CRYSTAL, MINECART_TNT, CREEPER, FIREBALL, WITHER_SKULL -> e.blockList().clear();
                     default -> e.setCancelled(true);
@@ -46,7 +49,7 @@ public class EntityProtect implements Listener {
         Entity entity = e.getEntity();
         Entity attacker = e.getDamager();
         Location location = entity.getLocation();
-        if (wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectMap())) {
+        if (wgrpContainer.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())) {
             if (!(attacker instanceof Player)) {
                 switch (entity.getType()) {
                     case ARMOR_STAND, ENDER_CRYSTAL, ITEM_FRAME, GLOW_ITEM_FRAME, TROPICAL_FISH, AXOLOTL,

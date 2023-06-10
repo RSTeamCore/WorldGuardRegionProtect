@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -24,14 +25,16 @@ public class BlockProtect implements Listener {
 
     private final WGRPContainer wgrpContainer;
 
+    private final Config config = wgrpContainer.getConfig();
+
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyBreak(@NotNull BlockBreakEvent e) {
         Player player = e.getPlayer();
         Location location = e.getBlock().getLocation();
-        if (wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectAllowMap())
-                || wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectOnlyBreakAllowMap())) {
+        if (wgrpContainer.getRsRegion().checkStandingRegion(location, config.getRegionProtectAllowMap())
+                || wgrpContainer.getRsRegion().checkStandingRegion(location, config.getRegionProtectOnlyBreakAllowMap())) {
             e.setCancelled(false);
-        } else if (wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectMap())
+        } else if (wgrpContainer.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
                 && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
             sendMessage(player);
@@ -46,9 +49,9 @@ public class BlockProtect implements Listener {
     private void denyPlace(@NotNull BlockPlaceEvent e) {
         Player player = e.getPlayer();
         Location location = e.getBlock().getLocation();
-        if (wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectAllowMap())) {
+        if (wgrpContainer.getRsRegion().checkStandingRegion(location, config.getRegionProtectAllowMap())) {
             e.setCancelled(false);
-        } else if (wgrpContainer.getRsRegion().checkStandingRegion(location, wgrpContainer.getConfig().getRegionProtectMap())
+        } else if (wgrpContainer.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
                 && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
             sendMessage(player);
@@ -73,7 +76,7 @@ public class BlockProtect implements Listener {
                     block.getWorld().getName()
             );
         }
-        if (wgrpContainer.getConfig().getDataBaseEnable()) {
+        if (config.getDataBaseEnable()) {
             wgrpContainer.getRsStorage().getDataSource().setLogAction(
                     player.getPlayerProfile().getName(), player.getPlayerProfile().getId(),
                     System.currentTimeMillis(), regionAction,
@@ -83,7 +86,7 @@ public class BlockProtect implements Listener {
     }
 
     private void sendMessage(Player player) {
-        if (wgrpContainer.getConfig().getRegionMessageProtect()) {
+        if (config.getRegionMessageProtect()) {
             wgrpContainer.getMessages().get("messages.ServerMsg.wgrpMsg").send(player);
         }
     }
@@ -95,7 +98,7 @@ public class BlockProtect implements Listener {
         Material blockType = block.getType();
         if (blockType == Material.RESPAWN_ANCHOR
                 && wgrpContainer.getRsRegion().checkStandingRegion(
-                location, wgrpContainer.getConfig().getRegionProtectMap())) {
+                location, config.getRegionProtectMap())) {
             e.setCancelled(true);
         }
     }
