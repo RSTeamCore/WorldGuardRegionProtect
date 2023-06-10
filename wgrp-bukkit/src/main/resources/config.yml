@@ -95,6 +95,16 @@ wgRegionProtect:
     interactType:
       - armor_stand
       - end_crystal
+      - bucket
+      - water_bucket
+      - lava_bucket
+      - tropical_fish_bucket
+      - pufferfish_bucket
+      - axolotl_bucket
+      - cod_bucket
+      - salmon_bucket
+      - tadpole_bucket
+    vehicleType:
       - minecart
       - tnt_minecart
       - command_block_minecart
@@ -119,15 +129,6 @@ wgRegionProtect:
       - cherry_chest_boat
       - bamboo_raft
       - bamboo_chest_raft
-      - bucket
-      - water_bucket
-      - lava_bucket
-      - tropical_fish_bucket
-      - pufferfish_bucket
-      - axolotl_bucket
-      - cod_bucket
-      - salmon_bucket
-      - tadpole_bucket
     naturalBlockOrItem:
       - oak_sapling
       - spruce_sapling

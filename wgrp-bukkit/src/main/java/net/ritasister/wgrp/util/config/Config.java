@@ -39,6 +39,9 @@ public class Config {
     private List<String> interactType;
 
     @CanRecover
+    private List<String> vehicleType;
+
+    @CanRecover
     private List<String> naturalBlockOrItem;
 
     @CanRecover
@@ -182,6 +185,7 @@ public class Config {
             //End getting regions
 
             interactType = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.interactType");
+            vehicleType = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.vehicleType");
             naturalBlockOrItem = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.naturalBlockOrItem");
             denyCollisionWithVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyCollisionWithVehicle");
             denySitAsPassengerInVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denySitAsPassengerInVehicle");
@@ -241,12 +245,22 @@ public class Config {
                             case "updateChecker" -> updateChecker = true;
 
                             case "interactType" -> interactType = List.of(
-                                    "armor_stand", "end_crystal", "minecart",
-                                    "explosive_minecart", "command_minecart", "hopper_minecart",
-                                    "storage_minecart", "powered_minecart", "boat",
-                                    "boat_spruce", "boat_birch", "boat_jungle",
-                                    "boat_acacia", "boat_dark_oak", "bucket",
-                                    "water_bucket", "lava_bucket");
+                                    "armor_stand", "end_crystal", "bucket",
+                                    "water_bucket", "lava_bucket", "tropical_fish_bucket",
+                                    "pufferfish_bucket", "axolotl_bucket", "cod_bucket",
+                                    "salmon_bucket", "tadpole_bucket");
+                            case "vehicleType" -> vehicleType = List.of(
+                                    "minecart", "tnt_minecart", "command_block_minecart",
+                                    "hopper_minecart", "chest_minecart", "furnace_minecart",
+                                    "oak_boat", "oak_chest_boat",
+                                    "spruce_boat", "spruce_chest_boat",
+                                    "birch_boat", "birch_chest_boat",
+                                    "jungle_boat", "jungle_chest_boat",
+                                    "acacia_boat", "acacia_chest_boat",
+                                    "dark_oak_boat", "dark_oak_chest_boat",
+                                    "mangrove_boat", "mangrove_chest_boat",
+                                    "cherry_boat", "cherry_chest_boat",
+                                    "bamboo_raft", "bamboo_chest_raft");
                             case "naturalBlockOrItem" -> naturalBlockOrItem = List.of(
                                     "oak_sapling", "spruce_sapling", "birch_sapling",
                                     "jungle_sapling", "acacia_sapling", "dark_oak_sapling",
@@ -256,7 +270,7 @@ public class Config {
                                     "red_tulip", "orange_tulip", "white_tulip", "pink_tulip",
                                     "oxeye_daisy", "cornflower", "lily_of_the_valley",
                                     "bamboo", "sugar_cane", "cactus", "wither_rose",
-                                    "crimson_roots", "warped_roots"
+                                    "crimson_roots", "warped_roots", "cherry_sapling", "torchflower"
                             );
                             case "denyCollisionWithVehicle" -> denyCollisionWithVehicle = true;
                             case "denySitAsPassengerInVehicle" -> denySitAsPassengerInVehicle = true;
@@ -357,6 +371,10 @@ public class Config {
 
     public List<String> getInteractType() {
         return interactType;
+    }
+
+    public List<String> getVehicleType() {
+        return vehicleType;
     }
 
     public List<String> getNaturalBlockOrItem() {
@@ -479,6 +497,7 @@ public class Config {
             }
 
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.interactType", interactType);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.vehicleType", vehicleType);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.naturalBlockOrItem", naturalBlockOrItem);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyCollisionWithVehicle", denyCollisionWithVehicle);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denySitAsPassengerInVehicle", denySitAsPassengerInVehicle);
