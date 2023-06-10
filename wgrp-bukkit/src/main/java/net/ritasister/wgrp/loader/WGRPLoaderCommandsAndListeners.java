@@ -9,12 +9,12 @@ import org.bukkit.plugin.PluginManager;
 public class WGRPLoaderCommandsAndListeners extends LoadHandlersImpl<WorldGuardRegionProtect> {
 
     @Override
-    public void loadHandlers(WorldGuardRegionProtect worldGuardRegionProtect) {
-        AbstractHandler<Void> registerCommands = new CommandHandler(worldGuardRegionProtect);
+    public void loadHandlers(WorldGuardRegionProtect wgRegionProtect) {
+        AbstractHandler<Void> registerCommands = new CommandHandler(wgRegionProtect);
         registerCommands.handle();
 
-        AbstractHandler<PluginManager> registerListeners = new ListenerHandler(worldGuardRegionProtect);
-        registerListeners.handle(worldGuardRegionProtect.getWgrpContainer().getPluginManager());
+        AbstractHandler<PluginManager> registerListeners = new ListenerHandler(wgRegionProtect);
+        registerListeners.handle(wgRegionProtect.getWgrpContainer().getPluginManager());
     }
 
 }

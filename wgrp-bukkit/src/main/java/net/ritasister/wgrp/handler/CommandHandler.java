@@ -14,17 +14,7 @@ public class CommandHandler extends AbstractHandler<Void> {
 
     @Override
     public void handle() {
-        try {
-            new CommandWGRP(wgRegionProtect);
-            WGRPContainer.getLogger().info("All commands registered successfully!");
-        } catch (NullPointerException e) {
-            WGRPContainer.getLogger().error("""
-                    Command cannot be null.
-                    Possible for reason:
-                    - command not set in getCommand(ucl.cmd_name).
-                    - command not set in UtilCommandList.
-                    - command not set in plugin.yml.
-                    """);
-        }
+        new CommandWGRP(wgRegionProtect);
+        WGRPContainer.getLogger().info("All commands registered successfully!");
     }
 }
