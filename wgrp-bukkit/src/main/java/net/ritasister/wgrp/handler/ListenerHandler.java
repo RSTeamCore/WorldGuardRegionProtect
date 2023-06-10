@@ -9,8 +9,11 @@ import net.ritasister.wgrp.listener.MiscProtect;
 import net.ritasister.wgrp.listener.PlayerProtect;
 import net.ritasister.wgrp.listener.ToolsProtect;
 import net.ritasister.wgrp.listener.VehicleProtect;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class ListenerHandler extends AbstractHandler<PluginManager> {
 
@@ -22,27 +25,16 @@ public class ListenerHandler extends AbstractHandler<PluginManager> {
 
     @Override
     public void handle(final @NotNull PluginManager pluginManager) {
-        final BlockProtect blockProtect = new BlockProtect(wgRegionProtect.getWgrpContainer());
-        pluginManager.registerEvents(blockProtect, wgRegionProtect.getWGRPBukkitPlugin());
+        List<Listener> allListeners = List.of(
+                new BlockProtect(wgRegionProtect.getWgrpContainer()),
+                new EntityProtect(wgRegionProtect.getWgrpContainer()),
+                new HangingProtect(wgRegionProtect.getWgrpContainer()),
+                new MiscProtect(wgRegionProtect.getWgrpContainer()),
+                new PlayerProtect(wgRegionProtect.getWgrpContainer()),
+                new ToolsProtect(wgRegionProtect.getWgrpContainer()),
+                new VehicleProtect(wgRegionProtect.getWgrpContainer()));
 
-        final EntityProtect entityProtect = new EntityProtect(wgRegionProtect.getWgrpContainer());
-        pluginManager.registerEvents(entityProtect, wgRegionProtect.getWGRPBukkitPlugin());
-
-        final HangingProtect hangingProtect = new HangingProtect(wgRegionProtect.getWgrpContainer());
-        pluginManager.registerEvents(hangingProtect, wgRegionProtect.getWGRPBukkitPlugin());
-
-        final MiscProtect miscProtect = new MiscProtect(wgRegionProtect.getWgrpContainer());
-        pluginManager.registerEvents(miscProtect, wgRegionProtect.getWGRPBukkitPlugin());
-
-        final PlayerProtect playerProtect = new PlayerProtect(wgRegionProtect.getWgrpContainer());
-        pluginManager.registerEvents(playerProtect, wgRegionProtect.getWGRPBukkitPlugin());
-
-        final ToolsProtect toolsProtect = new ToolsProtect(wgRegionProtect.getWgrpContainer());
-        pluginManager.registerEvents(toolsProtect, wgRegionProtect.getWGRPBukkitPlugin());
-
-        final VehicleProtect vehicleProtect = new VehicleProtect(wgRegionProtect.getWgrpContainer());
-        pluginManager.registerEvents(vehicleProtect, wgRegionProtect.getWGRPBukkitPlugin());
-
+        allListeners.forEach((listener) -> pluginManager.registerEvents(listener, wgRegionProtect.getWGRPBukkitPlugin()));
 
         WGRPContainer.getLogger().info("All listeners registered successfully!");
     }
