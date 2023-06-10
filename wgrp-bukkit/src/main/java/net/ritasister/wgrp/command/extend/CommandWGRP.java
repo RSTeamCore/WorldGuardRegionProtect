@@ -15,7 +15,11 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 public class CommandWGRP extends AbstractCommand {
 
@@ -117,9 +121,8 @@ public class CommandWGRP extends AbstractCommand {
                 String region = args[0];
                 String world = Objects.requireNonNull(((Player) sender).getPlayer()).getLocation().getWorld().getName();
                 if(args.length == 2) world = args[1];
-                List<String> newRegionList = new ArrayList<>();
                 if(rgMap.containsKey(world) && rgMap.get(world).contains(region)) {
-                    newRegionList.addAll(rgMap.get(world));
+                    List<String> newRegionList = new ArrayList<>(rgMap.get(world));
                     newRegionList.remove(region);
                     rgMap.put(world, newRegionList);
                     wgRegionProtect.getWgrpContainer().getConfig().setRegionProtectMap(rgMap);
@@ -129,9 +132,8 @@ public class CommandWGRP extends AbstractCommand {
                 if(args.length == 2) {
                     String region = args[0];
                     String world = args[1];
-                    List<String> newRegionList = new ArrayList<>();
                     if(rgMap.containsKey(world) && rgMap.get(world).contains(region)) {
-                        newRegionList.addAll(rgMap.get(world));
+                        List<String> newRegionList = new ArrayList<>(rgMap.get(world));
                         newRegionList.remove(region);
                         rgMap.put(world, newRegionList);
                         wgRegionProtect.getWgrpContainer().getConfig().setRegionProtectMap(rgMap);
@@ -172,10 +174,10 @@ public class CommandWGRP extends AbstractCommand {
         @NotNull UUID uniqueId = Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getUniqueId();
         if (wgRegionProtect.getWgrpContainer().getSpyLog().contains(uniqueId)) {
             wgRegionProtect.getWgrpContainer().getSpyLog().remove(uniqueId);
-            sender.sendMessage("You are disable spy logging!");
+            sender.sendMessage(Component.text("You are disable spy logging!"));
         } else {
             wgRegionProtect.getWgrpContainer().getSpyLog().add(uniqueId);
-            sender.sendMessage("You are enable spy logging!");
+            sender.sendMessage(Component.text("You are enable spy logging!"));
         }
     }
 }
