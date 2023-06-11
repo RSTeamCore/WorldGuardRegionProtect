@@ -19,6 +19,8 @@ public class EntityCheckTypeProvider {
         this.entityCheckTypes = new ArrayList<>() {{
             add(new BoatMaterialCheckTypeImpl(config));
             add(new MinecartMaterialCheckTypeImpl(config));
+            add(new HangingCheckTypeImpl(config));
+            add(new CreatureCheckTypeImpl(config));
         }};
     }
 

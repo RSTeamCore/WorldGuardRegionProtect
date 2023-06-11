@@ -42,6 +42,12 @@ public class Config {
     private List<String> vehicleType;
 
     @CanRecover
+    private List<String> creatureType;
+
+    @CanRecover
+    private List<String> entityExplodeType;
+
+    @CanRecover
     private List<String> naturalBlockOrItem;
 
     @CanRecover
@@ -186,6 +192,8 @@ public class Config {
 
             interactType = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.interactType");
             vehicleType = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.vehicleType");
+            creatureType = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.creatureType");
+            entityExplodeType = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.entityExplodeType");
             naturalBlockOrItem = (List<String>)wgrpBukkitPlugin.getConfig().getList("wgRegionProtect.protectInteract.naturalBlockOrItem");
             denyCollisionWithVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyCollisionWithVehicle");
             denySitAsPassengerInVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denySitAsPassengerInVehicle");
@@ -261,6 +269,12 @@ public class Config {
                                     "mangrove_boat", "mangrove_chest_boat",
                                     "cherry_boat", "cherry_chest_boat",
                                     "bamboo_raft", "bamboo_chest_raft");
+                            case "creatureType" -> creatureType = List.of(
+                                    "tropical_fish", "axolotl", "turtle",
+                                    "sniffer", "camel");
+                            case "entityExplodeType" -> entityExplodeType = List.of(
+                                    "primed_tnt", "end_crystal", "minecart_tnt",
+                                    "creeper", "wither_skull");
                             case "naturalBlockOrItem" -> naturalBlockOrItem = List.of(
                                     "oak_sapling", "spruce_sapling", "birch_sapling",
                                     "jungle_sapling", "acacia_sapling", "dark_oak_sapling",
@@ -375,6 +389,14 @@ public class Config {
 
     public List<String> getVehicleType() {
         return vehicleType;
+    }
+
+    public List<String> getCreatureType() {
+        return creatureType;
+    }
+
+    public List<String> getEntityExplodeType() {
+        return entityExplodeType;
     }
 
     public List<String> getNaturalBlockOrItem() {
@@ -498,6 +520,8 @@ public class Config {
 
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.interactType", interactType);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.vehicleType", vehicleType);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.creatureType", creatureType);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.entityExplodeType", entityExplodeType);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.naturalBlockOrItem", naturalBlockOrItem);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyCollisionWithVehicle", denyCollisionWithVehicle);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denySitAsPassengerInVehicle", denySitAsPassengerInVehicle);

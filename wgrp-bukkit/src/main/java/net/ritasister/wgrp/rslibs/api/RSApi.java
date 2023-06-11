@@ -1,15 +1,17 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.rslibs.checker.EntityCheckType;
+import net.ritasister.wgrp.rslibs.checker.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -17,12 +19,23 @@ import java.util.List;
 /**
  * Utility api class for other classes to use the necessary methods and other.
  */
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
 @Slf4j
 public class RSApi {
 
     private final WorldGuardRegionProtect wgRegionProtect;
+
+    private final WGRPContainer wgrpContainer;
+
+    private final Config config;
+
+    private final EntityCheckTypeProvider entityCheckTypeProvider;
+
+    public RSApi(final WorldGuardRegionProtect wgRegionProtect) {
+        this.wgRegionProtect = wgRegionProtect;
+        this.wgrpContainer = this.wgRegionProtect.getWgrpContainer();
+        this.config = wgrpContainer.getConfig();
+        this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpContainer);
+    }
 
     /**
      * Check if a player has permission for use Listener.
@@ -172,6 +185,17 @@ public class RSApi {
             }
         }
         return false;
+    }
+
+    public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
+        if (!wgrpContainer.getRsRegion().checkStandingRegion(checkEntity.getLocation(), config.getRegionProtectMap())
+                || !wgrpContainer.getRsApi().isEntityListenerPermission(entity, UtilPermissions.REGION_PROTECT)) {
+            return;
+        }
+        EntityCheckType entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
+        if(entityCheckType.check(checkEntity)) {
+            cancellable.setCancelled(true);
+        }
     }
 
 }

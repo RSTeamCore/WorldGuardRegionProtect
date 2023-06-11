@@ -41,8 +41,7 @@ public class MiscProtect implements Listener {
     private void denyStructureGrow(@NotNull StructureGrowEvent e) {
         if (e.getPlayer() != null) {
             Player player = e.getPlayer();
-            if (wgrpContainer.getRsRegion().checkStandingRegion(e.getLocation(), config.getRegionProtectMap()
-            )) {
+            if (wgrpContainer.getRsRegion().checkStandingRegion(e.getLocation(), config.getRegionProtectMap())) {
                 if (!wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     e.setCancelled(true);
                 }

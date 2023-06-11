@@ -97,9 +97,7 @@ public class BlockProtect implements Listener {
         Block block = e.getBlock();
         Location location = block.getLocation();
         Material blockType = block.getType();
-        if (blockType == Material.RESPAWN_ANCHOR
-                && wgrpContainer.getRsRegion().checkStandingRegion(
-                location, config.getRegionProtectMap())) {
+        if (blockType == Material.RESPAWN_ANCHOR && wgrpContainer.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())) {
             e.setCancelled(true);
         }
     }

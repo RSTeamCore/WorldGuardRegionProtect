@@ -27,7 +27,8 @@ public class MinecartMaterialCheckTypeImpl implements EntityCheckType {
                 EntityType.MINECART_CHEST,
                 EntityType.MINECART_FURNACE,
                 EntityType.MINECART_TNT,
-                EntityType.MINECART_HOPPER};
+                EntityType.MINECART_HOPPER
+        };
     }
 
 }

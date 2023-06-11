@@ -22,6 +22,9 @@ public class BoatMaterialCheckTypeImpl implements EntityCheckType {
 
     @Override
     public EntityType[] getEntityType() {
-        return new EntityType[] {EntityType.CHEST_BOAT, EntityType.BOAT};
+        return new EntityType[] {
+                EntityType.CHEST_BOAT,
+                EntityType.BOAT
+        };
     }
 }
