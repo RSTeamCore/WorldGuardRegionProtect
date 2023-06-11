@@ -1,10 +1,11 @@
 package net.ritasister.wgrp.handler;
 
-import net.ritasister.wgrp.WGRPContainer;
+import lombok.extern.slf4j.Slf4j;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.command.extend.CommandWGRP;
 
-public class CommandHandler extends AbstractHandler<Void> {
+@Slf4j
+public class CommandHandler implements Handler<Void> {
 
     private final WorldGuardRegionProtect wgRegionProtect;
 
@@ -15,6 +16,6 @@ public class CommandHandler extends AbstractHandler<Void> {
     @Override
     public void handle() {
         new CommandWGRP(wgRegionProtect);
-        WGRPContainer.getLogger().info("All commands registered successfully!");
+        log.info("All commands registered successfully!");
     }
 }

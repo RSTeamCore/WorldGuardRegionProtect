@@ -1,9 +1,6 @@
 package net.ritasister.wgrp.listener;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
-import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
@@ -25,13 +22,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class PlayerProtect implements Listener {
 
     private final WGRPContainer wgrpContainer;
 
-    private final Config config = wgrpContainer.getConfig();
+    private final Config config;
+
+    public PlayerProtect(final @NotNull WGRPContainer wgrpContainer) {
+        this.wgrpContainer = wgrpContainer;
+        this.config = wgrpContainer.getConfig();
+    }
 
     static final Set<String> REGION_COMMANDS_NAME = Set.of(
             "/rg",
@@ -105,6 +105,7 @@ public class PlayerProtect implements Listener {
                         }
                     }
                 }
+
             }
         }
     }

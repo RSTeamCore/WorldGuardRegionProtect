@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.ritasister.wgrp.loader.InitializationImpl;
 import net.ritasister.wgrp.loader.LoadHandlersImpl;
 import net.ritasister.wgrp.loader.WGRPInitialization;
@@ -12,6 +13,7 @@ import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
+@Slf4j
 public class WorldGuardRegionProtect {
 
     private final WGRPBukkitPlugin wgrpBukkitPlugin;
@@ -35,7 +37,7 @@ public class WorldGuardRegionProtect {
             try {
                 configLoader.getConfig().saveConfig();
             } catch (NullPointerException ignored) {
-                WGRPContainer.getLogger().info("Cannot save config, because config is not loaded!");
+                log.info("Cannot save config, because config is not loaded!");
             }
         }
     }

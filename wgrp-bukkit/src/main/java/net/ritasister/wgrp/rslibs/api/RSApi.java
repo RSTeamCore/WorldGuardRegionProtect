@@ -3,7 +3,7 @@ package net.ritasister.wgrp.rslibs.api;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
-import net.ritasister.wgrp.WGRPContainer;
+import lombok.extern.slf4j.Slf4j;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.Bukkit;
@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
+@Slf4j
 public class RSApi {
 
     private final WorldGuardRegionProtect wgRegionProtect;
@@ -155,18 +156,18 @@ public class RSApi {
         try {
             long time = System.currentTimeMillis();
             if (supportedVersions.contains(serverPackage)) {
-                WGRPContainer.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
+                log.info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
                 return true;
             } else {
-                WGRPContainer.getLogger().info(
+                log.info(
                         "No compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ").");
             }
         } catch (Exception ex) {
             if (supportedVersions.contains(serverPackage)) {
-                WGRPContainer.getLogger().error(
+                log.error(
                         "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
             } else {
-                WGRPContainer.getLogger().error("Your server version is completely unsupported. This plugin version only " +
+                log.error("Your server version is completely unsupported. This plugin version only " +
                         "supports " + supportedVersionRange + ". Disabling.");
             }
         }

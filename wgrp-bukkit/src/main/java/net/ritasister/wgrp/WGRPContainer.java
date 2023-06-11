@@ -15,7 +15,6 @@ import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import net.rsteamcore.config.Container;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
-import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +27,6 @@ public class WGRPContainer {
     private final WorldGuardRegionProtect worldGuardRegionProtect;
 
     public boolean isPaper;
-
-    public static Logger logger;
 
     public WG wg;
 
@@ -97,10 +94,6 @@ public class WGRPContainer {
 
     public WG getWg() {
         return wg;
-    }
-
-    public static Logger getLogger() {
-        return logger;
     }
 
     public UpdateNotify getUpdateNotify() {

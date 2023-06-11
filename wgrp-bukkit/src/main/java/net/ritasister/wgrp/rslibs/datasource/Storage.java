@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.datasource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import net.ritasister.wgrp.WGRPContainer;
+import lombok.extern.slf4j.Slf4j;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
 import org.bukkit.Bukkit;
@@ -16,6 +16,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 //TODO need to change...
+@Slf4j
 @SuppressWarnings({"checkstyle:AbbreviationAsWordInName"})
 public class Storage implements StorageDataSource {
 
@@ -77,7 +78,7 @@ public class Storage implements StorageDataSource {
 			pst.execute();
 			pst.close();
 		} catch(SQLException ex){
-			WGRPContainer.getLogger().error("Failed connect to database! Error code: " + ex.getErrorCode());
+			log.error("Failed connect to database! Error code: " + ex.getErrorCode());
 		} finally {
 			this.close(pst);
 		}
@@ -108,7 +109,7 @@ public class Storage implements StorageDataSource {
 			}
 			return true;
 		}catch(SQLException ex){
-            WGRPContainer.getLogger().error("Failed to load from database!");
+            log.error("Failed to load from database!");
 			ex.printStackTrace();
 		}finally{
 			this.close(rs);
@@ -143,7 +144,7 @@ public class Storage implements StorageDataSource {
 				}
 				wgRegionProtect.getWgrpContainer().getRsStorage().dbLogs = new ConcurrentHashMap<>(tempDataBase);
 			} catch (SQLException ex) {
-                WGRPContainer.getLogger().error("Failed to load database asynchronous!");
+                log.error("Failed to load database asynchronous!");
 				ex.printStackTrace();
 			} finally {
 				this.close(rs);
@@ -171,7 +172,7 @@ public class Storage implements StorageDataSource {
 				pst.setDouble(9, z);
 				pst.executeUpdate();
 			} catch (SQLException ex) {
-                WGRPContainer.getLogger().error("[DataBase] <id> "+uniqueId.toString()
+                log.error("[DataBase] <id> "+uniqueId.toString()
 					.replace("<id>", uniqueId.toString())+ ex);
 			} finally {
 				this.close(pst);
@@ -185,7 +186,7 @@ public class Storage implements StorageDataSource {
 				pst.close();
 			}
 		}catch(SQLException ex){
-            WGRPContainer.getLogger().error("Failed to close prepared statement");
+            log.error("Failed to close prepared statement");
 		}
 	}
 
@@ -195,7 +196,7 @@ public class Storage implements StorageDataSource {
 				rs.close();
 			}
 		}catch(SQLException ex){
-            WGRPContainer.getLogger().error("Failed to close result set");
+            log.error("Failed to close result set");
 		}
 	}
 
@@ -204,7 +205,7 @@ public class Storage implements StorageDataSource {
 			ds.close();
 		}
         connect();
-        WGRPContainer.getLogger().info("Successfully reloaded!");
+        log.info("Successfully reloaded!");
     }
 
 	@Override

@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.handler;
 
-import net.ritasister.wgrp.WGRPContainer;
+import lombok.extern.slf4j.Slf4j;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.listener.BlockProtect;
 import net.ritasister.wgrp.listener.EntityProtect;
@@ -15,7 +15,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ListenerHandler extends AbstractHandler<PluginManager> {
+@Slf4j
+public class ListenerHandler implements Handler<PluginManager> {
 
     private final WorldGuardRegionProtect wgRegionProtect;
 
@@ -36,7 +37,7 @@ public class ListenerHandler extends AbstractHandler<PluginManager> {
 
         allListeners.forEach((listener) -> pluginManager.registerEvents(listener, wgRegionProtect.getWGRPBukkitPlugin()));
 
-        WGRPContainer.getLogger().info("All listeners registered successfully!");
+        log.info("All listeners registered successfully!");
     }
 
 }

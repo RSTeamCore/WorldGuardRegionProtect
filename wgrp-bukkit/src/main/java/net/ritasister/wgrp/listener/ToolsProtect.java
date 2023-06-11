@@ -24,7 +24,13 @@ public class ToolsProtect implements Listener {
 
     private final WGRPContainer wgrpContainer;
 
-    private final Config config = wgrpContainer.getConfig();
+    private final Config config;
+
+
+    public ToolsProtect(final @NotNull WGRPContainer wgrpContainer) {
+        this.wgrpContainer = wgrpContainer;
+        this.config = wgrpContainer.getConfig();
+    }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyPlayerTakeLecternBook(@NotNull PlayerTakeLecternBookEvent e) {
@@ -55,10 +61,7 @@ public class ToolsProtect implements Listener {
         Player player = e.getPlayer();
         Location location = e.getLoomInventory().getLocation();
         if (config.isDenyLoomPatternSelect()) {
-            if (wgrpContainer.getRsRegion().checkStandingRegion(
-                    Objects.requireNonNull(location),
-                    config.getRegionProtectMap()
-            )
+            if (wgrpContainer.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), config.getRegionProtectMap())
                     && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }

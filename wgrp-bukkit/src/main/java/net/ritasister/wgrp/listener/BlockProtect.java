@@ -1,8 +1,5 @@
 package net.ritasister.wgrp.listener;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
@@ -19,13 +16,16 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class BlockProtect implements Listener {
 
     private final WGRPContainer wgrpContainer;
 
-    private final Config config = wgrpContainer.getConfig();
+    private final Config config;
+
+    public BlockProtect(@NotNull WGRPContainer wgrpContainer) {
+        this.wgrpContainer = wgrpContainer;
+        this.config = wgrpContainer.getConfig();
+    }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyBreak(@NotNull BlockBreakEvent e) {
@@ -54,6 +54,7 @@ public class BlockProtect implements Listener {
         } else if (wgrpContainer.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
                 && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
+
             sendMessage(player);
         } else if (wgrpContainer.getRsRegion().checkStandingRegion(location)
                 && wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
