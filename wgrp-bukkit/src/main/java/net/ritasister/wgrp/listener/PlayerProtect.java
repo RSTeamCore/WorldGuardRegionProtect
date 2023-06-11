@@ -53,6 +53,7 @@ public class PlayerProtect implements Listener {
         }
     }
 
+    //TODO
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyFlowerPotManipulate(@NotNull PlayerFlowerPotManipulateEvent e) {
         Player player = e.getPlayer();
@@ -81,6 +82,7 @@ public class PlayerProtect implements Listener {
         }
     }
 
+    //TODO
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyInteract(@NotNull PlayerInteractEvent e) {
         if (e.getItem() != null && e.getClickedBlock() != null) {
@@ -125,6 +127,9 @@ public class PlayerProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyInteractWithEntity(@NotNull PlayerInteractEntityEvent e) {
+        if (!config.isDenyInteractWithItemFrame()) {
+            return;
+        }
         Player player = e.getPlayer();
         Location clickLoc = e.getRightClicked().getLocation();
         EntityType clickType = e.getRightClicked().getType();

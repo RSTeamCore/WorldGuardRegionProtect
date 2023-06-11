@@ -72,6 +72,9 @@ public class Config {
     private boolean denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot;
 
     @CanRecover
+    private boolean denyInteractWithItemFrame;
+
+    @CanRecover
     private boolean denyStonecutterRecipeSelect;
 
     @CanRecover
@@ -200,6 +203,7 @@ public class Config {
             denyDamageVehicle = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyDamageVehicle");
             denyTakeLecternBook = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyTakeLecternBook");
             denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot");
+            denyInteractWithItemFrame = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyInteractWithItemFrame");
             denyStonecutterRecipeSelect = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyStonecutterRecipeSelect");
             denyLoomPatternSelect = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.player.denyLoomPatternSelect");
             denyWaterFlowToRegion = wgrpBukkitPlugin.getConfig().getBoolean("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion");
@@ -291,6 +295,7 @@ public class Config {
                             case "denyDamageVehicle" -> denyDamageVehicle = true;
                             case "denyTakeLecternBook" -> denyTakeLecternBook = true;
                             case "denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot" -> denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot = true;
+                            case "denyInteractWithItemFrame" -> denyInteractWithItemFrame = true;
                             case "denyStonecutterRecipeSelect" -> denyStonecutterRecipeSelect = true;
                             case "denyLoomPatternSelect" -> denyLoomPatternSelect = true;
 
@@ -423,6 +428,10 @@ public class Config {
         return denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot;
     }
 
+    public boolean isDenyInteractWithItemFrame() {
+        return denyInteractWithItemFrame;
+    }
+
     public boolean isDenyStonecutterRecipeSelect() {
         return denyStonecutterRecipeSelect;
     }
@@ -528,6 +537,7 @@ public class Config {
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyDamageVehicle", denyDamageVehicle);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyTakeLecternBook", denyTakeLecternBook);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot", denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot);
+            wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyInteractWithItemFrame", denyInteractWithItemFrame);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyStonecutterRecipeSelect", denyStonecutterRecipeSelect);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.player.denyLoomPatternSelect", denyLoomPatternSelect);
             wgRegionProtect.getWGRPBukkitPlugin().getConfig().set("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion", denyWaterFlowToRegion);

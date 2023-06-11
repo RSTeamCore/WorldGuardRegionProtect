@@ -239,6 +239,7 @@ wgRegionProtect:
             denyStonecutterRecipeSelect: true
             denyLoomPatternSelect: true
             denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot: true
+            denyInteractWithItemFrame: true
         # --------------------------------------------------------------------------------------
         # denyWaterFlowToRegion — Whether to allow water to flow into protected regions.
         # denyLavaFlowToRegion — Whether to allow lava to flow into protected regions.
