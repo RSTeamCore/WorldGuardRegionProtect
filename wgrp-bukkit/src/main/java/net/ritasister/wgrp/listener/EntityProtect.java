@@ -1,8 +1,5 @@
 package net.ritasister.wgrp.listener;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
@@ -17,13 +14,16 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.jetbrains.annotations.NotNull;
 
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class EntityProtect implements Listener {
 
     private final WGRPContainer wgrpContainer;
 
-    private final Config config = wgrpContainer.getConfig();
+    private final Config config;
+
+    public EntityProtect(final @NotNull WGRPContainer wgrpContainer) {
+        this.wgrpContainer = wgrpContainer;
+        this.config = wgrpContainer.getConfig();
+    }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyExplodeEntity(@NotNull EntityExplodeEvent e) {

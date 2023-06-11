@@ -5,7 +5,7 @@ import org.bukkit.entity.EntityType;
 
 public interface EntityCheckType {
 
-    void check(Entity entity);
+    boolean check(Entity entity);
 
-    EntityType getEntityType();
+    EntityType[] getEntityType();
 }
