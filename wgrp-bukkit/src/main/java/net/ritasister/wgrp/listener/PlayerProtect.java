@@ -28,10 +28,11 @@ public class PlayerProtect implements Listener {
 
     private final Config config;
 
-    public PlayerProtect(final @NotNull WGRPContainer wgrpContainer) {
+    public PlayerProtect(@NotNull WGRPContainer wgrpContainer) {
         this.wgrpContainer = wgrpContainer;
         this.config = wgrpContainer.getConfig();
     }
+
 
     static final Set<String> REGION_COMMANDS_NAME = Set.of(
             "/rg",
@@ -61,6 +62,7 @@ public class PlayerProtect implements Listener {
         if (config.isDenyTakeOrPlaceNaturalBlockOrItemIOFlowerPot()) {
             if (wgrpContainer.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), config.getRegionProtectMap())
                     && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+
                 for (String naturalBlockOrItem : config.getNaturalBlockOrItem()) {
                     if (e.getItem().getType() == Material.getMaterial(naturalBlockOrItem.toUpperCase())) {
                         e.setCancelled(true);

@@ -1,10 +1,7 @@
 package net.ritasister.wgrp.listener;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import io.papermc.paper.event.player.PlayerLoomPatternSelectEvent;
 import io.papermc.paper.event.player.PlayerStonecutterRecipeSelectEvent;
-import lombok.RequiredArgsConstructor;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
@@ -18,8 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class ToolsProtect implements Listener {
 
     private final WGRPContainer wgrpContainer;
