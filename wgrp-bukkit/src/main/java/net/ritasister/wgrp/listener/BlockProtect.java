@@ -54,7 +54,6 @@ public class BlockProtect implements Listener {
         } else if (wgrpContainer.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
                 && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
-
             sendMessage(player);
         } else if (wgrpContainer.getRsRegion().checkStandingRegion(location)
                 && wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
