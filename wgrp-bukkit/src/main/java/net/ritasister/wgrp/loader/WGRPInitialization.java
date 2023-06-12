@@ -22,7 +22,12 @@ public class WGRPInitialization extends InitializationImpl<WorldGuardRegionProte
         WGRPContainer wgrpContainer = wgRegionProtect.getWgrpContainer();
         wgrpContainer.updateNotify = new UpdateNotify(wgRegionProtect.getWGRPBukkitPlugin());
 
-        loadAnotherClassAndMethods(wgRegionProtect, wgrpContainer);
+        //Configs.
+        wgrpContainer.configLoader = new ConfigLoader();
+        if (wgrpContainer.getConfigLoader() != null) {
+            wgrpContainer.getConfigLoader().initConfig(wgRegionProtect, wgRegionProtect.getWGRPBukkitPlugin());
+        }
+
         wgrpContainer.rsApi = new RSApi(wgRegionProtect);
 
         WGRPChecker wgrpChecker = new WGRPChecker(wgRegionProtect);
@@ -30,6 +35,7 @@ public class WGRPInitialization extends InitializationImpl<WorldGuardRegionProte
         wgrpChecker.checkIfRunningOnPaper();
 
         loadMetrics(wgRegionProtect);
+        loadAnotherClassAndMethods(wgRegionProtect, wgrpContainer);
 
         WGRPLoadDataBase wgrpLoadDataBase = new WGRPLoadDataBase(wgRegionProtect);
         wgrpLoadDataBase.loadDataBase();
