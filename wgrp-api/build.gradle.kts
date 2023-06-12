@@ -24,12 +24,8 @@ dependencies {
 
     //Paper
     compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT")
-    //Alternate run-task Paper if runServer is don't updated to the new version of MC.
-    //paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
 
     //Plugins
-    //PlaceholderAPI
-    compileOnly("me.clip:placeholderapi:2.11.3")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
     //Kyori and MiniMessage
