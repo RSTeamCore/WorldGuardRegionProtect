@@ -6,7 +6,6 @@ import net.ritasister.wgrp.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.checker.EntityCheckType;
 import net.ritasister.wgrp.rslibs.checker.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
@@ -26,14 +25,11 @@ public class RSApi {
 
     private final WGRPContainer wgrpContainer;
 
-    private final Config config;
-
     private final EntityCheckTypeProvider entityCheckTypeProvider;
 
     public RSApi(final WorldGuardRegionProtect wgRegionProtect) {
         this.wgRegionProtect = wgRegionProtect;
         this.wgrpContainer = this.wgRegionProtect.getWgrpContainer();
-        this.config = wgrpContainer.getConfig();
         this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpContainer);
     }
 
@@ -188,7 +184,7 @@ public class RSApi {
     }
 
     public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
-        if (!wgrpContainer.getRsRegion().checkStandingRegion(checkEntity.getLocation(), config.getRegionProtectMap())
+        if (!wgrpContainer.getRsRegion().checkStandingRegion(checkEntity.getLocation(), wgrpContainer.getConfig().getRegionProtectMap())
                 || !wgrpContainer.getRsApi().isEntityListenerPermission(entity, UtilPermissions.REGION_PROTECT)) {
             return;
         }
