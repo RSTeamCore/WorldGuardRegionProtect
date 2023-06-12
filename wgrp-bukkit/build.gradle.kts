@@ -54,7 +54,7 @@ dependencies {
     //Paper
     compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT")
     //Alternate run-task Paper if runServer is don't updated to the new version of MC.
-    paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
+    //paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
 
     //Plugins
     //PlaceholderAPI
@@ -143,8 +143,8 @@ tasks {
         pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
     }
-    runMojangMappedServer {
+    /*runMojangMappedServer {
         pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
-    }
+    }*/
 }
