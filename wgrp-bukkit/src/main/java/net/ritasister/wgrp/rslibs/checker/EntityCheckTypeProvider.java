@@ -1,7 +1,18 @@
 package net.ritasister.wgrp.rslibs.checker;
 
 import net.ritasister.wgrp.WGRPContainer;
-import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.rslibs.checker.misc.ArmorStandCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.misc.ExplosiveCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.misc.HangingCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.mob.AllayMobCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.mob.AmbientCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.mob.AnimalCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.mob.GolemCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.mob.HumanEntityCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.mob.MonsterCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.mob.WaterMobCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.transport.BoatMaterialCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.transport.MinecartMaterialCheckTypeImpl;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,13 +25,24 @@ public class EntityCheckTypeProvider {
     private final List<EntityCheckType> entityCheckTypes;
 
     public EntityCheckTypeProvider(final @NotNull WGRPContainer wgrpContainer) {
-        Config config = wgrpContainer.getConfig();
 
         this.entityCheckTypes = new ArrayList<>() {{
-            add(new BoatMaterialCheckTypeImpl(config));
-            add(new MinecartMaterialCheckTypeImpl(config));
-            add(new HangingCheckTypeImpl(config));
-            add(new CreatureCheckTypeImpl(config));
+            //Ambient
+            add(new AmbientCheckTypeImpl(wgrpContainer));
+            //Mobs
+            add(new AnimalCheckTypeImpl(wgrpContainer));
+            add(new MonsterCheckTypeImpl(wgrpContainer));
+            add(new WaterMobCheckTypeImpl(wgrpContainer));
+            add(new HumanEntityCheckTypeImpl(wgrpContainer));
+            add(new AllayMobCheckTypeImpl(wgrpContainer));
+            add(new GolemCheckTypeImpl(wgrpContainer));
+            //Transport
+            add(new BoatMaterialCheckTypeImpl(wgrpContainer));
+            add(new MinecartMaterialCheckTypeImpl(wgrpContainer));
+            //Misc
+            add(new HangingCheckTypeImpl(wgrpContainer));
+            add(new ArmorStandCheckTypeImpl(wgrpContainer));
+            add(new ExplosiveCheckTypeImpl(wgrpContainer));
         }};
     }
 
