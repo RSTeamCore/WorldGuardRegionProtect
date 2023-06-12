@@ -1,7 +1,6 @@
-package net.ritasister.wgrp.util.config.interfaces;
+package net.ritasister.wgrp.util.config;
 
 import net.ritasister.wgrp.WGRPBukkitPlugin;
-import net.ritasister.wgrp.util.config.Config;
 import org.jetbrains.annotations.NotNull;
 
 public interface CheckVersionLang {

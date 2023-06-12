@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.config.interfaces;
+package net.ritasister.wgrp.util.config;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;

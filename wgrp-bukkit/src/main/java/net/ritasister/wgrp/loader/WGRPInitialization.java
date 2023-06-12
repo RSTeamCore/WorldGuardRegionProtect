@@ -14,15 +14,20 @@ import net.ritasister.wgrp.rslibs.util.updater.UpdateNotify;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import org.bstats.bukkit.Metrics;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.LoggerFactory;
 
 public class WGRPInitialization extends InitializationImpl<WorldGuardRegionProtect> {
 
     @Override
     public void wgrpInit(@NotNull WorldGuardRegionProtect wgRegionProtect) {
         WGRPContainer wgrpContainer = wgRegionProtect.getWgrpContainer();
-        WGRPContainer.logger = LoggerFactory.getLogger("WGRP");
         wgrpContainer.updateNotify = new UpdateNotify(wgRegionProtect.getWGRPBukkitPlugin());
+
+        //Configs.
+        wgrpContainer.configLoader = new ConfigLoader();
+        if (wgrpContainer.getConfigLoader() != null) {
+            wgrpContainer.getConfigLoader().initConfig(wgRegionProtect, wgRegionProtect.getWGRPBukkitPlugin());
+        }
+
         wgrpContainer.rsApi = new RSApi(wgRegionProtect);
 
         WGRPChecker wgrpChecker = new WGRPChecker(wgRegionProtect);

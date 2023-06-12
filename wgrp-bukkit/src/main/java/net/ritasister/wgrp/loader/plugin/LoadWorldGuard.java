@@ -1,19 +1,21 @@
 package net.ritasister.wgrp.loader.plugin;
 
-import net.ritasister.wgrp.WGRPContainer;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-public class LoadWorldGuard implements LoadPlugin {
+@Slf4j
+public class LoadWorldGuard implements LoadPluginManager {
+
 
     @Override
     public void loadPlugin() {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin != null && plugin.isEnabled()) {
             try {
-                WGRPContainer.getLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
+                log.info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
             } catch (NullPointerException | ClassCastException | NoClassDefFoundError exception) {
-                WGRPContainer.getLogger().error(exception.getMessage());
+                log.error(exception.getMessage());
             }
         }
     }

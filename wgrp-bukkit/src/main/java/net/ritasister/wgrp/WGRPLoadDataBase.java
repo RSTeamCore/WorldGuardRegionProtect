@@ -3,6 +3,7 @@ package net.ritasister.wgrp;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.ritasister.wgrp.rslibs.api.RSStorage;
 import net.ritasister.wgrp.rslibs.datasource.Storage;
 import org.bukkit.Bukkit;
@@ -10,6 +11,7 @@ import org.bukkit.Bukkit;
 
 @Singleton
 @RequiredArgsConstructor(onConstructor_ = @Inject)
+@Slf4j
 public class WGRPLoadDataBase {
 
     private final WorldGuardRegionProtect worldGuardRegionProtect;
@@ -21,9 +23,9 @@ public class WGRPLoadDataBase {
             rsStorage.dbLogsSource = new Storage(worldGuardRegionProtect);
             rsStorage.dbLogs.clear();
             if (rsStorage.dbLogsSource.load()) {
-                WGRPContainer.getLogger().info("[DataBase] The database is loaded.");
+                log.info("[DataBase] The database is loaded.");
                 this.postEnable();
-                WGRPContainer.getLogger().info(String.format(
+                log.info(String.format(
                         "[DataBase] Startup duration: %s ms.", System.currentTimeMillis() - durationTimeStart));
             }
         }
@@ -33,7 +35,7 @@ public class WGRPLoadDataBase {
         Bukkit.getServer().getScheduler().cancelTasks(this.worldGuardRegionProtect.getWGRPBukkitPlugin());
         if (worldGuardRegionProtect.getWgrpContainer().getConfigLoader().getConfig().getMySQLSettings().getIntervalReload() > 0) {
             worldGuardRegionProtect.getWgrpContainer().getRsStorage().dbLogsSource.loadAsync();
-            WGRPContainer.getLogger().info("[DataBase] The database is loaded asynchronously.");
+            log.info("[DataBase] The database is loaded asynchronously.");
         }
     }
 

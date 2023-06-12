@@ -1,23 +1,20 @@
 package net.ritasister.wgrp.loader;
 
 import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.handler.AbstractHandler;
 import net.ritasister.wgrp.handler.CommandHandler;
+import net.ritasister.wgrp.handler.Handler;
 import net.ritasister.wgrp.handler.ListenerHandler;
 import org.bukkit.plugin.PluginManager;
 
-public class WGRPLoaderCommandsAndListeners extends LoaderCommandsAndListenersImpl<WorldGuardRegionProtect> {
+public class WGRPLoaderCommandsAndListeners extends LoadHandlersImpl<WorldGuardRegionProtect> {
 
     @Override
-    public void loadCommands(WorldGuardRegionProtect worldGuardRegionProtect) {
-        AbstractHandler<Void> registerCommands = new CommandHandler(worldGuardRegionProtect);
+    public void loadHandlers(WorldGuardRegionProtect wgRegionProtect) {
+        Handler<Void> registerCommands = new CommandHandler(wgRegionProtect);
         registerCommands.handle();
-    }
 
-    @Override
-    public void loadListeners(WorldGuardRegionProtect worldGuardRegionProtect) {
-        AbstractHandler<PluginManager> registerListeners = new ListenerHandler(worldGuardRegionProtect);
-        registerListeners.handle(worldGuardRegionProtect.getWgrpContainer().getPluginManager());
+        Handler<PluginManager> registerListeners = new ListenerHandler(wgRegionProtect);
+        registerListeners.handle(wgRegionProtect.getWgrpContainer().getPluginManager());
     }
 
 }

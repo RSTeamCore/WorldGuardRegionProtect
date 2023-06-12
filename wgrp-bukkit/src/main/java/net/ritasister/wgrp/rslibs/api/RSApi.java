@@ -1,27 +1,37 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.ritasister.wgrp.WGRPContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.rslibs.checker.EntityCheckType;
+import net.ritasister.wgrp.rslibs.checker.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.Bukkit;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Utility api class for other classes to use the necessary methods and other.
  */
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
+@Slf4j
 public class RSApi {
 
     private final WorldGuardRegionProtect wgRegionProtect;
+
+    private final WGRPContainer wgrpContainer;
+
+    private final EntityCheckTypeProvider entityCheckTypeProvider;
+
+    public RSApi(final WorldGuardRegionProtect wgRegionProtect) {
+        this.wgRegionProtect = wgRegionProtect;
+        this.wgrpContainer = this.wgRegionProtect.getWgrpContainer();
+        this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpContainer);
+    }
 
     /**
      * Check if a player has permission for use Listener.
@@ -64,13 +74,12 @@ public class RSApi {
             for (String cmd : wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandList()) {
                 if (cmd.equalsIgnoreCase(senderCommand.toLowerCase()) && wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
                     player.playSound(player.getLocation(), wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
-                    player.sendMessage(wgRegionProtect.getWgrpContainer()
+                    wgRegionProtect.getWgrpContainer()
                             .getMessages()
                             .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
-                            .toString()
                             .replace("<player>", playerName)
                             .replace("<cmd>", cmd)
-                            .replace("<region>", regionName));
+                            .replace("<region>", regionName).send(player);
                 }
             }
         }
@@ -90,13 +99,13 @@ public class RSApi {
         if (wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyConsoleEnable()) {
             for (String cmd : wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandList()) {
                 if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-                    Bukkit.getConsoleSender().sendMessage(wgRegionProtect.getWgrpContainer()
+                    ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
+                    wgRegionProtect.getWgrpContainer()
                             .getMessages()
                             .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
-                            .toString()
                             .replace("<player>", playerName)
                             .replace("<cmd>", cmd)
-                            .replace("<region>", regionName));
+                            .replace("<region>", regionName).send(consoleSender);
                 }
             }
         }
@@ -129,17 +138,16 @@ public class RSApi {
                 suspectPlayer,
                 UtilPermissions.SPY_INSPECT_FOR_SUSPECT
         ) && wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminEnable()) {
-            admin.sendMessage(wgRegionProtect.getWgrpContainer()
+            wgRegionProtect.getWgrpContainer()
                     .getMessages()
                     .get("messages.Notify.sendAdminInfoIfActionInRegion")
-                    .toString()
                     .replace("<player>", suspectName)
                     .replace("<action>", action.getAction())
                     .replace("<region>", regionName)
                     .replace("<x>", String.valueOf(x))
                     .replace("<y>", String.valueOf(y))
                     .replace("<z>", String.valueOf(z))
-                    .replace("<world>", world));
+                    .replace("<world>", world).send(admin);
         }
     }
 
@@ -151,28 +159,39 @@ public class RSApi {
      * @return {@code true} if server version compatible, {@code false} if not
      */
     public boolean isVersionSupported() {
-        List<String> supportedVersions = Arrays.asList("v1_19_R1", "v1_19_R2", "v1_19_R3");
-        String supportedVersionRange = "1.19 - 1.19.4";
+        List<String> supportedVersions = List.of("v1_20_R1");
+        String supportedVersionRange = "1.20";
         String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
             long time = System.currentTimeMillis();
             if (supportedVersions.contains(serverPackage)) {
-                WGRPContainer.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
+                log.info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
                 return true;
             } else {
-                WGRPContainer.getLogger().info(
+                log.info(
                         "No compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ").");
             }
         } catch (Exception ex) {
             if (supportedVersions.contains(serverPackage)) {
-                WGRPContainer.getLogger().error(
+                log.error(
                         "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
             } else {
-                WGRPContainer.getLogger().error("Your server version is completely unsupported. This plugin version only " +
+                log.error("Your server version is completely unsupported. This plugin version only " +
                         "supports " + supportedVersionRange + ". Disabling.");
             }
         }
         return false;
+    }
+
+    public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
+        if (!wgrpContainer.getRsRegion().checkStandingRegion(checkEntity.getLocation(), wgrpContainer.getConfig().getRegionProtectMap())
+                || !wgrpContainer.getRsApi().isEntityListenerPermission(entity, UtilPermissions.REGION_PROTECT)) {
+            return;
+        }
+        EntityCheckType entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
+        if(entityCheckType.check(checkEntity)) {
+            cancellable.setCancelled(true);
+        }
     }
 
 }

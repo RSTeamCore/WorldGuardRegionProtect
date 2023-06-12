@@ -2,6 +2,6 @@ package net.ritasister.wgrp.handler;
 
 public interface Handler<V> {
 
-    void handle(V v);
-    void handle();
+    default void handle(V v) {}
+    default void handle() {}
 }
