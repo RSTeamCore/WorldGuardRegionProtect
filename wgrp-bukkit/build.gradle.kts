@@ -52,7 +52,7 @@ dependencies {
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
 
     //Paper
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT")
+    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
     //Alternate run-task Paper if runServer is don't updated to the new version of MC.
     //paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
 
@@ -139,7 +139,7 @@ tasks {
 
 tasks {
     runServer {
-        minecraftVersion("1.20")
+        minecraftVersion("1.20.1")
         pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
     }
