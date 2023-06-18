@@ -80,7 +80,6 @@ dependencies {
 
 You can find old versions of plugin lower 1.19 to 1.12.2 only:
 
-- [spigotmc.ru](https://spigotmc.ru/resources/518/)
-- [spigotmc.org](https://www.spigotmc.org/resources/81333/)
-- [dev.bukkit.org](https://dev.bukkit.org/projects/worldguardregionprotect/files)
+- [Spigot Page of old version plugin](https://www.spigotmc.org/resources/81333/)
+- [DevBukkit Page of files](https://dev.bukkit.org/projects/worldguardregionprotect/files)
 
