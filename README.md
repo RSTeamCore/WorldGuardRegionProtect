@@ -17,6 +17,7 @@
 our [Crowdin project](https://crowdin.com/project/worldguardregionprotect).
 
 Feel free to join our Discord community server:
+
 [![Discord Banner](https://discord.com/api/guilds/918677001479540787/widget.png?style=banner2)](https://discord.com/invite/kvqvA3GTVF)
 
 ## 🔗 Links
@@ -34,7 +35,7 @@ Feel free to join our Discord community server:
 
 ## 📜 License
 
-**WorldGuardRegionProtect** is licensed under GNU General Public License v3.0. 
+**WorldGuardRegionProtect** is licensed under GNU General Public License v3.0.
 Please see [`LICENSE.txt`](https://github.com/RSTeamCore/WorldGuardRegionProtect/blob/dev/LICENSE.txt) for more info.
 
 ## WorldGuardRegionProtect API
@@ -42,6 +43,7 @@ Please see [`LICENSE.txt`](https://github.com/RSTeamCore/WorldGuardRegionProtect
 ### Maven repository
 
 ```xml
+
 <repository>
     <id>codemc-releases</id>
     <url>https://repo.codemc.org/repository/maven-releases/</url>
@@ -49,10 +51,11 @@ Please see [`LICENSE.txt`](https://github.com/RSTeamCore/WorldGuardRegionProtect
 ```
 
 ```xml
+
 <dependency>
-<groupId>net.ritasister</groupId>
-<artifactId>WorldGuardRegionProtect-api</artifactId>
-<version>0.7.4.1</version>
+    <groupId>net.ritasister</groupId>
+    <artifactId>WorldGuardRegionProtect-api</artifactId>
+    <version>0.7.4.1</version>
 </dependency>
 ```
 
@@ -67,7 +70,6 @@ dependencies {
     implementation("net.ritasister:WorldGuardRegionProtect-api:0.7.4.1")
 }
 ```
-
 
 ## Metrics
 
