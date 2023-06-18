@@ -1,20 +1,21 @@
 package net.ritasister.wgrp.rslibs.util.updater;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import io.papermc.paper.plugin.configuration.PluginMeta;
-import lombok.RequiredArgsConstructor;
-import net.ritasister.wgrp.rslibs.api.WorldGuardRegionProtectApi;
+import net.ritasister.wgrp.rslibs.api.WorldGuardRegionProtect;
 import net.rsteamcore.config.update.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class UpdateNotify {
 
     private final JavaPlugin javaPlugin;
+    private final WorldGuardRegionProtect worldGuardRegionProtect;
+
+    public UpdateNotify(final JavaPlugin javaPlugin, final WorldGuardRegionProtect worldGuardRegionProtect) {
+        this.javaPlugin = javaPlugin;
+        this.worldGuardRegionProtect = worldGuardRegionProtect;
+    }
 
     public void checkUpdateNotify(PluginMeta pluginMeta) {
         final String noUpdate = """
@@ -56,9 +57,9 @@ public class UpdateNotify {
         if (checkUpdate) {
             new UpdateChecker(javaPlugin, 81321).getVersion(version -> {
                 if (pluginMeta.getVersion().equalsIgnoreCase(version)) {
-                    WorldGuardRegionProtectApi.messageToCommandSender(player, String.format(noUpdate, version));
+                    worldGuardRegionProtect.messageToCommandSender(player, String.format(noUpdate, version));
                 } else {
-                    WorldGuardRegionProtectApi.messageToCommandSender(player, String.format(hasUpdate, pluginMeta.getVersion(), version));
+                    worldGuardRegionProtect.messageToCommandSender(player, String.format(hasUpdate, pluginMeta.getVersion(), version));
                 }
             });
         }
