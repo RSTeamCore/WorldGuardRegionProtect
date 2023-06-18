@@ -1,5 +1,7 @@
 # WorldGuardRegionProtect - Addon plugin for advanced secured your region from WorldGuard
 
+---
+
 <p align="center">
 <a href="https://www.spigotmc.org/resources/81321/"><img src="https://img.shields.io/spiget/downloads/81321?label=Spigot%20downloads" alt="Spigot downloads"></a>
 <a href="https://www.spigotmc.org/resources/81321/"><img src="https://img.shields.io/spiget/rating/81321?label=Spigot%20rating" alt="Spigot rating"></a>
