@@ -1,33 +1,33 @@
 langTitle:
   language: Deutsch
-  author: RSTeamCore
-  version: '1.1'
+  author: RSTeamCore, Kendrick
+  version: '1.2'
 messages:
   ServerMsg:
-    wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> Diese Region ist vom Server geschützt!'
-    wgrpMsgWe: '<dark_gray>[<red>WGRP<dark_gray>]<red> Du kannst hier nicht den Worldedit Befehl verwenden!'
-    noPerm: '<red>Du hast keine Rechte, um diesen Befehl zu nutzen.'
+    wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> Diese Region ist vom Server geschützt!'
+    wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> Du kannst diesen Worldedit-Befehl hier nicht verwenden!'
+    noPerm: '<red>Du hast keinen Zugriff auf diesen Befehl.'
   regionManagement:
-    add: "<yellow>Region <gold><region><green> zur Konfiguration hinzugefügt."
-    remove: "<red>Region <gold><region><red> aus der Konfiguration entfernt."
-    notContains: '<red>Konnte Region nicht von der Schutzliste entfernen, da <gold><region> <red>nicht geschützt ist!'
-    invalidWorld: '<red>Welt <gold><world><red> nicht gefunden. Bist du sicher, dass du den Namen der Welt korrekt eingegeben hast?'
-    invalidRegion: '<red>Region <gold><region><red> nicht gefunden. Sind Sie sicher, dass Sie den richtigen Regionalnamen eingegeben haben?'
+    add: '<green>Region <gold><region><green> zur Config hinzugefügt.'
+    remove: '<red>Region <gold><region><red> aus der Config entfernt.'
+    notContains: '<red>Die Region konnte nicht von der Schutzliste entfernt werden, weil <gold><region> <red>sie nicht geschützt ist!'
+    invalidWorld: '<red>World <gold><world><red> nicht gefunden. Bist du dir sicher, dass du den Namen der Welt korrekt eingegeben hast?'
+    invalidRegion: '<red>Region <gold><region><red>nicht gefunden. Bist du dir sicher, dass du den Weltnamen korrekt eingegeben hast?'
   Configs:
-    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>Alle Dateien neu geladen unter <time> ms!'
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>Alle Dateien in <time> ms neu geladen!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>] <red>Achtung! <yellow><player><red> versucht Befehl <dark_purple><cmd><red> in der Region zu verwenden: <dark_aqua><region>'
-    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>Achtung! <yellow><player> <gold><action><red> Block in Region: <dark_aqua><region><red> Ort <dark_aqua><x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>ACHTUNG! <yellow><player><red>Es wird versucht, den Befehl <dark_purple><cmd><red> in der Region: <dark_aqua><region><red> zu nutzen'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>Achtung! <yellow><player> <gold><action><red> Block in Region: <dark_aqua><region><red> Koordinaten: <dark_aqua><x> <y> <z> <world>'
   usage:
-    title: '<dark_gray>[<red>WGRP<dark_gray>]<yellow> Verwendung für Befehl <gold>%command%'
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua>Benutzung:  <gold>%command%'
     format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
-    wgrpUseHelp: '<green>Nutzung: <yellow>/wgrp help - <gold>um eine Liste von Befehlen anzuzeigen.'
-    addRegionFromConsole: '<green>Nutzung: <yellow>/wgrp addregion <dark_green>[region] [world]'
-    removeRegionFromConsole: '<green>Nutzung: <yellow>/wgrp removeregion <dark_green>[region] [world]'
+    wgrpUseHelp: '<green>Verwende  <yellow>/wgrp help<gold>, um eine Liste von Befehlen zu sehen.'
+    addRegionFromConsole: '<green>Verwende <yellow>/wgrp addregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>Verwende <yellow>/wgrp removeregion <dark_green>[region] [world]'
   subCommands:
-    reload: 'ladet die Konfigurations Dateien neu.'
-    about: 'zeige Informationen über Autoren.'
-    spy: 'spion für wer mit der Region interagiert.'
-    help: 'für gesehen Hilfe.'
-    addRegion: 'fügen Sie eine Region zur Konfiguration zum Schutz hinzu.'
-    removeRegion: 'entfernen Sie die Region aus der Konfiguration, um den Schutz zu entfernen.'
+    reload: 'Konfigurationsdateien neu laden.'
+    about: 'Info über Autor*innen.'
+    spy: 'spioniere, wer mit der Region interagiert.'
+    help: 'für gesehene Hilfe.'
+    addRegion: 'füge eine Region zur Config hinzu, um sie zu schützen.'
+    removeRegion: 'lösche die Region aus der Config um, den Schutz zu entfernen.'
