@@ -71,7 +71,7 @@ dependencies {
 }
 ```
 
-## Metrics
+## 📈 Metrics
 
 [bStats](https://bstats.org/plugin/bukkit/WorldGuardRegionProtect/12975)
 <img alt="bStats" src="https://bstats.org/signatures/bukkit/WorldGuardRegionProtect.svg"/>
