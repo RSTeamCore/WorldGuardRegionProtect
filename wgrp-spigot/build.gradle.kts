@@ -97,7 +97,7 @@ tasks {
         filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
     }
     shadowJar {
-        archiveFileName.set("${rootProject.name}-Spigot-${project.version}.${archiveExtension.getOrElse("jar")}")
+        archiveFileName.set("${rootProject.name}-${project.version}.${archiveExtension.getOrElse("jar")}")
     }
     build {
         dependsOn(shadowJar)
