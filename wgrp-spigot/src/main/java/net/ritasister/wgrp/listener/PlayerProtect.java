@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerBucketEntityEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -23,7 +24,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
 import java.util.Set;
 
 
@@ -65,11 +65,22 @@ public class PlayerProtect implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
+    private void denyChangeSign(@NotNull SignChangeEvent e) {
+        Player player = e.getPlayer();
+        if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(player.getLocation(), config.getRegionProtectMap())
+                && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+            if (config.getSignType().contains(e.getBlock().getType().name().toLowerCase())) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
     private void denyFlowerPotManipulate(@NotNull PlayerFlowerPotManipulateEvent e) {
         Player player = e.getPlayer();
         Location location = e.getFlowerpot().getLocation();
         if (config.isDenyTakeOrPlaceNaturalBlockOrItemIOFlowerPot()) {
-            if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), config.getRegionProtectMap())
+            if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
                     && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 if (config.getNaturalBlockOrItem().contains(e.getItem().getType().name().toLowerCase())) {
                     e.setCancelled(true);

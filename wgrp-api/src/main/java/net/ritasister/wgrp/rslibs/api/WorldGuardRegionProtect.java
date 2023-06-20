@@ -7,10 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 public interface WorldGuardRegionProtect {
 
-    boolean isDebug();
-
-    void setDebug(boolean debug);
-
     default void messageToCommandSender(@NotNull CommandSender commandSender, String message) {
         var miniMessage = MiniMessage.miniMessage();
         Component parsed = miniMessage.deserialize(message);

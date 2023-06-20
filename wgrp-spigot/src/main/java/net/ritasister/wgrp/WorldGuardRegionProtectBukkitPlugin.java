@@ -60,7 +60,7 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     private UpdateNotify updateNotify;
 
     public WorldGuardRegionProtectBukkitPlugin(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
-        super(wgrpBukkitBase.getPluginMeta().getVersion(), ServerType.SPIGOT);
+        super(ServerType.SPIGOT);
         this.wgrpBukkitBase = wgrpBukkitBase;
         this.audiences = BukkitAudiences.create(wgrpBukkitBase);
         load();
@@ -74,7 +74,7 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
 
         rsApi = new RSApi(this);
 
-        WGRPChecker wgrpChecker = new WGRPChecker(wgrpBukkitBase, this);
+        WGRPChecker wgrpChecker = new WGRPChecker(this);
         wgrpChecker.checkStartUpVersionServer();
         wgrpChecker.checkIfRunningOnPaper();
 

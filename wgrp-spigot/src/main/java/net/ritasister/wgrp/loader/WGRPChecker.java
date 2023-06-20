@@ -5,20 +5,23 @@ import lombok.extern.slf4j.Slf4j;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.api.RSApi;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 @Slf4j
 public class WGRPChecker {
 
-    private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+
+    private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
 
     @Getter
     private boolean isPaper;
 
-    public WGRPChecker(final WorldGuardRegionProtectBukkitBase wgrpBukkitBase,
-                       final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitBase = wgrpBukkitBase;
+    @Contract(pure = true)
+    public WGRPChecker(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+        this.wgrpBukkitBase = wgrpBukkitPlugin.getWgrpBukkitBase();
     }
 
     public void checkStartUpVersionServer() {
@@ -39,12 +42,12 @@ public class WGRPChecker {
             isPaper = true;
         } catch (ClassNotFoundException ignored) {
             log.info(String.format("""
-                            You are not using a paper? %s
+                            Using paper: %s
                             Better if you are running your server on paper or other forks of paper.
                             Please don't use any untrusted forks.
                             """, isPaper()));
         }
-        log.info(String.format("Using paper or trust forks of paper? %s Nice!", isPaper()));
+        log.info(String.format("Using paper: %s", isPaper()));
     }
 
     public void notifyAboutBuild() {

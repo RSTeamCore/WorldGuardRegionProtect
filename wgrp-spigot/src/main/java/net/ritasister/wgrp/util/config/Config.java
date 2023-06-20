@@ -56,6 +56,9 @@ public class Config {
     private List<String> naturalBlockOrItem;
 
     @CanRecover
+    private List<String> signType;
+
+    @CanRecover
     private boolean denyCollisionWithVehicle;
 
     @CanRecover
@@ -223,6 +226,7 @@ public class Config {
             animalType = (List<String>) wgrpBukkitBase.getConfig().getList("wgRegionProtect.protectInteract.animalType");
             monsterType = (List<String>) wgrpBukkitBase.getConfig().getList("wgRegionProtect.protectInteract.monsterType");
             waterMobType = (List<String>) wgrpBukkitBase.getConfig().getList("wgRegionProtect.protectInteract.waterMobType");
+            signType = (List<String>) wgrpBukkitBase.getConfig().getList("wgRegionProtect.protectInteract.signType");
             entityExplodeType = (List<String>) wgrpBukkitBase.getConfig().getList(
                     "wgRegionProtect.protectInteract.entityExplodeType");
             naturalBlockOrItem = (List<String>) wgrpBukkitBase.getConfig().getList(
@@ -334,6 +338,16 @@ public class Config {
                             case "waterMobType" -> waterMobType = List.of(
                                     "tropical_fish", "axolotl", "turtle",
                                     "sniffer", "camel"
+                            );
+                            case "signType" -> signType = List.of(
+                                    "oak_sign", "spruce_sign", "birch_sign",
+                                    "jungle_sign", "acacia_sign", "dark_oak_sign",
+                                    "mangrove_sign", "cherry_sign", "bamboo_sign",
+                                    "crimson_sign", "warped_sign",
+                                    "oak_hanging_sign", "spruce_hanging_sign", "birch_hanging_sign",
+                                    "jungle_hanging_sign", "acacia_hanging_sign", "dark_oak_hanging_sign",
+                                    "mangrove_hanging_sign", "cherry_hanging_sign", "bamboo_hanging_sign",
+                                    "crimson_hanging_sign", "warped_hanging_sign"
                             );
                             case "entityExplodeType" -> entityExplodeType = List.of(
                                     "primed_tnt", "end_crystal", "minecart_tnt",
@@ -478,6 +492,10 @@ public class Config {
 
     public List<String> getEntityExplodeType() {
         return entityExplodeType;
+    }
+
+    public List<String> getSignType() {
+        return signType;
     }
 
     public List<String> getNaturalBlockOrItem() {
@@ -637,58 +655,22 @@ public class Config {
             wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.interactType", interactType);
             wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.vehicleType", vehicleType);
             wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.animalType", animalType);
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.entityExplodeType",
-                    entityExplodeType
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.naturalBlockOrItem",
-                    naturalBlockOrItem
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.player.vehicle.denyCollisionWithVehicle",
-                    denyCollisionWithVehicle
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.player.vehicle.denySitAsPassengerInVehicle",
-                    denySitAsPassengerInVehicle
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.player.vehicle.denyDamageVehicle",
-                    denyDamageVehicle
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.player.tools.denyTakeLecternBook",
-                    denyTakeLecternBook
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.player.tools.denyStonecutterRecipeSelect",
-                    denyStonecutterRecipeSelect
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.player.tools.denyLoomPatternSelect",
-                    denyLoomPatternSelect
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.player.itemFrame.denyInteractWithItemFrame",
-                    denyInteractWithItemFrame
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.player.itemFrame.denyDamageItemFrameOrPainting",
-                    denyDamageItemFrameOrPainting
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.player.misc.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot",
-                    denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.other.denyWaterFlowToRegion",
-                    denyWaterFlowToRegion
-            );
-            wgrpBukkitBase.getConfig().set(
-                    "wgRegionProtect.protectInteract.other.denyLavaFlowToRegion",
-                    denyLavaFlowToRegion
-            );
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.monsterType", monsterType);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.waterMobType", waterMobType);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.entityExplodeType", entityExplodeType);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.signType", signType);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.naturalBlockOrItem", naturalBlockOrItem);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.player.vehicle.denyCollisionWithVehicle", denyCollisionWithVehicle);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.player.vehicle.denySitAsPassengerInVehicle", denySitAsPassengerInVehicle);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.player.vehicle.denyDamageVehicle", denyDamageVehicle);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.player.tools.denyTakeLecternBook", denyTakeLecternBook);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.player.tools.denyStonecutterRecipeSelect", denyStonecutterRecipeSelect);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.player.tools.denyLoomPatternSelect", denyLoomPatternSelect);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.player.itemFrame.denyInteractWithItemFrame", denyInteractWithItemFrame);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.player.itemFrame.denyDamageItemFrameOrPainting", denyDamageItemFrameOrPainting);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.player.misc.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot", denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.other.denyWaterFlowToRegion", denyWaterFlowToRegion);
+            wgrpBukkitBase.getConfig().set("wgRegionProtect.protectInteract.other.denyLavaFlowToRegion", denyLavaFlowToRegion);
 
             wgrpBukkitBase.getConfig().set("wgRegionProtect.noProtectCmd.cmdWe", cmdWe);
             wgrpBukkitBase.getConfig().set("wgRegionProtect.noProtectCmd.cmdWeC", cmdWeC);
