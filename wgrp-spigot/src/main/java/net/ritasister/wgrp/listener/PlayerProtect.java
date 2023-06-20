@@ -1,8 +1,6 @@
 package net.ritasister.wgrp.listener;
 
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
@@ -21,7 +19,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -45,11 +42,6 @@ public class PlayerProtect implements Listener {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
         this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
         this.messages = wgrpBukkitPlugin.getConfigLoader().getMessages();
-    }
-
-    @EventHandler(priority = EventPriority.NORMAL)
-    private void playerMove(@NotNull PlayerMoveEvent e) {
-        Audience.audience().sendActionBar(Component.text("test"));
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
