@@ -73,8 +73,6 @@ body:
         label: Video case
         description: paste your link here
         placeholder: "Link here your video if you has this"
-    validations:
-        required: true
 
   - type: input
     attributes:
