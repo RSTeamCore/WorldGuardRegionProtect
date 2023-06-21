@@ -1,6 +1,7 @@
 name: WorldGuardRegionProtect
 version: ${version}
-authors: [${author}]
+author: ${author}
+contributor: ${contributor}
 main: ${group}.wgrp.WorldGuardRegionProtectBukkitBase
 depend: [ WorldGuard ]
 softdepend: [ PlaceholderAPI ]
