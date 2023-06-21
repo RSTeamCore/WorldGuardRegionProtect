@@ -14,11 +14,12 @@ wgRegionProtect:
     # -------------------------------------------------------------
     # Let the admin know if he updated the plugin to the latest version.
     # enable: Is enable check of update a new version of this plugin.
-    # sendNoUpdate: Is enable sending in chat for admins if plugin not have a update.
+    # sendNoUpdate: Is enable sending in chat for admins if plugin not have an update.
+    # true - enable messages, false - disable.
     # -------------------------------------------------------------
     updateChecker:
         enable: true
-        sendNoUpdate: false
+        sendNoUpdate: true
 
     # -------------------------------------------------------------
     # List of protected regions.

@@ -49,7 +49,7 @@ public class PlayerProtect implements Listener {
     private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
         if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.PERMISSION_STAR) || e.getPlayer().isOp()) {
             wgrpBukkitPlugin.getUpdateNotify().checkUpdateNotify(
-                    wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta(),
+                    wgrpBukkitPlugin.getWgrpBukkitBase().getDescription(),
                     e.getPlayer(),
                     config.isUpdateChecker(),
                     config.isSendNoUpdate()

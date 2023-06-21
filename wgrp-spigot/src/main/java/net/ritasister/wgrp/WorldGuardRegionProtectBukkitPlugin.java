@@ -87,7 +87,7 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         wgrpChecker.notifyAboutBuild();
 
         updateNotify = new UpdateNotify(wgrpBukkitBase, this);
-        updateNotify.checkUpdateNotify(wgrpBukkitBase.getPluginMeta());
+        updateNotify.checkUpdateNotify(wgrpBukkitBase.getDescription());
     }
 
     private void loadAnotherClassAndMethods() {
