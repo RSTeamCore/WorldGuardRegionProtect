@@ -35,6 +35,9 @@ public class Config {
     private boolean updateChecker;
 
     @CanRecover
+    private boolean sendNoUpdate;
+
+    @CanRecover
     private List<String> interactType;
 
     @CanRecover
@@ -157,7 +160,8 @@ public class Config {
 
         try {
             lang = wgrpBukkitBase.getConfig().getString("wgRegionProtect.lang");
-            updateChecker = wgrpBukkitBase.getConfig().getBoolean("wgRegionProtect.updateChecker");
+            updateChecker = wgrpBukkitBase.getConfig().getBoolean("wgRegionProtect.updateChecker.enable");
+            sendNoUpdate = wgrpBukkitBase.getConfig().getBoolean("wgRegionProtect.updateChecker.sendNoUpdate");
 
             //start getting regions.
             ConfigurationSection regionProtectSection = wgrpBukkitBase.getConfig().getConfigurationSection(
@@ -307,6 +311,7 @@ public class Config {
                         switch (f.getName()) {
                             case "lang" -> lang = "en";
                             case "updateChecker" -> updateChecker = true;
+                            case "sendNoUpdate" -> sendNoUpdate = true;
 
                             case "interactType" -> interactType = List.of(
                                     "armor_stand", "end_crystal", "bucket",
@@ -439,8 +444,12 @@ public class Config {
         return lang;
     }
 
-    public boolean getUpdateChecker() {
+    public boolean isUpdateChecker() {
         return updateChecker;
+    }
+
+    public boolean isSendNoUpdate() {
+        return sendNoUpdate;
     }
 
     public Map<String, List<String>> getRegionProtectMap() {

@@ -38,6 +38,7 @@ public class PlayerProtect implements Listener {
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
     private final Config config;
     private final Container messages;
+
     public PlayerProtect(@NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
         this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
@@ -46,12 +47,12 @@ public class PlayerProtect implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
-        if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(
-                e.getPlayer(), UtilPermissions.PERMISSION_STAR) || e.getPlayer().isOp()) {
+        if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.PERMISSION_STAR) || e.getPlayer().isOp()) {
             wgrpBukkitPlugin.getUpdateNotify().checkUpdateNotify(
                     wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta(),
                     e.getPlayer(),
-                    config.getUpdateChecker()
+                    config.isUpdateChecker(),
+                    config.isSendNoUpdate()
             );
         }
     }

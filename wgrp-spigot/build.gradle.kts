@@ -137,7 +137,7 @@ tasks {
 tasks {
     runServer {
         minecraftVersion("1.20.1")
-        pluginJars(project(":wgrp-spigot").file("build/libs/WorldGuardRegionProtect-Spigot-${rootProject.version}.jar"))
+        pluginJars(project(":wgrp-spigot").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
     }
     /*runMojangMappedServer {

@@ -40,12 +40,12 @@ public class UpdateNotify {
         });
     }
 
-    public void checkUpdateNotify(PluginMeta pluginMeta, Player player, boolean checkUpdate) {
+    public void checkUpdateNotify(PluginMeta pluginMeta, Player player, boolean checkUpdate, boolean sendNoUpdate) {
         final String noUpdate = """
-                <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
-                                      <gold>Current version: <aqua>%s
-                                   <gold>You are using the latest version.
-                <yellow>=======================================""";
+               <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
+                              <gold>Current version: <aqua>%s
+                            <gold>You are using the latest version.
+               <yellow>=======================================""";
         final String hasUpdate = """
                 <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
                 <gold> There is a new version update available.
@@ -57,7 +57,9 @@ public class UpdateNotify {
         if (checkUpdate) {
             new UpdateChecker(javaPlugin, 81321).getVersion(version -> {
                 if (pluginMeta.getVersion().equalsIgnoreCase(version)) {
-                    worldGuardRegionProtect.messageToCommandSender(player, String.format(noUpdate, version));
+                    if(sendNoUpdate) {
+                        worldGuardRegionProtect.messageToCommandSender(player, String.format(noUpdate, version));
+                    }
                 } else {
                     worldGuardRegionProtect.messageToCommandSender(player, String.format(hasUpdate, pluginMeta.getVersion(), version));
                 }
