@@ -33,7 +33,7 @@ public class ToolsProtect implements Listener {
         Location location = e.getLectern().getLocation();
         if (config.isDenyTakeLecternBook()) {
             if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
-                    && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }
@@ -45,7 +45,7 @@ public class ToolsProtect implements Listener {
         Location location = e.getStonecutterInventory().getLocation();
         if (config.isDenyStonecutterRecipeSelect()) {
             if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), config.getRegionProtectMap())
-                    && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }
@@ -57,7 +57,7 @@ public class ToolsProtect implements Listener {
         Location location = e.getLoomInventory().getLocation();
         if (config.isDenyLoomPatternSelect()) {
             if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), config.getRegionProtectMap())
-                    && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }

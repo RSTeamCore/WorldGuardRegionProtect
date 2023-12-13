@@ -11,6 +11,7 @@ messages:
     add: "<green>Alue <gold><region><green> lisätty asetukseen."
     remove: "<red>Alue <gold><region><red> poistettu asetuksesta."
     notContains: '<red>Ei voitu poistaa aluetta suojelulistalta, koska <gold><region> <red>is ei ole suojattu!'
+    alreadyProtected: '<red>Region <gold><region><red> is already added to protect.'
     invalidWorld: '<red>Maailman- <gold><world><red> ei löytynyt. Oletko varma, että syötit maailman nimen oikein?'
     invalidRegion: '<red>Alue <gold><region><red> ei löytynyt. Oletko varma, että syötit oikean aluenimen?'
   Configs:

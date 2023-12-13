@@ -4,13 +4,13 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
 import net.ritasister.wgrp.util.config.Config;
-import net.ritasister.wgrp.util.config.InitConfigImpl;
+import net.ritasister.wgrp.util.config.InitConfig;
 import net.ritasister.wgrp.util.config.InitMessages;
 import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;
 import net.rsteamcore.config.Container;
 
 @Slf4j
-public class ConfigLoader extends InitConfigImpl<WorldGuardRegionProtectBukkitBase> {
+public class ConfigLoader implements InitConfig<WorldGuardRegionProtectBukkitBase> {
 
     @Getter
     private Config config;

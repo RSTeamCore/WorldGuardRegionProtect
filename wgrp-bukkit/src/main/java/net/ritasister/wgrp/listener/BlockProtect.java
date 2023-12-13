@@ -38,7 +38,7 @@ public class BlockProtect implements Listener {
                 || wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectOnlyBreakAllowMap())) {
             e.setCancelled(false);
         } else if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
-                && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
             sendMessage(player);
         } else if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location)
@@ -55,7 +55,7 @@ public class BlockProtect implements Listener {
         if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectAllowMap())) {
             e.setCancelled(false);
         } else if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
-                && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
             sendMessage(player);
         } else if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location)

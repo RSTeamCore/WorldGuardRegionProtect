@@ -11,6 +11,7 @@ messages:
     add: '<green>Region <gold><region><green> zur Config hinzugefügt.'
     remove: '<red>Region <gold><region><red> aus der Config entfernt.'
     notContains: '<red>Die Region konnte nicht von der Schutzliste entfernt werden, weil <gold><region> <red>sie nicht geschützt ist!'
+    alreadyProtected: '<red>Region <gold><region><red> is already protected by plugin.'
     invalidWorld: '<red>World <gold><world><red> nicht gefunden. Bist du dir sicher, dass du den Namen der Welt korrekt eingegeben hast?'
     invalidRegion: '<red>Region <gold><region><red>nicht gefunden. Bist du dir sicher, dass du den Weltnamen korrekt eingegeben hast?'
   Configs:

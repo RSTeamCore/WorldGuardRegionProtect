@@ -92,6 +92,10 @@ public class CommandWGRP extends AbstractCommand {
                 if(args.length == 2) world = args[1];
                 for(World w : Bukkit.getWorlds()) if(w.getName().equalsIgnoreCase(world)) isWorldValid = true;
                 if(wgrpBukkitPlugin.getRsRegion().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region)) isRegionValid = true;
+                if(rgMap.get(world).contains(region)) {
+                    messages.get("messages.regionManagement.alreadyProtected").replace("<region>", region).send(sender);
+                    return;
+                }
                 if(!isWorldValid) {
                     messages.get("messages.regionManagement.invalidWorld").replace("<world>", world).send(sender);
                     return;

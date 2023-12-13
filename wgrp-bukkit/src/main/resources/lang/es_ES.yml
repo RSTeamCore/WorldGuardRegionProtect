@@ -1,30 +1,30 @@
----
 langTitle:
   language: Español
   author: RSTeamCore, FabriCanoSolitario
-  version: 1.0
+  version: '1.0'
 messages:
   ServerMsg:
-    wgrpMsg: '&8[&cWGRP&8]&a ¡Esta región está protegida por el servidor!'
-    wgrpMsgWe: '&8[&cWGRP&8]&c ¡No puedes usaraquí el comando worldedit!'
-    noPerm: '&cNo tienes permiso para usar este comando.'
+    wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> ¡Esta región está protegida por el servidor!'
+    wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> ¡No puedes usaraquí el comando worldedit!'
+    noPerm: '<red>No tienes permiso para usar este comando.'
   regionManagement:
-    add: "&aRegión &6<region>&a añadida a la configuración."
-    remove: "&cRegión &6<region>&c eliminada de la configuración."
-    notContains: "&c¡No se pudo eliminar la región de la lista de protección, porque &6<region> &cno está protegida!"
-    invalidWorld: "&cMundo &6<world>&c no encontrado. ¿Estás seguro de que has introducido el nombre del mundo correctamente?"
-    invalidRegion: "&cRegión &6<region>&c no encontrada. ¿Estás seguro de que has introducido el nombre correcto de la región?"
+    add: "<green>Región <gold><region><green> añadida a la configuración."
+    remove: "<red>Región <gold><region><red> eliminada de la configuración."
+    notContains: "<red>¡No se pudo eliminar la región de la lista de protección, porque <gold><region> <red>no está protegida!"
+    alreadyProtected: '<red>Region <gold><region><red> is already added to protect.'
+    invalidWorld: "<red>Mundo <gold><world><red> no encontrado. ¿Estás seguro de que has introducido el nombre del mundo correctamente?"
+    invalidRegion: "<red>Región <gold><region><red> no encontrada. ¿Estás seguro de que has introducido el nombre correcto de la región?"
   Configs:
-    configReloaded: '&8[&cWGRP&8] &a¡Todos los archivos recargados en <time> ms!'
+    configReloaded: '<dark_gray>[<dark_red>WGRP<dark_gray>] <green>¡Todos los archivos recargados en <time> ms!'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '&8[&4!&8]&c¡Atención! &e<player>&c intentando usar el comando &5<cmd>&c en la región: &3<region>'
-    sendAdminInfoIfActionInRegion: '&8[&4!&8]&c¡Atención! &e<player> &6<action>&c bloqueada en la región: &3<region>&c Ubicación &3<x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>¡Atención! <yellow><player><red> intentando usar el comando <dark_purple><cmd><red> en la región: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>¡Atención! <yellow><player> <gold><action><red> bloqueada en la región: <dark_aqua><region><red> Ubicación <dark_aqua><x> <y> <z> <world>'
   usage:
-    title: '&8[&cWGRP&8]&3 Uso para el comando &6%command%'
-    format: ' &a%command% %alias% &2%tabArgs%&3-&e%description%'
-    wgrpUseHelp: '&aUso: &e/wgrp help - &6para ver una lista de comandos.'
-    addRegionFromConsole: '&aUso: &e/wgrp addregion &2[región] [mundo]'
-    removeRegionFromConsole: '&aUso: &e/wgrp removeregion &2[región] [mundo]'
+    title: '<dark_gray>[<dark_red>WGRP<dark_gray>]<dark_aqua> Uso para el comando <gold>%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>Uso: <yellow>/wgrp help - <gold>para ver una lista de comandos.'
+    addRegionFromConsole: '<green>Uso: <yellow>/wgrp addregion <dark_green>[región] [mundo]'
+    removeRegionFromConsole: '<green>Uso: <yellow>/wgrp removeregion <dark_green>[región] [mundo]'
   subCommands:
     reload: 'recargar los archivos de configuración.'
     about: 'ver información sobre los autores.'

@@ -45,7 +45,7 @@ public class RSApi {
      * @return can a player use this listener.
      */
     public boolean isPlayerListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm) {
-        return player.hasPermission(perm.getPermissionName());
+        return !player.hasPermission(perm.getPermissionName());
     }
 
     /**
@@ -177,13 +177,12 @@ public class RSApi {
     }
 
     public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
-        if (!wgrpBukkitPlugin.getRsRegion().checkStandingRegion(checkEntity.getLocation(), config.getRegionProtectMap())
-                || !wgrpBukkitPlugin.getRsApi().isEntityListenerPermission(entity, UtilPermissions.REGION_PROTECT)) {
-            return;
-        }
-        EntityCheckType entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
-        if(entityCheckType.check(checkEntity)) {
-            cancellable.setCancelled(true);
+        if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(checkEntity.getLocation(), config.getRegionProtectMap())
+                && wgrpBukkitPlugin.getRsApi().isEntityListenerPermission(entity, UtilPermissions.REGION_PROTECT)) {
+            EntityCheckType entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
+            if(entityCheckType.check(checkEntity)) {
+                cancellable.setCancelled(true);
+            }
         }
     }
 

@@ -61,7 +61,7 @@ public class PlayerProtect implements Listener {
     private void denyChangeSign(@NotNull SignChangeEvent e) {
         Player player = e.getPlayer();
         if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(player.getLocation(), config.getRegionProtectMap())
-                && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             if (config.getSignType().contains(e.getBlock().getType().name().toLowerCase())) {
                 e.setCancelled(true);
             }
@@ -74,7 +74,7 @@ public class PlayerProtect implements Listener {
         Location location = e.getFlowerpot().getLocation();
         if (config.isDenyTakeOrPlaceNaturalBlockOrItemIOFlowerPot()) {
             if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
-                    && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 if (config.getNaturalBlockOrItem().contains(e.getItem().getType().name().toLowerCase())) {
                     e.setCancelled(true);
                 }
@@ -87,7 +87,7 @@ public class PlayerProtect implements Listener {
         Player player = e.getPlayer();
         Location location = e.getEntity().getLocation();
         if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
-                && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             if (player.getInventory().getItemInMainHand().getType() == Material.WATER_BUCKET) {
                 e.setCancelled(true);
             }
@@ -101,7 +101,7 @@ public class PlayerProtect implements Listener {
             Player player = e.getPlayer();
             Location location = e.getClickedBlock().getLocation();
             if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
-                    && !wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 for (String spawnVehicleType : config.getVehicleType()) {
                     for (String spawnEntityType : config.getInteractType()) {
                         if (e.getItem().getType() == Material.getMaterial(spawnVehicleType.toUpperCase())
@@ -129,7 +129,7 @@ public class PlayerProtect implements Listener {
         Player player = e.getPlayer();
         Location clickLoc = e.getRightClicked().getLocation();
         if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(clickLoc, config.getRegionProtectMap())) {
-            if (!wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+            if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 if (e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
                     e.setCancelled(true);
                 }
@@ -146,7 +146,7 @@ public class PlayerProtect implements Listener {
         Location clickLoc = e.getRightClicked().getLocation();
         EntityType clickType = e.getRightClicked().getType();
         if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(clickLoc, config.getRegionProtectMap())) {
-            if (!wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+            if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 switch (clickType) {
                     case ITEM_FRAME, GLOW_ITEM_FRAME -> e.setCancelled(true);
                 }
@@ -161,7 +161,7 @@ public class PlayerProtect implements Listener {
         Location location = player.getLocation();
         String[] s = e.getMessage().toLowerCase().split(" ");
         String cmd = e.getMessage().split(" ")[0].toLowerCase();
-        if (!wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+        if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             if (this.wgrpBukkitPlugin.getCommandWE().cmdWE(s[0]) && !this.wgrpBukkitPlugin.getWg().checkIntersection(player)
                     || this.wgrpBukkitPlugin.getCommandWE().cmdWE_C(s[0]) && !this.wgrpBukkitPlugin.getWg().checkCIntersection(
                     player,

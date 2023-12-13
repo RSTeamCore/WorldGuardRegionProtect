@@ -1,25 +1,8 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("xyz.jpenilla.run-paper") version "2.1.0"
     kotlin("jvm") version "1.8.0"
-}
-
-val javaVersion = 17
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(javaVersion))
-}
-
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = javaVersion.toString()
-}
-val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions {
-    jvmTarget = javaVersion.toString()
 }
 
 defaultTasks("clean", "build")
@@ -152,7 +135,7 @@ tasks {
 tasks {
     runServer {
         minecraftVersion("1.20.4")
-        pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}-SNAPSHOT.jar"))
+        pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
     }
     /*runMojangMappedServer {

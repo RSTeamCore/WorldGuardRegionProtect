@@ -1,7 +1,7 @@
 langTitle:
   language: English
   author: RSTeamCore
-  version: '1.1'
+  version: '1.2'
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by server!'
@@ -11,6 +11,7 @@ messages:
     add: '<green>Region <gold><region><green> added to config.'
     remove: '<red>Region <gold><region><red> removed from config.'
     notContains: '<red>Could not remove region from protect list, because <gold><region> <red>is not protected!'
+    alreadyProtected: '<red>Region <gold><region><red> is already added to protect.'
     invalidWorld: '<red>World <gold><world><red> not found. Are you sure you entered the name of the world correctly?'
     invalidRegion: '<red>Region <gold><region><red> not found. Are you sure you entered the correct region name?'
   Configs:
