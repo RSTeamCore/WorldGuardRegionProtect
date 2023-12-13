@@ -1,4 +1,5 @@
 rootProject.name = "WorldGuardRegionProtect"
 
-include("wgrp-api")
-include("wgrp-spigot")
+include (
+        "wgrp-api",
+        "wgrp-bukkit")

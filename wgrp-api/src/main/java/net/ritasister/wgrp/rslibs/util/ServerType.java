@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.util;
 
 public enum ServerType {
 
+    PAPER("PAPER"),
     SPIGOT("Spigot"),
     SPONGE("Sponge");
 
