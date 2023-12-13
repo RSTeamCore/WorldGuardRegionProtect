@@ -1,0 +1,33 @@
+langTitle:
+  language: 日本語
+  author: RSTeamCore
+  version: '1.1'
+messages:
+  ServerMsg:
+    wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>] <green>このリージョンはサーバーによって保護されています！'
+    wgrpMsgWe: '<dark_gray>[<red>WGRP<dark_gray>] <red>WorldEditコマンドはここでは使用できません！'
+    noPerm: '<red>このコマンドを使用する権限がありません。'
+  regionManagement:
+    add: "<yellow>リージョン<gold><region><green> が設定に追加されました。"
+    remove: "<red>リージョン<gold><region><red> が設定から削除されました。"
+    notContains: "<red><gold><region> <red>が保護されていないため、保護リストからリージョンを削除できませんでした！"
+    invalidWorld: "<red>ワールド <gold><world><red> が見つかりません。ワールドの名前を正しく入力していますか？"
+    invalidRegion: "<red>地域 <gold><region><red> が見つかりません。正しい地域名を入力してもよろしいですか？"
+  Configs:
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green> <time> msですべてのファイルが再読み込みされました！'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>注意！<yellow><player><red> コマンド<dark_purple><cmd><red> リージョン: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>注意！<yellow><player> <gold><action><red> ブロックリージョン: <dark_aqua><region><red> Location <dark_aqua><x> <y> <z> <world>'
+  usage:
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> コマンドの使用法 <gold>%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>使い方: <yellow>/wgrp help - <gold>コマンド一覧を表示します。'
+    addRegionFromConsole: '<green>使用法: <yellow>/wgrp addregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>使用法: <yellow>/wgrp removeregion <dark_green>[region] [world]'
+  subCommands:
+    reload: '設定ファイルを再読み込みします。'
+    about: '著者に関する情報を見る。'
+    spy: 'リージョンと交流するスパイだ'
+    help: 'チーム一覧を見る。'
+    addRegion: '設定にリージョンを追加して保護します。'
+    removeRegion: '設定からリージョンを削除して保護を解除します。'

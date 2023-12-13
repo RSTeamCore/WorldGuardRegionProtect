@@ -1,0 +1,33 @@
+langTitle:
+  language: English
+  author: RSTeamCore
+  version: '1.1'
+messages:
+  ServerMsg:
+    wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by server!'
+    wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> You can''t use here the worldedit command!'
+    noPerm: '<red>You don''t have permission to use this command.'
+  regionManagement:
+    add: '<green>Region <gold><region><green> added to config.'
+    remove: '<red>Region <gold><region><red> removed from config.'
+    notContains: '<red>Could not remove region from protect list, because <gold><region> <red>is not protected!'
+    invalidWorld: '<red>World <gold><world><red> not found. Are you sure you entered the name of the world correctly?'
+    invalidRegion: '<red>Region <gold><region><red> not found. Are you sure you entered the correct region name?'
+  Configs:
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>All files reloaded at <time> ms!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player><red> trying to using command <dark_purple><cmd><red> in region: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player> <gold><action><red> block in region: <dark_aqua><region><red> Location <dark_aqua><x> <y> <z> <world>'
+  usage:
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> Usage for command <gold>%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>Usage: <yellow>/wgrp help - <gold>to see a list of commands.'
+    addRegionFromConsole: '<green>Usage: <yellow>/wgrp addregion <dark_green>[region] [world]'
+    removeRegionFromConsole: '<green>Usage: <yellow>/wgrp removeregion <dark_green>[region] [world]'
+  subCommands:
+    reload: 'reload the configuration files.'
+    about: 'seeing info about authors.'
+    spy: 'spy for who interact with region.'
+    help: 'for seen helping.'
+    addRegion: 'add a region to the config to protect.'
+    removeRegion: 'remove the region from the config to remove the protection.'
