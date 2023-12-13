@@ -8,7 +8,7 @@ subprojects {
     apply (plugin = "maven-publish")
 
     group = "net.ritasister"
-    version = "1.0.0-SNAPSHOT"
+    version = "0.9.5-SNAPSHOT"
 
     val javaVersion = JavaVersion.VERSION_17
 
