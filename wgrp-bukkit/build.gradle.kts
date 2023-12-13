@@ -47,12 +47,29 @@ repositories {
 dependencies {
     //Api for this plugin
     api(project(":wgrp-api"))
+
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
     implementation("org.projectlombok:lombok:1.18.28")
 
+    //Kyori and MiniMessage
+    api("net.kyori:adventure-api:4.11.0") {
+        exclude(module = "adventure-bom")
+        exclude(module = "checker-qual")
+        exclude(module = "annotations")
+    }
+    api("net.kyori:adventure-text-minimessage:4.11.0") {
+        exclude(module = "adventure-bom")
+        exclude(module = "adventure-api")
+    }
+    compileOnly("net.kyori:adventure-platform-bukkit:4.1.0") {
+        exclude(module = "adventure-bom")
+        exclude(module = "adventure-api")
+        exclude(module = "adventure-nbt")
+    }
+
     //Paper
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
+    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
     //Alternate run-task Paper if runServer is don't updated to the new version of MC.
     //paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
 
@@ -61,10 +78,6 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.3")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
-    //Kyori and MiniMessage
-    compileOnly("net.kyori:adventure-api:4.14.0")
-    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
-    implementation("net.kyori:adventure-text-minimessage:4.14.0")
 
     //Libs
     //HikariCP
@@ -139,7 +152,7 @@ tasks {
 tasks {
     runServer {
         minecraftVersion("1.20.4")
-        pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
+        pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}-SNAPSHOT.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
     }
     /*runMojangMappedServer {
