@@ -10,6 +10,7 @@
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/graphs/contributors"><img src="https://img.shields.io/github/contributors/RitaSister/WorldGuardRegionProtect.svg" alt="Contributors"></a>
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>
 <a title="Crowdin" target="_blank" href="https://crowdin.com/project/worldguardregionprotect"><img src="https://badges.crowdin.net/worldguardregionprotect/localized.svg"></a>
+<a href="https://www.codefactor.io/repository/github/rsteamcore/worldguardregionprotect"><img src="https://www.codefactor.io/repository/github/rsteamcore/worldguardregionprotect/badge" alt="CodeFactor" /></a>
 
 ## 🌈 Community
 
