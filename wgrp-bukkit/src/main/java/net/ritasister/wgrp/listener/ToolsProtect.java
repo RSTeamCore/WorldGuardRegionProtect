@@ -2,7 +2,7 @@ package net.ritasister.wgrp.listener;
 
 import io.papermc.paper.event.player.PlayerLoomPatternSelectEvent;
 import io.papermc.paper.event.player.PlayerStonecutterRecipeSelectEvent;
-import net.ritasister.wgrp.WGRPContainer;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Location;
@@ -17,23 +17,23 @@ import java.util.Objects;
 
 public class ToolsProtect implements Listener {
 
-    private final WGRPContainer wgrpContainer;
+    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
     private final Config config;
 
 
-    public ToolsProtect(final @NotNull WGRPContainer wgrpContainer) {
-        this.wgrpContainer = wgrpContainer;
-        this.config = wgrpContainer.getConfig();
+    public ToolsProtect(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyPlayerTakeLecternBook(@NotNull PlayerTakeLecternBookEvent e) {
         Player player = e.getPlayer();
         Location location = e.getLectern().getLocation();
-        if (wgrpContainer.getConfig().isDenyTakeLecternBook()) {
-            if (wgrpContainer.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
-                    && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+        if (config.isDenyTakeLecternBook()) {
+            if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
+                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }
@@ -44,8 +44,8 @@ public class ToolsProtect implements Listener {
         Player player = e.getPlayer();
         Location location = e.getStonecutterInventory().getLocation();
         if (config.isDenyStonecutterRecipeSelect()) {
-            if (wgrpContainer.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), config.getRegionProtectMap())
-                    && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+            if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), config.getRegionProtectMap())
+                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }
@@ -56,8 +56,8 @@ public class ToolsProtect implements Listener {
         Player player = e.getPlayer();
         Location location = e.getLoomInventory().getLocation();
         if (config.isDenyLoomPatternSelect()) {
-            if (wgrpContainer.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), config.getRegionProtectMap())
-                    && !wgrpContainer.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+            if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(Objects.requireNonNull(location), config.getRegionProtectMap())
+                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }

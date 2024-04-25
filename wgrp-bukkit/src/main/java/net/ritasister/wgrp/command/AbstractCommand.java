@@ -1,9 +1,15 @@
 package net.ritasister.wgrp.command;
 
-import net.ritasister.wgrp.WorldGuardRegionProtect;
+import lombok.Getter;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import org.bukkit.command.*;
+import net.rsteamcore.config.Container;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
@@ -15,15 +21,16 @@ import java.util.List;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
-    private final WorldGuardRegionProtect wgRegionProtect;
+    @Getter
+    private final Container messages;
 
-    public AbstractCommand(String command, @NotNull WorldGuardRegionProtect wgRegionProtect) {
-        PluginCommand pluginCommand = wgRegionProtect.getWGRPBukkitPlugin().getCommand(command);
+    public AbstractCommand(String command, @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+        PluginCommand pluginCommand = wgrpBukkitPlugin.getWgrpBukkitBase().getCommand(command);
         if(pluginCommand != null) {
             pluginCommand.setExecutor(this);
             pluginCommand.setTabCompleter(this);
         }
-        this.wgRegionProtect=wgRegionProtect;
+        this.messages = wgrpBukkitPlugin.getConfigLoader().getMessages();
     }
 
     public List<String> complete() {
@@ -42,7 +49,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) {
-            wgRegionProtect.getWgrpContainer().getMessages().get("messages.usage.wgrpUseHelp").send(sender);
+            messages.get("messages.usage.wgrpUseHelp").send(sender);
         } else for (Method m : this.getClass().getDeclaredMethods()) {
             if (m.isAnnotationPresent(SubCommand.class)) {
                 SubCommand sub = m.getAnnotation(SubCommand.class);
@@ -70,7 +77,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                             } catch (IllegalAccessException | InvocationTargetException e) {
                                 throw new RuntimeException(e);
                             }
-                        } else wgRegionProtect.getWgrpContainer().getMessages().get("messages.ServerMsg.noPerm").send(sender);
+                        } else messages.get("messages.ServerMsg.noPerm").send(sender);
                     } else try {
                         m.invoke(this, sender, subArgs);
                         break;

@@ -19,8 +19,6 @@ body:
     attributes:
       label: Are there any alternatives?
       description: List any alternatives you might have tried
-    validations:
-      required: true
 
   - type: textarea
     attributes:

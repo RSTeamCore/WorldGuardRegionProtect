@@ -1,26 +1,8 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("xyz.jpenilla.run-paper") version "2.1.0"
-    //id("io.papermc.paperweight.userdev") version "1.5.5"
     kotlin("jvm") version "1.8.0"
-}
-
-val javaVersion = 17
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(javaVersion))
-}
-
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = javaVersion.toString()
-}
-val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions {
-    jvmTarget = javaVersion.toString()
 }
 
 defaultTasks("clean", "build")
@@ -48,11 +30,29 @@ repositories {
 dependencies {
     //Api for this plugin
     api(project(":wgrp-api"))
+
     //RSLibs by RSTeamCore
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
+    implementation("org.projectlombok:lombok:1.18.28")
+
+    //Kyori and MiniMessage
+    api("net.kyori:adventure-api:4.11.0") {
+        exclude(module = "adventure-bom")
+        exclude(module = "checker-qual")
+        exclude(module = "annotations")
+    }
+    api("net.kyori:adventure-text-minimessage:4.11.0") {
+        exclude(module = "adventure-bom")
+        exclude(module = "adventure-api")
+    }
+    compileOnly("net.kyori:adventure-platform-bukkit:4.1.0") {
+        exclude(module = "adventure-bom")
+        exclude(module = "adventure-api")
+        exclude(module = "adventure-nbt")
+    }
 
     //Paper
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT")
+    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
     //Alternate run-task Paper if runServer is don't updated to the new version of MC.
     //paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
 
@@ -61,9 +61,6 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.3")
     //WorldGuard 7+
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
-    //Kyori and MiniMessage
-    compileOnly("net.kyori:adventure-api:4.14.0")
-    implementation("net.kyori:adventure-text-minimessage:4.14.0")
 
     //Libs
     //HikariCP
@@ -71,9 +68,6 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.2")
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:3.1.2")
-    //DI google guice
-    implementation("com.google.inject:guice:5.1.0")
-    implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
     //Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20-RC")
     //Annotations
@@ -115,6 +109,7 @@ tasks {
                     "version" to project.version,
                     "group" to project.group,
                     "author" to project.property("author"),
+                    "contributor" to project.property("contributor"),
                     "description" to project.property("description"),
             )
         }
@@ -139,12 +134,12 @@ tasks {
 
 tasks {
     runServer {
-        minecraftVersion("1.20")
+        minecraftVersion("1.20.4")
         pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
     }
     /*runMojangMappedServer {
-        pluginJars(project(":wgrp-bukkit").file("build/libs/WorldGuardRegionProtect-Bukkit-${rootProject.version}.jar"))
+        pluginJars(project(":wgrp-spigot").file("build/libs/WorldGuardRegionProtect-Spigot-${rootProject.version}.jar"))
         jvmArgs("-Xms2G", "-Xmx2G")
     }*/
 }

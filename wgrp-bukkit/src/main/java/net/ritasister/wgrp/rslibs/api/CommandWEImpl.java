@@ -1,26 +1,29 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import lombok.RequiredArgsConstructor;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.api.interfaces.CommandWE;
 import net.ritasister.wgrp.rslibs.util.wg.WG;
+import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.wg.WG7Impl;
 
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class CommandWEImpl implements CommandWE {
 
-    private final WorldGuardRegionProtect wgRegionProtect;
+    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+
+    private Config config;
+
+    public CommandWEImpl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    }
 
     public WG setUpWorldGuardVersionSeven() {
-        return new WG7Impl(this.wgRegionProtect);
+        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
+        return new WG7Impl(this.wgrpBukkitPlugin);
     }
 
     public boolean cmdWE(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWe()) {
+        for (String tmp : config.getCmdWe()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -30,7 +33,7 @@ public class CommandWEImpl implements CommandWE {
 
     public boolean cmdWE_C(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWeC()) {
+        for (String tmp : config.getCmdWeC()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -40,7 +43,7 @@ public class CommandWEImpl implements CommandWE {
 
     public boolean cmdWE_P(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWeP()) {
+        for (String tmp : config.getCmdWeP()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -50,7 +53,7 @@ public class CommandWEImpl implements CommandWE {
 
     public boolean cmdWE_S(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWeS()) {
+        for (String tmp : config.getCmdWeS()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -60,7 +63,7 @@ public class CommandWEImpl implements CommandWE {
 
     public boolean cmdWE_U(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWeU()) {
+        for (String tmp : config.getCmdWeU()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -70,7 +73,7 @@ public class CommandWEImpl implements CommandWE {
 
     public boolean cmdWE_CP(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : wgRegionProtect.getWgrpContainer().getConfig().getCmdWeCP()) {
+        for (String tmp : config.getCmdWeCP()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }

@@ -3,8 +3,9 @@ package net.ritasister.wgrp.rslibs.datasource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.api.RegionAction;
+import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,49 +21,52 @@ import java.util.concurrent.ConcurrentHashMap;
 @SuppressWarnings({"checkstyle:AbbreviationAsWordInName"})
 public class Storage implements StorageDataSource {
 
-	private final WorldGuardRegionProtect wgRegionProtect;
+	private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+
+    private final Config config;
 
 	private HikariDataSource ds;
 
-	public Storage(WorldGuardRegionProtect worldGuardRegionProtect) {
-		this.wgRegionProtect = worldGuardRegionProtect;
+	public Storage(@NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+		this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
 		this.connect();
 		this.initialize();
 	}
 
 	private void connect() {
-		HikariConfig config = new HikariConfig();
-		config.setDriverClassName("org.mariadb.jdbc.Driver");
-		config.setJdbcUrl("jdbc:mariadb://"
-				+ wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getHost() + ":"
-				+ wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getPort() + "/"
-				+ wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getDataBase());
-		config.setUsername(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getUser());
-		config.setPassword(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getPassword());
+		HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName("org.mariadb.jdbc.Driver");
+        hikariConfig.setJdbcUrl("jdbc:mariadb://"
+				+ config.getMySQLSettings().getHost() + ":"
+				+ config.getMySQLSettings().getPort() + "/"
+				+ config.getMySQLSettings().getDataBase());
+        hikariConfig.setUsername(config.getMySQLSettings().getUser());
+        hikariConfig.setPassword(config.getMySQLSettings().getPassword());
 
 		// Pool settings
-        config.setMaximumPoolSize(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getMaxPoolSize());
-        config.setMaxLifetime(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getMaxLifetime() * 1000L);
-		config.addDataSourceProperty("useSSL", wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getUseSsl());
-		config.setConnectionTimeout(wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getConnectionTimeout());
+        hikariConfig.setMaximumPoolSize(config.getMySQLSettings().getMaxPoolSize());
+        hikariConfig.setMaxLifetime(config.getMySQLSettings().getMaxLifetime() * 1000L);
+        hikariConfig.addDataSourceProperty("useSSL", config.getMySQLSettings().getUseSsl());
+        hikariConfig.setConnectionTimeout(config.getMySQLSettings().getConnectionTimeout());
 
-		config.setPoolName("MariaDBPool");
+        hikariConfig.setPoolName("MariaDBPool");
 
         // Encoding
-        config.addDataSourceProperty("characterEncoding", "utf8");
-        config.addDataSourceProperty("encoding", "UTF-8");
-        config.addDataSourceProperty("useUnicode", "true");
+        hikariConfig.addDataSourceProperty("characterEncoding", "utf8");
+        hikariConfig.addDataSourceProperty("encoding", "UTF-8");
+        hikariConfig.addDataSourceProperty("useUnicode", "true");
 
         // Random stuff
-        config.addDataSourceProperty("rewriteBatchedStatements", "true");
-        config.addDataSourceProperty("jdbcCompliantTruncation", "false");
+        hikariConfig.addDataSourceProperty("rewriteBatchedStatements", "true");
+        hikariConfig.addDataSourceProperty("jdbcCompliantTruncation", "false");
 
         // Caching
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "275");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        hikariConfig.addDataSourceProperty("cachePrepStmts", "true");
+        hikariConfig.addDataSourceProperty("prepStmtCacheSize", "275");
+        hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 
-		ds = new HikariDataSource(config);
+		ds = new HikariDataSource(hikariConfig);
 	}
 
 	private Connection getConnection() throws SQLException {
@@ -74,7 +78,7 @@ public class Storage implements StorageDataSource {
 		try(Connection conn = Storage.this.getConnection()) {
 			pst = conn.prepareStatement(
 					"CREATE TABLE IF NOT EXISTS <table> (id INT AUTO_INCREMENT, nickname VARCHAR(16) NULL, uniqueId VARCHAR(36) NULL, time BIGINT(20) NOT NULL DEFAULT '0', action VARCHAR(5) NULL, region VARCHAR(60) NULL, world VARCHAR(60), x DOUBLE NOT NULL DEFAULT '0', y DOUBLE NOT NULL DEFAULT '0', z DOUBLE NOT NULL DEFAULT '0', CONSTRAINT table_const_prim PRIMARY KEY (id));"
-					.replace("<table>", wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getTable()));
+					.replace("<table>", config.getMySQLSettings().getTable()));
 			pst.execute();
 			pst.close();
 		} catch(SQLException ex){
@@ -90,7 +94,7 @@ public class Storage implements StorageDataSource {
 		ResultSet rs = null;
 		try(Connection conn = this.getConnection()) {
 			pst = conn.prepareStatement("SELECT * FROM <table>;"
-					.replace("<table>", wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getTable()));
+					.replace("<table>", config.getMySQLSettings().getTable()));
 			rs = pst.executeQuery();
 			while(rs.next()) {
 				UUID uniqueId = UUID.fromString(rs.getString("uniqueId"));
@@ -105,7 +109,7 @@ public class Storage implements StorageDataSource {
 						rs.getDouble("x"),
 						rs.getDouble("y"),
 						rs.getDouble("z"));
-				wgRegionProtect.getWgrpContainer().getRsStorage().dbLogs.put(uniqueId, dataBase);
+				wgrpBukkitPlugin.getRsStorage().dbLogs.put(uniqueId, dataBase);
 			}
 			return true;
 		}catch(SQLException ex){
@@ -118,14 +122,14 @@ public class Storage implements StorageDataSource {
 	}
 
 	public void loadAsync() {
-		Bukkit.getScheduler().runTaskTimerAsynchronously(wgRegionProtect.getWGRPBukkitPlugin(), () -> {
+		Bukkit.getScheduler().runTaskTimerAsynchronously(wgrpBukkitPlugin.getWgrpBukkitBase(), () -> {
 			ConcurrentHashMap<UUID, StorageDataBase> tempDataBase = new ConcurrentHashMap<>();
 			PreparedStatement pst = null;
 			ResultSet rs = null;
 			try (Connection conn = Storage.this.getConnection()) {
 				pst = conn.prepareStatement(
 						"SELECT * FROM <table>;"
-								.replace("<table>", wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getTable()));
+								.replace("<table>", config.getMySQLSettings().getTable()));
 				rs = pst.executeQuery();
 				while (rs.next()) {
 					UUID uniqueId = UUID.fromString(rs.getString("uniqueId"));
@@ -142,7 +146,7 @@ public class Storage implements StorageDataSource {
 							rs.getDouble("z"));
 					tempDataBase.put(uniqueId, dataBase);
 				}
-				wgRegionProtect.getWgrpContainer().getRsStorage().dbLogs = new ConcurrentHashMap<>(tempDataBase);
+                wgrpBukkitPlugin.getRsStorage().dbLogs = new ConcurrentHashMap<>(tempDataBase);
 			} catch (SQLException ex) {
                 log.error("Failed to load database asynchronous!");
 				ex.printStackTrace();
@@ -150,17 +154,17 @@ public class Storage implements StorageDataSource {
 				this.close(rs);
 				this.close(pst);
 			}
-			}, wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getIntervalReload() * 20L,
-				wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getIntervalReload() * 20L);
+			}, config.getMySQLSettings().getIntervalReload() * 20L,
+				config.getMySQLSettings().getIntervalReload() * 20L);
 	}
 
 	@Override
 	public void setLogAction(String nickname, @NotNull UUID uniqueId, long time, @NotNull RegionAction action, String region, String world, int x, int y, int z) {
-		Bukkit.getScheduler().runTaskAsynchronously(wgRegionProtect.getWGRPBukkitPlugin(), () -> {
+		Bukkit.getScheduler().runTaskAsynchronously(wgrpBukkitPlugin.getWgrpBukkitBase(), () -> {
 			PreparedStatement pst = null;
 			try(Connection conn = this.getConnection()) {
 				pst = conn.prepareStatement("INSERT INTO <table> (nickname, uniqueId, time, action, region, world, x, y, z) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
-						.replace("<table>", wgRegionProtect.getWgrpContainer().getConfig().getMySQLSettings().getTable()));
+						.replace("<table>", config.getMySQLSettings().getTable()));
 				pst.setString(1, nickname);
 				pst.setString(2, uniqueId.toString());
 				pst.setLong(3, time);

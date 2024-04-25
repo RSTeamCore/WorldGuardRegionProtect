@@ -3,7 +3,7 @@ package net.ritasister.wgrp.util.config.loader;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import net.ritasister.wgrp.WGRPBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
 import net.ritasister.wgrp.util.config.CheckVersionLang;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.ParamsVersionCheck;
@@ -25,18 +25,18 @@ public class MessageCheckVersion implements CheckVersionLang {
 
     @Override
     @SneakyThrows
-    public void checkVersionLang(final @NotNull WGRPBukkitPlugin wgrpBukkitPlugin, final @NotNull Config config) {
+    public void checkVersionLang(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase, final @NotNull Config config) {
         String lang = config.getLang();
-        File currentLangFile = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
-        InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitPlugin.getResource("lang/" + lang + ".yml")));
+        File currentLangFile = new File(wgrpBukkitBase.getDataFolder(), "lang/" + lang + ".yml");
+        InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitBase.getResource("lang/" + lang + ".yml")));
         YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(inputStreamReader);
         var currentYaml = YamlConfiguration.loadConfiguration(currentLangFile);
         if (currentLangFile.exists() && !paramsVersionCheck.getCurrentVersion(currentYaml).equals(Objects.requireNonNull(paramsVersionCheck.getNewVersion(yamlConfiguration)))) {
             log.info("Found new version of lang file, updating this now...");
-            Path renameOldLang = new File(wgrpBukkitPlugin.getDataFolder(),
+            Path renameOldLang = new File(wgrpBukkitBase.getDataFolder(),
                     "lang/" + lang + "-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
             Files.move(currentLangFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
-            wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", true);
+            wgrpBukkitBase.saveResource("lang/" + lang + ".yml", true);
         } else {
             log.info("No update is required for the lang file");
         }

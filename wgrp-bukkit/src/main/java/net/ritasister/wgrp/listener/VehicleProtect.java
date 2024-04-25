@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.listener;
 
-import net.ritasister.wgrp.WGRPContainer;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,13 +12,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class VehicleProtect implements Listener {
 
-    private final WGRPContainer wgrpContainer;
+    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
     private final Config config;
 
-    public VehicleProtect(final @NotNull WGRPContainer wgrpContainer) {
-        this.wgrpContainer = wgrpContainer;
-        this.config = wgrpContainer.getConfig();
+    public VehicleProtect(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -26,23 +26,23 @@ public class VehicleProtect implements Listener {
         if (!config.isDenyCollisionWithVehicle()) {
             return;
         }
-        wgrpContainer.getRsApi().entityCheck(e, e.getEntity(), e.getVehicle());
+        wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getEntity(), e.getVehicle());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyVehicleEnter(@NotNull VehicleEnterEvent e) {
-        if (!wgrpContainer.getConfig().isDenySitAsPassengerInVehicle()) {
+        if (!config.isDenySitAsPassengerInVehicle()) {
             return;
         }
-        wgrpContainer.getRsApi().entityCheck(e, e.getEntered(), e.getVehicle());
+        wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getEntered(), e.getVehicle());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyVehicleDamage(@NotNull VehicleDamageEvent e) {
-        if (!wgrpContainer.getConfig().isDenyDamageVehicle()) {
+        if (!config.isDenyDamageVehicle()) {
             return;
         }
-        wgrpContainer.getRsApi().entityCheck(e, e.getAttacker(), e.getVehicle());
+        wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getAttacker(), e.getVehicle());
     }
 
 }

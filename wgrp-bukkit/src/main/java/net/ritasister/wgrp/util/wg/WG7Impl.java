@@ -1,7 +1,5 @@
 package net.ritasister.wgrp.util.wg;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
@@ -17,8 +15,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import lombok.RequiredArgsConstructor;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.util.wg.WG;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -26,11 +23,13 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class WG7Impl implements WG {
 
-    public final WorldGuardRegionProtect wgRegionProtect;
+    public final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+
+    public WG7Impl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    }
 
     @Override
     public boolean checkIntersection(final Player player) {
@@ -52,14 +51,15 @@ public class WG7Impl implements WG {
             assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) {
-                for (final String region : wgRegionProtect.getWgrpContainer().getConfig().getRegionProtectMap().get(player.getWorld().getName())) {
+                for (final String region : wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectMap().get(player.getWorld().getName())) {
                     if (rg.getId().equalsIgnoreCase(region)) {
                         return false;
                     }
                 }
             }
             for (final ProtectedRegion rg : set) {
-                for (final String region : wgRegionProtect.getWgrpContainer().getConfig().getRegionProtectOnlyBreakAllowMap().get(player.getWorld().getName())) {
+                for (final String region :
+                        wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectOnlyBreakAllowMap().get(player.getWorld().getName())) {
                     if (rg.getId().equalsIgnoreCase(region)) {
                         return false;
                     }

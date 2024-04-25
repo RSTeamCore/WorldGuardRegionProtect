@@ -1,0 +1,34 @@
+langTitle:
+  language: Español
+  author: RSTeamCore, FabriCanoSolitario
+  version: '1.0'
+messages:
+  ServerMsg:
+    wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> ¡Esta región está protegida por el servidor!'
+    wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> ¡No puedes usaraquí el comando worldedit!'
+    noPerm: '<red>No tienes permiso para usar este comando.'
+  regionManagement:
+    add: "<green>Región <gold><region><green> añadida a la configuración."
+    remove: "<red>Región <gold><region><red> eliminada de la configuración."
+    notContains: "<red>¡No se pudo eliminar la región de la lista de protección, porque <gold><region> <red>no está protegida!"
+    alreadyProtected: '<red>Region <gold><region><red> is already added to protect.'
+    invalidWorld: "<red>Mundo <gold><world><red> no encontrado. ¿Estás seguro de que has introducido el nombre del mundo correctamente?"
+    invalidRegion: "<red>Región <gold><region><red> no encontrada. ¿Estás seguro de que has introducido el nombre correcto de la región?"
+  Configs:
+    configReloaded: '<dark_gray>[<dark_red>WGRP<dark_gray>] <green>¡Todos los archivos recargados en <time> ms!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>¡Atención! <yellow><player><red> intentando usar el comando <dark_purple><cmd><red> en la región: <dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>¡Atención! <yellow><player> <gold><action><red> bloqueada en la región: <dark_aqua><region><red> Ubicación <dark_aqua><x> <y> <z> <world>'
+  usage:
+    title: '<dark_gray>[<dark_red>WGRP<dark_gray>]<dark_aqua> Uso para el comando <gold>%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>Uso: <yellow>/wgrp help - <gold>para ver una lista de comandos.'
+    addRegionFromConsole: '<green>Uso: <yellow>/wgrp addregion <dark_green>[región] [mundo]'
+    removeRegionFromConsole: '<green>Uso: <yellow>/wgrp removeregion <dark_green>[región] [mundo]'
+  subCommands:
+    reload: 'recargar los archivos de configuración.'
+    about: 'ver información sobre los autores.'
+    spy: 'espiar a quienes interactúan con la región.'
+    help: 'para ver por ayuda.'
+    addRegion: 'añadir una región a la configuración para proteger.'
+    removeRegion: 'eliminar la región de la configuración para eliminar la protección.'

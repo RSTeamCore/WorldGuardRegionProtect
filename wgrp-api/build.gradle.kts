@@ -23,7 +23,7 @@ dependencies {
     implementation("net.rsteamcore:RSLibs-api:0.0.6")
 
     //Paper
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT")
+    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
 
     //Plugins
     //WorldGuard 7+
@@ -38,9 +38,6 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.2")
     //MariaDB for DataBase
     implementation("org.mariadb.jdbc:mariadb-java-client:3.1.2")
-    //DI google guice
-    implementation("com.google.inject:guice:5.1.0")
-    implementation("com.google.inject.extensions:guice-assistedinject:5.1.0")
     //Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20-RC")
     //Annotations

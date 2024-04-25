@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.listener.BlockProtect;
 import net.ritasister.wgrp.listener.EntityProtect;
 import net.ritasister.wgrp.listener.HangingProtect;
@@ -18,24 +18,24 @@ import java.util.List;
 @Slf4j
 public class ListenerHandler implements Handler<PluginManager> {
 
-    private final WorldGuardRegionProtect wgRegionProtect;
+    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
-    public ListenerHandler(WorldGuardRegionProtect wgRegionProtect) {
-        this.wgRegionProtect = wgRegionProtect;
+    public ListenerHandler(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
     }
 
     @Override
     public void handle(final @NotNull PluginManager pluginManager) {
         List<Listener> allListeners = List.of(
-                new BlockProtect(wgRegionProtect.getWgrpContainer()),
-                new EntityProtect(wgRegionProtect.getWgrpContainer()),
-                new HangingProtect(wgRegionProtect.getWgrpContainer()),
-                new MiscProtect(wgRegionProtect.getWgrpContainer()),
-                new PlayerProtect(wgRegionProtect.getWgrpContainer()),
-                new ToolsProtect(wgRegionProtect.getWgrpContainer()),
-                new VehicleProtect(wgRegionProtect.getWgrpContainer()));
+                new BlockProtect(wgrpBukkitPlugin),
+                new EntityProtect(wgrpBukkitPlugin),
+                new HangingProtect(wgrpBukkitPlugin),
+                new MiscProtect(wgrpBukkitPlugin),
+                new PlayerProtect(wgrpBukkitPlugin),
+                new ToolsProtect(wgrpBukkitPlugin),
+                new VehicleProtect(wgrpBukkitPlugin));
 
-        allListeners.forEach((listener) -> pluginManager.registerEvents(listener, wgRegionProtect.getWGRPBukkitPlugin()));
+        allListeners.forEach((listener) -> pluginManager.registerEvents(listener, wgrpBukkitPlugin.getWgrpBukkitBase()));
 
         log.info("All listeners registered successfully!");
     }

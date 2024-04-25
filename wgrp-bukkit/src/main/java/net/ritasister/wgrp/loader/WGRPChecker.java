@@ -1,53 +1,59 @@
 package net.ritasister.wgrp.loader;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.ritasister.wgrp.WGRPContainer;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.rsteamcore.config.Container;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.rslibs.api.RSApi;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-@Singleton
-@RequiredArgsConstructor(onConstructor_ = @Inject)
 @Slf4j
 public class WGRPChecker {
 
-    private final WorldGuardRegionProtect wgRegionProtect;
+    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
-    void checkStartUpVersionServer() {
-        if (!wgRegionProtect.getWgrpContainer().getRsApi().isVersionSupported()) {
+    private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
+
+    @Getter
+    private boolean isPaper;
+
+    @Contract(pure = true)
+    public WGRPChecker(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+        this.wgrpBukkitBase = wgrpBukkitPlugin.getWgrpBukkitBase();
+    }
+
+    public void checkStartUpVersionServer() {
+        if (!RSApi.isVersionSupported()) {
             log.error("""
-                    This plugin version works only on 1.20!
+                    This plugin version works only on 1.20+!
                     Please read this thread: https://www.spigotmc.org/resources/81321/
                     The main post on spigotmc and please download the correct version of plugin for your server version.
                     """);
-            wgRegionProtect.getWgrpContainer().getPluginManager().disablePlugin(wgRegionProtect.getWGRPBukkitPlugin());
+            wgrpBukkitBase.getServer().getPluginManager().disablePlugin(wgrpBukkitBase);
         }
     }
 
-    void checkIfRunningOnPaper() {
-        wgRegionProtect.getWgrpContainer().isPaper = false;
+    public void checkIfRunningOnPaper() {
+        isPaper = false;
         try {
             Class.forName("com.destroystokyo.paper.ParticleBuilder");
-            wgRegionProtect.getWgrpContainer().isPaper = true;
+            isPaper = true;
         } catch (ClassNotFoundException ignored) {
             log.info(String.format("""
-                            You are not using a paper? %s
+                            Using paper: %s
                             Better if you are running your server on paper or other forks of paper.
                             Please don't use any untrusted forks.
-                            """, wgRegionProtect.getWgrpContainer().isPaper));
+                            """, isPaper()));
         }
-        log.info(String.format("Using paper or trust forks of paper? %s Nice!", wgRegionProtect.getWgrpContainer().isPaper));
+        log.info(String.format("Using paper: %s", isPaper()));
     }
 
-    public void notifyAboutBuild(@NotNull WGRPContainer wgrpContainer) {
-        String pluginVersion = wgrpContainer.getPluginVersion();
-        Container container = wgrpContainer.getMessages();
-        if (pluginVersion.contains("alpha")
-                || pluginVersion.contains("beta")
-                || pluginVersion.contains("pre")) {
+    public void notifyAboutBuild() {
+        if (wgrpBukkitBase.getPluginMeta().getVersion().contains("alpha")
+                || wgrpBukkitBase.getPluginMeta().getVersion().contains("beta")
+                || wgrpBukkitBase.getPluginMeta().getVersion().contains("pre")) {
             log.warn("""
                      This is a test build. This building may be unstable!
                      When reporting a bug:
@@ -62,7 +68,10 @@ public class WGRPChecker {
         }
         log.info(String.format(""" 
                 Using %s language version %s. Author of this localization - %s.
-                """, container.get("langTitle.language"), container.get("langTitle.version"), container.get("langTitle.author")
+                """,
+                wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.language"),
+                wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.version"),
+                wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.author")
         ));
     }
 

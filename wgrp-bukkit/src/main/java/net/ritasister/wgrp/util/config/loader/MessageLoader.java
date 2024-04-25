@@ -2,7 +2,7 @@ package net.ritasister.wgrp.util.config.loader;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.ritasister.wgrp.WGRPBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.InitMessages;
 import net.rsteamcore.config.Container;
@@ -15,11 +15,11 @@ import java.io.File;
 @AllArgsConstructor
 public class MessageLoader implements InitMessages {
 
-    public Container initMessages(final @NotNull WGRPBukkitPlugin wgrpBukkitPlugin, final @NotNull Config config) {
+    public Container initMessages(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase, final @NotNull Config config) {
         String lang = config.getLang();
-        File file = new File(wgrpBukkitPlugin.getDataFolder(), "lang/" + lang + ".yml");
+        File file = new File(wgrpBukkitBase.getDataFolder(), "lang/" + lang + ".yml");
         if (!file.exists()) {
-            wgrpBukkitPlugin.saveResource("lang/" + lang + ".yml", false);
+            wgrpBukkitBase.saveResource("lang/" + lang + ".yml", false);
         }
         return new Container(YamlConfiguration.loadConfiguration(file));
     }

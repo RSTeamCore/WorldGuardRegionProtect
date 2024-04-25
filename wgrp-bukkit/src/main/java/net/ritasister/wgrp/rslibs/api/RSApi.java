@@ -1,11 +1,12 @@
 package net.ritasister.wgrp.rslibs.api;
 
 import lombok.extern.slf4j.Slf4j;
-import net.ritasister.wgrp.WGRPContainer;
-import net.ritasister.wgrp.WorldGuardRegionProtect;
-import net.ritasister.wgrp.rslibs.checker.EntityCheckType;
-import net.ritasister.wgrp.rslibs.checker.EntityCheckTypeProvider;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckType;
+import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.util.config.Config;
+import net.rsteamcore.config.Container;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
@@ -21,16 +22,19 @@ import java.util.List;
 @Slf4j
 public class RSApi {
 
-    private final WorldGuardRegionProtect wgRegionProtect;
-
-    private final WGRPContainer wgrpContainer;
+    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
     private final EntityCheckTypeProvider entityCheckTypeProvider;
 
-    public RSApi(final WorldGuardRegionProtect wgRegionProtect) {
-        this.wgRegionProtect = wgRegionProtect;
-        this.wgrpContainer = this.wgRegionProtect.getWgrpContainer();
-        this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpContainer);
+    private final Config config;
+
+    private final Container messages;
+
+    public RSApi(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
+        this.messages = wgrpBukkitPlugin.getConfigLoader().getMessages();
+        this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpBukkitPlugin);
     }
 
     /**
@@ -41,7 +45,7 @@ public class RSApi {
      * @return can a player use this listener.
      */
     public boolean isPlayerListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm) {
-        return player.hasPermission(perm.getPermissionName());
+        return !player.hasPermission(perm.getPermissionName());
     }
 
     /**
@@ -67,20 +71,16 @@ public class RSApi {
         if (regionName == null) {
             return;
         }
-        if (wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminEnable() && this.isPlayerListenerPermission(
+        if (config.getSpyCommandNotifyAdminEnable() && this.isPlayerListenerPermission(
                 player,
-                UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN
-        )) {
-            for (String cmd : wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandList()) {
-                if (cmd.equalsIgnoreCase(senderCommand.toLowerCase()) && wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminPlaySoundEnable()) {
-                    player.playSound(player.getLocation(), wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
-                    wgRegionProtect.getWgrpContainer()
-                            .getMessages()
-                            .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
-                            .replace("<player>", playerName)
-                            .replace("<cmd>", cmd)
-                            .replace("<region>", regionName).send(player);
-                }
+                UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
+            String cmd = config.getSpyCommandList().toString();
+            if(cmd.contains(senderCommand.toLowerCase()) && config.getSpyCommandNotifyAdminPlaySoundEnable()) {
+                player.playSound(player.getLocation(), config.getSpyCommandNotifyAdminPlaySound().toLowerCase(), 1, 1);
+                messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                        .replace("<player>", playerName)
+                        .replace("<cmd>", cmd)
+                        .replace("<region>", regionName).send(player);
             }
         }
     }
@@ -96,17 +96,14 @@ public class RSApi {
         if (regionName == null) {
             return;
         }
-        if (wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyConsoleEnable()) {
-            for (String cmd : wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandList()) {
-                if (cmd.equalsIgnoreCase(senderCommand.toLowerCase())) {
-                    ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
-                    wgRegionProtect.getWgrpContainer()
-                            .getMessages()
-                            .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
-                            .replace("<player>", playerName)
-                            .replace("<cmd>", cmd)
-                            .replace("<region>", regionName).send(consoleSender);
-                }
+        if (config.getSpyCommandNotifyConsoleEnable()) {
+            String cmd = config.getSpyCommandList().toString();
+            if(cmd.contains(senderCommand.toLowerCase())) {
+                ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
+                messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                        .replace("<player>", playerName)
+                        .replace("<cmd>", cmd)
+                        .replace("<region>", regionName).send(consoleSender);
             }
         }
     }
@@ -134,13 +131,9 @@ public class RSApi {
             double y,
             double z,
             String world) {
-        if (this.isPlayerListenerPermission(
-                suspectPlayer,
-                UtilPermissions.SPY_INSPECT_FOR_SUSPECT
-        ) && wgRegionProtect.getWgrpContainer().getConfig().getSpyCommandNotifyAdminEnable()) {
-            wgRegionProtect.getWgrpContainer()
-                    .getMessages()
-                    .get("messages.Notify.sendAdminInfoIfActionInRegion")
+        if (this.isPlayerListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
+                && config.getSpyCommandNotifyAdminEnable()) {
+            messages.get("messages.Notify.sendAdminInfoIfActionInRegion")
                     .replace("<player>", suspectName)
                     .replace("<action>", action.getAction())
                     .replace("<region>", regionName)
@@ -158,9 +151,9 @@ public class RSApi {
      *
      * @return {@code true} if server version compatible, {@code false} if not
      */
-    public boolean isVersionSupported() {
-        List<String> supportedVersions = List.of("v1_20_R1");
-        String supportedVersionRange = "1.20";
+    public static boolean isVersionSupported() {
+        List<String> supportedVersions = List.of("v1_20_R1", "v1_20_R2", "v1_20_R3");
+        String supportedVersionRange = "1.20 - 1.20.4";
         String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
             long time = System.currentTimeMillis();
@@ -184,13 +177,12 @@ public class RSApi {
     }
 
     public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
-        if (!wgrpContainer.getRsRegion().checkStandingRegion(checkEntity.getLocation(), wgrpContainer.getConfig().getRegionProtectMap())
-                || !wgrpContainer.getRsApi().isEntityListenerPermission(entity, UtilPermissions.REGION_PROTECT)) {
-            return;
-        }
-        EntityCheckType entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
-        if(entityCheckType.check(checkEntity)) {
-            cancellable.setCancelled(true);
+        if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(checkEntity.getLocation(), config.getRegionProtectMap())
+                && wgrpBukkitPlugin.getRsApi().isEntityListenerPermission(entity, UtilPermissions.REGION_PROTECT)) {
+            EntityCheckType entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
+            if(entityCheckType.check(checkEntity)) {
+                cancellable.setCancelled(true);
+            }
         }
     }
 

@@ -11,6 +11,7 @@ messages:
     add: "<yellow>リージョン<gold><region><green> が設定に追加されました。"
     remove: "<red>リージョン<gold><region><red> が設定から削除されました。"
     notContains: "<red><gold><region> <red>が保護されていないため、保護リストからリージョンを削除できませんでした！"
+    alreadyProtected: '<red>Region <gold><region><red> is already added to protect.'
     invalidWorld: "<red>ワールド <gold><world><red> が見つかりません。ワールドの名前を正しく入力していますか？"
     invalidRegion: "<red>地域 <gold><region><red> が見つかりません。正しい地域名を入力してもよろしいですか？"
   Configs:
