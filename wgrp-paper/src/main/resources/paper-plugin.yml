@@ -1,0 +1,49 @@
+name: WorldGuardRegionProtect
+version: ${version}
+author: ${author}
+contributor: ${contributor}
+main: ${group}.wgrp.WorldGuardRegionProtectBukkitBase
+description: ${description}
+website: https://github.com/RSTeamCore/WorldGuardRegionProtect
+api-version: "1.20"
+load: POSTWORLD
+dependencies:
+    server:
+        WorldGuard:
+            required: true
+            join-classpath: true
+        PlaceholderAPI:
+            required: false
+            join-classpath: true
+
+permissions:
+    wgrp.admin:
+        description: All permissions of this plugin
+        children:
+            - wgrp.command.wgrpbase
+            - wgrp.command.reload
+            - wgrp.regionprotect
+            - wgrp.notify.admin
+            - wgrp.command.addregion
+            - wgrp.command.removeregion
+    wgrp.*:
+        description: Alias for wgrp.admin
+        default: false
+    wgrp.command.wgrpbase:
+        description: Access for /wgrp command
+    wgrp.command.addregion:
+        description: Access for /wgrp addregion
+    wgrp.command.removeregion:
+        description: Access for /wgrp removeregion
+    wgrp.command.reload:
+        description: Access for /wgrp reload command
+    wgrp.regionprotect:
+        description: Bypass region protect
+        default: false
+    wgrp.notify.admin:
+        description: See notifies for admins
+
+commands:
+    wgregionprotect:
+        aliases: [wgrp]
+        description: "WGRP Command - main command of WGRP plugin."

@@ -2,4 +2,5 @@ rootProject.name = "WorldGuardRegionProtect"
 
 include (
         "wgrp-api",
-        "wgrp-bukkit")
+        "wgrp-common",
+        "wgrp-paper")
