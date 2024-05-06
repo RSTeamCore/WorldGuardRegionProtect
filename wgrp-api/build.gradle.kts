@@ -1,5 +1,5 @@
 group = "net.ritasister"
-project.version = "'1.0"
+project.version = "'1.0.0"
 
 repositories {
     mavenCentral()

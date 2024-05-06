@@ -76,11 +76,9 @@ tasks {
     }
 
 
-    tasks {
-        runServer {
-            minecraftVersion("1.20.6")
-            pluginJars(project(":wgrp-paper").file("build/libs/WorldGuardRegionProtect-Paper-${rootProject.version}.jar"))
-            jvmArgs("-Xms4G", "-Xmx4G")
-        }
+    runServer {
+        minecraftVersion("1.20.6")
+        pluginJars(project(":wgrp-paper").file("build/libs/WorldGuardRegionProtect-Paper-${rootProject.version}.jar"))
+        jvmArgs("-Xms4G", "-Xmx4G")
     }
 }
