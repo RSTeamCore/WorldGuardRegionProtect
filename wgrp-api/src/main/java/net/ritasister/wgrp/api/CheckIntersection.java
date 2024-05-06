@@ -1,17 +1,22 @@
 package net.ritasister.wgrp.api;
 
-public interface CheckIntersection<P> {
+/**
+ * Methods by which it is checked which selection method the player has chosen
+ *
+ * @param <Player>
+ */
+public interface CheckIntersection<Player> {
 
-    boolean checkIntersection(P player);
+    boolean checkIntersection(Player player);
 
-    boolean checkCIntersection(P player, String... args);
+    boolean checkCIntersection(Player player, String... args);
 
-    boolean checkPIntersection(P player, String... args);
+    boolean checkPIntersection(Player player, String... args);
 
-    boolean checkSIntersection(P player, String... args);
+    boolean checkSIntersection(Player player, String... args);
 
-    boolean checkUIntersection(P player, String... args);
+    boolean checkUIntersection(Player player, String... args);
 
-    boolean checkCPIntersection(P player, String... args);
+    boolean checkCPIntersection(Player player, String... args);
 
 }

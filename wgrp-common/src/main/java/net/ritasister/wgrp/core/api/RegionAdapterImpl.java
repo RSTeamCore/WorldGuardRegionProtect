@@ -17,7 +17,6 @@ import net.ritasister.wgrp.api.RegionAdapter;
 import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -34,21 +33,12 @@ public class RegionAdapterImpl implements RegionAdapter<Location, Player, Region
      * @param location Location of Object.
      * @return location of any Object.
      */
-
-    @Contract("_ -> new")
     private @NotNull ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
         return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer()
                         .get(BukkitAdapter.adapt(location.getWorld())))
                 .getApplicableRegions(BukkitAdapter.asBlockVector(location));
     }
 
-    /**
-     * Check access in standing region by a Player used region name from HashMap and list of regions.
-     *
-     * @param location Return location of object.
-     * @param regions  Maps of regions from WorldGuard.
-     * @return location of object(example: block, entity, Player etc.)
-     */
     @Override
     public boolean checkStandingRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions) {
         if (regions.get(location.getWorld().getName()) == null) {
@@ -64,24 +54,12 @@ public class RegionAdapterImpl implements RegionAdapter<Location, Player, Region
         return false;
     }
 
-    /**
-     * Checking the access in a region without region name.
-     *
-     * @param location Location of object.
-     * @return location of object(example: block, entity, Player etc.)
-     */
     @Override
     public boolean checkStandingRegion(@NotNull Location location) {
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         return (applicableRegionSet.size() != 0);
     }
 
-    /**
-     * Getting the name of the region where the object trying to interact with protected a region.
-     *
-     * @param location Location of object.
-     * @return the name of the region.
-     */
     @Override
     public String getProtectRegionName(Location location) {
         return this.getApplicableRegions(location)
@@ -91,11 +69,6 @@ public class RegionAdapterImpl implements RegionAdapter<Location, Player, Region
                 .collect(Collectors.joining());
     }
 
-    /**
-     * Getting the name of the region where the player trying to use WorldEdit.
-     *
-     * @param player Location of object.
-     */
     @Override
     public String getProtectRegionNameBySelection(final Player player) {
         LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
@@ -110,12 +83,6 @@ public class RegionAdapterImpl implements RegionAdapter<Location, Player, Region
         return null;
     }
 
-    /**
-     * Check the intersection by the player for the method getProtectRegionName()
-     *
-     * @param selection get selection in the region by a Player.
-     * @return location of Object.
-     */
     @Override
     public String getProtectRegionNameByIntersection(final Region selection) throws NoSelectionException {
         if (selection instanceof CuboidRegion) {

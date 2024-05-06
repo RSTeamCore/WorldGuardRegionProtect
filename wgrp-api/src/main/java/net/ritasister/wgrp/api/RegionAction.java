@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.api;
 
 /**
- * Represent of Region Action
+ * Represent Enum class of Region Action
  */
 public interface RegionAction {
 

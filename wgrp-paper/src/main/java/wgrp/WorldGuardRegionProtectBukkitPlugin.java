@@ -1,13 +1,11 @@
 package wgrp;
 
-import com.sk89q.worldedit.regions.Region;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.ritasister.wgrp.api.CheckIntersection;
-import net.ritasister.wgrp.api.RegionAdapter;
 import net.ritasister.wgrp.api.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.core.WorldGuardRegionProtectPlugin;
+import net.ritasister.wgrp.core.api.RegionAdapterImpl;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import wgrp.loader.LoadHandlers;
@@ -36,23 +34,17 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     private final BukkitAudiences audiences;
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
-    private final RegionAdapter<Location, Player, Region> regionAdapter;
+    private RegionAdapterImpl regionAdapter;
     private RSStorage rsStorage;
-    private final CheckIntersection<Player> checkIntersection;
+    private CheckIntersection<Player> checkIntersection;
     private List<UUID> spyLog;
     private UpdateNotify updateNotify;
     private UtilCommandWE playerUtilWE;
 
-    public WorldGuardRegionProtectBukkitPlugin(
-            final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase,
-            final RegionAdapter<Location, Player, Region> adapter,
-            final CheckIntersection<Player> intersection
-    ) {
+    public WorldGuardRegionProtectBukkitPlugin(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
         super(wgrpBukkitBase.getDescription().getVersion(), ServerType.SPIGOT);
         this.wgrpBukkitBase = wgrpBukkitBase;
         this.audiences = BukkitAudiences.create(wgrpBukkitBase);
-        regionAdapter = adapter;
-        checkIntersection = intersection;
         load();
     }
 
@@ -64,7 +56,7 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
 
         rsApi = new RSApiImpl(this);
 
-        WGRPChecker wgrpChecker = new WGRPChecker(this.wgrpBukkitBase);
+        WGRPChecker wgrpChecker = new WGRPChecker(this);
         wgrpChecker.checkStartUpVersionServer();
         wgrpChecker.checkIfRunningOnPaper();
 
@@ -86,6 +78,8 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
 
         LoadPluginManager loadPlaceholderAPI = new LoadPlaceholderAPI(wgrpBukkitBase);
         loadPlaceholderAPI.loadPlugin();
+
+        this.regionAdapter = new RegionAdapterImpl();
 
         playerUtilWE = new UtilWEImpl(this);
         playerUtilWE.setUpWorldGuardVersionSeven();
@@ -125,7 +119,7 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     }
 
     @Override
-    public RegionAdapter<Location, Player, Region> getRegionAdapter() {
+    public RegionAdapterImpl getRegionAdapter() {
         return regionAdapter;
     }
 

@@ -1,17 +1,17 @@
 package wgrp.rslibs.checker.entity.mob;
 
-import net.ritasister.wgrp.core.WorldGuardRegionProtectPlugin;
 import org.bukkit.entity.Ambient;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
+import wgrp.WorldGuardRegionProtectBukkitPlugin;
 import wgrp.rslibs.checker.entity.EntityCheckType;
 
 public class AmbientCheckTypeImpl implements EntityCheckType {
 
-    private final WorldGuardRegionProtectPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
-    public AmbientCheckTypeImpl(final WorldGuardRegionProtectPlugin wgrpBukkitPlugin) {
+    public AmbientCheckTypeImpl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
     }
 

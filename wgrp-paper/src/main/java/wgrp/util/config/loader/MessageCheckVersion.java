@@ -1,7 +1,5 @@
 package wgrp.util.config.loader;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -18,14 +16,12 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
-@Slf4j
-@AllArgsConstructor
 public class MessageCheckVersion implements CheckVersionLang<Plugin> {
 
     private final ParamsVersionCheck paramsVersionCheck;
 
-    public MessageCheckVersion(final ParamsVersionCheck check) {
-        paramsVersionCheck = check;
+    public MessageCheckVersion(ParamsVersionCheck paramsVersionCheck) {
+        this.paramsVersionCheck = paramsVersionCheck;
     }
 
     @Override

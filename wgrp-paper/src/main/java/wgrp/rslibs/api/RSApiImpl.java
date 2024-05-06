@@ -16,9 +16,6 @@ import wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 
 import java.util.List;
 
-/**
- * Utility api class for other classes to use the necessary methods and other.
- */
 public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
@@ -33,25 +30,10 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
         this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpBukkitPlugin);
     }
 
-
-    /**
-     * Check if a player has permission for use Listener.
-     *
-     * @param player who send this command.
-     * @param perm   permission to check.
-     * @return can a player use this listener.
-     */
     public boolean isPlayerListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm) {
         return !player.hasPermission(perm.getPermissionName());
     }
 
-    /**
-     * Check if an entity has permission for use Listener.
-     *
-     * @param entity who send this command.
-     * @param perm   permission to check.
-     * @return can an entity use this listener.
-     */
     public boolean isEntityListenerPermission(@NotNull Entity entity, @NotNull UtilPermissions perm) {
         return !entity.hasPermission(perm.getPermissionName());
     }
@@ -64,8 +46,8 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
      * @return {@code true} if server version compatible, {@code false} if not
      */
     public static boolean isVersionSupported() {
-        List<String> supportedVersions = List.of("v1_20_R1", "v1_20_R2", "v1_20_R3");
-        String supportedVersionRange = "1.20 - 1.20.4";
+        List<String> supportedVersions = List.of("v1_20_R1", "v1_20_R2", "v1_20_R3", "v1_20_R4");
+        String supportedVersionRange = "1.20 - 1.20.6";
         String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
             long time = System.currentTimeMillis();

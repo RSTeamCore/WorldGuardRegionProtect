@@ -3,28 +3,28 @@ package wgrp.loader;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import wgrp.WorldGuardRegionProtectBukkitBase;
+import wgrp.WorldGuardRegionProtectBukkitPlugin;
 import wgrp.rslibs.api.RSApiImpl;
 
 public class WGRPChecker {
 
-    private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
+    private final WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin;
 
     private boolean isPaper;
 
     @Contract(pure = true)
-    public WGRPChecker(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
-        this.wgrpBukkitBase = wgrpBukkitBase;
+    public WGRPChecker(final @NotNull WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin) {
+        this.worldGuardRegionProtectBukkitPlugin = worldGuardRegionProtectBukkitPlugin;
     }
 
     public void checkStartUpVersionServer() {
         if (!RSApiImpl.isVersionSupported()) {
             Bukkit.getLogger().severe("""
-                    This plugin version works only on 1.20+!
+                    This plugin version works only on 1.20.5-1.20.6!
                     Please read this thread: https://www.spigotmc.org/resources/81321/
                     The main post on spigotmc and please download the correct version of plugin for your server version.
                     """);
-            Bukkit.getServer().getPluginManager().disablePlugin(wgrpBukkitBase);
+            Bukkit.getServer().getPluginManager().disablePlugin(worldGuardRegionProtectBukkitPlugin.getWgrpBukkitBase());
         }
     }
 
@@ -44,9 +44,9 @@ public class WGRPChecker {
     }
 
     public void notifyAboutBuild() {
-        if (wgrpBukkitBase.getDescription().getVersion().contains("alpha")
-                || wgrpBukkitBase.getDescription().getVersion().contains("beta")
-                || wgrpBukkitBase.getDescription().getVersion().contains("pre")) {
+        if (worldGuardRegionProtectBukkitPlugin.getWgrpBukkitBase().getDescription().getVersion().contains("alpha")
+                || worldGuardRegionProtectBukkitPlugin.getWgrpBukkitBase().getDescription().getVersion().contains("beta")
+                || worldGuardRegionProtectBukkitPlugin.getWgrpBukkitBase().getDescription().getVersion().contains("pre")) {
             Bukkit.getLogger().warning("""
                      This is a test build. This building may be unstable!
                      When reporting a bug:
@@ -63,10 +63,14 @@ public class WGRPChecker {
                 """ 
                 Using %s language version %s. Author of this localization - %s.
                 """,
-                wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.language"),
-                wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.version"),
-                wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.author")
+                worldGuardRegionProtectBukkitPlugin.getConfigLoader().getMessages().get("langTitle.language"),
+                worldGuardRegionProtectBukkitPlugin.getConfigLoader().getMessages().get("langTitle.version"),
+                worldGuardRegionProtectBukkitPlugin.getConfigLoader().getMessages().get("langTitle.author")
         ));
+    }
+
+    public boolean isPaper() {
+        return this.isPaper;
     }
 
 }
