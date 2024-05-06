@@ -4,11 +4,11 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import net.ritasister.wgrp.core.api.WorldGuardRegionProtectProvider;
+import net.ritasister.wgrp.util.ServerType;
+import net.ritasister.wgrp.util.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
-import wgrp.util.ServerType;
-import wgrp.util.Version;
 
 public abstract class WorldGuardRegionProtectPlugin implements WorldGuardRegionProtect {
 
