@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.shadow)
+    id("xyz.jpenilla.run-paper") version "2.3.0"
 }
 
 repositories {
@@ -15,12 +16,13 @@ repositories {
         name = "PlaceholderApi"
         url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     }
+    mavenCentral()
 }
 
 dependencies {
     implementation(project(":wgrp-common"))
 
-    compileOnly("net.kyori:adventure-platform-bukkit:4.1.0") {
+    compileOnly("net.kyori:adventure-platform-bukkit:4.3.2") {
         exclude(module = "adventure-bom")
         exclude(module = "adventure-api")
         exclude(module = "adventure-nbt")
@@ -34,22 +36,22 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.5")
 
     //Annotations
-    implementation("org.jetbrains:annotations:24.0.1")
-    implementation("org.projectlombok:lombok:1.18.26")
+    implementation("org.jetbrains:annotations:24.1.0")
+    implementation("org.projectlombok:lombok:1.18.32")
 
     //HikariCP
-    compileOnly("com.zaxxer:HikariCP:5.0.1")
+    compileOnly("com.zaxxer:HikariCP:5.1.0")
     compileOnly("org.bstats:bstats-bukkit:3.0.2")
     //MariaDB for DataBase
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.1.2")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.3.3")
     //Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20-RC")
-    implementation("org.jetbrains:annotations:24.0.1")
-    implementation("org.projectlombok:lombok:1.18.26")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0-RC2")
+    implementation("org.jetbrains:annotations:24.1.0")
+    implementation("org.projectlombok:lombok:1.18.32")
     implementation("aopalliance:aopalliance:1.0")
-    annotationProcessor("org.projectlombok:lombok:1.18.26")
-    implementation("org.projectlombok:lombok:1.18.26")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.26")
+    annotationProcessor("org.projectlombok:lombok:1.18.32")
+    implementation("org.projectlombok:lombok:1.18.32")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.32")
 }
 
 tasks {
@@ -73,4 +75,12 @@ tasks {
         dependsOn(shadowJar)
     }
 
+
+    tasks {
+        runServer {
+            minecraftVersion("1.20.6")
+            pluginJars(project(":wgrp-paper").file("build/libs/WorldGuardRegionProtect-Paper-${rootProject.version}.jar"))
+            jvmArgs("-Xms4G", "-Xmx4G")
+        }
+    }
 }
