@@ -1,22 +1,20 @@
 package net.ritasister.wgrp.handler;
 
-import lombok.extern.slf4j.Slf4j;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.listener.BlockProtect;
+import net.ritasister.wgrp.listener.EntityProtect;
+import net.ritasister.wgrp.listener.HangingProtect;
+import net.ritasister.wgrp.listener.MiscProtect;
+import net.ritasister.wgrp.listener.PlayerProtect;
+import net.ritasister.wgrp.listener.ToolsProtect;
+import net.ritasister.wgrp.listener.VehicleProtect;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
-import wgrp.listener.BlockProtect;
-import wgrp.listener.EntityProtect;
-import wgrp.listener.HangingProtect;
-import wgrp.listener.MiscProtect;
-import wgrp.listener.PlayerProtect;
-import wgrp.listener.ToolsProtect;
-import wgrp.listener.VehicleProtect;
 
 import java.util.List;
 
-@Slf4j
-public class ListenerHandler implements wgrp.handler.Handler<PluginManager> {
+public class ListenerHandler implements Handler<PluginManager> {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
@@ -37,7 +35,7 @@ public class ListenerHandler implements wgrp.handler.Handler<PluginManager> {
 
         allListeners.forEach((listener) -> pluginManager.registerEvents(listener, wgrpBukkitPlugin.getWgrpBukkitBase()));
 
-        log.info("All listeners registered successfully!");
+        wgrpBukkitPlugin.getPluginLogger().info("All listeners registered successfully!");
     }
 
 }

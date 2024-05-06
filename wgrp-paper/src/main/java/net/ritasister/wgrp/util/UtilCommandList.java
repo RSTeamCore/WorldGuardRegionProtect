@@ -1,4 +1,4 @@
-package wgrp.util;
+package net.ritasister.wgrp.util;
 
 public enum UtilCommandList {
 

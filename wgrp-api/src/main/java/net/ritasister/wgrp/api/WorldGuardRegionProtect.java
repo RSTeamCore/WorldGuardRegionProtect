@@ -1,5 +1,7 @@
 package net.ritasister.wgrp.api;
 
+import net.ritasister.wgrp.api.logging.PluginLogger;
+
 public interface WorldGuardRegionProtect {
 
     /**
@@ -23,4 +25,11 @@ public interface WorldGuardRegionProtect {
      */
     default void messageToCommandSender(Class<?> consoleSender, String format) {
     }
+
+    /**
+     * Gets the plugin logger
+     *
+     * @return the logger
+     */
+    PluginLogger getPluginLogger();
 }

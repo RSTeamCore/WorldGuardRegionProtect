@@ -5,6 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 public interface InitMessages<T> {
 
-    Container initMessages(@NotNull T wgrpBukkitPlugin, Config config);
+    Container initMessages(@NotNull T plugin, Config config);
 
 }

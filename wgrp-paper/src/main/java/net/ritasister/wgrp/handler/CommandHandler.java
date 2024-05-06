@@ -1,9 +1,9 @@
 package net.ritasister.wgrp.handler;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import wgrp.command.extend.CommandWGRP;
+import net.ritasister.wgrp.command.extend.CommandWGRP;
 
-public class CommandHandler implements wgrp.handler.Handler<Void> {
+public class CommandHandler implements Handler<Void> {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
@@ -14,6 +14,6 @@ public class CommandHandler implements wgrp.handler.Handler<Void> {
     @Override
     public void handle() {
         new CommandWGRP(wgrpBukkitPlugin);
-        log.info("All commands registered successfully!");
+        wgrpBukkitPlugin.getPluginLogger().info("All commands registered successfully!");
     }
 }

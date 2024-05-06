@@ -3,6 +3,7 @@ package net.ritasister.wgrp;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.api.WorldGuardRegionMetadata;
+import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.core.WorldGuardRegionProtectPlugin;
 import net.ritasister.wgrp.core.api.RegionAdapterImpl;
 import net.ritasister.wgrp.loader.LoadHandlers;
@@ -42,7 +43,7 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     private UtilCommandWE playerUtilWE;
 
     public WorldGuardRegionProtectBukkitPlugin(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
-        super(wgrpBukkitBase.getDescription().getVersion(), ServerType.SPIGOT);
+        super(wgrpBukkitBase.getDescription().getVersion(), ServerType.PAPER);
         this.wgrpBukkitBase = wgrpBukkitBase;
         this.audiences = BukkitAudiences.create(wgrpBukkitBase);
         load();
@@ -52,7 +53,7 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         this.spyLog = new ArrayList<>();
 
         configLoader = new ConfigLoader();
-        configLoader.initConfig(this.wgrpBukkitBase);
+        configLoader.initConfig(this);
 
         rsApi = new RSApiImpl(this);
 
@@ -73,10 +74,10 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     }
 
     private void loadAnotherClassAndMethods() {
-        LoadPluginManager loadWorldGuard = new LoadWorldGuard();
+        LoadPluginManager loadWorldGuard = new LoadWorldGuard(this);
         loadWorldGuard.loadPlugin();
 
-        LoadPluginManager loadPlaceholderAPI = new LoadPlaceholderAPI(wgrpBukkitBase);
+        LoadPluginManager loadPlaceholderAPI = new LoadPlaceholderAPI(this);
         loadPlaceholderAPI.loadPlugin();
 
         this.regionAdapter = new RegionAdapterImpl();
@@ -126,6 +127,11 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     @Override
     public WorldGuardRegionMetadata getWorldGuardMetadata() {
         return null;
+    }
+
+    @Override
+    public PluginLogger getPluginLogger() {
+        return wgrpBukkitBase.getApi().getPluginLogger();
     }
 
     public CheckIntersection<Player> getCheckIntersection() {

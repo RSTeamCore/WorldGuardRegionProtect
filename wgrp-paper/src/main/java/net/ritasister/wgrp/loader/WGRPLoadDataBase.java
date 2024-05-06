@@ -25,9 +25,9 @@ public class WGRPLoadDataBase {
             rsStorage.dbLogsSource = new Storage(wgrpBukkitPlugin);
             rsStorage.dbLogs.clear();
             if (rsStorage.dbLogsSource.load()) {
-                Bukkit.getLogger().info("[DataBase] The database is loaded.");
+                wgrpBukkitPlugin.getPluginLogger().info("[DataBase] The database is loaded.");
                 this.postEnable();
-                Bukkit.getLogger().info(String.format(
+                wgrpBukkitPlugin.getPluginLogger().info(String.format(
                         "[DataBase] Startup duration: %s ms.", System.currentTimeMillis() - durationTimeStart));
             }
         }
@@ -37,7 +37,7 @@ public class WGRPLoadDataBase {
         Bukkit.getServer().getScheduler().cancelTasks(wgrpBukkitPlugin.getWgrpBukkitBase());
         if (config.getMySQLSettings().getIntervalReload() > 0) {
             wgrpBukkitPlugin.getRsStorage().dbLogsSource.loadAsync();
-            Bukkit.getLogger().info("[DataBase] The database is loaded asynchronously.");
+            wgrpBukkitPlugin.getPluginLogger().info("[DataBase] The database is loaded asynchronously.");
         }
     }
 

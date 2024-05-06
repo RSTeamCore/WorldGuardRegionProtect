@@ -2,17 +2,17 @@ package net.ritasister.wgrp.command.extend;
 
 import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.command.AbstractCommand;
 import net.ritasister.wgrp.core.api.config.Container;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import wgrp.command.AbstractCommand;
 import wgrp.util.UtilCommandList;
-import wgrp.util.config.Config;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class CommandWGRP extends AbstractCommand {
         long timeInitStart = System.currentTimeMillis();
 
         config.reload();
-        wgrpPlugin.getConfigLoader().initConfig(wgrpPlugin.getWgrpBukkitBase());
+        wgrpPlugin.getConfigLoader().initConfig(wgrpPlugin);
 
         long timeReload = (System.currentTimeMillis() - timeInitStart);
         messages.get("messages.Configs.configReloaded").replace("<time>", timeReload).send(sender);

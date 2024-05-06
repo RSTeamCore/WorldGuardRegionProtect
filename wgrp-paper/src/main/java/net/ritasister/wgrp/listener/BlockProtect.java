@@ -4,6 +4,7 @@ import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.core.RegionActionImpl;
 import net.ritasister.wgrp.core.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,7 +16,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
-import wgrp.util.config.Config;
 
 public class BlockProtect implements Listener {
 

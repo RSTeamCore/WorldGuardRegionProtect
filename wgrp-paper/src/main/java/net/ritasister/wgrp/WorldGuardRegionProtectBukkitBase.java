@@ -5,23 +5,23 @@ import net.ritasister.wgrp.core.WorldGuardRegionProtectBase;
 import net.ritasister.wgrp.core.WorldGuardRegionProtectPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class WorldGuardRegionProtectBukkitBase extends JavaPlugin implements WorldGuardRegionProtectBase {
+public abstract class WorldGuardRegionProtectBukkitBase extends JavaPlugin implements WorldGuardRegionProtectBase {
 
-    private WorldGuardRegionProtectPlugin worldGuardRegionProtect;
+    private WorldGuardRegionProtectPlugin wgrpPlugin;
 
     @Override
     public void onEnable() {
-        worldGuardRegionProtect = new WorldGuardRegionProtectBukkitPlugin(this);
+        wgrpPlugin = new WorldGuardRegionProtectBukkitPlugin(this);
     }
 
     @Override
     public void onDisable() {
-        worldGuardRegionProtect.disable();
+        wgrpPlugin.disable();
     }
 
     @Override
     public WorldGuardRegionProtect getApi() {
-        return worldGuardRegionProtect;
+        return wgrpPlugin;
     }
 
 }

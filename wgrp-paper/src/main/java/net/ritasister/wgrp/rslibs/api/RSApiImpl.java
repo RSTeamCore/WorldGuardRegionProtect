@@ -45,25 +45,26 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
      *
      * @return {@code true} if server version compatible, {@code false} if not
      */
-    public static boolean isVersionSupported() {
+    public boolean isVersionSupported() {
         List<String> supportedVersions = List.of("v1_20_R4");
         String supportedVersionRange = "1.20.5 - 1.20.6";
         String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
             long time = System.currentTimeMillis();
             if (supportedVersions.contains(serverPackage)) {
-                Bukkit.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
+                wgrpBukkitPlugin.getPluginLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
                 return true;
             } else {
-                Bukkit.getLogger().info(
+                wgrpBukkitPlugin.getPluginLogger().info(
                         "No compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ").");
             }
         } catch (Exception ex) {
             if (supportedVersions.contains(serverPackage)) {
-                Bukkit.getLogger().severe(
+                wgrpBukkitPlugin.getPluginLogger().severe(
                         "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
             } else {
-                Bukkit.getLogger().severe("Your server version is completely unsupported. This plugin version only " +
+                wgrpBukkitPlugin.getPluginLogger().severe(
+                        "Your server version is completely unsupported. This plugin version only " +
                         "supports " + supportedVersionRange + ". Disabling.");
             }
         }

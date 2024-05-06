@@ -80,7 +80,7 @@ public class Storage implements StorageDataSource {
 			pst.execute();
 			pst.close();
 		} catch(SQLException ex){
-			Bukkit.getLogger().severe("Failed connect to database! Error code: " + ex.getErrorCode());
+            wgrpBukkitPlugin.getPluginLogger().severe("Failed connect to database! Error code: " + ex.getErrorCode());
 		} finally {
 			this.close(pst);
 		}
@@ -111,7 +111,7 @@ public class Storage implements StorageDataSource {
 			}
 			return true;
 		}catch(SQLException ex){
-			Bukkit.getLogger().severe("Failed to load from database!");
+            wgrpBukkitPlugin.getPluginLogger().severe("Failed to load from database!");
 			ex.printStackTrace();
 		}finally{
 			this.close(rs);
@@ -146,7 +146,7 @@ public class Storage implements StorageDataSource {
 				}
                 wgrpBukkitPlugin.getRsStorage().dbLogs = new ConcurrentHashMap<>(tempDataBase);
 			} catch (SQLException ex) {
-				Bukkit.getLogger().severe("Failed to load database asynchronous!");
+                wgrpBukkitPlugin.getPluginLogger().severe("Failed to load database asynchronous!");
 				ex.printStackTrace();
 			} finally {
 				this.close(rs);
@@ -174,7 +174,7 @@ public class Storage implements StorageDataSource {
 				pst.setDouble(9, z);
 				pst.executeUpdate();
 			} catch (SQLException ex) {
-				Bukkit.getLogger().severe("[DataBase] <id> " + uniqueId.toString()
+                wgrpBukkitPlugin.getPluginLogger().severe("[DataBase] <id> " + uniqueId.toString()
 					.replace("<id>", uniqueId.toString())+ ex);
 			} finally {
 				this.close(pst);
@@ -188,7 +188,7 @@ public class Storage implements StorageDataSource {
 				pst.close();
 			}
 		}catch(SQLException ex){
-			Bukkit.getLogger().severe("Failed to close prepared statement");
+            wgrpBukkitPlugin.getPluginLogger().severe("Failed to close prepared statement");
 		}
 	}
 
@@ -198,7 +198,7 @@ public class Storage implements StorageDataSource {
 				rs.close();
 			}
 		}catch(SQLException ex){
-			Bukkit.getLogger().severe("Failed to close result set");
+            wgrpBukkitPlugin.getPluginLogger().severe("Failed to close result set");
 		}
 	}
 
@@ -207,7 +207,7 @@ public class Storage implements StorageDataSource {
 			ds.close();
 		}
         connect();
-		Bukkit.getLogger().info("Successfully reloaded!");
+        wgrpBukkitPlugin.getPluginLogger().info("Successfully reloaded!");
     }
 
 	@Override
