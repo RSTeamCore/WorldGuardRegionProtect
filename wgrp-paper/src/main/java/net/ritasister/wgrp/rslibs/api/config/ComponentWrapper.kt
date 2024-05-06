@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.core.api.config
+package net.ritasister.wgrp.rslibs.api.config
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent

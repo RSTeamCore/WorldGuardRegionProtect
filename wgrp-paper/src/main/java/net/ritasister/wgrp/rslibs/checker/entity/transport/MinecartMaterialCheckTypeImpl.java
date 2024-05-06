@@ -26,12 +26,12 @@ public class MinecartMaterialCheckTypeImpl implements EntityCheckType {
     public EntityType[] getEntityType() {
         return new EntityType[] {
                 EntityType.MINECART,
-                EntityType.MINECART_CHEST,
-                EntityType.MINECART_FURNACE,
-                EntityType.MINECART_TNT,
-                EntityType.MINECART_HOPPER,
-                EntityType.MINECART_COMMAND,
-                EntityType.MINECART_MOB_SPAWNER
+                EntityType.CHEST_MINECART,
+                EntityType.FURNACE_MINECART,
+                EntityType.TNT_MINECART,
+                EntityType.HOPPER_MINECART,
+                EntityType.COMMAND_BLOCK_MINECART,
+                EntityType.SPAWNER_MINECART
         };
     }
 

@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.core;
+package net.ritasister.wgrp;
 
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 

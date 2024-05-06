@@ -3,8 +3,8 @@ package net.ritasister.wgrp.command.extend;
 import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.command.AbstractCommand;
-import net.ritasister.wgrp.core.api.config.Container;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
+import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.util.config.Config;
@@ -56,7 +56,7 @@ public class CommandWGRP extends AbstractCommand {
             aliases = {"credits", "authors"},
             description = "seeing info about authors.")
     public void wgrpAbout(@NotNull CommandSender sender, String[] args) {
-        wgrpPlugin.messageToCommandSender(sender, """
+        wgrpPlugin.messageToCommandSender(sender.getClass(), """
                             <aqua>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<aqua>========
                             <yellow>Hi! If you need help from this plugin,
                             <yellow>you can contact with me on:

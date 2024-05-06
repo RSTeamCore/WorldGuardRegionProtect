@@ -2,7 +2,7 @@ package net.ritasister.wgrp.listener;
 
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import net.ritasister.wgrp.core.api.config.Container;
+import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Location;
@@ -51,7 +51,7 @@ public class PlayerProtect implements Listener {
                 .getPlayer()
                 .isOp()) {
             wgrpBukkitPlugin.getUpdateNotify().checkUpdateNotify(
-                    wgrpBukkitPlugin.getWgrpBukkitBase().getDescription(),
+                    wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion(),
                     e.getPlayer(),
                     config.isUpdateChecker(),
                     config.isSendNoUpdate()

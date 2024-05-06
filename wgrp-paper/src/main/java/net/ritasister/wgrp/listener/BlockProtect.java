@@ -1,8 +1,8 @@
 package net.ritasister.wgrp.listener;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import net.ritasister.wgrp.core.RegionActionImpl;
-import net.ritasister.wgrp.core.api.config.Container;
+import net.ritasister.wgrp.api.RegionAction;
+import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Location;
@@ -47,7 +47,7 @@ public class BlockProtect implements Listener {
         } else if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
 
-            spyMethod(e.getBlock(), player, location, RegionActionImpl.BREAK);
+            spyMethod(e.getBlock(), player, location, RegionAction.BREAK);
         }
     }
 
@@ -64,12 +64,12 @@ public class BlockProtect implements Listener {
         } else if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
 
-            spyMethod(e.getBlock(), player, location, RegionActionImpl.PLACE);
+            spyMethod(e.getBlock(), player, location, RegionAction.PLACE);
         }
     }
 
-    private void spyMethod(Block block, @NotNull Player player, Location location, RegionActionImpl regionAction) {
-        if (wgrpBukkitPlugin.getSpyLog().contains(player.getPlayerProfile().getUniqueId())) {
+    private void spyMethod(Block block, @NotNull Player player, Location location, RegionAction regionAction) {
+        if (wgrpBukkitPlugin.getSpyLog().contains(player.getPlayerProfile().getId())) {
             wgrpBukkitPlugin.getRsApi().notifyIfActionInRegion(
                     player,
                     player,
@@ -85,7 +85,7 @@ public class BlockProtect implements Listener {
         if (config.getDataBaseEnable()) {
             wgrpBukkitPlugin.getRsStorage().getDataSource().setLogAction(
                     player.getPlayerProfile().getName(),
-                    player.getPlayerProfile().getUniqueId(),
+                    player.getPlayerProfile().getId(),
                     System.currentTimeMillis(),
                     regionAction,
                     wgrpBukkitPlugin.getRegionAdapter().getProtectRegionName(location),

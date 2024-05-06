@@ -1,6 +1,7 @@
 package net.ritasister.wgrp.loader;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.rslibs.api.RSApiImpl;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -18,11 +19,11 @@ public class WGRPChecker {
 
     public void checkStartUpVersionServer() {
         if (!wgrpBukkitPlugin.getRsApi().isVersionSupported()) {
-            wgrpBukkitPlugin.getPluginLogger().severe("""
-                    This plugin version works only on 1.20.5-1.20.6!
+            wgrpBukkitPlugin.getPluginLogger().severe(String.format("""
+                    This plugin version works only on %s!
                     Please read this thread: https://www.spigotmc.org/resources/81321/
                     The main post on spigotmc and please download the correct version of plugin for your server version.
-                    """);
+                    """, RSApiImpl.SUPPORTED_VERSION_RANGE));
             Bukkit.getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin.getWgrpBukkitBase());
         }
     }
@@ -43,9 +44,9 @@ public class WGRPChecker {
     }
 
     public void notifyAboutBuild() {
-        if (wgrpBukkitPlugin.getWgrpBukkitBase().getDescription().getVersion().contains("alpha")
-                || wgrpBukkitPlugin.getWgrpBukkitBase().getDescription().getVersion().contains("beta")
-                || wgrpBukkitPlugin.getWgrpBukkitBase().getDescription().getVersion().contains("pre")) {
+        if (wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion().contains("alpha")
+                || wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion().contains("beta")
+                || wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion().contains("pre")) {
             wgrpBukkitPlugin.getPluginLogger().warn("""
                      This is a test build. This building may be unstable!
                      When reporting a bug:

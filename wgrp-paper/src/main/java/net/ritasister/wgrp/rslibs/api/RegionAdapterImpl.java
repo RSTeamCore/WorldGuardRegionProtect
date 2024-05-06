@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.core.api;
+package net.ritasister.wgrp.rslibs.api;
 
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.LocalSession;

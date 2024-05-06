@@ -2,8 +2,8 @@ package net.ritasister.wgrp.rslibs.api;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.api.RSApi;
-import net.ritasister.wgrp.core.RegionActionImpl;
-import net.ritasister.wgrp.core.api.config.Container;
+import net.ritasister.wgrp.api.RegionAction;
+import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckType;
 import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
@@ -23,6 +24,9 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
     private final EntityCheckTypeProvider entityCheckTypeProvider;
 
     private final Container messages;
+
+    public final static String SUPPORTED_VERSION_RANGE = "1.20.5 - 1.20.6";
+    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.20.5", "1.20.6");
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
@@ -46,26 +50,28 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
      * @return {@code true} if server version compatible, {@code false} if not
      */
     public boolean isVersionSupported() {
-        List<String> supportedVersions = List.of("v1_20_R4");
-        String supportedVersionRange = "1.20.5 - 1.20.6";
-        String serverPackage = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+        String minecraftVersion = Bukkit.getServer().getMinecraftVersion();
         try {
             long time = System.currentTimeMillis();
-            if (supportedVersions.contains(serverPackage)) {
+            if (SUPPORTED_VERSION.contains(minecraftVersion)) {
                 wgrpBukkitPlugin.getPluginLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
+                wgrpBukkitPlugin.getPluginLogger().info(String.format(
+                        "Current support versions range %s",
+                        SUPPORTED_VERSION_RANGE
+                ));
                 return true;
             } else {
                 wgrpBukkitPlugin.getPluginLogger().info(
-                        "No compatibility issue was found, but this plugin version does not claim to support your server package (" + serverPackage + ").");
+                        "No compatibility issue was found, but this plugin version does not claim to support your server package (" + minecraftVersion + ").");
             }
         } catch (Exception ex) {
-            if (supportedVersions.contains(serverPackage)) {
+            if (SUPPORTED_VERSION.contains(minecraftVersion)) {
                 wgrpBukkitPlugin.getPluginLogger().severe(
                         "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
             } else {
                 wgrpBukkitPlugin.getPluginLogger().severe(
                         "Your server version is completely unsupported. This plugin version only " +
-                        "supports " + supportedVersionRange + ". Disabling.");
+                                "supports " + SUPPORTED_VERSION_RANGE + ". Disabling.");
             }
         }
         return false;
@@ -145,7 +151,7 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
             Player admin,
             Player suspectPlayer,
             String suspectName,
-            RegionActionImpl action,
+            RegionAction action,
             String regionName,
             double x,
             double y,

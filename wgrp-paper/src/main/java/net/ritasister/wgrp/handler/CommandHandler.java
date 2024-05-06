@@ -1,6 +1,7 @@
 package net.ritasister.wgrp.handler;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.api.handler.Handler;
 import net.ritasister.wgrp.command.extend.CommandWGRP;
 
 public class CommandHandler implements Handler<Void> {

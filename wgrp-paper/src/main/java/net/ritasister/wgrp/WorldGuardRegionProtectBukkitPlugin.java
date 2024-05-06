@@ -1,12 +1,10 @@
 package net.ritasister.wgrp;
 
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.api.WorldGuardRegionMetadata;
+import net.ritasister.wgrp.api.handler.LoadHandlers;
+import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
-import net.ritasister.wgrp.core.WorldGuardRegionProtectPlugin;
-import net.ritasister.wgrp.core.api.RegionAdapterImpl;
-import net.ritasister.wgrp.loader.LoadHandlers;
 import net.ritasister.wgrp.loader.WGRPChecker;
 import net.ritasister.wgrp.loader.WGRPLoaderCommands;
 import net.ritasister.wgrp.loader.WGRPLoaderListeners;
@@ -16,22 +14,34 @@ import net.ritasister.wgrp.loader.plugin.LoadWorldGuard;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
 import net.ritasister.wgrp.rslibs.api.RSStorage;
+import net.ritasister.wgrp.rslibs.api.RegionAdapterImpl;
 import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
-import net.ritasister.wgrp.rslibs.util.updater.UpdateNotify;
+import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.util.ServerType;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtectPlugin {
+public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtectPlugin {
 
     private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
-    private final BukkitAudiences audiences;
+    /**
+     * The plugin logger
+     */
+    private final PluginLogger logger;
+    /**
+     * The time when the plugin was enabled
+     */
+    private Instant startTime;
+    //private final BukkitAudiences audiences;
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
     private RegionAdapterImpl regionAdapter;
@@ -44,13 +54,12 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     public WorldGuardRegionProtectBukkitPlugin(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
         super(wgrpBukkitBase.getDescription().getVersion(), ServerType.PAPER);
         this.wgrpBukkitBase = wgrpBukkitBase;
-        this.audiences = BukkitAudiences.create(wgrpBukkitBase);
+        this.logger = new JavaPluginLogger(wgrpBukkitBase.getLogger());
         load();
     }
 
     public void load() {
         this.spyLog = new ArrayList<>();
-
         configLoader = new ConfigLoader();
         configLoader.initConfig(this);
 
@@ -69,7 +78,10 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         wgrpChecker.notifyAboutBuild();
 
         updateNotify = new UpdateNotify(wgrpBukkitBase, this);
-        updateNotify.checkUpdateNotify(wgrpBukkitBase.getDescription());
+        updateNotify.checkUpdateNotify(wgrpBukkitBase.getPluginMeta().getVersion());
+    }
+
+    public void unLoad() {
     }
 
     private void loadAnotherClassAndMethods() {
@@ -114,24 +126,27 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         return rsApi;
     }
 
-    public BukkitAudiences getAudiences() {
-        return audiences;
-    }
-
     @Override
     public RegionAdapterImpl getRegionAdapter() {
         return regionAdapter;
     }
 
     @Override
-    public WorldGuardRegionMetadata getWorldGuardMetadata() {
+    public boolean isWorldGuardRegionProtect() {
+        return false;
+    }
+
+    @Contract(pure = true)
+    @Override
+    public @Nullable WorldGuardRegionMetadata getWorldGuardMetadata() {
         return null;
     }
 
     @Override
     public PluginLogger getPluginLogger() {
-        return wgrpBukkitBase.getApi().getPluginLogger();
+        return this.logger;
     }
+
 
     public CheckIntersection<Player> getCheckIntersection() {
         return checkIntersection;

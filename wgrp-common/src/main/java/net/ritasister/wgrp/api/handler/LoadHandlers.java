@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.loader;
+package net.ritasister.wgrp.api.handler;
 
 public interface LoadHandlers<T> {
 

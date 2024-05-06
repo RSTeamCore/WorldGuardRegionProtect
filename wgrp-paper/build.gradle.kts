@@ -1,6 +1,9 @@
 plugins {
+    id("java-library")
     alias(libs.plugins.shadow)
     alias(libs.plugins.runPaper)
+    id("io.papermc.paperweight.userdev") version "1.7.0"
+    kotlin("jvm")
 }
 
 repositories {
@@ -16,6 +19,10 @@ repositories {
         name = "PlaceholderApi"
         url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     }
+    maven {
+        name = "Sonatype-oss"
+        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+    }
     mavenCentral()
 }
 
@@ -29,7 +36,8 @@ dependencies {
     }
 
     //Paper
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT")
+    //compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
 
     //Plugins
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9")
@@ -39,12 +47,9 @@ dependencies {
     implementation("org.jetbrains:annotations:24.1.0")
     implementation("org.projectlombok:lombok:1.18.32")
 
-    //HikariCP
     compileOnly("com.zaxxer:HikariCP:5.1.0")
-    compileOnly("org.bstats:bstats-bukkit:3.0.2")
-    //MariaDB for DataBase
+    implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.3.3")
-    //Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0-RC2")
     implementation("org.jetbrains:annotations:24.1.0")
     implementation("org.projectlombok:lombok:1.18.32")
@@ -92,11 +97,14 @@ tasks {
         dependencies {
             //Main need libs from us API
             include(dependency(":wgrp-api:"))
+            include(dependency(":wgrp-common:"))
             //Shaded components for using bstats
             include(dependency("org.bstats:"))
+            include(dependency("org.jetbrains.kotlin:"))
         }
         //Shaded components for using bstats
         relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
+        relocate("org.jetbrains.kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
     }
 }
 
@@ -106,4 +114,8 @@ tasks {
         pluginJars(project(":wgrp-paper").file("build/libs/WorldGuardRegionProtect-Paper-${rootProject.version}.jar"))
         jvmArgs("-Xms4G", "-Xmx4G")
     }
+}
+
+kotlin {
+    jvmToolchain(21)
 }

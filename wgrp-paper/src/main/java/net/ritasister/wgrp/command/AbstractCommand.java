@@ -1,8 +1,8 @@
 package net.ritasister.wgrp.command;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import net.ritasister.wgrp.core.api.config.Container;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
+import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

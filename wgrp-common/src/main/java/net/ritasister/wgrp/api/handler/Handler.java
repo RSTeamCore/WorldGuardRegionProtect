@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.handler;
+package net.ritasister.wgrp.api.handler;
 
 public interface Handler<V> {
 

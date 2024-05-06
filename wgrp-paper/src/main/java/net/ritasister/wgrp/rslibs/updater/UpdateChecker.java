@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.core.api.update;
+package net.ritasister.wgrp.rslibs.updater;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

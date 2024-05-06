@@ -297,15 +297,15 @@ public class Config {
             );
 
         } catch (Exception e) {
-            Bukkit.getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
-            e.printStackTrace();
+            wgrpBase.getApi().getPluginLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
+            e.fillInStackTrace();
         }
 
-        for (Field f : this.getClass().getFields()) {
-            if (f.isAnnotationPresent(CanRecover.class)) {
+        for (Field field : this.getClass().getFields()) {
+            if (field.isAnnotationPresent(CanRecover.class)) {
                 try {
-                    if (f.get(this.getClass()).equals(null)) {
-                        switch (f.getName()) {
+                    if (field.get(this.getClass()).equals(null)) {
+                        switch (field.getName()) {
                             case "lang" -> lang = "en";
                             case "updateChecker" -> updateChecker = true;
                             case "sendNoUpdate" -> sendNoUpdate = true;
@@ -761,8 +761,8 @@ public class Config {
             wgrpBase.getConfig().set("wgRegionProtect.lang", lang);
             wgrpBase.saveConfig();
         } catch (Exception e) {
-            Bukkit.getLogger().severe("Could not save config.yml! Error: " + e.getLocalizedMessage());
-            e.printStackTrace();
+            wgrpBase.getApi().getPluginLogger().severe("Could not save config.yml! Error: " + e.getLocalizedMessage());
+            e.fillInStackTrace();
         }
     }
 

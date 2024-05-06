@@ -1,11 +1,9 @@
-package net.ritasister.wgrp.rslibs.util.updater;
+package net.ritasister.wgrp.rslibs.updater;
 
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
-import net.ritasister.wgrp.core.api.update.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class UpdateNotify {
@@ -20,7 +18,7 @@ public class UpdateNotify {
         this.worldGuardRegionProtect = worldGuardRegionProtect;
     }
 
-    public void checkUpdateNotify(PluginDescriptionFile pluginDescriptionFile) {
+    public void checkUpdateNotify(String oldVersion) {
         Server server = Bukkit.getServer();
         final String noUpdate = """
                <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
@@ -35,21 +33,21 @@ public class UpdateNotify {
                 <green>    Please, download new version here(Clickable)
                 <green>    %s
                 <yellow>=======================================""";
-        new UpdateChecker(javaPlugin, 81321).getVersion(version -> {
-            if (pluginDescriptionFile.getVersion().equalsIgnoreCase(version)) {
+        new UpdateChecker(javaPlugin, 81321).getVersion(newVersion -> {
+            if (oldVersion.equalsIgnoreCase(newVersion)) {
                 worldGuardRegionProtect.messageToCommandSender(server.getConsoleSender().getClass(), String.format(
-                        noUpdate, version));
+                        noUpdate, newVersion));
             } else {
                 worldGuardRegionProtect.messageToCommandSender(server.getConsoleSender().getClass(), String.format(
                         hasUpdate,
-                        pluginDescriptionFile.getVersion(),
-                        version,
+                        oldVersion,
+                        newVersion,
                         PLUGIN_URL_ADDRESS));
             }
         });
     }
 
-    public void checkUpdateNotify(PluginDescriptionFile pluginDescriptionFile, Player player, boolean checkUpdate, boolean sendNoUpdate) {
+    public void checkUpdateNotify(String oldVersion, Player player, boolean checkUpdate, boolean sendNoUpdate) {
         final String noUpdate = """
                <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
                <gold>               Current version: <aqua>%s
@@ -63,19 +61,19 @@ public class UpdateNotify {
                 <green>    <u><click:open_url:'%s'><hover:show_text:'<gold>%s'>Please, download new version here(Clickable)</click></u></green>
                 <yellow>=======================================""";
         if (checkUpdate) {
-            new UpdateChecker(javaPlugin, 81321).getVersion(version -> {
-                if (pluginDescriptionFile.getVersion().equalsIgnoreCase(version)) {
+            new UpdateChecker(javaPlugin, 81321).getVersion(newVersion -> {
+                if (oldVersion.equalsIgnoreCase(newVersion)) {
                     if(sendNoUpdate) {
                         worldGuardRegionProtect.messageToCommandSender(player.getClass(), String.format(
                                 noUpdate,
-                                version
+                                newVersion
                         ));
                     }
                 } else {
                     worldGuardRegionProtect.messageToCommandSender(player.getClass(), String.format(
                             hasUpdate,
-                            pluginDescriptionFile.getVersion(),
-                            version,
+                            oldVersion,
+                            newVersion,
                             PLUGIN_URL_ADDRESS,
                             PLUGIN_URL_ADDRESS
                     ));

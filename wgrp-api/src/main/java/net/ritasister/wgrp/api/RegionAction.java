@@ -1,8 +1,22 @@
 package net.ritasister.wgrp.api;
 
 /**
- * Represent Enum class of Region Action
+ * Check the type of action with regions.
  */
-public interface RegionAction {
+public enum RegionAction {
+
+    BREAK("break"),
+    PLACE("place"),
+    INTERACT("interact");
+
+    private final String action;
+
+    RegionAction(String action) {
+        this.action = action;
+    }
+
+    public String getAction() {
+        return this.action;
+    }
 
 }

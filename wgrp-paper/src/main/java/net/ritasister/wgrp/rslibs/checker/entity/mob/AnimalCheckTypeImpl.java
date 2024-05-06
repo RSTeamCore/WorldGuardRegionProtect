@@ -40,7 +40,7 @@ public class AnimalCheckTypeImpl implements EntityCheckType {
                 EntityType.FROG,
                 EntityType.COW,
                 EntityType.FOX,
-                EntityType.MUSHROOM_COW,
+                EntityType.MOOSHROOM,
                 EntityType.ZOMBIE_HORSE,
                 EntityType.PANDA,
                 EntityType.BEE,

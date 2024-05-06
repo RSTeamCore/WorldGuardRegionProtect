@@ -1,7 +1,6 @@
 plugins {
     id("java-library")
     id("jacoco")
-    kotlin("jvm")
 }
 
 repositories {
@@ -16,6 +15,10 @@ repositories {
     maven {
         name = "EngineHub"
         url = uri("https://maven.enginehub.org/repo/")
+    }
+    maven {
+        name = "Sonatype-oss"
+        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     }
     mavenCentral()
 }
@@ -39,14 +42,12 @@ dependencies {
     api("com.google.code.gson:gson:2.10")
     api("com.google.code.gson:gson:2.10")
 
-    //Paper
-    compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
-
     //Plugins
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9")
+    compileOnly(dependencyNotation = "com.sk89q.worldguard:worldguard-bukkit:7.0.9")
 
     //Libs
-    implementation("ninja.leaping.configurate:configurate-yaml:3.7.1")
+    compileOnly("org.jetbrains:annotations:24.1.0")
+    implementation(dependencyNotation = "ninja.leaping.configurate:configurate-yaml:3.7.1")
     compileOnly("org.slf4j:slf4j-api:2.0.12")
     compileOnly("org.apache.logging.log4j:log4j-api:3.0.0-beta1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.0-RC2")
@@ -60,8 +61,4 @@ tasks {
     jacocoTestReport {
         dependsOn.toMutableSet() to test
     }
-}
-
-kotlin {
-    jvmToolchain(21)
 }
