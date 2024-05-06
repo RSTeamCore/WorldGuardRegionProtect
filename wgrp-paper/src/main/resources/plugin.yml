@@ -2,19 +2,18 @@ name: WorldGuardRegionProtect
 version: ${version}
 author: ${author}
 contributor: ${contributor}
-main: net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase
+main: ${group}.wgrp.WorldGuardRegionProtectBukkitBase
+depend: [ WorldGuard ]
+softdepend: [ PlaceholderAPI ]
 description: ${description}
 website: https://github.com/RSTeamCore/WorldGuardRegionProtect
 api-version: "1.20"
 load: POSTWORLD
-dependencies:
-    server:
-        WorldGuard:
-            required: true
-            join-classpath: true
-        PlaceholderAPI:
-            required: false
-            join-classpath: true
+libraries:
+    - net.kyori:adventure-platform-bukkit:4.3.0
+    - com.zaxxer:HikariCP:5.0.1
+    - org.mariadb.jdbc:mariadb-java-client:3.1.2
+    - org.jetbrains.kotlin:kotlin-stdlib:1.8.10
 
 permissions:
     wgrp.admin:
