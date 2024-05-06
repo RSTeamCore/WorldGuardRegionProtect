@@ -33,5 +33,4 @@ target
 .gradle
 forge-download
 out
-/wgrp-spigot/run/
-/wgrp-bukkit/run/
+/wgrp-paper/run/
