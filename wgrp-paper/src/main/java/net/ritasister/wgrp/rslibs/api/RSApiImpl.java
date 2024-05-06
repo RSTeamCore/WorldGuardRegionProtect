@@ -4,6 +4,8 @@ import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.api.RSApi;
 import net.ritasister.wgrp.core.RegionActionImpl;
 import net.ritasister.wgrp.core.api.config.Container;
+import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckType;
+import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -11,8 +13,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
-import wgrp.rslibs.checker.entity.EntityCheckType;
-import wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 
 import java.util.List;
 
