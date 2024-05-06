@@ -4,6 +4,7 @@ import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.core.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -19,7 +20,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
-import wgrp.util.config.Config;
 
 import java.util.Set;
 
@@ -96,7 +96,6 @@ public class PlayerProtect implements Listener {
         }
     }
 
-    //TODO
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyInteract(@NotNull PlayerInteractEvent e) {
         if (e.getItem() != null && e.getClickedBlock() != null) {

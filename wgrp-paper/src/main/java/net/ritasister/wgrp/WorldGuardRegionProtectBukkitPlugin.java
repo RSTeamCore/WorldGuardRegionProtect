@@ -8,7 +8,6 @@ import net.ritasister.wgrp.core.WorldGuardRegionProtectPlugin;
 import net.ritasister.wgrp.core.api.RegionAdapterImpl;
 import net.ritasister.wgrp.loader.LoadHandlers;
 import net.ritasister.wgrp.loader.WGRPChecker;
-import net.ritasister.wgrp.loader.WGRPLoadDataBase;
 import net.ritasister.wgrp.loader.WGRPLoaderCommands;
 import net.ritasister.wgrp.loader.WGRPLoaderListeners;
 import net.ritasister.wgrp.loader.plugin.LoadPlaceholderAPI;
@@ -64,8 +63,8 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         loadMetrics();
         loadAnotherClassAndMethods();
 
-        WGRPLoadDataBase wgrpLoadDataBase = new WGRPLoadDataBase(this);
-        wgrpLoadDataBase.loadDataBase();
+        // wgrpLoadDataBase = new WGRPLoadDataBase(this);
+        //wgrpLoadDataBase.loadDataBase();
 
         wgrpChecker.notifyAboutBuild();
 

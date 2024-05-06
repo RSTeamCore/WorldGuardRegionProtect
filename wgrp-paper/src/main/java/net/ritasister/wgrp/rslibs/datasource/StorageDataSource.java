@@ -4,7 +4,6 @@ import net.ritasister.wgrp.api.RegionAction;
 
 import java.util.UUID;
 
-//TODO need to change...
 public interface StorageDataSource {
 
 	boolean load();

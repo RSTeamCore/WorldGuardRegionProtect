@@ -8,7 +8,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.jetbrains.annotations.NotNull;
 
-//TODO NEED FIX NULL ENTITY WITH TNT PRIME
 public class EntityProtect implements Listener {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;

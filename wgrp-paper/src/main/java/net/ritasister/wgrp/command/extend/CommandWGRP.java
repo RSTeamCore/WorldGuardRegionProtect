@@ -6,13 +6,13 @@ import net.ritasister.wgrp.command.AbstractCommand;
 import net.ritasister.wgrp.core.api.config.Container;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import wgrp.util.UtilCommandList;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
