@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     id("jacoco")
+    kotlin("jvm")
 }
 
 repositories {
@@ -41,32 +42,11 @@ dependencies {
     //Paper
     compileOnly(dependencyNotation = "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
 
-    //RSLibs by RSTeamCore
-    implementation("net.rsteamcore:RSLibs-api:0.0.6")
-
-    //Plugins
-    //WorldGuard 7+
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
-
     //Libs
     implementation("ninja.leaping.configurate:configurate-yaml:3.7.1")
     compileOnly ("org.slf4j:slf4j-api:1.7.30")
     compileOnly ("org.apache.logging.log4j:log4j-api:2.17.1")
-
-    //HikariCP
-    compileOnly("com.zaxxer:HikariCP:5.0.1")
-    compileOnly("org.bstats:bstats-bukkit:3.0.2")
-    //MariaDB for DataBase
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.1.2")
-    //Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20-RC")
-    //Annotations
-    implementation("org.jetbrains:annotations:24.0.1")
-    implementation("org.projectlombok:lombok:1.18.26")
-    implementation("aopalliance:aopalliance:1.0")
-    annotationProcessor("org.projectlombok:lombok:1.18.26")
-    implementation("org.projectlombok:lombok:1.18.26")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.26")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 tasks {
@@ -77,4 +57,8 @@ tasks {
     jacocoTestReport {
         dependsOn.toMutableSet() to test
     }
+}
+
+kotlin {
+    jvmToolchain(21)
 }

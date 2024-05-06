@@ -1,12 +1,10 @@
 package wgrp.loader.plugin;
 
-import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import wgrp.WorldGuardRegionProtectBukkitBase;
 import wgrp.rslibs.papi.PlaceholderAPIExpansion;
 
-@Slf4j
 public class LoadPlaceholderAPI implements LoadPluginManager {
 
     private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
@@ -20,11 +18,11 @@ public class LoadPlaceholderAPI implements LoadPluginManager {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI");
         if (plugin != null && plugin.isEnabled()) {
             try {
-                log.info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
+                Bukkit.getLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
                 new PlaceholderAPIExpansion(wgrpBukkitBase).register();
                 isPlaceholderAPIEnabled(true);
             } catch (NullPointerException | ClassCastException | NoClassDefFoundError exception) {
-                log.error(exception.getMessage());
+                Bukkit.getLogger().severe(exception.getMessage());
             }
         }
     }

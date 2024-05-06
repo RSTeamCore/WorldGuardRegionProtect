@@ -1,13 +1,9 @@
 package wgrp.command.extend;
 
-import lombok.Getter;
-import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
+import net.ritasister.wgrp.core.api.config.Container;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.UtilCommandList;
-import net.ritasister.wgrp.util.config.Config;
-import net.rsteamcore.config.Container;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -15,6 +11,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import wgrp.WorldGuardRegionProtectBukkitPlugin;
 import wgrp.command.AbstractCommand;
+import wgrp.util.UtilCommandList;
+import wgrp.util.config.Config;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -25,23 +23,20 @@ import java.util.UUID;
 
 public class CommandWGRP extends AbstractCommand {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectBukkitPlugin wgrpPlugin;
 
-    @Getter
     private final Config config;
 
-    @Getter
     private final Container messages;
 
 
-    public CommandWGRP(@NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        super(UtilCommandList.WGRP.getCommand(), wgrpBukkitPlugin);
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
-        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
-        this.messages = wgrpBukkitPlugin.getConfigLoader().getMessages();
+    public CommandWGRP(@NotNull WorldGuardRegionProtectBukkitPlugin wgrpPlugin) {
+        super(UtilCommandList.WGRP.getCommand(), wgrpPlugin);
+        this.wgrpPlugin = wgrpPlugin;
+        this.config = wgrpPlugin.getConfigLoader().getConfig();
+        this.messages = wgrpPlugin.getConfigLoader().getMessages();
     }
 
-    @SneakyThrows
     @SubCommand(
             name = "reload",
             permission = UtilPermissions.COMMAND_WGRP_RELOAD_CONFIGS,
@@ -50,7 +45,7 @@ public class CommandWGRP extends AbstractCommand {
         long timeInitStart = System.currentTimeMillis();
 
         config.reload();
-        wgrpBukkitPlugin.getConfigLoader().initConfig(wgrpBukkitPlugin.getWgrpBukkitBase());
+        wgrpPlugin.getConfigLoader().initConfig(wgrpPlugin.getWgrpBukkitBase());
 
         long timeReload = (System.currentTimeMillis() - timeInitStart);
         messages.get("messages.Configs.configReloaded").replace("<time>", timeReload).send(sender);
@@ -61,7 +56,7 @@ public class CommandWGRP extends AbstractCommand {
             aliases = {"credits", "authors"},
             description = "seeing info about authors.")
     public void wgrpAbout(@NotNull CommandSender sender, String[] args) {
-        wgrpBukkitPlugin.messageToCommandSender((SenderInfo) sender, """
+        wgrpPlugin.messageToCommandSender(sender, """
                             <aqua>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<aqua>========
                             <yellow>Hi! If you need help from this plugin,
                             <yellow>you can contact with me on:
@@ -78,7 +73,7 @@ public class CommandWGRP extends AbstractCommand {
             name = "addregion",
             aliases = {"addrg"},
             tabArgs = {"<region>", "[world]"},
-            permission = UtilPermissions.COMMAND_ADDREGION,
+            permission = UtilPermissions.COMMAND_ADD_REGION,
             description = "add a region to the config to protect.")
     public void wgrpAddRegion(@NotNull CommandSender sender, String @NotNull [] args) {
         if(args.length == 1 || args.length == 2) {
@@ -91,7 +86,9 @@ public class CommandWGRP extends AbstractCommand {
                 boolean isRegionValid = false;
                 if(args.length == 2) world = args[1];
                 for(World w : Bukkit.getWorlds()) if(w.getName().equalsIgnoreCase(world)) isWorldValid = true;
-                if(wgrpBukkitPlugin.getRsRegion().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region)) isRegionValid = true;
+                if (wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region)) {
+                    isRegionValid = true;
+                }
                 if(rgMap.get(world).contains(region)) {
                     messages.get("messages.regionManagement.alreadyProtected").replace("<region>", region).send(sender);
                     return;
@@ -127,7 +124,7 @@ public class CommandWGRP extends AbstractCommand {
             name = "removeregion",
             aliases = {"removerg"},
             tabArgs = {"<region>", "[world]"},
-            permission = UtilPermissions.COMMAND_REMOVEREGION,
+            permission = UtilPermissions.COMMAND_REMOVE_REGION,
             description = "remove the region from the config to remove the protection.")
     public void wgrpRemoveRegion(@NotNull CommandSender sender, String @NotNull [] args) {
         if(args.length == 1 || args.length == 2) {
@@ -186,11 +183,11 @@ public class CommandWGRP extends AbstractCommand {
             description = "spy for who interact with region.")
     public void wgrpSpy(@NotNull CommandSender sender, String[] args) {
         @NotNull UUID uniqueId = Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getUniqueId();
-        if (wgrpBukkitPlugin.getSpyLog().contains(uniqueId)) {
-            wgrpBukkitPlugin.getSpyLog().remove(uniqueId);
+        if (wgrpPlugin.getSpyLog().contains(uniqueId)) {
+            wgrpPlugin.getSpyLog().remove(uniqueId);
             sender.sendMessage("You are disable spy logging!");
         } else {
-            wgrpBukkitPlugin.getSpyLog().add(uniqueId);
+            wgrpPlugin.getSpyLog().add(uniqueId);
             sender.sendMessage("You are enable spy logging!");
         }
     }

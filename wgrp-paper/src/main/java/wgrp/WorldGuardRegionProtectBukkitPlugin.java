@@ -6,9 +6,6 @@ import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.api.RegionAdapter;
 import net.ritasister.wgrp.api.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.core.WorldGuardRegionProtectPlugin;
-import net.ritasister.wgrp.core.api.RSApiImpl;
-import net.ritasister.wgrp.core.util.ServerType;
-import net.ritasister.wgrp.core.util.config.loader.ConfigLoader;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -21,10 +18,13 @@ import wgrp.loader.WGRPLoaderListeners;
 import wgrp.loader.plugin.LoadPlaceholderAPI;
 import wgrp.loader.plugin.LoadPluginManager;
 import wgrp.loader.plugin.LoadWorldGuard;
-import wgrp.rslibs.CommandWE;
-import wgrp.rslibs.api.CommandWEImpl;
+import wgrp.rslibs.UtilCommandWE;
+import wgrp.rslibs.api.RSApiImpl;
 import wgrp.rslibs.api.RSStorage;
+import wgrp.rslibs.api.UtilWEImpl;
 import wgrp.rslibs.util.updater.UpdateNotify;
+import wgrp.util.ServerType;
+import wgrp.util.config.loader.ConfigLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,31 +32,27 @@ import java.util.UUID;
 
 public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtectPlugin {
 
-    //Расширяемый класс для этого класса.
     private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
-
     private final BukkitAudiences audiences;
-
     private ConfigLoader configLoader;
-
     private RSApiImpl rsApi;
-
-    private RegionAdapter<Location, Player, Region> regionAdapter;
-
+    private final RegionAdapter<Location, Player, Region> regionAdapter;
     private RSStorage rsStorage;
-
-    private CommandWE commandWE;
-
-    private CheckIntersection<Player> checkIntersection;
-
+    private final CheckIntersection<Player> checkIntersection;
     private List<UUID> spyLog;
-
     private UpdateNotify updateNotify;
+    private UtilCommandWE playerUtilWE;
 
-    public WorldGuardRegionProtectBukkitPlugin(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
+    public WorldGuardRegionProtectBukkitPlugin(
+            final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase,
+            final RegionAdapter<Location, Player, Region> adapter,
+            final CheckIntersection<Player> intersection
+    ) {
         super(wgrpBukkitBase.getDescription().getVersion(), ServerType.SPIGOT);
         this.wgrpBukkitBase = wgrpBukkitBase;
         this.audiences = BukkitAudiences.create(wgrpBukkitBase);
+        regionAdapter = adapter;
+        checkIntersection = intersection;
         load();
     }
 
@@ -64,11 +60,11 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         this.spyLog = new ArrayList<>();
 
         configLoader = new ConfigLoader();
-        configLoader.initConfig(wgrpBukkitBase);
+        configLoader.initConfig(this.wgrpBukkitBase);
 
         rsApi = new RSApiImpl(this);
 
-        WGRPChecker wgrpChecker = new WGRPChecker(this);
+        WGRPChecker wgrpChecker = new WGRPChecker(this.wgrpBukkitBase);
         wgrpChecker.checkStartUpVersionServer();
         wgrpChecker.checkIfRunningOnPaper();
 
@@ -91,9 +87,8 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         LoadPluginManager loadPlaceholderAPI = new LoadPlaceholderAPI(wgrpBukkitBase);
         loadPlaceholderAPI.loadPlugin();
 
-
-        commandWE = new CommandWEImpl(this);
-        checkIntersection = commandWE.setUpWorldGuardVersionSeven();
+        playerUtilWE = new UtilWEImpl(this);
+        playerUtilWE.setUpWorldGuardVersionSeven();
 
         rsStorage = new RSStorage();
 
@@ -109,6 +104,26 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         new Metrics(wgrpBukkitBase, pluginId);
     }
 
+    public WorldGuardRegionProtectBukkitBase getWgrpBukkitBase() {
+        return wgrpBukkitBase;
+    }
+
+    public List<UUID> getSpyLog() {
+        return spyLog;
+    }
+
+    public RSStorage getRsStorage() {
+        return rsStorage;
+    }
+
+    public RSApiImpl getRsApi() {
+        return rsApi;
+    }
+
+    public BukkitAudiences getAudiences() {
+        return audiences;
+    }
+
     @Override
     public RegionAdapter<Location, Player, Region> getRegionAdapter() {
         return regionAdapter;
@@ -119,9 +134,20 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         return null;
     }
 
-    @Override
-    public void getConfig() {
+    public CheckIntersection<Player> getCheckIntersection() {
+        return checkIntersection;
+    }
 
+    public UtilCommandWE getPlayerUtilWE() {
+        return playerUtilWE;
+    }
+
+    public UpdateNotify getUpdateNotify() {
+        return updateNotify;
+    }
+
+    public ConfigLoader getConfigLoader() {
+        return configLoader;
     }
 
 }

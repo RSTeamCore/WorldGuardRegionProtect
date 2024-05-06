@@ -6,5 +6,6 @@ public interface WorldGuardRegionProtect {
 
     WorldGuardRegionMetadata getWorldGuardMetadata();
 
-    void getConfig();
+    default void messageToCommandSender(Class<?> consoleSender, String format) {
+    }
 }

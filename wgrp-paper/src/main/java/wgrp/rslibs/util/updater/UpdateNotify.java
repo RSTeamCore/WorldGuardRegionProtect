@@ -1,7 +1,7 @@
 package wgrp.rslibs.util.updater;
 
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
-import net.rsteamcore.config.update.UpdateChecker;
+import net.ritasister.wgrp.core.api.update.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -37,10 +37,10 @@ public class UpdateNotify {
                 <yellow>=======================================""";
         new UpdateChecker(javaPlugin, 81321).getVersion(version -> {
             if (pluginDescriptionFile.getVersion().equalsIgnoreCase(version)) {
-                worldGuardRegionProtect.messageToCommandSender(server.getConsoleSender(), String.format(
+                worldGuardRegionProtect.messageToCommandSender(server.getConsoleSender().getClass(), String.format(
                         noUpdate, version));
             } else {
-                worldGuardRegionProtect.messageToCommandSender(server.getConsoleSender(), String.format(
+                worldGuardRegionProtect.messageToCommandSender(server.getConsoleSender().getClass(), String.format(
                         hasUpdate,
                         pluginDescriptionFile.getVersion(),
                         version,
@@ -66,13 +66,13 @@ public class UpdateNotify {
             new UpdateChecker(javaPlugin, 81321).getVersion(version -> {
                 if (pluginDescriptionFile.getVersion().equalsIgnoreCase(version)) {
                     if(sendNoUpdate) {
-                        worldGuardRegionProtect.messageToCommandSender(player, String.format(
+                        worldGuardRegionProtect.messageToCommandSender(player.getClass(), String.format(
                                 noUpdate,
                                 version
                         ));
                     }
                 } else {
-                    worldGuardRegionProtect.messageToCommandSender(player, String.format(
+                    worldGuardRegionProtect.messageToCommandSender(player.getClass(), String.format(
                             hasUpdate,
                             pluginDescriptionFile.getVersion(),
                             version,

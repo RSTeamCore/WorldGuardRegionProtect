@@ -1,8 +1,8 @@
 package wgrp.listener;
 
+import net.ritasister.wgrp.core.RegionActionImpl;
+import net.ritasister.wgrp.core.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.config.Config;
-import net.rsteamcore.config.Container;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,7 +15,7 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 import wgrp.WorldGuardRegionProtectBukkitPlugin;
-import wgrp.rslibs.RegionAction;
+import wgrp.util.config.Config;
 
 public class BlockProtect implements Listener {
 
@@ -34,17 +34,20 @@ public class BlockProtect implements Listener {
     private void denyBreak(@NotNull BlockBreakEvent e) {
         Player player = e.getPlayer();
         Location location = e.getBlock().getLocation();
-        if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectAllowMap())
-                || wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectOnlyBreakAllowMap())) {
+        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectAllowMap())
+                || wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
+                location,
+                config.getRegionProtectOnlyBreakAllowMap()
+        )) {
             e.setCancelled(false);
-        } else if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
+        } else if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                 && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
             sendMessage(player);
-        } else if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location)
+        } else if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
 
-            spyMethod(e.getBlock(), player, location, RegionAction.BREAK);
+            spyMethod(e.getBlock(), player, location, RegionActionImpl.BREAK);
         }
     }
 
@@ -52,27 +55,27 @@ public class BlockProtect implements Listener {
     private void denyPlace(@NotNull BlockPlaceEvent e) {
         Player player = e.getPlayer();
         Location location = e.getBlock().getLocation();
-        if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectAllowMap())) {
+        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectAllowMap())) {
             e.setCancelled(false);
-        } else if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())
+        } else if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                 && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
             sendMessage(player);
-        } else if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location)
+        } else if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
 
-            spyMethod(e.getBlock(), player, location, RegionAction.PLACE);
+            spyMethod(e.getBlock(), player, location, RegionActionImpl.PLACE);
         }
     }
 
-    private void spyMethod(Block block, @NotNull Player player, Location location, RegionAction regionAction) {
+    private void spyMethod(Block block, @NotNull Player player, Location location, RegionActionImpl regionAction) {
         if (wgrpBukkitPlugin.getSpyLog().contains(player.getPlayerProfile().getUniqueId())) {
             wgrpBukkitPlugin.getRsApi().notifyIfActionInRegion(
                     player,
                     player,
                     player.getPlayerProfile().getName(),
                     regionAction,
-                    wgrpBukkitPlugin.getRsRegion().getProtectRegionName(location),
+                    wgrpBukkitPlugin.getRegionAdapter().getProtectRegionName(location),
                     block.getX(),
                     block.getY(),
                     block.getZ(),
@@ -85,7 +88,7 @@ public class BlockProtect implements Listener {
                     player.getPlayerProfile().getUniqueId(),
                     System.currentTimeMillis(),
                     regionAction,
-                    wgrpBukkitPlugin.getRsRegion().getProtectRegionName(location),
+                    wgrpBukkitPlugin.getRegionAdapter().getProtectRegionName(location),
                     block.getWorld().getName(),
                     block.getX(),
                     block.getY(),
@@ -104,7 +107,10 @@ public class BlockProtect implements Listener {
         Block block = e.getBlock();
         Location location = block.getLocation();
         Material blockType = block.getType();
-        if (blockType == Material.RESPAWN_ANCHOR && wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())) {
+        if (blockType == Material.RESPAWN_ANCHOR && wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
+                location,
+                config.getRegionProtectMap()
+        )) {
             e.setCancelled(true);
         }
     }

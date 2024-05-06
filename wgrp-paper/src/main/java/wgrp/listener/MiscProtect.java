@@ -1,7 +1,6 @@
 package wgrp.listener;
 
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,6 +12,7 @@ import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.jetbrains.annotations.NotNull;
 import wgrp.WorldGuardRegionProtectBukkitPlugin;
+import wgrp.util.config.Config;
 
 public class MiscProtect implements Listener {
 
@@ -29,7 +29,7 @@ public class MiscProtect implements Listener {
     private void denyBlockFromTo(@NotNull BlockFromToEvent e) {
         Block block = e.getBlock();
         Location location = e.getToBlock().getLocation();
-        if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(location, config.getRegionProtectMap())) {
+        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
             if (config.isDenyWaterFlowToRegion() && block.getType() == Material.WATER
                     || config.isDenyLavaFlowToRegion() && block.getType() == Material.LAVA) {
                 e.setCancelled(true);
@@ -41,7 +41,7 @@ public class MiscProtect implements Listener {
     private void denyStructureGrow(@NotNull StructureGrowEvent e) {
         if (e.getPlayer() != null) {
             Player player = e.getPlayer();
-            if (wgrpBukkitPlugin.getRsRegion().checkStandingRegion(e.getLocation(), config.getRegionProtectMap())) {
+            if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(e.getLocation(), config.getRegionProtectMap())) {
                 if (!wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     e.setCancelled(true);
                 }

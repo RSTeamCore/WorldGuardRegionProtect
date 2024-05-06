@@ -1,6 +1,6 @@
 package wgrp.rslibs.datasource;
 
-import wgrp.rslibs.RegionAction;
+import net.ritasister.wgrp.api.RegionAction;
 
 import java.util.UUID;
 

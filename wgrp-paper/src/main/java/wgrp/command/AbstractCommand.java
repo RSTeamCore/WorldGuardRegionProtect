@@ -1,9 +1,8 @@
 package wgrp.command;
 
-import lombok.Getter;
+import net.ritasister.wgrp.core.api.config.Container;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.rsteamcore.config.Container;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +20,6 @@ import java.util.List;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
-    @Getter
     private final Container messages;
 
     public AbstractCommand(String command, @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {

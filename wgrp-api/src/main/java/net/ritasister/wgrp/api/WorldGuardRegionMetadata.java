@@ -1,7 +1,5 @@
 package net.ritasister.wgrp.api;
 
-import lombok.NonNull;
-
 /**
  * Provides information about the WorldGuardRegionProtect plugin.
  */
@@ -12,13 +10,13 @@ public interface WorldGuardRegionMetadata {
      *
      * @return the version of the plugin running on the platform
      */
-    @NonNull String getVersion();
+    String getVersion();
 
     /**
      * Gets the API version
      *
      * @return the version of the API running on the platform
      */
-    @NonNull String getApiVersion();
+    String getApiVersion();
 
 }

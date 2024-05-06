@@ -2,12 +2,11 @@ package wgrp.rslibs.datasource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.extern.slf4j.Slf4j;
-import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.api.RegionAction;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import wgrp.WorldGuardRegionProtectBukkitPlugin;
-import wgrp.rslibs.RegionAction;
+import wgrp.util.config.Config;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +16,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 //TODO need to change...
-@Slf4j
 @SuppressWarnings({"checkstyle:AbbreviationAsWordInName"})
 public class Storage implements StorageDataSource {
 
@@ -82,7 +80,7 @@ public class Storage implements StorageDataSource {
 			pst.execute();
 			pst.close();
 		} catch(SQLException ex){
-			log.error("Failed connect to database! Error code: " + ex.getErrorCode());
+			Bukkit.getLogger().severe("Failed connect to database! Error code: " + ex.getErrorCode());
 		} finally {
 			this.close(pst);
 		}
@@ -113,7 +111,7 @@ public class Storage implements StorageDataSource {
 			}
 			return true;
 		}catch(SQLException ex){
-            log.error("Failed to load from database!");
+			Bukkit.getLogger().severe("Failed to load from database!");
 			ex.printStackTrace();
 		}finally{
 			this.close(rs);
@@ -148,7 +146,7 @@ public class Storage implements StorageDataSource {
 				}
                 wgrpBukkitPlugin.getRsStorage().dbLogs = new ConcurrentHashMap<>(tempDataBase);
 			} catch (SQLException ex) {
-                log.error("Failed to load database asynchronous!");
+				Bukkit.getLogger().severe("Failed to load database asynchronous!");
 				ex.printStackTrace();
 			} finally {
 				this.close(rs);
@@ -176,7 +174,7 @@ public class Storage implements StorageDataSource {
 				pst.setDouble(9, z);
 				pst.executeUpdate();
 			} catch (SQLException ex) {
-                log.error("[DataBase] <id> "+uniqueId.toString()
+				Bukkit.getLogger().severe("[DataBase] <id> " + uniqueId.toString()
 					.replace("<id>", uniqueId.toString())+ ex);
 			} finally {
 				this.close(pst);
@@ -190,7 +188,7 @@ public class Storage implements StorageDataSource {
 				pst.close();
 			}
 		}catch(SQLException ex){
-            log.error("Failed to close prepared statement");
+			Bukkit.getLogger().severe("Failed to close prepared statement");
 		}
 	}
 
@@ -200,7 +198,7 @@ public class Storage implements StorageDataSource {
 				rs.close();
 			}
 		}catch(SQLException ex){
-            log.error("Failed to close result set");
+			Bukkit.getLogger().severe("Failed to close result set");
 		}
 	}
 
@@ -209,7 +207,7 @@ public class Storage implements StorageDataSource {
 			ds.close();
 		}
         connect();
-        log.info("Successfully reloaded!");
+		Bukkit.getLogger().info("Successfully reloaded!");
     }
 
 	@Override

@@ -1,6 +1,5 @@
 package wgrp.listener;
 
-import net.ritasister.wgrp.util.config.Config;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -9,6 +8,7 @@ import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.jetbrains.annotations.NotNull;
 import wgrp.WorldGuardRegionProtectBukkitPlugin;
+import wgrp.util.config.Config;
 
 public class VehicleProtect implements Listener {
 
