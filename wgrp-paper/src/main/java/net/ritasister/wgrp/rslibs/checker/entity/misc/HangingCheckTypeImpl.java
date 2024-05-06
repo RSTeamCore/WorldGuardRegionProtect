@@ -1,10 +1,10 @@
-package wgrp.rslibs.checker.entity.misc;
+package net.ritasister.wgrp.rslibs.checker.entity.misc;
 
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Hanging;
-import wgrp.WorldGuardRegionProtectBukkitPlugin;
-import wgrp.rslibs.checker.entity.EntityCheckType;
 
 public class HangingCheckTypeImpl implements EntityCheckType {
 

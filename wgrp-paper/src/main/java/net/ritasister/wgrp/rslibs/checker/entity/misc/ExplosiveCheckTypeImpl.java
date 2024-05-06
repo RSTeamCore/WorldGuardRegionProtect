@@ -1,11 +1,11 @@
-package wgrp.rslibs.checker.entity.misc;
+package net.ritasister.wgrp.rslibs.checker.entity.misc;
 
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Explosive;
 import org.jetbrains.annotations.NotNull;
-import wgrp.WorldGuardRegionProtectBukkitPlugin;
-import wgrp.rslibs.checker.entity.EntityCheckType;
 
 public class ExplosiveCheckTypeImpl implements EntityCheckType {
 
