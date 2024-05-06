@@ -290,5 +290,4 @@ public class PlayerProtect implements Listener {
             }
         }
     }
-
 }

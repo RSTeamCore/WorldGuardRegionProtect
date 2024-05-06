@@ -82,18 +82,6 @@ public class BlockProtect implements Listener {
                     block.getWorld().getName()
             );
         }
-        if (config.getDataBaseEnable()) {
-            wgrpBukkitPlugin.getRsStorage().getDataSource().setLogAction(
-                    player.getPlayerProfile().getName(),
-                    player.getPlayerProfile().getId(),
-                    System.currentTimeMillis(),
-                    regionAction,
-                    wgrpBukkitPlugin.getRegionAdapter().getProtectRegionName(location),
-                    block.getWorld().getName(),
-                    block.getX(),
-                    block.getY(),
-                    block.getZ());
-        }
     }
 
     private void sendMessage(Player player) {

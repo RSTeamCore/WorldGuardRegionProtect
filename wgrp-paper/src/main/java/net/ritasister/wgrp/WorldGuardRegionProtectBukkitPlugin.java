@@ -13,7 +13,6 @@ import net.ritasister.wgrp.loader.plugin.LoadPluginManager;
 import net.ritasister.wgrp.loader.plugin.LoadWorldGuard;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
-import net.ritasister.wgrp.rslibs.api.RSStorage;
 import net.ritasister.wgrp.rslibs.api.RegionAdapterImpl;
 import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
@@ -45,7 +44,6 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
     private RegionAdapterImpl regionAdapter;
-    private RSStorage rsStorage;
     private CheckIntersection<Player> checkIntersection;
     private List<UUID> spyLog;
     private UpdateNotify updateNotify;
@@ -72,9 +70,6 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
         loadMetrics();
         loadAnotherClassAndMethods();
 
-        // wgrpLoadDataBase = new WGRPLoadDataBase(this);
-        //wgrpLoadDataBase.loadDataBase();
-
         wgrpChecker.notifyAboutBuild();
 
         updateNotify = new UpdateNotify(wgrpBukkitBase, this);
@@ -96,8 +91,6 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
         playerUtilWE = new UtilWEImpl(this);
         playerUtilWE.setUpWorldGuardVersionSeven();
 
-        rsStorage = new RSStorage();
-
         LoadHandlers<WorldGuardRegionProtectBukkitPlugin> loaderCommands = new WGRPLoaderCommands();
         loaderCommands.loadHandler(this);
 
@@ -116,10 +109,6 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
 
     public List<UUID> getSpyLog() {
         return spyLog;
-    }
-
-    public RSStorage getRsStorage() {
-        return rsStorage;
     }
 
     public RSApiImpl getRsApi() {

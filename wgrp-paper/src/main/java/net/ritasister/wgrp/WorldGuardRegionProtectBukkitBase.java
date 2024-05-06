@@ -1,8 +1,10 @@
 package net.ritasister.wgrp;
 
+import lombok.AllArgsConstructor;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@AllArgsConstructor
 public final class WorldGuardRegionProtectBukkitBase extends JavaPlugin implements WorldGuardRegionProtectBase {
 
     private WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin;
@@ -16,7 +18,6 @@ public final class WorldGuardRegionProtectBukkitBase extends JavaPlugin implemen
     public void onDisable() {
         worldGuardRegionProtectBukkitPlugin.unLoad();
     }
-
 
     @Override
     public WorldGuardRegionProtect getApi() {
