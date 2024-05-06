@@ -1,6 +1,12 @@
 group = "net.ritasister"
 project.version = "'1.0.0"
 
+tasks.jar {
+    manifest {
+        attributes("Automatic-Module-Name" to "net.ritasister.wgrp.api")
+    }
+}
+
 repositories {
     mavenCentral()
 }

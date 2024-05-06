@@ -2,7 +2,7 @@ name: WorldGuardRegionProtect
 version: ${version}
 author: ${author}
 contributor: ${contributor}
-main: ${group}.wgrp.WorldGuardRegionProtectBukkitBase
+main: net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase
 description: ${description}
 website: https://github.com/RSTeamCore/WorldGuardRegionProtect
 api-version: "1.20"

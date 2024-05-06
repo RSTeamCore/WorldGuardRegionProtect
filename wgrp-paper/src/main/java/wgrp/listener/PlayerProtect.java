@@ -169,28 +169,16 @@ public class PlayerProtect implements Listener {
                     .checkIntersection(player)
                     || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_C(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
-                    .checkCIntersection(
-                    player,
-                    s
-            )
+                    .checkCIntersection(player, s)
                     || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_P(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
-                    .checkPIntersection(
-                    player,
-                    s
-            )
+                    .checkPIntersection(player, s)
                     || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_S(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
-                    .checkSIntersection(
-                    player,
-                    s
-            )
+                    .checkSIntersection(player, s)
                     || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_U(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
-                    .checkUIntersection(
-                    player,
-                    s
-            )) {
+                    .checkUIntersection(player, s)) {
                 if (config.getRegionMessageProtectWe()) {
                     messages.get("messages.ServerMsg.wgrpMsgWe").send(player);
                     e.setCancelled(true);

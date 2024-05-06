@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.shadow)
-    id("xyz.jpenilla.run-paper") version "2.3.0"
+    alias(libs.plugins.runPaper)
 }
 
 repositories {
@@ -74,8 +74,33 @@ tasks {
     build {
         dependsOn(shadowJar)
     }
+}
 
+tasks {
+    processResources {
+        filesMatching("paper-plugin.yml") {
+            expand(
+                    "name" to rootProject.name,
+                    "version" to project.version,
+                    "group" to project.group,
+                    "author" to project.property("author"),
+                    "contributor" to project.property("contributor"),
+                    "description" to project.property("description"))
+        }
+    }
+    shadowJar {
+        dependencies {
+            //Main need libs from us API
+            include(dependency(":wgrp-api:"))
+            //Shaded components for using bstats
+            include(dependency("org.bstats:"))
+        }
+        //Shaded components for using bstats
+        relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
+    }
+}
 
+tasks {
     runServer {
         minecraftVersion("1.20.6")
         pluginJars(project(":wgrp-paper").file("build/libs/WorldGuardRegionProtect-Paper-${rootProject.version}.jar"))
