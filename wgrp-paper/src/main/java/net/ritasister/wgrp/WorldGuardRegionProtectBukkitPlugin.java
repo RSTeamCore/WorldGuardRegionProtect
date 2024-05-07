@@ -21,6 +21,8 @@ import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.util.ServerType;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -46,10 +48,14 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
     private RegionAdapterImpl regionAdapter;
-    private CheckIntersection<Player> checkIntersection;
+
     private List<UUID> spyLog;
     private UpdateNotify updateNotify;
     private UtilCommandWE playerUtilWE;
+
+    private EntityCheckType<Entity, EntityType> entityCheckType;
+    private CheckIntersection<Player> checkIntersection;
+    private MessagingService<Player> messagingService;
 
     public WorldGuardRegionProtectBukkitPlugin(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
         super(wgrpBukkitBase.getDescription().getVersion(), ServerType.PAPER);
@@ -143,16 +149,14 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
         return this.logger;
     }
 
-    @Contract(pure = true)
     @Override
-    public <Entity, EntityType> @Nullable EntityCheckType<Entity, EntityType> getEntityChecker() {
-        return null;
+    public @Nullable EntityCheckType<Entity, EntityType> getEntityChecker() {
+        return entityCheckType;
     }
 
-    @Contract(pure = true)
     @Override
-    public <Player> @Nullable MessagingService<Player> getMessagingService() {
-        return null;
+    public MessagingService<Player> getMessagingService() {
+        return messagingService;
     }
 
     public CheckIntersection<Player> getCheckIntersection() {

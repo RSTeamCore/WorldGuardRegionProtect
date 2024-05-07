@@ -23,13 +23,13 @@ public abstract class WorldGuardRegionProtectPlugin implements WorldGuardRegionP
     }
 
     @Override
-    public void setWorldGuardRegionProtect(final boolean worldGuardRegionProtect) {
-        //setWorldGuardRegionProtect(worldGuardRegionProtect);
+    public boolean isWorldGuardRegionProtect() {
+        return true;
     }
 
     @Override
-    public WorldGuardRegionMetadata getWorldGuardMetadata() {
-        return worldGuardRegionMetadata;
+    public void setWorldGuardRegionProtect(final boolean worldGuardRegionProtect) {
+        //setWorldGuardRegionProtect(worldGuardRegionProtect);
     }
 
 }

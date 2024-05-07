@@ -40,23 +40,23 @@ public interface WorldGuardRegionProtect {
      * Gain access to Api region checks, region name retrieval and general interaction with WGRP
      */
     @ApiStatus.Experimental
-    <Location, Player, Region> RegionAdapter<Location, Player, Region> getRegionAdapter();
+    <L, P, R> RegionAdapter<L, P, R> getRegionAdapter();
 
     /**
      * Gain access to Api entity checks. Still in development
      */
     @ApiStatus.Experimental
-    <Entity, EntityType> EntityCheckType<Entity, EntityType> getEntityChecker();
+    <E, T> EntityCheckType<E, T> getEntityChecker();
 
     /**
      *
      */
     @ApiStatus.Experimental
-    <Player> MessagingService<Player> getMessagingService();
+    <P> MessagingService<P> getMessagingService();
 
     /**
      *
      */
     @ApiStatus.Experimental
-    <Player> CheckIntersection<Player> getCheckIntersection();
+    <P> CheckIntersection<P> getCheckIntersection();
 }
