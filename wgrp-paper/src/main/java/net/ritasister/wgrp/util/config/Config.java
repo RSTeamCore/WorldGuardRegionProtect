@@ -166,10 +166,7 @@ public class Config {
             if (regionProtectSection != null) {
                 try {
                     for (String world : regionProtectSection.getKeys(false)) {
-                        regionProtect.put(
-                                world,
-                                wgrpBase.getConfig().getStringList("wgRegionProtect.regionProtect." + world)
-                        );
+                        regionProtect.put(world, wgrpBase.getConfig().getStringList("wgRegionProtect.regionProtect." + world));
                     }
                 } catch (Throwable ignored) {
                 }
@@ -222,15 +219,15 @@ public class Config {
             }
             //End getting regions
 
-            interactType = (List<String>) wgrpBase.getConfig().getList("wgRegionProtect.protectInteract.interactType");
-            vehicleType = (List<String>) wgrpBase.getConfig().getList("wgRegionProtect.protectInteract.vehicleType");
-            animalType = (List<String>) wgrpBase.getConfig().getList("wgRegionProtect.protectInteract.animalType");
-            monsterType = (List<String>) wgrpBase.getConfig().getList("wgRegionProtect.protectInteract.monsterType");
-            waterMobType = (List<String>) wgrpBase.getConfig().getList("wgRegionProtect.protectInteract.waterMobType");
-            signType = (List<String>) wgrpBase.getConfig().getList("wgRegionProtect.protectInteract.signType");
-            entityExplodeType = (List<String>) wgrpBase.getConfig().getList(
+            interactType = wgrpBase.getConfig().getStringList("wgRegionProtect.protectInteract.interactType");
+            vehicleType = wgrpBase.getConfig().getStringList("wgRegionProtect.protectInteract.vehicleType");
+            animalType = wgrpBase.getConfig().getStringList("wgRegionProtect.protectInteract.animalType");
+            monsterType = wgrpBase.getConfig().getStringList("wgRegionProtect.protectInteract.monsterType");
+            waterMobType = wgrpBase.getConfig().getStringList("wgRegionProtect.protectInteract.waterMobType");
+            signType = wgrpBase.getConfig().getStringList("wgRegionProtect.protectInteract.signType");
+            entityExplodeType = wgrpBase.getConfig().getStringList(
                     "wgRegionProtect.protectInteract.entityExplodeType");
-            naturalBlockOrItem = (List<String>) wgrpBase.getConfig().getList(
+            naturalBlockOrItem = wgrpBase.getConfig().getStringList(
                     "wgRegionProtect.protectInteract.naturalBlockOrItem");
             denyCollisionWithVehicle = wgrpBase.getConfig().getBoolean(
                     "wgRegionProtect.protectInteract.player.vehicle.denyCollisionWithVehicle");
@@ -304,7 +301,7 @@ public class Config {
         for (Field field : this.getClass().getFields()) {
             if (field.isAnnotationPresent(CanRecover.class)) {
                 try {
-                    if (field.get(this.getClass()).equals(null)) {
+                    if (field.get(this.getClass()) == null) {
                         switch (field.getName()) {
                             case "lang" -> lang = "en";
                             case "updateChecker" -> updateChecker = true;

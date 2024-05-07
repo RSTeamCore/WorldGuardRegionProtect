@@ -19,8 +19,6 @@ public interface WorldGuardRegionProtect {
      */
     WorldGuardRegionMetadata getWorldGuardMetadata();
 
-    void messageToCommandSender(Class<?> consoleSender, String format);
-
     /**
      * Gets the {@link PluginLogger} own of plugin loggers.
      *

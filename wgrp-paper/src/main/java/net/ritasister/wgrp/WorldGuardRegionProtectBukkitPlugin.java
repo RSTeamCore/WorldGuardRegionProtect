@@ -1,5 +1,7 @@
 package net.ritasister.wgrp;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
@@ -21,6 +23,7 @@ import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.util.ServerType;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,7 +51,7 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
 
     private List<UUID> spyLog;
     private UpdateNotify updateNotify;
-    private UtilCommandWE playerUtilWE;
+    private UtilWEImpl playerUtilWE;
 
     private EntityCheckType entityCheckType;
     private CheckIntersection checkIntersection;
@@ -131,9 +134,10 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
         return null;
     }
 
-    @Override
-    public void messageToCommandSender(final Class<?> consoleSender, final String format) {
-
+    public void messageToCommandSender(final @NotNull CommandSender commandSender, final String message) {
+        var miniMessage = MiniMessage.miniMessage();
+        Component parsed = miniMessage.deserialize(message);
+        commandSender.sendMessage(parsed);
     }
 
     @Override
