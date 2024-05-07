@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.updater;
 
-import net.ritasister.wgrp.api.WorldGuardRegionProtect;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -9,13 +9,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class UpdateNotify {
 
     private final JavaPlugin javaPlugin;
-    private final WorldGuardRegionProtect worldGuardRegionProtect;
+    private final WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin;
 
     static final String PLUGIN_URL_ADDRESS = "https://www.spigotmc.org/resources/81321";
 
-    public UpdateNotify(final JavaPlugin javaPlugin, final WorldGuardRegionProtect worldGuardRegionProtect) {
+    public UpdateNotify(
+            final JavaPlugin javaPlugin,
+            final WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin
+    ) {
         this.javaPlugin = javaPlugin;
-        this.worldGuardRegionProtect = worldGuardRegionProtect;
+        this.worldGuardRegionProtectBukkitPlugin = worldGuardRegionProtectBukkitPlugin;
     }
 
     public void checkUpdateNotify(String oldVersion) {
@@ -35,10 +38,10 @@ public class UpdateNotify {
                 <yellow>=======================================""";
         new UpdateChecker(javaPlugin, 81321).getVersion(newVersion -> {
             if (oldVersion.equalsIgnoreCase(newVersion)) {
-                worldGuardRegionProtect.messageToCommandSender(server.getConsoleSender().getClass(), String.format(
+                worldGuardRegionProtectBukkitPlugin.messageToCommandSender(server.getConsoleSender(), String.format(
                         noUpdate, newVersion));
             } else {
-                worldGuardRegionProtect.messageToCommandSender(server.getConsoleSender().getClass(), String.format(
+                worldGuardRegionProtectBukkitPlugin.messageToCommandSender(server.getConsoleSender(), String.format(
                         hasUpdate,
                         oldVersion,
                         newVersion,
@@ -64,13 +67,13 @@ public class UpdateNotify {
             new UpdateChecker(javaPlugin, 81321).getVersion(newVersion -> {
                 if (oldVersion.equalsIgnoreCase(newVersion)) {
                     if(sendNoUpdate) {
-                        worldGuardRegionProtect.messageToCommandSender(player.getClass(), String.format(
+                        worldGuardRegionProtectBukkitPlugin.messageToCommandSender(player, String.format(
                                 noUpdate,
                                 newVersion
                         ));
                     }
                 } else {
-                    worldGuardRegionProtect.messageToCommandSender(player.getClass(), String.format(
+                    worldGuardRegionProtectBukkitPlugin.messageToCommandSender(player, String.format(
                             hasUpdate,
                             oldVersion,
                             newVersion,
