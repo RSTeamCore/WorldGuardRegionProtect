@@ -10,7 +10,6 @@ public class UpdateNotify {
 
     private final JavaPlugin javaPlugin;
     private final WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin;
-
     static final String PLUGIN_URL_ADDRESS = "https://www.spigotmc.org/resources/81321";
 
     public UpdateNotify(

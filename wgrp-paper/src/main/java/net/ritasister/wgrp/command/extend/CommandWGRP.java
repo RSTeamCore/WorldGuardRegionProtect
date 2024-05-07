@@ -24,11 +24,8 @@ import java.util.UUID;
 public class CommandWGRP extends AbstractCommand {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpPlugin;
-
     private final Config config;
-
     private final Container messages;
-
 
     public CommandWGRP(@NotNull WorldGuardRegionProtectBukkitPlugin wgrpPlugin) {
         super(UtilCommandList.WGRP.getCommand(), wgrpPlugin);
