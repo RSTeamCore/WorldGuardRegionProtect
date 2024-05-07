@@ -16,6 +16,7 @@ libraries:
 permissions:
     wgrp.admin:
         description: All permissions of this plugin
+        default: false
         children:
             - wgrp.command.wgrpbase
             - wgrp.command.reload
@@ -30,15 +31,19 @@ permissions:
         description: Access for /wgrp command
     wgrp.command.addregion:
         description: Access for /wgrp addregion
+        default: false
     wgrp.command.removeregion:
         description: Access for /wgrp removeregion
+        default: false
     wgrp.command.reload:
         description: Access for /wgrp reload command
+        default: false
     wgrp.regionprotect:
         description: Bypass region protect
         default: false
     wgrp.notify.admin:
         description: See notifies for admins
+        default: false
 
 commands:
     wgregionprotect:
