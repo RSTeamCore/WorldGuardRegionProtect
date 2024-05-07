@@ -45,11 +45,9 @@ public class PlayerProtect implements Listener {
         this.messages = wgrpBukkitPlugin.getConfigLoader().getMessages();
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.LOWEST)
     private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
-        if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.PERMISSION_STAR) || e
-                .getPlayer()
-                .isOp()) {
+        if (!wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.ADMIN_RIGHT)) {
             wgrpBukkitPlugin.getUpdateNotify().checkUpdateNotify(
                     wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion(),
                     e.getPlayer(),
@@ -61,9 +59,8 @@ public class PlayerProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyChangeSign(@NotNull SignChangeEvent e) {
-        Player player = e.getPlayer();
-        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(player.getLocation(), config.getRegionProtectMap())
-                && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(e.getPlayer().getLocation(), config.getRegionProtectMap())
+                && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
             if (config.getSignType().contains(e.getBlock().getType().name().toLowerCase())) {
                 e.setCancelled(true);
             }
@@ -72,11 +69,10 @@ public class PlayerProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyFlowerPotManipulate(@NotNull PlayerFlowerPotManipulateEvent e) {
-        Player player = e.getPlayer();
         Location location = e.getFlowerpot().getLocation();
         if (config.isDenyTakeOrPlaceNaturalBlockOrItemIOFlowerPot()) {
             if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
                 if (config.getNaturalBlockOrItem().contains(e.getItem().getType().name().toLowerCase())) {
                     e.setCancelled(true);
                 }
@@ -86,11 +82,10 @@ public class PlayerProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyPlayerBucketEntity(@NotNull PlayerBucketEntityEvent e) {
-        Player player = e.getPlayer();
         Location location = e.getEntity().getLocation();
         if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
-            if (player.getInventory().getItemInMainHand().getType() == Material.WATER_BUCKET) {
+                && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+            if (e.getPlayer().getInventory().getItemInMainHand().getType() == Material.WATER_BUCKET) {
                 e.setCancelled(true);
             }
         }
@@ -127,10 +122,9 @@ public class PlayerProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyManipulateArmorStand(@NotNull PlayerArmorStandManipulateEvent e) {
-        Player player = e.getPlayer();
         Location clickLoc = e.getRightClicked().getLocation();
         if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(clickLoc, config.getRegionProtectMap())) {
-            if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+            if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
                 if (e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
                     e.setCancelled(true);
                 }
@@ -143,12 +137,12 @@ public class PlayerProtect implements Listener {
         if (!config.isDenyInteractWithItemFrame()) {
             return;
         }
-        Player player = e.getPlayer();
-        Location clickLoc = e.getRightClicked().getLocation();
-        EntityType clickType = e.getRightClicked().getType();
-        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(clickLoc, config.getRegionProtectMap())) {
-            if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
-                switch (clickType) {
+        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
+                e.getRightClicked().getLocation(),
+                config.getRegionProtectMap()
+        )) {
+            if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+                switch (e.getRightClicked().getType()) {
                     case ITEM_FRAME, GLOW_ITEM_FRAME -> e.setCancelled(true);
                 }
             }
@@ -157,67 +151,65 @@ public class PlayerProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     private void denyUseWEAndWGCommand(@NotNull PlayerCommandPreprocessEvent e) {
-        Player player = e.getPlayer();
-        String playerName = player.getName();
-        Location location = player.getLocation();
         String[] s = e.getMessage().toLowerCase().split(" ");
         String cmd = e.getMessage().split(" ")[0].toLowerCase();
-        if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+        if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
             if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
-                    .checkIntersection(player)
+                    .checkIntersection(e.getPlayer())
                     || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_C(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
-                    .checkCIntersection(player, s)
+                    .checkCIntersection(e.getPlayer(), s)
                     || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_P(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
-                    .checkPIntersection(player, s)
+                    .checkPIntersection(e.getPlayer(), s)
                     || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_S(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
-                    .checkSIntersection(player, s)
+                    .checkSIntersection(e.getPlayer(), s)
                     || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_U(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
-                    .checkUIntersection(player, s)) {
+                    .checkUIntersection(e.getPlayer(), s)) {
                 if (config.getRegionMessageProtectWe()) {
-                    messages.get("messages.ServerMsg.wgrpMsgWe").send(player);
+                    messages.get("messages.ServerMsg.wgrpMsgWe").send(e.getPlayer());
                     e.setCancelled(true);
                 }
                 wgrpBukkitPlugin.getRsApi().notify(
-                        player,
-                        playerName,
+                        e.getPlayer(),
+                        e.getPlayer().getName(),
                         cmd,
-                        wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(player)
+                        wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer())
                 );
                 wgrpBukkitPlugin.getRsApi().notify(
-                        playerName,
+                        e.getPlayer().getName(),
                         cmd,
-                        wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(player)
+                        wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer())
                 );
             }
             if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_CP(s[0])) {
                 e.setMessage(e.getMessage().replace("-o", ""));
-                if (!this.wgrpBukkitPlugin.getCheckIntersection().checkCPIntersection(player, s)) {
+                if (!this.wgrpBukkitPlugin.getCheckIntersection().checkCPIntersection(e.getPlayer(), s)) {
                     e.setCancelled(true);
                 }
                 wgrpBukkitPlugin.getRsApi().notify(
-                        player,
-                        playerName,
+                        e.getPlayer(),
+                        e.getPlayer().getName(),
                         cmd,
-                        wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(player)
+                        wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer())
                 );
                 wgrpBukkitPlugin.getRsApi().notify(
-                        playerName,
+                        e.getPlayer().getName(),
                         cmd,
-                        wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(player)
+                        wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer())
                 );
             }
             if (REGION_COMMANDS_NAME.contains(s[0]) && s.length > 2) {
-                for (String list : config.getRegionProtectMap().get(location.getWorld().getName())) {
+                for (String list : config.getRegionProtectMap().get(e.getPlayer().getLocation().getWorld().getName())) {
                     if (list.equalsIgnoreCase(s[2])) {
                         e.setCancelled(true);
                     }
                 }
-                for (String list : config.getRegionProtectOnlyBreakAllowMap().get(location
+                for (String list : config.getRegionProtectOnlyBreakAllowMap().get(
+                        e.getPlayer().getLocation()
                         .getWorld()
                         .getName())) {
                     if (list.equalsIgnoreCase(s[2])) {
@@ -226,12 +218,14 @@ public class PlayerProtect implements Listener {
                 }
                 if (s.length > 3 && REGION_EDIT_ARGS.contains(s[2].toLowerCase())
                         || s.length > 3 && REGION_EDIT_ARGS_FLAGS.contains(s[2].toLowerCase())) {
-                    for (String list : config.getRegionProtectMap().get(location.getWorld().getName())) {
+                    for (String list : config.getRegionProtectMap().get(
+                            e.getPlayer().getLocation().getWorld().getName())) {
                         if (list.equalsIgnoreCase(s[3])) {
                             e.setCancelled(true);
                         }
                     }
-                    for (String list : config.getRegionProtectOnlyBreakAllowMap().get(location
+                    for (String list : config.getRegionProtectOnlyBreakAllowMap().get(
+                            e.getPlayer().getLocation()
                             .getWorld()
                             .getName())) {
                         if (list.equalsIgnoreCase(s[3])) {
@@ -241,12 +235,14 @@ public class PlayerProtect implements Listener {
                 }
                 if (s.length > 4 && s[2].equalsIgnoreCase("-w")
                         || s.length > 4 && REGION_EDIT_ARGS.contains(s[2].toLowerCase())) {
-                    for (String list : config.getRegionProtectMap().get(location.getWorld().getName())) {
+                    for (String list : config.getRegionProtectMap().get(
+                            e.getPlayer().getLocation().getWorld().getName())) {
                         if (list.equalsIgnoreCase(s[4])) {
                             e.setCancelled(true);
                         }
                     }
-                    for (String list : config.getRegionProtectOnlyBreakAllowMap().get(location
+                    for (String list : config.getRegionProtectOnlyBreakAllowMap().get(
+                            e.getPlayer().getLocation()
                             .getWorld()
                             .getName())) {
                         if (list.equalsIgnoreCase(s[4])) {
@@ -257,12 +253,14 @@ public class PlayerProtect implements Listener {
                 if (s.length > 5 && s[3].equalsIgnoreCase("-w")
                         || s.length > 5 && REGION_EDIT_ARGS.contains(s[4].toLowerCase())
                         || s.length > 5 && REGION_EDIT_ARGS_FLAGS.contains(s[4].toLowerCase())) {
-                    for (String list : config.getRegionProtectMap().get(location.getWorld().getName())) {
+                    for (String list : config.getRegionProtectMap().get(
+                            e.getPlayer().getLocation().getWorld().getName())) {
                         if (list.equalsIgnoreCase(s[5])) {
                             e.setCancelled(true);
                         }
                     }
-                    for (String list : config.getRegionProtectOnlyBreakAllowMap().get(location
+                    for (String list : config.getRegionProtectOnlyBreakAllowMap().get(
+                            e.getPlayer().getLocation()
                             .getWorld()
                             .getName())) {
                         if (list.equalsIgnoreCase(s[5])) {
@@ -274,12 +272,13 @@ public class PlayerProtect implements Listener {
                         || s.length > 6 && s[4].equalsIgnoreCase("-h")
                         || s.length > 6 && REGION_EDIT_ARGS.contains(s[5].toLowerCase())
                         || s.length > 6 && REGION_EDIT_ARGS_FLAGS.contains(s[5].toLowerCase())) {
-                    for (String list : config.getRegionProtectMap().get(location.getWorld().getName())) {
+                    for (String list : config.getRegionProtectMap().get(e.getPlayer().getLocation().getWorld().getName())) {
                         if (list.equalsIgnoreCase(s[6])) {
                             e.setCancelled(true);
                         }
                     }
-                    for (String list : config.getRegionProtectOnlyBreakAllowMap().get(location
+                    for (String list : config.getRegionProtectOnlyBreakAllowMap().get(
+                            e.getPlayer().getLocation()
                             .getWorld()
                             .getName())) {
                         if (list.equalsIgnoreCase(s[6])) {

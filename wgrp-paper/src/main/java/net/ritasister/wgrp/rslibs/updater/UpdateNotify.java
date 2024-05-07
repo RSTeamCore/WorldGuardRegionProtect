@@ -11,6 +11,11 @@ public class UpdateNotify {
     private final JavaPlugin javaPlugin;
     private final WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin;
     static final String PLUGIN_URL_ADDRESS = "https://www.spigotmc.org/resources/81321";
+    static final String NO_UPDATE_AVAILABLE = """
+            <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
+            <gold>               Current version: <aqua>%s
+            <gold>             You are using the latest version.
+            <yellow>=======================================""";
 
     public UpdateNotify(
             final JavaPlugin javaPlugin,
@@ -22,11 +27,6 @@ public class UpdateNotify {
 
     public void checkUpdateNotify(String oldVersion) {
         Server server = Bukkit.getServer();
-        final String noUpdate = """
-               <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
-               <gold>               Current version: <aqua>%s
-               <gold>             You are using the latest version.
-               <yellow>=======================================""";
         final String hasUpdate = """
                 <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
                 <gold>  There is a new version update available.
@@ -38,7 +38,7 @@ public class UpdateNotify {
         new UpdateChecker(javaPlugin, 81321).getVersion(newVersion -> {
             if (oldVersion.equalsIgnoreCase(newVersion)) {
                 worldGuardRegionProtectBukkitPlugin.messageToCommandSender(server.getConsoleSender(), String.format(
-                        noUpdate, newVersion));
+                        NO_UPDATE_AVAILABLE, newVersion));
             } else {
                 worldGuardRegionProtectBukkitPlugin.messageToCommandSender(server.getConsoleSender(), String.format(
                         hasUpdate,
@@ -50,11 +50,6 @@ public class UpdateNotify {
     }
 
     public void checkUpdateNotify(String oldVersion, Player player, boolean checkUpdate, boolean sendNoUpdate) {
-        final String noUpdate = """
-               <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
-               <gold>               Current version: <aqua>%s
-               <gold>             You are using the latest version.
-               <yellow>=======================================""";
         final String hasUpdate = """
                 <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
                 <gold>  There is a new version update available.
@@ -67,7 +62,7 @@ public class UpdateNotify {
                 if (oldVersion.equalsIgnoreCase(newVersion)) {
                     if(sendNoUpdate) {
                         worldGuardRegionProtectBukkitPlugin.messageToCommandSender(player, String.format(
-                                noUpdate,
+                                NO_UPDATE_AVAILABLE,
                                 newVersion
                         ));
                     }
