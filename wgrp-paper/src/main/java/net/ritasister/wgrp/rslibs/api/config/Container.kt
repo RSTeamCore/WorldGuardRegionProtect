@@ -29,8 +29,8 @@ class Container(section: ConfigurationSection) {
         val data: MutableMap<String, ComponentWrapper> = HashMap<String, ComponentWrapper>()
         section.getKeys(false).forEach { key ->
             if (section.isConfigurationSection(key)) {
-                section.getConfigurationSection(key)
-                    ?.let { fromConfigurationToMap(it) }?.forEach { (keyMessage: String, message: ComponentWrapper) ->
+                section.getConfigurationSection(key)?.let { fromConfigurationToMap(it) }
+                    ?.forEach { (keyMessage: String, message: ComponentWrapper) ->
                         if (prefix != null) message.prefix = prefix!!
                         data.put("$key.$keyMessage", message)
                     }

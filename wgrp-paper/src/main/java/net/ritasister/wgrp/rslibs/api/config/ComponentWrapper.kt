@@ -32,27 +32,23 @@ class ComponentWrapper(private var value: MutableList<String>, private val conta
             miniMessage.deserialize(
                 it
             )
-        } as TextComponent).toBuilder()
-            .also { component ->
+        } as TextComponent).toBuilder().also { component ->
                 value.map {
                     miniMessage.deserialize(it, TagResolver.resolver(resolvers.asIterable()))
                 }.mapIndexed { index, it ->
                     component.append(it)
-                    if (value.size != 1 && value.lastIndex != index)
-                        component.append(Component.newline())
+                    if (value.size != 1 && value.lastIndex != index) component.append(Component.newline())
                 }
             }.build()
 
     fun toComponent(): TextComponent = (prefix?.let {
         miniMessage.deserialize(it)
-    } as TextComponent).toBuilder()
-        .also { component ->
+    } as TextComponent).toBuilder().also { component ->
             value.map {
                 miniMessage.deserialize(it)
             }.mapIndexed { index, it ->
                 component.append(it)
-                if (value.size != 1 && value.lastIndex != index)
-                    component.append(Component.newline())
+                if (value.size != 1 && value.lastIndex != index) component.append(Component.newline())
             }
         }.build()
 
