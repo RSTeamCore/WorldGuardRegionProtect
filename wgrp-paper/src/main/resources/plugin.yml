@@ -8,9 +8,9 @@ softdepend: [ PlaceholderAPI ]
 description: ${description}
 website: https://github.com/RSTeamCore/WorldGuardRegionProtect
 api-version: "1.20"
-load: POSTWORLD
+load: STARTUP
 libraries:
-    - net.kyori:adventure-platform-bukkit:4.3.0
+    - net.kyori:adventure-platform-bukkit:4.3.2
     - org.jetbrains.kotlin:kotlin-stdlib:1.8.10
 
 permissions:
