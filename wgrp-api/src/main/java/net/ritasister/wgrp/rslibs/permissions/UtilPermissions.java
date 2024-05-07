@@ -16,6 +16,7 @@ public enum UtilPermissions {
     COMMAND_REMOVE_REGION("wgrp.command.removeregion"),
 
     //Listeners permission
+    ADMIN_RIGHT("wgrp.admin"),
     REGION_PROTECT("wgrp.regionprotect"),
     REGION_PROTECT_NOTIFY_ADMIN("wgrp.notify.admin"),
     SPY_INSPECT_FOR_SUSPECT("wgrp.spy.suspect"),
