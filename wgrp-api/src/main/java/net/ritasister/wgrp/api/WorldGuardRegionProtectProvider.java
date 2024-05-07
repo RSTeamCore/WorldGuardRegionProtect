@@ -29,7 +29,7 @@ public final class WorldGuardRegionProtectProvider {
      *
      * <p>This method will never return null.</p>
      *
-     * @return an instance of the LuckPerms API
+     * @return an instance of the WorldGuardRegionProtect API
      * @throws IllegalStateException if the API is not loaded yet
      */
     public static @NonNull WorldGuardRegionProtect get() {
@@ -48,7 +48,7 @@ public final class WorldGuardRegionProtectProvider {
         private static final String MESSAGE = "The WorldGuardRegionProtect API isn't loaded yet!\n" +
                 "This could be because:\n" +
                 "  a) the WorldGuardRegionProtect plugin is not installed or it failed to enable\n" +
-                "  b) the plugin in the stacktrace does not declare a dependency on LuckPerms\n" +
+                "  b) the plugin in the stacktrace does not declare a dependency on WorldGuardRegionProtect\n" +
                 "  c) the plugin in the stacktrace is retrieving the API before the plugin 'enable' phase\n" +
                 "     (call the #get method in onEnable, not the constructor!)\n";
 
