@@ -5,6 +5,8 @@ import net.ritasister.wgrp.api.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
+import net.ritasister.wgrp.api.messaging.MessagingService;
+import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.loader.WGRPChecker;
 import net.ritasister.wgrp.loader.WGRPLoaderCommands;
 import net.ritasister.wgrp.loader.WGRPLoaderListeners;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtectPlugin {
+public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtectPlugin {
 
     private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
     /**
@@ -132,8 +134,25 @@ public abstract class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegi
     }
 
     @Override
+    public void messageToCommandSender(final Class<?> consoleSender, final String format) {
+
+    }
+
+    @Override
     public PluginLogger getPluginLogger() {
         return this.logger;
+    }
+
+    @Contract(pure = true)
+    @Override
+    public <Entity, EntityType> @Nullable EntityCheckType<Entity, EntityType> getEntityChecker() {
+        return null;
+    }
+
+    @Contract(pure = true)
+    @Override
+    public <Player> @Nullable MessagingService<Player> getMessagingService() {
+        return null;
     }
 
     public CheckIntersection<Player> getCheckIntersection() {
