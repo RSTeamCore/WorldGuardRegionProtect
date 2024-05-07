@@ -56,7 +56,7 @@ Please see [`LICENSE.txt`](https://github.com/RSTeamCore/WorldGuardRegionProtect
 <dependency>
     <groupId>net.ritasister</groupId>
     <artifactId>wgrp-api</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -68,7 +68,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.ritasister:wgrp-api:1.0.0")
+    implementation("net.ritasister:wgrp-api:1.0.1")
 }
 ```
 
