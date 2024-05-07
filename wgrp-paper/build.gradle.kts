@@ -97,10 +97,12 @@ tasks {
             include(dependency(":wgrp-common:"))
             //Shaded components for using bstats
             include(dependency("org.bstats:"))
+            include(dependency("net.kyori:"))
             include(dependency("org.jetbrains.kotlin:"))
         }
         //Shaded components for using bstats
         relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
+        relocate("net.kyori", "${project.group}.wgrp.rslibs.lib.kyori")
         relocate("org.jetbrains.kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
     }
 
