@@ -1,8 +1,11 @@
 package net.ritasister.wgrp.rslibs;
 
+import net.ritasister.wgrp.api.CheckIntersection;
+import org.bukkit.entity.Player;
+
 public interface UtilCommandWE {
 
-    void setUpWorldGuardVersionSeven();
+    CheckIntersection<Player> setUpWorldGuardVersionSeven();
     boolean cmdWE(String param);
     boolean cmdWE_C(String param);
     boolean cmdWE_P(String param);
