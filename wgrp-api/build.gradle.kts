@@ -10,8 +10,8 @@ tasks.jar {
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
+            artifactId = "wgrp-api"
             groupId = rootProject.group as String?
-            artifactId = "wgrp"
             version = rootProject.version as String?
 
             from(components["java"])
@@ -19,18 +19,15 @@ publishing {
     }
 
     repositories {
-        val mavenUrl: String? by project
-        val mavenSnapshotUrl: String? by project
+        val mavenUrl = "https://repo.codemc.io/repository/maven-releases/"
 
-        (if (rootProject.version.toString().endsWith("SNAPSHOT")) mavenSnapshotUrl else mavenUrl)?.let { url ->
-            maven(url) {
-                val mavenUsername: String? by project
-                val mavenPassword: String? by project
-                if (mavenUsername != null && mavenPassword != null) {
-                    credentials {
-                        username = mavenUsername
-                        password = mavenPassword
-                    }
+        maven(mavenUrl) {
+            val mavenUsername: String? by project
+            val mavenPassword: String? by project
+            if (mavenUsername != null && mavenPassword != null) {
+                credentials {
+                    username = mavenUsername
+                    password = mavenPassword
                 }
             }
         }
