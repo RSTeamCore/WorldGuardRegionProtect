@@ -1,10 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
-plugins {
-    id("org.ajoberstar.grgit") version "5.0.0-rc.3"
-}
-
 defaultTasks("clean", "build")
 
 subprojects {
