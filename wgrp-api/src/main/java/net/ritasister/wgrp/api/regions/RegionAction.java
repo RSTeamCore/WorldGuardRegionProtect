@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.api;
+package net.ritasister.wgrp.api.regions;
 
 /**
  * Check the type of action with regions.

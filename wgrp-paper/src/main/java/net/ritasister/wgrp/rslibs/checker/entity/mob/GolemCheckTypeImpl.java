@@ -1,13 +1,13 @@
 package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckType;
+import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Golem;
 import org.jetbrains.annotations.NotNull;
 
-public class GolemCheckTypeImpl implements EntityCheckType {
+public class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 

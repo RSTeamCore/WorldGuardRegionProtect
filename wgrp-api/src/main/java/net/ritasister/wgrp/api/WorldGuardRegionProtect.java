@@ -1,6 +1,11 @@
 package net.ritasister.wgrp.api;
 
 import net.ritasister.wgrp.api.logging.PluginLogger;
+import net.ritasister.wgrp.api.messaging.MessagingService;
+import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.api.regions.RegionAdapter;
+import org.jetbrains.annotations.ApiStatus;
+
 
 public interface WorldGuardRegionProtect {
 
@@ -15,26 +20,14 @@ public interface WorldGuardRegionProtect {
     void setWorldGuardRegionProtect(boolean worldGuardRegionProtect);
 
     /**
-     * @param <L>
-     * @param <P>
-     * @param <R>
-     * @return
-     */
-    <L, P, R> RegionAdapter<L, P, R> getRegionAdapter();
-
-    /**
-     * todo
      * @return getWorldGuardMetadata
      */
     WorldGuardRegionMetadata getWorldGuardMetadata();
 
     /**
      * get message helping
-     * @param consoleSender
-     * @param format
      */
-    default void messageToCommandSender(Class<?> consoleSender, String format) {
-    }
+    void messageToCommandSender(Class<?> consoleSender, String format);
 
     /**
      * Gets the plugin logger
@@ -42,4 +35,28 @@ public interface WorldGuardRegionProtect {
      * @return the logger
      */
     PluginLogger getPluginLogger();
+
+    /**
+     * Gain access to Api region checks, region name retrieval and general interaction with WGRP
+     */
+    @ApiStatus.Experimental
+    <Location, Player, Region> RegionAdapter<Location, Player, Region> getRegionAdapter();
+
+    /**
+     * Gain access to Api entity checks. Still in development
+     */
+    @ApiStatus.Experimental
+    <Entity, EntityType> EntityCheckType<Entity, EntityType> getEntityChecker();
+
+    /**
+     *
+     */
+    @ApiStatus.Experimental
+    <Player> MessagingService<Player> getMessagingService();
+
+    /**
+     *
+     */
+    @ApiStatus.Experimental
+    <Player> CheckIntersection<Player> getCheckIntersection();
 }

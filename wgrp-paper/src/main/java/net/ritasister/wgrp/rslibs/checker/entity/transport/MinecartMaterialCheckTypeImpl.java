@@ -1,13 +1,13 @@
 package net.ritasister.wgrp.rslibs.checker.entity.transport;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckType;
+import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Minecart;
 
-public class MinecartMaterialCheckTypeImpl implements EntityCheckType {
+public class MinecartMaterialCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 

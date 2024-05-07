@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtectPlugin {
+public abstract class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtectPlugin {
 
     private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
     /**
@@ -135,7 +135,6 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     public PluginLogger getPluginLogger() {
         return this.logger;
     }
-
 
     public CheckIntersection<Player> getCheckIntersection() {
         return checkIntersection;

@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.listener;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import net.ritasister.wgrp.api.RegionAction;
+import net.ritasister.wgrp.api.regions.RegionAction;
 import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;

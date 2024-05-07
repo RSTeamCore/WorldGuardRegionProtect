@@ -1,13 +1,13 @@
 package net.ritasister.wgrp.rslibs.checker.entity.misc;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckType;
+import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 
-public class ArmorStandCheckTypeImpl implements EntityCheckType {
+public class ArmorStandCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 

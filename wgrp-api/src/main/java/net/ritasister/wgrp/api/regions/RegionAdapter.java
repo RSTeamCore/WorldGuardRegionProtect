@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.api;
+package net.ritasister.wgrp.api.regions;
 
 import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
 

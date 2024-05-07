@@ -1,6 +1,7 @@
 package net.ritasister.wgrp.rslibs.checker.entity;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.rslibs.checker.entity.misc.ArmorStandCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.misc.ExplosiveCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.misc.HangingCheckTypeImpl;
@@ -14,6 +15,7 @@ import net.ritasister.wgrp.rslibs.checker.entity.mob.WaterMobCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.transport.BoatMaterialCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.transport.MinecartMaterialCheckTypeImpl;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ import java.util.List;
 
 public class EntityCheckTypeProvider {
 
-    private final List<EntityCheckType> entityCheckTypes;
+    private final List<EntityCheckType<Entity, EntityType>> entityCheckTypes;
 
     public EntityCheckTypeProvider(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpPlugin) {
 
@@ -46,12 +48,11 @@ public class EntityCheckTypeProvider {
         }};
     }
 
-    public EntityCheckType getCheck(Entity entity) {
+    public EntityCheckType<Entity, EntityType> getCheck(Entity entity) {
         return this.entityCheckTypes
                 .stream()
                 .filter((check) -> Arrays.asList(check.getEntityType()).contains(entity.getType()))
                 .findFirst()
                 .orElseThrow();
     }
-
 }

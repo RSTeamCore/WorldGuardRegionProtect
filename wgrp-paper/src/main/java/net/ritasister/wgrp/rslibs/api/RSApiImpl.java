@@ -1,15 +1,17 @@
 package net.ritasister.wgrp.rslibs.api;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import net.ritasister.wgrp.api.RSApi;
-import net.ritasister.wgrp.api.RegionAction;
+import net.ritasister.wgrp.api.messaging.MessagingService;
+import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.api.permissions.PermissionsCheck;
+import net.ritasister.wgrp.api.regions.RegionAction;
 import net.ritasister.wgrp.rslibs.api.config.Container;
-import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckType;
 import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
+public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Player, Entity> {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
@@ -34,10 +36,12 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
         this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpBukkitPlugin);
     }
 
+    @Override
     public boolean isPlayerListenerPermission(@NotNull Player player, @NotNull UtilPermissions perm) {
         return !player.hasPermission(perm.getPermissionName());
     }
 
+    @Override
     public boolean isEntityListenerPermission(@NotNull Entity entity, @NotNull UtilPermissions perm) {
         return !entity.hasPermission(perm.getPermissionName());
     }
@@ -77,14 +81,7 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
         return false;
     }
 
-    /**
-     * Send notification to admin.
-     *
-     * @param player        player object.
-     * @param playerName    player name.
-     * @param senderCommand name command if player attempt to use in a region.
-     * @param regionName    the region name, if player attempts to use command in a region.
-     */
+    @Override
     public void notify(Player player, String playerName, String senderCommand, String regionName) {
         if (regionName == null) {
             return;
@@ -111,13 +108,7 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
         }
     }
 
-    /**
-     * Send notify to admin.
-     *
-     * @param playerName    player name.
-     * @param senderCommand name command if Player attempt to use in a region.
-     * @param regionName    region name, if Player attempts to use command in a region.
-     */
+    @Override
     public void notify(String playerName, String senderCommand, String regionName) {
         if (regionName == null) {
             return;
@@ -156,7 +147,8 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
             double x,
             double y,
             double z,
-            String world) {
+            String world
+    ) {
         if (this.isPlayerListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
                 && wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandNotifyAdminEnable()) {
             messages.get("messages.Notify.sendAdminInfoIfActionInRegion")
@@ -176,11 +168,12 @@ public class RSApiImpl implements RSApi<Entity, Player, Cancellable> {
                 wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectMap()
         )
                 && wgrpBukkitPlugin.getRsApi().isEntityListenerPermission(entity, UtilPermissions.REGION_PROTECT)) {
-            EntityCheckType entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
+            EntityCheckType<Entity, EntityType> entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
             if(entityCheckType.check(checkEntity)) {
                 cancellable.setCancelled(true);
             }
         }
     }
+
 
 }

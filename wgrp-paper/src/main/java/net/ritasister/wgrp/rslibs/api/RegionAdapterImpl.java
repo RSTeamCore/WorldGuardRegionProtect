@@ -13,7 +13,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import net.ritasister.wgrp.api.RegionAdapter;
+import net.ritasister.wgrp.api.regions.RegionAdapter;
 import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
