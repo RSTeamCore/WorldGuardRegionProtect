@@ -1,10 +1,10 @@
 package net.ritasister.wgrp.api;
 
 import net.ritasister.wgrp.api.logging.PluginLogger;
+import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.api.regions.RegionAdapter;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -29,12 +29,12 @@ public interface WorldGuardRegionProtect {
     PluginLogger getPluginLogger();
 
     /**
-     * Gets the {@link RegionAdapter} methods for interacting with regions using the
+     * Gets the {@link RegionAdapterManager} methods for interacting with regions using the
      * WorldGuard plugin with its own API.
      * Gain access to Api region checks, region name retrieval and general interaction with WGRP
      */
     @ApiStatus.Experimental
-    <L, P, R> RegionAdapter<L, P, R> getRegionAdapter();
+    <L, P, R> RegionAdapterManager<L, P, R> getRegionAdapter();
 
     /**
      * Gets the {@link EntityCheckType}, which represents the server platform the

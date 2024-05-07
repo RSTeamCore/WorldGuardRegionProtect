@@ -2,14 +2,13 @@ plugins {
     id("java-library")
     alias(libs.plugins.shadow)
     alias(libs.plugins.runPaper)
-    //id("io.papermc.paperweight.userdev") version "1.7.0"
     kotlin("jvm")
 }
 
 repositories {
     maven {
-        name = "PaperMC"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
+        name = "SpigotMC"
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
     }
     maven {
         name = "EngineHub"
@@ -35,9 +34,8 @@ dependencies {
         exclude(module = "adventure-nbt")
     }
 
-    //Paper
-    //paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    //Spigot
+    compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
 
     //Plugins
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9")
@@ -71,7 +69,7 @@ tasks {
         filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
     }
     shadowJar {
-        archiveFileName.set("${rootProject.name}-Paper${project.version}.${archiveExtension.getOrElse("jar")}")
+        archiveFileName.set("${rootProject.name}-Bukkit-${project.version}.${archiveExtension.getOrElse("jar")}")
     }
     build {
         dependsOn(shadowJar)
@@ -102,14 +100,6 @@ tasks {
         //Shaded components for using bstats
         relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
         relocate("org.jetbrains.kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
-    }
-}
-
-tasks {
-    runServer {
-        minecraftVersion("1.20.4")
-        pluginJars(project(":wgrp-paper").file("build/libs/WorldGuardRegionProtect-Paper-${rootProject.version}.jar"))
-        jvmArgs("-Xms4G", "-Xmx4G")
     }
 }
 

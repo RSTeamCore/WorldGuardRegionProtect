@@ -13,7 +13,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import net.ritasister.wgrp.api.regions.RegionAdapter;
+import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 
-public class RegionAdapterImpl implements RegionAdapter<Location, Player, Region> {
+public class RegionAdapterManagerPaper implements RegionAdapterManager<Location, Player, Region> {
 
     /**
      * Getting regions by location using the WG API.

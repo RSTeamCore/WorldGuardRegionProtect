@@ -5,16 +5,8 @@ plugins {
 
 repositories {
     maven {
-        name = "PaperMC"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
-    }
-    maven {
         name = "CodeMC"
         url = uri("https://repo.codemc.org/repository/maven-public/")
-    }
-    maven {
-        name = "EngineHub"
-        url = uri("https://maven.enginehub.org/repo/")
     }
     maven {
         name = "Sonatype-oss"
@@ -41,9 +33,6 @@ dependencies {
 
     api("com.google.code.gson:gson:2.10")
     api("com.google.code.gson:gson:2.10")
-
-    //Plugins
-    compileOnly(dependencyNotation = "com.sk89q.worldguard:worldguard-bukkit:7.0.9")
 
     //Libs
     compileOnly("org.jetbrains:annotations:24.1.0")

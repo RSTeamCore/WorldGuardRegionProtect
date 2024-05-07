@@ -15,15 +15,12 @@ import net.ritasister.wgrp.loader.plugin.LoadPluginManager;
 import net.ritasister.wgrp.loader.plugin.LoadWorldGuard;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
-import net.ritasister.wgrp.rslibs.api.RegionAdapterImpl;
+import net.ritasister.wgrp.rslibs.api.RegionAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.util.ServerType;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -47,15 +44,15 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     //private final BukkitAudiences audiences;
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
-    private RegionAdapterImpl regionAdapter;
+    private RegionAdapterManagerPaper regionAdapter;
 
     private List<UUID> spyLog;
     private UpdateNotify updateNotify;
     private UtilCommandWE playerUtilWE;
 
-    private EntityCheckType<Entity, EntityType> entityCheckType;
-    private CheckIntersection<Player> checkIntersection;
-    private MessagingService<Player> messagingService;
+    private EntityCheckType entityCheckType;
+    private CheckIntersection checkIntersection;
+    private MessagingService messagingService;
 
     public WorldGuardRegionProtectBukkitPlugin(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
         super(wgrpBukkitBase.getDescription().getVersion(), ServerType.PAPER);
@@ -94,7 +91,7 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
         LoadPluginManager loadPlaceholderAPI = new LoadPlaceholderAPI(this);
         loadPlaceholderAPI.loadPlugin();
 
-        this.regionAdapter = new RegionAdapterImpl();
+        this.regionAdapter = new RegionAdapterManagerPaper();
 
         playerUtilWE = new UtilWEImpl(this);
         playerUtilWE.setUpWorldGuardVersionSeven();
@@ -124,7 +121,7 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     }
 
     @Override
-    public RegionAdapterImpl getRegionAdapter() {
+    public RegionAdapterManagerPaper getRegionAdapter() {
         return regionAdapter;
     }
 
@@ -145,16 +142,16 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     }
 
     @Override
-    public @Nullable EntityCheckType<Entity, EntityType> getEntityChecker() {
+    public @Nullable EntityCheckType getEntityChecker() {
         return entityCheckType;
     }
 
     @Override
-    public MessagingService<Player> getMessagingService() {
+    public MessagingService getMessagingService() {
         return messagingService;
     }
 
-    public CheckIntersection<Player> getCheckIntersection() {
+    public CheckIntersection getCheckIntersection() {
         return checkIntersection;
     }
 

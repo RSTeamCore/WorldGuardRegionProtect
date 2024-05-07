@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.api.regions;
+package net.ritasister.wgrp.api.manager.regions;
 
 import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
 
@@ -12,7 +12,7 @@ import java.util.Map;
  * @param <P> this is an object as player
  * @param <R> this check where region is selected by //pos1 and //pos2
  */
-public interface RegionAdapter<L, P, R> {
+public interface RegionAdapterManager<L, P, R> {
 
     /**
      * Check access in standing region by a Player used region name from HashMap and list of regions.
