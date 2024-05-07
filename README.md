@@ -32,7 +32,7 @@ Feel free to join our Discord community server:
 ## ❗IMPORTANT
 
 - [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RSTeamCore/WorldGuardRegionProtect/blob/dev/SECURITY.md)
-- Versions after **0.9.6** for **1.20.5+** require **JAVA 21+**!
+- Versions after **1.0.0** require **JAVA 21+**!
 
 ## 📜 License
 
@@ -56,7 +56,7 @@ Please see [`LICENSE.txt`](https://github.com/RSTeamCore/WorldGuardRegionProtect
 <dependency>
     <groupId>net.ritasister</groupId>
     <artifactId>wgrp-api</artifactId>
-    <version>0.9.6</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
@@ -68,7 +68,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.ritasister:wgrp-api:0.9.6")
+    implementation("net.ritasister:wgrp-api:1.0.0")
 }
 ```
 
