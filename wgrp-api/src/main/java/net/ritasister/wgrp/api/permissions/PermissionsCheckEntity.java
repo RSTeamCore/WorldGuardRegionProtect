@@ -13,8 +13,8 @@ public interface PermissionsCheckEntity<E> {
      * @param entity who send this command.
      * @param perm   permission to check.
      * @return can an entity use this listener.
+     * @since 0.3.4
      */
     boolean isEntityListenerPermission(E entity, UtilPermissions perm);
-
 
 }

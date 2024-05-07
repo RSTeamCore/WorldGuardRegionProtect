@@ -1,11 +1,11 @@
 package net.ritasister.wgrp;
 
 import net.ritasister.wgrp.api.CheckIntersection;
-import net.ritasister.wgrp.api.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.messaging.MessagingService;
+import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.loader.WGRPChecker;
 import net.ritasister.wgrp.loader.WGRPLoaderCommands;
@@ -126,11 +126,6 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     @Override
     public RegionAdapterImpl getRegionAdapter() {
         return regionAdapter;
-    }
-
-    @Override
-    public boolean isWorldGuardRegionProtect() {
-        return false;
     }
 
     @Contract(pure = true)

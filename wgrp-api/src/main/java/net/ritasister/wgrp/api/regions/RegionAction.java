@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.api.regions;
 
 /**
- * Check the type of action with regions.
+ * Getting different types of interactions with the region
  */
 public enum RegionAction {
 

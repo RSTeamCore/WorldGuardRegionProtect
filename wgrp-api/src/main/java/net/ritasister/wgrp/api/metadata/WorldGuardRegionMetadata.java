@@ -1,7 +1,8 @@
-package net.ritasister.wgrp.api;
+package net.ritasister.wgrp.api.metadata;
 
 /**
- * Provides information about the WorldGuardRegionProtect plugin.
+ * <p>Provides information about the WorldGuardRegionProtect plugin.
+ * </p>
  */
 public interface WorldGuardRegionMetadata {
 

@@ -20,6 +20,7 @@ public interface RegionAdapter<L, P, R> {
      * @param location Return location of object.
      * @param regions  Maps of regions from WorldGuard.
      * @return location of object(example: block, entity, Player etc.)
+     * @since 0.3.4
      */
     boolean checkStandingRegion(L location, Map<String, List<String>> regions);
 
@@ -28,6 +29,7 @@ public interface RegionAdapter<L, P, R> {
      *
      * @param location Location of object.
      * @return location of object(example: block, entity, Player etc.)
+     * @since 0.3.4
      */
     boolean checkStandingRegion(L location);
 
@@ -36,6 +38,7 @@ public interface RegionAdapter<L, P, R> {
      *
      * @param location Location of object.
      * @return the name of the region.
+     * @since 0.7.1
      */
     String getProtectRegionName(L location);
 
@@ -43,6 +46,7 @@ public interface RegionAdapter<L, P, R> {
      * Getting the name of the region where the player trying to use WorldEdit.
      *
      * @param player Location of object.
+     * @since 0.7.6
      */
     String getProtectRegionNameBySelection(final P player);
 
@@ -51,6 +55,7 @@ public interface RegionAdapter<L, P, R> {
      *
      * @param selection get selection in the region by a Player.
      * @return location of Object.
+     * @since 0.7.6
      */
     String getProtectRegionNameByIntersection(final R selection) throws NoSelectionException;
 

@@ -1,8 +1,8 @@
 package net.ritasister.wgrp;
 
-import net.ritasister.wgrp.api.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import net.ritasister.wgrp.api.WorldGuardRegionProtectProvider;
+import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.util.ServerType;
 import net.ritasister.wgrp.util.Version;
 
@@ -20,16 +20,6 @@ public abstract class WorldGuardRegionProtectPlugin implements WorldGuardRegionP
         this.serverType = serverType;
         this.prefix = "§8[§eWorldGuardRegionProtect" + serverType + "§8] ";
         WorldGuardRegionProtectProvider.setWorldGuardRegionProtect(this);
-    }
-
-    @Override
-    public boolean isWorldGuardRegionProtect() {
-        return true;
-    }
-
-    @Override
-    public void setWorldGuardRegionProtect(final boolean worldGuardRegionProtect) {
-        //setWorldGuardRegionProtect(worldGuardRegionProtect);
     }
 
 }

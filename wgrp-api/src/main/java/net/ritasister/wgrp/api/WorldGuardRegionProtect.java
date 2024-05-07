@@ -2,60 +2,58 @@ package net.ritasister.wgrp.api;
 
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.messaging.MessagingService;
+import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.regions.RegionAdapter;
 import org.jetbrains.annotations.ApiStatus;
 
-
+/**
+ * <p>For ease of use, and for platforms without a Service Manager, an instance
+ * can also be obtained from the static singleton accessor in
+ * {@link WorldGuardRegionProtect}.</p>
+ */
 public interface WorldGuardRegionProtect {
 
     /**
-     * @return true if WorldGuardRegionProtect is currently enabled
-     */
-    boolean isWorldGuardRegionProtect();
-
-    /**
-     * @param worldGuardRegionProtect true to enable, false to disable maintenance mode
-     */
-    void setWorldGuardRegionProtect(boolean worldGuardRegionProtect);
-
-    /**
-     * @return getWorldGuardMetadata
+     * Gets the {@link WorldGuardRegionMetadata} version of API or plugin.
      */
     WorldGuardRegionMetadata getWorldGuardMetadata();
 
-    /**
-     * get message helping
-     */
     void messageToCommandSender(Class<?> consoleSender, String format);
 
     /**
-     * Gets the plugin logger
+     * Gets the {@link PluginLogger} own of plugin loggers.
      *
-     * @return the logger
+     * @return the logger server where plugin in running.
      */
     PluginLogger getPluginLogger();
 
     /**
+     * Gets the {@link RegionAdapter} methods for interacting with regions using the
+     * WorldGuard plugin with its own API.
      * Gain access to Api region checks, region name retrieval and general interaction with WGRP
      */
     @ApiStatus.Experimental
     <L, P, R> RegionAdapter<L, P, R> getRegionAdapter();
 
     /**
-     * Gain access to Api entity checks. Still in development
+     * Gets the {@link EntityCheckType}, which represents the server platform the
+     * plugin is running on.
+     *
+     * @return the entityChecker
      */
     @ApiStatus.Experimental
     <E, T> EntityCheckType<E, T> getEntityChecker();
 
     /**
-     *
+     * Gets the {@link MessagingService}, various chat messages to the player or in the console.
      */
     @ApiStatus.Experimental
     <P> MessagingService<P> getMessagingService();
 
     /**
-     *
+     * Gets the {@link CheckIntersection}, checks methods how player is interacted
+     * with WE, FAWE or analog plugins.
      */
     @ApiStatus.Experimental
     <P> CheckIntersection<P> getCheckIntersection();

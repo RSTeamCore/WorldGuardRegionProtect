@@ -13,6 +13,7 @@ public interface PermissionsCheck<P, E> extends PermissionsCheckEntity<E> {
      * @param player who send this command.
      * @param perm   permission to check.
      * @return can a player use this listener.
+     * @since 0.3.4
      */
     boolean isPlayerListenerPermission(P player, UtilPermissions perm);
 

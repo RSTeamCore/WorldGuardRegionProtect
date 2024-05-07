@@ -4,7 +4,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Provider to get the WorldGuardRegionProtect api instance.
+ * The WorldGuardRegionProtect API.
+ *
+ * <p>Provider to get the WorldGuardRegionProtect api instance.</p>
  */
 public final class WorldGuardRegionProtectProvider {
 

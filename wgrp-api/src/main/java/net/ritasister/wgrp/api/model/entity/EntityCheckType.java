@@ -1,8 +1,11 @@
 package net.ritasister.wgrp.api.model.entity;
 
 /**
- * @param <E>
- * @param <T>
+ * Validate entities by using a provider to validate them.
+ *
+ * @param <E> the entity class type
+ * @param <T> the entityType class
+ * @since 0.8.0
  */
 public interface EntityCheckType<E, T> {
 
