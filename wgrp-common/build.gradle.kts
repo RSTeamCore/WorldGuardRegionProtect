@@ -34,6 +34,7 @@ dependencies {
     api("com.google.code.gson:gson:2.10")
     api("com.google.code.gson:gson:2.10")
 
+
     //Libs
     compileOnly("org.jetbrains:annotations:24.1.0")
     implementation(dependencyNotation = "ninja.leaping.configurate:configurate-yaml:3.7.1")

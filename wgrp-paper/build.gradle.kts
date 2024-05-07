@@ -103,12 +103,12 @@ tasks {
         relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
         relocate("org.jetbrains.kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
     }
-}
 
+}
 tasks {
     runServer {
         minecraftVersion("1.20.4")
-        pluginJars(project(":wgrp-paper").file("build/libs/WorldGuardRegionProtect-Paper-${rootProject.version}.jar"))
+        //pluginJars(project(":wgrp-paper").file("build/libs/WorldGuardRegionProtect-Paper-${rootProject.version}.jar"))
         jvmArgs("-Xms4G", "-Xmx4G")
     }
 }
