@@ -72,7 +72,7 @@ public class CommandWGRP extends AbstractCommand {
             tabArgs = {"<region>", "[world]"},
             permission = UtilPermissions.COMMAND_ADD_REGION,
             description = "add a region to the config to protect.")
-    public void wgrpAddRegion(@NotNull CommandSender sender, String @NotNull [] args) {
+    public void wgrpAddRegion(@NotNull CommandSender sender, String[] args) {
         if(args.length == 1 || args.length == 2) {
             Map<String, List<String>> rgMap = config.getRegionProtectMap();
             if(sender instanceof Player) {
@@ -123,7 +123,7 @@ public class CommandWGRP extends AbstractCommand {
             tabArgs = {"<region>", "[world]"},
             permission = UtilPermissions.COMMAND_REMOVE_REGION,
             description = "remove the region from the config to remove the protection.")
-    public void wgrpRemoveRegion(@NotNull CommandSender sender, String @NotNull [] args) {
+    public void wgrpRemoveRegion(@NotNull CommandSender sender, String[] args) {
         if(args.length == 1 || args.length == 2) {
             Map<String, List<String>> rgMap = config.getRegionProtectMap();
             if(sender instanceof Player) {
@@ -170,7 +170,7 @@ public class CommandWGRP extends AbstractCommand {
                         .toComponentList(false));
             }
         } for (Component message : messages) {
-            sender.sendMessage(String.valueOf(message));
+            sender.sendMessage(message);
         }
     }
 
