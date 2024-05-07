@@ -27,8 +27,8 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
 
     private final Container messages;
 
-    public final static String SUPPORTED_VERSION_RANGE = "1.20.2 - 1.20.6";
-    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6");
+    public final static String SUPPORTED_VERSION_RANGE = "1.20.2 - 1.20.4";
+    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.20.2", "1.20.3", "1.20.4");
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;

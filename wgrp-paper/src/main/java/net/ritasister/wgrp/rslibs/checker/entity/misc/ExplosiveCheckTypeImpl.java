@@ -25,9 +25,9 @@ public class ExplosiveCheckTypeImpl implements EntityCheckType<Entity, EntityTyp
     @Override
     public EntityType[] getEntityType() {
         return new EntityType[]{
-                EntityType.TNT,
-                EntityType.END_CRYSTAL,
-                EntityType.TNT_MINECART,
+                EntityType.PRIMED_TNT,
+                EntityType.ENDER_CRYSTAL,
+                EntityType.MINECART_TNT,
                 EntityType.CREEPER,
                 EntityType.WITHER_SKULL,
                 EntityType.FIREBALL

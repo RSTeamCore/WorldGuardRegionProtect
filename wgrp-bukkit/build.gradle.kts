@@ -1,7 +1,6 @@
 plugins {
     id("java-library")
     alias(libs.plugins.shadow)
-    alias(libs.plugins.runPaper)
     kotlin("jvm")
 }
 

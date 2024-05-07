@@ -25,7 +25,7 @@ public class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
     @Override
     public EntityType[] getEntityType() {
         return new EntityType[]{
-                EntityType.SNOW_GOLEM,
+                EntityType.SNOWMAN,
                 EntityType.IRON_GOLEM
         };
     }
