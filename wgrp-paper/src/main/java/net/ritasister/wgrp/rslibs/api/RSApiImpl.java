@@ -163,16 +163,14 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     }
 
     public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
-        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
-                checkEntity.getLocation(),
-                wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectMap()
-        )) {
-            switch (entity) {
-                case Player player when wgrpBukkitPlugin.getRsApi().isEntityListenerPermission(
-                        entity,
-                        UtilPermissions.REGION_PROTECT
-                ) -> entityCheck(cancellable, checkEntity);
-                case null, default -> entityCheck(cancellable, checkEntity);
+        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(checkEntity.getLocation(),
+                wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectMap())) {
+            if(entity instanceof Player player) {
+                if(wgrpBukkitPlugin.getRsApi().isEntityListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    entityCheck(cancellable, checkEntity);
+                }
+            } else {
+                entityCheck(cancellable, checkEntity);
             }
         }
     }
