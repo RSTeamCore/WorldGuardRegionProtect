@@ -97,7 +97,7 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
         this.regionAdapter = new RegionAdapterManagerPaper();
 
         playerUtilWE = new UtilWEImpl(this);
-        playerUtilWE.setUpWorldGuardVersionSeven();
+        checkIntersection = playerUtilWE.setUpWorldGuardVersionSeven();
 
         LoadHandlers<WorldGuardRegionProtectBukkitPlugin> loaderCommands = new WGRPLoaderCommands();
         loaderCommands.loadHandler(this);
