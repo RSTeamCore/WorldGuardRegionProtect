@@ -33,7 +33,7 @@ Feel free to join our Discord community server:
 
 - [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RSTeamCore/WorldGuardRegionProtect/blob/dev/SECURITY.md)
 - Versions after **1.0.0** require **JAVA 21+**! 
-- For **1.0.17** can still use **JAVA 17**
+- If you need plugin support **Java 17+**, so you need just download **1.0.1.17** special version
 
 ## 📜 License
 
