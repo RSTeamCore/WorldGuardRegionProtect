@@ -32,7 +32,8 @@ Feel free to join our Discord community server:
 ## ❗IMPORTANT
 
 - [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RSTeamCore/WorldGuardRegionProtect/blob/dev/SECURITY.md)
-- Versions after **1.0.0** require **JAVA 21+**!
+- Versions after **1.0.0** require **JAVA 21+**! 
+- For **1.0.17** can still use **JAVA 17**
 
 ## 📜 License
 

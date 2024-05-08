@@ -19,7 +19,7 @@ subprojects {
     apply (plugin = "java")
     apply (plugin = "maven-publish")
 
-    val javaVersion = JavaVersion.VERSION_21
+    val javaVersion = JavaVersion.VERSION_17
 
     tasks {
         // Configure reobfJar to run when invoking the build task
