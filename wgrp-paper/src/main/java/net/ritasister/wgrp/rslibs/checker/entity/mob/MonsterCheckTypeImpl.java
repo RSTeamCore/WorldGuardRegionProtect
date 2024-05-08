@@ -29,7 +29,6 @@ public class MonsterCheckTypeImpl implements EntityCheckType<Entity, EntityType>
                 EntityType.GUARDIAN,
                 EntityType.CREEPER,
                 EntityType.VEX,
-                EntityType.HOGLIN,
                 EntityType.CAVE_SPIDER,
                 EntityType.EVOKER,
                 EntityType.ELDER_GUARDIAN,

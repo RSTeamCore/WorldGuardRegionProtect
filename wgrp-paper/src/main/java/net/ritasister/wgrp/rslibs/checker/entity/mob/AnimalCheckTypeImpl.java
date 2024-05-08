@@ -57,7 +57,8 @@ public class AnimalCheckTypeImpl implements EntityCheckType<Entity, EntityType> 
                 EntityType.WANDERING_TRADER,
                 EntityType.MULE,
                 EntityType.TADPOLE,
-                EntityType.CAMEL
+                EntityType.CAMEL,
+                EntityType.HOGLIN
         };
     }
 
