@@ -3,11 +3,12 @@
 ## Maintained and unmaintained of versions
 | List of Versions WorldGuardRegionProtect | Maintained?        |
 |------------------------------------------|--------------------|
+| **1.0.3.21 [1.20.5-1.20.6]** / java 21   | :white_check_mark: |
 | **1.0.2.17 [1.20.2-1.20.4]** / java 17   | :white_check_mark: |
-| **1.0.17 [1.20.2-1.20.4]** / java 17     | :white_check_mark: |
-| **1.0.1 [1.20.2-1.20.4]** / java 21      | :white_check_mark: |
-| **1.0.0 [1.20.2-1.20.4]** / java 21      | :white_check_mark: |
-| **0.9.5 [1.20-1.20.4]** / java 17        | :white_check_mark: |
+| **1.0.17 [1.20.2-1.20.4]** / java 17     | :x:                |
+| **1.0.1 [1.20.2-1.20.4]** / java 21      | :x:                |
+| **1.0.0 [1.20.2-1.20.4]** / java 21      | :x:                |
+| **0.9.5 [1.20-1.20.4]** / java 17        | :x:                |
 | **0.9.4 [1.20-1.20.1]** / java 17        | :x:                |
 | **0.9.0 [1.20-1.20.1]** / java 17        | :x:                |
 | **0.8.0 [1.20-1.20.1]** / java 17        | :x:                |
