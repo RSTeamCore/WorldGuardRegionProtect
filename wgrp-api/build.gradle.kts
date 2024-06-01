@@ -41,7 +41,10 @@ dependencies {
     compileOnly("org.slf4j:slf4j-api:2.0.12")
 }
 
+tasks.withType<Javadoc> {
+    options.encoding = Charsets.UTF_8.name()
+}
+
 java {
-    withJavadocJar()
     withSourcesJar()
 }

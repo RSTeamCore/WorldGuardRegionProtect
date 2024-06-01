@@ -1,6 +1,11 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
+plugins {
+    id("java-library")
+    id("net.kyori.indra.checkstyle") version "3.1.3"
+}
+
 defaultTasks("clean", "build")
 
 logger.lifecycle("""
@@ -15,30 +20,40 @@ logger.lifecycle("""
 *******************************************
 """)
 
+if (!File("$rootDir/.git").exists()) {
+    logger.lifecycle("""
+    **************************************************************************************
+    You need to fork and clone this repository! Don't download a .zip file.
+    If you need assistance, consult the GitHub docs: https://docs.github.com/get-started/quickstart/fork-a-repo
+    **************************************************************************************
+    """.trimIndent()
+    ).also { kotlin.system.exitProcess(1) }
+}
+
+allprojects {
+    //checkstyle
+    apply(plugin = "java-library")
+    apply(plugin = "maven-publish")
+
+    java.toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
 subprojects {
-    apply (plugin = "java")
-    apply (plugin = "maven-publish")
+    tasks.withType<JavaCompile> {
+        options.encoding = Charsets.UTF_8.name()
+        options.release.set(21)
+    }
 
-    val javaVersion = JavaVersion.VERSION_17
-
-    tasks {
-        // Configure reobfJar to run when invoking the build task
-        withType<JavaCompile> {
-            options.encoding = "UTF-8"
-            sourceCompatibility = javaVersion.toString()
-            targetCompatibility = javaVersion.toString()
+    tasks.withType<Test> {
+        testLogging {
+            events = mutableSetOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
+            exceptionFormat = TestExceptionFormat.FULL
+            showExceptions = true
+            showCauses = true
+            showStackTraces = true
         }
     }
 
-    tasks {
-        withType<Test> {
-            testLogging {
-                events = mutableSetOf(TestLogEvent.PASSED, TestLogEvent.FAILED, TestLogEvent.SKIPPED)
-                exceptionFormat = TestExceptionFormat.FULL
-                showExceptions = true
-                showCauses = true
-                showStackTraces = true
-            }
-        }
-    }
 }
