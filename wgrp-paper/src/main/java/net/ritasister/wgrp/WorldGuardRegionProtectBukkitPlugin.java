@@ -28,7 +28,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -36,14 +35,7 @@ import java.util.UUID;
 public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtectPlugin {
 
     private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
-    /**
-     * The plugin logger
-     */
     private final PluginLogger logger;
-    /**
-     * The time when the plugin was enabled
-     */
-    private Instant startTime;
     //private final BukkitAudiences audiences;
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
