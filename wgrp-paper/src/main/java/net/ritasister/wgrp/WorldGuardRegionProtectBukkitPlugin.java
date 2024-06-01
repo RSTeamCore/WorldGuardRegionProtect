@@ -58,7 +58,7 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     private MessagingService messagingService;
 
     public WorldGuardRegionProtectBukkitPlugin(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
-        super(wgrpBukkitBase.getDescription().getVersion(), ServerType.PAPER);
+        super(wgrpBukkitBase.getPluginMeta().getVersion(), ServerType.PAPER);
         this.wgrpBukkitBase = wgrpBukkitBase;
         this.logger = new JavaPluginLogger(wgrpBukkitBase.getLogger());
         load();

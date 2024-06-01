@@ -27,8 +27,8 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
 
     private final Container messages;
 
-    public final static String SUPPORTED_VERSION_RANGE = "1.20.2 - 1.20.4";
-    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.20.2", "1.20.3", "1.20.4");
+    public final static String SUPPORTED_VERSION_RANGE = "1.20.5 - 1.20.6";
+    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.20.5", "1.20.6");
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
@@ -165,13 +165,21 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
         if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(checkEntity.getLocation(),
                 wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectMap())) {
+            switch (entity) {
+                case Player player when wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(
+                        player,
+                        UtilPermissions.REGION_PROTECT
+                ) -> entityCheck(cancellable, checkEntity);
+                case null, default -> entityCheck(cancellable, checkEntity);
+            }
+            /* java 17 method
             if(entity instanceof Player player) {
                 if(wgrpBukkitPlugin.getRsApi().isEntityListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     entityCheck(cancellable, checkEntity);
                 }
             } else {
                 entityCheck(cancellable, checkEntity);
-            }
+            }*/
         }
     }
 
