@@ -18,6 +18,7 @@ public abstract class WorldGuardRegionProtectPlugin implements WorldGuardRegionP
     private Version newestVersion;
     private boolean debug;
 
+    @SuppressWarnings("all")
     protected WorldGuardRegionProtectPlugin(final String version, final ServerType serverType) {
         this.version = new Version(version);
         this.serverType = serverType;
