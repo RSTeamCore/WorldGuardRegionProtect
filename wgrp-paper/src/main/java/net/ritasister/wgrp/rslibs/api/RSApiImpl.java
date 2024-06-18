@@ -34,8 +34,8 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     private final Container messages;
     private final ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck;
 
-    public final static String SUPPORTED_VERSION_RANGE = "1.20.6 - 1.21";
-    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.20.6", "1.21");
+    public final static String SUPPORTED_VERSION_RANGE = "1.20.5 - 1.21";
+    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.20.5", "1.20.6", "1.21");
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin, final ParamsVersionCheck<ConfigType, YamlConfiguration> check) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
@@ -73,7 +73,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
                 wgrpBukkitPlugin.getPluginLogger().info(
                         "No compatibility issue was found, but this plugin version does not claim to support your server package (" + minecraftVersion + ").");
             }
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
             if (SUPPORTED_VERSION.contains(minecraftVersion)) {
                 wgrpBukkitPlugin.getPluginLogger().severe(
                         "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
