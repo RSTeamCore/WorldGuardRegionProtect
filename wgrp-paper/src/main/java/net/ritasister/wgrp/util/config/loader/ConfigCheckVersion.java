@@ -23,7 +23,7 @@ public class ConfigCheckVersion implements CheckVersion<WorldGuardRegionProtectB
 
     @Override
     public void checkVersion(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        wgrpBukkitPlugin.getPluginLogger().info("Start checking for new versions for config file...");
+        wgrpBukkitPlugin.getPluginLogger().info("Started checking the new version of the config file...");
         File currentConfigFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "config.yml");
         InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(
                 wgrpBukkitPlugin.getWgrpBukkitBase().getResource("config.yml")));
