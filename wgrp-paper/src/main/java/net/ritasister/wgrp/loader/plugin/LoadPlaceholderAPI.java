@@ -5,7 +5,10 @@ import net.ritasister.wgrp.rslibs.papi.PlaceholderAPIExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-public class LoadPlaceholderAPI implements LoadPluginManager {
+/**
+ * Utility class for load PlaceholderAPI by WorldGuardRegionProtect.
+ */
+public class LoadPlaceholderAPI {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
@@ -13,7 +16,9 @@ public class LoadPlaceholderAPI implements LoadPluginManager {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
     }
 
-    @Override
+    /**
+     * Load PlaceholderAPI.
+     */
     public void loadPlugin() {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI");
         if (plugin != null && plugin.isEnabled()) {
@@ -27,6 +32,9 @@ public class LoadPlaceholderAPI implements LoadPluginManager {
         }
     }
 
+    /**
+     * Check if PlaceholderAPI enabled.
+     */
     public boolean isPlaceholderAPIEnabled(boolean placeholderAPIEnabled) {
         return placeholderAPIEnabled;
     }

@@ -3,8 +3,11 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     id("java-library")
+    id("net.kyori.indra") version "3.1.3"
     id("net.kyori.indra.checkstyle") version "3.1.3"
 }
+
+//val checkstyleVersion = "9.3"
 
 defaultTasks("clean", "build")
 
@@ -31,19 +34,23 @@ if (!File("$rootDir/.git").exists()) {
 }
 
 allprojects {
-    apply(plugin = "java-library")
-    apply(plugin = "maven-publish")
-    apply(plugin = "net.kyori.indra.checkstyle")
+    plugins.apply("java-library")
+    plugins.apply("net.kyori.indra")
+    plugins.apply("net.kyori.indra.checkstyle")
+    plugins.apply("maven-publish")
 
-    java.toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+    indra {
+        //checkstyle(checkstyleVersion)
+
+        javaVersions {
+            target(21)
+        }
     }
 }
 
 subprojects {
     tasks.withType<JavaCompile> {
         options.encoding = Charsets.UTF_8.name()
-        options.release.set(21)
     }
 
     tasks.withType<Test> {

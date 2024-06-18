@@ -4,9 +4,11 @@ import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
 import net.ritasister.wgrp.util.ServerType;
 import org.bukkit.Bukkit;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Utility class for checking all instances of plugin.
+ */
 public class WGRPChecker {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
@@ -14,11 +16,13 @@ public class WGRPChecker {
     private boolean isPaper = false;
     private boolean isFolia = false;
 
-    @Contract(pure = true)
     public WGRPChecker(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
     }
 
+    /**
+     * Check all variables while the plugin is startup.
+     */
     public void checkStartUpVersionServer() {
         if (!wgrpBukkitPlugin.getRsApi().isVersionSupported()) {
             wgrpBukkitPlugin.getPluginLogger().severe(String.format("""
@@ -30,6 +34,9 @@ public class WGRPChecker {
         }
     }
 
+    /**
+     * Detect what is a trusted or an untrusted platform used.
+     */
     public void detectPlatformRun() {
         if (isPaper) {
             try {
@@ -68,6 +75,9 @@ public class WGRPChecker {
                 """, ServerType.UNKNOWN));
     }
 
+    /**
+     * Notify about build this plugin. This is an alpha, beta or pre-release.
+     */
     public void notifyAboutBuild() {
         if (wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion().contains("alpha")
                 || wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion().contains("beta")

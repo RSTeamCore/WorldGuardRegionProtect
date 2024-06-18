@@ -13,7 +13,6 @@ import net.ritasister.wgrp.loader.WGRPChecker;
 import net.ritasister.wgrp.loader.WGRPLoaderCommands;
 import net.ritasister.wgrp.loader.WGRPLoaderListeners;
 import net.ritasister.wgrp.loader.plugin.LoadPlaceholderAPI;
-import net.ritasister.wgrp.loader.plugin.LoadPluginManager;
 import net.ritasister.wgrp.loader.plugin.LoadWorldGuard;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
@@ -80,10 +79,10 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     }
 
     private void loadAnotherClassAndMethods() {
-        LoadPluginManager loadWorldGuard = new LoadWorldGuard(this);
+        LoadWorldGuard loadWorldGuard = new LoadWorldGuard(this);
         loadWorldGuard.loadPlugin();
 
-        LoadPluginManager loadPlaceholderAPI = new LoadPlaceholderAPI(this);
+        LoadPlaceholderAPI loadPlaceholderAPI = new LoadPlaceholderAPI(this);
         loadPlaceholderAPI.loadPlugin();
 
         this.regionAdapter = new RegionAdapterManagerPaper();

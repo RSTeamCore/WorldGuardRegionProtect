@@ -1,8 +1,6 @@
 package net.ritasister.wgrp.util.config.loader;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import net.ritasister.wgrp.api.config.InitConfig;
-import net.ritasister.wgrp.api.config.InitMessages;
 import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;

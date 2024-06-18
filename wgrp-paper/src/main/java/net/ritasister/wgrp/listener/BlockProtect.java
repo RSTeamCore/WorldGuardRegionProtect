@@ -17,6 +17,9 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Listens of all events where player can interact with blocks.
+ */
 public class BlockProtect implements Listener {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
@@ -32,13 +35,12 @@ public class BlockProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyBreak(@NotNull BlockBreakEvent e) {
-        Player player = e.getPlayer();
-        Location location = e.getBlock().getLocation();
+        final Player player = e.getPlayer();
+        final Location location = e.getBlock().getLocation();
         if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectAllowMap())
                 || wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
                 location,
-                config.getRegionProtectOnlyBreakAllowMap()
-        )) {
+                config.getRegionProtectOnlyBreakAllowMap())) {
             e.setCancelled(false);
         } else if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                 && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
@@ -53,8 +55,8 @@ public class BlockProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyPlace(@NotNull BlockPlaceEvent e) {
-        Player player = e.getPlayer();
-        Location location = e.getBlock().getLocation();
+        final Player player = e.getPlayer();
+        final Location location = e.getBlock().getLocation();
         if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectAllowMap())) {
             e.setCancelled(false);
         } else if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
@@ -79,8 +81,7 @@ public class BlockProtect implements Listener {
                     block.getX(),
                     block.getY(),
                     block.getZ(),
-                    block.getWorld().getName()
-            );
+                    block.getWorld().getName());
         }
     }
 
@@ -92,9 +93,9 @@ public class BlockProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyExplodeRespawnAnchor(@NotNull BlockExplodeEvent e) {
-        Block block = e.getBlock();
-        Location location = block.getLocation();
-        Material blockType = block.getType();
+        final Block block = e.getBlock();
+        final Location location = block.getLocation();
+        final Material blockType = block.getType();
         if (blockType == Material.RESPAWN_ANCHOR && wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
                 location,
                 config.getRegionProtectMap()

@@ -7,11 +7,14 @@ import net.ritasister.wgrp.handler.ListenerHandler;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Utility class for a load and registered all listeners in ListenerHandler.
+ */
 public class WGRPLoaderListeners implements LoadHandlers<WorldGuardRegionProtectBukkitPlugin> {
 
     @Override
     public void loadHandler(@NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        Handler<PluginManager> registerListeners = new ListenerHandler(wgrpBukkitPlugin);
+        final Handler<PluginManager> registerListeners = new ListenerHandler(wgrpBukkitPlugin);
         registerListeners.handle(wgrpBukkitPlugin.getWgrpBukkitBase().getServer().getPluginManager());
     }
 

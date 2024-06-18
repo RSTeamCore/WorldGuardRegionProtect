@@ -9,6 +9,9 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Listens of all events for protect hanging, item frame, etc.
+ */
 public class HangingProtect implements Listener {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;

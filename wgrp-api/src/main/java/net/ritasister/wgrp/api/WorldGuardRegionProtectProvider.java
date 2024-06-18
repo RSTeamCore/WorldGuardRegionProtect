@@ -17,6 +17,10 @@ public final class WorldGuardRegionProtectProvider {
         throw new UnsupportedOperationException("This class cannot be instantiated.");
     }
 
+    /**
+     * Set instance of this api.
+     * @param worldGuardRegionProtect of this plugin.
+     */
     @ApiStatus.Internal
     public static void setWorldGuardRegionProtect(final WorldGuardRegionProtect worldGuardRegionProtect) {
         if (WorldGuardRegionProtectProvider.instance != null) {
@@ -35,7 +39,7 @@ public final class WorldGuardRegionProtectProvider {
      * @throws IllegalStateException if the API is not loaded yet
      */
     public static @NonNull WorldGuardRegionProtect get() {
-        WorldGuardRegionProtect instance = WorldGuardRegionProtectProvider.instance;
+        final WorldGuardRegionProtect instance = WorldGuardRegionProtectProvider.instance;
         if (instance == null) {
             throw new NotLoadedException();
         }

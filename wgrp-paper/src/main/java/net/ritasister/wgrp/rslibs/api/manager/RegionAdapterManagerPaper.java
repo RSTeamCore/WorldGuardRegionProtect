@@ -24,6 +24,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Utility class for use regions from WorldGuard Api.
+ */
 public class RegionAdapterManagerPaper implements RegionAdapterManager<Location, Player, Region> {
 
     @Override
@@ -34,7 +37,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         for (String regionName : regions.get(location.getWorld().getName())) {
             if (applicableRegionSet.getRegions().stream().anyMatch(region ->
-                            regionName.equalsIgnoreCase(region.getId()))) {
+                    regionName.equalsIgnoreCase(region.getId()))) {
                 return true;
             }
         }
@@ -44,7 +47,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     @Override
     public boolean checkStandingRegion(@NotNull Location location) {
         final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
-        return (applicableRegionSet.size() != 0);
+        return applicableRegionSet.size() != 0;
     }
 
     @Override
@@ -58,7 +61,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
 
     @Override
     public String getProtectRegionNameBySelection(final Player player) throws NoSelectionException {
-        LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
+        final LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
         Region selection = null;
         try {
             selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));

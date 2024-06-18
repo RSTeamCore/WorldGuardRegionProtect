@@ -15,6 +15,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+/**
+ * Listens of all events where player can interact with tools, lectern, stonecutter or else.
+ */
 public class ToolsProtect implements Listener {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
@@ -28,8 +31,8 @@ public class ToolsProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyPlayerTakeLecternBook(@NotNull PlayerTakeLecternBookEvent e) {
-        Player player = e.getPlayer();
-        Location location = e.getLectern().getLocation();
+        final Player player = e.getPlayer();
+        final Location location = e.getLectern().getLocation();
         if (config.isDenyTakeLecternBook()) {
             if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                     && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
@@ -40,8 +43,8 @@ public class ToolsProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyStonecutterRecipeSelect(@NotNull PlayerStonecutterRecipeSelectEvent e) {
-        Player player = e.getPlayer();
-        Location location = e.getStonecutterInventory().getLocation();
+        final Player player = e.getPlayer();
+        final Location location = e.getStonecutterInventory().getLocation();
         if (config.isDenyStonecutterRecipeSelect()) {
             if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
                     Objects.requireNonNull(location),
@@ -55,8 +58,8 @@ public class ToolsProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyLoomPatternSelect(@NotNull PlayerLoomPatternSelectEvent e) {
-        Player player = e.getPlayer();
-        Location location = e.getLoomInventory().getLocation();
+        final Player player = e.getPlayer();
+        final Location location = e.getLoomInventory().getLocation();
         if (config.isDenyLoomPatternSelect()) {
             if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
                     Objects.requireNonNull(location),

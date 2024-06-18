@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.api.config;
+package net.ritasister.wgrp.util.config.loader;
 
 public interface InitConfig<T> {
 

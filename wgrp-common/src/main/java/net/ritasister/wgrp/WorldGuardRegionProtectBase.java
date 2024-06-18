@@ -2,6 +2,9 @@ package net.ritasister.wgrp;
 
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 
+/**
+ * Only need for get api of this plugin.
+ */
 @FunctionalInterface
 public interface WorldGuardRegionProtectBase {
 
@@ -10,7 +13,6 @@ public interface WorldGuardRegionProtectBase {
      *
      * @return {@link WorldGuardRegionProtect} instance
      */
-
     WorldGuardRegionProtect getApi();
 
 }

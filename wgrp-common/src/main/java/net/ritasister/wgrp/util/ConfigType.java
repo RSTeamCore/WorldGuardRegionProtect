@@ -1,5 +1,8 @@
 package net.ritasister.wgrp.util;
 
+/**
+ * Get to only need a type of file like config or lang file
+ */
 public enum ConfigType {
 
     LANG("lang"),

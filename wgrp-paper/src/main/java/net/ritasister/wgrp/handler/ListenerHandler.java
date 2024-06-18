@@ -15,6 +15,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * Handler for register listeners.
+ */
 public class ListenerHandler implements Handler<PluginManager> {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
@@ -25,7 +28,7 @@ public class ListenerHandler implements Handler<PluginManager> {
 
     @Override
     public void handle(final @NotNull PluginManager pluginManager) {
-        List<Listener> allListeners = List.of(
+        final List<Listener> allListeners = List.of(
                 new BlockProtect(wgrpBukkitPlugin),
                 new EntityProtect(wgrpBukkitPlugin),
                 new HangingProtect(wgrpBukkitPlugin),
@@ -34,7 +37,7 @@ public class ListenerHandler implements Handler<PluginManager> {
                 new ToolsProtect(wgrpBukkitPlugin),
                 new VehicleProtect(wgrpBukkitPlugin));
 
-        allListeners.forEach((listener) -> pluginManager.registerEvents(listener, wgrpBukkitPlugin.getWgrpBukkitBase()));
+        allListeners.forEach(listener -> pluginManager.registerEvents(listener, wgrpBukkitPlugin.getWgrpBukkitBase()));
 
         wgrpBukkitPlugin.getPluginLogger().info("All listeners registered successfully!");
     }
