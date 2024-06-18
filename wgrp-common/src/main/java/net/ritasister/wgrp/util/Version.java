@@ -3,6 +3,9 @@ package net.ritasister.wgrp.util;
 import com.google.common.base.Preconditions;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Utility class for a version of plugin.
+ */
 public final class Version implements Comparable<Version> {
     private final int[] parts;
     private final String version;
@@ -10,7 +13,7 @@ public final class Version implements Comparable<Version> {
 
     /**
      * Creates a new version object to be compared.
-     * The version format are numbers separated by '.', possibly followed by a '-' to include an extra tag after it.
+     * The version format is numbers separated by '.', possibly followed by a '-' to include an extra tag after it.
      *
      * @param version string representation of the version
      * @throws IllegalArgumentException if the given version string is null or empty
@@ -74,6 +77,7 @@ public final class Version implements Comparable<Version> {
         if (!(o instanceof Version other)) {
             return false;
         }
-        return version.equals(other.version);
+
+        return other.version.equals(version) && other.version == version;
     }
 }
