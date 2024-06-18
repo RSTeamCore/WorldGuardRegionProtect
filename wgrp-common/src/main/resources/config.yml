@@ -7,6 +7,7 @@ wgRegionProtect:
     # Do not touch!
     # -------------------------------------------------------------
     version: '1.0'
+
     # -------------------------------------------------------------
     # Language of this plugins.
     # Loaded languages uploaded in "lang" folder.
