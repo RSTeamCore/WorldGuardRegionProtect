@@ -17,10 +17,7 @@ public class UpdateNotify {
             <gold>             You are using the latest version.
             <yellow>=======================================""";
 
-    public UpdateNotify(
-            final JavaPlugin javaPlugin,
-            final WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin
-    ) {
+    public UpdateNotify(final JavaPlugin javaPlugin, final WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin) {
         this.javaPlugin = javaPlugin;
         this.worldGuardRegionProtectBukkitPlugin = worldGuardRegionProtectBukkitPlugin;
     }

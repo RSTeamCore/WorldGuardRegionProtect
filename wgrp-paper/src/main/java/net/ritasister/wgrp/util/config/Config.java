@@ -27,6 +27,9 @@ public class Config {
     private Map<String, List<String>> regionProtectOnlyBreakAllow;
 
     @CanRecover
+    private String configVersion;
+
+    @CanRecover
     private String lang;
 
     @CanRecover
@@ -156,6 +159,7 @@ public class Config {
         wgrpBase.reloadConfig();
 
         try {
+            configVersion = wgrpBase.getConfig().getString("wgRegionProtect.version");
             lang = wgrpBase.getConfig().getString("wgRegionProtect.lang");
             updateChecker = wgrpBase.getConfig().getBoolean("wgRegionProtect.updateChecker.enable");
             sendNoUpdate = wgrpBase.getConfig().getBoolean("wgRegionProtect.updateChecker.sendNoUpdate");
@@ -432,6 +436,10 @@ public class Config {
             }
         }
         saveConfig();
+    }
+
+    public String getConfigVersion() {
+        return configVersion;
     }
 
     public String getLang() {

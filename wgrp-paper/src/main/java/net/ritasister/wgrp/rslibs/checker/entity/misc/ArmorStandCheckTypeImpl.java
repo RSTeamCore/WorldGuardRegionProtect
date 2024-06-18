@@ -15,7 +15,6 @@ public class ArmorStandCheckTypeImpl implements EntityCheckType<Entity, EntityTy
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
     }
 
-
     @Override
     public boolean check(final @NotNull Entity entity) {
         ArmorStand armorStand = (ArmorStand) entity;

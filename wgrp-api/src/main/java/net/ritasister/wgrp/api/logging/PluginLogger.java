@@ -8,14 +8,14 @@ package net.ritasister.wgrp.api.logging;
  */
 public interface PluginLogger {
 
-    void info(String s);
+    void info(String message);
 
-    void warn(String s);
+    void warn(String message);
 
-    void warn(String s, Throwable t);
+    void warn(String message, Throwable throwable);
 
-    void severe(String s);
+    void severe(String message);
 
-    void severe(String s, Throwable t);
+    void severe(String message, Throwable throwable);
 
 }

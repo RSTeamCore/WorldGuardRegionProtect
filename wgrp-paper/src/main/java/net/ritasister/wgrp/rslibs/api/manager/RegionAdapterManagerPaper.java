@@ -24,20 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
 public class RegionAdapterManagerPaper implements RegionAdapterManager<Location, Player, Region> {
-
-    /**
-     * Getting regions by location using the WG API.
-     *
-     * @param location Location of Object.
-     * @return location of any Object.
-     */
-    private @NotNull ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
-        return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer()
-                        .get(BukkitAdapter.adapt(location.getWorld())))
-                .getApplicableRegions(BukkitAdapter.asBlockVector(location));
-    }
 
     @Override
     public boolean checkStandingRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions) {
@@ -70,17 +57,15 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     @Override
-    public String getProtectRegionNameBySelection(final Player player) {
+    public String getProtectRegionNameBySelection(final Player player) throws NoSelectionException {
         LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
         Region selection = null;
         try {
             selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
-        } catch (IncompleteRegionException ignored) {
+        } catch (IncompleteRegionException exception) {
+            exception.fillInStackTrace();
         }
-        try {
-            return getProtectRegionNameByIntersection(selection);
-        } catch (NoSelectionException ignored) {}
-        return null;
+        return getProtectRegionNameByIntersection(selection);
     }
 
     @Override
@@ -99,6 +84,12 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
                     .collect(Collectors.joining());
         }
         throw new NoSelectionException();
+    }
+
+    private @NotNull ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
+        return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer()
+                        .get(BukkitAdapter.adapt(location.getWorld())))
+                .getApplicableRegions(BukkitAdapter.asBlockVector(location));
     }
 
 }

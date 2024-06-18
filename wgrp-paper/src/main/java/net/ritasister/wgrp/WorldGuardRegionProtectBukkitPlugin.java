@@ -59,7 +59,7 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     public void load() {
         this.spyLog = new ArrayList<>();
         configLoader = new ConfigLoader();
-        configLoader.initConfig(this);
+        configLoader.initConfig(this.getWgrpBukkitBase());
 
         rsApi = new RSApiImpl(this);
 

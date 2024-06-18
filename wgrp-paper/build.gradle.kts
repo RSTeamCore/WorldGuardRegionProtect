@@ -36,11 +36,10 @@ dependencies {
     }
 
     //Paper
-    //compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
-    paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
 
     //Plugins
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.1.0-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
 
     implementation("org.bstats:bstats-bukkit:3.0.2")
@@ -86,6 +85,5 @@ tasks.named("assemble").configure {
 
 tasks.named<RunServer>("runServer") {
     minecraftVersion("1.20.6")
-    //pluginJars(*project(":wgrp-paper").getTasksByName("shadowJar", false).map { (it as Jar).archiveFile }.toTypedArray())
-        jvmArgs("-Xms4G", "-Xmx4G")
+    jvmArgs("-Xms4G", "-Xmx4G")
 }

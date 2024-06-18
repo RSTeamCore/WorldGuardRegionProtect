@@ -27,7 +27,7 @@ public class AnimalCheckTypeImpl implements EntityCheckType<Entity, EntityType> 
         return new EntityType[]{
                 //Misc
                 EntityType.VILLAGER,
-                //Axolotls
+                //Water creature
                 EntityType.AXOLOTL,
                 //Land creature
                 EntityType.DONKEY,
