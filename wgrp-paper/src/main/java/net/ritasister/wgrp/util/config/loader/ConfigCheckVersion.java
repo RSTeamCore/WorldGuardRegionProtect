@@ -28,9 +28,8 @@ public class ConfigCheckVersion implements CheckVersion {
         YamlConfiguration newVersion = YamlConfiguration.loadConfiguration(reader);
         if(currentConfigFile.exists() && currentConfigVersion.getString("wgRegionProtect.version") == null) {
             wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentConfigFile, ConfigType.CONFIG, null);
-            wgrpBukkitPlugin.getPluginLogger().info("String version is null...recreating file config...");
-        }
-        if (currentConfigFile.exists() &&
+            wgrpBukkitPlugin.getPluginLogger().info("String version in config file is null...recreating file config...");
+        } else if (currentConfigFile.exists() &&
                 !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion)
                 .equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG, newVersion))) {
             wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentConfigFile, ConfigType.CONFIG, null);

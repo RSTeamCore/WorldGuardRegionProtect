@@ -30,13 +30,12 @@ public class MessageCheckVersion implements CheckVersion {
         YamlConfiguration newLangVersion = YamlConfiguration.loadConfiguration(reader);
         if(currentLangFile.exists() && currentLangVersion.getString("langTitle.version") == null) {
             wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentLangFile, ConfigType.LANG, lang);
-            wgrpBukkitPlugin.getPluginLogger().info("String version is null...recreating file config...");
-        }
-        if (currentLangFile.exists() &&
+            wgrpBukkitPlugin.getPluginLogger().info("String version in lang file is null...recreating lang file...");
+        } else if (currentLangFile.exists() &&
                 !paramsVersionCheck.getCurrentVersion(ConfigType.LANG, currentLangVersion)
                 .equals(paramsVersionCheck.getNewVersion(ConfigType.LANG, newLangVersion))) {
-            wgrpBukkitPlugin.getPluginLogger().info("Found new version of lang file, updating this now...");
             wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentLangFile, ConfigType.LANG, lang);
+            wgrpBukkitPlugin.getPluginLogger().info("Found new version of lang file, updating this now...");
         } else {
             wgrpBukkitPlugin.getPluginLogger().info("No update is required for the lang file");
         }
