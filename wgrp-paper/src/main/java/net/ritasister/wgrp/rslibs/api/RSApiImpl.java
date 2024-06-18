@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Player, Entity> {
@@ -26,8 +27,8 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
 
     private final Container messages;
 
-    public final static String SUPPORTED_VERSION_RANGE = "1.21";
-    public final static List<String> SUPPORTED_VERSION = List.of("1.21");
+    public final static String SUPPORTED_VERSION_RANGE = "1.20.6 - 1.21";
+    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.20.6", "1.21");
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;

@@ -36,7 +36,6 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
 
     private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
     private final PluginLogger logger;
-    //private final BukkitAudiences audiences;
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
     private RegionAdapterManagerPaper regionAdapter;
@@ -59,13 +58,13 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     public void load() {
         this.spyLog = new ArrayList<>();
         configLoader = new ConfigLoader();
-        configLoader.initConfig(this.getWgrpBukkitBase());
+        configLoader.initConfig(this);
 
         rsApi = new RSApiImpl(this);
 
         WGRPChecker wgrpChecker = new WGRPChecker(this);
         wgrpChecker.checkStartUpVersionServer();
-        wgrpChecker.checkIfRunningOnPaper();
+        wgrpChecker.detectPlatformRun();
 
         loadMetrics();
         loadAnotherClassAndMethods();
@@ -77,6 +76,7 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     }
 
     public void unLoad() {
+        configLoader.getConfig().saveConfig();
     }
 
     private void loadAnotherClassAndMethods() {

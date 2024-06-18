@@ -1,16 +1,16 @@
 package net.ritasister.wgrp.util.config.loader;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.util.config.Config;
 import org.jetbrains.annotations.NotNull;
 
-public interface CheckVersion {
+public interface CheckVersion<T> {
 
-    default void checkVersion(final WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
+    default void checkVersion(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
 
     }
 
-    default void checkVersion(final WorldGuardRegionProtectBukkitBase wgrpBukkitBase, final @NotNull Config config) {
+    default void checkVersion(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin, final @NotNull Config config) {
 
     }
 

@@ -3,7 +3,8 @@ package net.ritasister.wgrp.util;
 public enum ServerType {
 
     PAPER("Paper"),
-    SPIGOT("Spigot");
+    FOLIA("Folia"),
+    UNKNOWN("Unknown");
 
     private final String name;
 
