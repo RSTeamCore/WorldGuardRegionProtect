@@ -23,7 +23,7 @@ public class ConfigLoader implements InitConfig<WorldGuardRegionProtectBukkitPlu
 
         //Check a config version
         CheckVersion configCheckVersion = new ConfigCheckVersion(new ParamsVersionCheckImpl());
-        configCheckVersion.checkVersion(wgrpBukkitPlugin, this.config);
+        configCheckVersion.checkVersion(wgrpBukkitPlugin);
 
         //Check lang a version of file
         CheckVersion messageCheckVersion = new MessageCheckVersion(new ParamsVersionCheckImpl());
