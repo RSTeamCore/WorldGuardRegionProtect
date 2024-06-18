@@ -8,6 +8,7 @@ softdepend: [ PlaceholderAPI ]
 description: ${description}
 website: https://github.com/RSTeamCore/WorldGuardRegionProtect
 api-version: "1.20"
+folia-supported: true
 load: STARTUP
 libraries:
     - net.kyori:adventure-platform-bukkit:4.3.2

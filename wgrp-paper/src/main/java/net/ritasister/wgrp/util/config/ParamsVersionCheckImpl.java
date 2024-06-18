@@ -1,30 +1,41 @@
 package net.ritasister.wgrp.util.config;
 
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
+import net.ritasister.wgrp.util.ConfigType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
-public class ParamsVersionCheckImpl implements ParamsVersionCheck<YamlConfiguration> {
+public class ParamsVersionCheckImpl implements ParamsVersionCheck<ConfigType, YamlConfiguration> {
 
-    public @NotNull String getSimpleDateFormat() {
+    public String getSimpleDateFormat() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd-hh.mm.ss");
         return simpleDateFormat.format(date);
     }
 
-    public @NotNull String getCurrentVersion(final @NotNull YamlConfiguration currentYaml) {
-        return Objects.requireNonNull(currentYaml.getString("langTitle.version"))
-                .replaceAll("\"", "")
-                .replaceAll("'", "");
+    @Override
+    public String getCurrentVersion(ConfigType configType, final @NotNull YamlConfiguration currentYaml) {
+        return getStringVersion(configType, currentYaml);
     }
 
-    public @NotNull String getNewVersion(final @NotNull YamlConfiguration yamlConfiguration) {
-        return Objects.requireNonNull(yamlConfiguration.getString("langTitle.version"))
-                .replaceAll("\"", "")
-                .replaceAll("'", "");
+    @Override
+    public String getNewVersion(ConfigType configType, final @NotNull YamlConfiguration newYaml) {
+        return getStringVersion(configType, newYaml);
+    }
+
+    private @NotNull String getStringVersion(final ConfigType configType, @NotNull final YamlConfiguration yamlConfiguration) {
+        if(ConfigType.CONFIG.equals(configType) && yamlConfiguration.getString("wgRegionProtect.version") != null) {
+            return yamlConfiguration.getString("wgRegionProtect.version")
+                    .replaceAll("\"", "")
+                    .replaceAll("'", "");
+        } else if(ConfigType.LANG.equals(configType) && yamlConfiguration.getString("langTitle.version") != null) {
+            return yamlConfiguration.getString("langTitle.version")
+                    .replaceAll("\"", "")
+                    .replaceAll("'", "");
+        }
+        throw new NullPointerException("String version in file cannot be null!");
     }
 }

@@ -1,6 +1,7 @@
 package net.ritasister.wgrp.rslibs.api;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.permissions.PermissionsCheck;
@@ -8,32 +9,39 @@ import net.ritasister.wgrp.api.regions.RegionAction;
 import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.util.ConfigType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 
 public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Player, Entity> {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
-
     private final EntityCheckTypeProvider entityCheckTypeProvider;
-
     private final Container messages;
+    private final ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck;
 
     public final static String SUPPORTED_VERSION_RANGE = "1.20.6 - 1.21";
     public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.20.6", "1.21");
 
-    public RSApiImpl(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+    public RSApiImpl(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin, final ParamsVersionCheck<ConfigType, YamlConfiguration> check) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
         this.messages = wgrpBukkitPlugin.getConfigLoader().getMessages();
         this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpBukkitPlugin);
+        paramsVersionCheck = check;
     }
 
     @Override
@@ -174,6 +182,31 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         EntityCheckType<Entity, EntityType> entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
         if (entityCheckType.check(checkEntity)) {
             cancellable.setCancelled(true);
+        }
+    }
+
+    public void updateFile(@NotNull final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin,
+                           final @NotNull File currentFile, ConfigType configType, String lang) {
+        if(ConfigType.CONFIG.equals(configType)) {
+            Path renameOldFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(),
+                    "config-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
+            try {
+                Files.move(currentFile.toPath(), renameOldFile, StandardCopyOption.REPLACE_EXISTING);
+                wgrpBukkitPlugin.getPluginLogger().info("Old config file is renamed to: " + renameOldFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            wgrpBukkitPlugin.getWgrpBukkitBase().saveResource("config.yml", true);
+        } else if(ConfigType.LANG.equals(configType)) {
+            Path renameOldLang = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(),
+                    "lang/" + lang + "-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
+            try {
+                Files.move(currentFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
+                wgrpBukkitPlugin.getPluginLogger().info("Old lang file is renamed to: " + renameOldLang);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            wgrpBukkitPlugin.getWgrpBukkitBase().saveResource("lang/" + lang + ".yml", true);
         }
     }
 

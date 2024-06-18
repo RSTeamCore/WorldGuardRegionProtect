@@ -2,12 +2,12 @@ package net.ritasister.wgrp.api.config;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface ParamsVersionCheck<T> {
+public interface ParamsVersionCheck<CT, T> {
 
-    @NotNull String getSimpleDateFormat();
+    String getSimpleDateFormat();
 
-    @NotNull String getCurrentVersion(final @NotNull T currentYaml);
+    String getCurrentVersion(CT configType, final @NotNull T currentYaml);
 
-    @NotNull String getNewVersion(final @NotNull T yamlConfiguration);
+    String getNewVersion(CT configType, final @NotNull T yamlConfiguration);
 
 }
