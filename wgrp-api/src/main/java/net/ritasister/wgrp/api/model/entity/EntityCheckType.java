@@ -9,7 +9,16 @@ package net.ritasister.wgrp.api.model.entity;
  */
 public interface EntityCheckType<E, T> {
 
+    /**
+     *
+     * @param entity what is entity check.
+     * @return entity type what is checked.
+     */
     boolean check(E entity);
 
+    /**
+     * Get an entity type for checking in regions or whatever.
+     * @return entityType.
+     */
     T[] getEntityType();
 }

@@ -3,6 +3,8 @@ package net.ritasister.wgrp.util;
 import com.google.common.base.Preconditions;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 /**
  * Utility class for a version of plugin.
  */
@@ -69,6 +71,11 @@ public final class Version implements Comparable<Version> {
     @Override
     public String toString() {
         return version;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash ( version, tag );
     }
 
     @Override

@@ -6,6 +6,9 @@ import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.util.ServerType;
 import net.ritasister.wgrp.util.Version;
 
+/**
+ * Represent class for any platform.
+ */
 public abstract class WorldGuardRegionProtectPlugin implements WorldGuardRegionProtect {
 
     protected final Version version;

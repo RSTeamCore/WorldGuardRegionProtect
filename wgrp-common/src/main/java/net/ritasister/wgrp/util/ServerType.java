@@ -1,5 +1,8 @@
 package net.ritasister.wgrp.util;
 
+/**
+ * Get to only need a type of what platform is used.
+ */
 public enum ServerType {
 
     PAPER("Paper"),

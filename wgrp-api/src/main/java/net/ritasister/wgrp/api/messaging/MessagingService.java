@@ -1,5 +1,9 @@
 package net.ritasister.wgrp.api.messaging;
 
+/**
+ * Represent class for messaging for player or admin.
+ * @param <P>
+ */
 public interface MessagingService<P> {
 
     /**

@@ -5,6 +5,8 @@ package net.ritasister.wgrp.rslibs.exceptions;
  */
 public class NoSelectionException extends RuntimeException {
 
+    private static final long serialVersionUID = 1;
+
     public NoSelectionException() {
         super("Selection not has been made!");
     }

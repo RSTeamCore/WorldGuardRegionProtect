@@ -46,7 +46,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0-RC2")
     implementation("org.jetbrains:annotations:24.1.0")
     implementation("org.projectlombok:lombok:1.18.32")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.32")
 }
 
 kotlin {

@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.api.config;
+package net.ritasister.wgrp.util.config.loader;
 
 import org.jetbrains.annotations.NotNull;
 

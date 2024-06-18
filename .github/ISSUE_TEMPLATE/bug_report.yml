@@ -15,9 +15,9 @@ body:
       description: Which server Implementation are you using? If your server implementation is not listed, it is not supported. Switch to a supported version first.
       multiple: false
       options:
-        - Spigot
         - Paper
         - Purpur
+        - Folia
     validations:
       required: true
 
@@ -29,6 +29,7 @@ body:
       options:
         - '1.20.5'
         - '1.20.6'
+        - '1.21'
     validations:
       required: true
 

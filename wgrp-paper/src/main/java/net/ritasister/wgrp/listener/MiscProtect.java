@@ -14,6 +14,9 @@ import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Listens of all events misc for protection.
+ */
 public class MiscProtect implements Listener {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
@@ -27,8 +30,8 @@ public class MiscProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     private void denyBlockFromTo(@NotNull BlockFromToEvent e) {
-        Block block = e.getBlock();
-        Location location = e.getToBlock().getLocation();
+        final Block block = e.getBlock();
+        final Location location = e.getToBlock().getLocation();
         if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
             if (config.isDenyWaterFlowToRegion() && block.getType() == Material.WATER
                     || config.isDenyLavaFlowToRegion() && block.getType() == Material.LAVA) {
@@ -40,7 +43,7 @@ public class MiscProtect implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyStructureGrow(@NotNull StructureGrowEvent e) {
         if (e.getPlayer() != null) {
-            Player player = e.getPlayer();
+            final Player player = e.getPlayer();
             if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(e.getLocation(), config.getRegionProtectMap())) {
                 if (!wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     e.setCancelled(true);

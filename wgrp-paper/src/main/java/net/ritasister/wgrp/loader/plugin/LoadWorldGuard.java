@@ -4,7 +4,10 @@ import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-public class LoadWorldGuard implements LoadPluginManager {
+/**
+ * Utility class for load WorldGuard by WorldGuardRegionProtect.
+ */
+public class LoadWorldGuard {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
@@ -12,7 +15,9 @@ public class LoadWorldGuard implements LoadPluginManager {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
     }
 
-    @Override
+    /**
+     * Load PlaceholderAPI.
+     */
     public void loadPlugin() {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin != null && plugin.isEnabled()) {
