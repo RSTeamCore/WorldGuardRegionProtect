@@ -4,7 +4,7 @@ import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.util.config.Config;
 import org.jetbrains.annotations.NotNull;
 
-public interface CheckVersion<T> {
+public interface CheckVersion {
 
     default void checkVersion(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
 

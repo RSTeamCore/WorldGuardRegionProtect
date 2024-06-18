@@ -21,6 +21,7 @@ import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
 import net.ritasister.wgrp.rslibs.api.manager.RegionAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.util.ServerType;
+import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
@@ -58,9 +59,8 @@ public final class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionP
     public void load() {
         this.spyLog = new ArrayList<>();
         configLoader = new ConfigLoader();
+        rsApi = new RSApiImpl(this, new ParamsVersionCheckImpl());
         configLoader.initConfig(this);
-
-        rsApi = new RSApiImpl(this);
 
         WGRPChecker wgrpChecker = new WGRPChecker(this);
         wgrpChecker.checkStartUpVersionServer();

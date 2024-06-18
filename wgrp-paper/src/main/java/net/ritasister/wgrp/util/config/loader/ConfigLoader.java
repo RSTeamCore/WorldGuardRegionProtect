@@ -21,11 +21,11 @@ public class ConfigLoader implements InitConfig<WorldGuardRegionProtectBukkitPlu
         InitMessages<WorldGuardRegionProtectBukkitPlugin, Config, Container> messageLoader = new MessageLoader();
         this.messages = messageLoader.initMessages(wgrpBukkitPlugin, this.config);
 
-        //Check a config version
+        //Check a config version of file
         CheckVersion configCheckVersion = new ConfigCheckVersion(new ParamsVersionCheckImpl());
         configCheckVersion.checkVersion(wgrpBukkitPlugin);
 
-        //Check lang a version of file
+        //Check a lang version of file
         CheckVersion messageCheckVersion = new MessageCheckVersion(new ParamsVersionCheckImpl());
         messageCheckVersion.checkVersion(wgrpBukkitPlugin, this.config);
 
