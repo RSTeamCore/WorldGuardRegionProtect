@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.util.config.loader;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
-public class ConfigCheckVersion implements CheckVersion {
+public class ConfigCheckVersion implements CheckVersion<WorldGuardRegionProtectBukkitPlugin> {
 
     private final ParamsVersionCheck<YamlConfiguration> paramsVersionCheck;
 
@@ -22,25 +22,25 @@ public class ConfigCheckVersion implements CheckVersion {
     }
 
     @Override
-    public void checkVersion(final @NotNull WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
-        File currentConfigFile = new File(wgrpBukkitBase.getDataFolder(), "config.yml");
-        InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitBase
-                .getResource("config.yml")));
+    public void checkVersion(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+        File currentConfigFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "config.yml");
+        InputStreamReader inputStreamReader = new InputStreamReader(Objects.requireNonNull(
+                wgrpBukkitPlugin.getWgrpBukkitBase().getResource("config.yml")));
         YamlConfiguration currentVersion = YamlConfiguration.loadConfiguration(currentConfigFile);
         YamlConfiguration newVersion = YamlConfiguration.loadConfiguration(inputStreamReader);
         if (currentConfigFile.exists() && !paramsVersionCheck.getCurrentVersion(currentVersion).equals(Objects.requireNonNull(paramsVersionCheck.getNewVersion(newVersion)))) {
-            wgrpBukkitBase.getApi().getPluginLogger().info("Found new version of config file, updating this now...");
+            wgrpBukkitPlugin.getWgrpBukkitBase().getApi().getPluginLogger().info("Found new version of config file, updating this now...");
             Path renameOldLang = new File(
-                    wgrpBukkitBase.getDataFolder(),
+                    wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(),
                     "config-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
             try {
                 Files.move(currentConfigFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            wgrpBukkitBase.saveResource("config.yml", true);
+            wgrpBukkitPlugin.getWgrpBukkitBase().saveResource("config.yml", true);
         } else {
-            wgrpBukkitBase.getApi().getPluginLogger().info("No update is required for the config file");
+            wgrpBukkitPlugin.getPluginLogger().info("No update is required for the config file");
         }
     }
 

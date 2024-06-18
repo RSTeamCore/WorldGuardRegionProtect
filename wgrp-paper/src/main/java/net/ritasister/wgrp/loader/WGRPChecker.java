@@ -2,6 +2,7 @@ package net.ritasister.wgrp.loader;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
+import net.ritasister.wgrp.util.ServerType;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +11,8 @@ public class WGRPChecker {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
-    private boolean isPaper;
+    private boolean isPaper = false;
+    private boolean isFolia = false;
 
     @Contract(pure = true)
     public WGRPChecker(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
@@ -28,19 +30,42 @@ public class WGRPChecker {
         }
     }
 
-    public void checkIfRunningOnPaper() {
-        isPaper = false;
-        try {
-            Class.forName("com.destroystokyo.paper.ParticleBuilder");
-            isPaper = true;
-        } catch (ClassNotFoundException ignored) {
-            wgrpBukkitPlugin.getPluginLogger().info(String.format("""
-                            Using paper: %s
-                            Better if you are running your server on paper or other forks of paper.
-                            Please don't use any untrusted forks.
-                            """, isPaper()));
+    public void detectPlatformRun() {
+        if (isPaper) {
+            try {
+                Class.forName("com.destroystokyo.paper.ParticleBuilder");
+                detectTrustPlatformMessage(ServerType.PAPER);
+                isPaper = true;
+            } catch (ClassNotFoundException ignored) {
+                detectUnTrustPlatformMessage();
+            }
+            wgrpBukkitPlugin.getPluginLogger().info(String.format("Using paper: %s", isPaper()));
+        } else if (isFolia) {
+            try {
+                Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+                isFolia = true;
+                detectTrustPlatformMessage(ServerType.FOLIA);
+            } catch (ClassNotFoundException ignored) {
+                detectUnTrustPlatformMessage();
+            }
         }
-        wgrpBukkitPlugin.getPluginLogger().info(String.format("Using paper: %s", isPaper()));
+    }
+
+    private void detectTrustPlatformMessage(ServerType platform) {
+        wgrpBukkitPlugin.getPluginLogger().info(String.format("""
+                Your platform is: %s
+                You will be able to get support.
+                Running in folia can will be may issues, so please report any error.
+                """, platform));
+    }
+
+    private void detectUnTrustPlatformMessage() {
+        wgrpBukkitPlugin.getPluginLogger().info(String.format("""
+                Your platform is: %s
+                Better if you are running your server on paper or other forks of paper.
+                Please don't use any untrusted forks.
+                You don't get support if you are use other untrusted forks.
+                """, ServerType.UNKNOWN));
     }
 
     public void notifyAboutBuild() {
@@ -61,8 +86,8 @@ public class WGRPChecker {
         }
         wgrpBukkitPlugin.getPluginLogger().info(String.format(
                 """ 
-                Using %s language version %s. Author of this localization - %s.
-                """,
+                        Using %s language version %s. Author of this localization - %s.
+                        """,
                 wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.language"),
                 wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.version"),
                 wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.author")
@@ -71,6 +96,10 @@ public class WGRPChecker {
 
     public boolean isPaper() {
         return this.isPaper;
+    }
+
+    public boolean isFolia() {
+        return this.isFolia;
     }
 
 }
