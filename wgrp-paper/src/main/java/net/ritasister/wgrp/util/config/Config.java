@@ -147,10 +147,10 @@ public class Config {
 
     public Config(WorldGuardRegionProtectBukkitBase wgrpBase) {
         this.wgrpBase = wgrpBase;
-        reload();
+        reloadConfig();
     }
 
-    public void reload() {
+    public void reloadConfig() {
         regionProtect = new HashMap<>();
         regionProtectAllow = new HashMap<>();
         regionProtectOnlyBreakAllow = new HashMap<>();

@@ -49,7 +49,7 @@ public class CommandWGRP extends AbstractCommand {
     public void wgrpReload(@NotNull CommandSender sender, String[] args) {
         final long timeInitStart = System.currentTimeMillis();
 
-        config.reload();
+        config.reloadConfig();
         wgrpPlugin.getConfigLoader().initConfig(wgrpPlugin);
 
         final long timeReload = System.currentTimeMillis() - timeInitStart;
