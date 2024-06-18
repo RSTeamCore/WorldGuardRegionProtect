@@ -88,12 +88,6 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    @Override
-    public
-    List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String @NotNull [] args) {
-        return filter(complete(), args);
-    }
-
     private @NotNull List<String> filter(List<String> list, String @NotNull [] args) {
         String last = args[args.length - 1];
         if(args.length - 1 != 0) {
@@ -118,5 +112,11 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
             if(arg.toLowerCase().startsWith(last.toLowerCase())) result.add(arg);
         }
         return result;
+    }
+
+    @Override
+    public
+    List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String @NotNull [] args) {
+        return filter(complete(), args);
     }
 }

@@ -34,6 +34,7 @@ allprojects {
     //checkstyle
     apply(plugin = "java-library")
     apply(plugin = "maven-publish")
+    apply(plugin = "net.kyori.indra.checkstyle")
 
     java.toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))

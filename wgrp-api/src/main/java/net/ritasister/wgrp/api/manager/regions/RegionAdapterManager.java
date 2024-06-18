@@ -8,18 +8,18 @@ import java.util.Map;
 /**
  * Methods by which you can interact with WorldGuard Api
  *
- * @param <L> this is location
- * @param <P> this is an object as player
- * @param <R> this check where region is selected by //pos1 and //pos2
+ * @param <L> this is a location
+ * @param <P> this is an object as a player
+ * @param <R> this check where a region is selected by //pos1 and //pos2
  */
 public interface RegionAdapterManager<L, P, R> {
 
     /**
-     * Check access in standing region by a Player used region name from HashMap and list of regions.
+     * Check access in a standing region by a Player used region name from HashMap and list of regions.
      *
-     * @param location Return location of object.
+     * @param location Return location of an object.
      * @param regions  Maps of regions from WorldGuard.
-     * @return location of object(example: block, entity, Player etc.)
+     * @return location of an object (example: block, entity, Player etc.)
      * @since 0.3.4
      */
     boolean checkStandingRegion(L location, Map<String, List<String>> regions);
@@ -27,8 +27,8 @@ public interface RegionAdapterManager<L, P, R> {
     /**
      * Checking the access in a region without region name.
      *
-     * @param location Location of object.
-     * @return location of object(example: block, entity, Player etc.)
+     * @param location Location of an object.
+     * @return location of an object (example: block, entity, Player etc.)
      * @since 0.3.4
      */
     boolean checkStandingRegion(L location);
@@ -36,7 +36,7 @@ public interface RegionAdapterManager<L, P, R> {
     /**
      * Getting the name of the region where the object trying to interact with protected a region.
      *
-     * @param location Location of object.
+     * @param location Location of an object.
      * @return the name of the region.
      * @since 0.7.1
      */
@@ -45,7 +45,7 @@ public interface RegionAdapterManager<L, P, R> {
     /**
      * Getting the name of the region where the player trying to use WorldEdit.
      *
-     * @param player Location of object.
+     * @param player Location of an object.
      * @since 0.7.6
      */
     String getProtectRegionNameBySelection(final P player);

@@ -37,8 +37,7 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
         Region selection = null;
         try {
             selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
-        } catch (IncompleteRegionException ignored) {
-        }
+        } catch (IncompleteRegionException ignored) {}
         return checkIntersection(selection, player);
     }
 
@@ -135,15 +134,13 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
         int i = 1;
         try {
             i = Integer.parseInt(args[2]);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
         final Location loc1 = player.getLocation().subtract(i, i, i);
         final Location loc2 = player.getLocation().add(i, i, i);
         return new CuboidRegion(
                 BukkitAdapter.adapt(player.getWorld()),
                 BukkitAdapter.asVector(loc1).toBlockPoint(),
-                BukkitAdapter.asVector(loc2).toBlockPoint()
-        );
+                BukkitAdapter.asVector(loc2).toBlockPoint());
     }
 
     private @Nullable CuboidRegion getSphereSelection(final Player player, final String @NotNull ... args) {
@@ -157,15 +154,13 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
         try {
             y2 = Integer.parseInt(cr[1]);
             z2 = Integer.parseInt(cr[2]);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
         final Location loc1 = player.getLocation().subtract(x2, y2, z2);
         final Location loc2 = player.getLocation().add(x2, y2, z2);
         return new CuboidRegion(
                 BukkitAdapter.adapt(player.getWorld()),
                 BukkitAdapter.asBlockVector(loc1),
-                BukkitAdapter.asBlockVector(loc2)
-        );
+                BukkitAdapter.asBlockVector(loc2));
     }
 
     private @Nullable CuboidRegion getUpSelection(final Player player, final String... args) {
@@ -176,8 +171,7 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
             return new CuboidRegion(
                     BukkitAdapter.adapt(player.getWorld()),
                     BukkitAdapter.asBlockVector(loc1),
-                    BukkitAdapter.asBlockVector(loc2)
-            );
+                    BukkitAdapter.asBlockVector(loc2));
         } catch (Exception ex) {
             return null;
         }

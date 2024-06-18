@@ -20,10 +20,10 @@ public class UpdateChecker {
     }
 
     /**
-     * Method checker if plugin have a last version.
+     * Method checker if plugin has a last version.
      */
     public void getVersion(final Consumer<String> consumer) {
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        Bukkit.getAsyncScheduler().runNow(this.plugin, t -> {
             try (InputStream inputStream = URI.create("https://api.spigotmc.org/legacy/update.php?resource="
                     + this.resourceId).toURL().openStream();
                  Scanner scanner = new Scanner(inputStream)) {

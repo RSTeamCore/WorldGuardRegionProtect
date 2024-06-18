@@ -16,7 +16,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Player, Entity> {
@@ -27,8 +26,8 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
 
     private final Container messages;
 
-    public final static String SUPPORTED_VERSION_RANGE = "1.20.5 - 1.20.6";
-    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.20.5", "1.20.6");
+    public final static String SUPPORTED_VERSION_RANGE = "1.21";
+    public final static List<String> SUPPORTED_VERSION = List.of("1.21");
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
@@ -47,7 +46,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     }
 
     /**
-     * Initializes all used NMS classes, constructors, fields and methods.
+     * Initializes all used NMS classes, constructor fields, and methods.
      * Returns {@code true} if everything went successfully and version marked as compatible,
      * {@code false} if anything went wrong or version not marked as compatible.
      *
@@ -59,10 +58,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
             long time = System.currentTimeMillis();
             if (SUPPORTED_VERSION.contains(minecraftVersion)) {
                 wgrpBukkitPlugin.getPluginLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
-                wgrpBukkitPlugin.getPluginLogger().info(String.format(
-                        "Current support versions range %s",
-                        SUPPORTED_VERSION_RANGE
-                ));
+                wgrpBukkitPlugin.getPluginLogger().info(String.format("Current support versions range %s", SUPPORTED_VERSION_RANGE));
                 return true;
             } else {
                 wgrpBukkitPlugin.getPluginLogger().info(
@@ -126,7 +122,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     }
 
     /**
-     * Send a notification to the administrator if Player attempts to interact with a region from WorldGuard.
+     * Send a notification to the administrator if a Player attempts to interact with a region from WorldGuard.
      *
      * @param admin         message for an admin who destroys a region.
      * @param suspectPlayer object player for method.
@@ -136,7 +132,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
      * @param x             position of block.
      * @param y             position of block.
      * @param z             position of block.
-     * @param world         position of block in world.
+     * @param world         position of block in the world.
      */
     public void notifyIfActionInRegion(
             Player admin,
@@ -147,8 +143,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
             double x,
             double y,
             double z,
-            String world
-    ) {
+            String world) {
         if (this.isPlayerListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
                 && wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandNotifyAdminEnable()) {
             messages.get("messages.Notify.sendAdminInfoIfActionInRegion")
@@ -166,20 +161,11 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(checkEntity.getLocation(),
                 wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectMap())) {
             switch (entity) {
-                case Player player when wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(
-                        player,
-                        UtilPermissions.REGION_PROTECT
-                ) -> entityCheck(cancellable, checkEntity);
+                case Player player when
+                        wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT) ->
+                        entityCheck(cancellable, checkEntity);
                 case null, default -> entityCheck(cancellable, checkEntity);
             }
-            /* java 17 method
-            if(entity instanceof Player player) {
-                if(wgrpBukkitPlugin.getRsApi().isEntityListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
-                    entityCheck(cancellable, checkEntity);
-                }
-            } else {
-                entityCheck(cancellable, checkEntity);
-            }*/
         }
     }
 

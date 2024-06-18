@@ -1,5 +1,6 @@
 package net.ritasister.wgrp.util.config;
 
+import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -7,24 +8,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public class ParamsVersionCheckImpl implements ParamsVersionCheck {
+public class ParamsVersionCheckImpl implements ParamsVersionCheck<YamlConfiguration> {
 
-    @NotNull
-    public String getSimpleDateFormat() {
+    public @NotNull String getSimpleDateFormat() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd-hh.mm.ss");
         return simpleDateFormat.format(date);
     }
 
-    @NotNull
-    public String getCurrentVersion(final @NotNull YamlConfiguration currentYaml) {
+    public @NotNull String getCurrentVersion(final @NotNull YamlConfiguration currentYaml) {
         return Objects.requireNonNull(currentYaml.getString("langTitle.version"))
                 .replaceAll("\"", "")
                 .replaceAll("'", "");
     }
 
-    @NotNull
-    public String getNewVersion(final @NotNull YamlConfiguration yamlConfiguration) {
+    public @NotNull String getNewVersion(final @NotNull YamlConfiguration yamlConfiguration) {
         return Objects.requireNonNull(yamlConfiguration.getString("langTitle.version"))
                 .replaceAll("\"", "")
                 .replaceAll("'", "");

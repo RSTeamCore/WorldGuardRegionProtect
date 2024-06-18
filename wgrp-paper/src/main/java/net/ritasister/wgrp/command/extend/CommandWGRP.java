@@ -42,7 +42,7 @@ public class CommandWGRP extends AbstractCommand {
         long timeInitStart = System.currentTimeMillis();
 
         config.reload();
-        wgrpPlugin.getConfigLoader().initConfig(wgrpPlugin);
+        wgrpPlugin.getConfigLoader().initConfig(wgrpPlugin.getWgrpBukkitBase());
 
         long timeReload = (System.currentTimeMillis() - timeInitStart);
         messages.get("messages.Configs.configReloaded").replace("<time>", timeReload).send(sender);

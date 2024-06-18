@@ -59,7 +59,10 @@ public class MonsterCheckTypeImpl implements EntityCheckType<Entity, EntityType>
                 EntityType.WITCH,
                 EntityType.PILLAGER,
                 EntityType.ZOGLIN,
-                EntityType.ENDER_DRAGON
+                EntityType.ENDER_DRAGON,
+                //New mobs since mc 1.21
+                EntityType.BREEZE,
+                EntityType.BOGGED
         };
     }
 
