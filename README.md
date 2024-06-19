@@ -44,6 +44,9 @@ Please see [`LICENSE.txt`](https://github.com/RSTeamCore/WorldGuardRegionProtect
 
 ### Maven repository
 
+#### Latest version (Without the v):
+<img src="https://img.shields.io/github/release/RSTeamCore/WorldGuardRegionProtect.svg" alt="Current Release">
+
 ```xml
 
 <repository>
