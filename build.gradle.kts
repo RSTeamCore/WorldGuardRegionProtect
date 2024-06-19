@@ -1,13 +1,16 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import kotlin.system.exitProcess
 
 plugins {
+    id("java")
     id("java-library")
+    kotlin("jvm")
     id("net.kyori.indra") version "3.1.3"
     id("net.kyori.indra.checkstyle") version "3.1.3"
 }
 
-//val checkstyleVersion = "9.3"
+val checkstyleVersion = "9.3"
 
 defaultTasks("clean", "build")
 
@@ -30,17 +33,23 @@ if (!File("$rootDir/.git").exists()) {
     If you need assistance, consult the GitHub docs: https://docs.github.com/get-started/quickstart/fork-a-repo
     **************************************************************************************
     """.trimIndent()
-    ).also { kotlin.system.exitProcess(1) }
+    ).also{ exitProcess(1) }
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 allprojects {
+    plugins.apply("java")
     plugins.apply("java-library")
+    plugins.apply("org.jetbrains.kotlin.jvm")
     plugins.apply("net.kyori.indra")
     plugins.apply("net.kyori.indra.checkstyle")
     plugins.apply("maven-publish")
 
     indra {
-        //checkstyle(checkstyleVersion)
+        checkstyle(checkstyleVersion)
 
         javaVersions {
             target(21)

@@ -1,4 +1,4 @@
-name: WorldGuardRegionProtect
+name: ${name}
 version: ${version}
 author: ${author}
 contributor: ${contributor}
