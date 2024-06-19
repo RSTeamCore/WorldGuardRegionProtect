@@ -24,9 +24,9 @@ public class HangingCheckTypeImpl implements EntityCheckType<Entity, EntityType>
     @Override
     public EntityType[] getEntityType() {
         return new EntityType[] {
-                EntityType.PAINTING,
-                EntityType.ITEM_FRAME,
-                EntityType.GLOW_ITEM_FRAME
+            EntityType.PAINTING,
+            EntityType.ITEM_FRAME,
+            EntityType.GLOW_ITEM_FRAME
         };
     }
 
