@@ -34,4 +34,4 @@ target
 forge-download
 out
 /wgrp-paper/run/
-/.checkstyle/
+/.kotlin/

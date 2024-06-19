@@ -2,7 +2,6 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import xyz.jpenilla.runpaper.task.RunServer
 
 plugins {
-    kotlin("jvm")
     id("io.papermc.paperweight.userdev") version "1.7.1"
     alias(libs.plugins.shadow)
     alias(libs.plugins.runPaper)
@@ -46,10 +45,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0-RC2")
     implementation("org.jetbrains:annotations:24.1.0")
     implementation("org.projectlombok:lombok:1.18.32")
-}
-
-kotlin {
-    jvmToolchain(21)
 }
 
 tasks.withType<ProcessResources> {
