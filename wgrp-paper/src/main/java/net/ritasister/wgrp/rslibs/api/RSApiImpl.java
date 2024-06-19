@@ -62,9 +62,9 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
      * @return {@code true} if server version compatible, {@code false} if not
      */
     public boolean isVersionSupported() {
-        String minecraftVersion = Bukkit.getServer().getMinecraftVersion();
+        final String minecraftVersion = Bukkit.getServer().getMinecraftVersion();
         try {
-            long time = System.currentTimeMillis();
+            final long time = System.currentTimeMillis();
             if (SUPPORTED_VERSION.contains(minecraftVersion)) {
                 wgrpBukkitPlugin.getPluginLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
                 wgrpBukkitPlugin.getPluginLogger().info(String.format("Current support versions range %s", SUPPORTED_VERSION_RANGE));
@@ -94,7 +94,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         if (wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandNotifyAdminEnable() && this.isPlayerListenerPermission(
                 player,
                 UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
-            String cmd = wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandList().toString();
+            final String cmd = wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandList().toString();
             if (cmd.contains(senderCommand.toLowerCase()) && wgrpBukkitPlugin
                     .getConfigLoader()
                     .getConfig()
@@ -119,9 +119,9 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
             return;
         }
         if (wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandNotifyConsoleEnable()) {
-            String cmd = wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandList().toString();
+            final String cmd = wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandList().toString();
             if(cmd.contains(senderCommand.toLowerCase())) {
-                ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
+                final ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
                 messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
                         .replace("<cmd>", cmd)
@@ -169,17 +169,18 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
         if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(checkEntity.getLocation(),
                 wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectMap())) {
-            switch (entity) {
-                case Player player when
-                        wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT) ->
-                        entityCheck(cancellable, checkEntity);
-                case null, default -> entityCheck(cancellable, checkEntity);
+            if (entity instanceof Player player) {
+                if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    entityCheck(cancellable, player);
+                }
+            } else {
+                entityCheck(cancellable, checkEntity);
             }
         }
     }
 
     private void entityCheck(Cancellable cancellable, Entity checkEntity) {
-        EntityCheckType<Entity, EntityType> entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
+        final EntityCheckType<Entity, EntityType> entityCheckType = entityCheckTypeProvider.getCheck(checkEntity);
         if (entityCheckType.check(checkEntity)) {
             cancellable.setCancelled(true);
         }
@@ -188,7 +189,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     public void updateFile(@NotNull final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin,
                            final @NotNull File currentFile, ConfigType configType, String lang) {
         if(ConfigType.CONFIG.equals(configType)) {
-            Path renameOldFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(),
+            final Path renameOldFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(),
                     "config-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
             try {
                 Files.move(currentFile.toPath(), renameOldFile, StandardCopyOption.REPLACE_EXISTING);
@@ -198,7 +199,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
             }
             wgrpBukkitPlugin.getWgrpBukkitBase().saveResource("config.yml", true);
         } else if(ConfigType.LANG.equals(configType)) {
-            Path renameOldLang = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(),
+            final Path renameOldLang = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(),
                     "lang/" + lang + "-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
             try {
                 Files.move(currentFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);

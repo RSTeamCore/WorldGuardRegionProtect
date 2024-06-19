@@ -33,7 +33,7 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
 
     @Override
     public boolean checkIntersection(final Player player) {
-        LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
+        final LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
         Region selection = null;
         try {
             selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
@@ -104,7 +104,7 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
     }
 
     @Contract("_, _ -> new")
-    private @NotNull CuboidRegion getCylSelection(final Player player, final String... args) {
+    private @NotNull CuboidRegion getCylSelection(final Player player, final String ... args) {
         int x = 1;
         int y = 1;
         int z = 0;
@@ -127,7 +127,7 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
         );
     }
 
-    private @Nullable CuboidRegion getPyramidSelection(final Player player, final String @NotNull ... args) {
+    private @Nullable CuboidRegion getPyramidSelection(final Player player, final String ... args) {
         if (args.length < 3) {
             return null;
         }
@@ -143,14 +143,14 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
                 BukkitAdapter.asVector(loc2).toBlockPoint());
     }
 
-    private @Nullable CuboidRegion getSphereSelection(final Player player, final String @NotNull ... args) {
+    private @Nullable CuboidRegion getSphereSelection(final Player player, final String ... args) {
         if (args.length < 3) {
             return null;
         }
         final String[] cr = args[2].split(",");
         int y2;
         int z2;
-        final int x2 = z2 = (y2 = Integer.parseInt(cr[0]));
+        final int x2 = z2 = y2 = Integer.parseInt(cr[0]);
         try {
             y2 = Integer.parseInt(cr[1]);
             z2 = Integer.parseInt(cr[2]);
@@ -163,7 +163,7 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
                 BukkitAdapter.asBlockVector(loc2));
     }
 
-    private @Nullable CuboidRegion getUpSelection(final Player player, final String... args) {
+    private @Nullable CuboidRegion getUpSelection(final Player player, final String ... args) {
         try {
             final int v = Integer.parseInt(args[1]);
             final Location loc1 = player.getLocation().add(0.0, v, 0.0);

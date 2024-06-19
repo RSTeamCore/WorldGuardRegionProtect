@@ -16,8 +16,8 @@ public class HangingCheckTypeImpl implements EntityCheckType<Entity, EntityType>
 
     @Override
     public boolean check(final Entity entity) {
-        Hanging hanging = (Hanging) entity;
-        EntityType hangingType = hanging.getType();
+        final Hanging hanging = (Hanging) entity;
+        final EntityType hangingType = hanging.getType();
         return wgrpBukkitPlugin.getConfigLoader().getConfig().getInteractType().contains(hangingType.name().toLowerCase());
     }
 
@@ -29,4 +29,5 @@ public class HangingCheckTypeImpl implements EntityCheckType<Entity, EntityType>
                 EntityType.GLOW_ITEM_FRAME
         };
     }
+
 }

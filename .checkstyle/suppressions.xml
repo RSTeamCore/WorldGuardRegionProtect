@@ -2,7 +2,5 @@
 <!DOCTYPE suppressions PUBLIC "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN" "http://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
     <suppress files=".*[\\/]test[\\/]java[\\/].*" checks="RequireExplicitVisibilityModifier"/>
-
     <suppress files="(net[\\/]ritasister[\\/])" checks="MissingJavadoc(Method|Type)"/>
-    <suppress files="wgrp-paper[\\/]src[\\/]main[\\/]java[\\/]net[\\/]ritasister[\\/].*" checks="(FilteringWriteTag|JavadocPackage|MissingJavadoc.*)"/>
 </suppressions>

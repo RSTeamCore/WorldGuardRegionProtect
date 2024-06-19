@@ -17,15 +17,16 @@ public class HumanEntityCheckTypeImpl implements EntityCheckType<Entity, EntityT
 
     @Override
     public boolean check(final @NotNull Entity entity) {
-        HumanEntity humanEntity = (HumanEntity) entity;
-        EntityType humanEntityType = humanEntity.getType();
+        final HumanEntity humanEntity = (HumanEntity) entity;
+        final EntityType humanEntityType = humanEntity.getType();
         return wgrpBukkitPlugin.getConfigLoader().getConfig().getInteractType().contains(humanEntityType.name().toLowerCase());
     }
 
     @Override
     public EntityType[] getEntityType() {
-        return new EntityType[]{
-                EntityType.PLAYER
+        return new EntityType[] {
+            EntityType.PLAYER
         };
     }
+
 }

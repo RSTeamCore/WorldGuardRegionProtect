@@ -17,20 +17,21 @@ public class ExplosiveCheckTypeImpl implements EntityCheckType<Entity, EntityTyp
 
     @Override
     public boolean check(final @NotNull Entity entity) {
-        Explosive explosive = (Explosive) entity;
-        EntityType explosiveType = explosive.getType();
+        final Explosive explosive = (Explosive) entity;
+        final EntityType explosiveType = explosive.getType();
         return wgrpBukkitPlugin.getConfigLoader().getConfig().getEntityExplodeType().contains(explosiveType.name().toLowerCase());
     }
 
     @Override
     public EntityType[] getEntityType() {
-        return new EntityType[]{
-                EntityType.TNT,
-                EntityType.END_CRYSTAL,
-                EntityType.TNT_MINECART,
-                EntityType.CREEPER,
-                EntityType.WITHER_SKULL,
-                EntityType.FIREBALL
+        return new EntityType[] {
+            EntityType.TNT,
+            EntityType.END_CRYSTAL,
+            EntityType.TNT_MINECART,
+            EntityType.CREEPER,
+            EntityType.WITHER_SKULL,
+            EntityType.FIREBALL
         };
     }
+
 }

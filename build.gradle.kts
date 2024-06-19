@@ -39,10 +39,6 @@ if (!File("$rootDir/.git").exists()) {
     ).also{ exitProcess(1) }
 }
 
-kotlin {
-    jvmToolchain(21)
-}
-
 allprojects {
     plugins.apply("java")
     plugins.apply("java-library")
@@ -53,6 +49,10 @@ allprojects {
 
     indra {
         checkstyle(checkstyleVersion)
+
+        kotlin {
+            jvmToolchain(21)
+        }
 
         javaVersions {
             target(21)
@@ -80,6 +80,12 @@ subprojects {
             showExceptions = true
             showCauses = true
             showStackTraces = true
+        }
+    }
+
+    tasks.test {
+        testLogging {
+            events("PASSED", "SKIPPED", "FAILED")
         }
     }
 

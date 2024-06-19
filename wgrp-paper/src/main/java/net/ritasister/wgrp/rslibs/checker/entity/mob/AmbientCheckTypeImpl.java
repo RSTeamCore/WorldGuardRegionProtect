@@ -17,15 +17,16 @@ public class AmbientCheckTypeImpl implements EntityCheckType<Entity, EntityType>
 
     @Override
     public boolean check(final @NotNull Entity entity) {
-        Ambient ambient = (Ambient) entity;
-        EntityType ambientType = ambient.getType();
+        final Ambient ambient = (Ambient) entity;
+        final EntityType ambientType = ambient.getType();
         return wgrpBukkitPlugin.getConfigLoader().getConfig().getInteractType().contains(ambientType.name().toLowerCase());
     }
 
     @Override
     public EntityType[] getEntityType() {
-        return new EntityType[]{
-                EntityType.BAT
+        return new EntityType[] {
+            EntityType.BAT
         };
     }
+
 }

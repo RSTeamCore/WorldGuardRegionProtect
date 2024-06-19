@@ -22,12 +22,11 @@ public class MessageCheckVersion implements CheckVersion {
     @Override
     public void checkVersion(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin, final @NotNull Config config) {
         wgrpBukkitPlugin.getPluginLogger().info("Started checking the new version of the language file...");
-        String lang = config.getLang();
-        File currentLangFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "lang/" + lang + ".yml");
-        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(
-                wgrpBukkitPlugin.getWgrpBukkitBase().getResource("lang/" + lang + ".yml")));
-        YamlConfiguration currentLangVersion = YamlConfiguration.loadConfiguration(currentLangFile);
-        YamlConfiguration newLangVersion = YamlConfiguration.loadConfiguration(reader);
+        final String lang = config.getLang();
+        final File currentLangFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "lang/" + lang + ".yml");
+        final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitPlugin.getWgrpBukkitBase().getResource("lang/" + lang + ".yml")));
+        final YamlConfiguration currentLangVersion = YamlConfiguration.loadConfiguration(currentLangFile);
+        final YamlConfiguration newLangVersion = YamlConfiguration.loadConfiguration(reader);
         if(currentLangFile.exists() && currentLangVersion.getString("langTitle.version") == null) {
             wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentLangFile, ConfigType.LANG, lang);
             wgrpBukkitPlugin.getPluginLogger().info("String version in lang file is null...recreating lang file...");

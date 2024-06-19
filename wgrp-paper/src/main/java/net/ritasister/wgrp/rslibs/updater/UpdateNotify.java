@@ -23,7 +23,7 @@ public class UpdateNotify {
     }
 
     public void checkUpdateNotify(String oldVersion) {
-        Server server = Bukkit.getServer();
+        final Server server = Bukkit.getServer();
         final String hasUpdate = """
                 <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
                 <gold>  There is a new version update available.
@@ -65,12 +65,11 @@ public class UpdateNotify {
                     }
                 } else {
                     worldGuardRegionProtectBukkitPlugin.messageToCommandSender(player, String.format(
-                            hasUpdate,
+                                    hasUpdate,
                             oldVersion,
                             newVersion,
                             PLUGIN_URL_ADDRESS,
-                            PLUGIN_URL_ADDRESS
-                    ));
+                            PLUGIN_URL_ADDRESS));
                 }
             });
         }

@@ -17,15 +17,16 @@ public class AllayMobCheckTypeImpl implements EntityCheckType<Entity, EntityType
 
     @Override
     public boolean check(final @NotNull Entity entity) {
-        Allay allay = (Allay) entity;
-        EntityType allayType = allay.getType();
+        final Allay allay = (Allay) entity;
+        final EntityType allayType = allay.getType();
         return worldGuardRegionProtectPlugin.getConfigLoader().getConfig().getAnimalType().contains(allayType.name().toLowerCase());
     }
 
     @Override
     public EntityType[] getEntityType() {
-        return new EntityType[]{
-                EntityType.ALLAY
+        return new EntityType[] {
+            EntityType.ALLAY
         };
     }
+
 }

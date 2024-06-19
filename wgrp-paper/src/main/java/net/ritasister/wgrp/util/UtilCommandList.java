@@ -2,15 +2,16 @@ package net.ritasister.wgrp.util;
 
 public enum UtilCommandList {
 
-	WGRP("wgregionprotect");
+    WGRP("wgregionprotect");
 
-	private final String command;
+    private final String command;
 
-	UtilCommandList(String command) {
-		this.command = command;
-	}
+    UtilCommandList(String command) {
+        this.command = command;
+    }
 
-	public String getCommand() {
-		return command;
-	}
+    public String getCommand() {
+        return command;
+    }
+
 }
