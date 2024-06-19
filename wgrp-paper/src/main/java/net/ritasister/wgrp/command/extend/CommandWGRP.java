@@ -45,7 +45,7 @@ public class CommandWGRP extends AbstractCommand {
     @SubCommand(
             name = "reload",
             permission = UtilPermissions.COMMAND_WGRP_RELOAD_CONFIGS,
-            description = "")
+            description = "reload config and lang file.")
     public void wgrpReload(@NotNull CommandSender sender, String[] args) {
         final long timeInitStart = System.currentTimeMillis();
 
