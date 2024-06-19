@@ -96,10 +96,7 @@ public class BlockProtect implements Listener {
         final Block block = e.getBlock();
         final Location location = block.getLocation();
         final Material blockType = block.getType();
-        if (blockType == Material.RESPAWN_ANCHOR && wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
-                location,
-                config.getRegionProtectMap()
-        )) {
+        if (blockType == Material.RESPAWN_ANCHOR && wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
             e.setCancelled(true);
         }
     }

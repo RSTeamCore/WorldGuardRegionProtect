@@ -39,6 +39,7 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
     private RegionAdapterManagerPaper regionAdapter;
+    private WorldGuardRegionMetadata worldGuardRegionMetadata;
 
     private List<UUID> spyLog;
     private UpdateNotify updateNotify;
@@ -116,13 +117,12 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
 
     @Override
     public RegionAdapterManagerPaper getRegionAdapter() {
-        return regionAdapter;
+        return this.regionAdapter;
     }
 
-    @Contract(pure = true)
     @Override
-    public @Nullable WorldGuardRegionMetadata getWorldGuardMetadata() {
-        return null;
+    public WorldGuardRegionMetadata getWorldGuardMetadata() {
+        return this.worldGuardRegionMetadata;
     }
 
     public void messageToCommandSender(final @NotNull CommandSender commandSender, final String message) {
@@ -137,29 +137,29 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     }
 
     @Override
-    public @Nullable EntityCheckType getEntityChecker() {
-        return entityCheckType;
+    public EntityCheckType getEntityChecker() {
+        return this.entityCheckType;
     }
 
     @Override
     public MessagingService getMessagingService() {
-        return messagingService;
+        return this.messagingService;
     }
 
     public CheckIntersection getCheckIntersection() {
-        return checkIntersection;
+        return this.checkIntersection;
     }
 
     public UtilCommandWE getPlayerUtilWE() {
-        return playerUtilWE;
+        return this.playerUtilWE;
     }
 
     public UpdateNotify getUpdateNotify() {
-        return updateNotify;
+        return this.updateNotify;
     }
 
     public ConfigLoader getConfigLoader() {
-        return configLoader;
+        return this.configLoader;
     }
 
 }

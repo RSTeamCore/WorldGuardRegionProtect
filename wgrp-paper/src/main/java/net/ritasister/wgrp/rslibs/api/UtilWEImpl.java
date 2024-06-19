@@ -5,6 +5,7 @@ import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.wg.CheckIntersectionImpl;
+import org.bukkit.entity.Player;
 
 public class UtilWEImpl implements UtilCommandWE {
 
@@ -17,7 +18,7 @@ public class UtilWEImpl implements UtilCommandWE {
     }
 
     @Override
-    public CheckIntersection setUpWorldGuardVersionSeven() {
+    public CheckIntersection<Player> setUpWorldGuardVersionSeven() {
         this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
         return new CheckIntersectionImpl(this.wgrpBukkitPlugin);
     }
