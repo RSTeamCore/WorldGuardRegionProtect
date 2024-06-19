@@ -9,13 +9,13 @@ public interface UtilCommandWE {
 
     boolean cmdWe(String param);
 
-    boolean cmdWe_C(String param);
+    boolean cmdWeC(String param);
 
-    boolean cmdWe_P(String param);
+    boolean cmdWeP(String param);
 
-    boolean cmdWe_S(String param);
+    boolean cmdWeS(String param);
 
-    boolean cmdWe_U(String param);
+    boolean cmdWeU(String param);
 
-    boolean cmdWe_CP(String param);
+    boolean cmdWeCP(String param);
 }

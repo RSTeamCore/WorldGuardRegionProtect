@@ -125,7 +125,7 @@
 
         <!-- https://checkstyle.org/config_whitespace.html#NoWhitespaceAfter -->
         <module name="NoWhitespaceAfter">
-            <property name="allowLineBreaks" value="false"/>
+            <property name="allowLineBreaks" value="true"/>
         </module>
 
         <!-- https://checkstyle.org/config_whitespace.html#NoWhitespaceBefore -->

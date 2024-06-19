@@ -159,16 +159,16 @@ public class PlayerProtect implements Listener {
             if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
                     .checkIntersection(e.getPlayer())
-                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe_C(s[0]) && !this.wgrpBukkitPlugin
+                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWeC(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
                     .checkCIntersection(e.getPlayer(), s)
-                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe_P(s[0]) && !this.wgrpBukkitPlugin
+                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWeP(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
                     .checkPIntersection(e.getPlayer(), s)
-                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe_S(s[0]) && !this.wgrpBukkitPlugin
+                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWeS(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
                     .checkSIntersection(e.getPlayer(), s)
-                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe_U(s[0]) && !this.wgrpBukkitPlugin
+                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWeU(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
                     .checkUIntersection(e.getPlayer(), s)) {
                 if (config.getRegionMessageProtectWe()) {
@@ -185,7 +185,7 @@ public class PlayerProtect implements Listener {
                         cmd,
                         wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
             }
-            if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe_CP(s[0])) {
+            if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWeCP(s[0])) {
                 e.setMessage(e.getMessage().replace("-o", ""));
                 if (!this.wgrpBukkitPlugin.getCheckIntersection().checkCPIntersection(e.getPlayer(), s)) {
                     e.setCancelled(true);
