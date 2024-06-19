@@ -22,7 +22,7 @@ public class UtilWEImpl implements UtilCommandWE {
         return new CheckIntersectionImpl(this.wgrpBukkitPlugin);
     }
 
-    public boolean cmdWE(String s) {
+    public boolean cmdWe(String s) {
         s = s.replace("worldedit:", "");
         for (String tmp : this.config.getCmdWe()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase()))
@@ -31,7 +31,7 @@ public class UtilWEImpl implements UtilCommandWE {
         return false;
     }
 
-    public boolean cmdWE_C(String s) {
+    public boolean cmdWe_C(String s) {
         s = s.replace("worldedit:", "");
         for (String tmp : config.getCmdWeC()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
@@ -41,7 +41,7 @@ public class UtilWEImpl implements UtilCommandWE {
         return false;
     }
 
-    public boolean cmdWE_P(String s) {
+    public boolean cmdWe_P(String s) {
         s = s.replace("worldedit:", "");
         for (String tmp : config.getCmdWeP()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
@@ -51,7 +51,7 @@ public class UtilWEImpl implements UtilCommandWE {
         return false;
     }
 
-    public boolean cmdWE_S(String s) {
+    public boolean cmdWe_S(String s) {
         s = s.replace("worldedit:", "");
         for (String tmp : config.getCmdWeS()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
@@ -61,7 +61,7 @@ public class UtilWEImpl implements UtilCommandWE {
         return false;
     }
 
-    public boolean cmdWE_U(String s) {
+    public boolean cmdWe_U(String s) {
         s = s.replace("worldedit:", "");
         for (String tmp : config.getCmdWeU()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
@@ -71,7 +71,7 @@ public class UtilWEImpl implements UtilCommandWE {
         return false;
     }
 
-    public boolean cmdWE_CP(String s) {
+    public boolean cmdWe_CP(String s) {
         s = s.replace("worldedit:", "");
         for (String tmp : config.getCmdWeCP()) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {

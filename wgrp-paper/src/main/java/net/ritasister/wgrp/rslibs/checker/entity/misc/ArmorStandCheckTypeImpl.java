@@ -17,15 +17,16 @@ public class ArmorStandCheckTypeImpl implements EntityCheckType<Entity, EntityTy
 
     @Override
     public boolean check(final @NotNull Entity entity) {
-        ArmorStand armorStand = (ArmorStand) entity;
-        EntityType armorStandType = armorStand.getType();
+        final ArmorStand armorStand = (ArmorStand) entity;
+        final EntityType armorStandType = armorStand.getType();
         return wgrpBukkitPlugin.getConfigLoader().getConfig().getInteractType().contains(armorStandType.name().toLowerCase());
     }
 
     @Override
     public EntityType[] getEntityType() {
-        return new EntityType[]{
+        return new EntityType[] {
             EntityType.ARMOR_STAND
         };
     }
+
 }

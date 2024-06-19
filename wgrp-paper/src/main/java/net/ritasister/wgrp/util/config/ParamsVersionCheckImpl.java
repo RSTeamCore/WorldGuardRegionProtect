@@ -11,8 +11,8 @@ import java.util.Date;
 public class ParamsVersionCheckImpl implements ParamsVersionCheck<ConfigType, YamlConfiguration> {
 
     public String getSimpleDateFormat() {
-        Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd-hh.mm.ss");
+        final Date date = new Date();
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd-hh.mm.ss");
         return simpleDateFormat.format(date);
     }
 

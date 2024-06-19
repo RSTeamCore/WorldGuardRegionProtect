@@ -17,16 +17,17 @@ public class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
     @Override
     public boolean check(final @NotNull Entity entity) {
-        Golem golem = (Golem) entity;
-        EntityType golemType = golem.getType();
+        final Golem golem = (Golem) entity;
+        final EntityType golemType = golem.getType();
         return wgrpBukkitPlugin.getConfigLoader().getConfig().getAnimalType().contains(golemType.name().toLowerCase());
     }
 
     @Override
     public EntityType[] getEntityType() {
-        return new EntityType[]{
-                EntityType.SNOW_GOLEM,
-                EntityType.IRON_GOLEM
+        return new EntityType[] {
+            EntityType.SNOW_GOLEM,
+            EntityType.IRON_GOLEM
         };
     }
+
 }

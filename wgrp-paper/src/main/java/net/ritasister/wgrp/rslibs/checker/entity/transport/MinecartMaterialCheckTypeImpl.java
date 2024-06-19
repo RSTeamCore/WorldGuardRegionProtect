@@ -17,21 +17,21 @@ public class MinecartMaterialCheckTypeImpl implements EntityCheckType<Entity, En
 
     @Override
     public boolean check(final Entity entity) {
-        Minecart minecart = (Minecart) entity;
-        Material minecartMaterial = minecart.getMinecartMaterial();
+        final Minecart minecart = (Minecart) entity;
+        final Material minecartMaterial = minecart.getMinecartMaterial();
         return wgrpBukkitPlugin.getConfigLoader().getConfig().getVehicleType().contains(minecartMaterial.name().toLowerCase());
     }
 
     @Override
     public EntityType[] getEntityType() {
         return new EntityType[] {
-                EntityType.MINECART,
-                EntityType.CHEST_MINECART,
-                EntityType.TNT_MINECART,
-                EntityType.HOPPER_MINECART,
-                EntityType.SPAWNER_MINECART,
-                EntityType.COMMAND_BLOCK_MINECART,
-                EntityType.FURNACE_MINECART
+            EntityType.MINECART,
+            EntityType.CHEST_MINECART,
+            EntityType.TNT_MINECART,
+            EntityType.HOPPER_MINECART,
+            EntityType.SPAWNER_MINECART,
+            EntityType.COMMAND_BLOCK_MINECART,
+            EntityType.FURNACE_MINECART
         };
     }
 

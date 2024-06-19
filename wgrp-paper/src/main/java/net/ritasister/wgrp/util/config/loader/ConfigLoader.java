@@ -16,15 +16,15 @@ public class ConfigLoader implements InitConfig<WorldGuardRegionProtectBukkitPlu
         this.config = new Config(wgrpBukkitPlugin.getWgrpBukkitBase());
 
         //Init messages
-        InitMessages<WorldGuardRegionProtectBukkitPlugin, Config, Container> messageLoader = new MessageLoader();
+        final InitMessages<WorldGuardRegionProtectBukkitPlugin, Config, Container> messageLoader = new MessageLoader();
         this.messages = messageLoader.initMessages(wgrpBukkitPlugin, this.config);
 
         //Check a config version of file
-        CheckVersion configCheckVersion = new ConfigCheckVersion(new ParamsVersionCheckImpl());
+        final CheckVersion configCheckVersion = new ConfigCheckVersion(new ParamsVersionCheckImpl());
         configCheckVersion.checkVersion(wgrpBukkitPlugin);
 
         //Check a lang version of file
-        CheckVersion messageCheckVersion = new MessageCheckVersion(new ParamsVersionCheckImpl());
+        final CheckVersion messageCheckVersion = new MessageCheckVersion(new ParamsVersionCheckImpl());
         messageCheckVersion.checkVersion(wgrpBukkitPlugin, this.config);
 
         wgrpBukkitPlugin.getPluginLogger().info("All configs load successfully!");

@@ -165,7 +165,7 @@ public class Config {
             sendNoUpdate = wgrpBase.getConfig().getBoolean("wgRegionProtect.updateChecker.sendNoUpdate");
 
             //start getting regions.
-            ConfigurationSection regionProtectSection = wgrpBase.getConfig().getConfigurationSection(
+            final ConfigurationSection regionProtectSection = wgrpBase.getConfig().getConfigurationSection(
                     "wgRegionProtect.regionProtect");
             if (regionProtectSection != null) {
                 try {
@@ -176,13 +176,13 @@ public class Config {
                 }
             }
             for (World w : Bukkit.getWorlds()) {
-                ArrayList<String> l = new ArrayList<>();
+                final ArrayList<String> list = new ArrayList<>();
                 if (!regionProtect.containsKey(w.getName())) {
-                    regionProtect.put(w.getName(), l);
+                    regionProtect.put(w.getName(), list);
                 }
             }
 
-            ConfigurationSection regionProtectAllowSection = wgrpBase.getConfig().getConfigurationSection(
+            final ConfigurationSection regionProtectAllowSection = wgrpBase.getConfig().getConfigurationSection(
                     "wgRegionProtect.regionProtectAllow");
             if (regionProtectAllowSection != null) {
                 try {
@@ -196,13 +196,13 @@ public class Config {
                 }
             }
             for (World w : Bukkit.getWorlds()) {
-                ArrayList<String> l = new ArrayList<>();
+                final ArrayList<String> list = new ArrayList<>();
                 if (!regionProtectAllow.containsKey(w.getName())) {
-                    regionProtectAllow.put(w.getName(), l);
+                    regionProtectAllow.put(w.getName(), list);
                 }
             }
 
-            ConfigurationSection regionProtectOnlyBreakAllowSection = wgrpBase.getConfig().getConfigurationSection(
+            final ConfigurationSection regionProtectOnlyBreakAllowSection = wgrpBase.getConfig().getConfigurationSection(
                     "wgRegionProtect.regionProtectOnlyBreakAllow");
             if (regionProtectOnlyBreakAllowSection != null) {
                 try {
@@ -216,9 +216,9 @@ public class Config {
                 }
             }
             for (World w : Bukkit.getWorlds()) {
-                ArrayList<String> l = new ArrayList<>();
+                final ArrayList<String> list = new ArrayList<>();
                 if (!regionProtectOnlyBreakAllow.containsKey(w.getName())) {
-                    regionProtectOnlyBreakAllow.put(w.getName(), l);
+                    regionProtectOnlyBreakAllow.put(w.getName(), list);
                 }
             }
             //End getting regions
@@ -589,7 +589,6 @@ public class Config {
         return cmdWeCP;
     }
 
-
     public boolean getRegionMessageProtect() {
         return regionMessageProtect;
     }
@@ -617,7 +616,6 @@ public class Config {
     public boolean getSpyCommandNotifyAdminPlaySoundEnable() {
         return spyCommandNotifyAdminPlaySoundEnable;
     }
-
 
     public boolean getDataBaseEnable() {
         return databaseEnable;

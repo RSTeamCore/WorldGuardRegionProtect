@@ -79,7 +79,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
             final RegionContainer rc = WorldGuard.getInstance().getPlatform().getRegionContainer();
             final RegionManager regions = rc.get(selection.getWorld());
             final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", min, max);
-            ApplicableRegionSet applicableRegionSet = Objects.requireNonNull(regions).getApplicableRegions(__dummy__);
+            final ApplicableRegionSet applicableRegionSet = Objects.requireNonNull(regions).getApplicableRegions(__dummy__);
             return applicableRegionSet
                     .getRegions()
                     .stream()

@@ -21,11 +21,11 @@ public class ConfigCheckVersion implements CheckVersion {
     @Override
     public void checkVersion(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         wgrpBukkitPlugin.getPluginLogger().info("Started checking the new version of the config file...");
-        File currentConfigFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "config.yml");
-        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(
+        final File currentConfigFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "config.yml");
+        final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(
                 wgrpBukkitPlugin.getWgrpBukkitBase().getResource("config.yml")));
-        YamlConfiguration currentConfigVersion = YamlConfiguration.loadConfiguration(currentConfigFile);
-        YamlConfiguration newVersion = YamlConfiguration.loadConfiguration(reader);
+        final YamlConfiguration currentConfigVersion = YamlConfiguration.loadConfiguration(currentConfigFile);
+        final YamlConfiguration newVersion = YamlConfiguration.loadConfiguration(reader);
         if(currentConfigFile.exists() && currentConfigVersion.getString("wgRegionProtect.version") == null) {
             wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentConfigFile, ConfigType.CONFIG, null);
             wgrpBukkitPlugin.getPluginLogger().info("String version in config file is null...recreating file config...");

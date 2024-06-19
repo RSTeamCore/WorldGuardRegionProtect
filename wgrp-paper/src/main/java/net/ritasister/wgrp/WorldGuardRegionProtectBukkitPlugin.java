@@ -61,7 +61,7 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         rsApi = new RSApiImpl(this, new ParamsVersionCheckImpl());
         configLoader.initConfig(this);
 
-        WGRPChecker wgrpChecker = new WGRPChecker(this);
+        final WGRPChecker wgrpChecker = new WGRPChecker(this);
         wgrpChecker.checkStartUpVersionServer();
         wgrpChecker.detectPlatformRun();
 
@@ -79,10 +79,10 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     }
 
     private void loadAnotherClassAndMethods() {
-        LoadWorldGuard loadWorldGuard = new LoadWorldGuard(this);
+        final LoadWorldGuard loadWorldGuard = new LoadWorldGuard(this);
         loadWorldGuard.loadPlugin();
 
-        LoadPlaceholderAPI loadPlaceholderAPI = new LoadPlaceholderAPI(this);
+        final LoadPlaceholderAPI loadPlaceholderAPI = new LoadPlaceholderAPI(this);
         loadPlaceholderAPI.loadPlugin();
 
         this.regionAdapter = new RegionAdapterManagerPaper();
@@ -90,15 +90,15 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
         playerUtilWE = new UtilWEImpl(this);
         checkIntersection = playerUtilWE.setUpWorldGuardVersionSeven();
 
-        LoadHandlers<WorldGuardRegionProtectBukkitPlugin> loaderCommands = new WGRPLoaderCommands();
+        final LoadHandlers<WorldGuardRegionProtectBukkitPlugin> loaderCommands = new WGRPLoaderCommands();
         loaderCommands.loadHandler(this);
 
-        LoadHandlers<WorldGuardRegionProtectBukkitPlugin> loaderListeners = new WGRPLoaderListeners();
+        final LoadHandlers<WorldGuardRegionProtectBukkitPlugin> loaderListeners = new WGRPLoaderListeners();
         loaderListeners.loadHandler(this);
     }
 
     public void loadMetrics() {
-        int pluginId = 12975;
+        final int pluginId = 12975;
         new Metrics(wgrpBukkitBase, pluginId);
     }
 
@@ -126,8 +126,8 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     }
 
     public void messageToCommandSender(final @NotNull CommandSender commandSender, final String message) {
-        var miniMessage = MiniMessage.miniMessage();
-        Component parsed = miniMessage.deserialize(message);
+        final var miniMessage = MiniMessage.miniMessage();
+        final Component parsed = miniMessage.deserialize(message);
         commandSender.sendMessage(parsed);
     }
 

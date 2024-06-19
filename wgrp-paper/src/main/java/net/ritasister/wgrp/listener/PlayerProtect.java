@@ -156,19 +156,19 @@ public class PlayerProtect implements Listener {
         final String[] s = e.getMessage().toLowerCase().split(" ");
         final String cmd = e.getMessage().split(" ")[0].toLowerCase();
         if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
-            if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE(s[0]) && !this.wgrpBukkitPlugin
+            if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
                     .checkIntersection(e.getPlayer())
-                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_C(s[0]) && !this.wgrpBukkitPlugin
+                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe_C(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
                     .checkCIntersection(e.getPlayer(), s)
-                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_P(s[0]) && !this.wgrpBukkitPlugin
+                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe_P(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
                     .checkPIntersection(e.getPlayer(), s)
-                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_S(s[0]) && !this.wgrpBukkitPlugin
+                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe_S(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
                     .checkSIntersection(e.getPlayer(), s)
-                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_U(s[0]) && !this.wgrpBukkitPlugin
+                    || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe_U(s[0]) && !this.wgrpBukkitPlugin
                     .getCheckIntersection()
                     .checkUIntersection(e.getPlayer(), s)) {
                 if (config.getRegionMessageProtectWe()) {
@@ -185,7 +185,7 @@ public class PlayerProtect implements Listener {
                         cmd,
                         wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
             }
-            if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWE_CP(s[0])) {
+            if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe_CP(s[0])) {
                 e.setMessage(e.getMessage().replace("-o", ""));
                 if (!this.wgrpBukkitPlugin.getCheckIntersection().checkCPIntersection(e.getPlayer(), s)) {
                     e.setCancelled(true);

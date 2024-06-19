@@ -27,32 +27,33 @@ public class EntityCheckTypeProvider {
     private final List<EntityCheckType<Entity, EntityType>> entityCheckTypes;
 
     public EntityCheckTypeProvider(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpPlugin) {
-
-        this.entityCheckTypes = new ArrayList<>() {{
-            //Ambient
-            add(new AmbientCheckTypeImpl(wgrpPlugin));
-            //Mobs
-            add(new AnimalCheckTypeImpl(wgrpPlugin));
-            add(new MonsterCheckTypeImpl(wgrpPlugin));
-            add(new WaterMobCheckTypeImpl(wgrpPlugin));
-            add(new HumanEntityCheckTypeImpl(wgrpPlugin));
-            add(new AllayMobCheckTypeImpl(wgrpPlugin));
-            add(new GolemCheckTypeImpl(wgrpPlugin));
-            //Transport
-            add(new BoatMaterialCheckTypeImpl(wgrpPlugin));
-            add(new MinecartMaterialCheckTypeImpl(wgrpPlugin));
-            //Misc
-            add(new HangingCheckTypeImpl(wgrpPlugin));
-            add(new ArmorStandCheckTypeImpl(wgrpPlugin));
-            add(new ExplosiveCheckTypeImpl(wgrpPlugin));
-        }};
+        this.entityCheckTypes = new ArrayList<>() {
+            {
+                add(new AmbientCheckTypeImpl(wgrpPlugin));
+                //Mobs
+                add(new AnimalCheckTypeImpl(wgrpPlugin));
+                add(new MonsterCheckTypeImpl(wgrpPlugin));
+                add(new WaterMobCheckTypeImpl(wgrpPlugin));
+                add(new HumanEntityCheckTypeImpl(wgrpPlugin));
+                add(new AllayMobCheckTypeImpl(wgrpPlugin));
+                add(new GolemCheckTypeImpl(wgrpPlugin));
+                //Transport
+                add(new BoatMaterialCheckTypeImpl(wgrpPlugin));
+                add(new MinecartMaterialCheckTypeImpl(wgrpPlugin));
+                //Misc
+                add(new HangingCheckTypeImpl(wgrpPlugin));
+                add(new ArmorStandCheckTypeImpl(wgrpPlugin));
+                add(new ExplosiveCheckTypeImpl(wgrpPlugin));
+            }
+        };
     }
 
     public EntityCheckType<Entity, EntityType> getCheck(Entity entity) {
         return this.entityCheckTypes
                 .stream()
-                .filter((check) -> Arrays.asList(check.getEntityType()).contains(entity.getType()))
+                .filter(check -> Arrays.asList(check.getEntityType()).contains(entity.getType()))
                 .findFirst()
                 .orElseThrow();
     }
+
 }

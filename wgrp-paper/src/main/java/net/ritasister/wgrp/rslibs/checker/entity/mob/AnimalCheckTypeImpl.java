@@ -17,51 +17,50 @@ public class AnimalCheckTypeImpl implements EntityCheckType<Entity, EntityType> 
 
     @Override
     public boolean check(final @NotNull Entity entity) {
-        Animals animals = (Animals) entity;
-        EntityType animalsType = animals.getType();
+        final Animals animals = (Animals) entity;
+        final EntityType animalsType = animals.getType();
         return wgrpBukkitPlugin.getConfigLoader().getConfig().getAnimalType().contains(animalsType.name().toLowerCase());
     }
 
     @Override
     public EntityType[] getEntityType() {
-        return new EntityType[]{
-                //Misc
-                EntityType.VILLAGER,
-                //Water creature
-                EntityType.AXOLOTL,
-                //Land creature
-                EntityType.DONKEY,
-                EntityType.PARROT,
-                EntityType.TRADER_LLAMA,
-                EntityType.HORSE,
-                EntityType.POLAR_BEAR,
-                EntityType.OCELOT,
-                EntityType.CAT,
-                EntityType.FROG,
-                EntityType.COW,
-                EntityType.FOX,
-                EntityType.MOOSHROOM,
-                EntityType.ZOMBIE_HORSE,
-                EntityType.PANDA,
-                EntityType.BEE,
-                EntityType.SKELETON_HORSE,
-                EntityType.PIG,
-                EntityType.LLAMA,
-                EntityType.GOAT,
-                EntityType.WOLF,
-                EntityType.CHICKEN,
-                EntityType.SNIFFER,
-                EntityType.SHEEP,
-                EntityType.RABBIT,
-                EntityType.TURTLE,
-                EntityType.WANDERING_TRADER,
-                EntityType.MULE,
-                EntityType.TADPOLE,
-                EntityType.CAMEL,
-                EntityType.HOGLIN,
-                EntityType.ARMADILLO
+        return new EntityType[] {
+            //Misc
+            EntityType.VILLAGER,
+            //Water creature
+            EntityType.AXOLOTL,
+            //Land creature
+            EntityType.DONKEY,
+            EntityType.PARROT,
+            EntityType.TRADER_LLAMA,
+            EntityType.HORSE,
+            EntityType.POLAR_BEAR,
+            EntityType.OCELOT,
+            EntityType.CAT,
+            EntityType.FROG,
+            EntityType.COW,
+            EntityType.FOX,
+            EntityType.MOOSHROOM,
+            EntityType.ZOMBIE_HORSE,
+            EntityType.PANDA,
+            EntityType.BEE,
+            EntityType.SKELETON_HORSE,
+            EntityType.PIG,
+            EntityType.LLAMA,
+            EntityType.GOAT,
+            EntityType.WOLF,
+            EntityType.CHICKEN,
+            EntityType.SNIFFER,
+            EntityType.SHEEP,
+            EntityType.RABBIT,
+            EntityType.TURTLE,
+            EntityType.WANDERING_TRADER,
+            EntityType.MULE,
+            EntityType.TADPOLE,
+            EntityType.CAMEL,
+            EntityType.HOGLIN,
+            EntityType.ARMADILLO
         };
     }
-
 
 }

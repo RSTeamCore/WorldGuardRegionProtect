@@ -17,16 +17,17 @@ public class BoatMaterialCheckTypeImpl implements EntityCheckType<Entity, Entity
 
     @Override
     public boolean check(final Entity entity) {
-        Boat boat = (Boat) entity;
-        Material boatMaterial = boat.getBoatMaterial();
+        final Boat boat = (Boat) entity;
+        final Material boatMaterial = boat.getBoatMaterial();
         return wgrpBukkitPlugin.getConfigLoader().getConfig().getVehicleType().contains(boatMaterial.name().toLowerCase());
     }
 
     @Override
     public EntityType[] getEntityType() {
         return new EntityType[] {
-                EntityType.CHEST_BOAT,
-                EntityType.BOAT
+            EntityType.CHEST_BOAT,
+            EntityType.BOAT
         };
     }
+
 }
