@@ -180,114 +180,148 @@ public class Config {
     }
 
     private void checkFields(@NotNull Field field) {
-        switch (field.getName()) {
+        String fieldName = field.getName();
+
+        switch (fieldName) {
+            case "lang", "updateChecker", "sendNoUpdate" -> handleBasicSettings(fieldName);
+
+            case "interactType", "vehicleType", "animalType", "monsterType", "waterMobType",
+                 "signType", "entityExplodeType", "naturalBlockOrItem" -> handleTypedSettings(fieldName);
+
+            case "denyCollisionWithVehicle", "denySitAsPassengerInVehicle", "denyDamageVehicle",
+                 "denyTakeLecternBook", "denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot",
+                 "denyPlaceItemFrameOrPainting", "denyInteractWithItemFrame", "denyDamageItemFrameOrPainting",
+                 "denyStonecutterRecipeSelect", "denyLoomPatternSelect" -> handleDenySettings(fieldName);
+
+            case "cmdWe", "cmdWeC", "cmdWeP", "cmdWeS", "cmdWeU", "cmdWeCP", "spyCommandList" -> handleCommandSettings(fieldName);
+
+            case "explodeEntity", "regionMessageProtect", "regionMessageProtectWe", "spyCommandNotifyConsole", "spyCommandNotifyAdmin",
+                 "spyCommandNotifyAdminPlaySoundEnable", "spyCommandNotifyAdminPlaySound" -> handleSpySettings(fieldName);
+
+            case "enable", "mysqlsettings" -> handleDatabaseSettings(fieldName);
+        }
+    }
+
+    private void handleBasicSettings(String fieldName) {
+        switch (fieldName) {
             case "lang" -> lang = "en";
             case "updateChecker" -> updateChecker = true;
             case "sendNoUpdate" -> sendNoUpdate = true;
+        }
+    }
 
+    private void handleTypedSettings(String fieldName) {
+        switch (fieldName) {
             case "interactType" -> interactType = List.of(
-                    "armor_stand", "end_crystal", "bucket",
-                    "water_bucket", "lava_bucket", "tropical_fish_bucket",
-                    "pufferfish_bucket", "axolotl_bucket", "cod_bucket",
-                    "salmon_bucket", "tadpole_bucket"
+                    "armor_stand", "end_crystal", "bucket", "water_bucket",
+                    "lava_bucket", "tropical_fish_bucket", "pufferfish_bucket",
+                    "axolotl_bucket", "cod_bucket", "salmon_bucket", "tadpole_bucket"
             );
             case "vehicleType" -> vehicleType = List.of(
-                    "minecart", "tnt_minecart", "command_block_minecart",
-                    "hopper_minecart", "chest_minecart", "furnace_minecart",
-                    "oak_boat", "oak_chest_boat",
-                    "spruce_boat", "spruce_chest_boat",
-                    "birch_boat", "birch_chest_boat",
-                    "jungle_boat", "jungle_chest_boat",
-                    "acacia_boat", "acacia_chest_boat",
-                    "dark_oak_boat", "dark_oak_chest_boat",
-                    "mangrove_boat", "mangrove_chest_boat",
-                    "cherry_boat", "cherry_chest_boat",
-                    "bamboo_raft", "bamboo_chest_raft"
+                    "minecart", "tnt_minecart", "command_block_minecart", "hopper_minecart",
+                    "chest_minecart", "furnace_minecart", "oak_boat", "oak_chest_boat", "spruce_boat",
+                    "spruce_chest_boat", "birch_boat", "birch_chest_boat", "jungle_boat",
+                    "jungle_chest_boat", "acacia_boat", "acacia_chest_boat", "dark_oak_boat",
+                    "dark_oak_chest_boat", "mangrove_boat", "mangrove_chest_boat", "cherry_boat",
+                    "cherry_chest_boat", "bamboo_raft", "bamboo_chest_raft"
             );
-            case "animalType" -> animalType = List.of(
-                    "tropical_fish", "axolotl", "turtle",
-                    "sniffer", "camel"
-            );
-            case "monsterType" -> monsterType = List.of(
-                    "tropical_fish", "axolotl", "turtle",
-                    "sniffer", "camel"
-            );
-            case "waterMobType" -> waterMobType = List.of(
-                    "tropical_fish", "axolotl", "turtle",
-                    "sniffer", "camel"
-            );
+            case "animalType", "monsterType", "waterMobType" -> setAnimalMonsterWaterMobTypes(fieldName);
             case "signType" -> signType = List.of(
-                    "oak_sign", "spruce_sign", "birch_sign",
-                    "jungle_sign", "acacia_sign", "dark_oak_sign",
-                    "mangrove_sign", "cherry_sign", "bamboo_sign",
-                    "crimson_sign", "warped_sign",
-                    "oak_hanging_sign", "spruce_hanging_sign", "birch_hanging_sign",
-                    "jungle_hanging_sign", "acacia_hanging_sign", "dark_oak_hanging_sign",
-                    "mangrove_hanging_sign", "cherry_hanging_sign", "bamboo_hanging_sign",
+                    "oak_sign", "spruce_sign", "birch_sign", "jungle_sign",
+                    "acacia_sign", "dark_oak_sign", "mangrove_sign", "cherry_sign",
+                    "bamboo_sign", "crimson_sign", "warped_sign", "oak_hanging_sign",
+                    "spruce_hanging_sign", "birch_hanging_sign", "jungle_hanging_sign", "acacia_hanging_sign",
+                    "dark_oak_hanging_sign", "mangrove_hanging_sign", "cherry_hanging_sign", "bamboo_hanging_sign",
                     "crimson_hanging_sign", "warped_hanging_sign"
             );
             case "entityExplodeType" -> entityExplodeType = List.of(
-                    "primed_tnt", "end_crystal", "minecart_tnt",
-                    "creeper", "wither_skull"
+                    "primed_tnt", "end_crystal", "minecart_tnt", "creeper", "wither_skull"
             );
             case "naturalBlockOrItem" -> naturalBlockOrItem = List.of(
-                    "oak_sapling", "spruce_sapling", "birch_sapling",
-                    "jungle_sapling", "acacia_sapling", "dark_oak_sapling",
-                    "mangrove_propagule", "dead_bush", "fern",
-                    "azalea", "flowering_azalea",
-                    "dandelion", "poppy", "blue_orchid", "allium", "azure_bluet",
+                    "oak_sapling", "spruce_sapling", "birch_sapling", "jungle_sapling",
+                    "acacia_sapling", "dark_oak_sapling", "mangrove_propagule", "dead_bush",
+                    "fern", "azalea", "flowering_azalea", "dandelion",
+                    "poppy", "blue_orchid", "allium", "azure_bluet",
                     "red_tulip", "orange_tulip", "white_tulip", "pink_tulip",
-                    "oxeye_daisy", "cornflower", "lily_of_the_valley",
-                    "bamboo", "sugar_cane", "cactus", "wither_rose",
-                    "crimson_roots", "warped_roots", "cherry_sapling", "torchflower"
+                    "oxeye_daisy", "cornflower", "lily_of_the_valley", "bamboo",
+                    "sugar_cane", "cactus", "wither_rose", "crimson_roots",
+                    "warped_roots", "cherry_sapling", "torchflower"
             );
+        }
+    }
+
+    private void setAnimalMonsterWaterMobTypes(String fieldName) {
+        List<String> commonTypes = List.of(
+                "tropical_fish", "axolotl",
+                "turtle", "sniffer", "camel");
+        switch (fieldName) {
+            case "animalType" -> animalType = commonTypes;
+            case "monsterType" -> monsterType = commonTypes;
+            case "waterMobType" -> waterMobType = commonTypes;
+        }
+    }
+
+    private void handleDenySettings(String fieldName) {
+        switch (fieldName) {
             case "denyCollisionWithVehicle" -> denyCollisionWithVehicle = true;
             case "denySitAsPassengerInVehicle" -> denySitAsPassengerInVehicle = true;
             case "denyDamageVehicle" -> denyDamageVehicle = true;
             case "denyTakeLecternBook" -> denyTakeLecternBook = true;
-            case "denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot" ->
-                    denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot = true;
+            case "denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot" -> denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot = true;
             case "denyPlaceItemFrameOrPainting" -> denyPlaceItemFrameOrPainting = true;
             case "denyInteractWithItemFrame" -> denyInteractWithItemFrame = true;
             case "denyDamageItemFrameOrPainting" -> denyDamageItemFrameOrPainting = true;
             case "denyStonecutterRecipeSelect" -> denyStonecutterRecipeSelect = true;
             case "denyLoomPatternSelect" -> denyLoomPatternSelect = true;
+        }
+    }
 
+    private void handleCommandSettings(String fieldName) {
+        switch (fieldName) {
             case "cmdWe" -> cmdWe = List.of(
-                    "//set", "//replace", "//overlay",
-                    "//walls", "//deform", "//fill",
-                    "//fillr", "//fixlava", "//hollow",
-                    "//move", "//stack", "//smooth",
+                    "//set", "//replace", "//overlay", "//walls",
+                    "//deform", "//fill", "//fillr", "//fixlava",
+                    "//hollow", "//move", "//stack", "//smooth",
                     "//cut", "//replacenear"
             );
             case "cmdWeC" -> cmdWeC = List.of(
-                    "//cyl", "//hcyl", "//drain", "//rep");
+                    "//cyl", "//hcyl",
+                    "//drain", "//rep"
+            );
             case "cmdWeP" -> cmdWeP = List.of(
-                    "//pyramid", "//hpyramid");
+                    "//pyramid", "//hpyramid"
+            );
             case "cmdWeS" -> cmdWeS = List.of(
-                    "//sphere", "//hsphere");
+                    "//sphere", "//hsphere"
+            );
             case "cmdWeU" -> cmdWeU = List.of(
-                    "//up", "/up");
+                    "//up", "/up"
+            );
             case "cmdWeCP" -> cmdWeCP = List.of(
-                    "//paste", "//place", "//replacenear", "//hollow");
+                    "//paste", "//place", "//replacenear", "//hollow"
+            );
+            case "spyCommandList" -> spyCommandList = List.of(
+                    "//set", "//replace", "//overlay", "//walls",
+                    "//deform", "//fill", "//fillr", "//fixlava", "//hollow",
+                    "//move", "//stack", "//smooth", "//cut", "//replacenear"
+            );
+        }
+    }
 
+    private void handleSpySettings(String fieldName) {
+        switch (fieldName) {
             case "explodeEntity" -> explodeEntity = true;
-
             case "regionMessageProtect" -> regionMessageProtect = true;
             case "regionMessageProtectWe" -> regionMessageProtectWe = true;
             case "spyCommandNotifyConsole" -> isSpyCommandNotifyConsoleEnable = true;
             case "spyCommandNotifyAdmin" -> isSpyCommandNotifyAdminEnable = true;
             case "spyCommandNotifyAdminPlaySoundEnable" -> spyCommandNotifyAdminPlaySoundEnable = true;
             case "spyCommandNotifyAdminPlaySound" -> spyCommandNotifyAdminPlaySound = "BLOCK_ANVIL_PLACE";
-            case "spyCommandList" -> spyCommandList = List.of(
-                    "//set", "//replace", "//overlay",
-                    "//walls", "//deform", "//fill",
-                    "//fillr", "//fixlava", "//hollow",
-                    "//move", "//stack", "//smooth",
-                    "//cut", "//replacenear"
-            );
+        }
+    }
 
-            //Database settings.
+    private void handleDatabaseSettings(String fieldName) {
+        switch (fieldName) {
             case "enable" -> databaseEnable = false;
             case "mysqlsettings" -> mysqlsettings = new MySQLSettings(
                     "localhost",
