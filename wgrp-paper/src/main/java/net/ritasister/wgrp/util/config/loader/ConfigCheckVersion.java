@@ -33,7 +33,7 @@ public class ConfigCheckVersion implements CheckVersion {
                 !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion)
                 .equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG, newVersion))) {
             wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentConfigFile, ConfigType.CONFIG, null);
-            wgrpBukkitPlugin.getWgrpBukkitBase().getApi().getPluginLogger().info("Found new version of config file, updating this now...");
+            wgrpBukkitPlugin.getPluginLogger().info("Found new version of config file, updating this now...");
         } else {
             wgrpBukkitPlugin.getPluginLogger().info("No update is required for the config file");
         }

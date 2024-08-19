@@ -74,7 +74,7 @@ public class WorldGuardRegionProtectBukkitPlugin extends WorldGuardRegionProtect
     }
 
     public void unLoad() {
-        configLoader.getConfig().saveConfig();
+        //configLoader.getConfig().saveConfig();
     }
 
     private void loadAnotherClassAndMethods() {
