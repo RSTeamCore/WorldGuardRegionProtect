@@ -12,9 +12,9 @@ import java.util.Objects;
 
 public class ConfigCheckVersion implements CheckVersion {
 
-    private final ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck;
+    private final ParamsVersionCheck<YamlConfiguration> paramsVersionCheck;
 
-    public ConfigCheckVersion(ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck) {
+    public ConfigCheckVersion(ParamsVersionCheck<YamlConfiguration> paramsVersionCheck) {
         this.paramsVersionCheck = paramsVersionCheck;
     }
 
@@ -27,12 +27,12 @@ public class ConfigCheckVersion implements CheckVersion {
         final YamlConfiguration currentConfigVersion = YamlConfiguration.loadConfiguration(currentConfigFile);
         final YamlConfiguration newVersion = YamlConfiguration.loadConfiguration(reader);
         if(currentConfigFile.exists() && currentConfigVersion.getString("wgRegionProtect.version") == null) {
-            wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentConfigFile, ConfigType.CONFIG, null);
+            wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentConfigFile, ConfigType.CONFIG.name(), null);
             wgrpBukkitPlugin.getPluginLogger().info("String version in config file is null...recreating file config...");
         } else if (currentConfigFile.exists() &&
-                !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion)
-                .equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG, newVersion))) {
-            wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentConfigFile, ConfigType.CONFIG, null);
+                !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG.name(), currentConfigVersion)
+                .equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG.name(), newVersion))) {
+            wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentConfigFile, ConfigType.CONFIG.name(), null);
             wgrpBukkitPlugin.getPluginLogger().info("Found new version of config file, updating this now...");
         } else {
             wgrpBukkitPlugin.getPluginLogger().info("No update is required for the config file");

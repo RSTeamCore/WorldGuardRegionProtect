@@ -33,14 +33,14 @@ public class Config {
     }
 
     public void reloadConfig() {
+        regionProtect = new HashMap<>();
+        regionProtectAllow = new HashMap<>();
+        regionProtectOnlyBreakAllow = new HashMap<>();
+
+        wgrpBase.saveDefaultConfig();
+        wgrpBase.reloadConfig();
+
         for (ConfigFields configFields : ConfigFields.values()) {
-            regionProtect = new HashMap<>();
-            regionProtectAllow = new HashMap<>();
-            regionProtectOnlyBreakAllow = new HashMap<>();
-
-            wgrpBase.saveDefaultConfig();
-            wgrpBase.reloadConfig();
-
             try {
                 configFields.get(wgrpBase);
                 //start getting regions.
@@ -52,12 +52,13 @@ public class Config {
                 wgrpBase.getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
                 e.fillInStackTrace();
             }
-            for (Field field : this.getClass().getFields()) {
+            for (Field field : ConfigFields.class.getFields()) {
                 if (field.isAnnotationPresent(CanRecover.class)) {
                     try {
-                        if (field.get(this.getClass()) == null) {
+                        if (field.get(ConfigFields.class).equals(null)) {
                             if (field.getName().equals(configFields.name())) {
-                                wgrpBase.getLogger().info("Fields will be loaded: " + configFields.name());
+                                configFields.get(wgrpBase);
+                                wgrpBase.getLogger().info(String.format("Field %s has been recovered", configFields.name()));
                             }
                         }
                     } catch (IllegalAccessException e) {

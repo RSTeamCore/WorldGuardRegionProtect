@@ -39,6 +39,7 @@ public class CommandWGRP extends AbstractCommand {
 
     /**
      * Just reload.
+     *
      * @param sender
      * @param args
      */
@@ -82,6 +83,7 @@ public class CommandWGRP extends AbstractCommand {
 
     /**
      * Admin can add a region to protection.
+     *
      * @param sender
      * @param args
      */
@@ -91,7 +93,7 @@ public class CommandWGRP extends AbstractCommand {
             tabArgs = {"<region>", "[world]"},
             permission = UtilPermissions.COMMAND_ADD_REGION,
             description = "add a region to the config to protect.")
-    public void wgrpAddRegion(@NotNull CommandSender sender, String[] args) {
+    public void wgrpAddRegion(@NotNull CommandSender sender, String @NotNull [] args) {
         if (args.length == 1 || args.length == 2) {
             final Map<String, List<String>> rgMap = config.getRegionProtectMap();
             if (sender instanceof Player) {
@@ -152,6 +154,7 @@ public class CommandWGRP extends AbstractCommand {
 
     /**
      * Admin can remove a region from protection.
+     *
      * @param sender
      * @param args
      */
@@ -161,7 +164,7 @@ public class CommandWGRP extends AbstractCommand {
             tabArgs = {"<region>", "[world]"},
             permission = UtilPermissions.COMMAND_REMOVE_REGION,
             description = "remove the region from the config to remove the protection.")
-    public void wgrpRemoveRegion(@NotNull CommandSender sender, String[] args) {
+    public void wgrpRemoveRegion(@NotNull CommandSender sender, String @NotNull [] args) {
         if (args.length == 1 || args.length == 2) {
             final Map<String, List<String>> rgMap = config.getRegionProtectMap();
             if (sender instanceof Player) {
@@ -185,7 +188,12 @@ public class CommandWGRP extends AbstractCommand {
         }
     }
 
-    private void getRgMap(@NotNull final CommandSender sender, final @NotNull Map<String, List<String>> rgMap, final String region, final String world) {
+    private void getRgMap(
+            @NotNull final CommandSender sender,
+            final @NotNull Map<String, List<String>> rgMap,
+            final String region,
+            final String world
+    ) {
         if (rgMap.containsKey(world) && rgMap.get(world).contains(region)) {
             final List<String> newRegionList = new ArrayList<>(rgMap.get(world));
             newRegionList.remove(region);
@@ -199,6 +207,7 @@ public class CommandWGRP extends AbstractCommand {
 
     /**
      * Help subcommands for player.
+     *
      * @param sender
      * @param args
      */
@@ -229,6 +238,7 @@ public class CommandWGRP extends AbstractCommand {
 
     /**
      * Spy command for admin only.
+     *
      * @param sender
      * @param args
      */

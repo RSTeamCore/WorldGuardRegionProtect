@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ParamsVersionCheckImpl implements ParamsVersionCheck<ConfigType, YamlConfiguration> {
+public class ParamsVersionCheckImpl implements ParamsVersionCheck<YamlConfiguration> {
 
     public String getSimpleDateFormat() {
         final Date date = new Date();
@@ -17,21 +17,21 @@ public class ParamsVersionCheckImpl implements ParamsVersionCheck<ConfigType, Ya
     }
 
     @Override
-    public String getCurrentVersion(ConfigType configType, final @NotNull YamlConfiguration currentYaml) {
+    public String getCurrentVersion(String configType, final @NotNull YamlConfiguration currentYaml) {
         return getStringVersion(configType, currentYaml);
     }
 
     @Override
-    public String getNewVersion(ConfigType configType, final @NotNull YamlConfiguration newYaml) {
+    public String getNewVersion(String configType, final @NotNull YamlConfiguration newYaml) {
         return getStringVersion(configType, newYaml);
     }
 
-    private @NotNull String getStringVersion(final ConfigType configType, @NotNull final YamlConfiguration yamlConfiguration) {
-        if (ConfigType.CONFIG.equals(configType)) {
+    private @NotNull String getStringVersion(final String configType, @NotNull final YamlConfiguration yamlConfiguration) {
+        if (ConfigType.CONFIG.name().equals(configType)) {
             return yamlConfiguration.getString("wgRegionProtect.version")
                     .replaceAll("\"", "")
                     .replaceAll("'", "");
-        } else if (ConfigType.LANG.equals(configType)) {
+        } else if (ConfigType.LANG.name().equals(configType)) {
             return yamlConfiguration.getString("langTitle.version")
                     .replaceAll("\"", "")
                     .replaceAll("'", "");

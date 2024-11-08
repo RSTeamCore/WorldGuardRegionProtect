@@ -16,10 +16,12 @@ public class ConfigLoader implements InitConfig<WorldGuardRegionProtectBukkitPlu
         this.config = new Config(wgrpBukkitPlugin.getWgrpBukkitBase());
 
         //Init messages
+        wgrpBukkitPlugin.getPluginLogger().info("Started loading messages...");
         final InitMessages<WorldGuardRegionProtectBukkitPlugin, Config, Container> messageLoader = new MessageLoader();
         this.messages = messageLoader.initMessages(wgrpBukkitPlugin, this.config);
 
         //Check a config version of file
+        wgrpBukkitPlugin.getPluginLogger().info("Started checking configuration versions of file...");
         final CheckVersion configCheckVersion = new ConfigCheckVersion(new ParamsVersionCheckImpl());
         configCheckVersion.checkVersion(wgrpBukkitPlugin);
 

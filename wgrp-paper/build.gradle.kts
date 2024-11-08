@@ -49,7 +49,7 @@ dependencies {
 
 tasks.withType<ProcessResources> {
     filteringCharset = Charsets.UTF_8.name()
-    filesMatching("paper-plugin.yml") {
+    filesMatching("plugin.yml") {
         expand(
                 "name" to rootProject.name,
                 "version" to project.version,

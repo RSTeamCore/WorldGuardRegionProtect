@@ -16,6 +16,8 @@ import java.util.Map;
 public enum ConfigFields {
 
     @CanRecover
+    CONFIG_VERSION("configVersion", "1.1", "wgRegionProtect.version"),
+    @CanRecover
     LANG("lang", "en_US", "wgRegionProtect.lang"),
     @CanRecover
     SEND_NO_UPDATE("sendNoUpdate", true, "wgRegionProtect.updateChecker.enable"),
@@ -212,30 +214,12 @@ public enum ConfigFields {
             "//fillr", "//fixlava", "//hollow",
             "//move", "//stack", "//smooth",
             "//cut", "//replacenear"
-    ), "wgRegionProtect.spySettings.spyCommandList"),
-    ;
-
-    /*@CanRecover
-    DATABASE_ENABLE("databaseEnable", true, "wgRegionProtect.dataSource.enable"),
-    @CanRecover
-    MYSQL_SETTINGS("mysqlSettings", String.valueOf(new MySQLSettings(
-            "localhost",
-            3306,
-            "database",
-            "root",
-            "password",
-            "wgrp_logs",
-            10,
-            1800,
-            5000,
-            true,
-            60
-    )), "wgRegionProtect.protectInteract.interactType");*/
+    ), "wgRegionProtect.spySettings.spyCommandList");
 
     private final String field;
     private Object param;
     private List<String> elements = new ArrayList<>();
-    private boolean value;
+    private boolean value = false;
     private final String path;
     private MySQLSettings mysqlsettings;
     private static final Map<String, ConfigFields> CONFIG_FIELDS = new HashMap<>();
@@ -281,7 +265,7 @@ public enum ConfigFields {
     }
 
     public Object get(@NotNull WorldGuardRegionProtectBukkitBase wgrpBase) {
-        if(elements.equals(param)) {
+        if(param != null && elements.size() > 1) {
             return elements = wgrpBase.getConfig().getStringList(getPath());
         }
         if(value) {
