@@ -1,12 +1,11 @@
 package net.ritasister.wgrp.util.config;
 
-import net.ritasister.wgrp.api.WorldGuardRegionProtect;
+import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
 import net.ritasister.wgrp.rslibs.annotation.CanRecover;
-import org.bukkit.Bukkit;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,6 +114,18 @@ public enum ConfigFields {
             "wgRegionProtect.protectInteract.player.misc.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot"
     ),
     @CanRecover
+    DENY_LAVA_FLOW_TO_REGION("denyLavaFlowToRegion", true,
+            "wgRegionProtect.protectInteract.other.denyLavaFlowToRegion"
+    ),
+    @CanRecover
+    DENY_WATER_FLOW_TO_REGION("denyWaterFlowToRegion", true,
+            "wgRegionProtect.protectInteract.other.denyWaterFlowToRegion"
+    ),
+    @CanRecover
+    DENY_INTERACT_WITH_FLOWER_POT("denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot", true,
+            "wgRegionProtect.protectInteract.player.misc.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot"
+    ),
+    @CanRecover
     DENY_PLACE_ITEM_FRAME_OR_PAINTING("denyPlaceItemFrameOrPainting", true,
             "wgRegionProtect.protectInteract.player.itemFrame.denyPlaceItemFrameOrPainting"
     ),
@@ -128,7 +139,7 @@ public enum ConfigFields {
     ),
     @CanRecover
     DENY_STONECUTTER_RECIPE_SELECT("denyStonecutterRecipeSelect", true,
-            "wwgRegionProtect.protectInteract.player.tools.denyStonecutterRecipeSelect"
+            "wgRegionProtect.protectInteract.player.tools.denyStonecutterRecipeSelect"
     ),
     @CanRecover
     DENY_LOOM_PATTERN_SELECT("denyLoomPatternSelect", true,
@@ -222,7 +233,7 @@ public enum ConfigFields {
     )), "wgRegionProtect.protectInteract.interactType");*/
 
     private final String field;
-    private String param;
+    private Object param;
     private List<String> elements = new ArrayList<>();
     private boolean value;
     private final String path;
@@ -265,27 +276,26 @@ public enum ConfigFields {
         return CONFIG_FIELDS.get(field.toLowerCase(Locale.ROOT));
     }
 
-    @Nullable
-    public Object getParam() {
-        if(param != null && elements.contains(param)) {
-            return elements;
+    public @NotNull String getPath() {
+        return path;
+    }
+
+    public Object get(@NotNull WorldGuardRegionProtectBukkitBase wgrpBase) {
+        if(elements.equals(param)) {
+            return elements = wgrpBase.getConfig().getStringList(getPath());
         }
         if(value) {
-            return value;
+            return value = wgrpBase.getConfig().getBoolean(getPath());
         }
-        return param;
+        return param = wgrpBase.getConfig().getString(getPath());
     }
 
-    //TODO
-    public @Unmodifiable Object getVariable() {
-        return Bukkit.spigot().getConfig().get(param);
+    public List<String> getList(@NotNull WorldGuardRegionProtectBukkitBase wgrpBase) {
+        return elements = wgrpBase.getConfig().getStringList(getPath());
     }
 
-    public String getPath() {
-        if(path != null) {
-            return String.format("Path %s cannot be null!", path);
-        }
-        return path;
+    public boolean getBoolean(@NotNull WorldGuardRegionProtectBukkitBase wgrpBase) {
+        return value = wgrpBase.getConfig().getBoolean(getPath());
     }
 
     public MySQLSettings getMysqlsettings() {

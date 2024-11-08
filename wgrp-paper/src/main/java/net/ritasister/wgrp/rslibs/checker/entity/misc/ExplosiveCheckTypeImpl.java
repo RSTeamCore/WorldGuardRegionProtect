@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.misc;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Explosive;
@@ -19,7 +20,7 @@ public class ExplosiveCheckTypeImpl implements EntityCheckType<Entity, EntityTyp
     public boolean check(final @NotNull Entity entity) {
         final Explosive explosive = (Explosive) entity;
         final EntityType explosiveType = explosive.getType();
-        return wgrpBukkitPlugin.getConfigLoader().getConfig().getEntityExplodeType().contains(explosiveType.name().toLowerCase());
+        return ConfigFields.ENTITY_EXPLODE_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(explosiveType.name().toLowerCase());
     }
 
     @Override

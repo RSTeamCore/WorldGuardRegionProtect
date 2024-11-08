@@ -23,7 +23,7 @@ public class MessageCheckVersion implements CheckVersion {
     @Override
     public void checkVersion(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin, final @NotNull Config config) {
         wgrpBukkitPlugin.getPluginLogger().info("Started checking the new version of the language file...");
-        final String lang = (String) ConfigFields.getField("LANG").getVariable();
+        final String lang = (String) ConfigFields.LANG.get(wgrpBukkitPlugin.getWgrpBukkitBase());
         final File currentLangFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "lang/" + lang + ".yml");
         final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitPlugin.getWgrpBukkitBase().getResource("lang/" + lang + ".yml")));
         final YamlConfiguration currentLangVersion = YamlConfiguration.loadConfiguration(currentLangFile);

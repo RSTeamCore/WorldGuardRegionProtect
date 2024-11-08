@@ -2,6 +2,7 @@ package net.ritasister.wgrp.listener;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -26,7 +27,7 @@ public class VehicleProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyVehicleCollision(@NotNull VehicleEntityCollisionEvent e) {
-        if (!config.isDenyCollisionWithVehicle()) {
+        if (!ConfigFields.DENY_COLLISION_WITH_VEHICLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
             return;
         }
         wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getEntity(), e.getVehicle());
@@ -34,7 +35,7 @@ public class VehicleProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyVehicleEnter(@NotNull VehicleEnterEvent e) {
-        if (!config.isDenySitAsPassengerInVehicle()) {
+        if (!ConfigFields.DENY_SIT_AS_PASSENGER_IN_VEHICLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
             return;
         }
         wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getEntered(), e.getVehicle());
@@ -42,7 +43,7 @@ public class VehicleProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyVehicleDamage(@NotNull VehicleDamageEvent e) {
-        if (!config.isDenyDamageVehicle()) {
+        if (!ConfigFields.DENY_DAMAGE_VEHICLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
             return;
         }
         wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getAttacker(), e.getVehicle());

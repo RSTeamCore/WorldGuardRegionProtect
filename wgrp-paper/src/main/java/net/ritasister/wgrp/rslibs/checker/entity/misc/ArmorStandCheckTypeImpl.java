@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.misc;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -19,7 +20,7 @@ public class ArmorStandCheckTypeImpl implements EntityCheckType<Entity, EntityTy
     public boolean check(final @NotNull Entity entity) {
         final ArmorStand armorStand = (ArmorStand) entity;
         final EntityType armorStandType = armorStand.getType();
-        return wgrpBukkitPlugin.getConfigLoader().getConfig().getInteractType().contains(armorStandType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(armorStandType.name().toLowerCase());
     }
 
     @Override

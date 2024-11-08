@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
@@ -19,7 +20,7 @@ public class HumanEntityCheckTypeImpl implements EntityCheckType<Entity, EntityT
     public boolean check(final @NotNull Entity entity) {
         final HumanEntity humanEntity = (HumanEntity) entity;
         final EntityType humanEntityType = humanEntity.getType();
-        return wgrpBukkitPlugin.getConfigLoader().getConfig().getInteractType().contains(humanEntityType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(humanEntityType.name().toLowerCase());
     }
 
     @Override

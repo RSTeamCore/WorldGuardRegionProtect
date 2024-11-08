@@ -10,6 +10,7 @@ import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.ConfigType;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -91,20 +92,16 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         if (regionName == null) {
             return;
         }
-        if (wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandNotifyAdminEnable() && this.isPlayerListenerPermission(
+        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase()) && this.isPlayerListenerPermission(
                 player,
                 UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
-            final String cmd = wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandList().toString();
-            if (cmd.contains(senderCommand.toLowerCase()) && wgrpBukkitPlugin
-                    .getConfigLoader()
-                    .getConfig()
-                    .getSpyCommandNotifyAdminPlaySoundEnable()) {
+            final String cmd = ConfigFields.SPY_COMMAND_LIST.get(wgrpBukkitPlugin.getWgrpBukkitBase()).toString();
+            if (cmd.contains(senderCommand.toLowerCase()) &&
+                    ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_PLAY_SOUND_ENABLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
                 player.playSound(
                         player.getLocation(),
-                        wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandNotifyAdminPlaySound().toLowerCase(),
-                        1,
-                        1
-                );
+                        ConfigFields.SPY_COMMAND_NOTIFY_PLAY_SOUND_TYPE
+                                .get(wgrpBukkitPlugin.getWgrpBukkitBase()).toString().toLowerCase(), 1, 1);
                 messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
                         .replace("<cmd>", cmd)
@@ -118,8 +115,8 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         if (regionName == null) {
             return;
         }
-        if (wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandNotifyConsoleEnable()) {
-            final String cmd = wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandList().toString();
+        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_CONSOLE_ENABLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+            final String cmd = ConfigFields.SPY_COMMAND_LIST.get(wgrpBukkitPlugin.getWgrpBukkitBase()).toString();
             if(cmd.contains(senderCommand.toLowerCase())) {
                 final ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
                 messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
@@ -154,7 +151,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
             double z,
             String world) {
         if (this.isPlayerListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
-                && wgrpBukkitPlugin.getConfigLoader().getConfig().getSpyCommandNotifyAdminEnable()) {
+                && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
             messages.get("messages.Notify.sendAdminInfoIfActionInRegion")
                     .replace("<player>", suspectName)
                     .replace("<action>", action.getAction())

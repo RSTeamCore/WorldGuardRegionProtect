@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.WaterMob;
@@ -18,7 +19,7 @@ public class WaterMobCheckTypeImpl implements EntityCheckType<Entity, EntityType
     public boolean check(final Entity entity) {
         final WaterMob waterMob = (WaterMob) entity;
         final EntityType waterMobType = waterMob.getType();
-        return wgrpBukkitPlugin.getConfigLoader().getConfig().getWaterMobType().contains(waterMobType.name().toLowerCase());
+        return ConfigFields.WATER_MOB_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(waterMobType.name().toLowerCase());
     }
 
     @Override

@@ -3,6 +3,7 @@ package net.ritasister.wgrp.listener;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,8 +34,10 @@ public class MiscProtect implements Listener {
         final Block block = e.getBlock();
         final Location location = e.getToBlock().getLocation();
         if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
-            if (config.isDenyWaterFlowToRegion() && block.getType() == Material.WATER
-                    || config.isDenyLavaFlowToRegion() && block.getType() == Material.LAVA) {
+            if (ConfigFields.DENY_WATER_FLOW_TO_REGION.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())
+                    && block.getType() == Material.WATER
+                    || ConfigFields.DENY_LAVA_FLOW_TO_REGION.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())
+                    && block.getType() == Material.LAVA) {
                 e.setCancelled(true);
             }
         }

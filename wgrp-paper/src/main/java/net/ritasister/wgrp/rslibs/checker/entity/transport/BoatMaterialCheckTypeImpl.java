@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.transport;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.Material;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
@@ -19,7 +20,7 @@ public class BoatMaterialCheckTypeImpl implements EntityCheckType<Entity, Entity
     public boolean check(final Entity entity) {
         final Boat boat = (Boat) entity;
         final Material boatMaterial = boat.getBoatMaterial();
-        return wgrpBukkitPlugin.getConfigLoader().getConfig().getVehicleType().contains(boatMaterial.name().toLowerCase());
+        return ConfigFields.VEHICLE_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(boatMaterial.name().toLowerCase());
     }
 
     @Override

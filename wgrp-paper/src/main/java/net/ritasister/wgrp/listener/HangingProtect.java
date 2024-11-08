@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.listener;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
-import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,16 +16,13 @@ public class HangingProtect implements Listener {
 
     private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
 
-    private final Config config;
-
     public HangingProtect(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
-        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyHangingPlace(@NotNull HangingPlaceEvent e) {
-        if (!config.isDenyPlaceItemFrameOrPainting()) {
+        if (!ConfigFields.DENY_PLACE_ITEM_FRAME_OR_PAINTING.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
             return;
         }
         wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getEntity(), e.getEntity());
@@ -33,7 +30,7 @@ public class HangingProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyHangingBreakByEntity(@NotNull HangingBreakByEntityEvent e) {
-        if (!config.isDenyDamageItemFrameOrPainting()) {
+        if (!ConfigFields.DENY_DAMAGE_ITEM_FRAME_OR_PAINTING.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
             return;
         }
         wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getRemover(), e.getEntity());

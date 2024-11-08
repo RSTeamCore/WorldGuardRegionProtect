@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.transport;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -19,7 +20,7 @@ public class MinecartMaterialCheckTypeImpl implements EntityCheckType<Entity, En
     public boolean check(final Entity entity) {
         final Minecart minecart = (Minecart) entity;
         final Material minecartMaterial = minecart.getMinecartMaterial();
-        return wgrpBukkitPlugin.getConfigLoader().getConfig().getVehicleType().contains(minecartMaterial.name().toLowerCase());
+        return ConfigFields.VEHICLE_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(minecartMaterial.name().toLowerCase());
     }
 
     @Override

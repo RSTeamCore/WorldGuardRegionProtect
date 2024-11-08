@@ -5,6 +5,7 @@ import io.papermc.paper.event.player.PlayerStonecutterRecipeSelectEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +25,7 @@ public class ToolsProtect implements Listener {
 
     private final Config config;
 
-    public ToolsProtect(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
+    public ToolsProtect(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
         this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
     }
@@ -33,7 +34,7 @@ public class ToolsProtect implements Listener {
     private void denyPlayerTakeLecternBook(@NotNull PlayerTakeLecternBookEvent e) {
         final Player player = e.getPlayer();
         final Location location = e.getLectern().getLocation();
-        if (config.isDenyTakeLecternBook()) {
+        if (ConfigFields.DENY_TAKE_LECTERN_BOOK.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
             if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                     && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
@@ -45,7 +46,7 @@ public class ToolsProtect implements Listener {
     private void denyStonecutterRecipeSelect(@NotNull PlayerStonecutterRecipeSelectEvent e) {
         final Player player = e.getPlayer();
         final Location location = e.getStonecutterInventory().getLocation();
-        if (config.isDenyStonecutterRecipeSelect()) {
+        if (ConfigFields.DENY_STONECUTTER_RECIPE_SELECT.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
             if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
                     Objects.requireNonNull(location),
                     config.getRegionProtectMap()
@@ -60,7 +61,7 @@ public class ToolsProtect implements Listener {
     private void denyLoomPatternSelect(@NotNull PlayerLoomPatternSelectEvent e) {
         final Player player = e.getPlayer();
         final Location location = e.getLoomInventory().getLocation();
-        if (config.isDenyLoomPatternSelect()) {
+        if (ConfigFields.DENY_LOOM_PATTERN_SELECT.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
             if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
                     Objects.requireNonNull(location),
                     config.getRegionProtectMap()

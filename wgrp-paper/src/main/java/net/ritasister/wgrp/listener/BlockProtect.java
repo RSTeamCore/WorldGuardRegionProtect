@@ -5,6 +5,7 @@ import net.ritasister.wgrp.api.regions.RegionAction;
 import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -86,7 +87,7 @@ public class BlockProtect implements Listener {
     }
 
     private void sendMessage(Player player) {
-        if (config.getRegionMessageProtect()) {
+        if (ConfigFields.REGION_MESSAGE_PROTECT.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
             messages.get("messages.ServerMsg.wgrpMsg").send(player);
         }
     }
