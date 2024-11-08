@@ -161,9 +161,15 @@ public class Config {
 
             try {
                 wgrpBase.getConfig().get(configFields.getPath());
+
+                //start getting regions.
+                regionProtectSection();
+                regionProtectAllowSection();
+                regionProtectOnlyBreakAllowSection();
+                //End getting regions
             } catch (Exception e) {
                 wgrpBase.getApi().getPluginLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
-                e.printStackTrace();
+                e.fillInStackTrace();
             }
             for (Field field : this.getClass().getFields()) {
                 if (field.isAnnotationPresent(CanRecover.class)) {
@@ -238,18 +244,6 @@ public class Config {
 
         //Database settings.
         databaseEnable = wgrpBase.getConfig().getBoolean("wgRegionProtect.dataSource.enable");
-        /*mysqlsettings = new MySQLSettings(
-                wgrpBase.getConfig().getString("wgRegionProtect.dataSource.host"),
-                wgrpBase.getConfig().getInt("wgRegionProtect.dataSource.port"),
-                wgrpBase.getConfig().getString("wgRegionProtect.dataSource.database"),
-                wgrpBase.getConfig().getString("wgRegionProtect.dataSource.user"),
-                wgrpBase.getConfig().getString("wgRegionProtect.dataSource.password"),
-                wgrpBase.getConfig().getString("wgRegionProtect.dataSource.table"),
-                wgrpBase.getConfig().getInt("wgRegionProtect.dataSource.maxPoolSize"),
-                wgrpBase.getConfig().getInt("wgRegionProtect.dataSource.maxLifetime"),
-                wgrpBase.getConfig().getInt("wgRegionProtect.dataSource.connectionTimeout"),
-                wgrpBase.getConfig().getBoolean("wgRegionProtect.dataSource.useSsl"),
-                wgrpBase.getConfig().getInt("wgRegionProtect.dataSource.intervalReload"));*/
     }
 
     private void regionProtectOnlyBreakAllowSection() {
@@ -304,8 +298,7 @@ public class Config {
                 for (String world : regionProtectSection.getKeys(false)) {
                     regionProtect.put(world, wgrpBase.getConfig().getStringList("wgRegionProtect.regionProtect." + world));
                 }
-            } catch (Throwable ignored) {
-            }
+            } catch (Throwable ignored) {}
         }
         for (World w : Bukkit.getWorlds()) {
             final ArrayList<String> list = new ArrayList<>();
@@ -337,7 +330,9 @@ public class Config {
 
     public void setRegionProtectMap(@NotNull Map<String, List<String>> value) {
         regionProtect = value;
-        //saveConfig(configFields.getPath());
+        for (ConfigFields configFields : ConfigFields.values()) {
+            saveConfig(configFields.getPath(), configFields.getParam());
+        }
     }
 
     public Map<String, List<String>> getRegionProtectAllowMap() {
@@ -346,7 +341,9 @@ public class Config {
 
     public void setRegionProtectAllowMap(@NotNull Map<String, List<String>> value) {
         regionProtectAllow = value;
-        //saveConfig(configFields.getPath());
+        for (ConfigFields configFields : ConfigFields.values()) {
+            saveConfig(configFields.getPath(), configFields.getParam());
+        }
     }
 
     public Map<String, List<String>> getRegionProtectOnlyBreakAllowMap() {
@@ -355,7 +352,9 @@ public class Config {
 
     public void setRegionProtectOnlyBreakAllow(@NotNull Map<String, List<String>> value) {
         regionProtectOnlyBreakAllow = value;
-        //saveConfig(configFields.getPath());
+        for (ConfigFields configFields : ConfigFields.values()) {
+            saveConfig(configFields.getPath(), configFields.getParam());
+        }
     }
 
     public List<String> getInteractType() {
@@ -502,7 +501,7 @@ public class Config {
         return mysqlsettings;
     }*/
 
-    public void saveConfig(final String path, final String field) {
+    public void saveConfig(final String path, final Object field) {
         try {
             if (regionProtect.isEmpty()) {
                 wgrpBase.getConfig().set(
@@ -538,7 +537,6 @@ public class Config {
                 wgrpBase.getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow." + entry.getKey(), entry.getValue());
             }
             wgrpBase.getConfig().set(path, field);
-            //wgrpBase.getConfig().getBoolean()
             wgrpBase.saveConfig();
         } catch (Exception e) {
             wgrpBase.getApi().getPluginLogger().severe("Could not save config.yml! Error: " + e.getLocalizedMessage());

@@ -1,8 +1,12 @@
 package net.ritasister.wgrp.util.config;
 
+import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import net.ritasister.wgrp.rslibs.annotation.CanRecover;
+import org.bukkit.Bukkit;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +27,8 @@ public enum ConfigFields {
             "armor_stand", "end_crystal", "bucket",
             "water_bucket", "lava_bucket", "tropical_fish_bucket",
             "pufferfish_bucket", "axolotl_bucket", "cod_bucket",
-            "salmon_bucket", "tadpole_bucket"
-    ),
-            "wgRegionProtect.protectInteract.interactType"
-    ),
+            "salmon_bucket", "tadpole_bucket"),
+            "wgRegionProtect.protectInteract.interactType"),
     @CanRecover
     VEHICLE_TYPE("vehicleType", List.of(
             "minecart", "tnt_minecart", "command_block_minecart",
@@ -93,11 +95,11 @@ public enum ConfigFields {
             "wgRegionProtect.protectInteract.naturalBlockOrItem"
     ),
     @CanRecover
-    DENY_COLLISION_WITH_VEHICLE("denyCollisionWithVehicle", "true",
+    DENY_COLLISION_WITH_VEHICLE("denyCollisionWithVehicle", true,
             "wgRegionProtect.protectInteract.player.vehicle.denyCollisionWithVehicle"
     ),
     @CanRecover
-    DENY_SIT_AS_PASSENGER_IN_VEHICLE("denySitAsPassengerInVehicle", "true",
+    DENY_SIT_AS_PASSENGER_IN_VEHICLE("denySitAsPassengerInVehicle", true,
             "wgRegionProtect.protectInteract.player.vehicle.denySitAsPassengerInVehicle"
     ),
     @CanRecover
@@ -200,7 +202,9 @@ public enum ConfigFields {
             "//move", "//stack", "//smooth",
             "//cut", "//replacenear"
     ), "wgRegionProtect.spySettings.spyCommandList"),
-    @CanRecover
+    ;
+
+    /*@CanRecover
     DATABASE_ENABLE("databaseEnable", true, "wgRegionProtect.dataSource.enable"),
     @CanRecover
     MYSQL_SETTINGS("mysqlSettings", String.valueOf(new MySQLSettings(
@@ -215,7 +219,7 @@ public enum ConfigFields {
             5000,
             true,
             60
-    )), "wgRegionProtect.protectInteract.interactType");
+    )), "wgRegionProtect.protectInteract.interactType");*/
 
     private final String field;
     private String param;
@@ -251,7 +255,7 @@ public enum ConfigFields {
         this.path = path;
     }
 
-    @org.jetbrains.annotations.ApiStatus.Internal
+    @ApiStatus.Internal
     @Contract("null -> null")
     @Nullable
     public static ConfigFields getField(String field) {
@@ -261,20 +265,26 @@ public enum ConfigFields {
         return CONFIG_FIELDS.get(field.toLowerCase(Locale.ROOT));
     }
 
-    public String getField() {
-        return field;
-    }
-
-    public String getParam() {
-        if (param == null) {
-            return param = String.valueOf(value).replace("'","");
-        } else if (elements != null) {
-            return param = String.valueOf(elements);
+    @Nullable
+    public Object getParam() {
+        if(param != null && elements.contains(param)) {
+            return elements;
+        }
+        if(value) {
+            return value;
         }
         return param;
     }
 
+    //TODO
+    public @Unmodifiable Object getVariable() {
+        return Bukkit.spigot().getConfig().get(param);
+    }
+
     public String getPath() {
+        if(path != null) {
+            return String.format("Path %s cannot be null!", path);
+        }
         return path;
     }
 

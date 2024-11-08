@@ -15,7 +15,7 @@ public class MessageLoader implements InitMessages<WorldGuardRegionProtectBukkit
 
     @Override
     public Container initMessages(@NotNull final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin, final @NotNull Config config) {
-        final String lang = ConfigFields.LANG.getParam();
+        final String lang = (String) ConfigFields.getField("LANG").getVariable();
         final File file = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "lang/" + lang + ".yml");
         if (!file.exists()) {
             wgrpBukkitPlugin.getWgrpBukkitBase().saveResource("lang/" + lang + ".yml", false);

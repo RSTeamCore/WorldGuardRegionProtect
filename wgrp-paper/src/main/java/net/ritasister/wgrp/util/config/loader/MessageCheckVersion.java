@@ -4,6 +4,7 @@ import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import net.ritasister.wgrp.util.ConfigType;
 import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +23,7 @@ public class MessageCheckVersion implements CheckVersion {
     @Override
     public void checkVersion(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin, final @NotNull Config config) {
         wgrpBukkitPlugin.getPluginLogger().info("Started checking the new version of the language file...");
-        final String lang = config.getLang();
+        final String lang = (String) ConfigFields.getField("LANG").getVariable();
         final File currentLangFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "lang/" + lang + ".yml");
         final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitPlugin.getWgrpBukkitBase().getResource("lang/" + lang + ".yml")));
         final YamlConfiguration currentLangVersion = YamlConfiguration.loadConfiguration(currentLangFile);

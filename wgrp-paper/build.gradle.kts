@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import xyz.jpenilla.runpaper.task.RunServer
 
 plugins {
-    id("io.papermc.paperweight.userdev") version "1.7.1"
+    id("io.papermc.paperweight.userdev") version "1.7.4"
     alias(libs.plugins.shadow)
     alias(libs.plugins.runPaper)
 }
@@ -39,7 +39,7 @@ dependencies {
 
     //Plugins
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.1.0-SNAPSHOT")
-    compileOnly("me.clip:placeholderapi:2.11.7")
+    compileOnly("me.clip:placeholderapi:2.11.6")
 
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
@@ -49,7 +49,7 @@ dependencies {
 
 tasks.withType<ProcessResources> {
     filteringCharset = Charsets.UTF_8.name()
-    filesMatching("plugin.yml") {
+    filesMatching("paper-plugin.yml") {
         expand(
                 "name" to rootProject.name,
                 "version" to project.version,
@@ -78,6 +78,6 @@ tasks.named("assemble").configure {
 }
 
 tasks.named<RunServer>("runServer") {
-    minecraftVersion("1.20.6")
+    minecraftVersion("1.21.1")
     jvmArgs("-Xms4G", "-Xmx4G")
 }
