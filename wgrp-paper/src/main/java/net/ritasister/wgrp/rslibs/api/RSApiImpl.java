@@ -35,8 +35,8 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     private final Container messages;
     private final ParamsVersionCheck<YamlConfiguration> paramsVersionCheck;
 
-    public final static String SUPPORTED_VERSION_RANGE = "1.21 - 1.21.1";
-    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.21", "1.21.1");
+    public final static String SUPPORTED_VERSION_RANGE = "1.21 - 1.21.3";
+    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.21", "1.21.1", "1.21.2", "1.21.3");
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin,
                      final ParamsVersionCheck<YamlConfiguration> check) {
