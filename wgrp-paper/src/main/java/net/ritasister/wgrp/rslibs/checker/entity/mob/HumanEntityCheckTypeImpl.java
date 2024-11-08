@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.entity.Entity;
@@ -8,19 +8,19 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
 
-public class HumanEntityCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
+public final class HumanEntityCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public HumanEntityCheckTypeImpl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public HumanEntityCheckTypeImpl(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @Override
     public boolean check(final @NotNull Entity entity) {
         final HumanEntity humanEntity = (HumanEntity) entity;
         final EntityType humanEntityType = humanEntity.getType();
-        return ConfigFields.INTERACT_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(humanEntityType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(humanEntityType.name().toLowerCase());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.checker.entity.transport;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.Material;
@@ -8,19 +8,19 @@ import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
-public class BoatMaterialCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
+public final class BoatMaterialCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public BoatMaterialCheckTypeImpl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public BoatMaterialCheckTypeImpl(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @Override
     public boolean check(final Entity entity) {
         final Boat boat = (Boat) entity;
         final Material boatMaterial = boat.getBoatMaterial();
-        return ConfigFields.VEHICLE_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(boatMaterial.name().toLowerCase());
+        return ConfigFields.VEHICLE_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(boatMaterial.name().toLowerCase());
     }
 
     @Override

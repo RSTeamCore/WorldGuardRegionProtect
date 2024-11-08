@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.loader;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
 import net.ritasister.wgrp.util.ServerType;
 import org.bukkit.Bukkit;
@@ -11,26 +11,26 @@ import org.jetbrains.annotations.NotNull;
  */
 public class WGRPChecker {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
     private boolean isPaper = false;
     private boolean isFolia = false;
 
-    public WGRPChecker(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public WGRPChecker(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     /**
      * Check all variables while the plugin is startup.
      */
     public void checkStartUpVersionServer() {
-        if (!wgrpBukkitPlugin.getRsApi().isVersionSupported()) {
-            wgrpBukkitPlugin.getPluginLogger().severe(String.format("""
+        if (!wgrpPlugin.getRsApi().isVersionSupported()) {
+            wgrpPlugin.getPluginLogger().severe(String.format("""
                     This plugin version works only on %s!
                     Please read this thread: https://www.spigotmc.org/resources/81321/
                     The main post on spigotmc and please download the correct version of plugin for your server version.
                     """, RSApiImpl.SUPPORTED_VERSION_RANGE));
-            Bukkit.getServer().getPluginManager().disablePlugin(wgrpBukkitPlugin.getWgrpBukkitBase());
+            Bukkit.getServer().getPluginManager().disablePlugin(wgrpPlugin.getWgrpPaperBase());
         }
     }
 
@@ -46,7 +46,7 @@ public class WGRPChecker {
             } catch (ClassNotFoundException ignored) {
                 detectUnTrustPlatformMessage();
             }
-            wgrpBukkitPlugin.getPluginLogger().info(String.format("Using paper: %s", isPaper()));
+            wgrpPlugin.getPluginLogger().info(String.format("Using paper: %s", isPaper()));
         } else if (isFolia) {
             try {
                 Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
@@ -59,7 +59,7 @@ public class WGRPChecker {
     }
 
     private void detectTrustPlatformMessage(ServerType platform) {
-        wgrpBukkitPlugin.getPluginLogger().info(String.format("""
+        wgrpPlugin.getPluginLogger().info(String.format("""
                 Your platform is: %s
                 You will be able to get support.
                 Running in folia can will be may issues, so please report any error.
@@ -67,7 +67,7 @@ public class WGRPChecker {
     }
 
     private void detectUnTrustPlatformMessage() {
-        wgrpBukkitPlugin.getPluginLogger().info(String.format("""
+        wgrpPlugin.getPluginLogger().info(String.format("""
                 Your platform is: %s
                 Better if you are running your server on paper or other forks of paper.
                 Please don't use any untrusted forks.
@@ -79,10 +79,10 @@ public class WGRPChecker {
      * Notify about build this plugin. This is an alpha, beta or pre-release.
      */
     public void notifyAboutBuild() {
-        if (wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion().contains("alpha")
-                || wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion().contains("beta")
-                || wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion().contains("pre")) {
-            wgrpBukkitPlugin.getPluginLogger().warn("""
+        if (wgrpPlugin.getWgrpPaperBase().getPluginMeta().getVersion().contains("alpha")
+                || wgrpPlugin.getWgrpPaperBase().getPluginMeta().getVersion().contains("beta")
+                || wgrpPlugin.getWgrpPaperBase().getPluginMeta().getVersion().contains("pre")) {
+            wgrpPlugin.getPluginLogger().warn("""
                      This is a test build. This building may be unstable!
                      When reporting a bug:
                      Use the issue tracker! Don't report bugs in the reviews.
@@ -92,15 +92,15 @@ public class WGRPChecker {
                      Provide any stack traces or "errors" using pastebin.
                     """);
         } else {
-            wgrpBukkitPlugin.getPluginLogger().info("This is the latest stable building.");
+            wgrpPlugin.getPluginLogger().info("This is the latest stable building.");
         }
-        wgrpBukkitPlugin.getPluginLogger().info(String.format(
+        wgrpPlugin.getPluginLogger().info(String.format(
                 """ 
                         Using %s language version %s. Author of this localization - %s.
                         """,
-                wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.language"),
-                wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.version"),
-                wgrpBukkitPlugin.getConfigLoader().getMessages().get("langTitle.author")
+                wgrpPlugin.getConfigLoader().getMessages().get("langTitle.language"),
+                wgrpPlugin.getConfigLoader().getMessages().get("langTitle.version"),
+                wgrpPlugin.getConfigLoader().getMessages().get("langTitle.author")
         ));
     }
 

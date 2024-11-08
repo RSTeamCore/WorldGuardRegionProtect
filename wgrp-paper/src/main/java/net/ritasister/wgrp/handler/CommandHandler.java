@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.handler;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.handler.Handler;
 import net.ritasister.wgrp.command.extend.CommandWGRP;
 
@@ -9,15 +9,15 @@ import net.ritasister.wgrp.command.extend.CommandWGRP;
  */
 public class CommandHandler implements Handler<Void> {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public CommandHandler(WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public CommandHandler(WorldGuardRegionProtectPaperPlugin wgrpPaperPlugin) {
+        this.wgrpPlugin = wgrpPaperPlugin;
     }
 
     @Override
     public void handle() {
-        new CommandWGRP(wgrpBukkitPlugin);
-        wgrpBukkitPlugin.getPluginLogger().info("All commands registered successfully!");
+        new CommandWGRP(wgrpPlugin);
+        wgrpPlugin.getPluginLogger().info("All commands registered successfully!");
     }
 }

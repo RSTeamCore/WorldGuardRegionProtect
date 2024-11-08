@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.loader.plugin;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.papi.PlaceholderAPIExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -10,10 +10,10 @@ import org.bukkit.plugin.Plugin;
  */
 public class LoadPlaceholderAPI {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public LoadPlaceholderAPI(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public LoadPlaceholderAPI(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     /**
@@ -23,11 +23,11 @@ public class LoadPlaceholderAPI {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI");
         if (plugin != null && plugin.isEnabled()) {
             try {
-                wgrpBukkitPlugin.getPluginLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
-                new PlaceholderAPIExpansion(wgrpBukkitPlugin.getWgrpBukkitBase()).register();
+                wgrpPlugin.getPluginLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
+                new PlaceholderAPIExpansion(wgrpPlugin.getWgrpPaperBase()).register();
                 isPlaceholderAPIEnabled(true);
             } catch (NullPointerException | ClassCastException | NoClassDefFoundError exception) {
-                wgrpBukkitPlugin.getPluginLogger().severe(exception.getMessage());
+                wgrpPlugin.getPluginLogger().severe(exception.getMessage());
             }
         }
     }

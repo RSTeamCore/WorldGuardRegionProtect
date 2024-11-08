@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.checker.entity;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.rslibs.checker.entity.misc.ArmorStandCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.misc.ExplosiveCheckTypeImpl;
@@ -26,7 +26,7 @@ public class EntityCheckTypeProvider {
 
     private final List<EntityCheckType<Entity, EntityType>> entityCheckTypes;
 
-    public EntityCheckTypeProvider(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpPlugin) {
+    public EntityCheckTypeProvider(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.entityCheckTypes = new ArrayList<>() {
             {
                 add(new AmbientCheckTypeImpl(wgrpPlugin));

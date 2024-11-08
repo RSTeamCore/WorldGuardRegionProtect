@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.util.config;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
 import net.ritasister.wgrp.rslibs.annotation.CanRecover;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
@@ -264,7 +264,7 @@ public enum ConfigFields {
         return path;
     }
 
-    public Object get(@NotNull WorldGuardRegionProtectBukkitBase wgrpBase) {
+    public Object get(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
         if(param != null && elements.size() > 1) {
             return elements = wgrpBase.getConfig().getStringList(getPath());
         }
@@ -274,11 +274,11 @@ public enum ConfigFields {
         return param = wgrpBase.getConfig().getString(getPath());
     }
 
-    public List<String> getList(@NotNull WorldGuardRegionProtectBukkitBase wgrpBase) {
+    public List<String> getList(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
         return elements = wgrpBase.getConfig().getStringList(getPath());
     }
 
-    public boolean getBoolean(@NotNull WorldGuardRegionProtectBukkitBase wgrpBase) {
+    public boolean getBoolean(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
         return value = wgrpBase.getConfig().getBoolean(getPath());
     }
 

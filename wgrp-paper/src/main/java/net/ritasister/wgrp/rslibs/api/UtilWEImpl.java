@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.util.config.Config;
@@ -10,23 +10,23 @@ import org.bukkit.entity.Player;
 
 public class UtilWEImpl implements UtilCommandWE {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
     private Config config;
 
-    public UtilWEImpl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public UtilWEImpl(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @Override
     public CheckIntersection<Player> setUpWorldGuardVersionSeven() {
-        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
-        return new CheckIntersectionImpl(this.wgrpBukkitPlugin);
+        this.config = wgrpPlugin.getConfigLoader().getConfig();
+        return new CheckIntersectionImpl(this.wgrpPlugin);
     }
 
     public boolean cmdWe(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : ConfigFields.CMD_WE.getList(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+        for (String tmp : ConfigFields.CMD_WE.getList(wgrpPlugin.getWgrpPaperBase())) {
             if (tmp.equalsIgnoreCase(s.toLowerCase()))
                 return true;
         }
@@ -35,7 +35,7 @@ public class UtilWEImpl implements UtilCommandWE {
 
     public boolean cmdWeC(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : ConfigFields.CMD_WE_C.getList(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+        for (String tmp : ConfigFields.CMD_WE_C.getList(wgrpPlugin.getWgrpPaperBase())) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -45,7 +45,7 @@ public class UtilWEImpl implements UtilCommandWE {
 
     public boolean cmdWeP(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : ConfigFields.CMD_WE_P.getList(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+        for (String tmp : ConfigFields.CMD_WE_P.getList(wgrpPlugin.getWgrpPaperBase())) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -55,7 +55,7 @@ public class UtilWEImpl implements UtilCommandWE {
 
     public boolean cmdWeS(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : ConfigFields.CMD_WE_S.getList(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+        for (String tmp : ConfigFields.CMD_WE_S.getList(wgrpPlugin.getWgrpPaperBase())) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -65,7 +65,7 @@ public class UtilWEImpl implements UtilCommandWE {
 
     public boolean cmdWeU(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : ConfigFields.CMD_WE_U.getList(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+        for (String tmp : ConfigFields.CMD_WE_U.getList(wgrpPlugin.getWgrpPaperBase())) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }
@@ -75,7 +75,7 @@ public class UtilWEImpl implements UtilCommandWE {
 
     public boolean cmdWeCP(String s) {
         s = s.replace("worldedit:", "");
-        for (String tmp : ConfigFields.CMD_WE_CP.getList(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+        for (String tmp : ConfigFields.CMD_WE_CP.getList(wgrpPlugin.getWgrpPaperBase())) {
             if (tmp.equalsIgnoreCase(s.toLowerCase())) {
                 return true;
             }

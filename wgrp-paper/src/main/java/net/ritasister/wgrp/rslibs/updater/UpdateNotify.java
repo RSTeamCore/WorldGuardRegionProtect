@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.updater;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class UpdateNotify {
 
     private final JavaPlugin javaPlugin;
-    private final WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     static final String PLUGIN_URL_ADDRESS = "https://www.spigotmc.org/resources/81321";
     static final String NO_UPDATE_AVAILABLE = """
             <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
@@ -17,9 +17,9 @@ public class UpdateNotify {
             <gold>             You are using the latest version.
             <yellow>=======================================""";
 
-    public UpdateNotify(final JavaPlugin javaPlugin, final WorldGuardRegionProtectBukkitPlugin worldGuardRegionProtectBukkitPlugin) {
+    public UpdateNotify(final JavaPlugin javaPlugin, final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.javaPlugin = javaPlugin;
-        this.worldGuardRegionProtectBukkitPlugin = worldGuardRegionProtectBukkitPlugin;
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     public void checkUpdateNotify(String oldVersion) {
@@ -34,10 +34,10 @@ public class UpdateNotify {
                 <yellow>=======================================""";
         new UpdateChecker(javaPlugin, 81321).getVersion(newVersion -> {
             if (oldVersion.equalsIgnoreCase(newVersion)) {
-                worldGuardRegionProtectBukkitPlugin.messageToCommandSender(server.getConsoleSender(), String.format(
+                wgrpPlugin.messageToCommandSender(server.getConsoleSender(), String.format(
                         NO_UPDATE_AVAILABLE, newVersion));
             } else {
-                worldGuardRegionProtectBukkitPlugin.messageToCommandSender(server.getConsoleSender(), String.format(
+                wgrpPlugin.messageToCommandSender(server.getConsoleSender(), String.format(
                         hasUpdate,
                         oldVersion,
                         newVersion,
@@ -58,13 +58,13 @@ public class UpdateNotify {
             new UpdateChecker(javaPlugin, 81321).getVersion(newVersion -> {
                 if (oldVersion.equalsIgnoreCase(newVersion)) {
                     if(sendNoUpdate) {
-                        worldGuardRegionProtectBukkitPlugin.messageToCommandSender(player, String.format(
+                        wgrpPlugin.messageToCommandSender(player, String.format(
                                 NO_UPDATE_AVAILABLE,
                                 newVersion
                         ));
                     }
                 } else {
-                    worldGuardRegionProtectBukkitPlugin.messageToCommandSender(player, String.format(
+                    wgrpPlugin.messageToCommandSender(player, String.format(
                                     hasUpdate,
                             oldVersion,
                             newVersion,

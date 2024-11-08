@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.entity.Animals;
@@ -8,19 +8,19 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 
-public class AnimalCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
+public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public AnimalCheckTypeImpl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public AnimalCheckTypeImpl(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @Override
     public boolean check(final @NotNull Entity entity) {
         final Animals animals = (Animals) entity;
         final EntityType animalsType = animals.getType();
-        return ConfigFields.ANIMAL_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(animalsType.name().toLowerCase());
+        return ConfigFields.ANIMAL_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(animalsType.name().toLowerCase());
     }
 
     @Override

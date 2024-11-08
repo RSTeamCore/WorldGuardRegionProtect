@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.listener;
 
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
@@ -39,32 +39,32 @@ public class PlayerProtect implements Listener {
     );
     static final Set<String> REGION_EDIT_ARGS = Set.of("f", "flag");
     static final Set<String> REGION_EDIT_ARGS_FLAGS = Set.of("-f", "-u", "-n", "-g", "-a");
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final Config config;
     private final Container messages;
 
-    public PlayerProtect(@NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
-        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
-        this.messages = wgrpBukkitPlugin.getConfigLoader().getMessages();
+    public PlayerProtect(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
+        this.config = wgrpPlugin.getConfigLoader().getConfig();
+        this.messages = wgrpPlugin.getConfigLoader().getMessages();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
-        if (!wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.ADMIN_RIGHT)) {
-            wgrpBukkitPlugin.getUpdateNotify().checkUpdateNotify(
-                    wgrpBukkitPlugin.getWgrpBukkitBase().getPluginMeta().getVersion(),
+        if (!wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.ADMIN_RIGHT)) {
+            wgrpPlugin.getUpdateNotify().checkUpdateNotify(
+                    wgrpPlugin.getWgrpPaperBase().getPluginMeta().getVersion(),
                     e.getPlayer(),
-                    ConfigFields.UPDATE_CHECKER.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase()),
-                    ConfigFields.SEND_NO_UPDATE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase()));
+                    ConfigFields.UPDATE_CHECKER.getBoolean(wgrpPlugin.getWgrpPaperBase()),
+                    ConfigFields.SEND_NO_UPDATE.getBoolean(wgrpPlugin.getWgrpPaperBase()));
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyChangeSign(@NotNull SignChangeEvent e) {
-        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(e.getPlayer().getLocation(), config.getRegionProtectMap())
-                && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
-            if (ConfigFields.SIGN_TYPE.get(wgrpBukkitPlugin.getWgrpBukkitBase()).toString().contains(e.getBlock().getType().name().toLowerCase())) {
+        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(e.getPlayer().getLocation(), config.getRegionProtectMap())
+                && wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+            if (ConfigFields.SIGN_TYPE.get(wgrpPlugin.getWgrpPaperBase()).toString().contains(e.getBlock().getType().name().toLowerCase())) {
                 e.setCancelled(true);
             }
         }
@@ -73,10 +73,10 @@ public class PlayerProtect implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyFlowerPotManipulate(@NotNull PlayerFlowerPotManipulateEvent e) {
         final Location location = e.getFlowerpot().getLocation();
-        if (ConfigFields.DENY_MANIPULATE_WITH_FLOWERPOT.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
-            if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
-                if (ConfigFields.NATURAL_BLOCK_OR_ITEM.get(wgrpBukkitPlugin.getWgrpBukkitBase()).toString().contains(e.getItem().getType().name().toLowerCase())) {
+        if (ConfigFields.DENY_MANIPULATE_WITH_FLOWERPOT.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
+                    && wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+                if (ConfigFields.NATURAL_BLOCK_OR_ITEM.get(wgrpPlugin.getWgrpPaperBase()).toString().contains(e.getItem().getType().name().toLowerCase())) {
                     e.setCancelled(true);
                 }
             }
@@ -86,8 +86,8 @@ public class PlayerProtect implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyPlayerBucketEntity(@NotNull PlayerBucketEntityEvent e) {
         final Location location = e.getEntity().getLocation();
-        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
+                && wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
             if (e.getPlayer().getInventory().getItemInMainHand().getType() == Material.WATER_BUCKET) {
                 e.setCancelled(true);
             }
@@ -99,10 +99,10 @@ public class PlayerProtect implements Listener {
         if (e.getItem() != null && e.getClickedBlock() != null) {
             final Player player = e.getPlayer();
             final Location location = e.getClickedBlock().getLocation();
-            if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
-                for (String spawnVehicleType : ConfigFields.VEHICLE_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase())) {
-                    for (String spawnEntityType : ConfigFields.INTERACT_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
+                    && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                for (String spawnVehicleType : ConfigFields.VEHICLE_TYPE.getList(wgrpPlugin.getWgrpPaperBase())) {
+                    for (String spawnEntityType : ConfigFields.INTERACT_TYPE.getList(wgrpPlugin.getWgrpPaperBase())) {
                         checkDenyInteract(e, spawnVehicleType, spawnEntityType, player);
                     }
                 }
@@ -129,8 +129,8 @@ public class PlayerProtect implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyManipulateArmorStand(@NotNull PlayerArmorStandManipulateEvent e) {
         final Location clickLoc = e.getRightClicked().getLocation();
-        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(clickLoc, config.getRegionProtectMap())) {
-            if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(clickLoc, config.getRegionProtectMap())) {
+            if (wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
                 if (e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
                     e.setCancelled(true);
                 }
@@ -140,13 +140,13 @@ public class PlayerProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyInteractWithItemFrame(@NotNull PlayerInteractEntityEvent e) {
-        if (!ConfigFields.DENY_INTERACT_WITH_ITEM_FRAME.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+        if (!ConfigFields.DENY_INTERACT_WITH_ITEM_FRAME.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             return;
         }
-        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
+        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(
                 e.getRightClicked().getLocation(),
                 config.getRegionProtectMap())) {
-            if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+            if (wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
                 switch (e.getRightClicked().getType()) {
                     case ITEM_FRAME, GLOW_ITEM_FRAME -> e.setCancelled(true);
                 }
@@ -158,15 +158,15 @@ public class PlayerProtect implements Listener {
     private void denyUseWEAndWGCommand(@NotNull PlayerCommandPreprocessEvent e) {
         final String[] string = e.getMessage().toLowerCase().split(" ");
         final String cmd = e.getMessage().split(" ")[0].toLowerCase();
-        if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+        if (wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
             checkIntersection(e, string, cmd);
-            if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWeCP(string[0])) {
+            if (this.wgrpPlugin.getPlayerUtilWE().cmdWeCP(string[0])) {
                 e.setMessage(e.getMessage().replace("-o", ""));
-                if (!this.wgrpBukkitPlugin.getCheckIntersection().checkCPIntersection(e.getPlayer(), string)) {
+                if (!this.wgrpPlugin.getCheckIntersection().checkCPIntersection(e.getPlayer(), string)) {
                     e.setCancelled(true);
                 }
-                wgrpBukkitPlugin.getRsApi().notify(e.getPlayer(), e.getPlayer().getName(), cmd, wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
-                wgrpBukkitPlugin.getRsApi().notify(e.getPlayer().getName(), cmd, wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
+                wgrpPlugin.getRsApi().notify(e.getPlayer(), e.getPlayer().getName(), cmd, wgrpPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
+                wgrpPlugin.getRsApi().notify(e.getPlayer().getName(), cmd, wgrpPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
             }
             if (REGION_COMMANDS_NAME.contains(string[0]) && string.length > 2) {
                 for (String list : config.getRegionProtectMap().get(e.getPlayer().getLocation().getWorld().getName())) {
@@ -191,26 +191,26 @@ public class PlayerProtect implements Listener {
     }
 
     private void checkIntersection(@NotNull PlayerCommandPreprocessEvent e, String @NotNull [] string, String cmd) {
-        if (this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWe(string[0]) &&
-                !this.wgrpBukkitPlugin.getCheckIntersection().checkIntersection(e.getPlayer())
-                || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWeC(string[0]) &&
-                !this.wgrpBukkitPlugin.getCheckIntersection().checkCIntersection(e.getPlayer(), string)
-                || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWeP(string[0]) &&
-                !this.wgrpBukkitPlugin.getCheckIntersection().checkPIntersection(e.getPlayer(), string)
-                || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWeS(string[0]) &&
-                !this.wgrpBukkitPlugin.getCheckIntersection().checkSIntersection(e.getPlayer(), string)
-                || this.wgrpBukkitPlugin.getPlayerUtilWE().cmdWeU(string[0]) &&
-                !this.wgrpBukkitPlugin.getCheckIntersection().checkUIntersection(e.getPlayer(), string)) {
-            if (ConfigFields.REGION_MESSAGE_PROTECT_WE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+        if (this.wgrpPlugin.getPlayerUtilWE().cmdWe(string[0]) &&
+                !this.wgrpPlugin.getCheckIntersection().checkIntersection(e.getPlayer())
+                || this.wgrpPlugin.getPlayerUtilWE().cmdWeC(string[0]) &&
+                !this.wgrpPlugin.getCheckIntersection().checkCIntersection(e.getPlayer(), string)
+                || this.wgrpPlugin.getPlayerUtilWE().cmdWeP(string[0]) &&
+                !this.wgrpPlugin.getCheckIntersection().checkPIntersection(e.getPlayer(), string)
+                || this.wgrpPlugin.getPlayerUtilWE().cmdWeS(string[0]) &&
+                !this.wgrpPlugin.getCheckIntersection().checkSIntersection(e.getPlayer(), string)
+                || this.wgrpPlugin.getPlayerUtilWE().cmdWeU(string[0]) &&
+                !this.wgrpPlugin.getCheckIntersection().checkUIntersection(e.getPlayer(), string)) {
+            if (ConfigFields.REGION_MESSAGE_PROTECT_WE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
                 messages.get("messages.ServerMsg.wgrpMsgWe").send(e.getPlayer());
                 e.setCancelled(true);
             }
-            wgrpBukkitPlugin.getRsApi().notify(
+            wgrpPlugin.getRsApi().notify(
                     e.getPlayer(), e.getPlayer().getName(),
-                    cmd, wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
-            wgrpBukkitPlugin.getRsApi().notify(
+                    cmd, wgrpPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
+            wgrpPlugin.getRsApi().notify(
                     e.getPlayer().getName(),
-                    cmd, wgrpBukkitPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
+                    cmd, wgrpPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
         }
     }
 

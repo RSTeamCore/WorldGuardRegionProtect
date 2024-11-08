@@ -2,7 +2,7 @@ package net.ritasister.wgrp.listener;
 
 import io.papermc.paper.event.player.PlayerLoomPatternSelectEvent;
 import io.papermc.paper.event.player.PlayerStonecutterRecipeSelectEvent;
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.ConfigFields;
@@ -21,22 +21,22 @@ import java.util.Objects;
  */
 public class ToolsProtect implements Listener {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
     private final Config config;
 
-    public ToolsProtect(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
-        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
+    public ToolsProtect(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
+        this.config = wgrpPlugin.getConfigLoader().getConfig();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyPlayerTakeLecternBook(@NotNull PlayerTakeLecternBookEvent e) {
         final Player player = e.getPlayer();
         final Location location = e.getLectern().getLocation();
-        if (ConfigFields.DENY_TAKE_LECTERN_BOOK.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
-            if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+        if (ConfigFields.DENY_TAKE_LECTERN_BOOK.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
+                    && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }
@@ -46,12 +46,12 @@ public class ToolsProtect implements Listener {
     private void denyStonecutterRecipeSelect(@NotNull PlayerStonecutterRecipeSelectEvent e) {
         final Player player = e.getPlayer();
         final Location location = e.getStonecutterInventory().getLocation();
-        if (ConfigFields.DENY_STONECUTTER_RECIPE_SELECT.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
-            if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
+        if (ConfigFields.DENY_STONECUTTER_RECIPE_SELECT.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(
                     Objects.requireNonNull(location),
                     config.getRegionProtectMap()
             )
-                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }
@@ -61,12 +61,12 @@ public class ToolsProtect implements Listener {
     private void denyLoomPatternSelect(@NotNull PlayerLoomPatternSelectEvent e) {
         final Player player = e.getPlayer();
         final Location location = e.getLoomInventory().getLocation();
-        if (ConfigFields.DENY_LOOM_PATTERN_SELECT.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
-            if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(
+        if (ConfigFields.DENY_LOOM_PATTERN_SELECT.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(
                     Objects.requireNonNull(location),
                     config.getRegionProtectMap()
             )
-                    && wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }

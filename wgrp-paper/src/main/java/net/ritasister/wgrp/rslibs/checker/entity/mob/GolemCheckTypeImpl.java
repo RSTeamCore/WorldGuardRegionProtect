@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.entity.Entity;
@@ -8,19 +8,19 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Golem;
 import org.jetbrains.annotations.NotNull;
 
-public class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
+public final class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public GolemCheckTypeImpl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public GolemCheckTypeImpl(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @Override
     public boolean check(final @NotNull Entity entity) {
         final Golem golem = (Golem) entity;
         final EntityType golemType = golem.getType();
-        return ConfigFields.ANIMAL_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(golemType.name().toLowerCase());
+        return ConfigFields.ANIMAL_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(golemType.name().toLowerCase());
     }
 
     @Override

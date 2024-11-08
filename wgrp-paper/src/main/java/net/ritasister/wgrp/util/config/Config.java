@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.util.config;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
 import net.ritasister.wgrp.rslibs.annotation.CanRecover;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class Config {
 
-    private final WorldGuardRegionProtectBukkitBase wgrpBase;
+    private final WorldGuardRegionProtectPaperBase wgrpBase;
 
     @CanRecover
     private Map<String, List<String>> regionProtect;
@@ -27,7 +27,7 @@ public class Config {
     private Map<String, List<String>> regionProtectOnlyBreakAllow;
 
 
-    public Config(WorldGuardRegionProtectBukkitBase wgrpBase) {
+    public Config(WorldGuardRegionProtectPaperBase wgrpBase) {
         this.wgrpBase = wgrpBase;
         reloadConfig();
     }

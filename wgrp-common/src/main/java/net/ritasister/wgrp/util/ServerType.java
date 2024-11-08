@@ -5,6 +5,7 @@ package net.ritasister.wgrp.util;
  */
 public enum ServerType {
 
+    SPIGOT("Spigot"),
     PAPER("Paper"),
     FOLIA("Folia"),
     UNKNOWN("Unknown");

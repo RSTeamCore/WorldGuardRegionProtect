@@ -2,7 +2,7 @@ name: ${name}
 version: ${version}
 author: ${author}
 contributor: ${contributor}
-main: ${group}.wgrp.WorldGuardRegionProtectBukkitBase
+main: ${group}.wgrp.WorldGuardRegionProtectPaperBase
 depend: [ WorldGuard ]
 softdepend: [ PlaceholderAPI ]
 description: ${description}

@@ -1,25 +1,25 @@
 package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
 
-public class MonsterCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
+public final class MonsterCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public MonsterCheckTypeImpl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public MonsterCheckTypeImpl(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @Override
     public boolean check(final Entity entity) {
         final Monster monster = (Monster) entity;
         final EntityType monsterType = monster.getType();
-        return ConfigFields.MONSTER_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(monsterType.name().toLowerCase());
+        return ConfigFields.MONSTER_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(monsterType.name().toLowerCase());
     }
 
     @Override

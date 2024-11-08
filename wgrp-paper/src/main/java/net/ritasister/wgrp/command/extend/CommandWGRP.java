@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.command.extend;
 
 import net.kyori.adventure.text.Component;
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.command.AbstractCommand;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.api.config.Container;
@@ -26,11 +26,11 @@ import java.util.UUID;
  */
 public class CommandWGRP extends AbstractCommand {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final Config config;
     private final Container messages;
 
-    public CommandWGRP(@NotNull WorldGuardRegionProtectBukkitPlugin wgrpPlugin) {
+    public CommandWGRP(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         super(UtilCommandList.WGRP.getCommand(), wgrpPlugin);
         this.wgrpPlugin = wgrpPlugin;
         this.config = wgrpPlugin.getConfigLoader().getConfig();

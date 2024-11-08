@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.api;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
@@ -30,7 +30,7 @@ import java.util.List;
 
 public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Player, Entity> {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final EntityCheckTypeProvider entityCheckTypeProvider;
     private final Container messages;
     private final ParamsVersionCheck<YamlConfiguration> paramsVersionCheck;
@@ -38,10 +38,11 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     public final static String SUPPORTED_VERSION_RANGE = "1.21 - 1.21.1";
     public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.21", "1.21.1");
 
-    public RSApiImpl(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin, final ParamsVersionCheck<YamlConfiguration> check) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
-        this.messages = wgrpBukkitPlugin.getConfigLoader().getMessages();
-        this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpBukkitPlugin);
+    public RSApiImpl(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin,
+                     final ParamsVersionCheck<YamlConfiguration> check) {
+        this.wgrpPlugin = wgrpPlugin;
+        this.messages = wgrpPlugin.getConfigLoader().getMessages();
+        this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpPlugin);
         paramsVersionCheck = check;
     }
 
@@ -67,19 +68,19 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         try {
             final long time = System.currentTimeMillis();
             if (SUPPORTED_VERSION.contains(minecraftVersion)) {
-                wgrpBukkitPlugin.getPluginLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
-                wgrpBukkitPlugin.getPluginLogger().info(String.format("Current support versions range %s", SUPPORTED_VERSION_RANGE));
+                wgrpPlugin.getPluginLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
+                wgrpPlugin.getPluginLogger().info(String.format("Current support versions range %s", SUPPORTED_VERSION_RANGE));
                 return true;
             } else {
-                wgrpBukkitPlugin.getPluginLogger().info(
+                wgrpPlugin.getPluginLogger().info(
                         "No compatibility issue was found, but this plugin version does not claim to support your server package (" + minecraftVersion + ").");
             }
         } catch (Exception ignored) {
             if (SUPPORTED_VERSION.contains(minecraftVersion)) {
-                wgrpBukkitPlugin.getPluginLogger().severe(
+                wgrpPlugin.getPluginLogger().severe(
                         "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
             } else {
-                wgrpBukkitPlugin.getPluginLogger().severe(
+                wgrpPlugin.getPluginLogger().severe(
                         "Your server version is completely unsupported. This plugin version only " +
                                 "supports " + SUPPORTED_VERSION_RANGE + ". Disabling.");
             }
@@ -92,16 +93,16 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         if (regionName == null) {
             return;
         }
-        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase()) && this.isPlayerListenerPermission(
+        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase()) && this.isPlayerListenerPermission(
                 player,
                 UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
-            final String cmd = ConfigFields.SPY_COMMAND_LIST.get(wgrpBukkitPlugin.getWgrpBukkitBase()).toString();
+            final String cmd = ConfigFields.SPY_COMMAND_LIST.get(wgrpPlugin.getWgrpPaperBase()).toString();
             if (cmd.contains(senderCommand.toLowerCase()) &&
-                    ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_PLAY_SOUND_ENABLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+                    ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_PLAY_SOUND_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
                 player.playSound(
                         player.getLocation(),
                         ConfigFields.SPY_COMMAND_NOTIFY_PLAY_SOUND_TYPE
-                                .get(wgrpBukkitPlugin.getWgrpBukkitBase()).toString().toLowerCase(), 1, 1);
+                                .get(wgrpPlugin.getWgrpPaperBase()).toString().toLowerCase(), 1, 1);
                 messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
                         .replace("<cmd>", cmd)
@@ -115,8 +116,8 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         if (regionName == null) {
             return;
         }
-        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_CONSOLE_ENABLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
-            final String cmd = ConfigFields.SPY_COMMAND_LIST.get(wgrpBukkitPlugin.getWgrpBukkitBase()).toString();
+        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_CONSOLE_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
+            final String cmd = ConfigFields.SPY_COMMAND_LIST.get(wgrpPlugin.getWgrpPaperBase()).toString();
             if(cmd.contains(senderCommand.toLowerCase())) {
                 final ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
                 messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
@@ -151,7 +152,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
             double z,
             String world) {
         if (this.isPlayerListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
-                && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpBukkitPlugin.getWgrpBukkitBase())) {
+                && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             messages.get("messages.Notify.sendAdminInfoIfActionInRegion")
                     .replace("<player>", suspectName)
                     .replace("<action>", action.getAction())
@@ -164,10 +165,10 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     }
 
     public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
-        if (wgrpBukkitPlugin.getRegionAdapter().checkStandingRegion(checkEntity.getLocation(),
-                wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectMap())) {
+        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(checkEntity.getLocation(),
+                wgrpPlugin.getConfigLoader().getConfig().getRegionProtectMap())) {
             if (entity instanceof Player player) {
-                if (wgrpBukkitPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                if (wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     entityCheck(cancellable, player);
                 }
             } else {
@@ -183,28 +184,28 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         }
     }
 
-    public void updateFile(@NotNull final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin,
+    public void updateFile(@NotNull final WorldGuardRegionProtectPaperPlugin wgrpPlugin,
                            final @NotNull File currentFile, String configType, String lang) {
         if(ConfigType.CONFIG.name().equals(configType)) {
-            final Path renameOldFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(),
+            final Path renameOldFile = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(),
                     "config-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
             try {
                 Files.move(currentFile.toPath(), renameOldFile, StandardCopyOption.REPLACE_EXISTING);
-                wgrpBukkitPlugin.getPluginLogger().info("Old config file is renamed to: " + renameOldFile);
+                wgrpPlugin.getPluginLogger().info("Old config file is renamed to: " + renameOldFile);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            wgrpBukkitPlugin.getWgrpBukkitBase().saveResource("config.yml", true);
+            wgrpPlugin.getWgrpPaperBase().saveResource("config.yml", true);
         } else if(ConfigType.LANG.name().equals(configType)) {
-            final Path renameOldLang = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(),
+            final Path renameOldLang = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(),
                     "lang/" + lang + "-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
             try {
                 Files.move(currentFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
-                wgrpBukkitPlugin.getPluginLogger().info("Old lang file is renamed to: " + renameOldLang);
+                wgrpPlugin.getPluginLogger().info("Old lang file is renamed to: " + renameOldLang);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            wgrpBukkitPlugin.getWgrpBukkitBase().saveResource("lang/" + lang + ".yml", true);
+            wgrpPlugin.getWgrpPaperBase().saveResource("lang/" + lang + ".yml", true);
         }
     }
 

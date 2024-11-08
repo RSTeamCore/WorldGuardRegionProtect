@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.util.config.loader;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import net.ritasister.wgrp.util.ConfigType;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,23 +19,23 @@ public class ConfigCheckVersion implements CheckVersion {
     }
 
     @Override
-    public void checkVersion(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        wgrpBukkitPlugin.getPluginLogger().info("Started checking the new version of the config file...");
-        final File currentConfigFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "config.yml");
+    public void checkVersion(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        wgrpPlugin.getPluginLogger().info("Started checking the new version of the config file...");
+        final File currentConfigFile = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(), "config.yml");
         final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(
-                wgrpBukkitPlugin.getWgrpBukkitBase().getResource("config.yml")));
+                wgrpPlugin.getWgrpPaperBase().getResource("config.yml")));
         final YamlConfiguration currentConfigVersion = YamlConfiguration.loadConfiguration(currentConfigFile);
         final YamlConfiguration newVersion = YamlConfiguration.loadConfiguration(reader);
         if(currentConfigFile.exists() && currentConfigVersion.getString("wgRegionProtect.version") == null) {
-            wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentConfigFile, ConfigType.CONFIG.name(), null);
-            wgrpBukkitPlugin.getPluginLogger().info("String version in config file is null...recreating file config...");
+            wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG.name(), null);
+            wgrpPlugin.getPluginLogger().info("String version in config file is null...recreating file config...");
         } else if (currentConfigFile.exists() &&
                 !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG.name(), currentConfigVersion)
                 .equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG.name(), newVersion))) {
-            wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentConfigFile, ConfigType.CONFIG.name(), null);
-            wgrpBukkitPlugin.getPluginLogger().info("Found new version of config file, updating this now...");
+            wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG.name(), null);
+            wgrpPlugin.getPluginLogger().info("Found new version of config file, updating this now...");
         } else {
-            wgrpBukkitPlugin.getPluginLogger().info("No update is required for the config file");
+            wgrpPlugin.getPluginLogger().info("No update is required for the config file");
         }
     }
 

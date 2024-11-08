@@ -16,3 +16,4 @@ include (
         "wgrp-api",
         "wgrp-common",
         "wgrp-paper")
+include("wgrp-spigot")

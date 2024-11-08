@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.rslibs.checker.entity.misc;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.entity.Entity;
@@ -8,19 +8,19 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Explosive;
 import org.jetbrains.annotations.NotNull;
 
-public class ExplosiveCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
+public final class ExplosiveCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public ExplosiveCheckTypeImpl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public ExplosiveCheckTypeImpl(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @Override
     public boolean check(final @NotNull Entity entity) {
         final Explosive explosive = (Explosive) entity;
         final EntityType explosiveType = explosive.getType();
-        return ConfigFields.ENTITY_EXPLODE_TYPE.getList(wgrpBukkitPlugin.getWgrpBukkitBase()).contains(explosiveType.name().toLowerCase());
+        return ConfigFields.ENTITY_EXPLODE_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(explosiveType.name().toLowerCase());
     }
 
     @Override

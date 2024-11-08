@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.util.config.loader;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import net.ritasister.wgrp.util.ConfigType;
 import net.ritasister.wgrp.util.config.Config;
@@ -21,23 +21,23 @@ public class MessageCheckVersion implements CheckVersion {
     }
 
     @Override
-    public void checkVersion(final @NotNull WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin, final @NotNull Config config) {
-        wgrpBukkitPlugin.getPluginLogger().info("Started checking the new version of the language file...");
-        final String lang = ConfigFields.LANG.get(wgrpBukkitPlugin.getWgrpBukkitBase()).toString();
-        final File currentLangFile = new File(wgrpBukkitPlugin.getWgrpBukkitBase().getDataFolder(), "lang/" + lang + ".yml");
-        final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(wgrpBukkitPlugin.getWgrpBukkitBase().getResource("lang/" + lang + ".yml")));
+    public void checkVersion(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin, final @NotNull Config config) {
+        wgrpPlugin.getPluginLogger().info("Started checking the new version of the language file...");
+        final String lang = ConfigFields.LANG.get(wgrpPlugin.getWgrpPaperBase()).toString();
+        final File currentLangFile = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(), "lang/" + lang + ".yml");
+        final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(wgrpPlugin.getWgrpPaperBase().getResource("lang/" + lang + ".yml")));
         final YamlConfiguration currentLangVersion = YamlConfiguration.loadConfiguration(currentLangFile);
         final YamlConfiguration newLangVersion = YamlConfiguration.loadConfiguration(reader);
         if(currentLangFile.exists() && currentLangVersion.getString("langTitle.version") == null) {
-            wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentLangFile, ConfigType.LANG.name(), lang);
-            wgrpBukkitPlugin.getPluginLogger().info("String version in lang file is null...recreating lang file...");
+            wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentLangFile, ConfigType.LANG.name(), lang);
+            wgrpPlugin.getPluginLogger().info("String version in lang file is null...recreating lang file...");
         } else if (currentLangFile.exists() &&
                 !paramsVersionCheck.getCurrentVersion(ConfigType.LANG.name(), currentLangVersion)
                 .equals(paramsVersionCheck.getNewVersion(ConfigType.LANG.name(), newLangVersion))) {
-            wgrpBukkitPlugin.getRsApi().updateFile(wgrpBukkitPlugin, currentLangFile, ConfigType.LANG.name(), lang);
-            wgrpBukkitPlugin.getPluginLogger().info("Found new version of lang file, updating this now...");
+            wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentLangFile, ConfigType.LANG.name(), lang);
+            wgrpPlugin.getPluginLogger().info("Found new version of lang file, updating this now...");
         } else {
-            wgrpBukkitPlugin.getPluginLogger().info("No update is required for the lang file");
+            wgrpPlugin.getPluginLogger().info("No update is required for the lang file");
         }
     }
 

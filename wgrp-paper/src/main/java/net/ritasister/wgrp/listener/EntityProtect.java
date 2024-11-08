@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.listener;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -13,20 +13,20 @@ import org.jetbrains.annotations.NotNull;
  */
 public class EntityProtect implements Listener {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPaperPlugin;
 
-    public EntityProtect(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public EntityProtect(final WorldGuardRegionProtectPaperPlugin wgrpPaperPlugin) {
+        this.wgrpPaperPlugin = wgrpPaperPlugin;
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyExplodeEntity(@NotNull EntityExplodeEvent e) {
-        wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getEntity(), e.getEntity());
+        wgrpPaperPlugin.getRsApi().entityCheck(e, e.getEntity(), e.getEntity());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyEntityDamageByEntityEvent(@NotNull EntityDamageByEntityEvent e) {
-        wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getDamager(), e.getEntity());
+        wgrpPaperPlugin.getRsApi().entityCheck(e, e.getDamager(), e.getEntity());
     }
 
 }

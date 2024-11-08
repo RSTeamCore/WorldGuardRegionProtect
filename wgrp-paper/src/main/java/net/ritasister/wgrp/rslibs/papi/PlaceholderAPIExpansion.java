@@ -1,31 +1,31 @@
 package net.ritasister.wgrp.rslibs.papi;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitBase;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
-    private final WorldGuardRegionProtectBukkitBase wgrpBukkitBase;
+    private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
 
-    public PlaceholderAPIExpansion(WorldGuardRegionProtectBukkitBase wgrpBukkitBase) {
-        this.wgrpBukkitBase = wgrpBukkitBase;
+    public PlaceholderAPIExpansion(WorldGuardRegionProtectPaperBase wgrpPaperBase) {
+        this.wgrpPaperBase = wgrpPaperBase;
     }
 
     @Override
     public @NotNull String getIdentifier() {
-        return wgrpBukkitBase.getDescription().getVersion();
+        return wgrpPaperBase.getDescription().getVersion();
     }
 
     @Override
     public @NotNull String getAuthor() {
-        return wgrpBukkitBase.getDescription().getAuthors().toString();
+        return wgrpPaperBase.getDescription().getAuthors().toString();
     }
 
     @Override
     public @NotNull String getVersion() {
-        return wgrpBukkitBase.getDescription().getVersion();
+        return wgrpPaperBase.getDescription().getVersion();
     }
 
     @Override

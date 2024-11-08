@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.handler;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.handler.Handler;
 import net.ritasister.wgrp.listener.BlockProtect;
 import net.ritasister.wgrp.listener.EntityProtect;
@@ -20,26 +20,26 @@ import java.util.List;
  */
 public class ListenerHandler implements Handler<PluginManager> {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public ListenerHandler(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public ListenerHandler(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @Override
     public void handle(final @NotNull PluginManager pluginManager) {
         final List<Listener> allListeners = List.of(
-                new BlockProtect(wgrpBukkitPlugin),
-                new EntityProtect(wgrpBukkitPlugin),
-                new HangingProtect(wgrpBukkitPlugin),
-                new MiscProtect(wgrpBukkitPlugin),
-                new PlayerProtect(wgrpBukkitPlugin),
-                new ToolsProtect(wgrpBukkitPlugin),
-                new VehicleProtect(wgrpBukkitPlugin));
+                new BlockProtect(wgrpPlugin),
+                new EntityProtect(wgrpPlugin),
+                new HangingProtect(wgrpPlugin),
+                new MiscProtect(wgrpPlugin),
+                new PlayerProtect(wgrpPlugin),
+                new ToolsProtect(wgrpPlugin),
+                new VehicleProtect(wgrpPlugin));
 
-        allListeners.forEach(listener -> pluginManager.registerEvents(listener, wgrpBukkitPlugin.getWgrpBukkitBase()));
+        allListeners.forEach(listener -> pluginManager.registerEvents(listener, wgrpPlugin.getWgrpPaperBase()));
 
-        wgrpBukkitPlugin.getPluginLogger().info("All listeners registered successfully!");
+        wgrpPlugin.getPluginLogger().info("All listeners registered successfully!");
     }
 
 }

@@ -15,7 +15,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.CheckIntersection;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -25,10 +25,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class CheckIntersectionImpl implements CheckIntersection<Player> {
 
-    public final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    public final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public CheckIntersectionImpl(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public CheckIntersectionImpl(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
             assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             for (final ProtectedRegion rg : set) {
-                for (final String region : wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectMap().get(
+                for (final String region : wgrpPlugin.getConfigLoader().getConfig().getRegionProtectMap().get(
                         player.getWorld().getName())) {
                     if (rg.getId().equalsIgnoreCase(region)) {
                         return false;
@@ -61,7 +61,7 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
             }
             for (final ProtectedRegion rg : set) {
                 for (final String region :
-                        wgrpBukkitPlugin.getConfigLoader().getConfig().getRegionProtectOnlyBreakAllowMap().get(player
+                        wgrpPlugin.getConfigLoader().getConfig().getRegionProtectOnlyBreakAllowMap().get(player
                                 .getWorld()
                                 .getName())) {
                     if (rg.getId().equalsIgnoreCase(region)) {

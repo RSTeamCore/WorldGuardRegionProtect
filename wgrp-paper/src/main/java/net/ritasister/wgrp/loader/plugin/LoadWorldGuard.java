@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.loader.plugin;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectBukkitPlugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -9,10 +9,10 @@ import org.bukkit.plugin.Plugin;
  */
 public class LoadWorldGuard {
 
-    private final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public LoadWorldGuard(final WorldGuardRegionProtectBukkitPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public LoadWorldGuard(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     /**
@@ -22,9 +22,9 @@ public class LoadWorldGuard {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin != null && plugin.isEnabled()) {
             try {
-                wgrpBukkitPlugin.getPluginLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
+                wgrpPlugin.getPluginLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
             } catch (NullPointerException | ClassCastException | NoClassDefFoundError exception) {
-                wgrpBukkitPlugin.getPluginLogger().severe(exception.getMessage());
+                wgrpPlugin.getPluginLogger().severe(exception.getMessage());
             }
         }
     }
