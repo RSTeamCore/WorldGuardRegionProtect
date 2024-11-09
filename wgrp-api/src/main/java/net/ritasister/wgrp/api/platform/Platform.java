@@ -31,7 +31,7 @@ public interface Platform {
          *
          * @return a readable name
          */
-        public @NonNull String getPlatform() {
+        public @NonNull String getPlatformName() {
             return this.platform;
         }
     }
