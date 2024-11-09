@@ -104,11 +104,7 @@ public class BlockProtect implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-<<<<<<< HEAD
     public void denyFormObsidianOrCobblestone(@NotNull BlockFormEvent e) {
-=======
-    public void onObsidianForm(@NotNull BlockFormEvent e) {
->>>>>>> e5041337f1ef368f99dc249ba6ae293b0d232960
         final Location location = e.getBlock().getLocation();
         if (!ConfigFields.DENY_FORM_BLOCK_FROM_LAVA_AND_WATER.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             return;
