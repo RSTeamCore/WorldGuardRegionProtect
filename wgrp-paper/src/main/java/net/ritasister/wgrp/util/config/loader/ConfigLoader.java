@@ -20,7 +20,7 @@ public class ConfigLoader {
         configCheckVersion.checkVersion(wgrpPlugin);
 
         //Initialising messages
-        wgrpPlugin.getPluginLogger().info("Started loading messages...");
+        wgrpPlugin.getLogger().info("Started loading messages...");
         final MessageLoader messageLoader = new MessageLoader();
         this.messages = messageLoader.initMessages(wgrpPlugin);
 
@@ -28,7 +28,7 @@ public class ConfigLoader {
         final CheckVersion messageCheckVersion = new MessageCheckVersion(new ParamsVersionCheckImpl());
         messageCheckVersion.checkVersion(wgrpPlugin);
 
-        wgrpPlugin.getPluginLogger().info("All configs load successfully!");
+        wgrpPlugin.getLogger().info("All configs load successfully!");
     }
 
     public Config getConfig() {

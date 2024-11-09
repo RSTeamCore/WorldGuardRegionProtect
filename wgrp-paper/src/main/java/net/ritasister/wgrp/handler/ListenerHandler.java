@@ -39,7 +39,7 @@ public class ListenerHandler implements Handler<PluginManager> {
 
         allListeners.forEach(listener -> pluginManager.registerEvents(listener, wgrpPlugin.getWgrpPaperBase()));
 
-        wgrpPlugin.getPluginLogger().info("All listeners registered successfully!");
+        wgrpPlugin.getLogger().info("All listeners registered successfully!");
     }
 
 }

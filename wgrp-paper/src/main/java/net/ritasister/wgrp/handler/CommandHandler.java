@@ -18,6 +18,6 @@ public class CommandHandler implements Handler<Void> {
     @Override
     public void handle() {
         new CommandWGRP(wgrpPlugin);
-        wgrpPlugin.getPluginLogger().info("All commands registered successfully!");
+        wgrpPlugin.getLogger().info("All commands registered successfully!");
     }
 }

@@ -20,7 +20,7 @@ public class ConfigCheckVersion implements CheckVersion {
 
     @Override
     public void checkVersion(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
-        wgrpPlugin.getPluginLogger().info("Started checking the new version of the config file...");
+        wgrpPlugin.getLogger().info("Started checking the new version of the config file...");
         final File currentConfigFile = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(), "config.yml");
         final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(
                 wgrpPlugin.getWgrpPaperBase().getResource("config.yml")));
@@ -31,9 +31,9 @@ public class ConfigCheckVersion implements CheckVersion {
                 && !paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion))
                 && !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion).equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG, newVersion))) {
             wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG, null);
-            wgrpPlugin.getPluginLogger().info("Found new version of config file, updating this now...");
+            wgrpPlugin.getLogger().info("Found new version of config file, updating this now...");
         } else {
-            wgrpPlugin.getPluginLogger().info("No update is required for the config file");
+            wgrpPlugin.getLogger().info("No update is required for the config file");
         }
     }
 

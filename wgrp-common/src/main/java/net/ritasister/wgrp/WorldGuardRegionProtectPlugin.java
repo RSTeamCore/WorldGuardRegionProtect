@@ -1,28 +1,43 @@
 package net.ritasister.wgrp;
 
-import net.ritasister.wgrp.api.WorldGuardRegionProtect;
-import net.ritasister.wgrp.api.WorldGuardRegionProtectProvider;
+import net.ritasister.wgrp.api.CheckIntersection;
+import net.ritasister.wgrp.api.logging.PluginLogger;
+import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
+import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
-import net.ritasister.wgrp.util.ServerType;
-import net.ritasister.wgrp.util.Version;
+import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.api.platform.Platform;
 
 /**
  * Represent class for any platform.
  */
-public abstract class WorldGuardRegionProtectPlugin implements WorldGuardRegionProtect {
+public interface WorldGuardRegionProtectPlugin {
 
-    protected final Version version;
-    private final ServerType serverType;
-    private final String prefix;
-    private WorldGuardRegionMetadata worldGuardRegionMetadata;
-    private Version newestVersion;
-    private boolean debug;
+    /**
+     * Gets the platform type this instance of LuckPerms is running on.
+     *
+     * @return the platform type
+     */
+    Platform.Type getType();
 
-    protected WorldGuardRegionProtectPlugin(final String version, final ServerType serverType) {
-        this.version = new Version(version);
-        this.serverType = serverType;
-        this.prefix = "§8[§eWorldGuardRegionProtect" + serverType + "§8] ";
-        WorldGuardRegionProtectProvider.setWorldGuardRegionProtect(this);
-    }
+    /**
+     * Gets a wrapped logger instance for the platform.
+     *
+     * @return the plugin's logger
+     */
+    PluginLogger getLogger();
+
+    EntityCheckType getEntityChecker();
+
+    RegionAdapterManager getRegionAdapter();
+
+    WorldGuardRegionMetadata getWorldGuardMetadata();
+
+    Platform getPlatform();
+
+    MessagingService getMessagingService();
+
+    CheckIntersection getCheckIntersection();
+
 
 }

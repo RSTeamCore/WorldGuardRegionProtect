@@ -3,12 +3,16 @@ package net.ritasister.wgrp;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.CheckIntersection;
+import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
+import net.ritasister.wgrp.api.implementation.ApiPlatform;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
+import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.loader.WGRPChecker;
 import net.ritasister.wgrp.loader.WGRPLoaderCommands;
 import net.ritasister.wgrp.loader.WGRPLoaderListeners;
@@ -19,7 +23,6 @@ import net.ritasister.wgrp.rslibs.api.RSApiImpl;
 import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
 import net.ritasister.wgrp.rslibs.api.manager.RegionAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
-import net.ritasister.wgrp.util.ServerType;
 import net.ritasister.wgrp.util.config.ConfigFields;
 import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
@@ -31,12 +34,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class WorldGuardRegionProtectPaperPlugin extends WorldGuardRegionProtectPlugin {
+public class WorldGuardRegionProtectPaperPlugin implements WorldGuardRegionProtectPlugin {
 
     private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
+
     private final PluginLogger logger;
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
+    private final ApiPlatform platform;
+
     private RegionAdapterManagerPaper regionAdapter;
     private WorldGuardRegionMetadata worldGuardRegionMetadata;
 
@@ -49,7 +55,7 @@ public class WorldGuardRegionProtectPaperPlugin extends WorldGuardRegionProtectP
     private MessagingService messagingService;
 
     public WorldGuardRegionProtectPaperPlugin(final @NotNull WorldGuardRegionProtectPaperBase wgrpPaperBase) {
-        super(wgrpPaperBase.getPluginMeta().getVersion(), ServerType.PAPER);
+        this.platform = new ApiPlatform(this);
         this.wgrpPaperBase = wgrpPaperBase;
         this.logger = new JavaPluginLogger(wgrpPaperBase.getLogger());
         load();
@@ -63,7 +69,7 @@ public class WorldGuardRegionProtectPaperPlugin extends WorldGuardRegionProtectP
 
         final WGRPChecker wgrpChecker = new WGRPChecker(this);
         wgrpChecker.checkStartUpVersionServer();
-        wgrpChecker.detectPlatformRun();
+        wgrpChecker.detectWhatIsPlatformRun();
 
         loadMetrics();
         loadAnotherClassAndMethods();
@@ -75,17 +81,17 @@ public class WorldGuardRegionProtectPaperPlugin extends WorldGuardRegionProtectP
     }
 
     public void unLoad() {
-        this.getPluginLogger().info("Saving all configs before shutting down...");
+        this.getLogger().info("Saving all configs before shutting down...");
         try {
             for (ConfigFields configFields : ConfigFields.values()) {
                 configLoader.getConfig().saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
-                this.getPluginLogger().info(String.format("Checking and saving fields: %s", configFields));
+                this.getLogger().info(String.format("Checking and saving fields: %s", configFields));
             }
         } catch (Exception e) {
-            this.getPluginLogger().severe("Could not saving config.yml! Please check the error: " + e.getLocalizedMessage());
+            this.getLogger().severe("Could not saving config.yml! Please check the error: " + e.getLocalizedMessage());
             e.fillInStackTrace();
         }
-        this.getPluginLogger().info("Saved complete. Good luck!");
+        this.getLogger().info("Saved complete. Good luck!");
     }
 
     private void loadAnotherClassAndMethods() {
@@ -124,16 +130,6 @@ public class WorldGuardRegionProtectPaperPlugin extends WorldGuardRegionProtectP
         return rsApi;
     }
 
-    @Override
-    public RegionAdapterManagerPaper getRegionAdapter() {
-        return this.regionAdapter;
-    }
-
-    @Override
-    public WorldGuardRegionMetadata getWorldGuardMetadata() {
-        return this.worldGuardRegionMetadata;
-    }
-
     public void messageToCommandSender(final @NotNull CommandSender commandSender, final String message) {
         final var miniMessage = MiniMessage.miniMessage();
         final Component parsed = miniMessage.deserialize(message);
@@ -141,7 +137,12 @@ public class WorldGuardRegionProtectPaperPlugin extends WorldGuardRegionProtectP
     }
 
     @Override
-    public PluginLogger getPluginLogger() {
+    public Platform.Type getType() {
+        return Platform.Type.PAPER;
+    }
+
+    @Override
+    public PluginLogger getLogger() {
         return this.logger;
     }
 
@@ -151,6 +152,22 @@ public class WorldGuardRegionProtectPaperPlugin extends WorldGuardRegionProtectP
     }
 
     @Override
+    public RegionAdapterManager getRegionAdapter() {
+        return this.regionAdapter;
+    }
+
+    @Override
+    public Platform getPlatform() {
+        return this.platform;
+    }
+
+    @Override
+    public WorldGuardRegionMetadata getWorldGuardMetadata() {
+        return this.platform;
+    }
+
+
+    @Override
     public MessagingService getMessagingService() {
         return this.messagingService;
     }
@@ -158,6 +175,7 @@ public class WorldGuardRegionProtectPaperPlugin extends WorldGuardRegionProtectP
     public CheckIntersection getCheckIntersection() {
         return this.checkIntersection;
     }
+
 
     public UtilCommandWE getPlayerUtilWE() {
         return this.playerUtilWE;

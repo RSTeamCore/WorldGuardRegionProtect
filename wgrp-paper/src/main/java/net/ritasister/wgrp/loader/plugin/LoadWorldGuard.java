@@ -22,9 +22,9 @@ public class LoadWorldGuard {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin != null && plugin.isEnabled()) {
             try {
-                wgrpPlugin.getPluginLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
+                wgrpPlugin.getLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
             } catch (NullPointerException | ClassCastException | NoClassDefFoundError exception) {
-                wgrpPlugin.getPluginLogger().severe(exception.getMessage());
+                wgrpPlugin.getLogger().severe(exception.getMessage());
             }
         }
     }

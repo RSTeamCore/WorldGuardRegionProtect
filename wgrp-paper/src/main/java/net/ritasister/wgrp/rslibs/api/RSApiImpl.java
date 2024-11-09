@@ -67,19 +67,19 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         try {
             final long time = System.currentTimeMillis();
             if (SUPPORTED_VERSION.contains(minecraftVersion)) {
-                wgrpPlugin.getPluginLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
-                wgrpPlugin.getPluginLogger().info(String.format("Current support versions range %s", SUPPORTED_VERSION_RANGE));
+                wgrpPlugin.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - time) + "ms");
+                wgrpPlugin.getLogger().info(String.format("Current support versions range %s", SUPPORTED_VERSION_RANGE));
                 return true;
             } else {
-                wgrpPlugin.getPluginLogger().info(
+                wgrpPlugin.getLogger().info(
                         "No compatibility issue was found, but this plugin version does not claim to support your server package (" + minecraftVersion + ").");
             }
         } catch (Exception ignored) {
             if (SUPPORTED_VERSION.contains(minecraftVersion)) {
-                wgrpPlugin.getPluginLogger().severe(
+                wgrpPlugin.getLogger().severe(
                         "Your server version is marked as compatible, but a compatibility issue was found. Please report the error below (include your server version & fork too)");
             } else {
-                wgrpPlugin.getPluginLogger().severe(
+                wgrpPlugin.getLogger().severe(
                         "Your server version is completely unsupported. This plugin version only " +
                                 "supports " + SUPPORTED_VERSION_RANGE + ". Disabling.");
             }
@@ -190,7 +190,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
                     "config-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
             try {
                 Files.move(currentFile.toPath(), renameOldFile, StandardCopyOption.REPLACE_EXISTING);
-                wgrpPlugin.getPluginLogger().info("Old config file is renamed to: " + renameOldFile);
+                wgrpPlugin.getLogger().info("Old config file is renamed to: " + renameOldFile);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -200,7 +200,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
                     "lang/" + lang + "-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
             try {
                 Files.move(currentFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
-                wgrpPlugin.getPluginLogger().info("Old lang file is renamed to: " + renameOldLang);
+                wgrpPlugin.getLogger().info("Old lang file is renamed to: " + renameOldLang);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

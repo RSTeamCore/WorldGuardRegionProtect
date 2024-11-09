@@ -19,7 +19,7 @@ public final class WorldGuardRegionProtectPaperBase extends JavaPlugin implement
 
     @Override
     public WorldGuardRegionProtect getApi() {
-        return wgrpPaperPlugin;
+        return (WorldGuardRegionProtect) this.wgrpPaperPlugin;
     }
 
 }

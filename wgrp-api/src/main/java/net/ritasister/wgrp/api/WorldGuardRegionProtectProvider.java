@@ -22,10 +22,7 @@ public final class WorldGuardRegionProtectProvider {
      * @param worldGuardRegionProtect of this plugin.
      */
     @ApiStatus.Internal
-    public static void setWorldGuardRegionProtect(final WorldGuardRegionProtect worldGuardRegionProtect) {
-        if (WorldGuardRegionProtectProvider.instance != null) {
-            throw new IllegalArgumentException("WorldGuardRegionProtectProvider is already set!");
-        }
+    static void setWorldGuardRegionProtect(final WorldGuardRegionProtect worldGuardRegionProtect) {
         WorldGuardRegionProtectProvider.instance = worldGuardRegionProtect;
     }
 
