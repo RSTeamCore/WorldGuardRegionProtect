@@ -24,4 +24,11 @@ public interface ParamsVersionCheck<T> {
      */
     String getNewVersion(String configType, final @NotNull T yamlConfiguration);
 
+    /**
+     *
+     * @param version
+     * @return
+     */
+    boolean checkMatches(@NotNull String version);
+
 }

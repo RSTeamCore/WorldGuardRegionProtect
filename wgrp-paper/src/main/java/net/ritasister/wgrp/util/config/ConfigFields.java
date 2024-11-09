@@ -219,7 +219,7 @@ public enum ConfigFields {
     private final String field;
     private Object param;
     private List<String> elements = new ArrayList<>();
-    private boolean value = false;
+    private boolean value;
     private final String path;
     private MySQLSettings mysqlsettings;
     private static final Map<String, ConfigFields> CONFIG_FIELDS = new HashMap<>();
@@ -265,10 +265,10 @@ public enum ConfigFields {
     }
 
     public Object get(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
-        if(param != null && elements.size() > 1) {
+        if (elements.size() > 1) {
             return elements = wgrpBase.getConfig().getStringList(getPath());
         }
-        if(value) {
+        if (!param.equals(value)) {
             return value = wgrpBase.getConfig().getBoolean(getPath());
         }
         return param = wgrpBase.getConfig().getString(getPath());

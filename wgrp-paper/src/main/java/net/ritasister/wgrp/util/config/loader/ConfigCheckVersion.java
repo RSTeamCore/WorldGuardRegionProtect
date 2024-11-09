@@ -4,10 +4,12 @@ import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import net.ritasister.wgrp.util.ConfigType;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStreamReader;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ConfigCheckVersion implements CheckVersion {
@@ -26,12 +28,10 @@ public class ConfigCheckVersion implements CheckVersion {
                 wgrpPlugin.getWgrpPaperBase().getResource("config.yml")));
         final YamlConfiguration currentConfigVersion = YamlConfiguration.loadConfiguration(currentConfigFile);
         final YamlConfiguration newVersion = YamlConfiguration.loadConfiguration(reader);
-        if(currentConfigFile.exists() && currentConfigVersion.getString("wgRegionProtect.version") == null) {
-            wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG.name(), null);
-            wgrpPlugin.getPluginLogger().info("String version in config file is null...recreating file config...");
-        } else if (currentConfigFile.exists() &&
-                !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG.name(), currentConfigVersion)
-                .equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG.name(), newVersion))) {
+
+        if (currentConfigFile.exists()
+                && !paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG.name(), currentConfigVersion))
+                && !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG.name(), currentConfigVersion).equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG.name(), newVersion))) {
             wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG.name(), null);
             wgrpPlugin.getPluginLogger().info("Found new version of config file, updating this now...");
         } else {

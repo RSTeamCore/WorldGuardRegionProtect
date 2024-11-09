@@ -28,7 +28,7 @@ public class Config {
 
     public Config(WorldGuardRegionProtectPaperBase wgrpPaperBase) {
         this.wgrpPaperBase = wgrpPaperBase;
-        reloadConfig();
+        this.reloadConfig();
     }
 
     public void reloadConfig() {
@@ -52,25 +52,23 @@ public class Config {
                 e.fillInStackTrace();
             }
             checkFields(configFields);
-            saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
         }
     }
 
     private void checkFields(final ConfigFields configFields) {
-        for (Field field : ConfigFields.class.getFields()) {
-            if (field.isAnnotationPresent(CanRecover.class)) {
+        for(Field field : ConfigFields.class.getFields()) {
+            if(field.isAnnotationPresent(CanRecover.class)) {
                 try {
-                    if (field.get(ConfigFields.class).equals(null)) {
-                        if (field.getName().equals(configFields.name())) {
-                            configFields.get(wgrpPaperBase);
-                            wgrpPaperBase.getLogger().info(String.format("Field %s has been recovered", configFields.name()));
-                        }
+                    if(field.get(ConfigFields.class.getClass()).equals(null)) {
+                        configFields.get(wgrpPaperBase);
+                        wgrpPaperBase.getLogger().info(String.format("Field %s has been recovered", configFields.name()));
                     }
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
             }
         }
+        saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
     }
 
     private void regionProtectOnlyBreakAllowSection() {
@@ -84,8 +82,7 @@ public class Config {
                             wgrpPaperBase.getConfig().getStringList("wgRegionProtect.regionProtectOnlyBreakAllow." + world)
                     );
                 }
-            } catch (Throwable ignored) {
-            }
+            } catch (Throwable ignored) {}
         }
         for (World w : Bukkit.getWorlds()) {
             final ArrayList<String> list = new ArrayList<>();
@@ -106,8 +103,7 @@ public class Config {
                             wgrpPaperBase.getConfig().getStringList("wgRegionProtect.regionProtectAllow." + world)
                     );
                 }
-            } catch (Throwable ignored) {
-            }
+            } catch (Throwable ignored) {}
         }
         for (World w : Bukkit.getWorlds()) {
             final ArrayList<String> list = new ArrayList<>();
@@ -125,8 +121,7 @@ public class Config {
                 for (String world : regionProtectSection.getKeys(false)) {
                     regionProtect.put(world, wgrpPaperBase.getConfig().getStringList("wgRegionProtect.regionProtect." + world));
                 }
-            } catch (Throwable ignored) {
-            }
+            } catch (Throwable ignored) {}
         }
         for (World w : Bukkit.getWorlds()) {
             final ArrayList<String> list = new ArrayList<>();

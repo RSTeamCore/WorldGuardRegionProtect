@@ -15,16 +15,16 @@ public class ConfigLoader {
     public void initConfig(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.config = new Config(wgrpPlugin.getWgrpPaperBase());
 
-        //Init messages
+        //Check a config version if available a new version
+        final CheckVersion configCheckVersion = new ConfigCheckVersion(new ParamsVersionCheckImpl());
+        configCheckVersion.checkVersion(wgrpPlugin);
+
+        //Initialising messages
         wgrpPlugin.getPluginLogger().info("Started loading messages...");
         final MessageLoader messageLoader = new MessageLoader();
         this.messages = messageLoader.initMessages(wgrpPlugin);
 
-        //Check a config version of file
-        final CheckVersion configCheckVersion = new ConfigCheckVersion(new ParamsVersionCheckImpl());
-        configCheckVersion.checkVersion(wgrpPlugin);
-
-        //Check a lang version of file
+        //Check a lang version if available a new version
         final CheckVersion messageCheckVersion = new MessageCheckVersion(new ParamsVersionCheckImpl());
         messageCheckVersion.checkVersion(wgrpPlugin);
 

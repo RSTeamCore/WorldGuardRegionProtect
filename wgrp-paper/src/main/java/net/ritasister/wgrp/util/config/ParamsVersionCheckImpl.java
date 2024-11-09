@@ -26,6 +26,11 @@ public class ParamsVersionCheckImpl implements ParamsVersionCheck<YamlConfigurat
         return getStringVersion(configType, newYaml);
     }
 
+    @Override
+    public boolean checkMatches(@NotNull final String version) {
+        return version.matches("^[0-9].*");
+    }
+
     private @NotNull String getStringVersion(final String configType, @NotNull final YamlConfiguration yamlConfiguration) {
         if (ConfigType.CONFIG.name().equals(configType)) {
             return yamlConfiguration.getString("wgRegionProtect.version")
