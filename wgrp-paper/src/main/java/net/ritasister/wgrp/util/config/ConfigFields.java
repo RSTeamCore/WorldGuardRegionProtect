@@ -296,10 +296,6 @@ public enum ConfigFields {
         return path;
     }
 
-    public Object getParam() {
-        return param;
-    }
-
     public Object get(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
         if (elements.size() > 1) {
             return elements = wgrpBase.getConfig().getStringList(getPath());
@@ -316,13 +312,12 @@ public enum ConfigFields {
         return param = wgrpBase.getConfig().getString(getPath());
     }
 
-    public boolean isDouble(String string) {
-        try {
-            Double.valueOf(string);
-        } catch (Exception ex) { // Not a valid double value
-            return (false);
-        }
-        return (true);
+    public List<String> getList(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
+        return elements = wgrpBase.getConfig().getStringList(getPath());
+    }
+
+    public boolean getBoolean(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
+        return bool = wgrpBase.getConfig().getBoolean(getPath());
     }
 
     private boolean isBooleanCheck(@NotNull String string) {
@@ -336,11 +331,12 @@ public enum ConfigFields {
         return pattern.matcher(strNum).matches();
     }
 
-    public List<String> getList(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
-        return elements = wgrpBase.getConfig().getStringList(getPath());
-    }
-
-    public boolean getBoolean(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
-        return bool = wgrpBase.getConfig().getBoolean(getPath());
+    private boolean isDouble(String string) {
+        try {
+            Double.valueOf(string);
+        } catch (Exception ex) { // Not a valid double value
+            return (false);
+        }
+        return (true);
     }
 }
