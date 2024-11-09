@@ -29,7 +29,8 @@ public class ConfigCheckVersion implements CheckVersion {
 
         if (currentConfigFile.exists()
                 && !paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion))
-                && !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion).equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG, newVersion))) {
+                && !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion)
+                .equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG, newVersion))) {
             wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG, null);
             wgrpPlugin.getLogger().info("Found new version of config file, updating this now...");
         } else {

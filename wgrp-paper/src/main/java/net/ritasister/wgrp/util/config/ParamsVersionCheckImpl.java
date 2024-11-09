@@ -34,11 +34,13 @@ public class ParamsVersionCheckImpl implements ParamsVersionCheck<ConfigType, Ya
 
     private @NotNull String getStringVersion(final ConfigType configType, @NotNull final YamlConfiguration yamlConfiguration) {
         if (ConfigType.CONFIG.equals(configType)) {
-            return Objects.requireNonNull(yamlConfiguration.getString("wgRegionProtect.version"))
-                    .replaceAll("\"", "").replaceAll("'", "");
+            return yamlConfiguration.getString("wgRegionProtect.version")
+                    .replaceAll("\"", "")
+                    .replaceAll("'", "");
         } else if (ConfigType.LANG.equals(configType)) {
-            return Objects.requireNonNull(yamlConfiguration.getString("langTitle.version"))
-                    .replaceAll("\"", "").replaceAll("'", "");
+            return yamlConfiguration.getString("langTitle.version")
+                    .replaceAll("\"", "")
+                    .replaceAll("'", "");
         }
         throw new RuntimeException("Value version cannot be null!");
     }
