@@ -14,9 +14,9 @@ import java.util.Objects;
 
 public class ConfigCheckVersion implements CheckVersion {
 
-    private final ParamsVersionCheck<YamlConfiguration> paramsVersionCheck;
+    private final ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck;
 
-    public ConfigCheckVersion(ParamsVersionCheck<YamlConfiguration> paramsVersionCheck) {
+    public ConfigCheckVersion(ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck) {
         this.paramsVersionCheck = paramsVersionCheck;
     }
 
@@ -30,9 +30,9 @@ public class ConfigCheckVersion implements CheckVersion {
         final YamlConfiguration newVersion = YamlConfiguration.loadConfiguration(reader);
 
         if (currentConfigFile.exists()
-                && !paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG.name(), currentConfigVersion))
-                && !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG.name(), currentConfigVersion).equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG.name(), newVersion))) {
-            wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG.name(), null);
+                && !paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion))
+                && !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion).equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG, newVersion))) {
+            wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG, null);
             wgrpPlugin.getPluginLogger().info("Found new version of config file, updating this now...");
         } else {
             wgrpPlugin.getPluginLogger().info("No update is required for the config file");

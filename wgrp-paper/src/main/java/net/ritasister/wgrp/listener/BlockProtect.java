@@ -106,9 +106,9 @@ public class BlockProtect implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onObsidianForm(@NotNull BlockGrowEvent e) {
         final Location location = e.getBlock().getLocation();
-        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
-            if (e.getNewState().getType() == Material.OBSIDIAN)
-                e.setCancelled(true);
+        if (e.getNewState().getType() == Material.OBSIDIAN || e.getNewState().getType() == Material.COBBLESTONE
+                && wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
+            e.setCancelled(true);
         }
     }
 

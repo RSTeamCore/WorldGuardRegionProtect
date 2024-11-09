@@ -13,9 +13,9 @@ import java.util.Objects;
 
 public class MessageCheckVersion implements CheckVersion {
 
-    private final ParamsVersionCheck<YamlConfiguration> paramsVersionCheck;
+    private final ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck;
 
-    public MessageCheckVersion(ParamsVersionCheck<YamlConfiguration> paramsVersionCheck) {
+    public MessageCheckVersion(ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck) {
         this.paramsVersionCheck = paramsVersionCheck;
     }
 
@@ -31,9 +31,9 @@ public class MessageCheckVersion implements CheckVersion {
         final YamlConfiguration newLangVersion = YamlConfiguration.loadConfiguration(reader);
 
         if (currentLangFile.exists()
-                && !paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.LANG.name(), currentLangVersion))
-                && !paramsVersionCheck.getCurrentVersion(ConfigType.LANG.name(), currentLangVersion).equals(paramsVersionCheck.getNewVersion(ConfigType.LANG.name(), newLangVersion))) {
-            wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentLangFile, ConfigType.LANG.name(), lang);
+                && !paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.LANG, currentLangVersion))
+                && !paramsVersionCheck.getCurrentVersion(ConfigType.LANG, currentLangVersion).equals(paramsVersionCheck.getNewVersion(ConfigType.LANG, newLangVersion))) {
+            wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentLangFile, ConfigType.LANG, lang);
             wgrpPlugin.getPluginLogger().info("Found new version of lang file, updating this now...");
         } else {
             wgrpPlugin.getPluginLogger().info("No update is required for the lang file");

@@ -1,7 +1,6 @@
 package net.ritasister.wgrp.util.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
-import net.ritasister.wgrp.rslibs.annotation.CanRecover;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -14,23 +13,22 @@ import java.util.Locale;
 import java.util.Map;
 
 public enum ConfigFields {
-
-    @CanRecover
+    
     CONFIG_VERSION("configVersion", "1.1", "wgRegionProtect.version"),
-    @CanRecover
+    
     LANG("lang", "en_US", "wgRegionProtect.lang"),
-    @CanRecover
+    
     SEND_NO_UPDATE("sendNoUpdate", true, "wgRegionProtect.updateChecker.enable"),
-    @CanRecover
+    
     UPDATE_CHECKER("updateChecker", true, "wgRegionProtect.updateChecker.sendNoUpdate"),
-    @CanRecover
+    
     INTERACT_TYPE("interactType", List.of(
             "armor_stand", "end_crystal", "bucket",
             "water_bucket", "lava_bucket", "tropical_fish_bucket",
             "pufferfish_bucket", "axolotl_bucket", "cod_bucket",
             "salmon_bucket", "tadpole_bucket"),
             "wgRegionProtect.protectInteract.interactType"),
-    @CanRecover
+    
     VEHICLE_TYPE("vehicleType", List.of(
             "minecart", "tnt_minecart", "command_block_minecart",
             "hopper_minecart", "chest_minecart", "furnace_minecart",
@@ -46,42 +44,42 @@ public enum ConfigFields {
     ),
             "wgRegionProtect.protectInteract.vehicleType"
     ),
-    @CanRecover
+    
     ANIMAL_TYPE("animalType", List.of(
             "tropical_fish", "axolotl", "turtle",
             "sniffer", "camel"
     ),
             "wgRegionProtect.protectInteract.animalType"
     ),
-    @CanRecover
+    
     MONSTER_TYPE("monsterType", List.of(
             "tropical_fish", "axolotl", "turtle",
             "sniffer", "camel"
     ),
             "wgRegionProtect.protectInteract.monsterType"
     ),
-    @CanRecover
+    
     WATER_MOB_TYPE("waterMobType", List.of(
             "tropical_fish", "axolotl", "turtle",
             "sniffer", "camel"
     ),
             "wgRegionProtect.protectInteract.waterMobType"
     ),
-    @CanRecover
+    
     SIGN_TYPE("signType", List.of(
             "primed_tnt", "end_crystal", "minecart_tnt",
             "creeper", "wither_skull"
     ),
             "wgRegionProtect.protectInteract.signType"
     ),
-    @CanRecover
+    
     ENTITY_EXPLODE_TYPE("entityExplodeType", List.of(
             "primed_tnt", "end_crystal", "minecart_tnt",
             "creeper", "wither_skull"
     ),
             "wgRegionProtect.protectInteract.entityExplodeType"
     ),
-    @CanRecover
+    
     NATURAL_BLOCK_OR_ITEM("naturalBlockOrItem", List.of(
             "oak_sapling", "spruce_sapling", "birch_sapling",
             "jungle_sapling", "acacia_sapling", "dark_oak_sapling",
@@ -95,60 +93,60 @@ public enum ConfigFields {
     ),
             "wgRegionProtect.protectInteract.naturalBlockOrItem"
     ),
-    @CanRecover
+    
     DENY_COLLISION_WITH_VEHICLE("denyCollisionWithVehicle", true,
             "wgRegionProtect.protectInteract.player.vehicle.denyCollisionWithVehicle"
     ),
-    @CanRecover
+    
     DENY_SIT_AS_PASSENGER_IN_VEHICLE("denySitAsPassengerInVehicle", true,
             "wgRegionProtect.protectInteract.player.vehicle.denySitAsPassengerInVehicle"
     ),
-    @CanRecover
+    
     DENY_DAMAGE_VEHICLE("denyDamageVehicle", true,
             "wgRegionProtect.protectInteract.player.vehicle.denyDamageVehicle"
     ),
-    @CanRecover
+    
     DENY_TAKE_LECTERN_BOOK("denyTakeLecternBook", true,
             "wgRegionProtect.protectInteract.player.tools.denyTakeLecternBook"
     ),
-    @CanRecover
+    
     DENY_MANIPULATE_WITH_FLOWERPOT("denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot", true,
             "wgRegionProtect.protectInteract.player.misc.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot"
     ),
-    @CanRecover
+    
     DENY_LAVA_FLOW_TO_REGION("denyLavaFlowToRegion", true,
             "wgRegionProtect.protectInteract.other.denyLavaFlowToRegion"
     ),
-    @CanRecover
+    
     DENY_WATER_FLOW_TO_REGION("denyWaterFlowToRegion", true,
             "wgRegionProtect.protectInteract.other.denyWaterFlowToRegion"
     ),
-    @CanRecover
+    
     DENY_INTERACT_WITH_FLOWER_POT("denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot", true,
             "wgRegionProtect.protectInteract.player.misc.denyTakeOrPlaceNaturalBlockOrItemIOFlowerPot"
     ),
-    @CanRecover
+    
     DENY_PLACE_ITEM_FRAME_OR_PAINTING("denyPlaceItemFrameOrPainting", true,
             "wgRegionProtect.protectInteract.player.itemFrame.denyPlaceItemFrameOrPainting"
     ),
-    @CanRecover
+    
     DENY_INTERACT_WITH_ITEM_FRAME("denyInteractWithItemFrame", true,
             "wgRegionProtect.protectInteract.player.itemFrame.denyInteractWithItemFrame"
     ),
-    @CanRecover
+    
     DENY_DAMAGE_ITEM_FRAME_OR_PAINTING("denyDamageItemFrameOrPainting", true,
             "wgRegionProtect.protectInteract.player.itemFrame.denyDamageItemFrameOrPainting"
     ),
-    @CanRecover
+    
     DENY_STONECUTTER_RECIPE_SELECT("denyStonecutterRecipeSelect", true,
             "wgRegionProtect.protectInteract.player.tools.denyStonecutterRecipeSelect"
     ),
-    @CanRecover
+    
     DENY_LOOM_PATTERN_SELECT("denyLoomPatternSelect", true,
             "wgRegionProtect.protectInteract.player.tools.denyLoomPatternSelect"
     ),
 
-    @CanRecover
+    
     CMD_WE("cmdWe", List.of(
             "//set", "//replace", "//overlay",
             "//walls", "//deform", "//fill",
@@ -158,56 +156,56 @@ public enum ConfigFields {
     ),
             "wgRegionProtect.noProtectCmd.cmdWe"
     ),
-    @CanRecover
+    
     CMD_WE_C("cmdWeC", List.of("//cyl", "//hcyl", "//drain", "//rep"),
             "wgRegionProtect.noProtectCmd.cmdWeC"
     ),
-    @CanRecover
+    
     CMD_WE_P("cmdWeP", List.of("//pyramid", "//hpyramid"),
             "wgRegionProtect.noProtectCmd.cmdWeP"
     ),
-    @CanRecover
+    
     CMD_WE_S("cmdWeS", List.of("//sphere", "//hsphere"),
             "wgRegionProtect.noProtectCmd.cmdWeS"
     ),
-    @CanRecover
+    
     CMD_WE_U("cmdWeU", List.of("//up", "/up"),
             "wgRegionProtect.noProtectCmd.cmdWeU"
     ),
-    @CanRecover
+    
     CMD_WE_CP("cmdWeCP", List.of("//paste", "//place", "//replacenear", "//hollow"),
             "wgRegionProtect.noProtectCmd.cmdWeCP"
     ),
 
-    @CanRecover
+    
     DENY_EXPLODE_ENTITY("explodeEntity", true,
             "wgRegionProtect.explodeEntity.enable"
     ),
 
-    @CanRecover
+    
     REGION_MESSAGE_PROTECT("regionMessageProtect", true,
             "wgRegionProtect.regionMessageProtect"
     ),
-    @CanRecover
+    
     REGION_MESSAGE_PROTECT_WE("regionMessageProtectWe", true,
             "wgRegionProtect.regionMessageProtectWe"
     ),
-    @CanRecover
+    
     IS_SPY_COMMAND_NOTIFY_CONSOLE_ENABLE("isSpyCommandNotifyConsoleEnable", true,
             "wgRegionProtect.spySettings.notify.console.enable"
     ),
-    @CanRecover
+    
     IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE("isSpyCommandNotifyAdminEnable", true,
             "wgRegionProtect.spySettings.notify.admin.enable"
     ),
-    @CanRecover
+    
     IS_SPY_COMMAND_NOTIFY_ADMIN_PLAY_SOUND_ENABLE("spyCommandNotifyAdminPlaySoundEnable", true,
             "wgRegionProtect.spySettings.notify.sound.enable"
     ),
-    @CanRecover
+    
     SPY_COMMAND_NOTIFY_PLAY_SOUND_TYPE("spyCommandNotifyAdminPlaySound", "BLOCK_ANVIL_PLACE",
             "wgRegionProtect.spySettings.notify.sound.type"),
-    @CanRecover
+    
     SPY_COMMAND_LIST("spyCommandList", List.of(
             "//set", "//replace", "//overlay",
             "//walls", "//deform", "//fill",

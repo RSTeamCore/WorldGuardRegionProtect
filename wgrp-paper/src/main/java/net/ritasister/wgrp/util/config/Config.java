@@ -1,13 +1,11 @@
 package net.ritasister.wgrp.util.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
-import net.ritasister.wgrp.rslibs.annotation.CanRecover;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,13 +15,10 @@ public class Config {
 
     private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
 
-    @CanRecover
     private Map<String, List<String>> regionProtect;
 
-    @CanRecover
     private Map<String, List<String>> regionProtectAllow;
 
-    @CanRecover
     private Map<String, List<String>> regionProtectOnlyBreakAllow;
 
     public Config(WorldGuardRegionProtectPaperBase wgrpPaperBase) {
@@ -51,24 +46,8 @@ public class Config {
                 wgrpPaperBase.getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
                 e.fillInStackTrace();
             }
-            checkFields(configFields);
+            saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
         }
-    }
-
-    private void checkFields(final ConfigFields configFields) {
-        for(Field field : ConfigFields.class.getFields()) {
-            if(field.isAnnotationPresent(CanRecover.class)) {
-                try {
-                    if(field.get(ConfigFields.class.getClass()).equals(null)) {
-                        configFields.get(wgrpPaperBase);
-                        wgrpPaperBase.getLogger().info(String.format("Field %s has been recovered", configFields.name()));
-                    }
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        //saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
     }
 
     private void regionProtectOnlyBreakAllowSection() {
