@@ -16,7 +16,7 @@ public class MessageLoader implements InitMessages<WorldGuardRegionProtectPaperP
     @Override
     public Container initMessages(@NotNull final WorldGuardRegionProtectPaperPlugin wgrpPlugin, final @NotNull Config config) {
         final String lang = ConfigFields.LANG.get(wgrpPlugin.getWgrpPaperBase()).toString();
-        File file = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(), "lang/" + lang + ".yml");
+        final File file = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(), "lang/" + lang + ".yml");
         if (!file.exists()) {
             wgrpPlugin.getWgrpPaperBase().saveResource("lang/" + lang + ".yml", false);
         }

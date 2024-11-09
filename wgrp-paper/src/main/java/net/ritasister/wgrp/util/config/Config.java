@@ -26,7 +26,6 @@ public class Config {
     @CanRecover
     private Map<String, List<String>> regionProtectOnlyBreakAllow;
 
-
     public Config(WorldGuardRegionProtectPaperBase wgrpBase) {
         this.wgrpBase = wgrpBase;
         reloadConfig();
@@ -122,7 +121,8 @@ public class Config {
                 for (String world : regionProtectSection.getKeys(false)) {
                     regionProtect.put(world, wgrpBase.getConfig().getStringList("wgRegionProtect.regionProtect." + world));
                 }
-            } catch (Throwable ignored) {}
+            } catch (Throwable ignored) {
+            }
         }
         for (World w : Bukkit.getWorlds()) {
             final ArrayList<String> list = new ArrayList<>();
@@ -211,4 +211,5 @@ public class Config {
             e.fillInStackTrace();
         }
     }
+
 }
