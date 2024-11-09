@@ -33,13 +33,12 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final EntityCheckTypeProvider entityCheckTypeProvider;
     private final Container messages;
-    private final ParamsVersionCheck<YamlConfiguration> paramsVersionCheck;
+    private final ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck;
 
     public final static String SUPPORTED_VERSION_RANGE = "1.21 - 1.21.3";
     public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.21", "1.21.1", "1.21.2", "1.21.3");
 
-    public RSApiImpl(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin,
-                     final ParamsVersionCheck<YamlConfiguration> check) {
+    public RSApiImpl(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin, final ParamsVersionCheck<ConfigType, YamlConfiguration> check) {
         this.wgrpPlugin = wgrpPlugin;
         this.messages = wgrpPlugin.getConfigLoader().getMessages();
         this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpPlugin);
@@ -185,8 +184,8 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     }
 
     public void updateFile(@NotNull final WorldGuardRegionProtectPaperPlugin wgrpPlugin,
-                           final @NotNull File currentFile, String configType, String lang) {
-        if(ConfigType.CONFIG.name().equals(configType)) {
+                           final @NotNull File currentFile, ConfigType configType, String lang) {
+        if(ConfigType.CONFIG.equals(configType)) {
             final Path renameOldFile = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(),
                     "config-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
             try {
@@ -196,7 +195,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
                 throw new RuntimeException(e);
             }
             wgrpPlugin.getWgrpPaperBase().saveResource("config.yml", true);
-        } else if(ConfigType.LANG.name().equals(configType)) {
+        } else if(ConfigType.LANG.equals(configType)) {
             final Path renameOldLang = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(),
                     "lang/" + lang + "-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
             try {

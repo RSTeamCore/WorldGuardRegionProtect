@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
  * Represent class for a checking version of configs.
  * @param <T>
  */
-public interface ParamsVersionCheck<T> {
+public interface ParamsVersionCheck<C, T> {
 
     /**
      * Getting dateFormat in string value.
@@ -17,12 +17,12 @@ public interface ParamsVersionCheck<T> {
     /**
      * Actually get a version of config.
      */
-    String getCurrentVersion(String configType, final @NotNull T currentYaml);
+    String getCurrentVersion(C configType, final @NotNull T currentYaml);
 
     /**
      * Get a new version of config from jar.
      */
-    String getNewVersion(String configType, final @NotNull T yamlConfiguration);
+    String getNewVersion(C configType, final @NotNull T yamlConfiguration);
 
     /**
      *
