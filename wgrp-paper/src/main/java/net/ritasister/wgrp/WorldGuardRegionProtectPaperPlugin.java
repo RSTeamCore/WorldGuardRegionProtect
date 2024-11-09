@@ -27,7 +27,6 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -77,9 +76,14 @@ public class WorldGuardRegionProtectPaperPlugin extends WorldGuardRegionProtectP
 
     public void unLoad() {
         this.getPluginLogger().info("Saving all configs before shutting down...");
-        for (ConfigFields configFields : ConfigFields.values()) {
-            configLoader.getConfig().saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
-            this.getPluginLogger().info(String.format("Checking and saving fields: %s", configFields));
+        try {
+            for (ConfigFields configFields : ConfigFields.values()) {
+                configLoader.getConfig().saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
+                this.getPluginLogger().info(String.format("Checking and saving fields: %s", configFields));
+            }
+        } catch (Exception e) {
+            this.getPluginLogger().severe("Could not saving config.yml! Please check the error: " + e.getLocalizedMessage());
+            e.fillInStackTrace();
         }
         this.getPluginLogger().info("Saved complete. Good luck!");
     }
