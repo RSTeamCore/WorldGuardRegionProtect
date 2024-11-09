@@ -1,8 +1,7 @@
----
 langTitle:
   language: Українська
   author: RSTeamCore
-  version: 1.2
+  version: 1
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> Цей регіон захищено сервером!'

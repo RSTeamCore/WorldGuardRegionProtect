@@ -1,7 +1,7 @@
 langTitle:
   language: French
   author: RSTeamCore
-  version: '1.1'
+  version: 1
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> Cette région est protégée par le serveur !'
