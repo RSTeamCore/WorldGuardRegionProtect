@@ -1,7 +1,7 @@
 langTitle:
   language: Español
   author: RSTeamCore, FabriCanoSolitario
-  version: '1.0'
+  version: 1
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> ¡Esta región está protegida por el servidor!'

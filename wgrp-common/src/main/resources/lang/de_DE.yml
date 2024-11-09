@@ -1,7 +1,7 @@
 langTitle:
   language: Deutsch
   author: RSTeamCore, Kendrick
-  version: '1.2'
+  version: 2
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> Diese Region ist vom Server geschützt!'

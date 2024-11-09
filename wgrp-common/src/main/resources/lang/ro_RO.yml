@@ -1,8 +1,7 @@
----
 langTitle:
   language: Rumânia
   author: ReteamCore
-  version: '1.3'
+  version: 1
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> Această regiune este protejată de server!'
