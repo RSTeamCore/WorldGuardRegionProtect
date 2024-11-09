@@ -35,7 +35,7 @@ public class WGRPChecker {
      * Detect what is a trusted or an untrusted platform used.
      */
     public void detectWhatIsPlatformRun() {
-        String minecraftVersion = Bukkit.getServer().getMinecraftVersion();
+        final String minecraftVersion = Bukkit.getServer().getMinecraftVersion();
         if (wgrpPlugin.getType() == Platform.Type.PAPER) {
             try {
                 Class.forName("com.destroystokyo.paper.ParticleBuilder");

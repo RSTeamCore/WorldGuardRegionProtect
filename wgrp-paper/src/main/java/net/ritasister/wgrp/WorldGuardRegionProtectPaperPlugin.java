@@ -3,7 +3,6 @@ package net.ritasister.wgrp;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.CheckIntersection;
-import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.api.implementation.ApiPlatform;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
@@ -166,7 +165,6 @@ public class WorldGuardRegionProtectPaperPlugin implements WorldGuardRegionProte
         return this.platform;
     }
 
-
     @Override
     public MessagingService getMessagingService() {
         return this.messagingService;
@@ -175,7 +173,6 @@ public class WorldGuardRegionProtectPaperPlugin implements WorldGuardRegionProte
     public CheckIntersection getCheckIntersection() {
         return this.checkIntersection;
     }
-
 
     public UtilCommandWE getPlayerUtilWE() {
         return this.playerUtilWE;

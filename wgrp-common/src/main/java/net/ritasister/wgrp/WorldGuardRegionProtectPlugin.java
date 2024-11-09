@@ -39,5 +39,4 @@ public interface WorldGuardRegionProtectPlugin {
 
     CheckIntersection getCheckIntersection();
 
-
 }

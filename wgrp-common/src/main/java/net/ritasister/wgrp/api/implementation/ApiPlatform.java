@@ -20,7 +20,7 @@ public class ApiPlatform implements Platform, WorldGuardRegionMetadata {
 
     @Override
     public @NonNull String getApiVersion() {
-        String[] version = this.plugin.getWorldGuardMetadata().getVersion().split("\\.");
+        final String[] version = this.plugin.getWorldGuardMetadata().getVersion().split("\\.");
         return version[0] + '.' + version[1];
     }
 

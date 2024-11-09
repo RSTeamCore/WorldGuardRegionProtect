@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 public class ParamsVersionCheckImpl implements ParamsVersionCheck<ConfigType, YamlConfiguration> {
 
