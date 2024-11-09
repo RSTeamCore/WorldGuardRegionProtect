@@ -48,6 +48,10 @@ Please see [`LICENSE.txt`](https://github.com/RSTeamCore/WorldGuardRegionProtect
 #### Latest version (Without the v):
 <img src="https://img.shields.io/github/release/RSTeamCore/WorldGuardRegionProtect.svg" alt="Current Release">
 
+## Example using of API WorldGuardRegionProtect
+
+You can [look example use API from WGRP](https://github.com/RSTeamCore/WGRPAddonExample) to made your addon for plugin WGRP.
+
 ```xml
 
 <repository>
