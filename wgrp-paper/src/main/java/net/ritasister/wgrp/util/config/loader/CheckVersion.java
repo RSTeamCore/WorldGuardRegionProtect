@@ -6,12 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 public interface CheckVersion {
 
-    default void checkVersion(final WorldGuardRegionProtectPaperPlugin wgrpBukkitPlugin) {
-
-    }
-
-    default void checkVersion(final WorldGuardRegionProtectPaperPlugin wgrpBukkitPlugin, final @NotNull Config config) {
-
-    }
+    void checkVersion(final WorldGuardRegionProtectPaperPlugin wgrpPlugin);
 
 }

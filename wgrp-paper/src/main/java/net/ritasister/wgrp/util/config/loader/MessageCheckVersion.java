@@ -21,7 +21,7 @@ public class MessageCheckVersion implements CheckVersion {
     }
 
     @Override
-    public void checkVersion(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin, final @NotNull Config config) {
+    public void checkVersion(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         wgrpPlugin.getPluginLogger().info("Started checking the new version of the language file...");
         final String lang = ConfigFields.LANG.get(wgrpPlugin.getWgrpPaperBase()).toString();
         final File currentLangFile = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(), "lang/" + lang + ".yml");

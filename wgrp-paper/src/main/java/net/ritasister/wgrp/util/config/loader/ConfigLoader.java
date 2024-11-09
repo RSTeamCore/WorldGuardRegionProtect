@@ -6,7 +6,7 @@ import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;
 import org.jetbrains.annotations.NotNull;
 
-public class ConfigLoader implements InitConfig<WorldGuardRegionProtectPaperPlugin> {
+public class ConfigLoader {
 
     private Config config;
 
@@ -17,17 +17,16 @@ public class ConfigLoader implements InitConfig<WorldGuardRegionProtectPaperPlug
 
         //Init messages
         wgrpPlugin.getPluginLogger().info("Started loading messages...");
-        final InitMessages<WorldGuardRegionProtectPaperPlugin, Config, Container> messageLoader = new MessageLoader();
-        this.messages = messageLoader.initMessages(wgrpPlugin, this.config);
+        final MessageLoader messageLoader = new MessageLoader();
+        this.messages = messageLoader.initMessages(wgrpPlugin);
 
         //Check a config version of file
-        wgrpPlugin.getPluginLogger().info("Started checking configuration versions of file...");
         final CheckVersion configCheckVersion = new ConfigCheckVersion(new ParamsVersionCheckImpl());
         configCheckVersion.checkVersion(wgrpPlugin);
 
         //Check a lang version of file
         final CheckVersion messageCheckVersion = new MessageCheckVersion(new ParamsVersionCheckImpl());
-        messageCheckVersion.checkVersion(wgrpPlugin, this.config);
+        messageCheckVersion.checkVersion(wgrpPlugin);
 
         wgrpPlugin.getPluginLogger().info("All configs load successfully!");
     }

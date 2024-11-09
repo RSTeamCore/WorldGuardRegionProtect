@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class Config {
 
-    private final WorldGuardRegionProtectPaperBase wgrpBase;
+    private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
 
     @CanRecover
     private Map<String, List<String>> regionProtect;
@@ -26,8 +26,8 @@ public class Config {
     @CanRecover
     private Map<String, List<String>> regionProtectOnlyBreakAllow;
 
-    public Config(WorldGuardRegionProtectPaperBase wgrpBase) {
-        this.wgrpBase = wgrpBase;
+    public Config(WorldGuardRegionProtectPaperBase wgrpPaperBase) {
+        this.wgrpPaperBase = wgrpPaperBase;
         reloadConfig();
     }
 
@@ -36,23 +36,23 @@ public class Config {
         regionProtectAllow = new HashMap<>();
         regionProtectOnlyBreakAllow = new HashMap<>();
 
-        wgrpBase.saveDefaultConfig();
-        wgrpBase.reloadConfig();
+        wgrpPaperBase.saveDefaultConfig();
+        wgrpPaperBase.reloadConfig();
 
         for (ConfigFields configFields : ConfigFields.values()) {
             try {
-                configFields.get(wgrpBase);
+                configFields.get(wgrpPaperBase);
                 //start getting regions.
                 regionProtectSection();
                 regionProtectAllowSection();
                 regionProtectOnlyBreakAllowSection();
                 //End getting regions
             } catch (Exception e) {
-                wgrpBase.getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
+                wgrpPaperBase.getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
                 e.fillInStackTrace();
             }
             checkFields(configFields);
-            saveConfig(configFields.getPath(), configFields.get(wgrpBase));
+            saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
         }
     }
 
@@ -62,8 +62,8 @@ public class Config {
                 try {
                     if (field.get(ConfigFields.class).equals(null)) {
                         if (field.getName().equals(configFields.name())) {
-                            configFields.get(wgrpBase);
-                            wgrpBase.getLogger().info(String.format("Field %s has been recovered", configFields.name()));
+                            configFields.get(wgrpPaperBase);
+                            wgrpPaperBase.getLogger().info(String.format("Field %s has been recovered", configFields.name()));
                         }
                     }
                 } catch (IllegalAccessException e) {
@@ -74,14 +74,14 @@ public class Config {
     }
 
     private void regionProtectOnlyBreakAllowSection() {
-        final ConfigurationSection regionProtectOnlyBreakAllowSection = wgrpBase.getConfig().getConfigurationSection(
+        final ConfigurationSection regionProtectOnlyBreakAllowSection = wgrpPaperBase.getConfig().getConfigurationSection(
                 "wgRegionProtect.regionProtectOnlyBreakAllow");
         if (regionProtectOnlyBreakAllowSection != null) {
             try {
                 for (String world : regionProtectOnlyBreakAllowSection.getKeys(false)) {
                     regionProtectOnlyBreakAllow.put(
                             world,
-                            wgrpBase.getConfig().getStringList("wgRegionProtect.regionProtectOnlyBreakAllow." + world)
+                            wgrpPaperBase.getConfig().getStringList("wgRegionProtect.regionProtectOnlyBreakAllow." + world)
                     );
                 }
             } catch (Throwable ignored) {
@@ -96,14 +96,14 @@ public class Config {
     }
 
     private void regionProtectAllowSection() {
-        final ConfigurationSection regionProtectAllowSection = wgrpBase.getConfig().getConfigurationSection(
+        final ConfigurationSection regionProtectAllowSection = wgrpPaperBase.getConfig().getConfigurationSection(
                 "wgRegionProtect.regionProtectAllow");
         if (regionProtectAllowSection != null) {
             try {
                 for (String world : regionProtectAllowSection.getKeys(false)) {
                     regionProtectAllow.put(
                             world,
-                            wgrpBase.getConfig().getStringList("wgRegionProtect.regionProtectAllow." + world)
+                            wgrpPaperBase.getConfig().getStringList("wgRegionProtect.regionProtectAllow." + world)
                     );
                 }
             } catch (Throwable ignored) {
@@ -118,12 +118,12 @@ public class Config {
     }
 
     private void regionProtectSection() {
-        final ConfigurationSection regionProtectSection = wgrpBase.getConfig().getConfigurationSection(
+        final ConfigurationSection regionProtectSection = wgrpPaperBase.getConfig().getConfigurationSection(
                 "wgRegionProtect.regionProtect");
         if (regionProtectSection != null) {
             try {
                 for (String world : regionProtectSection.getKeys(false)) {
-                    regionProtect.put(world, wgrpBase.getConfig().getStringList("wgRegionProtect.regionProtect." + world));
+                    regionProtect.put(world, wgrpPaperBase.getConfig().getStringList("wgRegionProtect.regionProtect." + world));
                 }
             } catch (Throwable ignored) {
             }
@@ -143,7 +143,7 @@ public class Config {
     public void setRegionProtectMap(@NotNull Map<String, List<String>> value) {
         regionProtect = value;
         for (ConfigFields configFields : ConfigFields.values()) {
-            saveConfig(configFields.getPath(), configFields.get(wgrpBase));
+            saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
         }
     }
 
@@ -154,7 +154,7 @@ public class Config {
     public void setRegionProtectAllowMap(@NotNull Map<String, List<String>> value) {
         regionProtectAllow = value;
         for (ConfigFields configFields : ConfigFields.values()) {
-            saveConfig(configFields.getPath(), configFields.get(wgrpBase));
+            saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
         }
     }
 
@@ -165,53 +165,49 @@ public class Config {
     public void setRegionProtectOnlyBreakAllow(@NotNull Map<String, List<String>> value) {
         regionProtectOnlyBreakAllow = value;
         for (ConfigFields configFields : ConfigFields.values()) {
-            saveConfig(configFields.getPath(), configFields.get(wgrpBase));
+            saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
         }
     }
-
-    /*public MySQLSettings getMySQLSettings() {
-        return mysqlsettings;
-    }*/
 
     public void saveConfig(final String path, final Object field) {
         try {
             if (regionProtect.isEmpty()) {
-                wgrpBase.getConfig().set(
+                wgrpPaperBase.getConfig().set(
                         "wgRegionProtect.regionProtect",
                         new ArrayList<>()
                 );
             }
             for (Map.Entry<String, List<String>> entry : regionProtect.entrySet()) {
-                wgrpBase.getConfig().set(
+                wgrpPaperBase.getConfig().set(
                         "wgRegionProtect.regionProtect." + entry.getKey(),
                         entry.getValue()
                 );
             }
             if (regionProtectAllow.isEmpty()) {
-                wgrpBase.getConfig().set(
+                wgrpPaperBase.getConfig().set(
                         "wgRegionProtect.regionProtectAllow",
                         new ArrayList<>()
                 );
             }
             for (Map.Entry<String, List<String>> entry : regionProtectAllow.entrySet()) {
-                wgrpBase.getConfig().set(
+                wgrpPaperBase.getConfig().set(
                         "wgRegionProtect.regionProtectAllow." + entry.getKey(),
                         entry.getValue()
                 );
             }
             if (regionProtectOnlyBreakAllow.isEmpty()) {
-                wgrpBase.getConfig().set(
+                wgrpPaperBase.getConfig().set(
                         "wgRegionProtect.regionProtectOnlyBreakAllow",
                         new ArrayList<>()
                 );
             }
             for (Map.Entry<String, List<String>> entry : regionProtectOnlyBreakAllow.entrySet()) {
-                wgrpBase.getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow." + entry.getKey(), entry.getValue());
+                wgrpPaperBase.getConfig().set("wgRegionProtect.regionProtectOnlyBreakAllow." + entry.getKey(), entry.getValue());
             }
-            wgrpBase.getConfig().set(path, field);
-            wgrpBase.saveConfig();
+            wgrpPaperBase.getConfig().set(path, field);
+            wgrpPaperBase.saveConfig();
         } catch (Exception e) {
-            wgrpBase.getLogger().severe("Could not save config.yml! Error: " + e.getLocalizedMessage());
+            wgrpPaperBase.getLogger().severe("Could not save config.yml! Error: " + e.getLocalizedMessage());
             e.fillInStackTrace();
         }
     }

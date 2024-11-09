@@ -20,12 +20,14 @@ import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
 import net.ritasister.wgrp.rslibs.api.manager.RegionAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.util.ServerType;
+import net.ritasister.wgrp.util.config.ConfigFields;
 import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -74,7 +76,12 @@ public class WorldGuardRegionProtectPaperPlugin extends WorldGuardRegionProtectP
     }
 
     public void unLoad() {
-        //configLoader.getConfig().saveConfig();
+        this.getPluginLogger().info("Saving all configs before shutting down...");
+        for (ConfigFields configFields : ConfigFields.values()) {
+            configLoader.getConfig().saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
+            this.getPluginLogger().info(String.format("Checking and saving fields: %s", configFields));
+        }
+        this.getPluginLogger().info("Saved complete. Good luck!");
     }
 
     private void loadAnotherClassAndMethods() {
