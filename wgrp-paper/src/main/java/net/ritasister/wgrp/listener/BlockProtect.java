@@ -15,6 +15,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
@@ -104,7 +105,7 @@ public class BlockProtect implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onObsidianForm(@NotNull BlockGrowEvent e) {
+    public void onObsidianForm(@NotNull BlockFormEvent e) {
         final Location location = e.getBlock().getLocation();
         if (e.getNewState().getType() == Material.OBSIDIAN || e.getNewState().getType() == Material.COBBLESTONE
                 && wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
