@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.jetbrains.annotations.NotNull;
@@ -40,6 +41,13 @@ public class MiscProtect implements Listener {
                     && block.getType() == Material.LAVA) {
                 e.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    private void deny(@NotNull BlockFormEvent event) {
+        if(event.getBlock().getType() == Material.WATER) {
+            event.setCancelled(true);
         }
     }
 

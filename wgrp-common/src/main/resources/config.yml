@@ -12,7 +12,7 @@ wgRegionProtect:
     # Language of this plugins.
     # Loaded languages uploaded in "lang" folder.
     # Languages available:
-    # en_US, es_ES, de_DE, fi_FI, fr_FR, ru_RU, zh_CN, uk_UA, tr_TR, ja_JP
+    # en_US, es_ES, de_DE, fi_FI, fr_FR, ro_RO, ru_RU, zh_CN, uk_UA, tr_TR, ja_JP
     # -------------------------------------------------------------
     lang: ja_JP
 
