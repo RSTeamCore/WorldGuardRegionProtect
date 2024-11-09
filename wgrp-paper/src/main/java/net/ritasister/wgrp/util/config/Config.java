@@ -51,21 +51,25 @@ public class Config {
                 wgrpBase.getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
                 e.fillInStackTrace();
             }
-            for (Field field : ConfigFields.class.getFields()) {
-                if (field.isAnnotationPresent(CanRecover.class)) {
-                    try {
-                        if (field.get(ConfigFields.class).equals(null)) {
-                            if (field.getName().equals(configFields.name())) {
-                                configFields.get(wgrpBase);
-                                wgrpBase.getLogger().info(String.format("Field %s has been recovered", configFields.name()));
-                            }
+            checkFields(configFields);
+            saveConfig(configFields.getPath(), configFields.get(wgrpBase));
+        }
+    }
+
+    private void checkFields(final ConfigFields configFields) {
+        for (Field field : ConfigFields.class.getFields()) {
+            if (field.isAnnotationPresent(CanRecover.class)) {
+                try {
+                    if (field.get(ConfigFields.class).equals(null)) {
+                        if (field.getName().equals(configFields.name())) {
+                            configFields.get(wgrpBase);
+                            wgrpBase.getLogger().info(String.format("Field %s has been recovered", configFields.name()));
                         }
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
                     }
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
                 }
             }
-            saveConfig(configFields.getPath(), configFields.get(wgrpBase));
         }
     }
 
