@@ -14,6 +14,7 @@ public class MessageLoader {
 
     public Container initMessages(@NotNull final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         final String lang = ConfigFields.LANG.get(wgrpPlugin.getWgrpPaperBase()).toString();
+
         final File file = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(), "lang/" + lang + ".yml");
         if (!file.exists()) {
             wgrpPlugin.getWgrpPaperBase().saveResource("lang/" + lang + ".yml", false);
