@@ -522,10 +522,12 @@ wgRegionProtect:
         # --------------------------------------------------------------------------------------
         # denyWaterFlowToRegion — Whether to allow water to flow into protected regions.
         # denyLavaFlowToRegion — Whether to allow lava to flow into protected regions.
+        # denyFormObsidianOrCobbleStone - Whether to allow form obsidian or cobblestone from water and lava.
         # --------------------------------------------------------------------------------------
         other:
             denyWaterFlowToRegion: true
             denyLavaFlowToRegion: true
+            denyFormObsidianOrCobbleStone: true
 
     # --------------------------------------------------------------------------------------
     # List of forbidden commands from WE / FAWE.

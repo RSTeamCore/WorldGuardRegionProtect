@@ -121,6 +121,10 @@ public enum ConfigFields {
             "wgRegionProtect.protectInteract.other.denyLavaFlowToRegion"
     ),
 
+    DENY_FORM_BLOCK_FROM_LAVA_AND_WATER("denyFormObsidianOrCobbleStone", true,
+            "wgRegionProtect.protectInteract.other.denyFormObsidianOrCobbleStone"
+    ),
+
     DENY_WATER_FLOW_TO_REGION("denyWaterFlowToRegion", true,
             "wgRegionProtect.protectInteract.other.denyWaterFlowToRegion"
     ),
@@ -321,7 +325,7 @@ public enum ConfigFields {
     }
 
     private boolean isBooleanCheck(@NotNull String string) {
-        return (string.equalsIgnoreCase("true") || string.equalsIgnoreCase("false"));
+        return string.equalsIgnoreCase("true") || string.equalsIgnoreCase("false");
     }
 
     private boolean isNumeric(String strNum) {
@@ -335,8 +339,8 @@ public enum ConfigFields {
         try {
             Double.valueOf(string);
         } catch (Exception ex) { // Not a valid double value
-            return (false);
+            return false;
         }
-        return (true);
+        return true;
     }
 }
