@@ -42,7 +42,7 @@ public interface WorldGuardRegionProtect {
      * Gain access to Api region checks, region name retrieval and general interaction with WGRP
      */
     @ApiStatus.Experimental
-    RegionAdapterManager getRegionAdapterManager();
+    <L, P, R>RegionAdapterManager<L, P, R> getRegionAdapterManager();
 
     /**
      * Gets the {@link EntityCheckType}, which represents the server platform the
@@ -51,18 +51,18 @@ public interface WorldGuardRegionProtect {
      * @return the entityChecker
      */
     @ApiStatus.Experimental
-    EntityCheckType getEntityCheckerType();
+    <E, T>EntityCheckType<E, T> getEntityCheckerType();
 
     /**
      * Gets the {@link MessagingService}, various chat messages to the player or in the console.
      */
     @ApiStatus.Experimental
-    MessagingService getMessagingService();
+    <P>MessagingService<P> getMessagingService();
 
     /**
      * Gets the {@link CheckIntersection}, checks methods how player is interacted
      * with WE, FAWE or analog plugins.
      */
     @ApiStatus.Experimental
-    CheckIntersection getCheckIntersection();
+    <P>CheckIntersection<P> getCheckIntersection();
 }
