@@ -268,10 +268,14 @@ public enum ConfigFields {
         if (elements.size() > 1) {
             return elements = wgrpBase.getConfig().getStringList(getPath());
         }
-        if (!param.equals(value)) {
+        if (param != null && isBooleanCheck(param.toString())) {
             return value = wgrpBase.getConfig().getBoolean(getPath());
         }
         return param = wgrpBase.getConfig().getString(getPath());
+    }
+
+    private boolean isBooleanCheck(@NotNull String s) {
+        return (s.equalsIgnoreCase("true") || s.equalsIgnoreCase("false"));
     }
 
     public List<String> getList(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {

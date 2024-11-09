@@ -15,6 +15,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -99,6 +100,15 @@ public class BlockProtect implements Listener {
         final Material blockType = block.getType();
         if (blockType == Material.RESPAWN_ANCHOR && wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
             e.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onObsidianForm(@NotNull BlockGrowEvent e) {
+        final Location location = e.getBlock().getLocation();
+        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
+            if (e.getNewState().getType() == Material.OBSIDIAN)
+                e.setCancelled(true);
         }
     }
 

@@ -68,7 +68,7 @@ public class Config {
                 }
             }
         }
-        saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
+        //saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
     }
 
     private void regionProtectOnlyBreakAllowSection() {
