@@ -50,6 +50,13 @@ public interface WorldGuardRegionProtectPlugin {
     <L, P, R> RegionAdapterManager<L, P, R> getRegionAdapter();
 
     /**
+     * Returns the class implementing the LuckPermsAPI on this platform.
+     *
+     * @return the api
+     */
+    WorldGuardRegionProtectApiProvider getApiProvider();
+
+    /**
      * Gets a wrapped metadata instance for the platform.
      *
      * @return the plugin's logger
