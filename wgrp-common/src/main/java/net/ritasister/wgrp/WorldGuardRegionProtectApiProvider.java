@@ -81,7 +81,7 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     }
 
     @Override
-    public <L, P, R> @NonNull RegionAdapterManager<L, P, R> getRegionAdapterManager() {
+    public <L, P, R> @NonNull RegionAdapterManager<L, P, R> getRegionAdapter() {
         return this.regionAdapterManager;
     }
 
