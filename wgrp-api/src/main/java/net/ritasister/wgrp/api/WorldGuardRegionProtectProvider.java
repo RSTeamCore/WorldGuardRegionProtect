@@ -31,12 +31,12 @@ public final class WorldGuardRegionProtectProvider {
     }
 
     @Internal
-    static void setWorldGuardRegionProtect(final WorldGuardRegionProtect worldGuardRegionProtect) {
+    static void register(final WorldGuardRegionProtect worldGuardRegionProtect) {
         WorldGuardRegionProtectProvider.instance = worldGuardRegionProtect;
     }
 
     @Internal
-    static void unSetWorldGuardRegionProtect() {
+    static void unregister() {
         WorldGuardRegionProtectProvider.instance = null;
     }
 
