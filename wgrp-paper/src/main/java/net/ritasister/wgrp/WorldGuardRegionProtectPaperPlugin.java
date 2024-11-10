@@ -147,7 +147,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     @Override
-    public PluginLogger getLogger() {
+    public @NotNull PluginLogger getLogger() {
         return this.logger;
     }
 

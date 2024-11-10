@@ -8,6 +8,7 @@ import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.api.regions.RegionAction;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
@@ -23,11 +24,11 @@ public interface WorldGuardRegionProtectPlugin {
     Platform.Type getType();
 
     /**
-     * Gets a wrapped logger instance for the platform.
+     * Gets the {@link PluginLogger} own of plugin loggers.
      *
-     * @return the plugin's logger
+     * @return the logger server where plugin in running.
      */
-    PluginLogger getLogger();
+    @NonNull PluginLogger getLogger();
 
     /**
      * Gets a wrapped entity checker instance for the platform.
