@@ -42,7 +42,8 @@ public class BlockProtect implements Listener {
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectAllowMap())
                 || wgrpPlugin.getRegionAdapter().checkStandingRegion(
                 location,
-                config.getRegionProtectOnlyBreakAllowMap())) {
+                config.getRegionProtectOnlyBreakAllowMap()
+        )) {
             e.setCancelled(false);
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                 && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
@@ -51,7 +52,7 @@ public class BlockProtect implements Listener {
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
 
-            spyMethod(e.getBlock(), player, location, RegionAction.BREAK);
+            spyMethod(e.getBlock(), player, location, RegionAction.Type.BREAK.getAction());
         }
     }
 
@@ -68,11 +69,11 @@ public class BlockProtect implements Listener {
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
 
-            spyMethod(e.getBlock(), player, location, RegionAction.PLACE);
+            spyMethod(e.getBlock(), player, location, RegionAction.Type.PLACE.getAction());
         }
     }
 
-    private void spyMethod(Block block, @NotNull Player player, Location location, RegionAction regionAction) {
+    private void spyMethod(Block block, @NotNull Player player, Location location, String regionAction) {
         if (wgrpPlugin.getSpyLog().contains(player.getPlayerProfile().getId())) {
             wgrpPlugin.getRsApi().notifyIfActionInRegion(
                     player,
@@ -83,7 +84,8 @@ public class BlockProtect implements Listener {
                     block.getX(),
                     block.getY(),
                     block.getZ(),
-                    block.getWorld().getName());
+                    block.getWorld().getName()
+            );
         }
     }
 
@@ -98,7 +100,10 @@ public class BlockProtect implements Listener {
         final Block block = e.getBlock();
         final Location location = block.getLocation();
         final Material blockType = block.getType();
-        if (blockType == Material.RESPAWN_ANCHOR && wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
+        if (blockType == Material.RESPAWN_ANCHOR && wgrpPlugin.getRegionAdapter().checkStandingRegion(
+                location,
+                config.getRegionProtectMap()
+        )) {
             e.setCancelled(true);
         }
     }

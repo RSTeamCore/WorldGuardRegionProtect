@@ -5,7 +5,6 @@ import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.permissions.PermissionsCheck;
-import net.ritasister.wgrp.api.regions.RegionAction;
 import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
@@ -144,7 +143,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
             Player admin,
             Player suspectPlayer,
             String suspectName,
-            RegionAction action,
+            String action,
             String regionName,
             double x,
             double y,
@@ -154,7 +153,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
                 && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             messages.get("messages.Notify.sendAdminInfoIfActionInRegion")
                     .replace("<player>", suspectName)
-                    .replace("<action>", action.getAction())
+                    .replace("<action>", action)
                     .replace("<region>", regionName)
                     .replace("<x>", String.valueOf(x))
                     .replace("<y>", String.valueOf(y))

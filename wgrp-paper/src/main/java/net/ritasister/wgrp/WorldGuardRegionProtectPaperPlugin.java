@@ -5,6 +5,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.api.implementation.ApiPlatform;
+import net.ritasister.wgrp.api.implementation.ApiRegionAction;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
@@ -12,6 +13,7 @@ import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.platform.Platform;
+import net.ritasister.wgrp.api.regions.RegionAction;
 import net.ritasister.wgrp.loader.WGRPChecker;
 import net.ritasister.wgrp.loader.WGRPLoaderCommands;
 import net.ritasister.wgrp.loader.WGRPLoaderListeners;
@@ -41,6 +43,7 @@ public class WorldGuardRegionProtectPaperPlugin implements WorldGuardRegionProte
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
     private final ApiPlatform platform;
+    private final ApiRegionAction regionAction;
 
     private RegionAdapterManagerPaper regionAdapter;
     private WorldGuardRegionMetadata worldGuardRegionMetadata;
@@ -55,6 +58,7 @@ public class WorldGuardRegionProtectPaperPlugin implements WorldGuardRegionProte
 
     public WorldGuardRegionProtectPaperPlugin(final @NotNull WorldGuardRegionProtectPaperBase wgrpPaperBase) {
         this.platform = new ApiPlatform(this);
+        this.regionAction = new ApiRegionAction(this);
         this.wgrpPaperBase = wgrpPaperBase;
         this.logger = new JavaPluginLogger(wgrpPaperBase.getLogger());
         load();
@@ -163,6 +167,11 @@ public class WorldGuardRegionProtectPaperPlugin implements WorldGuardRegionProte
     @Override
     public WorldGuardRegionMetadata getWorldGuardMetadata() {
         return this.platform;
+    }
+
+    @Override
+    public RegionAction getRegionAction() {
+        return regionAction;
     }
 
     @Override

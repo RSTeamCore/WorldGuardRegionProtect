@@ -5,9 +5,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public interface Platform {
 
     /**
-     * Gets the type of platform LuckPerms is running on
+     * Gets the type of platform WorldGuardRegionProtect is running on
      *
-     * @return the type of platform LuckPerms is running on
+     * @return the type of platform WorldGuardRegionProtect is running on
      */
     Platform.@NonNull Type getType();
 

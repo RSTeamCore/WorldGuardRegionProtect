@@ -7,6 +7,7 @@ import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.platform.Platform;
+import net.ritasister.wgrp.api.regions.RegionAction;
 
 /**
  * Represent class for any platform.
@@ -39,14 +40,14 @@ public interface WorldGuardRegionProtectPlugin {
      *
      * @return the plugin's logger
      */
-    <E, T>EntityCheckType<E, T> getEntityChecker();
+    <E, T> EntityCheckType<E, T> getEntityChecker();
 
     /**
      * Gets a wrapped region adapter instance for the platform.
      *
      * @return the plugin's logger
      */
-    <L, P, R>RegionAdapterManager<L, P, R> getRegionAdapter();
+    <L, P, R> RegionAdapterManager<L, P, R> getRegionAdapter();
 
     /**
      * Gets a wrapped metadata instance for the platform.
@@ -60,13 +61,15 @@ public interface WorldGuardRegionProtectPlugin {
      *
      * @return the plugin's logger
      */
-    <P>MessagingService<P> getMessagingService();
+    <P> MessagingService<P> getMessagingService();
 
     /**
      * Gets a wrapped check intersection instance for the platform.
      *
      * @return the plugin's logger
      */
-    <P>CheckIntersection<P> getCheckIntersection();
+    <P> CheckIntersection<P> getCheckIntersection();
+
+    RegionAction getRegionAction();
 
 }

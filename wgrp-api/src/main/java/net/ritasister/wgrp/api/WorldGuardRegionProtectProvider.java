@@ -19,6 +19,7 @@ public final class WorldGuardRegionProtectProvider {
 
     /**
      * Set instance of this api.
+     *
      * @param worldGuardRegionProtect of this plugin.
      */
     @ApiStatus.Internal

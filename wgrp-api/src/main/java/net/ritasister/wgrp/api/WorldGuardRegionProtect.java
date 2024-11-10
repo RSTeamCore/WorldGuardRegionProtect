@@ -6,6 +6,7 @@ import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.platform.Platform;
+import net.ritasister.wgrp.api.regions.RegionAction;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -42,7 +43,7 @@ public interface WorldGuardRegionProtect {
      * Gain access to Api region checks, region name retrieval and general interaction with WGRP
      */
     @ApiStatus.Experimental
-    <L, P, R>RegionAdapterManager<L, P, R> getRegionAdapterManager();
+    <L, P, R> RegionAdapterManager<L, P, R> getRegionAdapterManager();
 
     /**
      * Gets the {@link EntityCheckType}, which represents the server platform the
@@ -51,18 +52,22 @@ public interface WorldGuardRegionProtect {
      * @return the entityChecker
      */
     @ApiStatus.Experimental
-    <E, T>EntityCheckType<E, T> getEntityCheckerType();
+    <E, T> EntityCheckType<E, T> getEntityCheckerType();
 
     /**
      * Gets the {@link MessagingService}, various chat messages to the player or in the console.
      */
     @ApiStatus.Experimental
-    <P>MessagingService<P> getMessagingService();
+    <P> MessagingService<P> getMessagingService();
 
     /**
      * Gets the {@link CheckIntersection}, checks methods how player is interacted
      * with WE, FAWE or analog plugins.
      */
     @ApiStatus.Experimental
-    <P>CheckIntersection<P> getCheckIntersection();
+    <P> CheckIntersection<P> getCheckIntersection();
+
+    @ApiStatus.Experimental
+    RegionAction getRegionAction();
+
 }
