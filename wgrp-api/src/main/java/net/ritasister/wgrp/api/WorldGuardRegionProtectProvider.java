@@ -1,7 +1,8 @@
 package net.ritasister.wgrp.api;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.ApiStatus;
+
+import static org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * The WorldGuardRegionProtect API.
@@ -12,19 +13,9 @@ public final class WorldGuardRegionProtectProvider {
 
     private static WorldGuardRegionProtect instance;
 
-    @ApiStatus.Internal
+    @Internal
     private WorldGuardRegionProtectProvider() {
         throw new UnsupportedOperationException("This class cannot be instantiated.");
-    }
-
-    /**
-     * Set instance of this api.
-     *
-     * @param worldGuardRegionProtect of this plugin.
-     */
-    @ApiStatus.Internal
-    static void setWorldGuardRegionProtect(final WorldGuardRegionProtect worldGuardRegionProtect) {
-        WorldGuardRegionProtectProvider.instance = worldGuardRegionProtect;
     }
 
     /**
@@ -42,6 +33,16 @@ public final class WorldGuardRegionProtectProvider {
             throw new NotLoadedException();
         }
         return instance;
+    }
+
+    @Internal
+    static void setWorldGuardRegionProtect(final WorldGuardRegionProtect worldGuardRegionProtect) {
+        WorldGuardRegionProtectProvider.instance = worldGuardRegionProtect;
+    }
+
+    @Internal
+    static void unSetWorldGuardRegionProtect() {
+        WorldGuardRegionProtectProvider.instance = null;
     }
 
     /**

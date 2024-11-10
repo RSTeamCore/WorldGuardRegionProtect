@@ -1,6 +1,7 @@
 package net.ritasister.wgrp;
 
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
+import net.ritasister.wgrp.api.WorldGuardRegionProtectProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WorldGuardRegionProtectPaperBase extends JavaPlugin implements WorldGuardRegionProtectBase {

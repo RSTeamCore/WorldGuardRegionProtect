@@ -3,6 +3,7 @@ package net.ritasister.wgrp;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.CheckIntersection;
+import net.ritasister.wgrp.api.WorldGuardRegionProtectProvider;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.api.implementation.ApiPlatform;
 import net.ritasister.wgrp.api.implementation.ApiRegionAction;

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * <p>For ease of use, and for platforms without a Service Manager, an instance
  * can also be obtained from the static singleton accessor in
- * {@link WorldGuardRegionProtect}.</p>
+ * {@link WorldGuardRegionProtectProvider}.</p>
  */
 public interface WorldGuardRegionProtect {
 
