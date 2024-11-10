@@ -3,10 +3,8 @@ package net.ritasister.wgrp;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.CheckIntersection;
-import net.ritasister.wgrp.api.WorldGuardRegionProtectProvider;
+import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
-import net.ritasister.wgrp.api.implementation.ApiPlatform;
-import net.ritasister.wgrp.api.implementation.ApiRegionAction;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
@@ -30,6 +28,7 @@ import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -43,8 +42,6 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     private final PluginLogger logger;
     private ConfigLoader configLoader;
     private RSApiImpl rsApi;
-    private final ApiPlatform platform;
-    private final ApiRegionAction regionAction;
 
     private RegionAdapterManagerPaper regionAdapter;
     private WorldGuardRegionMetadata worldGuardRegionMetadata;
@@ -58,13 +55,12 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     private MessagingService messagingService;
 
     public WorldGuardRegionProtectPaperPlugin(final @NotNull WorldGuardRegionProtectPaperBase wgrpPaperBase) {
-        this.platform = new ApiPlatform(this);
-        this.regionAction = new ApiRegionAction(this);
         this.wgrpPaperBase = wgrpPaperBase;
         this.logger = new JavaPluginLogger(wgrpPaperBase.getLogger());
     }
 
-    public void load() {
+    public void onEnable() {
+        load();
         this.spyLog = new ArrayList<>();
         configLoader = new ConfigLoader();
         rsApi = new RSApiImpl(this, new ParamsVersionCheckImpl());
@@ -83,7 +79,8 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         updateNotify.checkUpdateNotify(wgrpPaperBase.getPluginMeta().getVersion());
     }
 
-    public void unLoad() {
+    public void onDisable() {
+        unLoad();
         this.getLogger().info("Saving all configs before shutting down...");
         try {
             for (ConfigFields configFields : ConfigFields.values()) {
@@ -95,6 +92,11 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
             e.fillInStackTrace();
         }
         this.getLogger().info("Saved complete. Good luck!");
+    }
+
+    @Override
+    protected void registerApiOnPlatform(final WorldGuardRegionProtect api) {
+        this.wgrpPaperBase.getServer().getServicesManager().register(WorldGuardRegionProtect.class, api, this.wgrpPaperBase, ServicePriority.Normal);
     }
 
     private void loadAnotherClassAndMethods() {
@@ -121,16 +123,16 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         new Metrics(wgrpPaperBase, pluginId);
     }
 
-    public WorldGuardRegionProtectPaperBase getWgrpPaperBase() {
-        return wgrpPaperBase;
-    }
-
     public List<UUID> getSpyLog() {
         return spyLog;
     }
 
     public RSApiImpl getRsApi() {
         return rsApi;
+    }
+
+    public WorldGuardRegionProtectPaperBase getWgrpPaperBase() {
+        return wgrpPaperBase;
     }
 
     public void messageToCommandSender(final @NotNull CommandSender commandSender, final String message) {
@@ -150,6 +152,16 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     @Override
+    public WorldGuardRegionMetadata getWorldGuardMetadata() {
+        return null;
+    }
+
+    @Override
+    public RegionAction getRegionAction() {
+        return null;
+    }
+
+    @Override
     public EntityCheckType getEntityChecker() {
         return this.entityCheckType;
     }
@@ -157,21 +169,6 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     @Override
     public RegionAdapterManager getRegionAdapter() {
         return this.regionAdapter;
-    }
-
-    @Override
-    public Platform getPlatform() {
-        return this.platform;
-    }
-
-    @Override
-    public WorldGuardRegionMetadata getWorldGuardMetadata() {
-        return this.platform;
-    }
-
-    @Override
-    public RegionAction getRegionAction() {
-        return regionAction;
     }
 
     @Override

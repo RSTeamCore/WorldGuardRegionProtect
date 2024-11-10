@@ -1,6 +1,7 @@
 package net.ritasister.wgrp.util.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -300,7 +301,7 @@ public enum ConfigFields {
         return path;
     }
 
-    public Object get(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
+    public Object get(@NotNull Plugin wgrpBase) {
         if (elements.size() > 1) {
             return elements = wgrpBase.getConfig().getStringList(getPath());
         }

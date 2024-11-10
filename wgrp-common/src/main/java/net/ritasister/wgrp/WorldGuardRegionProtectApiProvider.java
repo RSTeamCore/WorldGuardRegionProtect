@@ -2,6 +2,7 @@ package net.ritasister.wgrp;
 
 import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
+import net.ritasister.wgrp.api.implementation.ApiPlatform;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
@@ -15,9 +16,8 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
 
     private final WorldGuardRegionProtectPlugin plugin;
 
-    private final WorldGuardRegionMetadata metadata;
     private final PluginLogger logger;
-    private final Platform platform;
+    private final ApiPlatform platform;
     private final RegionAdapterManager regionAdapterManager;
     private final EntityCheckType entityCheckType;
     private final MessagingService messagingService;
@@ -27,9 +27,8 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     public WorldGuardRegionProtectApiProvider(WorldGuardRegionProtectPlugin plugin) {
         this.plugin = plugin;
 
-        this.metadata = plugin.getWorldGuardMetadata();
+        this.platform = new ApiPlatform(plugin);
         this.logger = plugin.getLogger();
-        this.platform = plugin.getPlatform();
         this.regionAdapterManager = plugin.getRegionAdapter();
         this.entityCheckType = plugin.getEntityChecker();
         this.messagingService = plugin.getMessagingService();
@@ -38,18 +37,18 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     }
 
     @Override
+    public @NotNull Platform getPlatform() {
+        return this.platform;
+    }
+
+    @Override
     public WorldGuardRegionMetadata getWorldGuardMetadata() {
-        return this.metadata;
+        return this.platform;
     }
 
     @Override
     public PluginLogger getPluginLogger() {
         return this.logger;
-    }
-
-    @Override
-    public @NotNull Platform getPlatform() {
-        return this.platform;
     }
 
     @Override

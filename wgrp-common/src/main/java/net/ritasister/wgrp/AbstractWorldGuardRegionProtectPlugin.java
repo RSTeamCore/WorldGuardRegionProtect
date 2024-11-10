@@ -1,18 +1,21 @@
 package net.ritasister.wgrp;
 
 import net.ritasister.wgrp.api.ApiRegistrationUtil;
+import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 
 public abstract class AbstractWorldGuardRegionProtectPlugin implements WorldGuardRegionProtectPlugin {
 
     private WorldGuardRegionProtectApiProvider apiProvider;
 
-    public void load() {
+    public final void load() {
         //Register API
         this.apiProvider = new WorldGuardRegionProtectApiProvider(this);
         ApiRegistrationUtil.registerProvider(apiProvider);
+
+        registerApiOnPlatform(this.apiProvider);
     }
 
-    public void unLoad() {
+    public final void unLoad() {
 
     }
 
@@ -20,4 +23,7 @@ public abstract class AbstractWorldGuardRegionProtectPlugin implements WorldGuar
     public final WorldGuardRegionProtectApiProvider getApiProvider() {
         return this.apiProvider;
     }
+
+    protected abstract void registerApiOnPlatform(WorldGuardRegionProtect api);
+
 }

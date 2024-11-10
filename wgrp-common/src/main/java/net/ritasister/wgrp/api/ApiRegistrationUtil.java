@@ -2,10 +2,14 @@ package net.ritasister.wgrp.api;
 
 import java.lang.reflect.Method;
 
-public class ApiRegistrationUtil {
+public final class ApiRegistrationUtil {
 
     private static final Method REGISTER;
     private static final Method UNREGISTER;
+
+    private ApiRegistrationUtil() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
 
     static {
         try {

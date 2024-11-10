@@ -26,13 +26,6 @@ public interface WorldGuardRegionProtectPlugin {
      *
      * @return the plugin's logger
      */
-    Platform getPlatform();
-
-    /**
-     * Gets a wrapped logger instance for the platform.
-     *
-     * @return the plugin's logger
-     */
     PluginLogger getLogger();
 
     /**
