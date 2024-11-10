@@ -13,11 +13,6 @@ public final class WorldGuardRegionProtectProvider {
 
     private static WorldGuardRegionProtect instance;
 
-    @Internal
-    private WorldGuardRegionProtectProvider() {
-        throw new UnsupportedOperationException("This class cannot be instantiated.");
-    }
-
     /**
      * Gets an instance of the {@link WorldGuardRegionProtect} API,
      * throwing {@link IllegalStateException} if the API is not loaded yet.
@@ -43,6 +38,11 @@ public final class WorldGuardRegionProtectProvider {
     @Internal
     static void unSetWorldGuardRegionProtect() {
         WorldGuardRegionProtectProvider.instance = null;
+    }
+
+    @Internal
+    private WorldGuardRegionProtectProvider() {
+        throw new UnsupportedOperationException("This class cannot be instantiated.");
     }
 
     /**
