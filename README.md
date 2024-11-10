@@ -79,7 +79,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.ritasister:wgrp-api:VERSION")
+    compileOnly("net.ritasister:wgrp-api:VERSION")
 }
 ```
 
