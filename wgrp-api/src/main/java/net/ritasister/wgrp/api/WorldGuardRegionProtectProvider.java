@@ -11,7 +11,7 @@ import static org.jetbrains.annotations.ApiStatus.Internal;
  */
 public final class WorldGuardRegionProtectProvider {
 
-    private static WorldGuardRegionProtect instance;
+    private static WorldGuardRegionProtect instance = null;
 
     /**
      * Gets an instance of the {@link WorldGuardRegionProtect} API,
