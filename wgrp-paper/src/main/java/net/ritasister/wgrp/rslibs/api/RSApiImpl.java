@@ -8,7 +8,7 @@ import net.ritasister.wgrp.api.permissions.PermissionsCheck;
 import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.ConfigType;
+import net.ritasister.wgrp.util.config.ConfigType;
 import net.ritasister.wgrp.util.config.ConfigFields;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;

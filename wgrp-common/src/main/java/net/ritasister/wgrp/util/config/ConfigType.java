@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util;
+package net.ritasister.wgrp.util.config;
 
 /**
  * Get to only need a type of file like config or lang file

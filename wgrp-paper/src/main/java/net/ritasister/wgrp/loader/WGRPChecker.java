@@ -60,7 +60,7 @@ public class WGRPChecker {
     private void detectUnTrustPlatformMessage(final @NotNull String minecraftVersion) {
         wgrpPlugin.getLogger().info(String.format("""
                 Server implementation running on %s as version %s.
-                Better if you are running your server on paper or other forks of paper.
+                Better if you are running your server on paper or other forks from paper.
                 Please don't use any untrusted forks.
                 You don't get support if you are use other untrusted forks.
                 """, Platform.Type.UNKNOWN, minecraftVersion));
