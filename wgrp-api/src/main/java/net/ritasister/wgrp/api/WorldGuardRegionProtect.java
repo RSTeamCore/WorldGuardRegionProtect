@@ -21,14 +21,16 @@ public interface WorldGuardRegionProtect {
     /**
      * Gets the {@link WorldGuardRegionMetadata} version of API or plugin.
      */
-    @NonNull WorldGuardRegionMetadata getWorldGuardMetadata();
+    @NonNull
+    WorldGuardRegionMetadata getWorldGuardMetadata();
 
     /**
      * Gets the {@link PluginLogger} own of plugin loggers.
      *
      * @return the logger server where plugin in running.
      */
-    @NonNull PluginLogger getPluginLogger();
+    @NonNull
+    PluginLogger getPluginLogger();
 
     /**
      * Gets the {@link Platform}, which represents the server platform the
@@ -44,7 +46,8 @@ public interface WorldGuardRegionProtect {
      * Gain access to Api region checks, region name retrieval and general interaction with WGRP
      */
     @ApiStatus.Experimental
-    @NonNull <L, P, R> RegionAdapterManager<L, P, R> getRegionAdapter();
+    @NonNull
+    <L, P, R> RegionAdapterManager<L, P, R> getRegionAdapter();
 
     /**
      * Gets the {@link EntityCheckType}, which represents the server platform the
@@ -53,24 +56,26 @@ public interface WorldGuardRegionProtect {
      * @return the entityChecker
      */
     @ApiStatus.Experimental
-    @NonNull <E, T> EntityCheckType<E, T> getEntityCheckerType();
+    @NonNull
+    <E, T> EntityCheckType<E, T> getEntityCheckerType();
 
     /**
      * Gets the {@link MessagingService}, various chat messages to the player or in the console.
      */
     @ApiStatus.Experimental
-    @NonNull <P> MessagingService<P> getMessagingService();
+    @NonNull
+    <P> MessagingService<P> getMessagingService();
 
     /**
      * Gets the {@link CheckIntersection}, checks methods how player is interacted
      * with WE, FAWE or analog plugins.
      */
     @ApiStatus.Experimental
-    @NonNull <P> CheckIntersection<P> getCheckIntersection();
+    @NonNull
+    <P> CheckIntersection<P> getCheckIntersection();
 
     @ApiStatus.Experimental
-    @NonNull RegionAction getRegionAction();
-
-
+    @NonNull
+    RegionAction getRegionAction();
 
 }
