@@ -2,6 +2,7 @@ package net.ritasister.wgrp;
 
 import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
+import net.ritasister.wgrp.api.WorldGuardRegionProtectProvider;
 import net.ritasister.wgrp.api.implementation.ApiPlatform;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
@@ -10,6 +11,7 @@ import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.api.regions.RegionAction;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProtect {
@@ -36,43 +38,70 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
         this.regionAction = plugin.getRegionAction();
     }
 
+    public void ensureApiWasLoadedByPlugin() {
+        final WorldGuardRegionProtectPlugin worldGuardRegionProtectPlugin = this.plugin;
+        final ClassLoader pluginClassLoader = worldGuardRegionProtectPlugin.getClass().getClassLoader();
+
+        for (Class<?> apiClass : new Class[]{WorldGuardRegionProtect.class, WorldGuardRegionProtectProvider.class}) {
+            final ClassLoader apiClassLoader = apiClass.getClassLoader();
+
+            if (!apiClassLoader.equals(pluginClassLoader)) {
+                String guilty = "unknown";
+                try {
+                    guilty = worldGuardRegionProtectPlugin.identifyClassLoader(apiClassLoader);
+                } catch (Exception e) {
+                    // ignore
+                }
+
+                final PluginLogger logger = this.plugin.getLogger();
+                logger.warn("It seems that the WorldGuardRegionProtect API has been (class)loaded by a plugin other than " +
+                        "WorldGuardRegionProtect!");
+                logger.warn("The API was loaded by " + apiClassLoader + " (" + guilty + ") and the " +
+                        "WorldGuardRegionProtect plugin was loaded by " + pluginClassLoader.toString() + ".");
+                logger.warn("This indicates that the other plugin has incorrectly \"shaded\" the " +
+                        "WorldGuardRegionProtect API into its jar file. This can cause errors at runtime and should be fixed.");
+                return;
+            }
+        }
+    }
+
     @Override
     public @NotNull Platform getPlatform() {
         return this.platform;
     }
 
     @Override
-    public WorldGuardRegionMetadata getWorldGuardMetadata() {
+    public @NonNull WorldGuardRegionMetadata getWorldGuardMetadata() {
         return this.platform;
     }
 
     @Override
-    public PluginLogger getPluginLogger() {
+    public @NonNull PluginLogger getPluginLogger() {
         return this.logger;
     }
 
     @Override
-    public <L, P, R> RegionAdapterManager<L, P, R> getRegionAdapterManager() {
+    public <L, P, R> @NonNull RegionAdapterManager<L, P, R> getRegionAdapterManager() {
         return this.regionAdapterManager;
     }
 
     @Override
-    public <E, T> EntityCheckType<E, T> getEntityCheckerType() {
+    public <E, T> @NonNull EntityCheckType<E, T> getEntityCheckerType() {
         return this.entityCheckType;
     }
 
     @Override
-    public <P> MessagingService<P> getMessagingService() {
+    public <P> @NonNull MessagingService<P> getMessagingService() {
         return this.messagingService;
     }
 
     @Override
-    public <P> CheckIntersection<P> getCheckIntersection() {
+    public <P> @NonNull CheckIntersection<P> getCheckIntersection() {
         return this.checkIntersection;
     }
 
     @Override
-    public RegionAction getRegionAction() {
+    public @NonNull RegionAction getRegionAction() {
         return this.regionAction;
     }
 

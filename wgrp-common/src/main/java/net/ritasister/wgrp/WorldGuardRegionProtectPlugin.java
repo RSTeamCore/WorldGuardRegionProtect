@@ -8,6 +8,7 @@ import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.api.regions.RegionAction;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Represent class for any platform.
@@ -71,5 +72,18 @@ public interface WorldGuardRegionProtectPlugin {
     <P> CheckIntersection<P> getCheckIntersection();
 
     RegionAction getRegionAction();
+
+    /**
+     * Attempts to identify the plugin behind the given classloader.
+     *
+     * <p>Used for giving more helpful log messages when things break.</p>
+     *
+     * @param classLoader the classloader to identify
+     * @return the name of the classloader source
+     * @throws Exception anything
+     */
+    default @Nullable String identifyClassLoader(ClassLoader classLoader) throws Exception {
+        return null;
+    }
 
 }

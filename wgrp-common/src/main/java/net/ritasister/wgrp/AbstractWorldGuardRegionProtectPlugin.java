@@ -10,8 +10,8 @@ public abstract class AbstractWorldGuardRegionProtectPlugin implements WorldGuar
     public final void load() {
         //Register API
         this.apiProvider = new WorldGuardRegionProtectApiProvider(this);
+        this.apiProvider.ensureApiWasLoadedByPlugin();
         ApiRegistrationUtil.registerProvider(apiProvider);
-
         registerApiOnPlatform(this.apiProvider);
     }
 
