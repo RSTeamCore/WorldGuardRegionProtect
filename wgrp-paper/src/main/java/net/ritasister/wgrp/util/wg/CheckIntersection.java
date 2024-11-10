@@ -16,22 +16,20 @@ import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.api.CheckIntersection;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class CheckIntersectionImpl implements CheckIntersection<Player> {
+public class CheckIntersection {
 
     public final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public CheckIntersectionImpl(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+    public CheckIntersection(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
     }
 
-    @Override
     public boolean checkIntersection(final Player player) {
         final LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
         Region selection = null;
@@ -74,31 +72,26 @@ public class CheckIntersectionImpl implements CheckIntersection<Player> {
         return false;
     }
 
-    @Override
     public boolean checkCIntersection(final Player player, final String... args) {
         final Region selection = this.getCylSelection(player, args);
         return this.checkIntersection(selection, player);
     }
 
-    @Override
     public boolean checkPIntersection(final Player player, final String... args) {
         final Region selection = this.getPyramidSelection(player, args);
         return this.checkIntersection(selection, player);
     }
 
-    @Override
     public boolean checkSIntersection(final Player player, final String... args) {
         final Region selection = this.getSphereSelection(player, args);
         return this.checkIntersection(selection, player);
     }
 
-    @Override
     public boolean checkUIntersection(final Player player, final String... args) {
         final Region selection = this.getUpSelection(player, args);
         return this.checkIntersection(selection, player);
     }
 
-    @Override
     public boolean checkCPIntersection(final Player player, final String... args) {
         final Region selection = this.getPasteSelection(player);
         return this.checkIntersection(selection, player);

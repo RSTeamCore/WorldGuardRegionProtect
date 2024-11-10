@@ -1,12 +1,10 @@
 package net.ritasister.wgrp.rslibs.api;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.ConfigFields;
-import net.ritasister.wgrp.util.wg.CheckIntersectionImpl;
-import org.bukkit.entity.Player;
+import net.ritasister.wgrp.util.wg.CheckIntersection;
 
 public class UtilWEImpl implements UtilCommandWE {
 
@@ -18,10 +16,9 @@ public class UtilWEImpl implements UtilCommandWE {
         this.wgrpPlugin = wgrpPlugin;
     }
 
-    @Override
-    public CheckIntersection<Player> setUpWorldGuardVersionSeven() {
+    public CheckIntersection setUpWorldGuardVersionSeven() {
         this.config = wgrpPlugin.getConfigLoader().getConfig();
-        return new CheckIntersectionImpl(this.wgrpPlugin);
+        return new CheckIntersection(this.wgrpPlugin);
     }
 
     public boolean cmdWe(String s) {

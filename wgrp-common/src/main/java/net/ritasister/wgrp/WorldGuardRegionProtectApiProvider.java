@@ -1,6 +1,5 @@
 package net.ritasister.wgrp;
 
-import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import net.ritasister.wgrp.api.WorldGuardRegionProtectProvider;
 import net.ritasister.wgrp.api.implementation.ApiEntityChecker;
@@ -25,7 +24,7 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     private final RegionAdapterManager<?, ?, ?> regionAdapterManager;
     private final EntityCheckType<?, ?> entityCheckType;
     private final MessagingService messagingService;
-    private final CheckIntersection checkIntersection;
+
     private final RegionAction regionAction;
 
     public WorldGuardRegionProtectApiProvider(WorldGuardRegionProtectPlugin plugin) {
@@ -36,7 +35,6 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
         this.regionAction = new ApiRegionAction(plugin);
         this.entityCheckType = new ApiEntityChecker<>(plugin);
         this.messagingService = plugin.getMessagingService();
-        this.checkIntersection = plugin.getCheckIntersection();
     }
 
     public void ensureApiWasLoadedByPlugin() {
@@ -89,11 +87,6 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     @Override
     public <P> @NonNull MessagingService<P> getMessagingService() {
         return this.messagingService;
-    }
-
-    @Override
-    public <P> @NonNull CheckIntersection<P> getCheckIntersection() {
-        return this.checkIntersection;
     }
 
     @Override

@@ -2,7 +2,6 @@ package net.ritasister.wgrp;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
@@ -26,6 +25,7 @@ import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.util.config.ConfigFields;
 import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;
 import net.ritasister.wgrp.util.config.loader.ConfigLoader;
+import net.ritasister.wgrp.util.wg.CheckIntersection;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.ServicePriority;
@@ -44,14 +44,13 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     private RSApiImpl rsApi;
 
     private RegionAdapterManagerPaper regionAdapter;
-    private WorldGuardRegionMetadata worldGuardRegionMetadata;
 
     private List<UUID> spyLog;
     private UpdateNotify updateNotify;
+    private CheckIntersection checkIntersection;
     private UtilWEImpl playerUtilWE;
 
     private EntityCheckType entityCheckType;
-    private CheckIntersection checkIntersection;
     private MessagingService messagingService;
 
     public WorldGuardRegionProtectPaperPlugin(final @NotNull WorldGuardRegionProtectPaperBase wgrpPaperBase) {
@@ -135,6 +134,10 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         return wgrpPaperBase;
     }
 
+    public CheckIntersection getCheckIntersection() {
+        return checkIntersection;
+    }
+
     public void messageToCommandSender(final @NotNull CommandSender commandSender, final String message) {
         final var miniMessage = MiniMessage.miniMessage();
         final Component parsed = miniMessage.deserialize(message);
@@ -174,10 +177,6 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     @Override
     public MessagingService getMessagingService() {
         return this.messagingService;
-    }
-
-    public CheckIntersection getCheckIntersection() {
-        return this.checkIntersection;
     }
 
     public UtilCommandWE getPlayerUtilWE() {

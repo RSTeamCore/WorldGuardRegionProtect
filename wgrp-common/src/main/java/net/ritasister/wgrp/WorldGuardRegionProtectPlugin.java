@@ -1,6 +1,5 @@
 package net.ritasister.wgrp;
 
-import net.ritasister.wgrp.api.CheckIntersection;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
@@ -64,13 +63,6 @@ public interface WorldGuardRegionProtectPlugin {
      * @return the plugin's logger
      */
     <P> MessagingService<P> getMessagingService();
-
-    /**
-     * Gets a wrapped check intersection instance for the platform.
-     *
-     * @return the plugin's logger
-     */
-    <P> CheckIntersection<P> getCheckIntersection();
 
     RegionAction getRegionAction();
 

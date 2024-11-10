@@ -53,13 +53,6 @@ public interface WorldGuardRegionProtect {
     @ApiStatus.Experimental
     @NonNull <P> MessagingService<P> getMessagingService();
 
-    /**
-     * Gets the {@link CheckIntersection}, checks methods how player is interacted
-     * with WE, FAWE or analog plugins.
-     */
-    @ApiStatus.Experimental
-    @NonNull <P> CheckIntersection<P> getCheckIntersection();
-
     @ApiStatus.Experimental
     @NonNull RegionAction getRegionAction();
 
