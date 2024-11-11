@@ -61,7 +61,7 @@ tasks.withType<ProcessResources> {
 }
 
 tasks.named<ShadowJar>("shadowJar") {
-    archiveFileName.set("${rootProject.name}-Paper-${project.version}.${archiveExtension.getOrElse("jar")}")
+    archiveFileName.set("${rootProject.name}-${project.version}.${archiveExtension.getOrElse("jar")}")
     dependencies {
         include(dependency(":wgrp-api:"))
         include(dependency(":wgrp-common:"))
