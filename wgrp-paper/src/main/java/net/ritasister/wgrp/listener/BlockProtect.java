@@ -2,10 +2,10 @@ package net.ritasister.wgrp.listener;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.regions.RegionAction;
-import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.ConfigFields;
+import net.ritasister.wgrp.util.config.messages.Messages;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -27,7 +27,7 @@ public class BlockProtect implements Listener {
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
     private final Config config;
-    private final Container messages;
+    private final Messages messages;
 
     public BlockProtect(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;

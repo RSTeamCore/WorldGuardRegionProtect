@@ -5,11 +5,11 @@ import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.permissions.PermissionsCheck;
-import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.ConfigType;
 import net.ritasister.wgrp.util.config.ConfigFields;
+import net.ritasister.wgrp.util.config.messages.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -31,11 +31,13 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final EntityCheckTypeProvider entityCheckTypeProvider;
-    private final Container messages;
+    private final Messages messages;
     private final ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck;
 
-    public final static String SUPPORTED_VERSION_RANGE = "1.21 - 1.21.3";
-    public final static List<String> SUPPORTED_VERSION = Arrays.asList("1.21", "1.21.1", "1.21.2", "1.21.3");
+    public final static String SUPPORTED_VERSION_RANGE = "1.20 - 1.21.3";
+    public final static List<String> SUPPORTED_VERSION = Arrays.asList(
+            "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
+            "1.21", "1.21.1", "1.21.2", "1.21.3");
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin, final ParamsVersionCheck<ConfigType, YamlConfiguration> check) {
         this.wgrpPlugin = wgrpPlugin;

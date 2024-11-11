@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.rslibs.api.config
+package net.ritasister.wgrp.util.config.messages
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
@@ -7,11 +7,11 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import org.bukkit.Material
 import org.bukkit.command.CommandSender
 
-class ComponentWrapper(private var value: MutableList<String>, private val container: Container) {
+class ComponentWrapper(private var value: MutableList<String>, private val container: Messages) {
 
-    constructor(string: String, container: Container) : this(mutableListOf(string), container)
+    constructor(string: String, container: Messages) : this(mutableListOf(string), container)
 
-    constructor(container: Container) : this(mutableListOf<String>(), container)
+    constructor(container: Messages) : this(mutableListOf<String>(), container)
 
     var prefix = if (container.hasPrefix()) container.prefix else ""
 

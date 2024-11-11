@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.config.loader;
+package net.ritasister.wgrp.util.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 

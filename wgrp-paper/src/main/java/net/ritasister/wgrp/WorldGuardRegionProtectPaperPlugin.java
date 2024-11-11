@@ -24,7 +24,7 @@ import net.ritasister.wgrp.rslibs.api.manager.RegionAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.util.config.ConfigFields;
 import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;
-import net.ritasister.wgrp.util.config.loader.ConfigLoader;
+import net.ritasister.wgrp.util.config.ConfigLoader;
 import net.ritasister.wgrp.util.wg.CheckIntersection;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
@@ -75,7 +75,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         wgrpChecker.notifyAboutBuild();
 
         updateNotify = new UpdateNotify(wgrpPaperBase, this);
-        updateNotify.checkUpdateNotify(wgrpPaperBase.getPluginMeta().getVersion());
+        updateNotify.checkUpdateNotify(wgrpPaperBase.getDescription().getVersion());
     }
 
     public void onDisable() {

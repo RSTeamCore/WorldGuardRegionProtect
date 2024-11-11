@@ -1,25 +1,26 @@
-package net.ritasister.wgrp.util.config.loader;
+package net.ritasister.wgrp.util.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.rslibs.api.config.Container;
-import net.ritasister.wgrp.util.config.Config;
-import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;
+import net.ritasister.wgrp.util.config.messages.MessageCheckVersion;
+import net.ritasister.wgrp.util.config.messages.MessageLoader;
+import net.ritasister.wgrp.util.config.messages.Messages;
 import org.jetbrains.annotations.NotNull;
 
 public class ConfigLoader {
 
     private Config config;
 
-    private Container messages;
+    private Messages messages;
 
     public void initConfig(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        //Initialising config.yml
         this.config = new Config(wgrpPlugin.getWgrpPaperBase());
 
         //Check a config version if available a new version
         final CheckVersion configCheckVersion = new ConfigCheckVersion(new ParamsVersionCheckImpl());
         configCheckVersion.checkVersion(wgrpPlugin);
 
-        //Initialising messages
+        //Initialising messages where located in like is /lang/en_US.yml
         wgrpPlugin.getLogger().info("Started loading messages...");
         final MessageLoader messageLoader = new MessageLoader();
         this.messages = messageLoader.initMessages(wgrpPlugin);
@@ -35,7 +36,7 @@ public class ConfigLoader {
         return config;
     }
 
-    public Container getMessages() {
+    public Messages getMessages() {
         return messages;
     }
 

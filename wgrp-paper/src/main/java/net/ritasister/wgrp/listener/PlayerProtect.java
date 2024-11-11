@@ -2,10 +2,10 @@ package net.ritasister.wgrp.listener;
 
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.config.Config;
 import net.ritasister.wgrp.util.config.ConfigFields;
+import net.ritasister.wgrp.util.config.messages.Messages;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -41,7 +41,7 @@ public class PlayerProtect implements Listener {
     static final Set<String> REGION_EDIT_ARGS_FLAGS = Set.of("-f", "-u", "-n", "-g", "-a");
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final Config config;
-    private final Container messages;
+    private final Messages messages;
 
     public PlayerProtect(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;

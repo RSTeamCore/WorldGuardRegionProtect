@@ -36,39 +36,57 @@ public class WGRPChecker {
      */
     public void detectWhatIsPlatformRun() {
         final String minecraftVersion = Bukkit.getServer().getMinecraftVersion();
-        if (wgrpPlugin.getType() == Platform.Type.PAPER) {
+        final String pluginVersion = wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
+        if (wgrpPlugin.getType() == Platform.Type.PAPER || wgrpPlugin.getType() == Platform.Type.FOLIA) {
             try {
                 Class.forName("com.destroystokyo.paper.ParticleBuilder");
-                detectTrustPlatformMessage(Platform.Type.PAPER.getPlatformName(), minecraftVersion);
+                detectTrustPlatformMessage(pluginVersion, Platform.Type.PAPER.getPlatformName(), minecraftVersion);
             } catch (ClassNotFoundException ignored) {
-                detectUnTrustPlatformMessage(minecraftVersion);
+                detectUnTrustPlatformMessage(pluginVersion, minecraftVersion);
             }
-        } else if (wgrpPlugin.getType() == Platform.Type.FOLIA) {
+        } else {
             try {
                 Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
-                detectTrustPlatformMessage(Platform.Type.FOLIA.getPlatformName(), minecraftVersion);
+                detectTrustPlatformMessage(pluginVersion, Platform.Type.FOLIA.getPlatformName(), minecraftVersion);
             } catch (ClassNotFoundException ignored) {
-                detectUnTrustPlatformMessage(minecraftVersion);
+                detectUnTrustPlatformMessage(pluginVersion, minecraftVersion);
+            }
+        }
+        if (wgrpPlugin.getType() == Platform.Type.SPIGOT) {
+            try {
+                Class.forName("com.destroystokyo.paper.ParticleBuilder");
+            } catch (ClassNotFoundException ignored) {
+                detectTrustPlatformMessage(pluginVersion, Platform.Type.SPIGOT.getPlatformName(), minecraftVersion);
             }
         }
     }
 
-    private void detectTrustPlatformMessage(final String type, final @NotNull String minecraftVersion) {
-        wgrpPlugin.getLogger().info(String.format("Server implementation running on %s as version %s.", type, minecraftVersion));
-    }
-
-    private void detectUnTrustPlatformMessage(final @NotNull String minecraftVersion) {
+    private void detectTrustPlatformMessage(final String pluginVersion, final String type, final @NotNull String minecraftVersion) {
         wgrpPlugin.getLogger().info(String.format("""
-                Server implementation running on %s as version %s.
-                Better if you are running your server on paper or other forks from paper.
-                Please don't use any untrusted forks.
-                You don't get support if you are use other untrusted forks.
-                """, Platform.Type.UNKNOWN, minecraftVersion));
+                \n<yellow>====================================================
+                
+                        <gold>WorldGuardRegionProtect %s
+                        <green>Server implementation running on %s - %s
+                
+                <yellow>====================================================
+                """, pluginVersion, type, minecraftVersion));
     }
 
-    /**
-     * Notify about build this plugin. This is an alpha, beta or pre-release.
-     */
+    private void detectUnTrustPlatformMessage(final String pluginVersion, final @NotNull String minecraftVersion) {
+        wgrpPlugin.getLogger().info(String.format("""
+                \n<yellow>====================================================
+                
+                        <gold>WorldGuardRegionProtect %s
+                        <green>Server implementation running on %s - %s
+                
+                        Better if you are running your server on paper or other forks from paper.
+                        Please don't use any untrusted/unknown forks.
+                        You don't get support if you are not running on known servers implementation.
+                
+                <yellow>====================================================
+                """, pluginVersion, Platform.Type.UNKNOWN, minecraftVersion));
+    }
+
     public void notifyAboutBuild() {
         wgrpPlugin.getLogger().info(String.format(
                 """ 

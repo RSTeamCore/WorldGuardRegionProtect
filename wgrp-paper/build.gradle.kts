@@ -38,7 +38,7 @@ dependencies {
     paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
 
     //Plugins
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.1.0-SNAPSHOT")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
 
     implementation("org.bstats:bstats-bukkit:3.0.2")
@@ -78,6 +78,6 @@ tasks.named("assemble").configure {
 }
 
 tasks.named<RunServer>("runServer") {
-    minecraftVersion("1.21.1")
+    minecraftVersion("1.20.1")
     jvmArgs("-Xms4G", "-Xmx4G")
 }

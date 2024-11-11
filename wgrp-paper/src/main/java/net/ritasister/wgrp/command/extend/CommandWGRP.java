@@ -4,10 +4,10 @@ import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.command.AbstractCommand;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
-import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.UtilCommandList;
 import net.ritasister.wgrp.util.config.Config;
+import net.ritasister.wgrp.util.config.messages.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -28,7 +28,7 @@ public class CommandWGRP extends AbstractCommand {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final Config config;
-    private final Container messages;
+    private final Messages messages;
 
     public CommandWGRP(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         super(UtilCommandList.WGRP.getCommand(), wgrpPlugin);
@@ -50,7 +50,6 @@ public class CommandWGRP extends AbstractCommand {
     public void wgrpReload(@NotNull CommandSender sender, String[] args) {
         final long timeInitStart = System.currentTimeMillis();
 
-        config.reloadConfig();
         wgrpPlugin.getConfigLoader().initConfig(wgrpPlugin);
 
         final long timeReload = System.currentTimeMillis() - timeInitStart;

@@ -1,9 +1,10 @@
-package net.ritasister.wgrp.util.config.loader;
+package net.ritasister.wgrp.util.config.messages;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import net.ritasister.wgrp.util.config.ConfigType;
 import net.ritasister.wgrp.util.config.ConfigFields;
+import net.ritasister.wgrp.util.config.CheckVersion;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +33,8 @@ public class MessageCheckVersion implements CheckVersion {
 
         if (currentLangFile.exists()
                 && !paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.LANG, currentLangVersion))
-                && !paramsVersionCheck.getCurrentVersion(ConfigType.LANG, currentLangVersion).equals(paramsVersionCheck.getNewVersion(ConfigType.LANG, newLangVersion))) {
+                && !paramsVersionCheck.getCurrentVersion(ConfigType.LANG, currentLangVersion)
+                .equals(paramsVersionCheck.getNewVersion(ConfigType.LANG, newLangVersion))) {
             wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentLangFile, ConfigType.LANG, lang);
             wgrpPlugin.getLogger().info("Found new version of lang file, updating this now...");
         } else {

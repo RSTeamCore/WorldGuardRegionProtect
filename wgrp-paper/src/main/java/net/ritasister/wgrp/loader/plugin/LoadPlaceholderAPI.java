@@ -17,18 +17,14 @@ public class LoadPlaceholderAPI {
     }
 
     /**
-     * Load PlaceholderAPI.
+     * Load methods for catch PlaceholderAPI.
      */
     public void loadPlugin() {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI");
         if (plugin != null && plugin.isEnabled()) {
-            try {
-                wgrpPlugin.getLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
-                new PlaceholderAPIExpansion(wgrpPlugin.getWgrpPaperBase()).register();
-                isPlaceholderAPIEnabled(true);
-            } catch (NullPointerException | ClassCastException | NoClassDefFoundError exception) {
-                wgrpPlugin.getLogger().severe(exception.getMessage());
-            }
+            wgrpPlugin.getLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
+            new PlaceholderAPIExpansion(wgrpPlugin.getWgrpPaperBase()).register();
+            isPlaceholderAPIEnabled(true);
         }
     }
 

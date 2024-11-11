@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.papi;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class PlaceholderAPIExpansion extends PlaceholderExpansion {
@@ -34,14 +34,12 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
     }
 
     @Override
-    public String onPlaceholderRequest(Player p, @NotNull String identifier) {
-        if (identifier.equals("playername")) {
-            return p.getName();
+    public String onRequest(OfflinePlayer player, @NotNull String params) {
+        if (params.equalsIgnoreCase("placeholder1")) {
+            return wgrpPaperBase.getConfig().getString("placeholders.placeholder1", "default1"); //
         }
-        if (identifier.equals("placeholder2")) {
-            return "placeholder2 works";
-        }
-        return null;
+
+        return null; //
     }
 
 }

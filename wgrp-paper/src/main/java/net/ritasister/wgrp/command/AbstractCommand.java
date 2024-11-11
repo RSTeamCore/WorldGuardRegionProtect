@@ -2,8 +2,8 @@ package net.ritasister.wgrp.command;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
-import net.ritasister.wgrp.rslibs.api.config.Container;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.util.config.messages.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
-    private final Container messages;
+    private final Messages messages;
 
     public AbstractCommand(String command, @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         final PluginCommand pluginCommand = wgrpPlugin.getWgrpPaperBase().getCommand(command);

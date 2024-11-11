@@ -16,16 +16,12 @@ public class LoadWorldGuard {
     }
 
     /**
-     * Load PlaceholderAPI.
+     * Load methods for catch WorldGuard.
      */
     public void loadPlugin() {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin != null && plugin.isEnabled()) {
-            try {
-                wgrpPlugin.getLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
-            } catch (NullPointerException | ClassCastException | NoClassDefFoundError exception) {
-                wgrpPlugin.getLogger().severe(exception.getMessage());
-            }
+            wgrpPlugin.getLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
         }
     }
 

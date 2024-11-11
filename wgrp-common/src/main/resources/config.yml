@@ -14,7 +14,7 @@ wgRegionProtect:
     # Languages available:
     # en_US, es_ES, de_DE, fi_FI, fr_FR, ro_RO, ru_RU, zh_CN, uk_UA, tr_TR, ja_JP
     # -------------------------------------------------------------
-    lang: ja_JP
+    lang: en_US
 
     # -------------------------------------------------------------
     # Let the admin know if he updated the plugin to the latest version.

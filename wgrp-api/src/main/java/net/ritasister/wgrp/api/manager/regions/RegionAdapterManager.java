@@ -1,9 +1,11 @@
 package net.ritasister.wgrp.api.manager.regions;
 
 import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Methods by which you can interact with WorldGuard Api
@@ -13,6 +15,28 @@ import java.util.Map;
  * @param <R> this check where a region is selected by //pos1 and //pos2
  */
 public interface RegionAdapterManager<L, P, R> {
+
+    /**
+     * Check access in a standing region by a Player used region name from HashMap and list of regions.
+     *
+     * @param location Return location of an object.
+     * @param regions  Maps of regions from WorldGuard.
+     * @param uniqueId whether the player owner this region.
+     * @return location of an object (example: block, entity, Player etc.)
+     * @since 1.6.21
+     */
+    boolean isOwnerRegion(@NotNull L location, @NotNull Map<String, List<String>> regions, UUID uniqueId);
+
+    /**
+     * Check access in a standing region by a Player used region name from HashMap and list of regions.
+     *
+     * @param location Return location of an object.
+     * @param regions  Maps of regions from WorldGuard.
+     * @param uniqueId whether the player owner this region.
+     * @return location of an object (example: block, entity, Player etc.)
+     * @since 1.6.21
+     */
+    boolean isMemberRegion(@NotNull L location, @NotNull Map<String, List<String>> regions, UUID uniqueId);
 
     /**
      * Check access in a standing region by a Player used region name from HashMap and list of regions.

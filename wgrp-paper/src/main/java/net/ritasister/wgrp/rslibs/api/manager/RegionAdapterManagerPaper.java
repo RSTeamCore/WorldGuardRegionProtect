@@ -22,12 +22,35 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
  * Utility class for use regions from WorldGuard Api.
  */
 public class RegionAdapterManagerPaper implements RegionAdapterManager<Location, Player, Region> {
+
+    @Override
+    public boolean isOwnerRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions, UUID uniqueId) {
+        if (regions.get(location.getWorld().getName()) == null) {
+            return false;
+        }
+        if (checkStandingRegion(location, regions)) {
+            return this.getOwners(location, uniqueId);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isMemberRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions, UUID uniqueId) {
+        if (regions.get(location.getWorld().getName()) == null) {
+            return false;
+        }
+        if (checkStandingRegion(location, regions)) {
+            return this.getMembers(location, uniqueId);
+        }
+        return false;
+    }
 
     @Override
     public boolean checkStandingRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions) {
@@ -93,6 +116,20 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
         return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer()
                         .get(BukkitAdapter.adapt(location.getWorld())))
                 .getApplicableRegions(BukkitAdapter.asBlockVector(location));
+    }
+
+    private boolean getOwners(final @NotNull Location location, UUID uniqueId) {
+        return this.getApplicableRegions(location)
+                .getRegions()
+                .stream()
+                .anyMatch(region -> region.getOwners().contains(uniqueId));
+    }
+
+    private boolean getMembers(final @NotNull Location location, UUID uniqueId) {
+        return this.getApplicableRegions(location)
+                .getRegions()
+                .stream()
+                .anyMatch(region -> region.getMembers().contains(uniqueId));
     }
 
 }
