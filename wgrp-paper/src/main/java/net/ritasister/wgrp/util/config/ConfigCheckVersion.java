@@ -20,9 +20,10 @@ public class ConfigCheckVersion implements CheckVersion {
     @Override
     public void checkVersion(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         wgrpPlugin.getLogger().info("Started checking the new version of the config file...");
+
         final File currentConfigFile = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(), "config.yml");
-        final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(
-                wgrpPlugin.getWgrpPaperBase().getResource("config.yml")));
+        final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(wgrpPlugin.getWgrpPaperBase().getResource("config.yml")));
+
         final YamlConfiguration currentConfigVersion = YamlConfiguration.loadConfiguration(currentConfigFile);
         final YamlConfiguration newVersion = YamlConfiguration.loadConfiguration(reader);
 
