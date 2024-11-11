@@ -23,9 +23,13 @@ public class WGRPChecker {
     public void checkStartUpVersionServer() {
         if (!wgrpPlugin.getRsApi().isVersionSupported()) {
             wgrpPlugin.getLogger().severe(String.format("""
-                    This plugin version works only on %s!
-                    Please read this thread: https://www.spigotmc.org/resources/81321/
-                    The main post on spigotmc and please download the correct version of plugin for your server version.
+                    \n====================================================
+                    
+                            WorldGuardRegionProtect Premium works only on %s!
+                            Please read this thread: https://www.spigotmc.org/resources/81321/
+                            The main post on spigotmc and please download the correct version of plugin for your server version.
+                    
+                    ====================================================
                     """, RSApiImpl.SUPPORTED_VERSION_RANGE));
             Bukkit.getServer().getPluginManager().disablePlugin(wgrpPlugin.getWgrpPaperBase());
         }
@@ -63,27 +67,27 @@ public class WGRPChecker {
 
     private void detectTrustPlatformMessage(final String pluginVersion, final String type, final @NotNull String minecraftVersion) {
         wgrpPlugin.getLogger().info(String.format("""
-                \n<yellow>====================================================
+                \n====================================================
                 
-                        <gold>WorldGuardRegionProtect %s
-                        <green>Server implementation running on %s - %s
+                        WorldGuardRegionProtect %s
+                        Server implementation running on %s - %s
                 
-                <yellow>====================================================
+                ====================================================
                 """, pluginVersion, type, minecraftVersion));
     }
 
     private void detectUnTrustPlatformMessage(final String pluginVersion, final @NotNull String minecraftVersion) {
         wgrpPlugin.getLogger().info(String.format("""
-                \n<yellow>====================================================
+                \n====================================================
                 
-                        <gold>WorldGuardRegionProtect %s
-                        <green>Server implementation running on %s - %s
+                        WorldGuardRegionProtect %s
+                        Server implementation running on %s - %s
                 
                         Better if you are running your server on paper or other forks from paper.
                         Please don't use any untrusted/unknown forks.
                         You don't get support if you are not running on known servers implementation.
                 
-                <yellow>====================================================
+                ====================================================
                 """, pluginVersion, Platform.Type.UNKNOWN, minecraftVersion));
     }
 
