@@ -85,7 +85,7 @@ public class WGRPChecker {
                 
                         Better if you are running your server on paper or other forks from paper.
                         Please don't use any untrusted/unknown forks.
-                        You don't get support if you are not running on known servers implementation.
+                        You don't get support if you are not running on trust servers implementation.
                 
                 ====================================================
                 """, pluginVersion, Platform.Type.UNKNOWN, minecraftVersion));
