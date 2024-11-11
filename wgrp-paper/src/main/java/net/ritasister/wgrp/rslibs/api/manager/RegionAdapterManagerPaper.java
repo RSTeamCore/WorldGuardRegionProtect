@@ -42,11 +42,27 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     @Override
+    public boolean isOwnerRegion(@NotNull Location location, UUID uniqueId) {
+        if (checkStandingRegion(location)) {
+            return this.getOwners(location, uniqueId);
+        }
+        return false;
+    }
+
+    @Override
     public boolean isMemberRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions, UUID uniqueId) {
         if (regions.get(location.getWorld().getName()) == null) {
             return false;
         }
         if (checkStandingRegion(location, regions)) {
+            return this.getMembers(location, uniqueId);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isMemberRegion(@NotNull Location location, UUID uniqueId) {
+        if (checkStandingRegion(location)) {
             return this.getMembers(location, uniqueId);
         }
         return false;

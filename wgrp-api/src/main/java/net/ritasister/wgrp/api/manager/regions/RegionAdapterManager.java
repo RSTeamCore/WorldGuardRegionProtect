@@ -28,6 +28,16 @@ public interface RegionAdapterManager<L, P, R> {
     boolean isOwnerRegion(@NotNull L location, @NotNull Map<String, List<String>> regions, UUID uniqueId);
 
     /**
+     * Check access in a standing region by a Player.
+     *
+     * @param location Return location of an object.
+     * @param uniqueId whether the player owner this region.
+     * @return location of an object (example: block, entity, Player etc.)
+     * @since 1.7.21
+     */
+    boolean isOwnerRegion(@NotNull L location, UUID uniqueId);
+
+    /**
      * Check access in a standing region by a Player used region name from HashMap and list of regions.
      *
      * @param location Return location of an object.
@@ -37,6 +47,16 @@ public interface RegionAdapterManager<L, P, R> {
      * @since 1.6.21
      */
     boolean isMemberRegion(@NotNull L location, @NotNull Map<String, List<String>> regions, UUID uniqueId);
+
+    /**
+     * Check access in a standing region by a Player.
+     *
+     * @param location Return location of an object.
+     * @param uniqueId whether the player owner this region.
+     * @return location of an object (example: block, entity, Player etc.)
+     * @since 1.7.21
+     */
+    boolean isMemberRegion(@NotNull L location, UUID uniqueId);
 
     /**
      * Check access in a standing region by a Player used region name from HashMap and list of regions.
