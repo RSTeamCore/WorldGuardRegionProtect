@@ -52,7 +52,7 @@ Please see [`LICENSE.txt`](https://github.com/RSTeamCore/WorldGuardRegionProtect
 
 You can [look example use API from WGRP](https://github.com/RSTeamCore/WGRPAddonExample) to made your addon for plugin WGRP.
 
-## Current version of wgrp-api: 1.7.21
+## Current version of wgrp-api: 1.8.21
 
 ```xml
 

@@ -21,9 +21,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Main CommandWGRP of this plugin.
- */
 public class CommandWGRP extends AbstractCommand {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
@@ -37,17 +34,11 @@ public class CommandWGRP extends AbstractCommand {
         this.messages = wgrpPlugin.getConfigLoader().getMessages();
     }
 
-    /**
-     * Just reload.
-     *
-     * @param sender
-     * @param args
-     */
     @SubCommand(
             name = "reload",
             permission = UtilPermissions.COMMAND_WGRP_RELOAD_CONFIGS,
             description = "reload config and lang file.")
-    public void wgrpReload(@NotNull CommandSender sender, String[] args) {
+    public void wgrpReload(@NotNull CommandSender sender) {
         final long timeInitStart = System.currentTimeMillis();
 
         wgrpPlugin.getConfigLoader().initConfig(wgrpPlugin);
@@ -56,17 +47,11 @@ public class CommandWGRP extends AbstractCommand {
         messages.get("messages.Configs.configReloaded").replace("<time>", timeReload).send(sender);
     }
 
-    /**
-     * Description about this plugin.
-     *
-     * @param sender
-     * @param args
-     */
     @SubCommand(
             name = "about",
             aliases = {"credits", "authors"},
             description = "seeing info about authors.")
-    public void wgrpAbout(@NotNull CommandSender sender, String[] args) {
+    public void wgrpAbout(@NotNull CommandSender sender) {
         wgrpPlugin.messageToCommandSender(sender, """
                 <aqua>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<aqua>========
                 <yellow>Hi! If you need help from this plugin,
@@ -80,12 +65,6 @@ public class CommandWGRP extends AbstractCommand {
                 """);
     }
 
-    /**
-     * Admin can add a region to protection.
-     *
-     * @param sender
-     * @param args
-     */
     @SubCommand(
             name = "addregion",
             aliases = {"addrg"},
@@ -151,12 +130,6 @@ public class CommandWGRP extends AbstractCommand {
         }
     }
 
-    /**
-     * Admin can remove a region from protection.
-     *
-     * @param sender
-     * @param args
-     */
     @SubCommand(
             name = "removeregion",
             aliases = {"removerg"},
@@ -204,12 +177,6 @@ public class CommandWGRP extends AbstractCommand {
         }
     }
 
-    /**
-     * Help subcommands for player.
-     *
-     * @param sender
-     * @param args
-     */
     @SubCommand(
             name = "help",
             description = "for seen helping.")
@@ -235,12 +202,6 @@ public class CommandWGRP extends AbstractCommand {
         }
     }
 
-    /**
-     * Spy command for admin only.
-     *
-     * @param sender
-     * @param args
-     */
     @SubCommand(
             name = "spy",
             permission = UtilPermissions.COMMAND_SPY_INSPECT_ADMIN,

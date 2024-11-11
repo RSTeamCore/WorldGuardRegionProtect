@@ -25,9 +25,6 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-/**
- * Utility class for use regions from WorldGuard Api.
- */
 public class RegionAdapterManagerPaper implements RegionAdapterManager<Location, Player, Region> {
 
     @Override
@@ -70,23 +67,15 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
 
     @Override
     public boolean checkStandingRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions) {
-        if (regions.get(location.getWorld().getName()) == null) {
-            return false;
-        }
-        final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
         for (String regionName : regions.get(location.getWorld().getName())) {
-            if (applicableRegionSet.getRegions().stream().anyMatch(region ->
-                    regionName.equalsIgnoreCase(region.getId()))) {
-                return true;
-            }
+            return this.getApplicableRegions(location).getRegions().stream().anyMatch(region -> regionName.equalsIgnoreCase(region.getId()));
         }
-        return false;
+        return regions.get(location.getWorld().getName()) == null;
     }
 
     @Override
     public boolean checkStandingRegion(@NotNull Location location) {
-        final ApplicableRegionSet applicableRegionSet = this.getApplicableRegions(location);
-        return applicableRegionSet.size() != 0;
+        return this.getApplicableRegions(location).size() != 0;
     }
 
     @Override
@@ -129,7 +118,9 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     private @NotNull ApplicableRegionSet getApplicableRegions(final @NotNull Location location) {
-        return Objects.requireNonNull(WorldGuard.getInstance().getPlatform().getRegionContainer()
+        return Objects.requireNonNull(WorldGuard.getInstance()
+                        .getPlatform()
+                        .getRegionContainer()
                         .get(BukkitAdapter.adapt(location.getWorld())))
                 .getApplicableRegions(BukkitAdapter.asBlockVector(location));
     }

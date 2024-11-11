@@ -9,7 +9,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             artifactId = "wgrp-api"
             groupId = rootProject.group as String?
-            version = "1.7.21"
+            version = "1.8.21"
 
             from(components["java"])
         }

@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Represent class for a checking version of configs.
- * @param <T>
  */
 public interface ParamsVersionCheck<C, T> {
 
@@ -15,19 +14,18 @@ public interface ParamsVersionCheck<C, T> {
     String getSimpleDateFormat();
 
     /**
-     * Actually get a version of config.
+     * Get actually version of config in root directory /plugins.
      */
     String getCurrentVersion(C configType, final @NotNull T currentYaml);
 
     /**
-     * Get a new version of config from jar.
+     * Get actually version of config from jar of plugin.
      */
     String getNewVersion(C configType, final @NotNull T yamlConfiguration);
 
     /**
-     *
-     * @param version
-     * @return
+     * @param version get a version for checking if actual number or not.
+     * @return checked matches character is number.
      */
     boolean checkMatches(@NotNull String version);
 

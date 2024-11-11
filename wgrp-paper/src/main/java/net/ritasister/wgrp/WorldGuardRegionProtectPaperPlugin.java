@@ -1,5 +1,6 @@
 package net.ritasister.wgrp;
 
+import com.sk89q.worldedit.regions.Region;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
@@ -27,7 +28,11 @@ import net.ritasister.wgrp.util.config.ParamsVersionCheckImpl;
 import net.ritasister.wgrp.util.config.ConfigLoader;
 import net.ritasister.wgrp.util.wg.CheckIntersection;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
 
@@ -165,17 +170,20 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     @Override
-    public EntityCheckType getEntityChecker() {
+    @SuppressWarnings("unchecked")
+    public EntityCheckType<Entity, EntityType> getEntityChecker() {
         return this.entityCheckType;
     }
 
     @Override
-    public RegionAdapterManager getRegionAdapter() {
+    @SuppressWarnings("unchecked")
+    public RegionAdapterManager<Location, Player, Region> getRegionAdapter() {
         return this.regionAdapter;
     }
 
     @Override
-    public MessagingService getMessagingService() {
+    @SuppressWarnings("unchecked")
+    public MessagingService<?> getMessagingService() {
         return this.messagingService;
     }
 
