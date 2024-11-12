@@ -1,6 +1,10 @@
 package net.ritasister.wgrp.util.schedulers;
 
-import io.papermc.paper.threadedregions.scheduler.*;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
+import io.papermc.paper.threadedregions.scheduler.AsyncScheduler;
+import io.papermc.paper.threadedregions.scheduler.EntityScheduler;
+import io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler;
+import io.papermc.paper.threadedregions.scheduler.RegionScheduler;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -22,7 +26,6 @@ public abstract class FoliaRunnable implements Runnable {
     private @Nullable World world;
     private int chunkX;
     private int chunkZ;
-
 
     public FoliaRunnable(@NotNull AsyncScheduler scheduler, @Nullable TimeUnit timeUnit) {
         this.asyncScheduler = scheduler;
