@@ -9,7 +9,7 @@ import java.net.URI;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
-public class UpdateChecker {
+public final class UpdateChecker {
 
     private final JavaPlugin plugin;
     private final int resourceId;
@@ -19,13 +19,11 @@ public class UpdateChecker {
         this.resourceId = resourceId;
     }
 
-    /**
-     * Method checker if plugin has a last version.
-     */
     public void getVersion(final Consumer<String> consumer) {
         Bukkit.getAsyncScheduler().runNow(this.plugin, t -> {
-            try (InputStream inputStream = URI.create("https://api.spigotmc.org/legacy/update.php?resource="
-                    + this.resourceId).toURL().openStream();
+            try (InputStream inputStream = URI.create("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId)
+                    .toURL()
+                    .openStream();
                  Scanner scanner = new Scanner(inputStream)) {
                 if (scanner.hasNext()) {
                     consumer.accept(scanner.next());

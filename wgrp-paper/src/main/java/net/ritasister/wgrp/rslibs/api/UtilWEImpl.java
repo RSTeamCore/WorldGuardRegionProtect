@@ -2,7 +2,6 @@ package net.ritasister.wgrp.rslibs.api;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
-import net.ritasister.wgrp.util.file.config.Config;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import net.ritasister.wgrp.util.wg.CheckIntersection;
 
@@ -10,14 +9,11 @@ public class UtilWEImpl implements UtilCommandWE {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    private Config config;
-
     public UtilWEImpl(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
     }
 
     public CheckIntersection setUpWorldGuardVersionSeven() {
-        this.config = wgrpPlugin.getConfigLoader().getConfig();
         return new CheckIntersection(this.wgrpPlugin);
     }
 

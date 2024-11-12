@@ -21,7 +21,7 @@ import net.ritasister.wgrp.loader.plugin.LoadWorldGuard;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
 import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
-import net.ritasister.wgrp.rslibs.api.manager.RegionAdapterManagerPaper;
+import net.ritasister.wgrp.rslibs.manager.region.RegionAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import net.ritasister.wgrp.util.file.ParamsVersionCheckImpl;
