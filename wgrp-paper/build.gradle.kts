@@ -44,7 +44,6 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
     implementation("org.jetbrains:annotations:24.1.0")
-    implementation("org.projectlombok:lombok:1.18.32")
 }
 
 tasks.withType<ProcessResources> {

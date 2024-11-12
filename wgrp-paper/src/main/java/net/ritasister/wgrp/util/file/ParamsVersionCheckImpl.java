@@ -1,6 +1,7 @@
-package net.ritasister.wgrp.util.config;
+package net.ritasister.wgrp.util.file;
 
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
+import net.ritasister.wgrp.util.config.ConfigType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 

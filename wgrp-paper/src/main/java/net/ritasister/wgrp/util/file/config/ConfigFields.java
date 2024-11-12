@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.config;
+package net.ritasister.wgrp.util.file.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
 import org.bukkit.plugin.Plugin;

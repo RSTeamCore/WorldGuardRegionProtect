@@ -1,14 +1,12 @@
-package net.ritasister.wgrp.util.config.messages;
+package net.ritasister.wgrp.util.file.messages;
 
-import lombok.AllArgsConstructor;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.util.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-@AllArgsConstructor
 public class MessageLoader {
 
     public Messages initMessages(@NotNull final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {

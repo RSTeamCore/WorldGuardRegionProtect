@@ -4,8 +4,8 @@ import io.papermc.paper.event.player.PlayerLoomPatternSelectEvent;
 import io.papermc.paper.event.player.PlayerStonecutterRecipeSelectEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.config.Config;
-import net.ritasister.wgrp.util.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.Config;
+import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,10 +47,7 @@ public class ToolsProtect implements Listener {
         final Player player = e.getPlayer();
         final Location location = e.getStonecutterInventory().getLocation();
         if (ConfigFields.DENY_STONECUTTER_RECIPE_SELECT.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(
-                    Objects.requireNonNull(location),
-                    config.getRegionProtectMap()
-            )
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                     && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
@@ -62,10 +59,7 @@ public class ToolsProtect implements Listener {
         final Player player = e.getPlayer();
         final Location location = e.getLoomInventory().getLocation();
         if (ConfigFields.DENY_LOOM_PATTERN_SELECT.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(
-                    Objects.requireNonNull(location),
-                    config.getRegionProtectMap()
-            )
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                     && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }

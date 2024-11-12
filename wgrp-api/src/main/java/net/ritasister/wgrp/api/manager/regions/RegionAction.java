@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.api.regions;
+package net.ritasister.wgrp.api.manager.regions;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 

@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.api.implementation;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPlugin;
-import net.ritasister.wgrp.api.regions.RegionAction;
+import net.ritasister.wgrp.api.manager.regions.RegionAction;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class ApiRegionAction implements RegionAction {

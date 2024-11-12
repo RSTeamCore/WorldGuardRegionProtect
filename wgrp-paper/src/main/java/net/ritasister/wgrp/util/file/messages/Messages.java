@@ -1,6 +1,7 @@
-package net.ritasister.wgrp.util.config.messages;
+package net.ritasister.wgrp.util.file.messages;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.ritasister.wgrp.util.config.messages.ComponentWrapper;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 

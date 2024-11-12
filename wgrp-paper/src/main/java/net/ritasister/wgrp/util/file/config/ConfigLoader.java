@@ -1,9 +1,11 @@
-package net.ritasister.wgrp.util.config;
+package net.ritasister.wgrp.util.file.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.util.config.messages.MessageCheckVersion;
-import net.ritasister.wgrp.util.config.messages.MessageLoader;
-import net.ritasister.wgrp.util.config.messages.Messages;
+import net.ritasister.wgrp.util.file.CheckVersion;
+import net.ritasister.wgrp.util.file.ParamsVersionCheckImpl;
+import net.ritasister.wgrp.util.file.messages.MessageCheckVersion;
+import net.ritasister.wgrp.util.file.messages.MessageLoader;
+import net.ritasister.wgrp.util.file.messages.Messages;
 import org.jetbrains.annotations.NotNull;
 
 public class ConfigLoader {

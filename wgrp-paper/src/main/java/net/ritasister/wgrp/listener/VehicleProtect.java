@@ -1,8 +1,8 @@
 package net.ritasister.wgrp.listener;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.util.config.Config;
-import net.ritasister.wgrp.util.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.Config;
+import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,11 +18,8 @@ public class VehicleProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpBukkitPlugin;
 
-    private final Config config;
-
     public VehicleProtect(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpBukkitPlugin) {
         this.wgrpBukkitPlugin = wgrpBukkitPlugin;
-        this.config = wgrpBukkitPlugin.getConfigLoader().getConfig();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
