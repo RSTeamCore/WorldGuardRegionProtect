@@ -25,7 +25,7 @@ public class WGRPChecker {
             wgrpPlugin.getLogger().severe(String.format("""
                     \n====================================================
                     
-                            WorldGuardRegionProtect Premium works only on %s!
+                            WorldGuardRegionProtect works only on %s!
                             Please read this thread: https://www.spigotmc.org/resources/81321/
                             The main post on spigotmc and please download the correct version of plugin for your server version.
                     
