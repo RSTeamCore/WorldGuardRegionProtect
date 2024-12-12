@@ -4,7 +4,6 @@ import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
@@ -20,7 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class RegionAdapterManagerPaper implements RegionAdapterManager<Location, Player, Region> {
+public class RegionAdapterManagerPaper implements RegionAdapterManager<Location, Player> {
 
     @Override
     public boolean isOwnerRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions, UUID uniqueId) {

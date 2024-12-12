@@ -1,6 +1,5 @@
 package net.ritasister.wgrp;
 
-import com.sk89q.worldedit.regions.Region;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
@@ -177,7 +176,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     @Override
     @SuppressWarnings("unchecked")
-    public RegionAdapterManager<Location, Player, Region> getRegionAdapter() {
+    public RegionAdapterManager<Location, Player> getRegionAdapter() {
         return this.regionAdapter;
     }
 

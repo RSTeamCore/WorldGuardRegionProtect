@@ -36,7 +36,7 @@ public interface WorldGuardRegionProtect {
      * Gain access to Api region checks, region name retrieval and general interaction with WGRP
      */
     @ApiStatus.Experimental
-    @NonNull <L, P, R> RegionAdapterManager<L, P, R> getRegionAdapter();
+    @NonNull <L, P, R> RegionAdapterManager<L, P> getRegionAdapter();
 
     /**
      * Gets the {@link EntityCheckType}, which represents the server platform the

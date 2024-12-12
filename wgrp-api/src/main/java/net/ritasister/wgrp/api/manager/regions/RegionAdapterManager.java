@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * A region adapter manager for easy use WorldGuard Api
  */
-public interface RegionAdapterManager<L, P, R> {
+public interface RegionAdapterManager<L, P> {
 
     /**
      * Check access in a standing region by a Player used region name from HashMap and list of regions.

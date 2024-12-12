@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class ApiRegionProtect<L, P, R> implements RegionAdapterManager<L, P, R> {
+public class ApiRegionProtect<L, P> implements RegionAdapterManager<L, P> {
 
     private final WorldGuardRegionProtectPlugin plugin;
 
