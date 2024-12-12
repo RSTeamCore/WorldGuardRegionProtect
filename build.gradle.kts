@@ -3,12 +3,11 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import kotlin.system.exitProcess
 
 plugins {
     id("java")
     id("java-library")
-    kotlin("jvm")
+    id("org.jetbrains.kotlin.jvm") version "2.1.0"
     id("net.kyori.indra") version "3.1.3"
     id("net.kyori.indra.checkstyle") version "3.1.3"
 }
@@ -28,16 +27,6 @@ logger.lifecycle("""
  Output files will be in [subproject]/build/libs
 *******************************************
 """)
-
-if (!File("$rootDir/.git").exists()) {
-    logger.lifecycle("""
-    **************************************************************************************
-    You need to fork and clone this repository! Don't download a .zip file.
-    If you need assistance, consult the GitHub docs: https://docs.github.com/get-started/quickstart/fork-a-repo
-    **************************************************************************************
-    """.trimIndent()
-    ).also{ exitProcess(1) }
-}
 
 allprojects {
     plugins.apply("java")
