@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 /**
  * A region adapter manager for easy use WorldGuard Api
@@ -15,7 +14,7 @@ public interface RegionAdapterManager<L, P> {
     /**
      * Check access in a standing region by a Player used region name from HashMap and list of regions.
      *
-     * @param location Return location of an object.
+     * @param location The location of the object being interacted with or checked.
      * @param regions  Maps of regions from WorldGuard.
      * @param uniqueId whether the player owner this region.
      * @return <code>owner</code> of the region.
@@ -26,7 +25,7 @@ public interface RegionAdapterManager<L, P> {
     /**
      * Check access in a standing region by a Player.
      *
-     * @param location Return location of an object.
+     * @param location The location of the object being interacted with or checked.
      * @param uniqueId whether the player owner this region.
      * @return <code>owner</code> of the region.
      * @since 1.7.21
@@ -36,7 +35,7 @@ public interface RegionAdapterManager<L, P> {
     /**
      * Check access in a standing region by a Player used region name from HashMap and list of regions.
      *
-     * @param location Return location of an object.
+     * @param location The location of the object being interacted with or checked.
      * @param regions  Maps of regions from WorldGuard.
      * @param uniqueId whether the player owner this region.
      * @return <code>member</code> of the region.
@@ -47,7 +46,7 @@ public interface RegionAdapterManager<L, P> {
     /**
      * Check access in a standing region by a Player.
      *
-     * @param location Return location of an object.
+     * @param location The location of the object being interacted with or checked.
      * @param uniqueId whether the player owner this region.
      * @return <code>member</code> of the region.
      * @since 1.7.21
@@ -57,8 +56,8 @@ public interface RegionAdapterManager<L, P> {
     /**
      * Check access in a standing region by a Player.
      *
-     * @param location Return location of an object.
-     * @return <code>member</code> of the region.
+     * @param location The location of the object being interacted with or checked.
+     * @return <code>priority</code> of the region.
      * @since 1.10.21
      */
     int getPriorityRegion(@NotNull L location);
@@ -76,7 +75,7 @@ public interface RegionAdapterManager<L, P> {
     /**
      * Checking the access in a region without region name.
      *
-     * @param location Location of an object.
+     * @param location The location of the object being interacted with or checked.
      * @return represent <code>object</code> who's try to interact with region (example: block, entity, Player etc.)
      * @since 0.3.4
      */
@@ -85,7 +84,7 @@ public interface RegionAdapterManager<L, P> {
     /**
      * Getting the name of the region where the object trying to interact with protected a region.
      *
-     * @param location Location of an object.
+     * @param location The location of the object being interacted with or checked.
      * @return the <code>name</code> of the region.
      * @since 0.7.1
      */
