@@ -10,6 +10,7 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
+import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -72,11 +73,13 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
         if (regions.get(location.getWorld().getName()) == null) {
             return false;
         }
-        for (String regionName : regions.get(location.getWorld().getName())) {
-            return this.getApplicableRegionsSet(location).getRegions().stream().anyMatch(region -> regionName.equalsIgnoreCase(
-                    region.getId()));
-        }
-        return false;
+        return regions.get(location.getWorld().getName())
+                .stream()
+                .anyMatch(regionName -> 
+                        this.getApplicableRegionsSet(location)
+                        .getRegions()
+                        .stream()
+                        .anyMatch(region -> regionName.equalsIgnoreCase(region.getId())));
     }
 
     @Override
@@ -101,13 +104,13 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
         try {
             selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
         } catch (IncompleteRegionException e) {
-            throw new RuntimeException(e);
+            throw new NoSelectionException();
         }
         return this.getApplicableRegionsSet(selection)
                 .getRegions()
                 .stream()
                 .map(ProtectedRegion::getId)
-                .collect(Collectors.joining());
+                .collect(Collectors.joining(", "));
     }
 
     private int getRegionPriority(final @NotNull Location location) {
@@ -144,8 +147,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
         final ProtectedRegion __dummy__ = new ProtectedCuboidRegion(
                 "__dummy__",
                 selection.getMinimumPoint(),
-                selection.getMaximumPoint()
-        );
+                selection.getMaximumPoint());
         return WorldGuard.getInstance()
                 .getPlatform()
                 .getRegionContainer().get(selection.getWorld()).getApplicableRegions(__dummy__);
