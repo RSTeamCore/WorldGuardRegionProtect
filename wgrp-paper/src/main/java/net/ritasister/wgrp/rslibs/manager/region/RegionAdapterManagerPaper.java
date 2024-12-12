@@ -73,7 +73,8 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
             return false;
         }
         for (String regionName : regions.get(location.getWorld().getName())) {
-            return this.getApplicableRegionsSet(location).getRegions().stream().anyMatch(region -> regionName.equalsIgnoreCase(region.getId()));
+            return this.getApplicableRegionsSet(location).getRegions().stream().anyMatch(region -> regionName.equalsIgnoreCase(
+                    region.getId()));
         }
         return false;
     }
@@ -85,7 +86,8 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
 
     @Override
     public String getProtectRegionName(Location location) {
-        return this.getApplicableRegionsSet(location)
+        return this
+                .getApplicableRegionsSet(location)
                 .getRegions()
                 .stream()
                 .map(ProtectedRegion::getId)
@@ -109,43 +111,38 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     private boolean getRegionPriority(final @NotNull Location location) {
-        return this.getApplicableRegionsSet(location)
-                .getRegions()
-                .stream()
-                .anyMatch(region -> region.getFlags()
-                        .entrySet()
-                        .stream()
-                        .anyMatch(entry -> entry.getValue().equals("priority")));
+        return this.getApplicableRegionsSet(location).getRegions().stream().anyMatch(region -> region.getPriority() > 0);
     }
 
     private boolean getOwners(final @NotNull Location location, UUID uniqueId) {
-        return this.getApplicableRegionsSet(location)
-                .getRegions()
-                .stream()
-                .anyMatch(region -> region.getOwners().contains(uniqueId));
+        return this.getApplicableRegionsSet(location).getRegions().stream().anyMatch(region -> region
+                .getOwners()
+                .contains(uniqueId));
     }
 
     private boolean getMembers(final @NotNull Location location, UUID uniqueId) {
-        return this.getApplicableRegionsSet(location)
-                .getRegions()
-                .stream()
-                .anyMatch(region -> region.getMembers().contains(uniqueId));
+        return this.getApplicableRegionsSet(location).getRegions().stream().anyMatch(region -> region
+                .getMembers()
+                .contains(uniqueId));
     }
 
     private @NotNull ApplicableRegionSet getApplicableRegionsSet(final @NotNull Location location) {
-        return WorldGuard.getInstance()
-                        .getPlatform()
-                        .getRegionContainer()
-                        .get(BukkitAdapter.adapt(location.getWorld()))
+        return WorldGuard
+                .getInstance()
+                .getPlatform()
+                .getRegionContainer()
+                .get(BukkitAdapter.adapt(location.getWorld()))
                 .getApplicableRegions(BukkitAdapter.asBlockVector(location));
     }
 
     private @NotNull ApplicableRegionSet getApplicableRegionsSet(final @NotNull Region selection) {
-        final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", selection.getMinimumPoint(), selection.getMaximumPoint());
-        return WorldGuard.getInstance()
-                .getPlatform()
-                .getRegionContainer()
-                .get(selection.getWorld()).getApplicableRegions(__dummy__);
+        final ProtectedRegion __dummy__ = new ProtectedCuboidRegion(
+                "__dummy__",
+                selection.getMinimumPoint(),
+                selection.getMaximumPoint()
+        );
+        return WorldGuard.getInstance().getPlatform().getRegionContainer().get(selection.getWorld()).getApplicableRegions(
+                __dummy__);
     }
 
 }
