@@ -95,7 +95,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     @Override
     public String getProtectRegionNameBySelection(final Player player) {
         final LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
-        Region selection;
+        final Region selection;
         try {
             selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
         } catch (IncompleteRegionException e) {

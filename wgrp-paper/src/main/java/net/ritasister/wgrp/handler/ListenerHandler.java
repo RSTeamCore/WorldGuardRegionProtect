@@ -2,7 +2,14 @@ package net.ritasister.wgrp.handler;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.handler.Handler;
-import net.ritasister.wgrp.listener.*;
+import net.ritasister.wgrp.listener.AdminProtect;
+import net.ritasister.wgrp.listener.BlockProtect;
+import net.ritasister.wgrp.listener.EntityProtect;
+import net.ritasister.wgrp.listener.HangingProtect;
+import net.ritasister.wgrp.listener.MiscProtect;
+import net.ritasister.wgrp.listener.PlayerProtect;
+import net.ritasister.wgrp.listener.ToolsProtect;
+import net.ritasister.wgrp.listener.VehicleProtect;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
