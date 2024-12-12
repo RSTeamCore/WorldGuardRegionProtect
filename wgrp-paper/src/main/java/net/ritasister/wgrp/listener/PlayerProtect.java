@@ -5,7 +5,6 @@ import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.file.config.Config;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
-import net.ritasister.wgrp.util.file.messages.Messages;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -27,12 +26,10 @@ public class PlayerProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final Config config;
-    private final Messages messages;
 
     public PlayerProtect(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
         this.config = wgrpPlugin.getConfigLoader().getConfig();
-        this.messages = wgrpPlugin.getConfigLoader().getMessages();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
