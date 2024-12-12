@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 /**
  * A region adapter manager for easy use WorldGuard Api
@@ -58,9 +59,9 @@ public interface RegionAdapterManager<L, P> {
      *
      * @param location Return location of an object.
      * @return <code>member</code> of the region.
-     * @since 1.9.21
+     * @since 1.10.21
      */
-    boolean isPriorityRegion(@NotNull L location);
+    int getPriorityRegion(@NotNull L location);
 
     /**
      * Check access in a standing region by a Player try interaction with region from HashMap.

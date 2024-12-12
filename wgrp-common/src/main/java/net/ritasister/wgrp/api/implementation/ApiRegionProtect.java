@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class ApiRegionProtect<L, P> implements RegionAdapterManager<L, P> {
 
@@ -37,8 +38,8 @@ public class ApiRegionProtect<L, P> implements RegionAdapterManager<L, P> {
     }
 
     @Override
-    public boolean isPriorityRegion(@NotNull final L location) {
-        return plugin.getRegionAdapter().isPriorityRegion(location);
+    public int getPriorityRegion(@NotNull final L location) {
+        return plugin.getRegionAdapter().getPriorityRegion(location);
     }
 
     @Override

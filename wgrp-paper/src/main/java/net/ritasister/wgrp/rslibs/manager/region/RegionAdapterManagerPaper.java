@@ -60,11 +60,11 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     @Override
-    public boolean isPriorityRegion(@NotNull Location location) {
+    public int getPriorityRegion(@NotNull Location location) {
         if (checkStandingRegion(location)) {
             return this.getRegionPriority(location);
         }
-        return false;
+        return 0;
     }
 
     @Override
@@ -110,20 +110,25 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
                 .collect(Collectors.joining());
     }
 
-    private boolean getRegionPriority(final @NotNull Location location) {
-        return this.getApplicableRegionsSet(location).getRegions().stream().anyMatch(region -> region.getPriority() > 0);
+    private int getRegionPriority(final @NotNull Location location) {
+        return this.getApplicableRegionsSet(location)
+                .getRegions()
+                .stream()
+                .mapToInt(ProtectedRegion::getPriority).max().orElse(0);
     }
 
     private boolean getOwners(final @NotNull Location location, UUID uniqueId) {
-        return this.getApplicableRegionsSet(location).getRegions().stream().anyMatch(region -> region
-                .getOwners()
-                .contains(uniqueId));
+        return this.getApplicableRegionsSet(location)
+                .getRegions()
+                .stream()
+                .anyMatch(region -> region.getOwners().contains(uniqueId));
     }
 
     private boolean getMembers(final @NotNull Location location, UUID uniqueId) {
-        return this.getApplicableRegionsSet(location).getRegions().stream().anyMatch(region -> region
-                .getMembers()
-                .contains(uniqueId));
+        return this.getApplicableRegionsSet(location)
+                .getRegions()
+                .stream()
+                .anyMatch(region -> region.getMembers().contains(uniqueId));
     }
 
     private @NotNull ApplicableRegionSet getApplicableRegionsSet(final @NotNull Location location) {
@@ -141,8 +146,9 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
                 selection.getMinimumPoint(),
                 selection.getMaximumPoint()
         );
-        return WorldGuard.getInstance().getPlatform().getRegionContainer().get(selection.getWorld()).getApplicableRegions(
-                __dummy__);
+        return WorldGuard.getInstance()
+                .getPlatform()
+                .getRegionContainer().get(selection.getWorld()).getApplicableRegions(__dummy__);
     }
 
 }

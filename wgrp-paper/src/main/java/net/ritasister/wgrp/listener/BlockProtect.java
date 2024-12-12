@@ -40,10 +40,7 @@ public class BlockProtect implements Listener {
         final Player player = e.getPlayer();
         final Location location = e.getBlock().getLocation();
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectAllowMap())
-                || wgrpPlugin.getRegionAdapter().checkStandingRegion(
-                location,
-                config.getRegionProtectOnlyBreakAllowMap()
-        )) {
+                || wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectOnlyBreakAllowMap())) {
             e.setCancelled(false);
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                 && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
