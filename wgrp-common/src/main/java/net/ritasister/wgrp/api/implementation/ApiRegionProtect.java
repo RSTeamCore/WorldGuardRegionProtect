@@ -2,7 +2,6 @@ package net.ritasister.wgrp.api.implementation;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPlugin;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
-import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -38,6 +37,11 @@ public class ApiRegionProtect<L, P, R> implements RegionAdapterManager<L, P, R> 
     }
 
     @Override
+    public boolean isPriorityRegion(@NotNull final L location) {
+        return plugin.getRegionAdapter().isPriorityRegion(location);
+    }
+
+    @Override
     public boolean checkStandingRegion(final L location, final Map<String, List<String>> regions) {
         return plugin.getRegionAdapter().checkStandingRegion(location, regions);
     }
@@ -55,11 +59,6 @@ public class ApiRegionProtect<L, P, R> implements RegionAdapterManager<L, P, R> 
     @Override
     public String getProtectRegionNameBySelection(final P player) {
         return plugin.getRegionAdapter().getProtectRegionNameBySelection(player);
-    }
-
-    @Override
-    public String getProtectRegionNameByIntersection(final R selection) throws NoSelectionException {
-        return plugin.getRegionAdapter().getProtectRegionNameByIntersection(selection);
     }
 
 }

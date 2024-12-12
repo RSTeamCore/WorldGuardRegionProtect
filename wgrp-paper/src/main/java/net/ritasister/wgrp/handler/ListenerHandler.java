@@ -2,13 +2,7 @@ package net.ritasister.wgrp.handler;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.handler.Handler;
-import net.ritasister.wgrp.listener.BlockProtect;
-import net.ritasister.wgrp.listener.EntityProtect;
-import net.ritasister.wgrp.listener.HangingProtect;
-import net.ritasister.wgrp.listener.MiscProtect;
-import net.ritasister.wgrp.listener.PlayerProtect;
-import net.ritasister.wgrp.listener.ToolsProtect;
-import net.ritasister.wgrp.listener.VehicleProtect;
+import net.ritasister.wgrp.listener.*;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +23,7 @@ public class ListenerHandler implements Handler<PluginManager> {
     @Override
     public void handle(final @NotNull PluginManager pluginManager) {
         final List<Listener> allListeners = List.of(
+                new AdminProtect(wgrpPlugin),
                 new BlockProtect(wgrpPlugin),
                 new EntityProtect(wgrpPlugin),
                 new HangingProtect(wgrpPlugin),

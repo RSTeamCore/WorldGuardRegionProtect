@@ -37,7 +37,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     public final static String SUPPORTED_VERSION_RANGE = "1.20 - 1.21.3";
     public final static List<String> SUPPORTED_VERSION = Arrays.asList(
             "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
-            "1.21", "1.21.1", "1.21.2", "1.21.3");
+            "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4");
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin, final ParamsVersionCheck<ConfigType, YamlConfiguration> check) {
         this.wgrpPlugin = wgrpPlugin;

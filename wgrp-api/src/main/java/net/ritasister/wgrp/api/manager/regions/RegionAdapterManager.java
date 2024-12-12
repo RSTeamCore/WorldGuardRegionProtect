@@ -1,6 +1,5 @@
 package net.ritasister.wgrp.api.manager.regions;
 
-import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -55,6 +54,15 @@ public interface RegionAdapterManager<L, P, R> {
     boolean isMemberRegion(@NotNull L location, UUID uniqueId);
 
     /**
+     * Check access in a standing region by a Player.
+     *
+     * @param location Return location of an object.
+     * @return <code>member</code> of the region.
+     * @since 1.9.21
+     */
+    boolean isPriorityRegion(@NotNull L location);
+
+    /**
      * Check access in a standing region by a Player try interaction with region from HashMap.
      *
      * @param location Return location of an object.
@@ -89,13 +97,5 @@ public interface RegionAdapterManager<L, P, R> {
      * @since 0.7.6
      */
     String getProtectRegionNameBySelection(final P player);
-
-    /**
-     * Check the intersection by the player for the method getProtectRegionName()
-     *
-     * @param selection get selection in the region by a Player.
-     * @since 0.7.6
-     */
-    String getProtectRegionNameByIntersection(final R selection) throws NoSelectionException;
 
 }

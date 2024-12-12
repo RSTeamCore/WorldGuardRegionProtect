@@ -32,10 +32,10 @@ public class AdminProtect implements Listener {
     static final Set<String> REGION_EDIT_ARGS = Set.of("f", "flag");
     static final Set<String> REGION_EDIT_ARGS_FLAGS = Set.of("-f", "-u", "-n", "-g", "-a");
 
-    public AdminProtect(final WorldGuardRegionProtectPaperPlugin plugin, final Config config, final Messages messages) {
-        wgrpPlugin = plugin;
-        this.config = config;
-        this.messages = messages;
+    public AdminProtect(final WorldGuardRegionProtectPaperPlugin plugin) {
+        this.wgrpPlugin = plugin;
+        this.config = wgrpPlugin.getConfigLoader().getConfig();
+        this.messages = wgrpPlugin.getConfigLoader().getMessages();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -86,16 +86,16 @@ public class AdminProtect implements Listener {
     }
 
     private void checkIntersection(@NotNull PlayerCommandPreprocessEvent e, String @NotNull [] string, String cmd) {
-        if (this.wgrpPlugin.getPlayerUtilWE().cmdWe(string[0]) &&
-                !this.wgrpPlugin.getCheckIntersection().checkIntersection(e.getPlayer())
-                || this.wgrpPlugin.getPlayerUtilWE().cmdWeC(string[0]) &&
-                !this.wgrpPlugin.getCheckIntersection().checkCIntersection(e.getPlayer(), string)
-                || this.wgrpPlugin.getPlayerUtilWE().cmdWeP(string[0]) &&
-                !this.wgrpPlugin.getCheckIntersection().checkPIntersection(e.getPlayer(), string)
-                || this.wgrpPlugin.getPlayerUtilWE().cmdWeS(string[0]) &&
-                !this.wgrpPlugin.getCheckIntersection().checkSIntersection(e.getPlayer(), string)
-                || this.wgrpPlugin.getPlayerUtilWE().cmdWeU(string[0]) &&
-                !this.wgrpPlugin.getCheckIntersection().checkUIntersection(e.getPlayer(), string)) {
+        if (this.wgrpPlugin.getPlayerUtilWE().cmdWe(string[0])
+                && !this.wgrpPlugin.getCheckIntersection().checkIntersection(e.getPlayer())
+                || this.wgrpPlugin.getPlayerUtilWE().cmdWeC(string[0])
+                && !this.wgrpPlugin.getCheckIntersection().checkCIntersection(e.getPlayer(), string)
+                || this.wgrpPlugin.getPlayerUtilWE().cmdWeP(string[0])
+                && !this.wgrpPlugin.getCheckIntersection().checkPIntersection(e.getPlayer(), string)
+                || this.wgrpPlugin.getPlayerUtilWE().cmdWeS(string[0])
+                && !this.wgrpPlugin.getCheckIntersection().checkSIntersection(e.getPlayer(), string)
+                || this.wgrpPlugin.getPlayerUtilWE().cmdWeU(string[0])
+                && !this.wgrpPlugin.getCheckIntersection().checkUIntersection(e.getPlayer(), string)) {
             if (ConfigFields.REGION_MESSAGE_PROTECT_WE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
                 messages.get("messages.ServerMsg.wgrpMsgWe").send(e.getPlayer());
                 e.setCancelled(true);
