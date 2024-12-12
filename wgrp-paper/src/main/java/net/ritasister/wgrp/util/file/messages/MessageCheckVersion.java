@@ -3,8 +3,8 @@ package net.ritasister.wgrp.util.file.messages;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
 import net.ritasister.wgrp.util.config.ConfigType;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
 import net.ritasister.wgrp.util.file.CheckVersion;
+import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
