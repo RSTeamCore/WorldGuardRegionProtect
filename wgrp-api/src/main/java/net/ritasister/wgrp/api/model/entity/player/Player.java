@@ -3,8 +3,6 @@ package net.ritasister.wgrp.api.model.entity.player;
 import net.ritasister.wgrp.api.model.entity.Entity;
 import net.ritasister.wgrp.api.model.location.World;
 
-import java.awt.*;
-
 /**
  * InDev...
  */
@@ -36,7 +34,7 @@ public interface Player extends Entity {
      *
      * @param message the message to send
      */
-    void sendMessage(Component message);
+    <T> void sendMessage(T message);
 
     /**
      * Checks if the player has the given permission.

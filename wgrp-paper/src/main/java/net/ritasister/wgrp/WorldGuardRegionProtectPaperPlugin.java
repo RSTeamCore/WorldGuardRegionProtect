@@ -173,7 +173,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     @Override
     @SuppressWarnings("unchecked")
-    public EntityCheckType<EntityType> getEntityChecker() {
+    public EntityCheckType<Entity, EntityType> getEntityChecker() {
         return this.entityCheckType;
     }
 

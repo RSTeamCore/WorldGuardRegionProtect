@@ -1,10 +1,9 @@
 package net.ritasister.wgrp.api.implementation;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPlugin;
-import net.ritasister.wgrp.api.model.entity.Entity;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 
-public class ApiEntityChecker<T> implements EntityCheckType<T> {
+public class ApiEntityChecker<E, T> implements EntityCheckType<E, T> {
 
     private final WorldGuardRegionProtectPlugin plugin;
 
@@ -13,7 +12,7 @@ public class ApiEntityChecker<T> implements EntityCheckType<T> {
     }
 
     @Override
-    public boolean check(final Entity entity) {
+    public boolean check(final E entity) {
         return plugin.getEntityChecker().check(entity);
     }
 
