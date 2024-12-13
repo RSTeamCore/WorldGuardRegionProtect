@@ -1,34 +1,34 @@
 langTitle:
-    language: Turkish
-    author: RSTeamCore
-    version: 1
+  language: Turkish
+  author: DarkSavic
+  version: '1.2'
 messages:
-    ServerMsg:
-        wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> Bu bölge sunucu tarafından korunmaktadır!'
-        wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> Burada worldedit komutunu kullanamazsınız!'
-        noPerm: '<red>Bu komutu kullanma izniniz yok.'
-    regionManagement:
-        add: '<green>Bölge <gold><region><green> yapılandırmaya eklendi.'
-        remove: '<red>Bölge <gold><region><red> yapılandırmadan kaldırıldı.'
-        notContains: '<red>Bölgeyi koruma listesinden kaldıramadık çünkü <gold><region> <red>korunmuyor!'
-        alreadyProtected: '<red>Bölge <gold><region><red> zaten koruma altına alınmış.'
-        invalidWorld: '<red>Dünya <gold><world><red> bulunamadı. Dünya adını doğru girdiğinizden emin misiniz?'
-        invalidRegion: '<red>Bölge <gold><region><red> bulunamadı. Bölge adını doğru girdiğinizden emin misiniz?'
-    Configs:
-        configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>Tüm dosyalar <time> ms içinde yeniden yüklendi!'
-    Notify:
-        sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>Dikkat! <yellow><player><red> bölge: <dark_aqua><region> içinde <dark_purple><cmd><red> komutunu kullanmaya çalışıyor'
-        sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>Dikkat! <yellow><player> <gold><action><red> bloğunu bölge: <dark_aqua><region><red> içinde kırmaya çalışıyor. Konum <dark_aqua><x> <y> <z> <world>'
-    usage:
-        title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> Komutun kullanımı <gold>%command%'
-        format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
-        wgrpUseHelp: '<green>Kullanım: <yellow>/wgrp help - <gold>komut listesini görmek için.'
-        addRegionFromConsole: '<green>Kullanım: <yellow>/wgrp addregion <dark_green>[bölge] [dünya]'
-        removeRegionFromConsole: '<green>Kullanım: <yellow>/wgrp removeregion <dark_green>[bölge] [dünya]'
-    subCommands:
-        reload: 'Yapılandırma dosyalarını yeniden yükle.'
-        about: 'Yazarlar hakkında bilgi gör.'
-        spy: 'Bölgeyle kimlerin etkileşimde bulunduğunu takip et.'
-        help: 'Yardım komutlarını görmek için.'
-        addRegion: 'Yapılandırmaya koruma için bir bölge ekle.'
-        removeRegion: 'Koruma listesinden bir bölgeyi kaldır.'
+  ServerMsg:
+    wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> Bu bölge sunucu tarafından korunmaktadır!'
+    wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> Burada worldedit komutunu kullanamazsınız!'
+    noPerm: '<red>Bu komutu kullanma izniniz yok.'
+  regionManagement:
+    add: '<green>Bölge <gold><region><green> yapılandırmaya eklendi.'
+    remove: '<red>Bölge <gold><region><red> yapılandırmadan kaldırıldı.'
+    notContains: '<red>Bölgeyi koruma listesinden kaldıramadık çünkü <gold><region> <red>korunmuyor!'
+    alreadyProtected: '<red>Bölge <gold><region><red> zaten koruma altına alınmış.'
+    invalidWorld: '<red>Dünya <gold><world><red> bulunamadı. Dünya adını doğru girdiğinizden emin misiniz?'
+    invalidRegion: '<red>Bölge <gold><region><red> bulunamadı. Bölge adını doğru girdiğinizden emin misiniz?'
+  Configs:
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>Tüm dosyalar <time> ms içinde yeniden yüklendi!'
+  Notify:
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>Dikkat! <yellow><player><red> bölge: <dark_aqua><region> içinde <dark_purple><cmd><red> komutunu kullanmaya çalışıyor'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>Dikkat! <yellow><player> <gold><action><red> bloğunu bölge: <dark_aqua><region><red> içinde kırmaya çalışıyor. Konum <dark_aqua><x> <y> <z> <world>'
+  usage:
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> Komutun kullanımı <gold>%command%'
+    format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
+    wgrpUseHelp: '<green>Kullanım: <yellow>/wgrp help - <gold>komut listesini görmek için.'
+    addRegionFromConsole: '<green>Kullanım: <yellow>/wgrp addregion <dark_green>[bölge] [dünya]'
+    removeRegionFromConsole: '<green>Kullanım: <yellow>/wgrp removeregion <dark_green>[bölge] [dünya]'
+  subCommands:
+    reload: 'Yapılandırma dosyalarını yeniden yükle.'
+    about: 'Yazarlar hakkında bilgi gör.'
+    spy: 'Bölgeyle kimlerin etkileşimde bulunduğunu takip et.'
+    help: 'Yardım komutlarını görmek için.'
+    addRegion: 'Yapılandırmaya koruma için bir bölge ekle.'
+    removeRegion: 'Koruma listesinden bir bölgeyi kaldır.'

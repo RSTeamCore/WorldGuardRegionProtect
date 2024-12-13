@@ -1,34 +1,34 @@
 langTitle:
-  language: 汉语
-  author: RSTeamCore
-  version: 1
+  language: 简体中文
+  author: SnowCutieOwO
+  version: '1.2'
 messages:
   ServerMsg:
-    wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>]<green> 此区域是由服务器保护的!'
-    wgrpMsgWe: '<dark_gray>[<red>WGRP<dark_gray>]<red> 你不能在这里使用世界编辑命令！'
-    noPerm: '你没有权限。'
+    wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> 该区域受服务器保护！'
+    wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> 你不能在这里使用 WorldEdit 命令！'
+    noPerm: '<red>你没有权限使用此命令。'
   regionManagement:
-    add: "<yellow> 区域<gold><region><green> 添加到配置。"
-    remove: "<red>区域<gold><region><red> 已从配置中删除。"
-    notContains: '<red>无法从保护列表中移除区域，因为<gold><region> <red>is 未受保护！'
-    alreadyProtected: '<red>Region <gold><region><red> is already added to protect.'
-    invalidWorld: '<red>World <gold><world><red> 未找到。您确定输入的世界名称正确吗？'
-    invalidRegion: '<red>区域<gold><region><red> 未找到。您确定输入了正确的区域名称吗？'
+    add: '<green>区域 <gold><region><green> 已添加至配置文件中。'
+    remove: '<red>区域 <gold><region><red> 已从配置文件中移出。'
+    notContains: '<red>无法将区域从保护列表中移除，因为 <gold><region><red> 没有受到保护！'
+    alreadyProtected: '<red>区域 <gold><region><red> 已经被添加至保护列表。'
+    invalidWorld: '<red>世界 <gold><world><red> 不存在。你确定输入的世界名称正确吗？'
+    invalidRegion: '<red>区域 <gold><region><red> 不存在。你确定输入的区域名称正确吗？'
   Configs:
-    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>所有文件重新加载于 <time> 毫秒!'
+    configReloaded: '<dark_gray>[<red>WGRP<dark_gray>] <green>所有配置已重载，耗时 <time>ms！'
   Notify:
-    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>Attention! <yellow><player><red> 正在尝试使用区域命令 <dark_purple><cmd><red>: <dark_aqua><region>'
-    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red> Attention! <yellow><player> <gold><action><red> 区域块: <dark_aqua><region><red> 位置 <dark_aqua><x> <y> <z> <world>'
+    sendAdminInfoIfUsedCommandInRG: '<dark_gray>[<dark_red>!<dark_gray>]<red>注意！<yellow><player><red> 尝试在如下区域内使用命令<dark_purple><cmd><red> ：<dark_aqua><region>'
+    sendAdminInfoIfActionInRegion: '<dark_gray>[<dark_red>!<dark_gray>]<red>注意！<yellow><player><red> 在如下区域内<gold><action><red> 了方块：<dark_aqua><region><red>，位于 <dark_aqua><world> 的 <x> <y> <z>'
   usage:
-    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> 命令使用 <gold>/%command%'
+    title: '<dark_gray>[<red>WGRP<dark_gray>]<dark_aqua> 命令用法：<gold>%command%'
     format: ' <green>%command% %alias% <dark_green>%tabArgs%<dark_aqua>-<yellow>%description%'
-    wgrpUseHelp: '<green>使用方法：<yellow>/wgrp help - <gold>查看命令列表。'
-    addRegionFromConsole: '<green>使用方法: <yellow>/wgrp addregion <dark_green>[region] [world]'
-    removeRegionFromConsole: '<green>使用方法: <yellow>/wgrp removeregion <dark_green>[region] [world]'
+    wgrpUseHelp: '<green>命令用法：<yellow>/wgrp help - <gold>浏览命令列表。'
+    addRegionFromConsole: '<green>命令用法：<yellow>/wgrp addregion <dark_green>[区域名称] [世界名称]'
+    removeRegionFromConsole: '<green>命令用法：<yellow>/wgrp removeregion <dark_green>[区域名称] [世界名称]'
   subCommands:
     reload: '重新加载配置文件。'
     about: '查看有关作者的信息。'
-    spy: '为谁与区域交互的间谍。'
+    spy: '监听与区域交互的玩家。'
     help: '用于查看帮助。'
-    addRegion: '将区域添加到配置以保护。'
-    removeRegion: '从配置中移除该区域以移除保护。'
+    addRegion: '将区域添加到配置的保护列表中。'
+    removeRegion: '将区域从配置的保护列表中移出。'
