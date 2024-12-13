@@ -10,9 +10,6 @@ import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Listens of all events where player can interact with vehicle like minecart or boat.
- */
 public class VehicleProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpBukkitPlugin;

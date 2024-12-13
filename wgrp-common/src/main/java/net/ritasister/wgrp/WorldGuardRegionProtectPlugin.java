@@ -34,14 +34,14 @@ public interface WorldGuardRegionProtectPlugin {
      *
      * @return the plugin's logger
      */
-    <E, T> EntityCheckType<E, T> getEntityChecker();
+    <T> EntityCheckType<T> getEntityChecker();
 
     /**
      * Gets a wrapped region adapter instance for the platform.
      *
      * @return the plugin's logger
      */
-    <L, P, R> RegionAdapterManager<L, P> getRegionAdapter();
+    RegionAdapterManager getRegionAdapter();
 
     /**
      * Returns the class implementing the WorldGuardRegionProtect on this platform.

@@ -8,9 +8,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Listens of all events for protect entity.
- */
 public class EntityProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPaperPlugin;

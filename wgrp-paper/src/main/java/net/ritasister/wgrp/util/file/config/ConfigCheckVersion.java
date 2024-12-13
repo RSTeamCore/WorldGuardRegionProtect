@@ -30,7 +30,7 @@ public class ConfigCheckVersion implements CheckVersion {
         final YamlConfiguration newVersion = YamlConfiguration.loadConfiguration(reader);
 
         if (currentConfigFile.exists()
-                && !paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion))
+                && paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion))
                 && !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion)
                 .equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG, newVersion))) {
             wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG, null);

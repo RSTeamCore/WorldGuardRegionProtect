@@ -302,17 +302,19 @@ public enum ConfigFields {
     }
 
     public Object get(@NotNull Plugin wgrpBase) {
-        if (elements.size() > 1) {
+        if (!elements.isEmpty()) {
             return elements = wgrpBase.getConfig().getStringList(getPath());
         }
-        if (param != null && isBooleanCheck(param.toString())) {
-            return bool = wgrpBase.getConfig().getBoolean(getPath());
-        }
-        if (param != null && isNumeric(param.toString())) {
-            return integer = wgrpBase.getConfig().getInt(getPath());
-        }
-        if (param != null && isDouble(param.toString())) {
-            return doubleValue = wgrpBase.getConfig().getDouble(getPath());
+        if (param != null) {
+            if (isBooleanCheck(param.toString())) {
+                return bool = wgrpBase.getConfig().getBoolean(getPath());
+            }
+            if (isNumeric(param.toString())) {
+                return integer = wgrpBase.getConfig().getInt(getPath());
+            }
+            if (isDouble(param.toString())) {
+                return doubleValue = wgrpBase.getConfig().getDouble(getPath());
+            }
         }
         return param = wgrpBase.getConfig().getString(getPath());
     }

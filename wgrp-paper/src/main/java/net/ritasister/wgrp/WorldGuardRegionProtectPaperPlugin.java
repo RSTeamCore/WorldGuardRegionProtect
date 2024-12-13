@@ -6,12 +6,12 @@ import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
+import net.ritasister.wgrp.api.manager.regions.RegionAction;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.platform.Platform;
-import net.ritasister.wgrp.api.manager.regions.RegionAction;
 import net.ritasister.wgrp.loader.WGRPChecker;
 import net.ritasister.wgrp.loader.WGRPLoaderCommands;
 import net.ritasister.wgrp.loader.WGRPLoaderListeners;
@@ -21,11 +21,12 @@ import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
 import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
 import net.ritasister.wgrp.rslibs.manager.region.RegionAdapterManagerPaper;
+import net.ritasister.wgrp.rslibs.manager.tools.ToolsAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
-import net.ritasister.wgrp.util.file.ParamsVersionCheckImpl;
-import net.ritasister.wgrp.util.file.config.ConfigLoader;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
+import net.ritasister.wgrp.util.file.ParamsVersionCheckImpl;
+import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.ConfigLoader;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -48,6 +49,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     private RSApiImpl rsApi;
 
     private RegionAdapterManagerPaper regionAdapter;
+    private ToolsAdapterManagerPaper toolsAdapter;
 
     private List<UUID> spyLog;
     private UpdateNotify updateNotify;
@@ -110,6 +112,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         loadPlaceholderAPI.loadPlugin();
 
         this.regionAdapter = new RegionAdapterManagerPaper();
+        this.toolsAdapter = new ToolsAdapterManagerPaper();
 
         playerUtilWE = new UtilWEImpl(this);
         checkIntersection = playerUtilWE.setUpWorldGuardVersionSeven();
@@ -170,14 +173,17 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     @Override
     @SuppressWarnings("unchecked")
-    public EntityCheckType<Entity, EntityType> getEntityChecker() {
+    public EntityCheckType<EntityType> getEntityChecker() {
         return this.entityCheckType;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public RegionAdapterManager<Location, Player> getRegionAdapter() {
-        return this.regionAdapter;
+        return regionAdapter;
+    }
+
+    public ToolsAdapterManagerPaper getToolsAdapter() {
+        return toolsAdapter;
     }
 
     @Override

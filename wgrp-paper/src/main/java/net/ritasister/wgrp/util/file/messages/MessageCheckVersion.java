@@ -33,7 +33,7 @@ public class MessageCheckVersion implements CheckVersion {
         final YamlConfiguration newLangVersion = YamlConfiguration.loadConfiguration(reader);
 
         if (currentLangFile.exists()
-                && !paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.LANG, currentLangVersion))
+                && paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.LANG, currentLangVersion))
                 && !paramsVersionCheck.getCurrentVersion(ConfigType.LANG, currentLangVersion)
                 .equals(paramsVersionCheck.getNewVersion(ConfigType.LANG, newLangVersion))) {
             wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentLangFile, ConfigType.LANG, lang);

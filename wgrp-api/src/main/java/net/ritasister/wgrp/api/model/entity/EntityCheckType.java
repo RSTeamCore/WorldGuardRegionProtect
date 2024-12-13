@@ -1,24 +1,27 @@
 package net.ritasister.wgrp.api.model.entity;
 
 /**
- * Validate entities by using a provider to validate them.
+ * Interface to validate entities using a provider for validation logic.
  *
- * @param <E> the entity class type
- * @param <T> the entityType class
+ * @param <E> the type of the entity to be validated
+ * @param <T> the type of the entity type for validation
  * @since 0.8.0
  */
 public interface EntityCheckType<E, T> {
 
     /**
+     * Checks if the specified entity meets the validation criteria.
      *
-     * @param entity what is entity check.
-     * @return entity type what is checked.
+     * @param entity the entity to be validated
+     * @return {@code true} if the entity passes the validation, {@code false} otherwise
      */
     boolean check(E entity);
 
     /**
-     * Get an entity type for checking in regions or whatever.
-     * @return entityType.
+     * Retrieves the supported entity types for validation.
+     *
+     * @return an array of supported entity types, or an empty array if none are available
      */
     T[] getEntityType();
+
 }

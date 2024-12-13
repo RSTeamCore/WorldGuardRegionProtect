@@ -6,6 +6,8 @@ import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Hanging;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public final class HangingCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
@@ -22,8 +24,9 @@ public final class HangingCheckTypeImpl implements EntityCheckType<Entity, Entit
         return ConfigFields.INTERACT_TYPE.getList(wgrpBukkitPlugin.getWgrpPaperBase()).contains(hangingType.name().toLowerCase());
     }
 
+    @Contract(value = " -> new", pure = true)
     @Override
-    public EntityType[] getEntityType() {
+    public EntityType @NotNull [] getEntityType() {
         return new EntityType[] {
             EntityType.PAINTING,
             EntityType.ITEM_FRAME,

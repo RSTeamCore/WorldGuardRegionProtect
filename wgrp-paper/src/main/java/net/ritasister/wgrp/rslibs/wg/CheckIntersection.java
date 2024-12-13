@@ -31,13 +31,13 @@ public class CheckIntersection {
     }
 
     public boolean checkIntersection(final Player player) {
-        final LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
-        Region selection = null;
         try {
-            selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
-        } catch (IncompleteRegionException ignored) {
+            final LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
+            final Region selection = localSession.getSelection(BukkitAdapter.adapt(player.getWorld()));
+            return checkIntersection(selection, player);
+        } catch (IncompleteRegionException | NullPointerException ex) {
+            return false;
         }
-        return checkIntersection(selection, player);
     }
 
     private boolean checkIntersection(final Region selection, Player player) {

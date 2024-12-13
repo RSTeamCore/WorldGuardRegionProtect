@@ -2,10 +2,12 @@ package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.util.EntityTypeHelper;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
@@ -23,8 +25,9 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
         return ConfigFields.ANIMAL_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(animalsType.name().toLowerCase());
     }
 
+    @Contract(" -> new")
     @Override
-    public EntityType[] getEntityType() {
+    public EntityType @NotNull [] getEntityType() {
         return new EntityType[] {
             //Misc
             EntityType.VILLAGER,
@@ -41,7 +44,8 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
             EntityType.FROG,
             EntityType.COW,
             EntityType.FOX,
-            EntityType.MOOSHROOM,
+            EntityTypeHelper.getEntityType("MOOSHROOM"), //1.20+
+            EntityTypeHelper.getEntityType("MOOSHROOM_COW"), //1.20+
             EntityType.ZOMBIE_HORSE,
             EntityType.PANDA,
             EntityType.BEE,
@@ -60,7 +64,7 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
             EntityType.TADPOLE,
             EntityType.CAMEL,
             EntityType.HOGLIN,
-            EntityType.ARMADILLO
+            EntityTypeHelper.getEntityType("ARMADILLO")
         };
     }
 

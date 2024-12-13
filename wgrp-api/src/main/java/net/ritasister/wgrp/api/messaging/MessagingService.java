@@ -1,28 +1,29 @@
 package net.ritasister.wgrp.api.messaging;
 
 /**
- * Represent class for messaging for player or admin.
- * @param <P>
+ * Represents a messaging service for communicating with players or administrators.
+ *
+ * @param <P> the type representing the player object.
  */
 public interface MessagingService<P> {
 
     /**
-     * Send any notification for only admin
+     * Sends a notification specifically to an administrator.
      *
-     * @param player player object.
-     * @param playerName player name.
-     * @param senderCommand the name command if a player attempts to use in a region.
-     * @param regionName the region name if a player attempts to use command in a region.
+     * @param player        the player object triggering the notification.
+     * @param playerName    the name of the player triggering the notification.
+     * @param senderCommand the command the player attempted to use in the region.
+     * @param regionName    the name of the region where the command was attempted.
      * @since 0.7.1
      */
     void notify(P player, String playerName, String senderCommand, String regionName);
 
     /**
-     * Send any notification for only console
+     * Sends a notification specifically to the console.
      *
-     * @param playerName player name.
-     * @param senderCommand the name command if a player attempts to use in a region.
-     * @param regionName region name if a player attempts to use command in a region.
+     * @param playerName    the name of the player triggering the notification.
+     * @param senderCommand the command the player attempted to use in the region.
+     * @param regionName    the name of the region where the command was attempted.
      * @since 0.7.1
      */
     void notify(String playerName, String senderCommand, String regionName);

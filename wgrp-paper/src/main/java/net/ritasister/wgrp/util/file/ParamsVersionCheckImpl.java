@@ -28,7 +28,7 @@ public class ParamsVersionCheckImpl implements ParamsVersionCheck<ConfigType, Ya
 
     @Override
     public boolean checkMatches(@NotNull final String version) {
-        return !version.matches("^[1-9].*");
+        return version.matches("^[1-9].*");
     }
 
     private @NotNull String getStringVersion(final ConfigType configType, @NotNull final YamlConfiguration yamlConfiguration) {

@@ -6,6 +6,8 @@ import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.WaterMob;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public final class WaterMobCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
 
@@ -22,8 +24,9 @@ public final class WaterMobCheckTypeImpl implements EntityCheckType<Entity, Enti
         return ConfigFields.WATER_MOB_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(waterMobType.name().toLowerCase());
     }
 
+    @Contract(value = " -> new", pure = true)
     @Override
-    public EntityType[] getEntityType() {
+    public EntityType @NotNull [] getEntityType() {
         return new EntityType[] {
             //Water creature
             EntityType.SQUID,

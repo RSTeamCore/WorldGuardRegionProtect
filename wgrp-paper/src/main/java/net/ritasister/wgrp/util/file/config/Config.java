@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class Config {
 
@@ -37,16 +38,19 @@ public class Config {
         for (ConfigFields configFields : ConfigFields.values()) {
             try {
                 configFields.get(wgrpPaperBase);
-                //start getting regions.
+
+                // Retrieve and populate region data
                 regionProtectSection();
                 regionProtectAllowSection();
                 regionProtectOnlyBreakAllowSection();
-                //End getting regions
+
+                // Save the specific config field data after retrieval
+                saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
             } catch (Exception e) {
-                wgrpPaperBase.getLogger().severe("Could not load config.yml! Error: " + e.getLocalizedMessage());
-                e.fillInStackTrace();
+                wgrpPaperBase.getLogger().severe("Error loading config.yml for field '"
+                        + configFields.name() + "': " + e.getLocalizedMessage());
+                wgrpPaperBase.getLogger().log(Level.SEVERE, "Stack trace: ", e);
             }
-            saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
         }
     }
 

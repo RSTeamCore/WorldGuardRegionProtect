@@ -19,9 +19,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Listens of all events interact with player.
- */
 public class PlayerProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;

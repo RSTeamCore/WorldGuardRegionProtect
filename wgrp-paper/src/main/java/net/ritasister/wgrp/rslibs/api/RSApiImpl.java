@@ -34,12 +34,16 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
     private final Messages messages;
     private final ParamsVersionCheck<ConfigType, YamlConfiguration> paramsVersionCheck;
 
-    public final static String SUPPORTED_VERSION_RANGE = "1.20 - 1.21.3";
+    public final static String SUPPORTED_VERSION_RANGE = "1.20 - 1.21.4";
     public final static List<String> SUPPORTED_VERSION = Arrays.asList(
             "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
-            "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4");
+            "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4"
+    );
 
-    public RSApiImpl(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin, final ParamsVersionCheck<ConfigType, YamlConfiguration> check) {
+    public RSApiImpl(
+            final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin,
+            final ParamsVersionCheck<ConfigType, YamlConfiguration> check
+    ) {
         this.wgrpPlugin = wgrpPlugin;
         this.messages = wgrpPlugin.getConfigLoader().getMessages();
         this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpPlugin);
@@ -95,14 +99,16 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         }
         if (ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase()) && this.isPlayerListenerPermission(
                 player,
-                UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
+                UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN
+        )) {
             final String cmd = ConfigFields.SPY_COMMAND_LIST.get(wgrpPlugin.getWgrpPaperBase()).toString();
             if (cmd.contains(senderCommand.toLowerCase()) &&
                     ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_PLAY_SOUND_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
                 player.playSound(
                         player.getLocation(),
                         ConfigFields.SPY_COMMAND_NOTIFY_PLAY_SOUND_TYPE
-                                .get(wgrpPlugin.getWgrpPaperBase()).toString().toLowerCase(), 1, 1);
+                                .get(wgrpPlugin.getWgrpPaperBase()).toString().toLowerCase(), 1, 1
+                );
                 messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
                         .replace("<cmd>", cmd)
@@ -118,7 +124,7 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
         }
         if (ConfigFields.IS_SPY_COMMAND_NOTIFY_CONSOLE_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             final String cmd = ConfigFields.SPY_COMMAND_LIST.get(wgrpPlugin.getWgrpPaperBase()).toString();
-            if(cmd.contains(senderCommand.toLowerCase())) {
+            if (cmd.contains(senderCommand.toLowerCase())) {
                 final ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
                 messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
@@ -150,7 +156,8 @@ public class RSApiImpl implements MessagingService<Player>, PermissionsCheck<Pla
             double x,
             double y,
             double z,
-            String world) {
+            String world
+    ) {
         if (this.isPlayerListenerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
                 && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             messages.get("messages.Notify.sendAdminInfoIfActionInRegion")

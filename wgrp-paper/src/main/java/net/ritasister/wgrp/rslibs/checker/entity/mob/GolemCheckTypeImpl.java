@@ -6,6 +6,7 @@ import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Golem;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public final class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityType> {
@@ -23,8 +24,9 @@ public final class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityT
         return ConfigFields.ANIMAL_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(golemType.name().toLowerCase());
     }
 
+    @Contract(value = " -> new", pure = true)
     @Override
-    public EntityType[] getEntityType() {
+    public EntityType @NotNull [] getEntityType() {
         return new EntityType[] {
             EntityType.SNOW_GOLEM,
             EntityType.IRON_GOLEM

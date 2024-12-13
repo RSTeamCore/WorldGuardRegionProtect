@@ -75,22 +75,21 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
         }
         return regions.get(location.getWorld().getName())
                 .stream()
-                .anyMatch(regionName -> 
+                .anyMatch(regionName ->
                         this.getApplicableRegionsSet(location)
-                        .getRegions()
-                        .stream()
-                        .anyMatch(region -> regionName.equalsIgnoreCase(region.getId())));
+                                .getRegions()
+                                .stream()
+                                .anyMatch(region -> regionName.equalsIgnoreCase(region.getId())));
     }
 
     @Override
     public boolean checkStandingRegion(@NotNull Location location) {
-        return this.getApplicableRegionsSet(location).size() != 0;
+        return this.getApplicableRegionsSet(location).getRegions().isEmpty();
     }
 
     @Override
     public String getProtectRegionName(Location location) {
-        return this
-                .getApplicableRegionsSet(location)
+        return this.getApplicableRegionsSet(location)
                 .getRegions()
                 .stream()
                 .map(ProtectedRegion::getId)
