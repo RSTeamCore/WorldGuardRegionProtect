@@ -126,6 +126,18 @@ public enum ConfigFields {
             "wgRegionProtect.protectInteract.other.denyFormObsidianOrCobbleStone"
     ),
 
+    DENY_CREATURE_SPAWN("denyCreatureSpawn", true,
+            "wgRegionProtect.protectInteract.mobs.denyCreatureSpawn"
+    ),
+
+    DENY_MOB_SPAWN_FROM_SPAWNER("denyMobSpawner", true,
+            "wgRegionProtect.protectInteract.mobs.denyMobSpawner"
+    ),
+
+    DENY_MOB_NATURALLY_SPAWN("denyMobSpawn", true,
+            "wgRegionProtect.protectInteract.mobs.denyMobSpawn"
+    ),
+
     DENY_WATER_FLOW_TO_REGION("denyWaterFlowToRegion", true,
             "wgRegionProtect.protectInteract.other.denyWaterFlowToRegion"
     ),

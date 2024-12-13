@@ -6,7 +6,7 @@ wgRegionProtect:
     # -------------------------------------------------------------
     # Do not touch!
     # -------------------------------------------------------------
-    version: 2
+    version: 3
 
     # -------------------------------------------------------------
     # Language of this plugins.
@@ -528,6 +528,15 @@ wgRegionProtect:
             denyWaterFlowToRegion: true
             denyLavaFlowToRegion: true
             denyFormObsidianOrCobbleStone: true
+        # --------------------------------------------------------------------------------------
+        # denyCreatureSpawn — Whether to deny spawn mobs from by egg.
+        # denyMobSpawner — Wether to deny spawn mobs from spawner.
+        # denyMobSpawn - Wether to deny naturally spawn mobs.
+        # --------------------------------------------------------------------------------------
+        mobs:
+            denyCreatureSpawn: true
+            denyMobSpawner: true
+            denyMobSpawn: true
 
     # --------------------------------------------------------------------------------------
     # List of forbidden commands from WE / FAWE.
