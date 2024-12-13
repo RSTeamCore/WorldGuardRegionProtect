@@ -14,9 +14,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTakeLecternBookEvent;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Listens of all events where player can interact with tools, lectern, stonecutter or else.
- */
 public class ToolsProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
