@@ -2,30 +2,31 @@ package net.ritasister.wgrp.rslibs.papi;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
-    private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public PlaceholderAPIExpansion(WorldGuardRegionProtectPaperBase wgrpPaperBase) {
-        this.wgrpPaperBase = wgrpPaperBase;
+    public PlaceholderAPIExpansion(WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @Override
     public @NotNull String getIdentifier() {
-        return wgrpPaperBase.getDescription().getVersion();
+        return wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
     }
 
     @Override
     public @NotNull String getAuthor() {
-        return wgrpPaperBase.getDescription().getAuthors().toString();
+        return wgrpPlugin.getWgrpPaperBase().getDescription().getAuthors().toString();
     }
 
     @Override
     public @NotNull String getVersion() {
-        return wgrpPaperBase.getDescription().getVersion();
+        return wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
     }
 
     @Override
@@ -35,11 +36,11 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String params) {
-        if (params.equalsIgnoreCase("placeholder1")) {
-            return wgrpPaperBase.getConfig().getString("placeholders.placeholder1", "default1"); //
-        }
-
-        return null; //
+        return switch (params.toLowerCase()) {
+            case "region_spying" -> // Indicates whether spy mode is enabled for the player
+                    wgrpPlugin.getSpyLog().contains(player.getUniqueId()) ? "true" : "false";
+            default -> null;
+        };
     }
 
 }

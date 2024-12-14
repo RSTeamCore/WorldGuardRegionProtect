@@ -19,9 +19,6 @@ import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Listens of all events where player can interact with blocks.
- */
 public class BlockProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;

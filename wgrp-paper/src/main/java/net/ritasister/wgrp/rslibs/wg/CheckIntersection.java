@@ -22,6 +22,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class CheckIntersection {
 
     public final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
@@ -49,22 +51,26 @@ public class CheckIntersection {
             final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", min, max);
             assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
-            for (final ProtectedRegion rg : set) {
-                for (final String region : wgrpPlugin.getConfigLoader().getConfig().getRegionProtectMap().get(
-                        player.getWorld().getName())) {
-                    if (rg.getId().equalsIgnoreCase(region)) {
+            List<String> regionProtectList = wgrpPlugin.getConfigLoader()
+                    .getConfig()
+                    .getRegionProtectMap()
+                    .get(player.getWorld().getName());
+
+            if (regionProtectList != null) {
+                for (final ProtectedRegion rg : set) {
+                    if (regionProtectList.stream().anyMatch(region -> rg.getId().equalsIgnoreCase(region))) {
                         return false;
                     }
                 }
             }
             for (final ProtectedRegion rg : set) {
-                for (final String region :
-                        wgrpPlugin.getConfigLoader().getConfig().getRegionProtectOnlyBreakAllowMap().get(player
-                                .getWorld()
-                                .getName())) {
-                    if (rg.getId().equalsIgnoreCase(region)) {
-                        return false;
-                    }
+                final List<String> breakAllowRegions = wgrpPlugin.getConfigLoader()
+                        .getConfig()
+                        .getRegionProtectOnlyBreakAllowMap()
+                        .get(player.getWorld().getName());
+
+                if (breakAllowRegions != null && breakAllowRegions.stream().anyMatch(region -> rg.getId().equalsIgnoreCase(region))) {
+                    return false;
                 }
             }
             return true;
@@ -121,7 +127,7 @@ public class CheckIntersection {
         );
     }
 
-    private @Nullable CuboidRegion getPyramidSelection(final Player player, final String... args) {
+    private @Nullable CuboidRegion getPyramidSelection(final Player player, final String @NotNull ... args) {
         if (args.length < 3) {
             return null;
         }
@@ -139,7 +145,7 @@ public class CheckIntersection {
         );
     }
 
-    private @Nullable CuboidRegion getSphereSelection(final Player player, final String... args) {
+    private @Nullable CuboidRegion getSphereSelection(final Player player, final String @NotNull ... args) {
         if (args.length < 3) {
             return null;
         }

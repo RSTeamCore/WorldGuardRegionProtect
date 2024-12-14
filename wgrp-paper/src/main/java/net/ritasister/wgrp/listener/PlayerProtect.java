@@ -64,33 +64,35 @@ public class PlayerProtect implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    private void denyInteract(@NotNull PlayerInteractEvent e) {
-        if (e.getItem() != null && e.getClickedBlock() != null) {
-            final Player player = e.getPlayer();
-            final Location location = e.getClickedBlock().getLocation();
+    private void denyInteract(@NotNull PlayerInteractEvent event) {
+        if (event.getItem() != null && event.getClickedBlock() != null) {
+            final Player player = event.getPlayer();
+            final Location location = event.getClickedBlock().getLocation();
             if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                     && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 for (String spawnVehicleType : ConfigFields.VEHICLE_TYPE.getList(wgrpPlugin.getWgrpPaperBase())) {
                     for (String spawnEntityType : ConfigFields.INTERACT_TYPE.getList(wgrpPlugin.getWgrpPaperBase())) {
-                        checkDenyInteract(e, spawnVehicleType, spawnEntityType, player);
+                        checkDenyInteract(event, spawnVehicleType, spawnEntityType, player);
                     }
+                }
+                if (event.getItem() != null && event.getItem().getType().toString().endsWith("_SPAWN_EGG")) {
+                    event.setCancelled(true);
                 }
             }
         }
     }
 
-    private void checkDenyInteract(@NotNull PlayerInteractEvent e, @NotNull String spawnVehicleType, String spawnEntityType, Player player) {
-        if (e.getItem() != null && e.getItem().getType() == Material.getMaterial(spawnVehicleType.toUpperCase())
-                || e.getItem() != null && e.getItem().getType() == Material.getMaterial(spawnEntityType.toUpperCase())
-                && e.getClickedBlock() != null) {
+    private void checkDenyInteract(@NotNull PlayerInteractEvent e, @NotNull String spawnVehicleType, String spawnEntityType, @NotNull Player player) {
+        final Material mainHandItem = player.getInventory().getItemInMainHand().getType();
+        final Material eventItemType = e.getItem() != null ? e.getItem().getType() : null;
+        final Material clickedBlockType = e.getClickedBlock() != null ? e.getClickedBlock().getType() : null;
+
+        if (eventItemType != null && (eventItemType == Material.getMaterial(spawnVehicleType.toUpperCase())
+                || eventItemType == Material.getMaterial(spawnEntityType.toUpperCase()))) {
             e.setCancelled(true);
-        } else if (player.getInventory().getItemInMainHand().getType() == Material.GLOWSTONE
-                && e.getClickedBlock() != null
-                && e.getClickedBlock().getType() == Material.RESPAWN_ANCHOR) {
+        } else if (mainHandItem == Material.GLOWSTONE && clickedBlockType == Material.RESPAWN_ANCHOR) {
             e.setCancelled(true);
-        } else if (player.getInventory().getItemInMainHand().getType() == Material.FLINT_AND_STEEL
-                && e.getClickedBlock() != null
-                && e.getClickedBlock().getType() == Material.TNT) {
+        } else if (mainHandItem == Material.FLINT_AND_STEEL && clickedBlockType == Material.TNT) {
             e.setCancelled(true);
         }
     }

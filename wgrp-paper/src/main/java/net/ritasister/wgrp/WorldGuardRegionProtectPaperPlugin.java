@@ -82,9 +82,9 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         compatibilityCheck.detectWhatIsPlatformRun();
         this.spyLog = new ArrayList<>();
         this.configLoader = new ConfigLoader();
+        this.configLoader.initConfig(this);
         this.rsApi = new RSApiImpl(this);
         this.playerPermissions = new PlayerPermissionsImpl();
-        this.configLoader.initConfig(this);
 
         loadMetrics();
         loadAnotherClassAndMethods();
@@ -100,9 +100,9 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         this.getLogger().info("Saving all configs before shutting down...");
         try {
             for (ConfigFields configFields : ConfigFields.values()) {
-                final var configPath = configFields.getPath();
-                final var configData = configFields.get(wgrpPaperBase);
-                configLoader.getConfig().saveConfig(configPath, configData);
+                final var path = configFields.getPath();
+                final var fields = configFields.get(wgrpPaperBase);
+                configLoader.getConfig().saveConfig(path, fields);
                 this.getLogger().info(String.format("Successfully checked and saved fields: %s", configFields));
             }
         } catch (Exception exception) {

@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class RSApiImpl implements MessagingService<Player> {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
@@ -32,19 +34,16 @@ public class RSApiImpl implements MessagingService<Player> {
         if (regionName == null) {
             return;
         }
-        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase()) && this.wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
-            final String cmd = ConfigFields.SPY_COMMAND_LIST.get(wgrpPlugin.getWgrpPaperBase()).toString();
-            if (cmd.contains(senderCommand.toLowerCase()) &&
-                    ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_PLAY_SOUND_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
-                player.playSound(
-                        player.getLocation(),
-                        ConfigFields.SPY_COMMAND_NOTIFY_PLAY_SOUND_TYPE
-                                .get(wgrpPlugin.getWgrpPaperBase()).toString().toLowerCase(), 1, 1
-                );
+        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())
+                && !this.wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
+            final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.getList(wgrpPlugin.getWgrpPaperBase());
+            final String normalizedSenderCommand = senderCommand.toLowerCase();
+            if (cmdList.stream().anyMatch(cmd -> cmd.equalsIgnoreCase(normalizedSenderCommand))) {
                 messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
-                        .replace("<cmd>", cmd)
-                        .replace("<region>", regionName).send(player);
+                        .replace("<cmd>", normalizedSenderCommand)
+                        .replace("<region>", regionName)
+                        .send(player);
             }
         }
     }
@@ -55,13 +54,15 @@ public class RSApiImpl implements MessagingService<Player> {
             return;
         }
         if (ConfigFields.IS_SPY_COMMAND_NOTIFY_CONSOLE_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            final String cmd = ConfigFields.SPY_COMMAND_LIST.get(wgrpPlugin.getWgrpPaperBase()).toString();
-            if (cmd.contains(senderCommand.toLowerCase())) {
+            final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.getList(wgrpPlugin.getWgrpPaperBase());
+            final String normalizedSenderCommand = senderCommand.toLowerCase();
+            if (cmdList.stream().anyMatch(cmd -> cmd.equalsIgnoreCase(normalizedSenderCommand))) {
                 final ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
                 messages.get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
-                        .replace("<cmd>", cmd)
-                        .replace("<region>", regionName).send(consoleSender);
+                        .replace("<cmd>", normalizedSenderCommand)
+                        .replace("<region>", regionName)
+                        .send(consoleSender);
             }
         }
     }

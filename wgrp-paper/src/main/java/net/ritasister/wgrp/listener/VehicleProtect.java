@@ -12,34 +12,34 @@ import org.jetbrains.annotations.NotNull;
 
 public class VehicleProtect implements Listener {
 
-    private final WorldGuardRegionProtectPaperPlugin wgrpBukkitPlugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    public VehicleProtect(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpBukkitPlugin) {
-        this.wgrpBukkitPlugin = wgrpBukkitPlugin;
+    public VehicleProtect(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyVehicleCollision(@NotNull VehicleEntityCollisionEvent e) {
-        if (!ConfigFields.DENY_COLLISION_WITH_VEHICLE.getBoolean(wgrpBukkitPlugin.getWgrpPaperBase())) {
+        if (!ConfigFields.DENY_COLLISION_WITH_VEHICLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             return;
         }
-        wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getEntity(), e.getVehicle());
+        wgrpPlugin.getRsApi().entityCheck(e, e.getEntity(), e.getVehicle());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyVehicleEnter(@NotNull VehicleEnterEvent e) {
-        if (!ConfigFields.DENY_SIT_AS_PASSENGER_IN_VEHICLE.getBoolean(wgrpBukkitPlugin.getWgrpPaperBase())) {
+        if (!ConfigFields.DENY_SIT_AS_PASSENGER_IN_VEHICLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             return;
         }
-        wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getEntered(), e.getVehicle());
+        wgrpPlugin.getRsApi().entityCheck(e, e.getEntered(), e.getVehicle());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyVehicleDamage(@NotNull VehicleDamageEvent e) {
-        if (!ConfigFields.DENY_DAMAGE_VEHICLE.getBoolean(wgrpBukkitPlugin.getWgrpPaperBase())) {
+        if (!ConfigFields.DENY_DAMAGE_VEHICLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             return;
         }
-        wgrpBukkitPlugin.getRsApi().entityCheck(e, e.getAttacker(), e.getVehicle());
+        wgrpPlugin.getRsApi().entityCheck(e, e.getAttacker(), e.getVehicle());
     }
 
 }

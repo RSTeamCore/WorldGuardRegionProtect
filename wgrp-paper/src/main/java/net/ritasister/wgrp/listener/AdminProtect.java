@@ -1,7 +1,9 @@
 package net.ritasister.wgrp.listener;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
+import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
 import net.ritasister.wgrp.util.file.config.Config;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import net.ritasister.wgrp.util.file.messages.Messages;
@@ -42,7 +44,7 @@ public class AdminProtect implements Listener {
     private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
         if (!wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.ADMIN_RIGHT)) {
             wgrpPlugin.getUpdateNotify().checkUpdateNotify(
-                    wgrpPlugin.getWgrpPaperBase().getPluginMeta().getVersion(),
+                    wgrpPlugin.getWgrpPaperBase().getDescription().getVersion(),
                     e.getPlayer(),
                     ConfigFields.UPDATE_CHECKER.getBoolean(wgrpPlugin.getWgrpPaperBase()),
                     ConfigFields.SEND_NO_UPDATE.getBoolean(wgrpPlugin.getWgrpPaperBase()));
@@ -86,26 +88,23 @@ public class AdminProtect implements Listener {
     }
 
     private void checkIntersection(@NotNull PlayerCommandPreprocessEvent e, String @NotNull [] string, String cmd) {
-        if (this.wgrpPlugin.getPlayerUtilWE().cmdWe(string[0])
-                && !this.wgrpPlugin.getCheckIntersection().checkIntersection(e.getPlayer())
-                || this.wgrpPlugin.getPlayerUtilWE().cmdWeC(string[0])
-                && !this.wgrpPlugin.getCheckIntersection().checkCIntersection(e.getPlayer(), string)
-                || this.wgrpPlugin.getPlayerUtilWE().cmdWeP(string[0])
-                && !this.wgrpPlugin.getCheckIntersection().checkPIntersection(e.getPlayer(), string)
-                || this.wgrpPlugin.getPlayerUtilWE().cmdWeS(string[0])
-                && !this.wgrpPlugin.getCheckIntersection().checkSIntersection(e.getPlayer(), string)
-                || this.wgrpPlugin.getPlayerUtilWE().cmdWeU(string[0])
-                && !this.wgrpPlugin.getCheckIntersection().checkUIntersection(e.getPlayer(), string)) {
+        UtilCommandWE playerUtilWE = this.wgrpPlugin.getPlayerUtilWE();
+        CheckIntersection checkIntersection = this.wgrpPlugin.getCheckIntersection();
+
+        if ((playerUtilWE.cmdWe(string[0]) && !checkIntersection.checkIntersection(e.getPlayer()))
+                || (playerUtilWE.cmdWeC(string[0]) && !checkIntersection.checkCIntersection(e.getPlayer(), string))
+                || (playerUtilWE.cmdWeP(string[0]) && !checkIntersection.checkPIntersection(e.getPlayer(), string))
+                || (playerUtilWE.cmdWeS(string[0]) && !checkIntersection.checkSIntersection(e.getPlayer(), string))
+                || (playerUtilWE.cmdWeU(string[0]) && !checkIntersection.checkUIntersection(e.getPlayer(), string))) {
+
             if (ConfigFields.REGION_MESSAGE_PROTECT_WE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
                 messages.get("messages.ServerMsg.wgrpMsgWe").send(e.getPlayer());
                 e.setCancelled(true);
             }
-            wgrpPlugin.getRsApi().notify(
-                    e.getPlayer(), e.getPlayer().getName(),
-                    cmd, wgrpPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
-            wgrpPlugin.getRsApi().notify(
-                    e.getPlayer().getName(),
-                    cmd, wgrpPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));
+
+            String regionName = wgrpPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer());
+            wgrpPlugin.getRsApi().notify(e.getPlayer(), e.getPlayer().getName(), cmd, regionName);
+            wgrpPlugin.getRsApi().notify(e.getPlayer().getName(), cmd, regionName);
         }
     }
 
