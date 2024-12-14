@@ -1,10 +1,12 @@
-package net.ritasister.wgrp.api.permissions;
+package net.ritasister.wgrp.api.model.permissions;
 
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Utility API class for checking permissions specifically for entities.
  */
+@Deprecated
 public interface PermissionsCheckEntity<E> {
 
     /**
@@ -15,6 +17,8 @@ public interface PermissionsCheckEntity<E> {
      * @return {@code true} if the entity has the required permission, {@code false} otherwise.
      * @since 0.3.4
      */
+    @Deprecated
+    @ApiStatus.ScheduledForRemoval(inVersion = "2.0.0")
     boolean isEntityListenerPermission(E entity, UtilPermissions perm);
 
 }

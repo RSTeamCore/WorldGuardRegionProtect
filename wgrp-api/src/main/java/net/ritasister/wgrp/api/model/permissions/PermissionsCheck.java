@@ -1,10 +1,13 @@
-package net.ritasister.wgrp.api.permissions;
+package net.ritasister.wgrp.api.model.permissions;
 
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Utility API class for checking permissions for both players and entities.
  */
+@Deprecated
+@ApiStatus.ScheduledForRemoval(inVersion = "2.0.0")
 public interface PermissionsCheck<P, E> extends PermissionsCheckEntity<E> {
 
     /**
@@ -15,6 +18,7 @@ public interface PermissionsCheck<P, E> extends PermissionsCheckEntity<E> {
      * @return {@code true} if the player has the required permission, {@code false} otherwise.
      * @since 0.3.4
      */
+    @Deprecated
     boolean isPlayerListenerPermission(P player, UtilPermissions perm);
 
 }
