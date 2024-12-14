@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.util.entity.EntityHelper;
+import net.ritasister.wgrp.util.utility.entity.EntityHelper;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -29,41 +29,41 @@ public final class MonsterCheckTypeImpl implements EntityCheckType<Entity, Entit
     @Override
     public EntityType @NotNull [] getEntityType() {
         return new EntityType[]{
-                EntityType.VINDICATOR,
-                EntityType.GUARDIAN,
-                EntityType.CREEPER,
-                EntityType.VEX,
-                EntityType.CAVE_SPIDER,
-                EntityType.EVOKER,
-                EntityType.ELDER_GUARDIAN,
-                EntityType.HUSK,
-                EntityType.WITHER,
-                EntityType.ENDERMAN,
-                EntityType.SPIDER,
-                EntityType.SKELETON,
-                EntityType.PIGLIN,
-                EntityType.WITHER_SKELETON,
-                EntityType.GIANT,
-                EntityType.ZOMBIE_VILLAGER,
-                EntityType.ENDERMITE,
-                EntityType.WARDEN,
-                EntityType.RAVAGER,
-                EntityType.ZOMBIFIED_PIGLIN,
-                EntityType.SILVERFISH,
-                EntityType.STRAY,
-                EntityType.DROWNED,
-                EntityType.BLAZE,
-                EntityType.ILLUSIONER,
-                EntityType.PIGLIN_BRUTE,
-                EntityType.ZOMBIE,
-                EntityType.SHULKER,
-                EntityType.WITCH,
-                EntityType.PILLAGER,
-                EntityType.ZOGLIN,
-                EntityType.ENDER_DRAGON,
-                //New mobs since mc 1.21
-                EntityHelper.getEntityType("BREEZE"),
-                EntityHelper.getEntityType("BOGGED")
+            EntityType.VINDICATOR,
+            EntityType.GUARDIAN,
+            EntityType.CREEPER,
+            EntityType.VEX,
+            EntityType.CAVE_SPIDER,
+            EntityType.EVOKER,
+            EntityType.ELDER_GUARDIAN,
+            EntityType.HUSK,
+            EntityType.WITHER,
+            EntityType.ENDERMAN,
+            EntityType.SPIDER,
+            EntityType.SKELETON,
+            EntityType.PIGLIN,
+            EntityType.WITHER_SKELETON,
+            EntityType.GIANT,
+            EntityType.ZOMBIE_VILLAGER,
+            EntityType.ENDERMITE,
+            EntityType.WARDEN,
+            EntityType.RAVAGER,
+            EntityType.ZOMBIFIED_PIGLIN,
+            EntityType.SILVERFISH,
+            EntityType.STRAY,
+            EntityType.DROWNED,
+            EntityType.BLAZE,
+            EntityType.ILLUSIONER,
+            EntityType.PIGLIN_BRUTE,
+            EntityType.ZOMBIE,
+            EntityType.SHULKER,
+            EntityType.WITCH,
+            EntityType.PILLAGER,
+            EntityType.ZOGLIN,
+            EntityType.ENDER_DRAGON,
+            //New mobs since mc 1.21
+            EntityHelper.getEntityType("BREEZE"),
+            EntityHelper.getEntityType("BOGGED")
         };
     }
 

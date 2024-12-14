@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.misc;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.util.utility.entity.EntityHelper;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -28,9 +29,14 @@ public final class ExplosiveCheckTypeImpl implements EntityCheckType<Entity, Ent
     @Override
     public EntityType @NotNull [] getEntityType() {
         return new EntityType[] {
-            EntityType.TNT,
-            EntityType.END_CRYSTAL,
-            EntityType.TNT_MINECART,
+            //Only available on older version like be 1.20.2
+            EntityHelper.getEntityType("PRIMED_TNT"),
+            EntityHelper.getEntityType("ENDER_CRYSTAL"),
+            EntityHelper.getEntityType("MINECART_TNT"),
+            //Only available on newest version like be 1.21+
+            EntityHelper.getEntityType("TNT"),
+            EntityHelper.getEntityType("END_CRYSTAL"),
+            EntityHelper.getEntityType("TNT_MINECART"),
             EntityType.CREEPER,
             EntityType.WITHER_SKULL,
             EntityType.FIREBALL

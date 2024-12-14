@@ -3,6 +3,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.transport;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.utility.entity.EntityHelper;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -30,12 +31,20 @@ public final class MinecartMaterialCheckTypeImpl implements EntityCheckType<Enti
     public EntityType @NotNull [] getEntityType() {
         return new EntityType[] {
             EntityType.MINECART,
-            EntityType.CHEST_MINECART,
-            EntityType.TNT_MINECART,
-            EntityType.HOPPER_MINECART,
-            EntityType.SPAWNER_MINECART,
-            EntityType.COMMAND_BLOCK_MINECART,
-            EntityType.FURNACE_MINECART
+            //Only available on older version like be 1.20.2
+            EntityHelper.getEntityType("MINECART_CHEST"),
+            EntityHelper.getEntityType("MINECART_COMMAND"),
+            EntityHelper.getEntityType("MINECART_FURNACE"),
+            EntityHelper.getEntityType("MINECART_HOPPER"),
+            EntityHelper.getEntityType("MINECART_MOB_SPAWNER"),
+            EntityHelper.getEntityType("MINECART_TNT"),
+            //Only available on newest version like be 1.21+
+            EntityHelper.getEntityType("CHEST_MINECART"),
+            EntityHelper.getEntityType("TNT_MINECART"),
+            EntityHelper.getEntityType("HOPPER_MINECART"),
+            EntityHelper.getEntityType("SPAWNER_MINECART"),
+            EntityHelper.getEntityType("COMMAND_BLOCK_MINECART"),
+            EntityHelper.getEntityType("FURNACE_MINECART"),
         };
     }
 

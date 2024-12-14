@@ -2,6 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.util.utility.entity.EntityHelper;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -28,7 +29,8 @@ public final class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityT
     @Override
     public EntityType @NotNull [] getEntityType() {
         return new EntityType[] {
-            EntityType.SNOW_GOLEM,
+            EntityHelper.getEntityType("SNOWMAN"), //Only available on older version like be 1.20.2
+            EntityHelper.getEntityType("SNOW_GOLEM"), //Only available on newest version like be 1.21+
             EntityType.IRON_GOLEM
         };
     }

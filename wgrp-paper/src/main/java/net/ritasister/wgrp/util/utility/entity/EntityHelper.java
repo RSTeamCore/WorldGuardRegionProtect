@@ -1,7 +1,7 @@
-package net.ritasister.wgrp.util.entity;
+package net.ritasister.wgrp.util.utility.entity;
 
 import org.bukkit.entity.EntityType;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 public final class EntityHelper {
 
@@ -9,13 +9,12 @@ public final class EntityHelper {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
-    public static @Nullable EntityType getEntityType(String typeName) {
+    public static @NotNull EntityType getEntityType(String typeName) {
         try {
             return EntityType.valueOf(typeName);
         } catch (IllegalArgumentException ignored) {
-            return null;
+            return EntityType.UNKNOWN;
         }
     }
-    
 
 }

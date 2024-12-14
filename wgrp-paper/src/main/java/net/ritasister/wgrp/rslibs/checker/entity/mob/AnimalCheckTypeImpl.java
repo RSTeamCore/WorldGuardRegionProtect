@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.util.entity.EntityHelper;
+import net.ritasister.wgrp.util.utility.entity.EntityHelper;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
@@ -44,8 +44,7 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
             EntityType.FROG,
             EntityType.COW,
             EntityType.FOX,
-            EntityHelper.getEntityType("MOOSHROOM"), //1.20+
-            EntityHelper.getEntityType("MOOSHROOM_COW"), //1.20+
+            EntityHelper.getEntityType("MUSHROOM_COW"), //Only available on older version like be 1.20.2
             EntityType.ZOMBIE_HORSE,
             EntityType.PANDA,
             EntityType.BEE,
