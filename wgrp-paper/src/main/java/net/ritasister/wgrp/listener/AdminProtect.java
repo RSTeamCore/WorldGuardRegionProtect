@@ -59,7 +59,7 @@ public class AdminProtect implements Listener {
             checkIntersection(e, string, cmd);
             if (this.wgrpPlugin.getPlayerUtilWE().cmdWeCP(string[0])) {
                 e.setMessage(e.getMessage().replace("-o", ""));
-                if (!this.wgrpPlugin.getCheckIntersection().checkCPIntersection(e.getPlayer(), string)) {
+                if (!this.wgrpPlugin.getCheckIntersection().checkCPIntersection(e.getPlayer())) {
                     e.setCancelled(true);
                 }
                 wgrpPlugin.getRsApi().notify(e.getPlayer(), e.getPlayer().getName(), cmd, wgrpPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer()));

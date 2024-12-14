@@ -98,7 +98,7 @@ public class CheckIntersection {
         return this.checkIntersection(selection, player);
     }
 
-    public boolean checkCPIntersection(final Player player, final String... args) {
+    public boolean checkCPIntersection(final Player player) {
         final Region selection = this.getPasteSelection(player);
         return this.checkIntersection(selection, player);
     }
@@ -127,7 +127,7 @@ public class CheckIntersection {
         );
     }
 
-    private @Nullable CuboidRegion getPyramidSelection(final Player player, final @NotNull String ... args) {
+    private @Nullable CuboidRegion getPyramidSelection(final Player player, final String... args) {
         if (args.length < 3) {
             return null;
         }
@@ -145,7 +145,7 @@ public class CheckIntersection {
         );
     }
 
-    private @Nullable CuboidRegion getSphereSelection(final Player player, final @NotNull String ... args) {
+    private @Nullable CuboidRegion getSphereSelection(final Player player, final String... args) {
         if (args.length < 3) {
             return null;
         }
