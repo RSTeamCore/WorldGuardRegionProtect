@@ -1,11 +1,11 @@
-package net.ritasister.wgrp.util;
+package net.ritasister.wgrp.util.entity;
 
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
 
-public final class EntityTypeHelper {
+public final class EntityHelper {
 
-    private EntityTypeHelper() {
+    private EntityHelper() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
@@ -16,5 +16,6 @@ public final class EntityTypeHelper {
             return null;
         }
     }
+    
 
 }

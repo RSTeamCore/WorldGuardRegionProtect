@@ -2,7 +2,6 @@ package net.ritasister.wgrp.util.file.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.ParamsVersionCheck;
-import net.ritasister.wgrp.util.config.ConfigType;
 import net.ritasister.wgrp.util.file.CheckVersion;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +32,7 @@ public class ConfigCheckVersion implements CheckVersion {
                 && paramsVersionCheck.checkMatches(paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion))
                 && !paramsVersionCheck.getCurrentVersion(ConfigType.CONFIG, currentConfigVersion)
                 .equals(paramsVersionCheck.getNewVersion(ConfigType.CONFIG, newVersion))) {
-            wgrpPlugin.getRsApi().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG, null);
+            wgrpPlugin.getConfigLoader().getUpdateFile().updateFile(wgrpPlugin, currentConfigFile, ConfigType.CONFIG, null);
             wgrpPlugin.getLogger().info("Found new version of config file, updating this now...");
         } else {
             wgrpPlugin.getLogger().info("No update is required for the config file");

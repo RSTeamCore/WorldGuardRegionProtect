@@ -45,7 +45,7 @@ public class MiscProtect implements Listener {
         if (e.getPlayer() != null) {
             final Player player = e.getPlayer();
             if (wgrpPlugin.getRegionAdapter().checkStandingRegion(e.getLocation(), config.getRegionProtectMap())) {
-                if (!wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                if (!wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     e.setCancelled(true);
                 }
             }

@@ -8,6 +8,7 @@ import net.ritasister.wgrp.rslibs.checker.entity.misc.HangingCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.mob.AllayMobCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.mob.AmbientCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.mob.AnimalCheckTypeImpl;
+import net.ritasister.wgrp.rslibs.checker.entity.mob.EnemyCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.mob.GolemCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.mob.HumanEntityCheckTypeImpl;
 import net.ritasister.wgrp.rslibs.checker.entity.mob.MonsterCheckTypeImpl;
@@ -33,6 +34,7 @@ public class EntityCheckTypeProvider {
                 //Mobs
                 add(new AnimalCheckTypeImpl(wgrpPlugin));
                 add(new MonsterCheckTypeImpl(wgrpPlugin));
+                add(new EnemyCheckTypeImpl(wgrpPlugin));
                 add(new WaterMobCheckTypeImpl(wgrpPlugin));
                 add(new HumanEntityCheckTypeImpl(wgrpPlugin));
                 add(new AllayMobCheckTypeImpl(wgrpPlugin));

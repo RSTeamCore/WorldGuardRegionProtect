@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.transport;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.util.EntityTypeHelper;
+import net.ritasister.wgrp.util.entity.EntityHelper;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.Material;
 import org.bukkit.entity.Boat;
@@ -31,29 +31,29 @@ public final class BoatMaterialCheckTypeImpl implements EntityCheckType<Entity, 
     public EntityType @NotNull [] getEntityType() {
         return new EntityType[]{
                 //Since before mc 1.21.2+
-                EntityTypeHelper.getEntityType("CHEST_BOAT"),
-                EntityTypeHelper.getEntityType("BOAT"),
+                EntityHelper.getEntityType("CHEST_BOAT"),
+                EntityHelper.getEntityType("BOAT"),
                 //Since after mc 1.21.2+
-                EntityTypeHelper.getEntityType("ACACIA_BOAT"),
-                EntityTypeHelper.getEntityType("ACACIA_CHEST_BOAT"),
-                EntityTypeHelper.getEntityType("BAMBOO_RAFT"),
-                EntityTypeHelper.getEntityType("BAMBOO_CHEST_RAFT"),
-                EntityTypeHelper.getEntityType("BIRCH_BOAT"),
-                EntityTypeHelper.getEntityType("BIRCH_CHEST_BOAT"),
-                EntityTypeHelper.getEntityType("CHERRY_BOAT"),
-                EntityTypeHelper.getEntityType("CHERRY_CHEST_BOAT"),
-                EntityTypeHelper.getEntityType("DARK_OAK_BOAT"),
-                EntityTypeHelper.getEntityType("DARK_OAK_CHEST_BOAT"),
-                EntityTypeHelper.getEntityType("JUNGLE_BOAT"),
-                EntityTypeHelper.getEntityType("JUNGLE_CHEST_BOAT"),
-                EntityTypeHelper.getEntityType("MANGROVE_BOAT"),
-                EntityTypeHelper.getEntityType("MANGROVE_CHEST_BOAT"),
-                EntityTypeHelper.getEntityType("OAK_BOAT"),
-                EntityTypeHelper.getEntityType("OAK_CHEST_BOAT"),
-                EntityTypeHelper.getEntityType("PALE_OAK_BOAT"),
-                EntityTypeHelper.getEntityType("PALE_OAK_CHEST_BOAT"),
-                EntityTypeHelper.getEntityType("SPRUCE_BOAT"),
-                EntityTypeHelper.getEntityType("SPRUCE_CHEST_BOAT"),
+                EntityHelper.getEntityType("ACACIA_BOAT"),
+                EntityHelper.getEntityType("ACACIA_CHEST_BOAT"),
+                EntityHelper.getEntityType("BAMBOO_RAFT"),
+                EntityHelper.getEntityType("BAMBOO_CHEST_RAFT"),
+                EntityHelper.getEntityType("BIRCH_BOAT"),
+                EntityHelper.getEntityType("BIRCH_CHEST_BOAT"),
+                EntityHelper.getEntityType("CHERRY_BOAT"),
+                EntityHelper.getEntityType("CHERRY_CHEST_BOAT"),
+                EntityHelper.getEntityType("DARK_OAK_BOAT"),
+                EntityHelper.getEntityType("DARK_OAK_CHEST_BOAT"),
+                EntityHelper.getEntityType("JUNGLE_BOAT"),
+                EntityHelper.getEntityType("JUNGLE_CHEST_BOAT"),
+                EntityHelper.getEntityType("MANGROVE_BOAT"),
+                EntityHelper.getEntityType("MANGROVE_CHEST_BOAT"),
+                EntityHelper.getEntityType("OAK_BOAT"),
+                EntityHelper.getEntityType("OAK_CHEST_BOAT"),
+                EntityHelper.getEntityType("PALE_OAK_BOAT"),
+                EntityHelper.getEntityType("PALE_OAK_CHEST_BOAT"),
+                EntityHelper.getEntityType("SPRUCE_BOAT"),
+                EntityHelper.getEntityType("SPRUCE_CHEST_BOAT"),
 
         };
     }

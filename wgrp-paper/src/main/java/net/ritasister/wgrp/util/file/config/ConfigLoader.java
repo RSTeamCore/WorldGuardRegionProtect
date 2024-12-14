@@ -3,6 +3,7 @@ package net.ritasister.wgrp.util.file.config;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.util.file.CheckVersion;
 import net.ritasister.wgrp.util.file.ParamsVersionCheckImpl;
+import net.ritasister.wgrp.util.file.UpdateFile;
 import net.ritasister.wgrp.util.file.messages.MessageCheckVersion;
 import net.ritasister.wgrp.util.file.messages.MessageLoader;
 import net.ritasister.wgrp.util.file.messages.Messages;
@@ -14,7 +15,11 @@ public class ConfigLoader {
 
     private Messages messages;
 
+    private UpdateFile updateFile;
+
     public void initConfig(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.updateFile = new UpdateFile(new ParamsVersionCheckImpl());
+
         //Initialising config.yml
         this.config = new Config(wgrpPlugin.getWgrpPaperBase());
 
@@ -34,12 +39,16 @@ public class ConfigLoader {
         wgrpPlugin.getLogger().info("All configs load successfully!");
     }
 
+    public UpdateFile getUpdateFile() {
+        return this.updateFile;
+    }
+
     public Config getConfig() {
-        return config;
+        return this.config;
     }
 
     public Messages getMessages() {
-        return messages;
+        return this.messages;
     }
 
 }

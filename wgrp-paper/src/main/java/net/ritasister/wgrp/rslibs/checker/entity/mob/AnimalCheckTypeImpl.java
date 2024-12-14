@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.util.EntityTypeHelper;
+import net.ritasister.wgrp.util.entity.EntityHelper;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
@@ -29,7 +29,7 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
     @Override
     public EntityType @NotNull [] getEntityType() {
         return new EntityType[] {
-            //Misc
+            //Misc creature
             EntityType.VILLAGER,
             //Water creature
             EntityType.AXOLOTL,
@@ -44,8 +44,8 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
             EntityType.FROG,
             EntityType.COW,
             EntityType.FOX,
-            EntityTypeHelper.getEntityType("MOOSHROOM"), //1.20+
-            EntityTypeHelper.getEntityType("MOOSHROOM_COW"), //1.20+
+            EntityHelper.getEntityType("MOOSHROOM"), //1.20+
+            EntityHelper.getEntityType("MOOSHROOM_COW"), //1.20+
             EntityType.ZOMBIE_HORSE,
             EntityType.PANDA,
             EntityType.BEE,
@@ -64,7 +64,7 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
             EntityType.TADPOLE,
             EntityType.CAMEL,
             EntityType.HOGLIN,
-            EntityTypeHelper.getEntityType("ARMADILLO")
+            EntityHelper.getEntityType("ARMADILLO")
         };
     }
 

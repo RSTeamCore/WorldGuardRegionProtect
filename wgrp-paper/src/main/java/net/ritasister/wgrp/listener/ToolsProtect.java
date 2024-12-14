@@ -31,7 +31,7 @@ public class ToolsProtect implements Listener {
         final Location location = e.getLectern().getLocation();
         if (ConfigFields.DENY_TAKE_LECTERN_BOOK.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                    && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }
@@ -43,7 +43,7 @@ public class ToolsProtect implements Listener {
         final Location location = e.getStonecutterInventory().getLocation();
         if (ConfigFields.DENY_STONECUTTER_RECIPE_SELECT.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                    && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }
@@ -55,7 +55,7 @@ public class ToolsProtect implements Listener {
         final Location location = e.getLoomInventory().getLocation();
         if (ConfigFields.DENY_LOOM_PATTERN_SELECT.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                    && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
         }
