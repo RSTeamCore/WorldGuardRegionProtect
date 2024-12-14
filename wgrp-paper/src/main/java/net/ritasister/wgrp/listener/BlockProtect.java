@@ -43,11 +43,11 @@ public class BlockProtect implements Listener {
                 || wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectOnlyBreakAllowMap())) {
             e.setCancelled(false);
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
             sendMessage(player);
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location)
-                && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
+                && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
 
             spyMethod(e.getBlock(), player, location, RegionAction.Type.BREAK.getAction());
         }
@@ -60,11 +60,11 @@ public class BlockProtect implements Listener {
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectAllowMap())) {
             e.setCancelled(false);
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
             e.setCancelled(true);
             sendMessage(player);
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location)
-                && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
+                && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
 
             spyMethod(e.getBlock(), player, location, RegionAction.Type.PLACE.getAction());
         }

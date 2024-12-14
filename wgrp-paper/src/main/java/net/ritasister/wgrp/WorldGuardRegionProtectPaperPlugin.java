@@ -9,8 +9,9 @@ import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
-import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
+import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.loader.WGRPChecker;
 import net.ritasister.wgrp.loader.WGRPLoaderCommands;
@@ -18,15 +19,16 @@ import net.ritasister.wgrp.loader.WGRPLoaderListeners;
 import net.ritasister.wgrp.loader.plugin.LoadPlaceholderAPI;
 import net.ritasister.wgrp.loader.plugin.LoadWorldGuard;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
+import net.ritasister.wgrp.rslibs.api.PlayerPermissionsImpl;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
 import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
 import net.ritasister.wgrp.rslibs.manager.region.RegionAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.manager.tools.ToolsAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
-import net.ritasister.wgrp.util.file.ParamsVersionCheckImpl;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import net.ritasister.wgrp.util.file.config.ConfigLoader;
+import net.ritasister.wgrp.util.utility.VersionCheck;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -43,21 +45,24 @@ import java.util.UUID;
 public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegionProtectPlugin {
 
     private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
-
     private final PluginLogger logger;
-    private ConfigLoader configLoader;
-    private RSApiImpl rsApi;
 
+    private RegionAction regionAction;
     private RegionAdapterManagerPaper regionAdapter;
     private ToolsAdapterManagerPaper toolsAdapter;
-
-    private List<UUID> spyLog;
-    private UpdateNotify updateNotify;
     private CheckIntersection checkIntersection;
     private UtilWEImpl playerUtilWE;
 
+    private RSApiImpl rsApi;
+    private PlayerPermissionsImpl playerPermissions;
+    private List<UUID> spyLog;
     private EntityCheckType entityCheckType;
     private MessagingService messagingService;
+
+    private UpdateNotify updateNotify;
+    private VersionCheck versionCheck;
+
+    private ConfigLoader configLoader;
 
     public WorldGuardRegionProtectPaperPlugin(final @NotNull WorldGuardRegionProtectPaperBase wgrpPaperBase) {
         this.wgrpPaperBase = wgrpPaperBase;
@@ -66,10 +71,12 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     public void onEnable() {
         load();
+        this.versionCheck = new VersionCheck(this);
         this.spyLog = new ArrayList<>();
-        configLoader = new ConfigLoader();
-        rsApi = new RSApiImpl(this, new ParamsVersionCheckImpl());
-        configLoader.initConfig(this);
+        this.configLoader = new ConfigLoader();
+        this.rsApi = new RSApiImpl(this);
+        this.playerPermissions = new PlayerPermissionsImpl();
+        this.configLoader.initConfig(this);
 
         final WGRPChecker wgrpChecker = new WGRPChecker(this);
         wgrpChecker.checkStartUpVersionServer();
@@ -80,8 +87,8 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
         wgrpChecker.notifyAboutBuild();
 
-        updateNotify = new UpdateNotify(wgrpPaperBase, this);
-        updateNotify.checkUpdateNotify(wgrpPaperBase.getDescription().getVersion());
+        this.updateNotify = new UpdateNotify(wgrpPaperBase, this);
+        this.updateNotify.checkUpdateNotify(wgrpPaperBase.getDescription().getVersion());
     }
 
     public void onDisable() {
@@ -162,13 +169,23 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     @Override
-    public WorldGuardRegionMetadata getWorldGuardMetadata() {
-        return null;
+    public PermissionCheck getPermissionCheck() {
+        return playerPermissions;
+    }
+
+    @Override
+    public WorldGuardRegionProtectMetadata getMetaData() {
+        return this.getApiProvider().getMetaData();
     }
 
     @Override
     public RegionAction getRegionAction() {
-        return null;
+        return this.regionAction;
+    }
+
+    @Override
+    public ToolsAdapterManagerPaper getToolTipManager() {
+        return this.toolsAdapter;
     }
 
     @Override
@@ -182,8 +199,8 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         return regionAdapter;
     }
 
-    public ToolsAdapterManagerPaper getToolsAdapter() {
-        return toolsAdapter;
+    public VersionCheck getVersionCheck() {
+        return versionCheck;
     }
 
     @Override

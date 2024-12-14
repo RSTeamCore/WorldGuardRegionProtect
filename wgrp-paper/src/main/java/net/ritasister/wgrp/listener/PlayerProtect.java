@@ -32,7 +32,7 @@ public class PlayerProtect implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyChangeSign(@NotNull SignChangeEvent e) {
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(e.getPlayer().getLocation(), config.getRegionProtectMap())
-                && wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+                && wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
             if (ConfigFields.SIGN_TYPE.get(wgrpPlugin.getWgrpPaperBase()).toString().contains(e.getBlock().getType().name().toLowerCase())) {
                 e.setCancelled(true);
             }
@@ -44,7 +44,7 @@ public class PlayerProtect implements Listener {
         final Location location = e.getFlowerpot().getLocation();
         if (ConfigFields.DENY_MANIPULATE_WITH_FLOWERPOT.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                    && wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+                    && wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
                 if (ConfigFields.NATURAL_BLOCK_OR_ITEM.get(wgrpPlugin.getWgrpPaperBase()).toString().contains(e.getItem().getType().name().toLowerCase())) {
                     e.setCancelled(true);
                 }
@@ -56,7 +56,7 @@ public class PlayerProtect implements Listener {
     private void denyPlayerBucketEntity(@NotNull PlayerBucketEntityEvent e) {
         final Location location = e.getEntity().getLocation();
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                && wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+                && wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
             if (e.getPlayer().getInventory().getItemInMainHand().getType() == Material.WATER_BUCKET) {
                 e.setCancelled(true);
             }
@@ -69,7 +69,7 @@ public class PlayerProtect implements Listener {
             final Player player = e.getPlayer();
             final Location location = e.getClickedBlock().getLocation();
             if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
-                    && wgrpPlugin.getRsApi().isPlayerListenerPermission(player, UtilPermissions.REGION_PROTECT)) {
+                    && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 for (String spawnVehicleType : ConfigFields.VEHICLE_TYPE.getList(wgrpPlugin.getWgrpPaperBase())) {
                     for (String spawnEntityType : ConfigFields.INTERACT_TYPE.getList(wgrpPlugin.getWgrpPaperBase())) {
                         checkDenyInteract(e, spawnVehicleType, spawnEntityType, player);
@@ -99,7 +99,7 @@ public class PlayerProtect implements Listener {
     private void denyManipulateArmorStand(@NotNull PlayerArmorStandManipulateEvent e) {
         final Location clickLoc = e.getRightClicked().getLocation();
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(clickLoc, config.getRegionProtectMap())) {
-            if (wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+            if (wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
                 if (e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
                     e.setCancelled(true);
                 }
@@ -115,7 +115,7 @@ public class PlayerProtect implements Listener {
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(
                 e.getRightClicked().getLocation(),
                 config.getRegionProtectMap())) {
-            if (wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+            if (wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
                 switch (e.getRightClicked().getType()) {
                     case ITEM_FRAME, GLOW_ITEM_FRAME -> e.setCancelled(true);
                 }

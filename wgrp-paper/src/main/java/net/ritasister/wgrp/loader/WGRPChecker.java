@@ -2,7 +2,7 @@ package net.ritasister.wgrp.loader;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.platform.Platform;
-import net.ritasister.wgrp.rslibs.api.RSApiImpl;
+import net.ritasister.wgrp.util.utility.VersionCheck;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +21,7 @@ public class WGRPChecker {
      * Check all variables while the plugin is startup.
      */
     public void checkStartUpVersionServer() {
-        if (!wgrpPlugin.getRsApi().isVersionSupported()) {
+        if (!wgrpPlugin.getVersionCheck().isVersionSupported()) {
             wgrpPlugin.getLogger().severe(String.format("""
                     \n====================================================
                     
@@ -30,7 +30,8 @@ public class WGRPChecker {
                             The main post on spigotmc and please download the correct version of plugin for your server version.
                     
                     ====================================================
-                    """, RSApiImpl.SUPPORTED_VERSION_RANGE));
+                    """, VersionCheck.SUPPORTED_VERSION_RANGE
+            ));
             Bukkit.getServer().getPluginManager().disablePlugin(wgrpPlugin.getWgrpPaperBase());
         }
     }

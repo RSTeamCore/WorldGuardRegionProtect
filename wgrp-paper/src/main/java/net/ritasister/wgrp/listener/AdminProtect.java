@@ -40,7 +40,7 @@ public class AdminProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
-        if (!wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.ADMIN_RIGHT)) {
+        if (!wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.ADMIN_RIGHT)) {
             wgrpPlugin.getUpdateNotify().checkUpdateNotify(
                     wgrpPlugin.getWgrpPaperBase().getPluginMeta().getVersion(),
                     e.getPlayer(),
@@ -53,7 +53,7 @@ public class AdminProtect implements Listener {
     private void denyUseWEAndWGCommand(@NotNull PlayerCommandPreprocessEvent e) {
         final String[] string = e.getMessage().toLowerCase().split(" ");
         final String cmd = e.getMessage().split(" ")[0].toLowerCase();
-        if (wgrpPlugin.getRsApi().isPlayerListenerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
+        if (wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
             checkIntersection(e, string, cmd);
             if (this.wgrpPlugin.getPlayerUtilWE().cmdWeCP(string[0])) {
                 e.setMessage(e.getMessage().replace("-o", ""));
