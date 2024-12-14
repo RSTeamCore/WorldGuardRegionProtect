@@ -28,16 +28,16 @@ paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArt
 dependencies {
     implementation(project(":wgrp-common"))
 
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.2") {
+    //Paper
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
+
+    //Plugins
+    compileOnly("net.kyori:adventure-platform-bukkit:4.3.3") {
         exclude(module = "adventure-bom")
         exclude(module = "adventure-api")
         exclude(module = "adventure-nbt")
     }
 
-    //Paper
-    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
-
-    //Plugins
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9-SNAPSHOT")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.3.9")
     compileOnly("me.clip:placeholderapi:2.11.6")
