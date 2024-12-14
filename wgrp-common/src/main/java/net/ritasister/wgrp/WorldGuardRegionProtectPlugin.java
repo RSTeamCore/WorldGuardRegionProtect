@@ -70,7 +70,7 @@ public interface WorldGuardRegionProtectPlugin {
 
     RegionAction getRegionAction();
 
-    ToolsAdapterManager getToolTipManager();
+    ToolsAdapterManager getToolsAdapter();
 
     /**
      * Attempts to identify the plugin behind the given classloader.

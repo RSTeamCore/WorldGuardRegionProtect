@@ -208,7 +208,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     @Override
-    public ToolsAdapterManagerPaper getToolTipManager() {
+    public ToolsAdapterManagerPaper getToolsAdapter() {
         return this.toolsAdapter;
     }
 

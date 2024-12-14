@@ -88,21 +88,21 @@ public class AdminProtect implements Listener {
     }
 
     private void checkIntersection(@NotNull PlayerCommandPreprocessEvent e, String @NotNull [] string, String cmd) {
-        UtilCommandWE playerUtilWE = this.wgrpPlugin.getPlayerUtilWE();
-        CheckIntersection checkIntersection = this.wgrpPlugin.getCheckIntersection();
+        final UtilCommandWE playerUtilWE = this.wgrpPlugin.getPlayerUtilWE();
+        final CheckIntersection checkIntersection = this.wgrpPlugin.getCheckIntersection();
 
-        if ((playerUtilWE.cmdWe(string[0]) && !checkIntersection.checkIntersection(e.getPlayer()))
-                || (playerUtilWE.cmdWeC(string[0]) && !checkIntersection.checkCIntersection(e.getPlayer(), string))
-                || (playerUtilWE.cmdWeP(string[0]) && !checkIntersection.checkPIntersection(e.getPlayer(), string))
-                || (playerUtilWE.cmdWeS(string[0]) && !checkIntersection.checkSIntersection(e.getPlayer(), string))
-                || (playerUtilWE.cmdWeU(string[0]) && !checkIntersection.checkUIntersection(e.getPlayer(), string))) {
+        if (playerUtilWE.cmdWe(string[0]) && !checkIntersection.checkIntersection(e.getPlayer())
+                || playerUtilWE.cmdWeC(string[0]) && !checkIntersection.checkCIntersection(e.getPlayer(), string)
+                || playerUtilWE.cmdWeP(string[0]) && !checkIntersection.checkPIntersection(e.getPlayer(), string)
+                || playerUtilWE.cmdWeS(string[0]) && !checkIntersection.checkSIntersection(e.getPlayer(), string)
+                || playerUtilWE.cmdWeU(string[0]) && !checkIntersection.checkUIntersection(e.getPlayer(), string)) {
 
             if (ConfigFields.REGION_MESSAGE_PROTECT_WE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
                 messages.get("messages.ServerMsg.wgrpMsgWe").send(e.getPlayer());
                 e.setCancelled(true);
             }
 
-            String regionName = wgrpPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer());
+            final String regionName = wgrpPlugin.getRegionAdapter().getProtectRegionNameBySelection(e.getPlayer());
             wgrpPlugin.getRsApi().notify(e.getPlayer(), e.getPlayer().getName(), cmd, regionName);
             wgrpPlugin.getRsApi().notify(e.getPlayer().getName(), cmd, regionName);
         }

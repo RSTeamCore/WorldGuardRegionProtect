@@ -1,7 +1,6 @@
 package net.ritasister.wgrp.rslibs.papi;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;

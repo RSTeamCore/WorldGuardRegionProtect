@@ -5,7 +5,6 @@ import net.ritasister.wgrp.rslibs.papi.PlaceholderAPIExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-
 public class LoadPlaceholderAPI {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
