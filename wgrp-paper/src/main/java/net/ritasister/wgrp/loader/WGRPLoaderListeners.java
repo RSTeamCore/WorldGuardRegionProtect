@@ -7,10 +7,7 @@ import net.ritasister.wgrp.handler.ListenerHandler;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Utility class for a load and registered all listeners in ListenerHandler.
- */
-public class WGRPLoaderListeners implements LoadHandlers<WorldGuardRegionProtectPaperPlugin> {
+public final class WGRPLoaderListeners implements LoadHandlers<WorldGuardRegionProtectPaperPlugin> {
 
     @Override
     public void loadHandler(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {

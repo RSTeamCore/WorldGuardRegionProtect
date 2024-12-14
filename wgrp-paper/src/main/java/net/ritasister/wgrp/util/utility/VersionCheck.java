@@ -28,7 +28,7 @@ public class VersionCheck {
      * @return {@code true} if server version compatible, {@code false} if not
      */
     public boolean isVersionSupported() {
-        final String minecraftVersion = Bukkit.getServer().getMinecraftVersion();
+        final String minecraftVersion = Bukkit.getBukkitVersion().split("-")[0];
         try {
             final long time = System.currentTimeMillis();
             if (SUPPORTED_VERSION.contains(minecraftVersion)) {
@@ -51,4 +51,5 @@ public class VersionCheck {
         }
         return false;
     }
+
 }

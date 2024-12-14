@@ -1,5 +1,7 @@
 package net.ritasister.wgrp;
 
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
@@ -13,7 +15,7 @@ import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.api.platform.Platform;
-import net.ritasister.wgrp.loader.WGRPChecker;
+import net.ritasister.wgrp.loader.WGRPCompatibilityCheck;
 import net.ritasister.wgrp.loader.WGRPLoaderCommands;
 import net.ritasister.wgrp.loader.WGRPLoaderListeners;
 import net.ritasister.wgrp.loader.plugin.LoadPlaceholderAPI;
@@ -46,6 +48,8 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
     private final PluginLogger logger;
+    private BukkitAudiences adventure;
+    private WorldGuardRegionProtectMetadata wgrpMetadata;
 
     private RegionAction regionAction;
     private RegionAdapterManagerPaper regionAdapter;
@@ -71,23 +75,23 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     public void onEnable() {
         load();
+        this.adventure = BukkitAudiences.create(wgrpPaperBase);
+        final WGRPCompatibilityCheck compatibilityCheck = new WGRPCompatibilityCheck(this);
         this.versionCheck = new VersionCheck(this);
+        compatibilityCheck.checkStartUpVersionServer();
+        compatibilityCheck.detectWhatIsPlatformRun();
         this.spyLog = new ArrayList<>();
         this.configLoader = new ConfigLoader();
         this.rsApi = new RSApiImpl(this);
         this.playerPermissions = new PlayerPermissionsImpl();
         this.configLoader.initConfig(this);
 
-        final WGRPChecker wgrpChecker = new WGRPChecker(this);
-        wgrpChecker.checkStartUpVersionServer();
-        wgrpChecker.detectWhatIsPlatformRun();
-
         loadMetrics();
         loadAnotherClassAndMethods();
 
-        wgrpChecker.notifyAboutBuild();
+        compatibilityCheck.notifyAboutBuild();
 
-        this.updateNotify = new UpdateNotify(wgrpPaperBase, this);
+        this.updateNotify = new UpdateNotify(this);
         this.updateNotify.checkUpdateNotify(wgrpPaperBase.getDescription().getVersion());
     }
 
@@ -96,14 +100,16 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         this.getLogger().info("Saving all configs before shutting down...");
         try {
             for (ConfigFields configFields : ConfigFields.values()) {
-                configLoader.getConfig().saveConfig(configFields.getPath(), configFields.get(wgrpPaperBase));
-                this.getLogger().info(String.format("Checking and saving fields: %s", configFields));
+                final var configPath = configFields.getPath();
+                final var configData = configFields.get(wgrpPaperBase);
+                configLoader.getConfig().saveConfig(configPath, configData);
+                this.getLogger().info(String.format("Successfully checked and saved fields: %s", configFields));
             }
-        } catch (Exception e) {
-            this.getLogger().severe("Could not saving config.yml! Please check the error: " + e.getLocalizedMessage());
-            e.fillInStackTrace();
+        } catch (Exception exception) {
+            this.getLogger().severe("Failed to save config.yml! Error: " + exception.getLocalizedMessage());
+            this.getLogger().severe("Exception details:", exception);
         }
-        this.getLogger().info("Saved complete. Good luck!");
+        this.getLogger().info("Saved complete. Good luck and thanks for using WorldGuardRegionProtect!");
     }
 
     @Override
@@ -153,14 +159,32 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     public void messageToCommandSender(final @NotNull CommandSender commandSender, final String message) {
+        final Audience audience = adventure.sender(commandSender);
         final var miniMessage = MiniMessage.miniMessage();
         final Component parsed = miniMessage.deserialize(message);
-        commandSender.sendMessage(parsed);
+        audience.sendMessage(parsed);
     }
 
     @Override
     public Platform.Type getType() {
-        return Platform.Type.PAPER;
+        if (isClassPresent("io.papermc.paper.threadedregions.RegionizedServer")) {
+            return Platform.Type.FOLIA;
+        } else if (isClassPresent("com.destroystokyo.paper.ParticleBuilder")) {
+            return Platform.Type.PAPER;
+        } else if (isClassPresent("org.spigotmc.SpigotConfig")) {
+            return Platform.Type.SPIGOT;
+        } else {
+            return Platform.Type.BUKKIT;
+        }
+    }
+
+    private boolean isClassPresent(String className) {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 
     @Override
@@ -175,7 +199,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     @Override
     public WorldGuardRegionProtectMetadata getMetaData() {
-        return this.getApiProvider().getMetaData();
+        return wgrpMetadata;
     }
 
     @Override

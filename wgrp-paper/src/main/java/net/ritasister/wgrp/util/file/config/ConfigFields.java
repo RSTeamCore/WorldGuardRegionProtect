@@ -63,11 +63,17 @@ public enum ConfigFields {
             "wgRegionProtect.protectInteract.monsterType"
     ),
 
-    ENEMY_TYPE("enemyType", List.of(
-            "tropical_fish", "axolotl", "turtle",
-            "sniffer", "camel"
+    ENEMY_ENTITY_TYPE("enemyType", List.of(
+            "ender_dragon", "magma_cube", "slime",
+            "ghast"
     ),
-            "wgRegionProtect.protectInteract.monsterType"
+            "wgRegionProtect.protectInteract.enemyType"
+    ),
+
+    MISC_ENTITY_TYPE("miscEntityType", List.of(
+            "egg", "ender_pearl", "experience_orb", "snowball"
+    ),
+            "wgRegionProtect.protectInteract.miscEntityType"
     ),
 
     WATER_MOB_TYPE("waterMobType", List.of(

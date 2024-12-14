@@ -21,16 +21,16 @@ public final class PlayerPermissionsImpl implements PermissionsCheck<Player, Ent
 
     @Override
     public boolean hasPlayerPermission(final Object player, final UtilPermissions perm) {
-        if (player instanceof Player) {
-            return ((Player) player).hasPermission(perm.getPermissionName());
+        if (player instanceof Player playerCheck) {
+            return !playerCheck.hasPermission(perm.getPermissionName());
         }
         return false;
     }
 
     @Override
     public boolean hasEntityPermission(final Object entity, final UtilPermissions perm) {
-        if (entity instanceof Entity) {
-            return ((Entity) entity).hasPermission(perm.getPermissionName());
+        if (entity instanceof Entity entityCheck) {
+            return !entityCheck.hasPermission(perm.getPermissionName());
         }
         return false;
     }

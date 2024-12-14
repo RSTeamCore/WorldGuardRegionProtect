@@ -288,16 +288,28 @@ wgRegionProtect:
             - zoglin
         # --------------------------------------------------------------------------------------
         # All list of available of enemy mob type:
-        # - ghast
+        # - ender_dragon
         # - magma_cube
         # - slime
-        # - ender_dragon
+        # - ghast
         # --------------------------------------------------------------------------------------
         enemyType:
             - ender_dragon
             - magma_cube
             - slime
             - ghast
+        # --------------------------------------------------------------------------------------
+        # All list of available of misc entity type:
+        # - egg
+        # - ender_pearl
+        # - experience_orb
+        # - snowball
+        # --------------------------------------------------------------------------------------
+        miscEntityType:
+            - egg
+            - ender_pearl
+            - experience_orb
+            - snowball
         # --------------------------------------------------------------------------------------
         # All list of available of water mob type:
         # - axolotl

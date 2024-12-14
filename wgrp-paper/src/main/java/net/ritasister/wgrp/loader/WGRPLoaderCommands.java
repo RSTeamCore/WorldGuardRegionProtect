@@ -5,10 +5,7 @@ import net.ritasister.wgrp.api.handler.Handler;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.handler.CommandHandler;
 
-/**
- * Utility class for a load and registered all commands in CommandHandler.
- */
-public class WGRPLoaderCommands implements LoadHandlers<WorldGuardRegionProtectPaperPlugin> {
+public final class WGRPLoaderCommands implements LoadHandlers<WorldGuardRegionProtectPaperPlugin> {
 
     @Override
     public void loadHandler(WorldGuardRegionProtectPaperPlugin wgrpBukkitPlugin) {

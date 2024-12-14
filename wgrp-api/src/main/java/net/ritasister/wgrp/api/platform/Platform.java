@@ -15,6 +15,7 @@ public interface Platform {
      * Represents a type of platform which WorldGuardRegionProtect can run on.
      */
     enum Type {
+        BUKKIT("Bukkit"),
         SPIGOT("Spigot"),
         PAPER("Paper"),
         FOLIA("Folia"),
