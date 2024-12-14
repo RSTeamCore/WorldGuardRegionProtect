@@ -6,7 +6,7 @@ wgRegionProtect:
     # -------------------------------------------------------------
     # Do not touch!
     # -------------------------------------------------------------
-    version: 3
+    version: 4
 
     # -------------------------------------------------------------
     # Language of this plugins.
@@ -213,7 +213,7 @@ wgRegionProtect:
             - snowman
             - iron_golem
         # --------------------------------------------------------------------------------------
-        # All list of available of water mob type:
+        # All list of available of monster mob type:
         # - ghast
         # - vindicator
         # - guardian
@@ -253,7 +253,6 @@ wgRegionProtect:
         # - ender_dragon
         # --------------------------------------------------------------------------------------
         monsterType:
-            - ghast
             - vindicator
             - guardian
             - creeper
@@ -264,8 +263,6 @@ wgRegionProtect:
             - elder_guardian
             - husk
             - wither
-            - magma_cube
-            - slime
             - enderman
             - spider
             - skeleton
@@ -289,7 +286,18 @@ wgRegionProtect:
             - witch
             - pillager
             - zoglin
+        # --------------------------------------------------------------------------------------
+        # All list of available of enemy mob type:
+        # - ghast
+        # - magma_cube
+        # - slime
+        # - ender_dragon
+        # --------------------------------------------------------------------------------------
+        enemyType:
             - ender_dragon
+            - magma_cube
+            - slime
+            - ghast
         # --------------------------------------------------------------------------------------
         # All list of available of water mob type:
         # - axolotl
