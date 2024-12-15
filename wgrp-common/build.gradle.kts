@@ -3,9 +3,8 @@ plugins {
 }
 
 repositories {
-    maven {
+    maven("https://repo.codemc.org/repository/maven-public/") {
         name = "CodeMC"
-        url = uri("https://repo.codemc.org/repository/maven-public/")
     }
     mavenCentral()
 }
@@ -39,9 +38,9 @@ dependencies {
 tasks {
     test {
         useJUnitPlatform()
-        /*testLogging {
-            exceptionFormat = "full"
-        }*/
+        testLogging {
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        }
     }
 
     jacocoTestReport {

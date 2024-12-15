@@ -1,5 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import xyz.jpenilla.runpaper.task.RunServer
+import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
 
 plugins {
     id("io.papermc.paperweight.userdev") version "1.7.4"
@@ -8,22 +9,19 @@ plugins {
 }
 
 repositories {
-    maven {
+    maven("https://repo.papermc.io/repository/maven-public/") {
         name = "PaperMC"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
-    maven {
+    maven("https://maven.enginehub.org/repo/") {
         name = "EngineHub"
-        url = uri("https://maven.enginehub.org/repo/")
     }
-    maven {
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/") {
         name = "PlaceholderApi"
-        url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     }
     mavenCentral()
 }
 
-paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
+paperweight.reobfArtifactConfiguration = ReobfArtifactConfiguration.MOJANG_PRODUCTION
 
 dependencies {
     implementation(project(":wgrp-common"))
@@ -62,6 +60,7 @@ tasks.withType<ProcessResources> {
 
 tasks.named<ShadowJar>("shadowJar") {
     archiveFileName.set("${rootProject.name}-${project.version}.${archiveExtension.getOrElse("jar")}")
+    mergeServiceFiles() // Automatically merge service files for shading
     dependencies {
         include(dependency(":wgrp-api:"))
         include(dependency(":wgrp-common:"))
@@ -79,5 +78,12 @@ tasks.named("assemble").configure {
 
 tasks.named<RunServer>("runServer") {
     minecraftVersion("1.20.2")
-    jvmArgs("-Xms4G", "-Xmx4G")
+    jvmArgs(
+        "-Xms4G", 
+        "-Xmx4G",
+        "-XX:+UseG1GC",
+        "-XX:MaxGCPauseMillis=50",
+        "-XX:+UnlockExperimentalVMOptions",
+        "-XX:+DisableExplicitGC")
+    runDirectory.set(file("run"))
 }
