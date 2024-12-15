@@ -29,8 +29,7 @@ public final class AdminProtect implements Listener {
             "/regions",
             "/worldguard:rg",
             "/worldguard:region",
-            "/worldguard:regions"
-    );
+            "/worldguard:regions");
     static final Set<String> REGION_EDIT_ARGS = Set.of("f", "flag");
     static final Set<String> REGION_EDIT_ARGS_FLAGS = Set.of("-f", "-u", "-n", "-g", "-a");
 

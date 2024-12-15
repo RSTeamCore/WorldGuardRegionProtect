@@ -17,9 +17,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Utility class for create subcommands.
- */
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     private final Messages messages;
@@ -33,10 +30,6 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
         this.messages = wgrpPlugin.getConfigLoader().getMessages();
     }
 
-    /**
-     * Complete all commands in a list for help.
-     * @return listOfSubCommands
-     */
     public List<String> complete() {
         final ArrayList<String> listOfSubCommands = new ArrayList<>();
         for (Method m : this.getClass().getDeclaredMethods()) {
