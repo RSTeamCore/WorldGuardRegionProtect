@@ -16,6 +16,7 @@ public class ApiEntityChecker<E, T> implements EntityCheckType<E, T> {
         return plugin.getEntityChecker().check(entity);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public T[] getEntityType() {
         return (T[]) plugin.getEntityChecker().getEntityType();
