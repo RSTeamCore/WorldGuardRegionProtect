@@ -9,7 +9,7 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class HangingProtect implements Listener {
+public final class HangingProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 

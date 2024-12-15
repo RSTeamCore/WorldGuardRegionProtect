@@ -12,7 +12,7 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class EntityProtect implements Listener {
+public final class EntityProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 

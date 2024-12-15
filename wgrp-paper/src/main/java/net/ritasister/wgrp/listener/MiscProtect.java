@@ -15,7 +15,7 @@ import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class MiscProtect implements Listener {
+public final class MiscProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 

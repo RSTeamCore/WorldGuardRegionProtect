@@ -19,7 +19,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerProtect implements Listener {
+public final class PlayerProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final Config config;

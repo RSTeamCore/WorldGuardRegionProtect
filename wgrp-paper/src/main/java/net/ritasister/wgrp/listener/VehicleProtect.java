@@ -10,7 +10,7 @@ import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class VehicleProtect implements Listener {
+public final class VehicleProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 

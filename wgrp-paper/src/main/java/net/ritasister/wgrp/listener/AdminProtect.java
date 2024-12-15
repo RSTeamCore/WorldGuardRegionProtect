@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public class AdminProtect implements Listener {
+public final class AdminProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 

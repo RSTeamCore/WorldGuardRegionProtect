@@ -19,7 +19,7 @@ import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class BlockProtect implements Listener {
+public final class BlockProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 

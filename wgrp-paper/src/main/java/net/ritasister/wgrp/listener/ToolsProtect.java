@@ -14,7 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTakeLecternBookEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class ToolsProtect implements Listener {
+public final class ToolsProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
