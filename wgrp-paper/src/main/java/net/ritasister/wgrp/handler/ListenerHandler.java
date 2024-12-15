@@ -16,9 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-/**
- * Handler for register listeners.
- */
 public class ListenerHandler implements Handler<PluginManager> {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;

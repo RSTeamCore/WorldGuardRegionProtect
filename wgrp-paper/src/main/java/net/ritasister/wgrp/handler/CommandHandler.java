@@ -4,9 +4,6 @@ import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.handler.Handler;
 import net.ritasister.wgrp.command.extend.CommandWGRP;
 
-/**
- * Handler for register commands.
- */
 public class CommandHandler implements Handler<Void> {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
