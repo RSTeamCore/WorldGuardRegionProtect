@@ -1,20 +1,26 @@
 package net.ritasister.wgrp.api.handler;
 
 /**
- * This class used for Commands and Listeners.
- * @param <V>
+ * Interface for handling operations related to Commands and Listeners.
+ * This can be implemented to perform actions either with or without parameters.
+ *
+ * @param <V> the type of object handled, or {@link Void} for parameter-less handling.
  */
 public interface Handler<V> {
 
     /**
-     * Override if you use this method with parameters.
+     * Handles an operation with a parameter.
+     * Override this method to define behavior when a parameter of type {@code V} is provided.
+     *
+     * @param v the parameter of type {@code V} to handle.
      */
     default void handle(V v) {
 
     }
 
     /**
-     * Override if you use without a parameter only with Void.
+     * Handles a parameter-less operation.
+     * Override this method to define behavior when no parameter is provided.
      */
     default void handle() {
 
