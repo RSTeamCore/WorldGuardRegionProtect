@@ -15,6 +15,7 @@ body:
       description: Which server Implementation are you using? If your server implementation is not listed, it is not supported. Switch to a supported version first.
       multiple: false
       options:
+        - Bukkit
         - Paper
         - Purpur
         - Folia
@@ -27,9 +28,18 @@ body:
       description: Which server version version you using? If your server version is not listed, it is not supported. Update to a supported version first.
       multiple: false
       options:
+        - '1.20'
+        - '1.20.1'
+        - '1.20.2'
+        - '1.20.3'
+        - '1.20.4'
         - '1.20.5'
         - '1.20.6'
         - '1.21'
+        - '1.21.1'
+        - '1.21.2'
+        - '1.21.3'
+        - '1.21.4'
     validations:
       required: true
 
