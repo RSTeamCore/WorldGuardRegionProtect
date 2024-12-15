@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 public class UpdateNotify {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
+    private final UpdateDownloader downloadUpdatePlugin;
+
     static final String PLUGIN_URL_ADDRESS = "https://www.spigotmc.org/resources/81321";
     static final String NO_UPDATE_AVAILABLE = """
             <yellow>========<dark_gray>[<red>WorldGuardRegionProtect<dark_gray>]<yellow>========
@@ -17,6 +19,7 @@ public class UpdateNotify {
 
     public UpdateNotify(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
+        this.downloadUpdatePlugin = new UpdateDownloader(wgrpPlugin);
     }
 
     public void checkUpdateNotify(String oldVersion) {
@@ -31,14 +34,22 @@ public class UpdateNotify {
                 <yellow>=======================================""";
         new UpdateChecker(wgrpPlugin, 81321).getVersion(newVersion -> {
             if (oldVersion.equalsIgnoreCase(newVersion)) {
-                wgrpPlugin.messageToCommandSender(server.getConsoleSender(), String.format(
-                        NO_UPDATE_AVAILABLE, newVersion));
+                wgrpPlugin.getLogger().info("The plugin is already up-to-date. No download needed.");
+                wgrpPlugin.messageToCommandSender(server.getConsoleSender(), String.format(NO_UPDATE_AVAILABLE, newVersion));
             } else {
                 wgrpPlugin.messageToCommandSender(server.getConsoleSender(), String.format(
                         hasUpdate,
                         oldVersion,
                         newVersion,
                         PLUGIN_URL_ADDRESS));
+                final boolean isUpdateDisabled = false;
+                if (!isUpdateDisabled) {
+                    wgrpPlugin.getLogger().info("Starting the download process for the latest plugin version");
+                    downloadUpdatePlugin.downloadUpdatePlugin();
+                } else {
+                    wgrpPlugin.getLogger().warn("Automatic updates for the premium plugin are disabled. Please download the latest version manually.");
+                    wgrpPlugin.getLogger().warn("This functionality will be enabled in the future. Thank you for your patience.");
+                }
             }
         });
     }
@@ -55,14 +66,11 @@ public class UpdateNotify {
             new UpdateChecker(wgrpPlugin, 81321).getVersion(newVersion -> {
                 if (oldVersion.equalsIgnoreCase(newVersion)) {
                     if(sendNoUpdate) {
-                        wgrpPlugin.messageToCommandSender(player, String.format(
-                                NO_UPDATE_AVAILABLE,
-                                newVersion
-                        ));
+                        wgrpPlugin.messageToCommandSender(player, String.format(NO_UPDATE_AVAILABLE, newVersion));
                     }
                 } else {
                     wgrpPlugin.messageToCommandSender(player, String.format(
-                                    hasUpdate,
+                            hasUpdate,
                             oldVersion,
                             newVersion,
                             PLUGIN_URL_ADDRESS,
