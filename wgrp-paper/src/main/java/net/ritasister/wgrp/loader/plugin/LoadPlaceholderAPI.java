@@ -16,9 +16,16 @@ public class LoadPlaceholderAPI {
     public void loadPlugin() {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI");
         if (plugin != null && plugin.isEnabled()) {
-            wgrpPlugin.getLogger().info(String.format("Plugin: %s loaded successful!.", plugin.getName()));
-            new PlaceholderAPIExpansion(wgrpPlugin).register();
-            isPlaceholderAPIEnabled(true);
+            wgrpPlugin.getLogger().info(String.format("PlaceholderAPI detected. Plugin: %s loaded successfully.", plugin.getName()));
+            try {
+                new PlaceholderAPIExpansion(wgrpPlugin).register();
+                isPlaceholderAPIEnabled(true);
+                wgrpPlugin.getLogger().info("PlaceholderAPI expansion registered successfully.");
+            } catch (Exception e) {
+                wgrpPlugin.getLogger().severe("Failed to register PlaceholderAPI expansion: " + e.getMessage());
+            }
+        } else {
+            wgrpPlugin.getLogger().warn("PlaceholderAPI is not installed or enabled. Placeholders will not function.");
         }
     }
 

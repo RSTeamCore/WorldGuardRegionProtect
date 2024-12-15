@@ -51,32 +51,45 @@ import static net.ritasister.wgrp.util.utility.UtilityClass.isClassPresent;
 
 public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegionProtectPlugin {
 
+    // Plugin base and logger initialization
     private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
     private final PluginLogger logger;
+
+    // Adventure API instance for message handling
     private BukkitAudiences adventure;
+
+    // Metadata for the plugin
     private WorldGuardRegionProtectMetadata wgrpMetadata;
 
+    // Region and tools management
     private RegionAction regionAction;
     private RegionAdapterManagerPaper regionAdapter;
     private ToolsAdapterManagerPaper toolsAdapter;
+
+    // WorldGuard interaction helpers
     private CheckIntersection checkIntersection;
     private UtilWEImpl playerUtilWE;
 
+    // API and permissions
     private RSApiImpl rsApi;
     private PlayerPermissionsImpl playerPermissions;
-    private List<UUID> spyLog;
-    private EntityCheckType entityCheckType;
-    private MessagingService messagingService;
 
+    // Spy log functionality for tracking
+    private List<UUID> spyLog;
+
+    // Entity and messaging services
+    private EntityCheckType<Entity, EntityType> entityCheckType;
+    private MessagingService<Player> messagingService;
+
+    // Update-related utilities
     private UpdateDownloaderGitHub downloader;
     private UpdateNotify updateNotify;
     private VersionCheck versionCheck;
 
+    // Configuration loader
     private ConfigLoader configLoader;
 
-    /**
-     * The time when the plugin was enabled
-     */
+    // The time when the plugin was enabled
     private Instant startTime;
 
     public WorldGuardRegionProtectPaperPlugin(final @NotNull WorldGuardRegionProtectPaperBase wgrpPaperBase) {
@@ -99,7 +112,10 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         this.rsApi = new RSApiImpl(this);
         this.playerPermissions = new PlayerPermissionsImpl();
 
-        loadMetrics();
+        //Init and load metrics
+        final int pluginId = 12975;
+        new Metrics(wgrpPaperBase, pluginId);
+
         loadAnotherClassAndMethods();
 
         compatibilityCheck.notifyAboutBuild();
@@ -154,11 +170,6 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
         final LoadHandlers<WorldGuardRegionProtectPaperPlugin> loaderListeners = new WGRPLoaderListeners();
         loaderListeners.loadHandler(this);
-    }
-
-    public void loadMetrics() {
-        final int pluginId = 12975;
-        new Metrics(wgrpPaperBase, pluginId);
     }
 
     public List<UUID> getSpyLog() {
@@ -230,12 +241,13 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         return this.toolsAdapter;
     }
 
-    @Override
     @SuppressWarnings("unchecked")
+    @Override
     public EntityCheckType<Entity, EntityType> getEntityChecker() {
         return this.entityCheckType;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public RegionAdapterManager<Location, Player> getRegionAdapter() {
         return regionAdapter;
@@ -245,8 +257,8 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         return versionCheck;
     }
 
-    @Override
     @SuppressWarnings("unchecked")
+    @Override
     public MessagingService<?> getMessagingService() {
         return this.messagingService;
     }
