@@ -2,23 +2,16 @@ package net.ritasister.wgrp.loader;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.platform.Platform;
-import net.ritasister.wgrp.util.utility.VersionCheck;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
+
+import static net.ritasister.wgrp.util.utility.VersionCheck.SUPPORTED_VERSION_RANGE;
 
 public class WGRPCompatibilityCheck {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private static String PLATFORM_NAME;
-
-    public WGRPCompatibilityCheck(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
-        this.wgrpPlugin = wgrpPlugin;
-    }
-
-    public void checkStartUpVersionServer() {
-        if (!wgrpPlugin.getVersionCheck().isVersionSupported()) {
-            wgrpPlugin.getLogger().severe(String.format(
-                    """
+    private static final String UNSUPPORTED_VERSION = """
                             \n====================================================
                             
                                     WorldGuardRegionProtect only works on %s!
@@ -26,13 +19,41 @@ public class WGRPCompatibilityCheck {
                                     Visit the main post on SpigotMC and download the correct version of the plugin for your server version.
                             
                             ====================================================
-                            """, VersionCheck.SUPPORTED_VERSION_RANGE
-            ));
+                            """;
+
+    public WGRPCompatibilityCheck(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.wgrpPlugin = wgrpPlugin;
+    }
+
+    public boolean performCompatibilityChecks() {
+        if (detectStartUpVersionServer() || detectWhatIsPlatformRun()) {
+            wgrpPlugin.getLogger().severe("Compatibility checks failed. Plugin will be disabled.");
             Bukkit.getServer().getPluginManager().disablePlugin(wgrpPlugin.getWgrpPaperBase());
+            return false;
+        }
+
+        wgrpPlugin.getLogger().info("Compatibility checks passed successfully.");
+        return true;
+    }
+
+    private boolean detectStartUpVersionServer() {
+        if (!wgrpPlugin.getVersionCheck().isVersionSupported()) {
+            wgrpPlugin.getLogger().severe(String.format(UNSUPPORTED_VERSION, SUPPORTED_VERSION_RANGE));
+            disablePluginWithLogging();
+        }
+        return false;
+    }
+
+    private void disablePluginWithLogging() {
+        if (wgrpPlugin.getWgrpPaperBase().isEnabled()) {
+            wgrpPlugin.getLogger().severe(String.format("Disabling plugin '%s' due to: %s", wgrpPlugin.getWgrpPaperBase().getName(), SUPPORTED_VERSION_RANGE));
+            Bukkit.getServer().getPluginManager().disablePlugin(wgrpPlugin.getWgrpPaperBase());
+        } else {
+            wgrpPlugin.getLogger().warn(String.format("Attempted to disable plugin '%s', but it was already disabled.", wgrpPlugin.getWgrpPaperBase().getName()));
         }
     }
 
-    public void detectWhatIsPlatformRun() {
+    public boolean detectWhatIsPlatformRun() {
         final String minecraftVersion = Bukkit.getBukkitVersion().split("-")[0];
         final String pluginVersion = wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
         final Platform.Type platformName = wgrpPlugin.getType();
@@ -51,13 +72,14 @@ public class WGRPCompatibilityCheck {
         } else if (platformName == Platform.Type.SPIGOT && isRunningOnBukkit()) {
             setPlatformName(Platform.Type.BUKKIT.getPlatformName());
             handleTrustPlatform(pluginVersion, Platform.Type.BUKKIT.getPlatformName(), minecraftVersion);
-            return;
+            return false;
         } else {
             handleUnTrustPlatform(pluginVersion, minecraftVersion);
-            return;
+            return false;
         }
 
         detectPlatformByClassName(className, detectedPlatform, pluginVersion, minecraftVersion);
+        return false;
     }
 
     private void detectPlatformByClassName(String className, Platform.@NotNull Type detectedPlatform, String pluginVersion, String minecraftVersion) {

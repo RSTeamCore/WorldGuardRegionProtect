@@ -30,6 +30,7 @@ import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import net.ritasister.wgrp.util.file.config.ConfigLoader;
+import net.ritasister.wgrp.util.utility.UpdateDownloaderGitHub;
 import net.ritasister.wgrp.util.utility.VersionCheck;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Location;
@@ -40,9 +41,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static net.ritasister.wgrp.util.utility.UtilityClass.isClassPresent;
 
 public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegionProtectPlugin {
 
@@ -63,10 +68,16 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     private EntityCheckType entityCheckType;
     private MessagingService messagingService;
 
+    private UpdateDownloaderGitHub downloader;
     private UpdateNotify updateNotify;
     private VersionCheck versionCheck;
 
     private ConfigLoader configLoader;
+
+    /**
+     * The time when the plugin was enabled
+     */
+    private Instant startTime;
 
     public WorldGuardRegionProtectPaperPlugin(final @NotNull WorldGuardRegionProtectPaperBase wgrpPaperBase) {
         this.wgrpPaperBase = wgrpPaperBase;
@@ -74,12 +85,14 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     public void onEnable() {
+        this.startTime = Instant.now();
         load();
         this.adventure = BukkitAudiences.create(wgrpPaperBase);
         final WGRPCompatibilityCheck compatibilityCheck = new WGRPCompatibilityCheck(this);
         this.versionCheck = new VersionCheck(this);
-        compatibilityCheck.checkStartUpVersionServer();
-        compatibilityCheck.detectWhatIsPlatformRun();
+        if (!compatibilityCheck.performCompatibilityChecks()) {
+            return;
+        }
         this.spyLog = new ArrayList<>();
         this.configLoader = new ConfigLoader();
         this.configLoader.initConfig(this);
@@ -91,18 +104,24 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
         compatibilityCheck.notifyAboutBuild();
 
+        this.downloader = new UpdateDownloaderGitHub(this);
         this.updateNotify = new UpdateNotify(this);
         this.updateNotify.checkUpdateNotify(wgrpPaperBase.getDescription().getVersion());
+
+        final Duration timeTaken = Duration.between(getStartupTime(), Instant.now());
+        getLogger().info("Successfully enabled. (took " + timeTaken.toMillis() + "ms)");
     }
 
     public void onDisable() {
         unLoad();
-        this.getLogger().info("Saving all configs before shutting down...");
+        this.getLogger().info("Saving all configuration files before the plugin shuts down...");
         try {
             for (ConfigFields configFields : ConfigFields.values()) {
                 final var path = configFields.getPath();
                 final var fields = configFields.get(wgrpPaperBase);
-                configLoader.getConfig().saveConfig(path, fields);
+                if(configLoader != null) {
+                    configLoader.getConfig().saveConfig(path, fields);
+                }
                 this.getLogger().info(String.format("Successfully checked and saved fields: %s", configFields));
             }
         } catch (Exception exception) {
@@ -178,13 +197,12 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         }
     }
 
-    private boolean isClassPresent(String className) {
-        try {
-            Class.forName(className);
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
+    private Instant getStartupTime() {
+        return this.startTime;
+    }
+
+    public UpdateDownloaderGitHub getDownloader() {
+        return downloader;
     }
 
     @Override
