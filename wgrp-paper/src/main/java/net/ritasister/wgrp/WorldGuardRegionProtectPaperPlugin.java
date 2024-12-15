@@ -30,7 +30,7 @@ import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import net.ritasister.wgrp.util.file.config.ConfigLoader;
-import net.ritasister.wgrp.util.utility.UpdateDownloaderGitHub;
+import net.ritasister.wgrp.rslibs.updater.UpdateDownloaderGitHub;
 import net.ritasister.wgrp.util.utility.VersionCheck;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Location;

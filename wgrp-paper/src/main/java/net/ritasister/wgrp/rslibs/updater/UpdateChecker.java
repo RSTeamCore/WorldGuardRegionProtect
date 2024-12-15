@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -29,7 +30,7 @@ public final class UpdateChecker {
         if (platformName.equals(Platform.Type.BUKKIT.getPlatformName())
                 || platformName.equals(Platform.Type.SPIGOT.getPlatformName())) {
             Bukkit.getScheduler().runTaskTimerAsynchronously(this.wgrpPlugin.getWgrpPaperBase(), t ->
-                    checkUpdate(consumer, platformName), 0, 432000);
+                    checkUpdate(consumer, platformName), 0, 6 * 60 * 60 * 20);
         } else if (platformName.equals(Platform.Type.PAPER.getPlatformName())) {
             Bukkit.getAsyncScheduler().runAtFixedRate(this.wgrpPlugin.getWgrpPaperBase(), t ->
                     checkUpdate(consumer, Platform.Type.PAPER.getPlatformName()), 0, 6, TimeUnit.HOURS);
@@ -45,7 +46,7 @@ public final class UpdateChecker {
 
     private void checkUpdate(final Consumer<String> consumer, String platformName) {
         wgrpPlugin.getLogger().info(String.format("Checking for updates using %s schedulers.", platformName));
-        try (InputStream inputStream = URI.create("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).toURL().openStream();
+        try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream();
              Scanner scanner = new Scanner(inputStream)) {
             if (scanner.hasNext()) {
                 consumer.accept(scanner.next());

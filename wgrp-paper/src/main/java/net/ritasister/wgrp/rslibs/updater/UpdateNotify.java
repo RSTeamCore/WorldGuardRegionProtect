@@ -5,10 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-public class UpdateNotify {
+public final class UpdateNotify {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
-    private final UpdateDownloader downloadUpdatePlugin;
 
     static final String PLUGIN_URL_ADDRESS = "https://www.spigotmc.org/resources/81321";
     static final String NO_UPDATE_AVAILABLE = """
@@ -19,7 +18,6 @@ public class UpdateNotify {
 
     public UpdateNotify(final WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
-        this.downloadUpdatePlugin = new UpdateDownloader(wgrpPlugin);
     }
 
     public void checkUpdateNotify(String oldVersion) {
@@ -45,7 +43,7 @@ public class UpdateNotify {
                 final boolean isUpdateDisabled = false;
                 if (!isUpdateDisabled) {
                     wgrpPlugin.getLogger().info("Starting the download process for the latest plugin version");
-                    downloadUpdatePlugin.downloadUpdatePlugin();
+                    wgrpPlugin.getDownloader().downloadLatestJar();
                 } else {
                     wgrpPlugin.getLogger().warn("Automatic updates for the premium plugin are disabled. Please download the latest version manually.");
                     wgrpPlugin.getLogger().warn("This functionality will be enabled in the future. Thank you for your patience.");
