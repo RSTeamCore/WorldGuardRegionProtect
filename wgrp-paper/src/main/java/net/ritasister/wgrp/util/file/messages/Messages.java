@@ -46,12 +46,12 @@ public class Messages {
                 }
             } else {
                 if (section.isString(key)) {
-                    String value = section.getString(key);
+                    final String value = section.getString(key);
                     if (value != null) {
                         data.put(key, new ComponentWrapper(value, this));
                     }
                 } else if (section.isList(key)) {
-                    List<String> list = section.getStringList(key);
+                    final List<String> list = section.getStringList(key);
                     if (!list.isEmpty()) {
                         data.put(key, new ComponentWrapper(new ArrayList<>(list), this));
                     }
