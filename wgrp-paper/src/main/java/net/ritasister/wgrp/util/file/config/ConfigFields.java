@@ -1,17 +1,26 @@
 package net.ritasister.wgrp.util.file.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
-import org.bukkit.plugin.Plugin;
+import net.ritasister.wgrp.rslibs.annotation.CanRecover;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 public enum ConfigFields {
@@ -179,7 +188,6 @@ public enum ConfigFields {
             "wgRegionProtect.protectInteract.player.tools.denyLoomPatternSelect"
     ),
 
-
     CMD_WE("cmdWe", List.of(
             "//set", "//replace", "//overlay",
             "//walls", "//deform", "//fill",
@@ -210,11 +218,9 @@ public enum ConfigFields {
             "wgRegionProtect.noProtectCmd.cmdWeCP"
     ),
 
-
     DENY_EXPLODE_ENTITY("explodeEntity", true,
             "wgRegionProtect.explodeEntity.enable"
     ),
-
 
     REGION_MESSAGE_PROTECT("regionMessageProtect", true,
             "wgRegionProtect.regionMessageProtect"
@@ -249,7 +255,6 @@ public enum ConfigFields {
     ), "wgRegionProtect.spySettings.spyCommandList"),
 
     DATA_SOURCE_ENABLE("enable", false, "wgRegionProtect.dataSource.enable"),
-
     DATA_SOURCE_HOST("localhost", "localhost", "wgRegionProtect.dataSource.localhost"),
     DATA_SOURCE_PORT("port", 3306, "wgRegionProtect.dataSource.port"),
     DATA_SOURCE_DATABASE("database", "database", "wgRegionProtect.dataSource.database"),
@@ -260,17 +265,22 @@ public enum ConfigFields {
     DATA_SOURCE_MAX_LIFE_TIME("maxLifetime", 1800, "wgRegionProtect.dataSource.maxLifetime"),
     DATA_SOURCE_CONNECTION_TIMEOUT("connectionTimeout", 5000, "wgRegionProtect.dataSource.connectionTimeout"),
     DATA_SOURCE_USE_SSL("useSsl", true, "wgRegionProtect.dataSource.useSsl"),
-    DATA_SOURCE_INTERVAL_RELOAD("intervalReload", 60, "wgRegionProtect.dataSource.intervalReload"
-
-    );
+    DATA_SOURCE_INTERVAL_RELOAD("intervalReload", 60, "wgRegionProtect.dataSource.intervalReload");
 
     private final String field;
-    private Object param;
-    private List<String> elements = new ArrayList<>();
-    private boolean bool;
-    private int integer;
-    private double doubleValue;
     private final String path;
+
+    @CanRecover
+    private Object param;
+    @CanRecover
+    private List<String> elements = new ArrayList<>();
+    @CanRecover
+    private boolean bool;
+    @CanRecover
+    private int integer;
+    @CanRecover
+    private double doubleValue;
+
     private static final Map<String, ConfigFields> CONFIG_FIELDS = new HashMap<>();
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
@@ -326,37 +336,76 @@ public enum ConfigFields {
         return path;
     }
 
-    public Object get(@NotNull Plugin wgrpBase) {
-        if (!elements.isEmpty()) {
-            return elements = wgrpBase.getConfig().getStringList(getPath());
-        }
-        if (param != null) {
-            if (isBooleanCheck(param.toString())) {
-                return bool = wgrpBase.getConfig().getBoolean(getPath());
-            }
-            if (isNumeric(param.toString())) {
-                return integer = wgrpBase.getConfig().getInt(getPath());
-            }
-            if (isDouble(param.toString())) {
-                return doubleValue = wgrpBase.getConfig().getDouble(getPath());
+    public Object get(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
+        Field[] fields = this.getClass().getDeclaredFields();
+        Arrays.sort(fields, Comparator.comparing(Field::getName));
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(CanRecover.class)) {
+                // read commentary
+                String comment = readComment(wgrpBase, field.getName());
+                // processing a comment
+                wgrpBase.getLogger().info("Comment for fields " + field.getName() + ": " + comment);
+                if (field.getName().equals("elements")) {
+                    if (!elements.isEmpty()) {
+                        return elements = wgrpBase.getConfig().getStringList(getPath());
+                    }
+                } else if (field.getName().equals("param") || field.getName().equals("bool") || field.getName().equals("integer")) {
+                    if (param != null && param.toString() != null) {
+                        if (isBoolean(param.toString())) {
+                            return bool = wgrpBase.getConfig().getBoolean(getPath());
+                        }
+                        if (isInteger(param.toString())) {
+                            return integer = wgrpBase.getConfig().getInt(getPath());
+                        }
+                        if (isDouble(param.toString())) {
+                            return doubleValue = wgrpBase.getConfig().getDouble(getPath());
+                        }
+                    }
+                }
             }
         }
         return param = wgrpBase.getConfig().getString(getPath());
     }
 
-    public List<String> getList(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
-        return elements = wgrpBase.getConfig().getStringList(getPath());
+    private String readComment(@NotNull WorldGuardRegionProtectPaperBase wgrpBase, String fieldName) {
+        String comment = null;
+        final String config = wgrpBase.getDataFolder().getAbsolutePath() + File.separator + "config.yml";
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(config));
+        } catch (FileNotFoundException exception) {
+            wgrpBase.getLogger().severe(String.format("File %s not found.", reader) + exception);
+        }
+        String line;
+        while (true) {
+            try {
+                if ((line = reader.readLine()) == null) break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if (line.startsWith("#")) {
+                // Это комментарий, проверяем, соответствует ли он имени поля
+                if (line.contains(fieldName)) {
+                    // Это комментарий для текущего поля
+                    comment = line.substring(line.indexOf("#") + 1).trim();
+                    break;
+                }
+                // Пропускаем комментарий, который не соответствует имени поля
+            }
+        }
+        try {
+            reader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return comment;
     }
 
-    public boolean getBoolean(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
-        return bool = wgrpBase.getConfig().getBoolean(getPath());
-    }
-
-    private boolean isBooleanCheck(@NotNull String string) {
+    private boolean isBoolean(@NotNull String string) {
         return string.equalsIgnoreCase("true") || string.equalsIgnoreCase("false");
     }
 
-    private boolean isNumeric(String strNum) {
+    private boolean isInteger(String strNum) {
         if (strNum == null) {
             return false;
         }
@@ -371,4 +420,21 @@ public enum ConfigFields {
         }
         return true;
     }
+
+    public List<String> getList(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
+        return elements = wgrpBase.getConfig().getStringList(getPath());
+    }
+
+    public boolean getBoolean(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
+        return bool = wgrpBase.getConfig().getBoolean(getPath());
+    }
+
+    public double getDoubleValue(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
+        return doubleValue = wgrpBase.getConfig().getDouble(getPath());
+    }
+
+    public int getInteger(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
+        return integer =wgrpBase.getConfig().getInt(getPath());
+    }
+
 }
