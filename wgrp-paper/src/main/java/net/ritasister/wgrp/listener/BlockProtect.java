@@ -5,7 +5,7 @@ import net.ritasister.wgrp.api.manager.regions.RegionAction;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.file.config.Config;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
-import net.ritasister.wgrp.util.file.messages.Messages;
+import net.ritasister.wgrp.util.file.config.ConfigLoader;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -24,12 +24,12 @@ public final class BlockProtect implements Listener {
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
     private final Config config;
-    private final Messages messages;
+    private final ConfigLoader configLoader;
 
     public BlockProtect(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
         this.config = wgrpPlugin.getConfigLoader().getConfig();
-        this.messages = wgrpPlugin.getConfigLoader().getMessages();
+        this.configLoader = wgrpPlugin.getConfigLoader();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -85,7 +85,7 @@ public final class BlockProtect implements Listener {
 
     private void sendMessage(Player player) {
         if (ConfigFields.REGION_MESSAGE_PROTECT.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            messages.get("messages.ServerMsg.wgrpMsg").send(player);
+            configLoader.getMessages().get("messages.ServerMsg.wgrpMsg").send(player);
         }
     }
 

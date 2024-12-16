@@ -7,19 +7,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class Messages {
 
     private final ComponentWrapper DEFAULT_NULLABLE_MESSAGE = new ComponentWrapper("", this);
-
     public String prefix;
     private final MiniMessage miniMessage = MiniMessage.miniMessage();
-
     private final Map<String, ComponentWrapper> langStrings = new HashMap<>();
-
-    private final ComponentWrapper nullable = null;
+    private ComponentWrapper message = null;
 
     public Messages(ConfigurationSection section) {
         try {
@@ -40,15 +38,23 @@ public class Messages {
                     for (Map.Entry<String, ComponentWrapper> entry : fromConfigurationToMap(subSection).entrySet()) {
                         final String keyMessage = entry.getKey();
                         final ComponentWrapper message = entry.getValue();
-                        if (prefix != null) message.setPrefix(prefix);
+                        if (prefix != null) {
+                            message.setPrefix(prefix);
+                        }
                         data.put(key + "." + keyMessage, message);
                     }
                 }
             } else {
                 if (section.isString(key)) {
-                    data.put(key, new ComponentWrapper(section.getString(key), this));
+                    String value = section.getString(key);
+                    if (value != null) {
+                        data.put(key, new ComponentWrapper(value, this));
+                    }
                 } else if (section.isList(key)) {
-                    data.put(key, new ComponentWrapper(new ArrayList<>(section.getStringList(key)), this));
+                    List<String> list = section.getStringList(key);
+                    if (!list.isEmpty()) {
+                        data.put(key, new ComponentWrapper(new ArrayList<>(list), this));
+                    }
                 }
             }
         }
@@ -60,25 +66,25 @@ public class Messages {
     }
 
     public ComponentWrapper get(String key) {
-        final ComponentWrapper message = langStrings.get(key);
-        if (message == null) return nullable != null ? nullable : DEFAULT_NULLABLE_MESSAGE;
-        if (prefix != null) message.setPrefix(prefix);
+        message = langStrings.get(key);
+        if (message == null) {
+            return DEFAULT_NULLABLE_MESSAGE;
+        }
+        if (prefix != null) {
+            message.setPrefix(prefix);
+        }
         return message;
     }
 
     public ComponentWrapper get(String key, boolean withPrefix) {
-        final ComponentWrapper message = langStrings.get(key);
-        if (message == null) return nullable != null ? nullable : DEFAULT_NULLABLE_MESSAGE;
-        if (prefix != null && withPrefix) message.setPrefix(prefix);
+        message = langStrings.get(key);
+        if (message == null) {
+            return DEFAULT_NULLABLE_MESSAGE;
+        }
+        if (prefix != null && withPrefix) {
+            message.setPrefix(prefix);
+        }
         return message;
-    }
-
-    public void put(String key, ComponentWrapper message) {
-        langStrings.put(key, message);
-    }
-
-    public void putIfAbsent(String key, ComponentWrapper message) {
-        langStrings.putIfAbsent(key, message);
     }
 
     public boolean hasPrefix() {

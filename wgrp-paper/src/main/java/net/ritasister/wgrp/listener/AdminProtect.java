@@ -6,7 +6,7 @@ import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
 import net.ritasister.wgrp.util.file.config.Config;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
-import net.ritasister.wgrp.util.file.messages.Messages;
+import net.ritasister.wgrp.util.file.config.ConfigLoader;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -21,7 +21,7 @@ public final class AdminProtect implements Listener {
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
     private final Config config;
-    private final Messages messages;
+    private final ConfigLoader configLoader;
 
     static final Set<String> REGION_COMMANDS_NAME = Set.of(
             "/rg",
@@ -36,7 +36,7 @@ public final class AdminProtect implements Listener {
     public AdminProtect(final WorldGuardRegionProtectPaperPlugin plugin) {
         this.wgrpPlugin = plugin;
         this.config = wgrpPlugin.getConfigLoader().getConfig();
-        this.messages = wgrpPlugin.getConfigLoader().getMessages();
+        this.configLoader = wgrpPlugin.getConfigLoader();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -97,7 +97,7 @@ public final class AdminProtect implements Listener {
                 || playerUtilWE.cmdWeU(string[0]) && !checkIntersection.checkUIntersection(e.getPlayer(), string)) {
 
             if (ConfigFields.REGION_MESSAGE_PROTECT_WE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
-                messages.get("messages.ServerMsg.wgrpMsgWe").send(e.getPlayer());
+                configLoader.getMessages().get("messages.ServerMsg.wgrpMsgWe").send(e.getPlayer());
                 e.setCancelled(true);
             }
 

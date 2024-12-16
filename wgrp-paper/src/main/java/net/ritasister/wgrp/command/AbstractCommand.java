@@ -3,7 +3,7 @@ package net.ritasister.wgrp.command;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.file.messages.Messages;
+import net.ritasister.wgrp.util.file.config.ConfigLoader;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
-    private final Messages messages;
+    private final ConfigLoader configLoader;
 
     public AbstractCommand(String command, @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         final PluginCommand pluginCommand = wgrpPlugin.getWgrpPaperBase().getCommand(command);
@@ -27,7 +27,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
             pluginCommand.setExecutor(this);
             pluginCommand.setTabCompleter(this);
         }
-        this.messages = wgrpPlugin.getConfigLoader().getMessages();
+        this.configLoader = wgrpPlugin.getConfigLoader();
     }
 
     public List<String> complete() {
@@ -46,7 +46,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) {
-            messages.get("messages.usage.wgrpUseHelp").send(sender);
+            configLoader.getMessages().get("messages.usage.wgrpUseHelp").send(sender);
         } else {
             for (Method m : this.getClass().getDeclaredMethods()) {
                 if (m.isAnnotationPresent(SubCommand.class)) {
@@ -64,28 +64,42 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                             }
                         }
                     }
+
                     String[] subArgs = {};
                     if (args.length > 1) {
                         subArgs = Arrays.copyOfRange(args, 1, args.length);
                     }
+
                     if (isMustBeProcessed) {
                         if (!sub.permission().equals(UtilPermissions.NULL_PERM)) {
                             if (sender.hasPermission(sub.permission().getPermissionName())) {
                                 try {
-                                    m.invoke(this, sender, subArgs);
+                                    if (m.getParameterCount() == 2) {
+                                        m.invoke(this, sender, subArgs);
+                                    } else if (m.getParameterCount() == 1) {
+                                        m.invoke(this, sender);
+                                    } else {
+                                        throw new IllegalStateException("Несовместимое число параметров для метода " + m.getName());
+                                    }
                                     break;
                                 } catch (IllegalAccessException | InvocationTargetException e) {
-                                    throw new RuntimeException(e);
+                                    throw new RuntimeException("Ошибка вызова команды: " + sub.name(), e);
                                 }
                             } else {
-                                messages.get("messages.ServerMsg.noPerm").send(sender);
+                                configLoader.getMessages().get("messages.ServerMsg.noPerm").send(sender);
                             }
                         } else {
                             try {
-                                m.invoke(this, sender, subArgs);
+                                if (m.getParameterCount() == 2) {
+                                    m.invoke(this, sender, subArgs);
+                                } else if (m.getParameterCount() == 1) {
+                                    m.invoke(this, sender);
+                                } else {
+                                    throw new IllegalStateException("Несовместимое число параметров для метода " + m.getName());
+                                }
                                 break;
                             } catch (IllegalAccessException | InvocationTargetException e) {
-                                throw new RuntimeException(e);
+                                throw new RuntimeException("Ошибка вызова команды: " + sub.name(), e);
                             }
                         }
                     }

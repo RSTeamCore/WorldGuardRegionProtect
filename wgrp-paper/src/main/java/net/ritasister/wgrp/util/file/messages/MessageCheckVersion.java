@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class MessageCheckVersion implements CheckVersion {
@@ -27,7 +28,7 @@ public class MessageCheckVersion implements CheckVersion {
         final String lang = ConfigFields.LANG.get(wgrpPlugin.getWgrpPaperBase()).toString();
 
         final File currentLangFile = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(), "lang/" + lang + ".yml");
-        final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(wgrpPlugin.getWgrpPaperBase().getResource("lang/" + lang + ".yml")));
+        final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(wgrpPlugin.getWgrpPaperBase().getResource("lang/" + lang + ".yml")), StandardCharsets.UTF_8);
 
         final YamlConfiguration currentLangVersion = YamlConfiguration.loadConfiguration(currentLangFile);
         final YamlConfiguration newLangVersion = YamlConfiguration.loadConfiguration(reader);
