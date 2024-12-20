@@ -3,7 +3,7 @@ import xyz.jpenilla.runpaper.task.RunServer
 import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
 
 plugins {
-    id("io.papermc.paperweight.userdev") version "1.7.4"
+    id("io.papermc.paperweight.userdev") version "1.7.7"
     alias(libs.plugins.shadow)
     alias(libs.plugins.runPaper)
 }
@@ -27,7 +27,7 @@ dependencies {
     implementation(project(":wgrp-common"))
 
     //Paper
-    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
 
     //Plugins
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.3") {
@@ -72,8 +72,8 @@ tasks.named<ShadowJar>("shadowJar") {
     relocate("org.jetbrains.kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
 }
 
-tasks.named("assemble").configure {
-    dependsOn("shadowJar")
+tasks.named<RunServer>("runServer") {
+    dependsOn(tasks.shadowJar)
 }
 
 tasks.named<RunServer>("runServer") {
