@@ -25,7 +25,7 @@ public class CommandWGRP extends AbstractCommand {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final Config config;
-    private ConfigLoader configLoader;
+    private final ConfigLoader configLoader;
 
     public CommandWGRP(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         super(UtilCommandList.WGRP.getCommand(), wgrpPlugin);
@@ -40,10 +40,8 @@ public class CommandWGRP extends AbstractCommand {
             description = "reload config and lang file.")
     public void wgrpReload(@NotNull CommandSender sender) {
         final long timeInitStart = System.currentTimeMillis();
-
-        wgrpPlugin.getConfigLoader().initConfig(wgrpPlugin);
-
         final long timeReload = System.currentTimeMillis() - timeInitStart;
+        wgrpPlugin.getConfigLoader().initConfig(wgrpPlugin);
         configLoader.getMessages().get("messages.Configs.configReloaded").replace("<time>", timeReload).send(sender);
     }
 

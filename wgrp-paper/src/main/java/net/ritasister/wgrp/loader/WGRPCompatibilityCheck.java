@@ -64,7 +64,7 @@ public class WGRPCompatibilityCheck {
             className = "com.destroystokyo.paper.ParticleBuilder";
             detectedPlatform = Platform.Type.PAPER;
         } else if (platformName == Platform.Type.FOLIA) {
-            className = "io.papermc.paper.threadedregions.RegionizedServer";
+            className = "io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler";
             detectedPlatform = Platform.Type.FOLIA;
         } else if (platformName == Platform.Type.BUKKIT) {
             className = "org.spigotmc.SpigotConfig";

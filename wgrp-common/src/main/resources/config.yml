@@ -19,7 +19,7 @@ wgRegionProtect:
     # -------------------------------------------------------------
     # Let the admin know if he updated the plugin to the latest version.
     # enable: Is enable check of update a new version of this plugin.
-    # sendNoUpdate: Is enable sending in chat for admins if plugin not have an update.
+    # sendNoUpdate: Is enable sending in chat for admins if the plugin does not have an update.
     # true - enable messages, false - disable.
     # -------------------------------------------------------------
     updateChecker:
@@ -105,9 +105,9 @@ wgRegionProtect:
     # --------------------------------------------------------------------------------------
     protectInteract:
         # --------------------------------------------------------------------------------------
-        # interactType used for multiple checks if player can set, break or interact with other stuff,
-        # and damage other entity.
-        # So I am not recommended remove anything from here. I set based settings for protect.
+        # interactType used for multiple checks if a player can set, break or interact with other stuff,
+        # and damage another entity.
+        # So I am not recommended to remove anything from here. I set based settings for protection.
         # - player
         # - bat
         # - armor_stand
@@ -311,7 +311,7 @@ wgRegionProtect:
             - experience_orb
             - snowball
         # --------------------------------------------------------------------------------------
-        # All list of available of water mob type:
+        # All list of available of a water mob type:
         # - axolotl
         # - squid
         # - dolphin
@@ -520,7 +520,7 @@ wgRegionProtect:
             # --------------------------------------------------------------------------------------
             # denyTakeLecternBook — whether the player can take a book from the pulpit.
             # denyStonecutterRecipeSelect- whether the player can use stonecutter for any recipe.
-            # denyLoomPatternSelect - whether the player can use loom for select pattern for banner.
+            # denyLoomPatternSelect - whether the player can use loom for a select pattern for banner.
             # --------------------------------------------------------------------------------------
             tools:
                 denyTakeLecternBook: true
@@ -551,7 +551,7 @@ wgRegionProtect:
         # --------------------------------------------------------------------------------------
         # denyCreatureSpawn — Whether to deny spawn mobs from by egg.
         # denyMobSpawner — Wether to deny spawn mobs from spawner.
-        # denyMobSpawn - Wether to deny naturally spawn mobs.
+        # denyMobSpawn - whether to deny naturally spawn mobs.
         # --------------------------------------------------------------------------------------
         mobs:
             denyCreatureSpawn: true
@@ -604,7 +604,7 @@ wgRegionProtect:
         enable: true
 
     # --------------------------------------------------------------------------------------
-    # Turn Enable/Disable the notification if player try to use in the protected region WE\FAWE command.
+    # Turn Enable/Disable the notification if player tries to use in the protected region WE\FAWE command.
     # --------------------------------------------------------------------------------------
     spySettings:
         notify:
@@ -672,5 +672,5 @@ wgRegionProtect:
         # --------------------------------------------------------------------------------------
         maxPoolSize: 10
         maxLifetime: 1800 # 30 minutes
-        connectionTimeout: 5000 # 5 second
+        connectionTimeout: 5000 # Second 5
         intervalReload: 60 # in seconds
