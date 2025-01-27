@@ -74,40 +74,40 @@ public class CommandWGRP extends AbstractCommand {
             final Map<String, List<String>> rgMap = config.getRegionProtectMap();
             if (sender instanceof Player player) {
                 String world = player.getLocation().getWorld().getName();
-                    final String region = args[0];
-                    boolean isWorldValid = false;
-                    boolean isRegionValid = false;
-                    if (args.length == 2) {
-                        world = args[1];
+                final String region = args[0];
+                boolean isWorldValid = false;
+                boolean isRegionValid = false;
+                if (args.length == 2) {
+                    world = args[1];
+                }
+                for (World w : Bukkit.getWorlds()) {
+                    if (w.getName().equalsIgnoreCase(world)) {
+                        isWorldValid = true;
                     }
-                    for (World w : Bukkit.getWorlds()) {
-                        if (w.getName().equalsIgnoreCase(world)) {
-                            isWorldValid = true;
-                        }
-                    }
-                    if (wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region)) {
-                        isRegionValid = true;
-                    }
-                    if (rgMap.containsKey(world) && rgMap.get(world) != null && rgMap.get(world).contains(region)) {
-                        configLoader.getMessages().get("messages.regionManagement.alreadyProtected").replace("<region>", region).send(sender);
-                        return;
-                    }
-                    if (!isWorldValid) {
-                        configLoader.getMessages().get("messages.regionManagement.invalidWorld").replace("<world>", world).send(sender);
-                        return;
-                    }
-                    if (!isRegionValid) {
-                        configLoader.getMessages().get("messages.regionManagement.invalidRegion").replace("<region>", region).send(sender);
-                        return;
-                    }
-                    final List<String> newRegionList = new ArrayList<>();
-                    if (rgMap.containsKey(world) && !rgMap.get(world).contains(region)) {
-                        newRegionList.addAll(rgMap.get(world));
-                    }
-                    newRegionList.add(region);
-                    rgMap.put(world, newRegionList);
-                    config.setRegionProtectMap(rgMap);
-                    configLoader.getMessages().get("messages.regionManagement.add").replace("<region>", region).send(sender);
+                }
+                if (wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region)) {
+                    isRegionValid = true;
+                }
+                if (rgMap.containsKey(world) && rgMap.get(world) != null && rgMap.get(world).contains(region)) {
+                    configLoader.getMessages().get("messages.regionManagement.alreadyProtected").replace("<region>", region).send(sender);
+                    return;
+                }
+                if (!isWorldValid) {
+                    configLoader.getMessages().get("messages.regionManagement.invalidWorld").replace("<world>", world).send(sender);
+                    return;
+                }
+                if (!isRegionValid) {
+                    configLoader.getMessages().get("messages.regionManagement.invalidRegion").replace("<region>", region).send(sender);
+                    return;
+                }
+                final List<String> newRegionList = new ArrayList<>();
+                if (rgMap.containsKey(world) && !rgMap.get(world).contains(region)) {
+                    newRegionList.addAll(rgMap.get(world));
+                }
+                newRegionList.add(region);
+                rgMap.put(world, newRegionList);
+                config.setRegionProtectMap(rgMap);
+                configLoader.getMessages().get("messages.regionManagement.add").replace("<region>", region).send(sender);
             } else if (args.length == 2) {
                 final String region = args[0];
                 final String world = args[1];
