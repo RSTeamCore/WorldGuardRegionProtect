@@ -9,19 +9,17 @@ import net.ritasister.wgrp.util.file.messages.MessageLoader;
 import net.ritasister.wgrp.util.file.messages.Messages;
 import org.jetbrains.annotations.NotNull;
 
-public class ConfigLoader {
+public final class ConfigLoader {
 
     private Config config;
-
     private Messages messages;
-
     private UpdateFile updateFile;
 
     public void initConfig(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.updateFile = new UpdateFile(new ParamsVersionCheckImpl());
 
         //Initialising config.yml
-        this.config = new Config(wgrpPlugin.getWgrpPaperBase());
+        this.config = new Config(wgrpPlugin);
 
         //Check a config version if available a new version
         final CheckVersion configCheckVersion = new ConfigCheckVersion(new ParamsVersionCheckImpl());

@@ -5,7 +5,6 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
-import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
@@ -16,8 +15,7 @@ import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.loader.WGRPCompatibilityCheck;
-import net.ritasister.wgrp.loader.WGRPLoaderCommands;
-import net.ritasister.wgrp.loader.WGRPLoaderListeners;
+import net.ritasister.wgrp.loader.WGRPLoaderHandlers;
 import net.ritasister.wgrp.loader.plugin.LoadPlaceholderAPI;
 import net.ritasister.wgrp.loader.plugin.LoadWorldGuard;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
@@ -31,65 +29,54 @@ import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
 import net.ritasister.wgrp.util.file.config.ConfigLoader;
 import net.ritasister.wgrp.rslibs.updater.UpdateDownloaderGitHub;
+import net.ritasister.wgrp.util.schedulers.FoliaRunnable;
 import net.ritasister.wgrp.util.utility.VersionCheck;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Location;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static net.ritasister.wgrp.util.utility.UtilityClass.isClassPresent;
 
 public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegionProtectPlugin {
 
-    // Plugin base and logger initialization
     private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
     private final PluginLogger logger;
-
-    // Adventure API instance for message handling
     private BukkitAudiences adventure;
-
-    // Metadata for the plugin
     private WorldGuardRegionProtectMetadata wgrpMetadata;
-
-    // Region and tools management
     private RegionAction regionAction;
     private RegionAdapterManagerPaper regionAdapter;
     private ToolsAdapterManagerPaper toolsAdapter;
-
-    // WorldGuard interaction helpers
     private CheckIntersection checkIntersection;
     private UtilWEImpl playerUtilWE;
-
-    // API and permissions
     private RSApiImpl rsApi;
     private PlayerPermissionsImpl playerPermissions;
-
-    // Spy log functionality for tracking
     private List<UUID> spyLog;
-
-    // Entity and messaging services
     private EntityCheckType<Entity, EntityType> entityCheckType;
     private MessagingService<Player> messagingService;
 
-    // Update-related utilities
+    private Map<Class<? extends Listener>, Listener> listenerHandlerMap = new HashMap<>();
+    private Map<String, CommandExecutor> commandMap;
+    private Map<Class<? extends FoliaRunnable>, FoliaRunnable> taskMap = new HashMap<>();
+
     private UpdateDownloaderGitHub downloader;
     private UpdateNotify updateNotify;
     private VersionCheck versionCheck;
-
-    // Configuration loader
     private ConfigLoader configLoader;
-
-    // The time when the plugin was enabled
     private Instant startTime;
 
     public WorldGuardRegionProtectPaperPlugin(final @NotNull WorldGuardRegionProtectPaperBase wgrpPaperBase) {
@@ -101,41 +88,62 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         this.startTime = Instant.now();
         load();
         this.adventure = BukkitAudiences.create(wgrpPaperBase);
-        final WGRPCompatibilityCheck compatibilityCheck = new WGRPCompatibilityCheck(this);
-        this.versionCheck = new VersionCheck(this);
-        if (!compatibilityCheck.performCompatibilityChecks()) {
+        initializeFields();
+        if (!new WGRPCompatibilityCheck(this).performCompatibilityChecks()) {
             return;
         }
+        initializeMetrics();
+        loadAnotherClassAndMethods();
+        new WGRPCompatibilityCheck(this).notifyAboutBuild();
+        this.updateNotify.checkUpdateNotify(wgrpPaperBase.getDescription().getVersion());
+        logStartupTime();
+    }
+
+    private void initializeFields() {
+        this.versionCheck = new VersionCheck(this);
         this.spyLog = new ArrayList<>();
+
         this.configLoader = new ConfigLoader();
         this.configLoader.initConfig(this);
+
         this.rsApi = new RSApiImpl(this);
         this.playerPermissions = new PlayerPermissionsImpl();
 
-        //Init and load metrics
-        final int pluginId = 12975;
-        new Metrics(wgrpPaperBase, pluginId);
-
-        loadAnotherClassAndMethods();
-
-        compatibilityCheck.notifyAboutBuild();
+        this.listenerHandlerMap = new HashMap<>();
+        this.commandMap = new HashMap<>();
+        this.taskMap = new HashMap<>();
 
         this.downloader = new UpdateDownloaderGitHub(this);
         this.updateNotify = new UpdateNotify(this);
-        this.updateNotify.checkUpdateNotify(wgrpPaperBase.getDescription().getVersion());
+    }
 
+    private void initializeMetrics() {
+        final int pluginId = 12975;
+        new Metrics(wgrpPaperBase, pluginId);
+    }
+
+    private void logStartupTime() {
         final Duration timeTaken = Duration.between(getStartupTime(), Instant.now());
         getLogger().info("Successfully enabled. (took " + timeTaken.toMillis() + "ms)");
     }
 
     public void onDisable() {
-        unLoad();
+        try {
+            unLoad();
+        } catch (Exception exception) {
+            this.getLogger().severe("Failed to unload resources: ", exception);
+        }
+        saveConfigFiles();
+        this.getLogger().info("Saved complete. Good luck and thanks for using WorldGuardRegionProtect!");
+    }
+
+    private void saveConfigFiles() {
         this.getLogger().info("Saving all configuration files before the plugin shuts down...");
         try {
             for (ConfigFields configFields : ConfigFields.values()) {
                 final var path = configFields.getPath();
-                final var fields = configFields.get(wgrpPaperBase);
-                if(configLoader != null) {
+                final var fields = configFields.get(this);
+                if (configLoader != null) {
                     configLoader.getConfig().saveConfig(path, fields);
                 }
                 this.getLogger().info(String.format("Successfully checked and saved fields: %s", configFields));
@@ -144,7 +152,6 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
             this.getLogger().severe("Failed to save config.yml! Error: " + exception.getLocalizedMessage());
             this.getLogger().severe("Exception details:", exception);
         }
-        this.getLogger().info("Saved complete. Good luck and thanks for using WorldGuardRegionProtect!");
     }
 
     @Override
@@ -153,11 +160,10 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     private void loadAnotherClassAndMethods() {
-        final LoadWorldGuard loadWorldGuard = new LoadWorldGuard(this);
-        loadWorldGuard.loadPlugin();
+        new LoadWorldGuard(this).loadPlugin();
+        new LoadPlaceholderAPI(this).loadPlugin();
 
-        final LoadPlaceholderAPI loadPlaceholderAPI = new LoadPlaceholderAPI(this);
-        loadPlaceholderAPI.loadPlugin();
+        new WGRPLoaderHandlers().loadHandler(this);
 
         this.regionAdapter = new RegionAdapterManagerPaper();
         this.toolsAdapter = new ToolsAdapterManagerPaper();
@@ -165,11 +171,6 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         playerUtilWE = new UtilWEImpl(this);
         checkIntersection = playerUtilWE.setUpWorldGuardVersionSeven();
 
-        final LoadHandlers<WorldGuardRegionProtectPaperPlugin> loaderCommands = new WGRPLoaderCommands();
-        loaderCommands.loadHandler(this);
-
-        final LoadHandlers<WorldGuardRegionProtectPaperPlugin> loaderListeners = new WGRPLoaderListeners();
-        loaderListeners.loadHandler(this);
     }
 
     public List<UUID> getSpyLog() {
@@ -253,13 +254,29 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         return regionAdapter;
     }
 
+    public Map<Class<? extends Listener>, Listener> getListenerHandlerMap() {
+        return listenerHandlerMap;
+    }
+
+    public <T extends Listener> T getListener(@NotNull Class<T> listenerClass) {
+        return listenerClass.cast(listenerHandlerMap.get(listenerClass));
+    }
+
+    public Map<String, CommandExecutor> getCommandMap() {
+        return commandMap;
+    }
+
+    public Map<Class<? extends FoliaRunnable>, FoliaRunnable> getTaskMap() {
+        return taskMap;
+    }
+
     public VersionCheck getVersionCheck() {
         return versionCheck;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public MessagingService<?> getMessagingService() {
+    public MessagingService getMessagingService() {
         return this.messagingService;
     }
 
@@ -274,5 +291,4 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     public ConfigLoader getConfigLoader() {
         return this.configLoader;
     }
-
 }
