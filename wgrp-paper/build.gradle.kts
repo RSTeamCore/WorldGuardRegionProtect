@@ -137,14 +137,18 @@ artifacts {
 tasks.named<RunServer>("runServer") {
     minecraftVersion("1.21.4")
     jvmArgs(
-        "-Xms4G",
-        "-Xmx4G",
+        "-Xms3G",
+        "-Xmx3G",
         "-XX:+UseG1GC",
         "-XX:MaxGCPauseMillis=50",
         "-XX:+UnlockExperimentalVMOptions",
         "-XX:+DisableExplicitGC"
     )
     runDirectory.set(file("run"))
+    val shadowJarTask = project(":wgrp-paper").tasks.findByName("shadowJar") as? Jar
+    if (shadowJarTask != null) {
+        pluginJars(shadowJarTask.archiveFile)
+    }
 }
 
 fun String.runCommand(): String {
