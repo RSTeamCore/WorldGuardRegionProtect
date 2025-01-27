@@ -100,13 +100,16 @@ public class CommandWGRP extends AbstractCommand {
                 configLoader.getMessages().get("messages.regionManagement.add").replace("<region>", result.region).send(sender);
             } else if (args.length == 2) {
                 final String region = args[0];
-                final String world = args[1];
+                final checkWorld result = getCheckWorld(sender, args);
+                if (result == null) {
+                    return;
+                }
                 final List<String> newRegionList = new ArrayList<>();
-                if (rgMap.containsKey(world)) {
-                    newRegionList.addAll(rgMap.get(world));
+                if (rgMap.containsKey(result.finalWorld)) {
+                    newRegionList.addAll(rgMap.get(result.finalWorld));
                 }
                 newRegionList.add(region);
-                rgMap.put(world, newRegionList);
+                rgMap.put(result.finalWorld, newRegionList);
                 config.setRegionProtectMap(rgMap);
                 configLoader.getMessages().get("messages.regionManagement.add").replace("<region>", region).send(sender);
             } else {

@@ -109,13 +109,12 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
     private @NotNull List<String> filter(List<String> list, String @NotNull [] args) {
         final String last = args[args.length - 1];
-        if (args.length - 1 != 0) {
+        if (args.length > 1) {
             final String subCmdStr = args[0];
             for (Method m : this.getClass().getDeclaredMethods()) {
                 if (m.isAnnotationPresent(SubCommand.class)) {
                     final SubCommand subCommand = m.getAnnotation(SubCommand.class);
-                    if (subCommand.name().equalsIgnoreCase(subCmdStr)
-                            || Arrays.stream(subCommand.aliases()).toList().contains(subCmdStr)) {
+                    if (subCommand.name().equalsIgnoreCase(subCmdStr) || Arrays.asList(subCommand.aliases()).contains(subCmdStr)) {
                         try {
                             return List.of(subCommand.tabArgs()[args.length - 2]);
                         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -126,6 +125,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
             }
             return Collections.emptyList();
         }
+
         final List<String> result = new ArrayList<>();
         for (String arg : list) {
             if (arg.toLowerCase().startsWith(last.toLowerCase())) {

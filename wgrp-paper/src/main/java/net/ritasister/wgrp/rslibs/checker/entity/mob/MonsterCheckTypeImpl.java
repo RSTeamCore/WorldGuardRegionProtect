@@ -63,7 +63,9 @@ public final class MonsterCheckTypeImpl implements EntityCheckType<Entity, Entit
             EntityType.ENDER_DRAGON,
             //New mobs since mc 1.21
             EntityHelper.getEntityType("BREEZE"),
-            EntityHelper.getEntityType("BOGGED")
+            EntityHelper.getEntityType("BOGGED"),
+            //New mobs since mc 1.21.4
+            EntityHelper.getEntityType("CREAKING")
         };
     }
 
