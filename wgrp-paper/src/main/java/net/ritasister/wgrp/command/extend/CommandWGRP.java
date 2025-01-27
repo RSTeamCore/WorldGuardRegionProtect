@@ -198,6 +198,10 @@ public class CommandWGRP extends AbstractCommand {
         }
     }
 
+    @SubCommand(
+            name = "version",
+            permission = UtilPermissions.ADMIN_RIGHT,
+            description = "seen what is version of plugin is running.")
     public void wgrpVersion(CommandSender sender) {
         final String pluginVersion = wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
         wgrpPlugin.messageToCommandSender(sender, String.format("<dark_gray>[<dark_red>WGRP<dark_gray>]<green>Current running version is <gold>%s", pluginVersion));
