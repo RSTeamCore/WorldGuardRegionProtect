@@ -33,6 +33,7 @@ import net.ritasister.wgrp.util.schedulers.FoliaRunnable;
 import net.ritasister.wgrp.util.utility.VersionCheck;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
@@ -252,7 +253,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     @SuppressWarnings("unchecked")
     @Override
-    public RegionAdapterManager<Location, Player> getRegionAdapter() {
+    public RegionAdapterManager<Location, Player, World> getRegionAdapter() {
         return regionAdapter;
     }
 

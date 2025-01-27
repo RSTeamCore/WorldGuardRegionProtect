@@ -25,7 +25,7 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     private final WorldGuardRegionProtectPlugin plugin;
 
     private final ApiPlatform platform;
-    private final RegionAdapterManager<?, ?> regionAdapterManager;
+    private final RegionAdapterManager<?, ?, ?> regionAdapterManager;
     private final ToolsAdapterManager<Player> toolsAdapterManager;
     private final ApiEntityChecker<?, ?> entityCheckType;
     private final MessagingService<?> messagingService;
