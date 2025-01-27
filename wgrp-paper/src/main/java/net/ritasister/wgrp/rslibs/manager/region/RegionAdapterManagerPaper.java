@@ -144,13 +144,16 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     private @NotNull ApplicableRegionSet getApplicableRegionsSet(final @NotNull Region selection) {
-        final ProtectedRegion __dummy__ = new ProtectedCuboidRegion(
-                "__dummy__",
-                selection.getMinimumPoint(),
-                selection.getMaximumPoint());
-        return WorldGuard.getInstance()
-                .getPlatform()
-                .getRegionContainer().get(selection.getWorld()).getApplicableRegions(__dummy__);
+        return Optional.ofNullable(WorldGuard.getInstance()
+                        .getPlatform()
+                        .getRegionContainer()
+                        .get(selection.getWorld()))
+                .map(regionManager -> 
+                        regionManager.getApplicableRegions(new ProtectedCuboidRegion("__dummy__", 
+                                selection.getMinimumPoint(), 
+                                selection.getMaximumPoint()))).orElseThrow(() ->
+                        new IllegalStateException("RegionManager is not available for the world: " 
+                                + (selection.getWorld() != null ? selection.getWorld().getName() : "unknown world")));
     }
-
+    
 }
