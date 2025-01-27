@@ -24,7 +24,7 @@ public class UpdateFile {
                            final @NotNull File currentFile, ConfigType configType, String lang) {
         if(ConfigType.CONFIG.equals(configType)) {
             final Path renameOldFile = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(),
-                    "config-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
+                    "config-old-" + paramsVersionCheck.getDateFormat() + ".yml").toPath();
             try {
                 Files.move(currentFile.toPath(), renameOldFile, StandardCopyOption.REPLACE_EXISTING);
                 wgrpPlugin.getLogger().info("Old config file is renamed to: " + renameOldFile);
@@ -34,7 +34,7 @@ public class UpdateFile {
             wgrpPlugin.getWgrpPaperBase().saveResource("config.yml", true);
         } else if(ConfigType.LANG.equals(configType)) {
             final Path renameOldLang = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(),
-                    "lang/" + lang + "-old-" + paramsVersionCheck.getSimpleDateFormat() + ".yml").toPath();
+                    "lang/" + lang + "-old-" + paramsVersionCheck.getDateFormat() + ".yml").toPath();
             try {
                 Files.move(currentFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
                 wgrpPlugin.getLogger().info("Old lang file is renamed to: " + renameOldLang);
