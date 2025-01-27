@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.listener;
+package net.ritasister.wgrp.listener.miscellaneous;
 
 import io.papermc.paper.event.player.PlayerLoomPatternSelectEvent;
 import io.papermc.paper.event.player.PlayerStonecutterRecipeSelectEvent;
