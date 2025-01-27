@@ -92,31 +92,27 @@ public class WGRPCompatibilityCheck {
         }
     }
 
-    private void handleTrustPlatform(final String pluginVersion, final @NotNull String type, final @NotNull String minecraftVersion) {
-        if (type.equals(Platform.Type.BUKKIT.getPlatformName()) || type.equals(Platform.Type.SPIGOT.getPlatformName())) {
-            wgrpPlugin.getLogger().warn(String.format(
-                    """
+    private void handleTrustPlatform(final @NotNull String pluginVersion, final @NotNull String type, final @NotNull String minecraftVersion) {
+        final boolean isDevBuild = pluginVersion.contains("-SNAPSHOT") || pluginVersion.contains("-dev");
+        final String pluginVersionModified = isDevBuild ? pluginVersion + " [DEV BUILD]" : pluginVersion;
+        final String defaultMessage = """
                             ====================================================
                             
                                     WorldGuardRegionProtect %s
                                     Server running on %s - %s.
-                                    It is recommended to use Paper, Folia or its forks for better performance and support!
+                                    %s
                             
                             ====================================================
-                            """, pluginVersion, PLATFORM_NAME, minecraftVersion));
+                            """;
+        final String isPaperForks = "It is recommended to use Paper, Folia or its forks for better performance and support!";
+        final String isNotPaperForks = "Your setup is optimal for plugin performance and support.";
+
+        if (type.equals(Platform.Type.BUKKIT.getPlatformName()) || type.equals(Platform.Type.SPIGOT.getPlatformName())) {
+            wgrpPlugin.getLogger().warn(String.format(defaultMessage, pluginVersionModified, PLATFORM_NAME, minecraftVersion, isNotPaperForks));
         }
         if (type.equals(Platform.Type.PAPER.getPlatformName()) || type.equals(Platform.Type.FOLIA.getPlatformName())) {
             setPlatformName(type);
-            wgrpPlugin.getLogger().info(String.format(
-                    """
-                            ====================================================
-                            
-                                    WorldGuardRegionProtect %s
-                                    Server running on %s - %s.
-                                    Your setup is optimal for plugin performance and support.
-                            
-                            ====================================================
-                            """, pluginVersion, PLATFORM_NAME, minecraftVersion));
+            wgrpPlugin.getLogger().info(String.format(defaultMessage, pluginVersionModified, PLATFORM_NAME, minecraftVersion, isPaperForks));
         }
     }
 
