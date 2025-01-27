@@ -286,6 +286,9 @@ wgRegionProtect:
             - witch
             - pillager
             - zoglin
+            - breeze
+            - bogged
+            - creaking
         # --------------------------------------------------------------------------------------
         # All list of available of enemy mob type:
         # - ender_dragon
