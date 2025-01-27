@@ -329,7 +329,7 @@ public enum ConfigFields {
         if (field == null) {
             return null;
         }
-        String fieldName = field.toString();
+        final String fieldName = field.toString();
         return CONFIG_FIELDS.get(fieldName.toLowerCase(Locale.ROOT));
     }
 

@@ -1,34 +1,12 @@
-* text=auto eol=lf
-# Force Batch files to CRLF
-*.bat eol=crlf -text
+#
+# https://help.github.com/articles/dealing-with-line-endings/
+#
+# Linux start script should use lf
+/gradlew        text eol=lf
 
-# Java sources
-*.java          text diff=java
-*.kt            text diff=java
-*.gradle        text diff=java
-*.gradle.kts    text diff=java
+# These are Windows script files and should use crlf
+*.bat           text eol=crlf
 
-# These files are text and should be normalized (Convert crlf => lf)
-*.css           text diff=css
-*.df            text
-*.htm           text diff=html
-*.html          text diff=html
-*.js            text
-*.jsp           text
-*.jspf          text
-*.jspx          text
-*.properties    text
-*.tld           text
-*.tag           text
-*.tagx          text
-*.xml           text
-
-# These files are binary and should be left untouched
-# (binary is a macro for -text -diff)
-*.class         binary
-*.dll           binary
-*.ear           binary
+# Binary files should be left untouched
 *.jar           binary
-*.so            binary
-*.war           binary
-*.jks           binary
+

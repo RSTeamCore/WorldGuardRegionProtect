@@ -26,23 +26,22 @@ paperweight.reobfArtifactConfiguration = ReobfArtifactConfiguration.MOJANG_PRODU
 dependencies {
     implementation(project(":wgrp-common"))
 
-    //Paper
-    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
+    //Paper or Folia
+    paperweight.foliaDevBundle("1.21.4-R0.1-SNAPSHOT")
 
-    //Plugins
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.3") {
-        exclude(module = "adventure-bom")
-        exclude(module = "adventure-api")
-        exclude(module = "adventure-nbt")
-    }
-
+    //Plugins api
+    compileOnly("net.kyori:adventure-platform-bukkit:4.3.3")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9-SNAPSHOT")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.3.9")
     compileOnly("me.clip:placeholderapi:2.11.6")
-
     implementation("org.bstats:bstats-bukkit:3.0.2")
+
+    //Others implementation
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
     implementation("org.jetbrains:annotations:24.1.0")
+    implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.google.guava:guava:33.3.1-jre")
+    implementation("it.unimi.dsi:fastutil:8.5.15")
 
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.google.guava:guava:33.3.1-jre")
@@ -68,46 +67,70 @@ configurations.all {
         }
     }
 }
-
 tasks.withType<ProcessResources> {
     filteringCharset = Charsets.UTF_8.name()
     filesMatching("plugin.yml") {
         expand(
-                "name" to rootProject.name,
-                "version" to project.version,
-                "group" to project.group,
-                "author" to project.property("author"),
-                "contributor" to project.property("contributor"),
-                "description" to project.property("description"))
+            "name" to rootProject.name,
+            "version" to project.version,
+            "group" to project.group,
+            "author" to project.property("author"),
+            "contributor" to project.property("contributor"),
+            "description" to project.property("description"))
+    }
+}
+
+val gitCommitHash: String by lazy {
+    try {
+        val hash = "git rev-parse --short=7 HEAD".runCommand().trim()
+        hash.ifEmpty { "unknown" }
+    } catch (e: Exception) {
+        "unknown"
     }
 }
 
 tasks.named<ShadowJar>("shadowJar") {
-    archiveFileName.set("${rootProject.name}-${project.version}.${archiveExtension.getOrElse("jar")}")
-    mergeServiceFiles() // Automatically merge service files for shading
+    val isDevBuild = project.version.toString().contains("-SNAPSHOT") || project.version.toString().contains("-dev")
+
+    archiveFileName.set(
+        if (isDevBuild) {
+            "${rootProject.name}-${project.version}-$gitCommitHash.${archiveExtension.getOrElse("jar")}"
+        } else {
+            "${rootProject.name}-${project.version}.${archiveExtension.getOrElse("jar")}"
+        })
+
+    mergeServiceFiles()
+
     dependencies {
         include(dependency(":wgrp-api:"))
         include(dependency(":wgrp-common:"))
-
         include(dependency("org.bstats:"))
         include(dependency("org.jetbrains.kotlin:"))
     }
+
     relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
     relocate("org.jetbrains.kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
 }
 
 tasks.named<RunServer>("runServer") {
-    dependsOn(tasks.shadowJar)
-}
-
-tasks.named<RunServer>("runServer") {
     minecraftVersion("1.21.4")
     jvmArgs(
-        "-Xms4G", 
+        "-Xms4G",
         "-Xmx4G",
         "-XX:+UseG1GC",
         "-XX:MaxGCPauseMillis=50",
         "-XX:+UnlockExperimentalVMOptions",
         "-XX:+DisableExplicitGC")
     runDirectory.set(file("run"))
+}
+
+fun String.runCommand(): String {
+    return try {
+        val process = ProcessBuilder(*split(" ").toTypedArray())
+            .redirectOutput(ProcessBuilder.Redirect.PIPE)
+            .start()
+        process.inputStream.bufferedReader().readText()
+    } catch (e: Exception) {
+        ""
+    }
 }
