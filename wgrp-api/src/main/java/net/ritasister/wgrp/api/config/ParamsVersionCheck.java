@@ -15,7 +15,7 @@ public interface ParamsVersionCheck<C, T> {
      *
      * @return A string representing the chosen date format.
      */
-    String getSimpleDateFormat();
+    String getDateFormat();
 
     /**
      * Retrieves the current version of the configuration from the root directory (/plugins).
