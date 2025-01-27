@@ -176,7 +176,7 @@ public class CommandWGRP extends AbstractCommand {
     @SubCommand(
             name = "help",
             description = "for seen helping.")
-    public void wgrpHelp(CommandSender sender, String[] args) {
+    public void wgrpHelp(CommandSender sender) {
         final List<Component> messages = new ArrayList<>(this.configLoader.getMessages()
                 .get("messages.usage.title")
                 .replace("%command%", "/wgrp")
