@@ -14,8 +14,6 @@ plugins {
 
 val checkstyleVersion = "9.3"
 
-defaultTasks("clean", "build")
-
 logger.lifecycle("""
 *******************************************
  You are building WorldGuardRegionProtect!
