@@ -71,9 +71,23 @@ configurations.all {
 tasks.withType<ProcessResources> {
     filteringCharset = Charsets.UTF_8.name()
     filesMatching("plugin.yml") {
+        val gitCommitHash = try {
+            "git rev-parse --short=7 HEAD".runCommand().trim().ifEmpty { "unknown" }
+        } catch (e: Exception) {
+            "unknown"
+        }
+
+        val version = project.version.toString()
+
+        val versionWithGitHash = if (version.contains("-SNAPSHOT") || version.contains("-dev")) {
+            "$version-$gitCommitHash"
+        } else {
+            version
+        }
+
         expand(
             "name" to rootProject.name,
-            "version" to project.version,
+            "version" to versionWithGitHash,
             "group" to project.group,
             "author" to project.property("author"),
             "contributor" to project.property("contributor"),
