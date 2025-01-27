@@ -102,11 +102,12 @@ public class WGRPCompatibilityCheck {
                         Server running on %s - %s.
                         %s
                         %s
+                
                 ====================================================
                 """;
         final String isPaperForks = "Your setup is optimal for plugin performance and support.";
         final String isNotPaperForks = "It is recommended to use Paper, Folia or its forks for better performance and support!";
-        final String isUnTrustFork = """
+        final String isUnTrustedFork = """
                 It is recommended to use Paper, Folia or its forks for better performance and support!
                 Avoid using untrusted or unknown server forks.
                 Support is not available for servers running on untrusted implementations.
@@ -114,15 +115,14 @@ public class WGRPCompatibilityCheck {
 
         final boolean isPlatformUnknown = type.equals(Platform.Type.UNKNOWN.getPlatformName());
         final String notSupported = "This platform is not supported. Please use a supported platform for optimal functionality.";
-        final String aboutAnother = isPlatformUnknown ? notSupported : String.format("Using %s language version %s. Author of this localization - %s.",
+        final String aboutAnother = isPlatformUnknown ? notSupported : String.format("Using %s language, author of this localization - %s.",
                 wgrpPlugin.getConfigLoader().getMessages().get("langTitle.language"),
-                wgrpPlugin.getConfigLoader().getMessages().get("langTitle.version"),
                 wgrpPlugin.getConfigLoader().getMessages().get("langTitle.author"));
 
         if (type.equals(Platform.Type.UNKNOWN.getPlatformName())) {
             wgrpPlugin.getLogger().warn(String.format(
                     defaultMessage, pluginVersionModified, Platform.Type.UNKNOWN.getPlatformName(),
-                    minecraftVersion, isUnTrustFork, aboutAnother));
+                    minecraftVersion, isUnTrustedFork, aboutAnother));
         }
         if (type.equals(Platform.Type.BUKKIT.getPlatformName()) || type.equals(Platform.Type.SPIGOT.getPlatformName())) {
             wgrpPlugin.getLogger().warn(String.format(
