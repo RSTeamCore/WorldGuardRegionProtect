@@ -89,13 +89,12 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         load();
         this.adventure = BukkitAudiences.create(wgrpPaperBase);
         initializeFields();
-        WGRPCompatibilityCheck compatibilityCheck =  new WGRPCompatibilityCheck(this);
+        final WGRPCompatibilityCheck compatibilityCheck =  new WGRPCompatibilityCheck(this);
         if (!compatibilityCheck.performCompatibilityChecks()) {
             return;
         }
         initializeMetrics();
         loadAnotherClassAndMethods();
-        compatibilityCheck.notifyAboutBuild();
         this.updateNotify.checkUpdateNotify(wgrpPaperBase.getDescription().getVersion());
         logStartupTime();
     }

@@ -101,7 +101,7 @@ public class WGRPCompatibilityCheck {
                         WorldGuardRegionProtect %s
                         Server running on %s - %s.
                         %s
-                
+                        %s
                 ====================================================
                 """;
         final String isPaperForks = "Your setup is optimal for plugin performance and support.";
@@ -111,27 +111,30 @@ public class WGRPCompatibilityCheck {
                 Avoid using untrusted or unknown server forks.
                 Support is not available for servers running on untrusted implementations.
                 """;
-        if(type.equals(Platform.Type.UNKNOWN.getPlatformName())) {
-            wgrpPlugin.getLogger().warn(String.format(defaultMessage, pluginVersionModified, Platform.Type.UNKNOWN.getPlatformName(), minecraftVersion, isUnTrustFork));
+
+        final boolean isPlatformUnknown = type.equals(Platform.Type.UNKNOWN.getPlatformName());
+        final String notSupported = "This platform is not supported. Please use a supported platform for optimal functionality.";
+        final String aboutAnother = isPlatformUnknown ? notSupported : String.format("Using %s language version %s. Author of this localization - %s.",
+                wgrpPlugin.getConfigLoader().getMessages().get("langTitle.language"),
+                wgrpPlugin.getConfigLoader().getMessages().get("langTitle.version"),
+                wgrpPlugin.getConfigLoader().getMessages().get("langTitle.author"));
+
+        if (type.equals(Platform.Type.UNKNOWN.getPlatformName())) {
+            wgrpPlugin.getLogger().warn(String.format(
+                    defaultMessage, pluginVersionModified, Platform.Type.UNKNOWN.getPlatformName(),
+                    minecraftVersion, isUnTrustFork, aboutAnother));
         }
         if (type.equals(Platform.Type.BUKKIT.getPlatformName()) || type.equals(Platform.Type.SPIGOT.getPlatformName())) {
-            wgrpPlugin.getLogger().warn(String.format(defaultMessage, pluginVersionModified, PLATFORM_NAME, minecraftVersion, isNotPaperForks));
+            wgrpPlugin.getLogger().warn(String.format(
+                    defaultMessage, pluginVersionModified, PLATFORM_NAME,
+                    minecraftVersion, isNotPaperForks, aboutAnother));
         }
         if (type.equals(Platform.Type.PAPER.getPlatformName()) || type.equals(Platform.Type.FOLIA.getPlatformName())) {
             setPlatformName(type);
-            wgrpPlugin.getLogger().info(String.format(defaultMessage, pluginVersionModified, PLATFORM_NAME, minecraftVersion, isPaperForks));
+            wgrpPlugin.getLogger().info(String.format(
+                    defaultMessage, pluginVersionModified, PLATFORM_NAME,
+                    minecraftVersion, isPaperForks, aboutAnother));
         }
-    }
-
-    public void notifyAboutBuild() {
-        wgrpPlugin.getLogger().info(String.format(
-                """ 
-                        Using %s language version %s. Author of this localization - %s.
-                        """,
-                wgrpPlugin.getConfigLoader().getMessages().get("langTitle.language"),
-                wgrpPlugin.getConfigLoader().getMessages().get("langTitle.version"),
-                wgrpPlugin.getConfigLoader().getMessages().get("langTitle.author")
-        ));
     }
 
     private boolean isRunningOnBukkit() {
