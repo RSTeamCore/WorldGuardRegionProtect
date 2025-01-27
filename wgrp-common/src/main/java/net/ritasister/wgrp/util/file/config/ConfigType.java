@@ -1,11 +1,18 @@
 package net.ritasister.wgrp.util.file.config;
 
 /**
- * Get to only need a type of file like config or lang file
+ * Enum representing different types of configuration files.
  */
 public enum ConfigType {
 
+    /**
+     * Language configuration file type.
+     */
     LANG("lang"),
+
+    /**
+     * General configuration file type.
+     */
     CONFIG("config");
 
     private final String name;
@@ -14,6 +21,11 @@ public enum ConfigType {
         this.name = name;
     }
 
+    /**
+     * Returns the name of the configuration type.
+     *
+     * @return the name of the configuration type.
+     */
     @Override
     public String toString() {
         return name;
