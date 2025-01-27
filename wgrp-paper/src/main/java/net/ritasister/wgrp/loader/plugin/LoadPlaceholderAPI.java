@@ -24,8 +24,6 @@ public class LoadPlaceholderAPI {
             } catch (Exception e) {
                 wgrpPlugin.getLogger().severe("Failed to register PlaceholderAPI expansion: " + e.getMessage());
             }
-        } else {
-            wgrpPlugin.getLogger().warn("PlaceholderAPI is not installed or enabled. Placeholders will not function.");
         }
     }
 

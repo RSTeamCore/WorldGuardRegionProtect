@@ -16,8 +16,6 @@ public final class LoadWorldGuard {
         final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin != null && plugin.isEnabled()) {
             wgrpPlugin.getLogger().info(String.format("Plugin '%s' loaded successfully!", plugin.getName()));
-        } else {
-            wgrpPlugin.getLogger().warn("WorldGuard plugin is not installed or not enabled. Features requiring WorldGuard will not function.");
         }
     }
 
