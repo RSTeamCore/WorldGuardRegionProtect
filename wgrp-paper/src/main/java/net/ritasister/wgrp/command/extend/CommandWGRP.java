@@ -13,6 +13,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -73,37 +74,30 @@ public class CommandWGRP extends AbstractCommand {
         if (args.length == 1 || args.length == 2) {
             final Map<String, List<String>> rgMap = config.getRegionProtectMap();
             if (sender instanceof Player player) {
-                final String region = args[0];
-                final String world = (args.length == 2) ? args[1] : null;
-                final String finalWorld = Bukkit.getWorlds().stream()
-                        .map(World::getName)
-                        .filter(name -> name.equalsIgnoreCase(world))
-                        .findFirst()
-                        .orElse(null);
-                if (rgMap.containsKey(world) && rgMap.get(world) != null && rgMap.get(world).contains(region)) {
-                    configLoader.getMessages().get("messages.regionManagement.alreadyProtected").replace("<region>", region).send(sender);
+                final checkWorld result = getCheckWorld(sender, args);
+                if (result == null) {
                     return;
                 }
 
-                if (world != null && finalWorld == null) {
-                    configLoader.getMessages().get("messages.regionManagement.invalidWorld").replace("<world>", world).send(sender);
+                if (rgMap.containsKey(result.finalWorld) && rgMap.get(result.finalWorld) != null && rgMap.get(result.finalWorld).contains(result.region)) {
+                    configLoader.getMessages().get("messages.regionManagement.alreadyProtected").replace("<region>", result.region).send(sender);
                     return;
                 }
 
-                final boolean isRegionValid = wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region);
+                final boolean isRegionValid = wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(result.region);
                 if (!isRegionValid) {
-                    configLoader.getMessages().get("messages.regionManagement.invalidRegion").replace("<region>", region).send(sender);
+                    configLoader.getMessages().get("messages.regionManagement.invalidRegion").replace("<region>", result.region).send(sender);
                     return;
                 }
 
                 final List<String> newRegionList = new ArrayList<>();
-                if (rgMap.containsKey(world) && !rgMap.get(world).contains(region)) {
-                    newRegionList.addAll(rgMap.get(world));
+                if (rgMap.containsKey(result.finalWorld) && !rgMap.get(result.finalWorld).contains(result.region)) {
+                    newRegionList.addAll(rgMap.get(result.finalWorld));
                 }
-                newRegionList.add(region);
-                rgMap.put(world, newRegionList);
+                newRegionList.add(result.region);
+                rgMap.put(result.finalWorld, newRegionList);
                 config.setRegionProtectMap(rgMap);
-                configLoader.getMessages().get("messages.regionManagement.add").replace("<region>", region).send(sender);
+                configLoader.getMessages().get("messages.regionManagement.add").replace("<region>", result.region).send(sender);
             } else if (args.length == 2) {
                 final String region = args[0];
                 final String world = args[1];
@@ -133,12 +127,9 @@ public class CommandWGRP extends AbstractCommand {
         if (args.length == 1 || args.length == 2) {
             final Map<String, List<String>> rgMap = config.getRegionProtectMap();
             if (sender instanceof Player) {
-                final String region = args[0];
-                String world = Objects.requireNonNull(((Player) sender).getPlayer()).getLocation().getWorld().getName();
-                if (args.length == 2) {
-                    world = args[1];
-                }
-                getRgMap(sender, rgMap, region, world);
+                final checkWorld result = getCheckWorld(sender, args);
+                if (result == null) return;
+                getRgMap(sender, rgMap, result.region(), result.finalWorld());
             } else {
                 if (args.length == 2) {
                     final String region = args[0];
@@ -153,12 +144,24 @@ public class CommandWGRP extends AbstractCommand {
         }
     }
 
-    private void getRgMap(
-            @NotNull final CommandSender sender,
-            final @NotNull Map<String, List<String>> rgMap,
-            final String region,
-            final String world
-    ) {
+    private @Nullable checkWorld getCheckWorld(@NotNull CommandSender sender, String @NotNull [] args) {
+        final String region = args[0];
+        final String world = (args.length == 2) ? args[1] : null;
+        final String finalWorld = Bukkit.getWorlds().stream()
+                .map(World::getName)
+                .filter(name -> name.equalsIgnoreCase(world))
+                .findFirst()
+                .orElse(null);
+        if (world != null && finalWorld == null) {
+            configLoader.getMessages().get("messages.regionManagement.invalidWorld").replace("<world>", world).send(sender);
+            return null;
+        }
+        return new checkWorld(region, finalWorld);
+    }
+
+    private record checkWorld(String region, String finalWorld) {}
+
+    private void getRgMap(@NotNull final CommandSender sender, final @NotNull Map<String, List<String>> rgMap, final String region, final String world) {
         if (rgMap.containsKey(world) && rgMap.get(world).contains(region)) {
             final List<String> newRegionList = new ArrayList<>(rgMap.get(world));
             newRegionList.remove(region);
@@ -195,11 +198,16 @@ public class CommandWGRP extends AbstractCommand {
         }
     }
 
+    public void wgrpVersion(CommandSender sender) {
+        final String pluginVersion = wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
+        wgrpPlugin.messageToCommandSender(sender, String.format("<dark_gray>[<dark_red>WGRP<dark_gray>]<green>Current running version is <gold>%s", pluginVersion));
+    }
+
     @SubCommand(
             name = "spy",
             permission = UtilPermissions.COMMAND_SPY_INSPECT_ADMIN,
             description = "spy for who interact with region.")
-    public void wgrpSpy(@NotNull CommandSender sender, String[] args) {
+    public void wgrpSpy(@NotNull CommandSender sender) {
         final @NotNull UUID uniqueId = Objects.requireNonNull(Bukkit.getPlayer(sender.getName())).getUniqueId();
         if (wgrpPlugin.getSpyLog().contains(uniqueId)) {
             wgrpPlugin.getSpyLog().remove(uniqueId);
