@@ -1,6 +1,7 @@
 package net.ritasister.wgrp.rslibs.updater;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
+import net.ritasister.wgrp.util.file.config.ConfigFields;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -40,9 +41,10 @@ public final class UpdateNotify {
                         oldVersion,
                         newVersion,
                         PLUGIN_URL_ADDRESS));
-                final boolean isUpdateDisabled = false;
-                if (!isUpdateDisabled) {
-                    wgrpPlugin.getLogger().info("Starting the download process for the latest plugin version");
+
+                boolean isUpdateDisabled = ConfigFields.UPDATE_CHECKER.getBoolean(wgrpPlugin.getWgrpPaperBase());
+                if (isUpdateDisabled) {
+                    wgrpPlugin.getLogger().info("Starting the download process for the latest plugin version...");
                     wgrpPlugin.getDownloader().downloadLatestJar();
                 } else {
                     wgrpPlugin.getLogger().warn("Automatic updates for the premium plugin are disabled. Please download the latest version manually.");

@@ -36,6 +36,16 @@ public class WGRPCompatibilityCheck {
         return true;
     }
 
+    public void checkUpdate() {
+        final String pluginVersion = wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
+        final boolean isDevBuild = pluginVersion.contains("-dev") || pluginVersion.contains("-SNAPSHOT");
+        if (isDevBuild) {
+            wgrpPlugin.getLogger().warn("You are using a development build of the plugin. Automatic updates are disabled.");
+        } else {
+            wgrpPlugin.getUpdateNotify().checkUpdateNotify(pluginVersion);
+        }
+    }
+
     private boolean detectStartUpVersionServer() {
         if (!wgrpPlugin.getVersionCheck().isVersionSupported()) {
             wgrpPlugin.getLogger().severe(String.format(UNSUPPORTED_VERSION, SUPPORTED_VERSION_RANGE));

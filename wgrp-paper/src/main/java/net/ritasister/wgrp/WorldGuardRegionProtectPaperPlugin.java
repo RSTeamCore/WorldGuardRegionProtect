@@ -86,17 +86,19 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     public void onEnable() {
         this.startTime = Instant.now();
-        load();
+        this.load();
         this.adventure = BukkitAudiences.create(wgrpPaperBase);
-        initializeFields();
+        this.initializeFields();
+
         final WGRPCompatibilityCheck compatibilityCheck = new WGRPCompatibilityCheck(this);
         if (!compatibilityCheck.performCompatibilityChecks()) {
             return;
         }
-        initializeMetrics();
-        loadAnotherClassAndMethods();
-        this.updateNotify.checkUpdateNotify(wgrpPaperBase.getDescription().getVersion());
-        logStartupTime();
+        compatibilityCheck.checkUpdate();
+
+        this.initializeMetrics();
+        this.loadAnotherClassAndMethods();
+        this.logStartupTime();
     }
 
     private void initializeFields() {
