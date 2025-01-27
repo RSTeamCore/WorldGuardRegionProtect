@@ -14,7 +14,8 @@ plugins {
 
 val checkstyleVersion = "9.3"
 
-logger.lifecycle("""
+logger.lifecycle(
+    """
 *******************************************
  You are building WorldGuardRegionProtect!
  If you encounter trouble:
@@ -24,7 +25,8 @@ logger.lifecycle("""
  
  Output files will be in [subproject]/build/libs
 *******************************************
-""")
+"""
+)
 
 allprojects {
     plugins.apply("java")

@@ -12,7 +12,8 @@ pluginManagement {
 }
 
 rootProject.name = "WorldGuardRegionProtect"
-include (
+include(
     "wgrp-api",
     "wgrp-common",
-    "wgrp-paper")
+    "wgrp-paper"
+)
