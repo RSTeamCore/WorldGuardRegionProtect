@@ -7,6 +7,7 @@ import net.ritasister.wgrp.util.file.config.ConfigLoader;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
@@ -72,41 +73,38 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
                     if (isMustBeProcessed) {
                         if (!sub.permission().equals(UtilPermissions.NULL_PERM)) {
+                            if(sender instanceof ConsoleCommandSender) {
+                                run(sender, m, sub, subArgs);
+                                break;
+                            }
                             if (sender.hasPermission(sub.permission().getPermissionName())) {
-                                try {
-                                    if (m.getParameterCount() == 2) {
-                                        m.invoke(this, sender, subArgs);
-                                    } else if (m.getParameterCount() == 1) {
-                                        m.invoke(this, sender);
-                                    } else {
-                                        throw new IllegalStateException("Несовместимое число параметров для метода " + m.getName());
-                                    }
-                                    break;
-                                } catch (IllegalAccessException | InvocationTargetException e) {
-                                    throw new RuntimeException("Ошибка вызова команды: " + sub.name(), e);
-                                }
+                                run(sender, m, sub, subArgs);
+                                break;
                             } else {
                                 configLoader.getMessages().get("messages.ServerMsg.noPerm").send(sender);
                             }
                         } else {
-                            try {
-                                if (m.getParameterCount() == 2) {
-                                    m.invoke(this, sender, subArgs);
-                                } else if (m.getParameterCount() == 1) {
-                                    m.invoke(this, sender);
-                                } else {
-                                    throw new IllegalStateException("Несовместимое число параметров для метода " + m.getName());
-                                }
-                                break;
-                            } catch (IllegalAccessException | InvocationTargetException e) {
-                                throw new RuntimeException("Ошибка вызова команды: " + sub.name(), e);
-                            }
+                            run(sender, m, sub, subArgs);
                         }
                     }
                 }
             }
         }
         return true;
+    }
+
+    private void run(@NotNull CommandSender sender, @NotNull Method m, SubCommand sub, String[] subArgs) {
+        try {
+            if (m.getParameterCount() == 2) {
+                m.invoke(this, sender, subArgs);
+            } else if (m.getParameterCount() == 1) {
+                m.invoke(this, sender);
+            } else {
+                throw new IllegalStateException("Incompatible number of parameters for method " + m.getName());
+            }
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException("Command invocation error: " + sub.name(), e);
+        }
     }
 
     private @NotNull List<String> filter(List<String> list, String @NotNull [] args) {
