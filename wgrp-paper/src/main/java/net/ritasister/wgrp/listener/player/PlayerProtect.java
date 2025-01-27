@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.listener;
+package net.ritasister.wgrp.listener.player;
 
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
@@ -33,7 +33,7 @@ public final class PlayerProtect implements Listener {
     private void denyChangeSign(@NotNull SignChangeEvent e) {
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(e.getPlayer().getLocation(), config.getRegionProtectMap())
                 && wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
-            if (ConfigFields.SIGN_TYPE.get(wgrpPlugin.getWgrpPaperBase()).toString().contains(e.getBlock().getType().name().toLowerCase())) {
+            if (ConfigFields.SIGN_TYPE.get(wgrpPlugin).toString().contains(e.getBlock().getType().name().toLowerCase())) {
                 e.setCancelled(true);
             }
         }
@@ -45,7 +45,7 @@ public final class PlayerProtect implements Listener {
         if (ConfigFields.DENY_MANIPULATE_WITH_FLOWERPOT.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
             if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())
                     && wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
-                if (ConfigFields.NATURAL_BLOCK_OR_ITEM.get(wgrpPlugin.getWgrpPaperBase()).toString().contains(e.getItem().getType().name().toLowerCase())) {
+                if (ConfigFields.NATURAL_BLOCK_OR_ITEM.get(wgrpPlugin).toString().contains(e.getItem().getType().name().toLowerCase())) {
                     e.setCancelled(true);
                 }
             }
