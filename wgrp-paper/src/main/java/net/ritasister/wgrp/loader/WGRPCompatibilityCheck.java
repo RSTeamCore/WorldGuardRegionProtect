@@ -99,7 +99,7 @@ public class WGRPCompatibilityCheck {
                 ====================================================
                 
                         WorldGuardRegionProtect %s
-                        Server running on %s - %s.
+                        Server running on %s - %s
                         %s
                         %s
                 
