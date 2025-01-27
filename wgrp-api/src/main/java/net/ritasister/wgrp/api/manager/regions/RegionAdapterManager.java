@@ -12,7 +12,7 @@ import java.util.UUID;
  * @param <L> Represents the location type (e.g., WorldGuard location object).
  * @param <P> Represents the player type (e.g., Bukkit Player object).
  */
-public interface RegionAdapterManager<L, P> {
+public interface RegionAdapterManager<L, P, W> {
 
     /**
      * Determines if a player is the owner of a region based on region names from a map.
@@ -92,6 +92,21 @@ public interface RegionAdapterManager<L, P> {
      * @since 0.7.1
      */
     String getProtectRegionName(@NotNull L location);
+
+    /**
+     * Retrieves the protected region name for the specified region in the given world.
+     *
+     * <p>This method searches for a protected region in the specified world using the region's name.
+     * If the region exists, its name is returned. If the region is not found,
+     * an exception might be thrown or a default value may be returned depending on the implementation.</p>
+     *
+     * @param name the name of the region for which the protected region name is to be retrieved
+     * @param world the world in which to search for the protected region
+     * @return the name of the protected region if found, otherwise a default value or exception might be returned
+     * @throws IllegalArgumentException if the specified world or region does not exist
+     * @since 1.8.3.21
+     */
+    String getProtectRegionName(@NotNull String name, W world);
 
     /**
      * Retrieves the name of the region based on the player's current selection in WorldEdit.

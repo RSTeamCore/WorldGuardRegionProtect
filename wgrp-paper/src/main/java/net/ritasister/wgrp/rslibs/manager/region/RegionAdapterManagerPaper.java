@@ -12,6 +12,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.rslibs.exceptions.NoSelectionException;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class RegionAdapterManagerPaper implements RegionAdapterManager<Location, Player> {
+public class RegionAdapterManagerPaper implements RegionAdapterManager<Location, Player, World> {
 
     @Override
     public boolean isOwnerRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions, @NotNull UUID uniqueId) {
@@ -98,6 +99,11 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     @Override
+    public String getProtectRegionName(@NotNull String name, World world) {
+        return this.getProtectedRegion(name, world).getId();
+    }
+
+    @Override
     public String getProtectRegionNameBySelection(final @NotNull Player player) {
         final LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
         final Region selection;
@@ -140,7 +146,16 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
                         .getRegionContainer()
                         .get(BukkitAdapter.adapt(location.getWorld()))).map(regionManager ->
                         regionManager.getApplicableRegions(BukkitAdapter.asBlockVector(location))).orElseThrow(() ->
-                        new IllegalStateException("RegionManager is not available for the world: " + location.getWorld().getName()));
+                        new IllegalArgumentException("RegionManager is not available for the world: " + location.getWorld().getName()));
+    }
+
+    private @NotNull ProtectedRegion getProtectedRegion(final String regionName, final @NotNull World world) {
+        return Optional.ofNullable(WorldGuard.getInstance()
+                .getPlatform()
+                .getRegionContainer()
+                .get(BukkitAdapter.adapt(world))).map(regionManager ->
+                regionManager.getRegion(regionName)).orElseThrow(() ->
+                new IllegalArgumentException("RegionManager is not available for the world: " + regionName));
     }
 
     private @NotNull ApplicableRegionSet getApplicableRegionsSet(final @NotNull Region selection) {

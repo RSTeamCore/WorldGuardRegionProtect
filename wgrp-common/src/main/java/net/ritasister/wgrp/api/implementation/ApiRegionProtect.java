@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class ApiRegionProtect<L, P> implements RegionAdapterManager<L, P> {
+public class ApiRegionProtect<L, P, W> implements RegionAdapterManager<L, P, W> {
 
     private final WorldGuardRegionProtectPlugin plugin;
 
@@ -54,6 +54,11 @@ public class ApiRegionProtect<L, P> implements RegionAdapterManager<L, P> {
     @Override
     public String getProtectRegionName(final @NotNull L location) {
         return plugin.getRegionAdapter().getProtectRegionName(location);
+    }
+
+    @Override
+    public String getProtectRegionName(@NotNull String name, W world) {
+        return plugin.getRegionAdapter().getProtectRegionName(name, world);
     }
 
     @Override
