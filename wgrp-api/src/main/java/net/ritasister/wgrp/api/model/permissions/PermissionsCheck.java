@@ -6,8 +6,7 @@ import org.jetbrains.annotations.ApiStatus;
 /**
  * Utility API class for checking permissions for both players and entities.
  */
-@Deprecated
-@ApiStatus.ScheduledForRemoval(inVersion = "2.0.0")
+@Deprecated(since = "1.8.2.21", forRemoval = true)
 public interface PermissionsCheck<P, E> extends PermissionsCheckEntity<E> {
 
     /**
