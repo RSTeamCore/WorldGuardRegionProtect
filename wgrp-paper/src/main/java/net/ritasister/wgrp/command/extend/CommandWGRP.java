@@ -73,33 +73,29 @@ public class CommandWGRP extends AbstractCommand {
         if (args.length == 1 || args.length == 2) {
             final Map<String, List<String>> rgMap = config.getRegionProtectMap();
             if (sender instanceof Player player) {
-                String world = player.getLocation().getWorld().getName();
                 final String region = args[0];
-                boolean isWorldValid = false;
-                boolean isRegionValid = false;
-                if (args.length == 2) {
-                    world = args[1];
-                }
-                for (World w : Bukkit.getWorlds()) {
-                    if (w.getName().equalsIgnoreCase(world)) {
-                        isWorldValid = true;
-                    }
-                }
-                if (wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region)) {
-                    isRegionValid = true;
-                }
+                final String world = (args.length == 2) ? args[1] : null;
+                final String finalWorld = Bukkit.getWorlds().stream()
+                        .map(World::getName)
+                        .filter(name -> name.equalsIgnoreCase(world))
+                        .findFirst()
+                        .orElse(null);
                 if (rgMap.containsKey(world) && rgMap.get(world) != null && rgMap.get(world).contains(region)) {
                     configLoader.getMessages().get("messages.regionManagement.alreadyProtected").replace("<region>", region).send(sender);
                     return;
                 }
-                if (!isWorldValid) {
+
+                if (world != null && finalWorld == null) {
                     configLoader.getMessages().get("messages.regionManagement.invalidWorld").replace("<world>", world).send(sender);
                     return;
                 }
+
+                final boolean isRegionValid = wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region);
                 if (!isRegionValid) {
                     configLoader.getMessages().get("messages.regionManagement.invalidRegion").replace("<region>", region).send(sender);
                     return;
                 }
+
                 final List<String> newRegionList = new ArrayList<>();
                 if (rgMap.containsKey(world) && !rgMap.get(world).contains(region)) {
                     newRegionList.addAll(rgMap.get(world));
