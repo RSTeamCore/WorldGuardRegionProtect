@@ -12,14 +12,14 @@ public class WGRPCompatibilityCheck {
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private static String PLATFORM_NAME;
     private static final String UNSUPPORTED_VERSION = """
-                            \n====================================================
-                            
-                                    WorldGuardRegionProtect only works on %s!
-                                    Please refer to this thread: https://www.spigotmc.org/resources/81321/
-                                    Visit the main post on SpigotMC and download the correct version of the plugin for your server version.
-                            
-                            ====================================================
-                            """;
+            ====================================================
+            
+                    WorldGuardRegionProtect only works on %s!
+                    Please refer to this thread: https://www.spigotmc.org/resources/81321/
+                    Visit the main post on SpigotMC and download the correct version of the plugin for your server version.
+            
+            ====================================================
+            """;
 
     public WGRPCompatibilityCheck(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
@@ -74,7 +74,7 @@ public class WGRPCompatibilityCheck {
             handleTrustPlatform(pluginVersion, Platform.Type.BUKKIT.getPlatformName(), minecraftVersion);
             return false;
         } else {
-            handleUnTrustPlatform(pluginVersion, minecraftVersion);
+            handleTrustPlatform(pluginVersion, Platform.Type.UNKNOWN.getPlatformName(), minecraftVersion);
             return false;
         }
 
@@ -88,25 +88,32 @@ public class WGRPCompatibilityCheck {
             setPlatformName(detectedPlatform.getPlatformName());
             handleTrustPlatform(pluginVersion, detectedPlatform.getPlatformName(), minecraftVersion);
         } catch (ClassNotFoundException ignored) {
-            handleUnTrustPlatform(pluginVersion, minecraftVersion);
+            handleTrustPlatform(pluginVersion, detectedPlatform.getPlatformName(), minecraftVersion);
         }
     }
 
     private void handleTrustPlatform(final @NotNull String pluginVersion, final @NotNull String type, final @NotNull String minecraftVersion) {
         final boolean isDevBuild = pluginVersion.contains("-SNAPSHOT") || pluginVersion.contains("-dev");
-        final String pluginVersionModified = isDevBuild ? pluginVersion + " [DEV BUILD]" : pluginVersion;
+        final String pluginVersionModified = isDevBuild ? pluginVersion + "-dev" : pluginVersion;
         final String defaultMessage = """
-                            ====================================================
-                            
-                                    WorldGuardRegionProtect %s
-                                    Server running on %s - %s.
-                                    %s
-                            
-                            ====================================================
-                            """;
-        final String isPaperForks = "It is recommended to use Paper, Folia or its forks for better performance and support!";
-        final String isNotPaperForks = "Your setup is optimal for plugin performance and support.";
-
+                ====================================================
+                
+                        WorldGuardRegionProtect %s
+                        Server running on %s - %s.
+                        %s
+                
+                ====================================================
+                """;
+        final String isPaperForks = "Your setup is optimal for plugin performance and support.";
+        final String isNotPaperForks = "It is recommended to use Paper, Folia or its forks for better performance and support!";
+        final String isUnTrustFork = """
+                It is recommended to use Paper, Folia or its forks for better performance and support!
+                Avoid using untrusted or unknown server forks.
+                Support is not available for servers running on untrusted implementations.
+                """;
+        if(type.equals(Platform.Type.UNKNOWN.getPlatformName())) {
+            wgrpPlugin.getLogger().warn(String.format(defaultMessage, pluginVersionModified, Platform.Type.UNKNOWN.getPlatformName(), minecraftVersion, isUnTrustFork));
+        }
         if (type.equals(Platform.Type.BUKKIT.getPlatformName()) || type.equals(Platform.Type.SPIGOT.getPlatformName())) {
             wgrpPlugin.getLogger().warn(String.format(defaultMessage, pluginVersionModified, PLATFORM_NAME, minecraftVersion, isNotPaperForks));
         }
@@ -114,22 +121,6 @@ public class WGRPCompatibilityCheck {
             setPlatformName(type);
             wgrpPlugin.getLogger().info(String.format(defaultMessage, pluginVersionModified, PLATFORM_NAME, minecraftVersion, isPaperForks));
         }
-    }
-
-    private void handleUnTrustPlatform(final String pluginVersion, final @NotNull String minecraftVersion) {
-        wgrpPlugin.getLogger().info(String.format(
-                """
-                        \n====================================================
-                        
-                                WorldGuardRegionProtect %s
-                                Server running on %s - %s.
-                        
-                                It is recommended to use Paper, Folia or its forks for better performance and support!
-                                Avoid using untrusted or unknown server forks.
-                                Support is not available for servers running on untrusted implementations.
-                        
-                        ====================================================
-                        """, pluginVersion, Platform.Type.UNKNOWN.getPlatformName(), minecraftVersion));
     }
 
     public void notifyAboutBuild() {
