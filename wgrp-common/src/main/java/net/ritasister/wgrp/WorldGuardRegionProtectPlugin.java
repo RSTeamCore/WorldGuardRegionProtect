@@ -38,6 +38,12 @@ public interface WorldGuardRegionProtectPlugin {
      */
     <E, T> EntityCheckType<E, T> getEntityChecker();
 
+    /**
+     * Retrieves the {@link PermissionCheck} instance that is used to check player and entity permissions.
+     *
+     * @return the {@link PermissionCheck} instance
+     * @since 1.7.1.21
+     */
     PermissionCheck getPermissionCheck();
 
     /**
@@ -70,7 +76,13 @@ public interface WorldGuardRegionProtectPlugin {
 
     RegionAction getRegionAction();
 
-    ToolsAdapterManager getToolsAdapter();
+    /**
+     * Retrieves the {@link ToolsAdapterManager} instance that is used to manage tool-related operations.
+     *
+     * @return the {@link ToolsAdapterManager} instance
+     * @since 1.8.1.21
+     */
+    <P> ToolsAdapterManager<P> getToolsAdapter();
 
     /**
      * Attempts to identify the plugin behind the given classloader.

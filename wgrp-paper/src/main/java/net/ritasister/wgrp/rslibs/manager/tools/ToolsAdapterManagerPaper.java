@@ -5,21 +5,17 @@ import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.entity.Player;
 import net.ritasister.wgrp.api.manager.tools.ToolsAdapterManager;
 
+import java.util.Optional;
+
 public class ToolsAdapterManagerPaper implements ToolsAdapterManager<Player> {
 
     public boolean isSuperPickaxeActive(Player player) {
-        if (player == null) {
-            return false;
-        }
-
-        final LocalSession session = WorldEdit.getInstance().getSessionManager().getIfPresent(player);
-
-        if (session != null && session.hasSuperPickAxe()) {
-            session.disableSuperPickAxe();
-            return true;
-        }
-
-        return false;
+        return Optional.ofNullable(WorldEdit.getInstance().getSessionManager().getIfPresent(player))
+                .filter(LocalSession::hasSuperPickAxe)
+                .map(session -> {
+                    session.disableSuperPickAxe();
+                    return true;
+                }).orElse(false);
     }
     
 }
