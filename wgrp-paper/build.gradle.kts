@@ -3,7 +3,7 @@ import xyz.jpenilla.runpaper.task.RunServer
 import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
 
 plugins {
-    id("io.papermc.paperweight.userdev") version "1.7.7"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.14"
     alias(libs.plugins.shadow)
     alias(libs.plugins.runPaper)
 }
@@ -43,6 +43,30 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
     implementation("org.jetbrains:annotations:24.1.0")
+
+    implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.google.guava:guava:33.3.1-jre")
+    implementation("it.unimi.dsi:fastutil:8.5.15")
+}
+
+configurations.all {
+    resolutionStrategy {
+        force("com.google.code.gson:gson:2.11.0")
+        force("com.google.guava:guava:33.3.1-jre")
+        force("it.unimi.dsi:fastutil:8.5.15")
+
+        eachDependency {
+            if (requested.group == "com.google.code.gson" && requested.name == "gson") {
+                useVersion("2.11.0")
+            }
+            if (requested.group == "com.google.guava" && requested.name == "guava") {
+                useVersion("33.3.1-jre")
+            }
+            if (requested.group == "it.unimi.dsi" && requested.name == "fastutil") {
+                useVersion("8.5.15")
+            }
+        }
+    }
 }
 
 tasks.withType<ProcessResources> {
@@ -77,7 +101,7 @@ tasks.named<RunServer>("runServer") {
 }
 
 tasks.named<RunServer>("runServer") {
-    minecraftVersion("1.20.2")
+    minecraftVersion("1.21.4")
     jvmArgs(
         "-Xms4G", 
         "-Xmx4G",
