@@ -49,7 +49,7 @@ public interface WorldGuardRegionProtect {
      */
     @ApiStatus.Experimental
     @NonNull
-    <L, P> RegionAdapterManager<L, P> getRegionAdapter();
+    <L, P, W> RegionAdapterManager<L, P, W> getRegionAdapter();
 
     /**
      * Provides access to the {@link ToolsAdapterManager}, which enables utility methods

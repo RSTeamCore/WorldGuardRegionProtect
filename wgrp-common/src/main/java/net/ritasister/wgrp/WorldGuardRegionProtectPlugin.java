@@ -51,7 +51,7 @@ public interface WorldGuardRegionProtectPlugin {
      *
      * @return the plugin's logger
      */
-    <L, P> RegionAdapterManager<L, P> getRegionAdapter();
+    <L, P, W> RegionAdapterManager<L, P, W> getRegionAdapter();
 
     /**
      * Returns the class implementing the WorldGuardRegionProtect on this platform.

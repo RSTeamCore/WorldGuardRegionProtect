@@ -73,7 +73,7 @@ public class CommandWGRP extends AbstractCommand {
     public void wgrpAddRegion(@NotNull CommandSender sender, String @NotNull [] args) {
         if (args.length == 1 || args.length == 2) {
             final Map<String, List<String>> rgMap = config.getRegionProtectMap();
-            if (sender instanceof Player player) {
+            if (sender instanceof Player) {
                 final checkWorld result = getCheckWorld(sender, args);
                 if (result == null) {
                     return;
@@ -84,7 +84,7 @@ public class CommandWGRP extends AbstractCommand {
                     return;
                 }
 
-                final boolean isRegionValid = wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(result.region);
+                final boolean isRegionValid = wgrpPlugin.getRegionAdapter().getProtectRegionName(result.region, Bukkit.getWorld(result.finalWorld)).equalsIgnoreCase(result.region);
                 if (!isRegionValid) {
                     configLoader.getMessages().get("messages.regionManagement.invalidRegion").replace("<region>", result.region).send(sender);
                     return;
