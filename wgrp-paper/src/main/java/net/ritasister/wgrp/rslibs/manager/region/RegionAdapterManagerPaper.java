@@ -152,7 +152,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
                         regionManager.getApplicableRegions(new ProtectedCuboidRegion("__dummy__", 
                                 selection.getMinimumPoint(), 
                                 selection.getMaximumPoint()))).orElseThrow(() ->
-                        new IllegalStateException("RegionManager is not available for the world: " 
+                                new IllegalStateException("RegionManager is not available for the world: "
                                 + (selection.getWorld() != null ? selection.getWorld().getName() : "unknown world")));
     }
     
