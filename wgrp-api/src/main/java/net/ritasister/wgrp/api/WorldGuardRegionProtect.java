@@ -37,7 +37,8 @@ public interface WorldGuardRegionProtect {
      *
      * @return the platform information.
      */
-    @NotNull Platform getPlatform();
+    @NotNull
+    Platform getPlatform();
 
     /**
      * Retrieves the {@link RegionAdapterManager} for interacting with regions using the
@@ -68,9 +69,9 @@ public interface WorldGuardRegionProtect {
      *
      * @return the entity checker type.
      */
-    @ApiStatus.Experimental
+    @ApiStatus.AvailableSince("1.8.3.21")
     @NonNull
-    EntityCheckType getEntityCheckerType();
+    <E, T> EntityCheckType<E, T> getEntityCheckerType();
 
     /**
      * Retrieves the {@link MessagingService} responsible for message handling.
@@ -79,7 +80,7 @@ public interface WorldGuardRegionProtect {
      * @param <P> the type representing the sender or recipient of the message.
      * @return the messaging service.
      */
-    @ApiStatus.Experimental
+    @ApiStatus.AvailableSince("1.8.3.21")
     @NonNull
     <P> MessagingService<P> getMessagingService();
 
@@ -89,7 +90,7 @@ public interface WorldGuardRegionProtect {
      *
      * @return the region action manager.
      */
-    @ApiStatus.Experimental
+    @ApiStatus.AvailableSince("1.8.3.21")
     @NonNull
     RegionAction getRegionAction();
 

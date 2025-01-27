@@ -17,22 +17,22 @@ public class ApiRegionProtect<L, P> implements RegionAdapterManager<L, P> {
     }
 
     @Override
-    public boolean isOwnerRegion(@NotNull final L location, @NotNull final Map<String, List<String>> regions, final UUID uniqueId) {
+    public boolean isOwnerRegion(@NotNull final L location, @NotNull final Map<String, List<String>> regions, final @NotNull UUID uniqueId) {
         return plugin.getRegionAdapter().isOwnerRegion(location, regions, uniqueId);
     }
 
     @Override
-    public boolean isOwnerRegion(@NotNull final L location, final UUID uniqueId) {
+    public boolean isOwnerRegion(@NotNull final L location, final @NotNull UUID uniqueId) {
         return plugin.getRegionAdapter().isOwnerRegion(location, uniqueId);
     }
 
     @Override
-    public boolean isMemberRegion(@NotNull final L location, @NotNull final Map<String, List<String>> regions, final UUID uniqueId) {
+    public boolean isMemberRegion(@NotNull final L location, @NotNull final Map<String, List<String>> regions, final @NotNull UUID uniqueId) {
         return plugin.getRegionAdapter().isMemberRegion(location, regions, uniqueId);
     }
 
     @Override
-    public boolean isMemberRegion(@NotNull final L location, final UUID uniqueId) {
+    public boolean isMemberRegion(@NotNull final L location, final @NotNull UUID uniqueId) {
         return plugin.getRegionAdapter().isMemberRegion(location, uniqueId);
     }
 
@@ -42,22 +42,22 @@ public class ApiRegionProtect<L, P> implements RegionAdapterManager<L, P> {
     }
 
     @Override
-    public boolean checkStandingRegion(final L location, final Map<String, List<String>> regions) {
+    public boolean checkStandingRegion(final @NotNull L location, final @NotNull Map<String, List<String>> regions) {
         return plugin.getRegionAdapter().checkStandingRegion(location, regions);
     }
 
     @Override
-    public boolean checkStandingRegion(final L location) {
+    public boolean checkStandingRegion(final @NotNull L location) {
         return plugin.getRegionAdapter().checkStandingRegion(location);
     }
 
     @Override
-    public String getProtectRegionName(final L location) {
+    public String getProtectRegionName(final @NotNull L location) {
         return plugin.getRegionAdapter().getProtectRegionName(location);
     }
 
     @Override
-    public String getProtectRegionNameBySelection(final P player) {
+    public String getProtectRegionNameBySelection(final @NotNull P player) {
         return plugin.getRegionAdapter().getProtectRegionNameBySelection(player);
     }
 

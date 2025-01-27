@@ -1,17 +1,13 @@
 package net.ritasister.wgrp.util.file.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.annotation.CanRecover;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,12 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 public enum ConfigFields {
 
-    CONFIG_VERSION("configVersion", 2, "wgRegionProtect.version"),
+    @CanRecover
+    CONFIG_VERSION("version", 4, "wgRegionProtect.version"),
 
     LANG("lang", "en_US", "wgRegionProtect.lang"),
 
@@ -255,7 +251,7 @@ public enum ConfigFields {
     ), "wgRegionProtect.spySettings.spyCommandList"),
 
     DATA_SOURCE_ENABLE("enable", false, "wgRegionProtect.dataSource.enable"),
-    DATA_SOURCE_HOST("localhost", "localhost", "wgRegionProtect.dataSource.localhost"),
+    DATA_SOURCE_HOST("host", "localhost", "wgRegionProtect.dataSource.host"),
     DATA_SOURCE_PORT("port", 3306, "wgRegionProtect.dataSource.port"),
     DATA_SOURCE_DATABASE("database", "database", "wgRegionProtect.dataSource.database"),
     DATA_SOURCE_USER("root", "root", "wgRegionProtect.dataSource.root"),
@@ -272,12 +268,16 @@ public enum ConfigFields {
 
     @CanRecover
     private Object param;
+
     @CanRecover
     private List<String> elements = new ArrayList<>();
+
     @CanRecover
     private boolean bool;
+
     @CanRecover
     private int integer;
+
     @CanRecover
     private double doubleValue;
 
@@ -325,80 +325,43 @@ public enum ConfigFields {
     @ApiStatus.Internal
     @Contract("null -> null")
     @Nullable
-    public static ConfigFields getField(String field) {
+    public static ConfigFields getField(Object field) {
         if (field == null) {
             return null;
         }
-        return CONFIG_FIELDS.get(field.toLowerCase(Locale.ROOT));
+        String fieldName = field.toString();
+        return CONFIG_FIELDS.get(fieldName.toLowerCase(Locale.ROOT));
     }
 
     public @NotNull String getPath() {
         return path;
     }
 
-    public Object get(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
-        Field[] fields = this.getClass().getDeclaredFields();
+    public Object get(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        final Field[] fields = this.getClass().getDeclaredFields();
         Arrays.sort(fields, Comparator.comparing(Field::getName));
         for (Field field : fields) {
             if (field.isAnnotationPresent(CanRecover.class)) {
-                // read commentary
-                String comment = readComment(wgrpBase, field.getName());
-                // processing a comment
-                wgrpBase.getLogger().info("Comment for fields " + field.getName() + ": " + comment);
                 if (field.getName().equals("elements")) {
                     if (!elements.isEmpty()) {
-                        return elements = wgrpBase.getConfig().getStringList(getPath());
+                        return elements = wgrpPlugin.getWgrpPaperBase().getConfig().getStringList(getPath());
                     }
                 } else if (field.getName().equals("param") || field.getName().equals("bool") || field.getName().equals("integer")) {
                     if (param != null && param.toString() != null) {
                         if (isBoolean(param.toString())) {
-                            return bool = wgrpBase.getConfig().getBoolean(getPath());
+                            return bool = wgrpPlugin.getWgrpPaperBase().getConfig().getBoolean(getPath());
                         }
                         if (isInteger(param.toString())) {
-                            return integer = wgrpBase.getConfig().getInt(getPath());
+                            return integer = wgrpPlugin.getWgrpPaperBase().getConfig().getInt(getPath());
                         }
                         if (isDouble(param.toString())) {
-                            return doubleValue = wgrpBase.getConfig().getDouble(getPath());
+                            return doubleValue = wgrpPlugin.getWgrpPaperBase().getConfig().getDouble(getPath());
                         }
                     }
                 }
             }
         }
-        return param = wgrpBase.getConfig().getString(getPath());
-    }
-
-    private String readComment(@NotNull WorldGuardRegionProtectPaperBase wgrpBase, String fieldName) {
-        String comment = null;
-        final String config = wgrpBase.getDataFolder().getAbsolutePath() + File.separator + "config.yml";
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(config));
-        } catch (FileNotFoundException exception) {
-            wgrpBase.getLogger().severe(String.format("File %s not found.", reader) + exception);
-        }
-        String line;
-        while (true) {
-            try {
-                if ((line = reader.readLine()) == null) break;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            if (line.startsWith("#")) {
-                // Это комментарий, проверяем, соответствует ли он имени поля
-                if (line.contains(fieldName)) {
-                    // Это комментарий для текущего поля
-                    comment = line.substring(line.indexOf("#") + 1).trim();
-                    break;
-                }
-                // Пропускаем комментарий, который не соответствует имени поля
-            }
-        }
-        try {
-            reader.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return comment;
+        return param = wgrpPlugin.getWgrpPaperBase().getConfig().getString(getPath());
     }
 
     private boolean isBoolean(@NotNull String string) {
@@ -415,7 +378,7 @@ public enum ConfigFields {
     private boolean isDouble(String string) {
         try {
             Double.valueOf(string);
-        } catch (Exception ex) { // Not a valid double value
+        } catch (Exception ex) {
             return false;
         }
         return true;

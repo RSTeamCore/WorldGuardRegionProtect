@@ -14,10 +14,10 @@ import net.ritasister.wgrp.api.manager.tools.ToolsAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.api.model.entity.player.Player;
 import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProtect {
@@ -26,7 +26,7 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
 
     private final ApiPlatform platform;
     private final RegionAdapterManager<?, ?> regionAdapterManager;
-    private final ToolsAdapterManager<?> toolsAdapterManager;
+    private final ToolsAdapterManager<Player> toolsAdapterManager;
     private final ApiEntityChecker<?, ?> entityCheckType;
     private final MessagingService<?> messagingService;
     private final PermissionCheck permissionCheck;
@@ -57,9 +57,7 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
                 String guilty = "unknown";
                 try {
                     guilty = worldGuardRegionProtectPlugin.identifyClassLoader(apiClassLoader);
-                } catch (Exception e) {
-                    // ignore
-                }
+                } catch (Exception ignored) {}
 
                 final PluginLogger logger = this.plugin.getLogger();
                 logger.warn("It seems that the WorldGuardRegionProtect API has been (class)loaded by a plugin other than " +
@@ -79,32 +77,32 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     }
 
     @Override
-    public @NonNull ToolsAdapterManager getToolsAdapterManager() {
+    public @NotNull ToolsAdapterManager getToolsAdapterManager() {
         return this.toolsAdapterManager;
     }
 
     @Override
-    public @NonNull WorldGuardRegionProtectMetadata getMetaData() {
+    public @NotNull WorldGuardRegionProtectMetadata getMetaData() {
         return this.platform;
     }
 
     @Override
-    public @NonNull RegionAdapterManager getRegionAdapter() {
+    public @NotNull RegionAdapterManager getRegionAdapter() {
         return this.regionAdapterManager;
     }
 
     @Override
-    public @NonNull EntityCheckType getEntityCheckerType() {
+    public @NotNull EntityCheckType getEntityCheckerType() {
         return this.entityCheckType;
     }
 
     @Override
-    public @NonNull MessagingService getMessagingService() {
+    public @NotNull MessagingService getMessagingService() {
         return this.messagingService;
     }
 
     @Override
-    public @NonNull RegionAction getRegionAction() {
+    public @NotNull RegionAction getRegionAction() {
         return this.regionAction;
     }
 

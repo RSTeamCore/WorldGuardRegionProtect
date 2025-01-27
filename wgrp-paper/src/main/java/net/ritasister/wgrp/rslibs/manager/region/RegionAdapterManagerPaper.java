@@ -17,13 +17,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class RegionAdapterManagerPaper implements RegionAdapterManager<Location, Player> {
 
     @Override
-    public boolean isOwnerRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions, UUID uniqueId) {
+    public boolean isOwnerRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions, @NotNull UUID uniqueId) {
         if (regions.get(location.getWorld().getName()) == null) {
             return false;
         }
@@ -34,7 +35,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     @Override
-    public boolean isOwnerRegion(@NotNull Location location, UUID uniqueId) {
+    public boolean isOwnerRegion(@NotNull Location location, @NotNull UUID uniqueId) {
         if (checkStandingRegion(location)) {
             return this.getOwners(location, uniqueId);
         }
@@ -42,7 +43,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     @Override
-    public boolean isMemberRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions, UUID uniqueId) {
+    public boolean isMemberRegion(@NotNull Location location, @NotNull Map<String, List<String>> regions, @NotNull UUID uniqueId) {
         if (regions.get(location.getWorld().getName()) == null) {
             return false;
         }
@@ -53,7 +54,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     @Override
-    public boolean isMemberRegion(@NotNull Location location, UUID uniqueId) {
+    public boolean isMemberRegion(@NotNull Location location, @NotNull UUID uniqueId) {
         if (checkStandingRegion(location)) {
             return this.getMembers(location, uniqueId);
         }
@@ -88,7 +89,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     @Override
-    public String getProtectRegionName(Location location) {
+    public String getProtectRegionName(@NotNull Location location) {
         return this.getApplicableRegionsSet(location)
                 .getRegions()
                 .stream()
@@ -97,7 +98,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     @Override
-    public String getProtectRegionNameBySelection(final Player player) {
+    public String getProtectRegionNameBySelection(final @NotNull Player player) {
         final LocalSession localSession = WorldEdit.getInstance().getSessionManager().get(BukkitAdapter.adapt(player));
         final Region selection;
         try {
@@ -134,12 +135,12 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
     }
 
     private @NotNull ApplicableRegionSet getApplicableRegionsSet(final @NotNull Location location) {
-        return WorldGuard
-                .getInstance()
-                .getPlatform()
-                .getRegionContainer()
-                .get(BukkitAdapter.adapt(location.getWorld()))
-                .getApplicableRegions(BukkitAdapter.asBlockVector(location));
+        return Optional.ofNullable(WorldGuard.getInstance()
+                        .getPlatform()
+                        .getRegionContainer()
+                        .get(BukkitAdapter.adapt(location.getWorld()))).map(regionManager ->
+                        regionManager.getApplicableRegions(BukkitAdapter.asBlockVector(location))).orElseThrow(() ->
+                        new IllegalStateException("RegionManager is not available for the world: " + location.getWorld().getName()));
     }
 
     private @NotNull ApplicableRegionSet getApplicableRegionsSet(final @NotNull Region selection) {
