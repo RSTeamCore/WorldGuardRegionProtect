@@ -67,6 +67,7 @@ configurations.all {
         }
     }
 }
+
 tasks.withType<ProcessResources> {
     filteringCharset = Charsets.UTF_8.name()
     filesMatching("plugin.yml") {
@@ -76,7 +77,8 @@ tasks.withType<ProcessResources> {
             "group" to project.group,
             "author" to project.property("author"),
             "contributor" to project.property("contributor"),
-            "description" to project.property("description"))
+            "description" to project.property("description")
+        )
     }
 }
 
@@ -97,7 +99,8 @@ tasks.named<ShadowJar>("shadowJar") {
             "${rootProject.name}-${project.version}-$gitCommitHash.${archiveExtension.getOrElse("jar")}"
         } else {
             "${rootProject.name}-${project.version}.${archiveExtension.getOrElse("jar")}"
-        })
+        }
+    )
 
     mergeServiceFiles()
 
@@ -125,7 +128,8 @@ tasks.named<RunServer>("runServer") {
         "-XX:+UseG1GC",
         "-XX:MaxGCPauseMillis=50",
         "-XX:+UnlockExperimentalVMOptions",
-        "-XX:+DisableExplicitGC")
+        "-XX:+DisableExplicitGC"
+    )
     runDirectory.set(file("run"))
 }
 
