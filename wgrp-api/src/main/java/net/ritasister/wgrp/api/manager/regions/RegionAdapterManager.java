@@ -103,7 +103,6 @@ public interface RegionAdapterManager<L, P, W> {
      * @param name the name of the region for which the protected region name is to be retrieved
      * @param world the world in which to search for the protected region
      * @return the name of the protected region if found, otherwise a default value or exception might be returned
-     * @throws IllegalArgumentException if the specified world or region does not exist
      * @since 1.8.3.21
      */
     String getProtectRegionName(@NotNull String name, W world);
