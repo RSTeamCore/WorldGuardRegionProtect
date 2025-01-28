@@ -13,8 +13,8 @@ public class VersionCheck {
         this.wgrpPlugin = plugin;
     }
 
-    public final static String SUPPORTED_VERSION_RANGE = "1.20 - 1.21.4";
-    public final static List<String> SUPPORTED_VERSION = List.of(
+    private final static String SUPPORTED_VERSION_RANGE = "1.20 - 1.21.4";
+    private final static List<String> SUPPORTED_VERSION = List.of(
             "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
             "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4"
     );
@@ -30,7 +30,7 @@ public class VersionCheck {
         final String minecraftVersion = Bukkit.getBukkitVersion().split("-")[0];
         final long start = System.currentTimeMillis();
         try {
-            if (SUPPORTED_VERSION.contains(minecraftVersion)) {
+            if (VersionCheck.SUPPORTED_VERSION.contains(minecraftVersion)) {
                 logVersionSupport(start);
                 return true;
             } else {
@@ -44,7 +44,7 @@ public class VersionCheck {
 
     private void logVersionSupport(long start) {
         wgrpPlugin.getLogger().info("Loaded NMS hook in " + (System.currentTimeMillis() - start) + "ms");
-        wgrpPlugin.getLogger().info("Current supported versions range: " + SUPPORTED_VERSION_RANGE);
+        wgrpPlugin.getLogger().info("Current supported versions range: " + VersionCheck.SUPPORTED_VERSION_RANGE);
     }
 
     private void logUnsupportedVersion(String minecraftVersion) {
@@ -53,12 +53,16 @@ public class VersionCheck {
     }
 
     private void handleCompatibilityError(String minecraftVersion) {
-        if (SUPPORTED_VERSION.contains(minecraftVersion)) {
+        if (VersionCheck.SUPPORTED_VERSION.contains(minecraftVersion)) {
             wgrpPlugin.getLogger().severe(
                     "Your server version is marked as compatible, but a compatibility issue was found. Please report the error (include your server version & fork).");
         } else {
             wgrpPlugin.getLogger().severe(
-                    "Your server version is completely unsupported. This plugin version only supports " + SUPPORTED_VERSION_RANGE + ". Disabling.");
+                    "Your server version is completely unsupported. This plugin version only supports " + VersionCheck.SUPPORTED_VERSION_RANGE + ". Disabling.");
         }
+    }
+
+    public static String getSupportedVersionRange() {
+        return SUPPORTED_VERSION_RANGE;
     }
 }

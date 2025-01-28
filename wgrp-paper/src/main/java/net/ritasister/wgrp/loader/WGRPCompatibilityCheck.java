@@ -2,10 +2,9 @@ package net.ritasister.wgrp.loader;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.platform.Platform;
+import net.ritasister.wgrp.util.utility.VersionCheck;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
-
-import static net.ritasister.wgrp.util.utility.VersionCheck.SUPPORTED_VERSION_RANGE;
 
 public class WGRPCompatibilityCheck {
 
@@ -48,7 +47,7 @@ public class WGRPCompatibilityCheck {
 
     private boolean detectStartUpVersionServer() {
         if (!wgrpPlugin.getVersionCheck().isVersionSupported()) {
-            wgrpPlugin.getLogger().severe(String.format(UNSUPPORTED_VERSION, SUPPORTED_VERSION_RANGE));
+            wgrpPlugin.getLogger().severe(String.format(UNSUPPORTED_VERSION, VersionCheck.getSupportedVersionRange()));
             disablePluginWithLogging();
         }
         return false;
@@ -56,7 +55,7 @@ public class WGRPCompatibilityCheck {
 
     private void disablePluginWithLogging() {
         if (wgrpPlugin.getWgrpPaperBase().isEnabled()) {
-            wgrpPlugin.getLogger().severe(String.format("Disabling plugin '%s' due to: %s", wgrpPlugin.getWgrpPaperBase().getName(), SUPPORTED_VERSION_RANGE));
+            wgrpPlugin.getLogger().severe(String.format("Disabling plugin '%s' due to: %s", wgrpPlugin.getWgrpPaperBase().getName(), VersionCheck.getSupportedVersionRange()));
             Bukkit.getServer().getPluginManager().disablePlugin(wgrpPlugin.getWgrpPaperBase());
         } else {
             wgrpPlugin.getLogger().warn(String.format("Attempted to disable plugin '%s', but it was already disabled.", wgrpPlugin.getWgrpPaperBase().getName()));
