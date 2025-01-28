@@ -4,7 +4,7 @@ import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-public final class LoadWorldGuard {
+public class LoadWorldGuard {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
