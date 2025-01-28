@@ -15,6 +15,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -100,7 +101,9 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
 
     @Override
     public String getProtectRegionName(@NotNull String name, World world) {
-        return this.getProtectedRegion(name, world).getId();
+        return Optional.ofNullable(this.getProtectedRegion(name, world))
+                .map(ProtectedRegion::getId)
+                .orElse("unknown-region");
     }
 
     @Override
@@ -149,13 +152,13 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
                         new IllegalArgumentException("RegionManager is not available for the world: " + location.getWorld().getName()));
     }
 
-    private @NotNull ProtectedRegion getProtectedRegion(final String regionName, final @NotNull World world) {
+    private @Nullable ProtectedRegion getProtectedRegion(final String regionName, final @NotNull World world) {
         return Optional.ofNullable(WorldGuard.getInstance()
-                .getPlatform()
-                .getRegionContainer()
-                .get(BukkitAdapter.adapt(world))).map(regionManager ->
-                regionManager.getRegion(regionName)).orElseThrow(() ->
-                new IllegalArgumentException("RegionManager is not available for the world: " + regionName));
+                        .getPlatform()
+                        .getRegionContainer()
+                        .get(BukkitAdapter.adapt(world)))
+                .map(regionManager -> regionManager.getRegion(regionName))
+                .orElse(null);
     }
 
     private @NotNull ApplicableRegionSet getApplicableRegionsSet(final @NotNull Region selection) {
