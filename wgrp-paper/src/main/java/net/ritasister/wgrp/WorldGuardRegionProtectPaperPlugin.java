@@ -22,8 +22,8 @@ import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.api.PlayerPermissionsImpl;
 import net.ritasister.wgrp.rslibs.api.RSApiImpl;
 import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
-import net.ritasister.wgrp.rslibs.manager.region.RegionAdapterManagerPaper;
-import net.ritasister.wgrp.rslibs.manager.tools.ToolsAdapterManagerPaper;
+import net.ritasister.wgrp.rslibs.api.manager.region.RegionAdapterManagerPaper;
+import net.ritasister.wgrp.rslibs.api.manager.tools.ToolsAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
 import net.ritasister.wgrp.util.file.config.ConfigFields;
@@ -240,6 +240,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         return this.regionAction;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public ToolsAdapterManagerPaper getToolsAdapter() {
         return this.toolsAdapter;
@@ -279,7 +280,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     @SuppressWarnings("unchecked")
     @Override
-    public MessagingService getMessagingService() {
+    public MessagingService<Player> getMessagingService() {
         return this.messagingService;
     }
 

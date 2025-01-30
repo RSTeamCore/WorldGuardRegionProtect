@@ -29,7 +29,7 @@ public final class UpdateDownloaderGitHub {
             final String organization = "RSTeamCore";
             final String pluginName = wgrpPlugin.getWgrpPaperBase().getName();
             final String currentVersion = wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
-            final String latestReleaseTag = getLatestReleaseTag(organization, pluginName);
+            final String latestReleaseTag = getLatestReleaseTag(pluginName);
 
             final String fileNew = String.format("WorldGuardRegionProtect-%s.jar", latestReleaseTag);
             final String fileCurrent = String.format("WorldGuardRegionProtect-%s.jar", currentVersion);
@@ -65,7 +65,6 @@ public final class UpdateDownloaderGitHub {
             }
         } catch (Exception exception) {
             wgrpPlugin.getLogger().severe("Error while downloading the latest jar: " + exception.getMessage());
-            exception.printStackTrace();
         }
     }
 
@@ -84,13 +83,12 @@ public final class UpdateDownloaderGitHub {
             }
         } catch (IOException exception) {
             wgrpPlugin.getLogger().severe("Failed to remove old jar files: " + exception.getMessage());
-            exception.printStackTrace();
         }
     }
 
-    private String getLatestReleaseTag(String organization, String repo) throws IOException {
+    private String getLatestReleaseTag(String repo) throws IOException {
         final String url = LATEST_RELEASE_URL
-                .replace("{owner}", organization)
+                .replace("{owner}", "RSTeamCore")
                 .replace("{repo}", repo);
         final StringBuilder response = new StringBuilder();
         HttpURLConnection connection = null;
@@ -107,8 +105,7 @@ public final class UpdateDownloaderGitHub {
                     response.append(new String(buffer, 0, bytesRead));
                 }
             } catch (IOException exception) {
-                wgrpPlugin.getLogger().warn("Failed to get release info from api.github.com.");
-                exception.printStackTrace();
+                wgrpPlugin.getLogger().warn("Failed to get release info from api.github.com." + exception.getMessage());
             }
         } finally {
             if (connection != null) {

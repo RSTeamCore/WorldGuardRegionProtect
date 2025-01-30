@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.rslibs.manager.tools;
+package net.ritasister.wgrp.rslibs.api.manager.tools;
 
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
