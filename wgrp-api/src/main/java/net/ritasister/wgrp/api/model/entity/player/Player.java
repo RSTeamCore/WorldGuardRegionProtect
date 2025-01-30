@@ -30,26 +30,12 @@ public interface Player extends Entity {
     World getWorld();
 
     /**
-     * Sends a message to the player.
-     *
-     * @param message the message to send
-     */
-    <T> void sendMessage(T message);
-
-    /**
      * Checks if the player has the given permission.
      *
      * @param permission the name of the permission
      * @return true if the player has the permission, false otherwise
      */
     boolean hasPermission(String permission);
-
-    /**
-     * Kicks the player from the platform with a reason.
-     *
-     * @param reason the reason for the kick
-     */
-    void kick(String reason);
 
     /**
      * Checks if the player is currently online.

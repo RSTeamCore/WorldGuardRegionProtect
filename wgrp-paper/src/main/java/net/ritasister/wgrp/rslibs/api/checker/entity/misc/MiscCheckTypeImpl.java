@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.rslibs.checker.entity.misc;
+package net.ritasister.wgrp.rslibs.api.checker.entity.misc;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;

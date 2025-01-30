@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.rslibs.manager.region;
+package net.ritasister.wgrp.rslibs.api.manager.region;
 
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.LocalSession;
@@ -30,7 +30,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
         if (regions.get(location.getWorld().getName()) == null) {
             return false;
         }
-        if (checkStandingRegion(location, regions)) {
+        if (this.checkStandingRegion(location, regions)) {
             return this.getOwners(location, uniqueId);
         }
         return false;
@@ -38,7 +38,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
 
     @Override
     public boolean isOwnerRegion(@NotNull Location location, @NotNull UUID uniqueId) {
-        if (checkStandingRegion(location)) {
+        if (this.checkStandingRegion(location)) {
             return this.getOwners(location, uniqueId);
         }
         return false;
@@ -49,7 +49,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
         if (regions.get(location.getWorld().getName()) == null) {
             return false;
         }
-        if (checkStandingRegion(location, regions)) {
+        if (this.checkStandingRegion(location, regions)) {
             return this.getMembers(location, uniqueId);
         }
         return false;
@@ -57,7 +57,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
 
     @Override
     public boolean isMemberRegion(@NotNull Location location, @NotNull UUID uniqueId) {
-        if (checkStandingRegion(location)) {
+        if (this.checkStandingRegion(location)) {
             return this.getMembers(location, uniqueId);
         }
         return false;
@@ -65,7 +65,7 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
 
     @Override
     public int getPriorityRegion(@NotNull Location location) {
-        if (checkStandingRegion(location)) {
+        if (this.checkStandingRegion(location)) {
             return this.getRegionPriority(location);
         }
         return 0;
@@ -173,5 +173,5 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
                                 new IllegalStateException("RegionManager is not available for the world: "
                                 + (selection.getWorld() != null ? selection.getWorld().getName() : "unknown world")));
     }
-    
+
 }
