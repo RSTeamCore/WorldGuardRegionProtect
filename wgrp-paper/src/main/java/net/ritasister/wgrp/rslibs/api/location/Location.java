@@ -37,30 +37,29 @@ public class Location implements net.ritasister.wgrp.api.model.location.Location
 
     @Override
     public World getWorld() {
-        return new WorldAdapter(bukkitLocation.getWorld());  // Адаптер для мира
+        return new WorldAdapter(bukkitLocation.getWorld());
     }
 
     @Override
     public String getName() {
-        // Если у твоего мира есть свойство или метод для имени, например:
         return bukkitLocation.getWorld().getName() + " (" + getX() + ", " + getY() + ", " + getZ() + ")";
     }
 
     @Override
     public Location add(double x, double y, double z) {
-        org.bukkit.Location newLocation = bukkitLocation.clone().add(x, y, z);
+        final org.bukkit.Location newLocation = bukkitLocation.clone().add(x, y, z);
         return new Location(newLocation);
     }
 
     @Override
     public Location subtract(double x, double y, double z) {
-        org.bukkit.Location newLocation = bukkitLocation.clone().subtract(x, y, z);
+        final org.bukkit.Location newLocation = bukkitLocation.clone().subtract(x, y, z);
         return new Location(newLocation);
     }
 
     @Override
     public Location multiply(double multiplier) {
-        org.bukkit.Location newLocation = new org.bukkit.Location(bukkitLocation.getWorld(),
+        final org.bukkit.Location newLocation = new org.bukkit.Location(bukkitLocation.getWorld(),
                 bukkitLocation.getX() * multiplier,
                 bukkitLocation.getY() * multiplier,
                 bukkitLocation.getZ() * multiplier);
@@ -69,7 +68,7 @@ public class Location implements net.ritasister.wgrp.api.model.location.Location
 
     @Override
     public Location divide(double divisor) {
-        org.bukkit.Location newLocation = new org.bukkit.Location(bukkitLocation.getWorld(),
+        final org.bukkit.Location newLocation = new org.bukkit.Location(bukkitLocation.getWorld(),
                 bukkitLocation.getX() / divisor,
                 bukkitLocation.getY() / divisor,
                 bukkitLocation.getZ() / divisor);
