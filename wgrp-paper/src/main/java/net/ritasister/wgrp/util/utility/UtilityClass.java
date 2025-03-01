@@ -17,7 +17,7 @@ public final class UtilityClass {
         }
     }
 
-    public static boolean areClassesPresent(String @NotNull ... classNames) {
+    public static boolean areClassesPresent(String @NotNull... classNames) {
         for (String className : classNames) {
             if (!isClassPresent(className)) {
                 return false;
@@ -26,7 +26,7 @@ public final class UtilityClass {
         return true;
     }
 
-    public static boolean isAnyClassPresent(String @NotNull ... classNames) {
+    public static boolean isAnyClassPresent(String @NotNull... classNames) {
         for (String className : classNames) {
             if (isClassPresent(className)) {
                 return true;
@@ -35,7 +35,7 @@ public final class UtilityClass {
         return false;
     }
 
-    public static @NotNull String getMissingClasses(String @NotNull ... classNames) {
+    public static @NotNull String getMissingClasses(String @NotNull... classNames) {
         final StringBuilder missingClasses = new StringBuilder();
         for (String className : classNames) {
             if (!isClassPresent(className)) {
