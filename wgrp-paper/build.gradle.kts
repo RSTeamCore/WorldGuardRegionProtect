@@ -127,6 +127,7 @@ tasks.named<ShadowJar>("shadowJar") {
 
     relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
     relocate("org.jetbrains.kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
+
 }
 
 artifacts {
