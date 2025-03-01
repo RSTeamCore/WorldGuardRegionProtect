@@ -122,12 +122,8 @@ tasks.named<ShadowJar>("shadowJar") {
         include(dependency(":wgrp-api:"))
         include(dependency(":wgrp-common:"))
         include(dependency("org.bstats:"))
-        include(dependency("org.jetbrains.kotlin:"))
     }
-
     relocate("org.bstats", "${project.group}.wgrp.rslibs.lib.bstats")
-    relocate("org.jetbrains.kotlin", "${project.group}.wgrp.rslibs.lib.kotlin")
-
 }
 
 artifacts {
