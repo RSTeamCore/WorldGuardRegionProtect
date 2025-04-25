@@ -3,7 +3,7 @@ package net.ritasister.wgrp.util.utility;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import org.bukkit.Bukkit;
 
-import java.util.List;
+import java.util.Set;
 
 public class VersionCheck {
 
@@ -13,10 +13,10 @@ public class VersionCheck {
         this.wgrpPlugin = plugin;
     }
 
-    private final static String SUPPORTED_VERSION_RANGE = "1.20 - 1.21.4";
-    private final static List<String> SUPPORTED_VERSION = List.of(
+    private final static String SUPPORTED_VERSION_RANGE = "1.20 - 1.21.5";
+    private final static Set<String> SUPPORTED_VERSION = Set.of(
             "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
-            "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4"
+            "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5"
     );
 
     /**
