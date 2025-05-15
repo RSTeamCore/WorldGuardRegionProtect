@@ -1,6 +1,6 @@
 files:
-  - source: /wgrp-common/src/main/resources/lang/en_US.yml
-    translation: /wgrp-common/src/main/resources/lang/%locale_with_underscore%.yml
+  - source: /wgrp-common/src/main/resources/en_US.yml
+    translation: /wgrp-common/src/main/resources/%locale_with_underscore%.yml
     languages_mapping:
       locale_with_underscore:
         bg: bg
