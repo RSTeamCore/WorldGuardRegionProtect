@@ -1,3 +1,5 @@
 files:
-    -   source: /wgrp-common/src/main/resources/en_US.yml
-        translation: /wgrp-common/src/main/resources/%locale_with_underscore%.yml
+  - source: /wgrp-common/src/main/resources/en_US.yml
+    translation: /wgrp-common/src/main/resources/%locale_with_underscore%.yml
+bundles:
+  - 2
