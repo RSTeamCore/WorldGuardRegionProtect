@@ -91,31 +91,6 @@ public interface Location {
     Location divide(double divisor);
 
     /**
-     * Calculates the distance between this location and another.
-     *
-     * @param other the other location
-     * @return the distance
-     */
-    double distance(Location other);
-
-    /**
-     * Calculates the squared distance between this location and another.
-     * This method is more efficient for comparing relative distances.
-     *
-     * @param other the other location
-     * @return the squared distance
-     */
-    double distanceSquared(Location other);
-
-    /**
-     * Checks if this location is in the same world as another location.
-     *
-     * @param other the other location
-     * @return true if both locations are in the same world, false otherwise
-     */
-    boolean isSameWorld(Location other);
-
-    /**
      * Converts the location to a string representation.
      *
      * @return a string representation of the location

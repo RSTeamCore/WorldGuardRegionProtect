@@ -27,7 +27,7 @@ public final class ApiRegistrationUtil {
         try {
             REGISTER.invoke(null, wgrpApi);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
     }
 
@@ -35,7 +35,7 @@ public final class ApiRegistrationUtil {
         try {
             UNREGISTER.invoke(null);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
     }
 

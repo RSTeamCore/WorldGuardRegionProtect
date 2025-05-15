@@ -4,8 +4,9 @@ import net.ritasister.wgrp.api.manager.regions.RegionAction;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.api.manager.tools.ToolsAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
-import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
+import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.api.platform.Platform;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.ApiStatus;
@@ -25,10 +26,10 @@ public interface WorldGuardRegionProtect {
      * Retrieves the metadata for the WorldGuard Region Protect plugin.
      * This includes versioning information and other metadata details.
      *
-     * @return the {@link WorldGuardRegionMetadata} instance containing plugin metadata.
+     * @return the {@link WorldGuardRegionProtectMetadata} instance containing plugin metadata.
      */
     @NonNull
-    WorldGuardRegionMetadata getWorldGuardMetadata();
+    WorldGuardRegionProtectMetadata getMetaData();
 
     /**
      * Provides the {@link Platform} the plugin is running on.
@@ -36,7 +37,8 @@ public interface WorldGuardRegionProtect {
      *
      * @return the platform information.
      */
-    @NotNull Platform getPlatform();
+    @NotNull
+    Platform getPlatform();
 
     /**
      * Retrieves the {@link RegionAdapterManager} for interacting with regions using the
@@ -47,7 +49,7 @@ public interface WorldGuardRegionProtect {
      */
     @ApiStatus.Experimental
     @NonNull
-    <L, P> RegionAdapterManager<L, P> getRegionAdapter();
+    <L, P, W> RegionAdapterManager<L, P, W> getRegionAdapter();
 
     /**
      * Provides access to the {@link ToolsAdapterManager}, which enables utility methods
@@ -67,9 +69,9 @@ public interface WorldGuardRegionProtect {
      *
      * @return the entity checker type.
      */
-    @ApiStatus.Experimental
+    @ApiStatus.AvailableSince("1.8.3.21")
     @NonNull
-    EntityCheckType getEntityCheckerType();
+    <E, T> EntityCheckType<E, T> getEntityCheckerType();
 
     /**
      * Retrieves the {@link MessagingService} responsible for message handling.
@@ -78,7 +80,7 @@ public interface WorldGuardRegionProtect {
      * @param <P> the type representing the sender or recipient of the message.
      * @return the messaging service.
      */
-    @ApiStatus.Experimental
+    @ApiStatus.AvailableSince("1.8.3.21")
     @NonNull
     <P> MessagingService<P> getMessagingService();
 
@@ -88,8 +90,16 @@ public interface WorldGuardRegionProtect {
      *
      * @return the region action manager.
      */
-    @ApiStatus.Experimental
+    @ApiStatus.AvailableSince("1.8.3.21")
     @NonNull
     RegionAction getRegionAction();
+
+    /**
+     * Retrieves the {@link PermissionCheck} for validating permissions of players or entities.
+     * This allows for checking specific permissions required for certain actions within regions.
+     *
+     * @return the permission check manager.
+     */
+    PermissionCheck getPermissionCheck();
 
 }

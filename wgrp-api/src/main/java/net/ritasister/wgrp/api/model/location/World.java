@@ -9,7 +9,7 @@ public interface World {
      *
      * @return the UUID of the world
      */
-    UUID getUID();
+    UUID getUUID();
 
     /**
      * Gets the name of the world.

@@ -1,37 +1,58 @@
 package net.ritasister.wgrp.rslibs.updater;
 
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
+import net.ritasister.wgrp.api.platform.Platform;
+import net.ritasister.wgrp.loader.WGRPCompatibilityCheck;
+import net.ritasister.wgrp.util.schedulers.FoliaRunnable;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
+import java.net.URL;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 public final class UpdateChecker {
 
-    private final JavaPlugin plugin;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final int resourceId;
 
-    public UpdateChecker(JavaPlugin plugin, int resourceId) {
-        this.plugin = plugin;
+    public UpdateChecker(WorldGuardRegionProtectPaperPlugin wgrpPlugin, int resourceId) {
+        this.wgrpPlugin = wgrpPlugin;
         this.resourceId = resourceId;
     }
 
     public void getVersion(final Consumer<String> consumer) {
-        Bukkit.getAsyncScheduler().runNow(this.plugin, t -> {
-            try (InputStream inputStream = URI.create("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId)
-                    .toURL()
-                    .openStream();
-                 Scanner scanner = new Scanner(inputStream)) {
-                if (scanner.hasNext()) {
-                    consumer.accept(scanner.next());
+        final String platformName = WGRPCompatibilityCheck.getPlatformName();
+
+        if (platformName.equals(Platform.Type.BUKKIT.getPlatformName())
+                || platformName.equals(Platform.Type.SPIGOT.getPlatformName())) {
+            Bukkit.getScheduler().runTaskTimerAsynchronously(this.wgrpPlugin.getWgrpPaperBase(), t ->
+                    checkUpdate(consumer, platformName), 0, 6 * 60 * 60 * 20);
+        } else if (platformName.equals(Platform.Type.PAPER.getPlatformName())) {
+            Bukkit.getAsyncScheduler().runAtFixedRate(this.wgrpPlugin.getWgrpPaperBase(), t ->
+                    checkUpdate(consumer, Platform.Type.PAPER.getPlatformName()), 0, 6, TimeUnit.HOURS);
+        } else if (platformName.equals(Platform.Type.FOLIA.getPlatformName())) {
+            new FoliaRunnable(Bukkit.getAsyncScheduler(), TimeUnit.HOURS) {
+                @Override
+                public void run() {
+                    checkUpdate(consumer, Platform.Type.FOLIA.getPlatformName());
                 }
-            } catch (IOException exception) {
-                this.plugin.getLogger().info("Cannot look for updates: " + exception.getMessage());
+            }.runAtFixedRate(wgrpPlugin.getWgrpPaperBase(), 0, 6);
+        }
+    }
+
+    private void checkUpdate(final Consumer<String> consumer, String platformName) {
+        wgrpPlugin.getLogger().info(String.format("Checking for updates using %s schedulers.", platformName));
+        try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream();
+             Scanner scanner = new Scanner(inputStream)) {
+            if (scanner.hasNext()) {
+                consumer.accept(scanner.next());
             }
-        });
+        } catch (IOException exception) {
+            this.wgrpPlugin.getLogger().info("Cannot look for updates: " + exception.getMessage());
+        }
     }
 
 }

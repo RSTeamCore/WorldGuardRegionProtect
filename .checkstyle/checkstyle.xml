@@ -33,6 +33,9 @@
     <module name="TreeWalker">
         <!-- https://checkstyle.org/config_misc.html#ArrayTypeStyle -->
         <module name="ArrayTypeStyle"/>
+        <module name="AvoidEscapedUnicodeCharacters">
+            <property name="allowIfAllCharactersEscaped" value="true"/>
+        </module>
 
         <!-- https://checkstyle.org/config_imports.html#AvoidStarImport -->
         <module name="AvoidStarImport"/>

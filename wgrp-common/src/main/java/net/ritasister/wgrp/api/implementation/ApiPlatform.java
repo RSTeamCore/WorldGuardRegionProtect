@@ -1,11 +1,11 @@
 package net.ritasister.wgrp.api.implementation;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPlugin;
-import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
+import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.platform.Platform;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class ApiPlatform implements Platform, WorldGuardRegionMetadata {
+public class ApiPlatform implements Platform, WorldGuardRegionProtectMetadata {
 
     private final WorldGuardRegionProtectPlugin plugin;
 
@@ -15,12 +15,12 @@ public class ApiPlatform implements Platform, WorldGuardRegionMetadata {
 
     @Override
     public @NonNull String getVersion() {
-        return this.plugin.getWorldGuardMetadata().getVersion();
+        return this.plugin.getMetaData().getVersion();
     }
 
     @Override
     public @NonNull String getApiVersion() {
-        final String[] version = this.plugin.getWorldGuardMetadata().getVersion().split("\\.");
+        final String[] version = this.plugin.getMetaData().getVersion().split("\\.");
         return version[0] + '.' + version[1];
     }
 

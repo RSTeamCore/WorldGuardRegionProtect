@@ -2,6 +2,8 @@ package net.ritasister.wgrp.api;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.io.Serial;
+
 import static org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
@@ -50,12 +52,17 @@ public final class WorldGuardRegionProtectProvider {
      */
     private static final class NotLoadedException extends IllegalStateException {
 
-        private static final String MESSAGE = "The WorldGuardRegionProtect API isn't loaded yet!\n" +
-                "This could be because:\n" +
-                "  a) the WorldGuardRegionProtect plugin is not installed or it failed to enable\n" +
-                "  b) the plugin in the stacktrace does not declare a dependency on WorldGuardRegionProtect\n" +
-                "  c) the plugin in the stacktrace is retrieving the API before the plugin 'enable' phase\n" +
-                "     (call the #get method in onEnable, not the constructor!)\n";
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        private static final String MESSAGE = """
+                The WorldGuardRegionProtect API isn't loaded yet!
+                This could be because:
+                  a) the WorldGuardRegionProtect plugin is not installed or it failed to enable
+                  b) the plugin in the stacktrace does not declare a dependency on WorldGuardRegionProtect
+                  c) the plugin in the stacktrace is retrieving the API before the plugin 'enable' phase
+                     (call the #get method in onEnable, not the constructor!)
+                """;
 
         NotLoadedException() {
             super(MESSAGE);

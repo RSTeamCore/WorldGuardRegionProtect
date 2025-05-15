@@ -2,9 +2,11 @@ package net.ritasister.wgrp;
 
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
+import net.ritasister.wgrp.api.manager.tools.ToolsAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
-import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
+import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -37,11 +39,19 @@ public interface WorldGuardRegionProtectPlugin {
     <E, T> EntityCheckType<E, T> getEntityChecker();
 
     /**
+     * Retrieves the {@link PermissionCheck} instance that is used to check player and entity permissions.
+     *
+     * @return the {@link PermissionCheck} instance
+     * @since 1.7.1.21
+     */
+    PermissionCheck getPermissionCheck();
+
+    /**
      * Gets a wrapped region adapter instance for the platform.
      *
      * @return the plugin's logger
      */
-    RegionAdapterManager getRegionAdapter();
+    <L, P, W> RegionAdapterManager<L, P, W> getRegionAdapter();
 
     /**
      * Returns the class implementing the WorldGuardRegionProtect on this platform.
@@ -55,7 +65,7 @@ public interface WorldGuardRegionProtectPlugin {
      *
      * @return the plugin's logger
      */
-    WorldGuardRegionMetadata getWorldGuardMetadata();
+    WorldGuardRegionProtectMetadata getMetaData();
 
     /**
      * Gets a wrapped messaging service instance for the platform.
@@ -65,6 +75,14 @@ public interface WorldGuardRegionProtectPlugin {
     <P> MessagingService<P> getMessagingService();
 
     RegionAction getRegionAction();
+
+    /**
+     * Retrieves the {@link ToolsAdapterManager} instance that is used to manage tool-related operations.
+     *
+     * @return the {@link ToolsAdapterManager} instance
+     * @since 1.8.1.21
+     */
+    <P> ToolsAdapterManager<P> getToolsAdapter();
 
     /**
      * Attempts to identify the plugin behind the given classloader.

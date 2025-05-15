@@ -1,13 +1,17 @@
 package net.ritasister.wgrp.util.file.config;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
-import org.bukkit.plugin.Plugin;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
+import net.ritasister.wgrp.rslibs.annotation.CanRecover;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -16,7 +20,8 @@ import java.util.regex.Pattern;
 
 public enum ConfigFields {
 
-    CONFIG_VERSION("configVersion", 2, "wgRegionProtect.version"),
+    @CanRecover
+    CONFIG_VERSION("version", 4, "wgRegionProtect.version"),
 
     LANG("lang", "en_US", "wgRegionProtect.lang"),
 
@@ -61,6 +66,19 @@ public enum ConfigFields {
             "sniffer", "camel"
     ),
             "wgRegionProtect.protectInteract.monsterType"
+    ),
+
+    ENEMY_ENTITY_TYPE("enemyType", List.of(
+            "ender_dragon", "magma_cube", "slime",
+            "ghast"
+    ),
+            "wgRegionProtect.protectInteract.enemyType"
+    ),
+
+    MISC_ENTITY_TYPE("miscEntityType", List.of(
+            "egg", "ender_pearl", "experience_orb", "snowball"
+    ),
+            "wgRegionProtect.protectInteract.miscEntityType"
     ),
 
     WATER_MOB_TYPE("waterMobType", List.of(
@@ -126,6 +144,18 @@ public enum ConfigFields {
             "wgRegionProtect.protectInteract.other.denyFormObsidianOrCobbleStone"
     ),
 
+    DENY_CREATURE_SPAWN("denyCreatureSpawn", true,
+            "wgRegionProtect.protectInteract.mobs.denyCreatureSpawn"
+    ),
+
+    DENY_MOB_SPAWN_FROM_SPAWNER("denyMobSpawner", true,
+            "wgRegionProtect.protectInteract.mobs.denyMobSpawner"
+    ),
+
+    DENY_MOB_NATURALLY_SPAWN("denyMobSpawn", true,
+            "wgRegionProtect.protectInteract.mobs.denyMobSpawn"
+    ),
+
     DENY_WATER_FLOW_TO_REGION("denyWaterFlowToRegion", true,
             "wgRegionProtect.protectInteract.other.denyWaterFlowToRegion"
     ),
@@ -153,7 +183,6 @@ public enum ConfigFields {
     DENY_LOOM_PATTERN_SELECT("denyLoomPatternSelect", true,
             "wgRegionProtect.protectInteract.player.tools.denyLoomPatternSelect"
     ),
-
 
     CMD_WE("cmdWe", List.of(
             "//set", "//replace", "//overlay",
@@ -185,11 +214,9 @@ public enum ConfigFields {
             "wgRegionProtect.noProtectCmd.cmdWeCP"
     ),
 
-
     DENY_EXPLODE_ENTITY("explodeEntity", true,
             "wgRegionProtect.explodeEntity.enable"
     ),
-
 
     REGION_MESSAGE_PROTECT("regionMessageProtect", true,
             "wgRegionProtect.regionMessageProtect"
@@ -224,8 +251,7 @@ public enum ConfigFields {
     ), "wgRegionProtect.spySettings.spyCommandList"),
 
     DATA_SOURCE_ENABLE("enable", false, "wgRegionProtect.dataSource.enable"),
-
-    DATA_SOURCE_HOST("localhost", "localhost", "wgRegionProtect.dataSource.localhost"),
+    DATA_SOURCE_HOST("host", "localhost", "wgRegionProtect.dataSource.host"),
     DATA_SOURCE_PORT("port", 3306, "wgRegionProtect.dataSource.port"),
     DATA_SOURCE_DATABASE("database", "database", "wgRegionProtect.dataSource.database"),
     DATA_SOURCE_USER("root", "root", "wgRegionProtect.dataSource.root"),
@@ -235,17 +261,26 @@ public enum ConfigFields {
     DATA_SOURCE_MAX_LIFE_TIME("maxLifetime", 1800, "wgRegionProtect.dataSource.maxLifetime"),
     DATA_SOURCE_CONNECTION_TIMEOUT("connectionTimeout", 5000, "wgRegionProtect.dataSource.connectionTimeout"),
     DATA_SOURCE_USE_SSL("useSsl", true, "wgRegionProtect.dataSource.useSsl"),
-    DATA_SOURCE_INTERVAL_RELOAD("intervalReload", 60, "wgRegionProtect.dataSource.intervalReload"
-
-    );
+    DATA_SOURCE_INTERVAL_RELOAD("intervalReload", 60, "wgRegionProtect.dataSource.intervalReload");
 
     private final String field;
-    private Object param;
-    private List<String> elements = new ArrayList<>();
-    private boolean bool;
-    private int integer;
-    private double doubleValue;
     private final String path;
+
+    @CanRecover
+    private Object param;
+
+    @CanRecover
+    private List<String> elements = new ArrayList<>();
+
+    @CanRecover
+    private boolean bool;
+
+    @CanRecover
+    private int integer;
+
+    @CanRecover
+    private double doubleValue;
+
     private static final Map<String, ConfigFields> CONFIG_FIELDS = new HashMap<>();
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
@@ -290,33 +325,63 @@ public enum ConfigFields {
     @ApiStatus.Internal
     @Contract("null -> null")
     @Nullable
-    public static ConfigFields getField(String field) {
+    public static ConfigFields getField(Object field) {
         if (field == null) {
             return null;
         }
-        return CONFIG_FIELDS.get(field.toLowerCase(Locale.ROOT));
+        final String fieldName = field.toString();
+        return CONFIG_FIELDS.get(fieldName.toLowerCase(Locale.ROOT));
     }
 
     public @NotNull String getPath() {
         return path;
     }
 
-    public Object get(@NotNull Plugin wgrpBase) {
-        if (!elements.isEmpty()) {
-            return elements = wgrpBase.getConfig().getStringList(getPath());
+    public Object get(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        final Field[] fields = this.getClass().getDeclaredFields();
+        Arrays.sort(fields, Comparator.comparing(Field::getName));
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(CanRecover.class)) {
+                if (field.getName().equals("elements")) {
+                    if (!elements.isEmpty()) {
+                        return elements = wgrpPlugin.getWgrpPaperBase().getConfig().getStringList(getPath());
+                    }
+                } else if (field.getName().equals("param") || field.getName().equals("bool") || field.getName().equals("integer")) {
+                    if (param != null && param.toString() != null) {
+                        if (isBoolean(param.toString())) {
+                            return bool = wgrpPlugin.getWgrpPaperBase().getConfig().getBoolean(getPath());
+                        }
+                        if (isInteger(param.toString())) {
+                            return integer = wgrpPlugin.getWgrpPaperBase().getConfig().getInt(getPath());
+                        }
+                        if (isDouble(param.toString())) {
+                            return doubleValue = wgrpPlugin.getWgrpPaperBase().getConfig().getDouble(getPath());
+                        }
+                    }
+                }
+            }
         }
-        if (param != null) {
-            if (isBooleanCheck(param.toString())) {
-                return bool = wgrpBase.getConfig().getBoolean(getPath());
-            }
-            if (isNumeric(param.toString())) {
-                return integer = wgrpBase.getConfig().getInt(getPath());
-            }
-            if (isDouble(param.toString())) {
-                return doubleValue = wgrpBase.getConfig().getDouble(getPath());
-            }
+        return param = wgrpPlugin.getWgrpPaperBase().getConfig().getString(getPath());
+    }
+
+    private boolean isBoolean(@NotNull String string) {
+        return string.equalsIgnoreCase("true") || string.equalsIgnoreCase("false");
+    }
+
+    private boolean isInteger(String strNum) {
+        if (strNum == null) {
+            return false;
         }
-        return param = wgrpBase.getConfig().getString(getPath());
+        return pattern.matcher(strNum).matches();
+    }
+
+    private boolean isDouble(String string) {
+        try {
+            Double.valueOf(string);
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
     }
 
     public List<String> getList(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
@@ -327,23 +392,12 @@ public enum ConfigFields {
         return bool = wgrpBase.getConfig().getBoolean(getPath());
     }
 
-    private boolean isBooleanCheck(@NotNull String string) {
-        return string.equalsIgnoreCase("true") || string.equalsIgnoreCase("false");
+    public double getDoubleValue(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
+        return doubleValue = wgrpBase.getConfig().getDouble(getPath());
     }
 
-    private boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        return pattern.matcher(strNum).matches();
+    public int getInteger(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
+        return integer =wgrpBase.getConfig().getInt(getPath());
     }
 
-    private boolean isDouble(String string) {
-        try {
-            Double.valueOf(string);
-        } catch (Exception ex) { // Not a valid double value
-            return false;
-        }
-        return true;
-    }
 }

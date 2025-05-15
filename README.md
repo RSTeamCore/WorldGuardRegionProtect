@@ -33,6 +33,7 @@ Feel free to join our Discord community server:
 ## ❗IMPORTANT
 
 - [List of all supported and not version WorldGuardRegionProtect available here](https://github.com/RSTeamCore/WorldGuardRegionProtect/blob/dev/SECURITY.md)
+- Start from version 1.8.0.21 will support **Bukkit/Spigot/Paper/Folia** and other forks of **Paper**.
 - Versions after **1.0.0** require **JAVA 21+**! 
 - If you need plugin support **Java 17+**, so you need just download **1.0.2.17** special version
 

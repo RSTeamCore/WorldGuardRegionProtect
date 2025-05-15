@@ -3,6 +3,7 @@ package net.ritasister.wgrp;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
 import net.ritasister.wgrp.api.WorldGuardRegionProtectProvider;
 import net.ritasister.wgrp.api.implementation.ApiEntityChecker;
+import net.ritasister.wgrp.api.implementation.ApiPermissionCheck;
 import net.ritasister.wgrp.api.implementation.ApiPlatform;
 import net.ritasister.wgrp.api.implementation.ApiRegionAction;
 import net.ritasister.wgrp.api.implementation.ApiRegionProtect;
@@ -11,11 +12,12 @@ import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.api.manager.tools.ToolsAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
-import net.ritasister.wgrp.api.metadata.WorldGuardRegionMetadata;
+import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
+import net.ritasister.wgrp.api.model.entity.player.Player;
+import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProtect {
@@ -23,10 +25,11 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     private final WorldGuardRegionProtectPlugin plugin;
 
     private final ApiPlatform platform;
-    private final RegionAdapterManager<?, ?> regionAdapterManager;
-    private final ToolsAdapterManager<?> toolsAdapterManager;
+    private final RegionAdapterManager<?, ?, ?> regionAdapterManager;
+    private final ToolsAdapterManager<Player> toolsAdapterManager;
     private final ApiEntityChecker<?, ?> entityCheckType;
     private final MessagingService<?> messagingService;
+    private final PermissionCheck permissionCheck;
 
     private final RegionAction regionAction;
 
@@ -38,6 +41,8 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
         this.toolsAdapterManager = new ApiToolsProtect<>(plugin);
         this.regionAction = new ApiRegionAction(plugin);
         this.entityCheckType = new ApiEntityChecker<>(plugin);
+        this.permissionCheck = new ApiPermissionCheck(plugin);
+
         this.messagingService = plugin.getMessagingService();
     }
 
@@ -52,9 +57,7 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
                 String guilty = "unknown";
                 try {
                     guilty = worldGuardRegionProtectPlugin.identifyClassLoader(apiClassLoader);
-                } catch (Exception e) {
-                    // ignore
-                }
+                } catch (Exception ignored) {}
 
                 final PluginLogger logger = this.plugin.getLogger();
                 logger.warn("It seems that the WorldGuardRegionProtect API has been (class)loaded by a plugin other than " +
@@ -74,33 +77,38 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     }
 
     @Override
-    public @NonNull ToolsAdapterManager getToolsAdapterManager() {
+    public @NotNull ToolsAdapterManager getToolsAdapterManager() {
         return this.toolsAdapterManager;
     }
 
     @Override
-    public @NonNull WorldGuardRegionMetadata getWorldGuardMetadata() {
+    public @NotNull WorldGuardRegionProtectMetadata getMetaData() {
         return this.platform;
     }
 
     @Override
-    public @NonNull RegionAdapterManager getRegionAdapter() {
+    public @NotNull RegionAdapterManager getRegionAdapter() {
         return this.regionAdapterManager;
     }
 
     @Override
-    public @NonNull EntityCheckType getEntityCheckerType() {
+    public @NotNull EntityCheckType getEntityCheckerType() {
         return this.entityCheckType;
     }
 
     @Override
-    public @NonNull MessagingService getMessagingService() {
+    public @NotNull MessagingService getMessagingService() {
         return this.messagingService;
     }
 
     @Override
-    public @NonNull RegionAction getRegionAction() {
+    public @NotNull RegionAction getRegionAction() {
         return this.regionAction;
+    }
+
+    @Override
+    public PermissionCheck getPermissionCheck() {
+        return this.permissionCheck;
     }
 
 }

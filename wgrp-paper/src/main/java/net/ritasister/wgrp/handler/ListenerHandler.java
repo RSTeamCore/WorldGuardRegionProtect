@@ -2,23 +2,21 @@ package net.ritasister.wgrp.handler;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.handler.Handler;
-import net.ritasister.wgrp.listener.AdminProtect;
-import net.ritasister.wgrp.listener.BlockProtect;
-import net.ritasister.wgrp.listener.EntityProtect;
-import net.ritasister.wgrp.listener.HangingProtect;
-import net.ritasister.wgrp.listener.MiscProtect;
-import net.ritasister.wgrp.listener.PlayerProtect;
-import net.ritasister.wgrp.listener.ToolsProtect;
-import net.ritasister.wgrp.listener.VehicleProtect;
+import net.ritasister.wgrp.listener.player.AdminProtect;
+import net.ritasister.wgrp.listener.miscellaneous.BlockProtect;
+import net.ritasister.wgrp.listener.entity.EntityProtect;
+import net.ritasister.wgrp.listener.entity.HangingProtect;
+import net.ritasister.wgrp.listener.miscellaneous.MiscProtect;
+import net.ritasister.wgrp.listener.player.PlayerProtect;
+import net.ritasister.wgrp.listener.miscellaneous.ToolsProtect;
+import net.ritasister.wgrp.listener.entity.VehicleProtect;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- * Handler for register listeners.
- */
 public class ListenerHandler implements Handler<PluginManager> {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
@@ -39,9 +37,17 @@ public class ListenerHandler implements Handler<PluginManager> {
                 new ToolsProtect(wgrpPlugin),
                 new VehicleProtect(wgrpPlugin));
 
-        allListeners.forEach(listener -> pluginManager.registerEvents(listener, wgrpPlugin.getWgrpPaperBase()));
+        allListeners.forEach(listener -> {
+            this.wgrpPlugin.getLogger().info("Registered listener: " + listener.getClass().getSimpleName());
+            this.wgrpPlugin.getListenerHandlerMap().put(listener.getClass(), listener);
+            pluginManager.registerEvents(listener, this.wgrpPlugin.getWgrpPaperBase());
+        });
 
-        wgrpPlugin.getLogger().info("All listeners registered successfully!");
+        this.wgrpPlugin.getLogger().info("Finished registering listeners.");
+        this.wgrpPlugin.getLogger().info(String.format("All listeners registered successfully! List of Listeners: %s",
+                allListeners.stream()
+                        .map(listener -> listener.getClass().getSimpleName())
+                        .collect(Collectors.joining(", "))));
     }
 
 }
