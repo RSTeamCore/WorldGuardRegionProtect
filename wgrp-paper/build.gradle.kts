@@ -27,7 +27,7 @@ dependencies {
     implementation(project(":wgrp-common"))
 
     //Paper or Folia
-    paperweight.foliaDevBundle("1.21.5-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.6-R0.1-SNAPSHOT")
 
     //Plugins api
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.3")
@@ -135,7 +135,7 @@ artifacts {
 }
 
 tasks.named<RunServer>("runServer") {
-    minecraftVersion("1.21.5")
+    minecraftVersion("1.21.6")
     jvmArgs(
         "-Xms3G",
         "-Xmx3G",
