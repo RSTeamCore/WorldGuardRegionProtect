@@ -30,6 +30,7 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
     public EntityType @NotNull [] getEntityType() {
         return new EntityType[] {
             //Misc creature
+            EntityHelper.getEntityType("HAPPY_GHAST"), //Only available on new version mc 1.21.6
             EntityType.VILLAGER,
             //Water creature
             EntityType.AXOLOTL,
