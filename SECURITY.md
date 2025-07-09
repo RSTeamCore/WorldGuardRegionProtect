@@ -3,8 +3,10 @@
 ## Maintained and unmaintained of versions
 | List of Versions WorldGuardRegionProtect | Maintained?        |
 |------------------------------------------|--------------------|
-| **1.8.4.21 [1.20-1.21.5]** / java 21     | :white_check_mark: |
-| **1.8.3.21 [1.20-1.21.4]** / java 21     | :white_check_mark: |
+| **1.8.7.21 [1.20-1.21.7]** / java 21     | :white_check_mark: |
+| **1.8.6.21 [1.20-1.21.6]** / java 21     | :white_check_mark: |
+| **1.8.4.21 [1.20-1.21.5]** / java 21     | :x:                |
+| **1.8.3.21 [1.20-1.21.4]** / java 21     | :x:                |
 | **1.8.2.21 [1.20-1.21.4]** / java 21     | :x:                |
 | **1.8.1.21 [1.20-1.21.4]** / java 21     | :x:                |
 | **1.8.0.21 [1.20-1.21.4]** / java 21     | :x:                |
