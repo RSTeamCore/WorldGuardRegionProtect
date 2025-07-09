@@ -63,7 +63,9 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
             EntityType.TADPOLE,
             EntityType.CAMEL,
             EntityType.HOGLIN,
-            EntityHelper.getEntityType("ARMADILLO")
+            EntityHelper.getEntityType("ARMADILLO"), // available from since 1.20.5
+            //Only available on newest version like be 1.21+
+            EntityHelper.getEntityType("HAPPY_GHAST"), // available from since 1.21.6
         };
     }
 
