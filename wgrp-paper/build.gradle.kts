@@ -3,7 +3,7 @@ import xyz.jpenilla.runpaper.task.RunServer
 import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
 
 plugins {
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.16"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
     alias(libs.plugins.shadow)
     alias(libs.plugins.runPaper)
 }
