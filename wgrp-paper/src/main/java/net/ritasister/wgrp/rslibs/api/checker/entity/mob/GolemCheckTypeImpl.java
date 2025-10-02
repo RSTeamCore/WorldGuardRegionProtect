@@ -31,7 +31,8 @@ public final class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityT
         return new EntityType[] {
             EntityHelper.getEntityType("SNOWMAN"), //Only available on older version like be 1.20.2
             EntityHelper.getEntityType("SNOW_GOLEM"), //Only available on newest version like be 1.21+
-            EntityType.IRON_GOLEM
+            EntityHelper.getEntityType("COPPER_GOLEM"), // available from since 1.21.9
+            EntityType.IRON_GOLEM // Always available because it's been in the game since 1.2.1
         };
     }
 
