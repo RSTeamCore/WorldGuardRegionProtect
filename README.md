@@ -11,7 +11,6 @@
 <a href="https://github.com/RSTeamCore/WorldGuardRegionProtect/commits/master"><img src="https://img.shields.io/github/commits-since/RitaSister/WorldGuardRegionProtect/latest.svg" alt="Commits since last release"></a>
 <a title="Crowdin" target="_blank" href="https://crowdin.com/project/worldguardregionprotect"><img src="https://badges.crowdin.net/worldguardregionprotect/localized.svg"></a>
 <a href="https://www.codefactor.io/repository/github/rsteamcore/worldguardregionprotect"><img src="https://www.codefactor.io/repository/github/rsteamcore/worldguardregionprotect/badge" alt="CodeFactor" /></a>
-<a href="https://codebeat.co/projects/github-com-rsteamcore-worldguardregionprotect-master"><img alt="codebeat badge" src="https://codebeat.co/badges/1c64aba7-52d9-430a-98d8-786bfda47b12" /></a>
 
 ## 🌈 Community
 
