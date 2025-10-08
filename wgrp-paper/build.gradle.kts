@@ -3,7 +3,7 @@ import xyz.jpenilla.runpaper.task.RunServer
 import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
 
 plugins {
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.19"
     alias(libs.plugins.shadow)
     alias(libs.plugins.runPaper)
 }
@@ -27,7 +27,7 @@ dependencies {
     implementation(project(":wgrp-common"))
 
     //Paper or Folia
-    paperweight.paperDevBundle("1.21.9-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.10-R0.1-SNAPSHOT")
 
     //Plugins api
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.3")
@@ -89,9 +89,8 @@ tasks.withType<ProcessResources> {
             "name" to rootProject.name,
             "version" to versionWithGitHash,
             "group" to project.group,
-            "author" to project.property("author"),
-            "contributor" to project.property("contributor"),
-            "description" to project.property("description")
+            "author" to (project.findProperty("author") ?: ""),
+            "description" to (project.findProperty("description") ?: "")
         )
     }
 }
