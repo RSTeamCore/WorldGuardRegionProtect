@@ -157,7 +157,7 @@ fun String.runCommand(): String {
             .redirectOutput(ProcessBuilder.Redirect.PIPE)
             .start()
         process.inputStream.bufferedReader().readText()
-    } catch (e: Exception) {
+    } catch (_: Exception) {
         ""
     }
 }
