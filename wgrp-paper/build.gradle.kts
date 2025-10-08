@@ -90,6 +90,7 @@ tasks.withType<ProcessResources> {
             "version" to versionWithGitHash,
             "group" to project.group,
             "author" to (project.findProperty("author") ?: ""),
+            "contributor" to (project.findProperty("contributor") ?: ""),
             "description" to (project.findProperty("description") ?: "")
         )
     }
