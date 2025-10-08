@@ -34,10 +34,10 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9-SNAPSHOT")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.3.9")
     compileOnly("me.clip:placeholderapi:2.11.6")
-    implementation("org.bstats:bstats-bukkit:3.0.2")
+    implementation("org.bstats:bstats-bukkit:3.1.0")
 
     //Others implementation
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.20")
     implementation("org.jetbrains:annotations:24.1.0")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.google.guava:guava:33.3.1-jre")
@@ -135,7 +135,7 @@ artifacts {
 }
 
 tasks.named<RunServer>("runServer") {
-    minecraftVersion("1.21.6")
+    minecraftVersion("1.21.10")
     jvmArgs(
         "-Xms3G",
         "-Xmx3G",
