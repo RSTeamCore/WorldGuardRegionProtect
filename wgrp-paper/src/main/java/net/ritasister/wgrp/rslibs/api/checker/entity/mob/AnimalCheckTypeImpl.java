@@ -3,7 +3,7 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.mob;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.utility.entity.EntityHelper;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -22,7 +22,7 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
     public boolean check(final @NotNull Entity entity) {
         final Animals animals = (Animals) entity;
         final EntityType animalsType = animals.getType();
-        return ConfigFields.ANIMAL_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(animalsType.name().toLowerCase());
+        return ConfigFields.ANIMAL_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(animalsType.name().toLowerCase());
     }
 
     @Contract(" -> new")
@@ -63,6 +63,7 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
             EntityType.TADPOLE,
             EntityType.CAMEL,
             EntityType.HOGLIN,
+            EntityHelper.getEntityType("CAMEL_HUSK"), // available from since 1.21.11
             EntityHelper.getEntityType("ARMADILLO"), // available from since 1.20.5
             //Only available on newest version like be 1.21+
             EntityHelper.getEntityType("HAPPY_GHAST"), // available from since 1.21.6

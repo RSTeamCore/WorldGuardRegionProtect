@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.entity.Ambient;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -21,7 +21,7 @@ public final class AmbientCheckTypeImpl implements EntityCheckType<Entity, Entit
     public boolean check(final @NotNull Entity entity) {
         final Ambient ambient = (Ambient) entity;
         final EntityType ambientType = ambient.getType();
-        return ConfigFields.INTERACT_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(ambientType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(ambientType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

@@ -3,7 +3,7 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.mob;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.utility.entity.EntityHelper;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Golem;
@@ -22,7 +22,7 @@ public final class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityT
     public boolean check(final @NotNull Entity entity) {
         final Golem golem = (Golem) entity;
         final EntityType golemType = golem.getType();
-        return ConfigFields.ANIMAL_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(golemType.name().toLowerCase());
+        return ConfigFields.ANIMAL_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(golemType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

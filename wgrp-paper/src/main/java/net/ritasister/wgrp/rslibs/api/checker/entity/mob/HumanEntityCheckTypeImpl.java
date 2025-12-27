@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
@@ -21,7 +21,7 @@ public final class HumanEntityCheckTypeImpl implements EntityCheckType<Entity, E
     public boolean check(final @NotNull Entity entity) {
         final HumanEntity humanEntity = (HumanEntity) entity;
         final EntityType humanEntityType = humanEntity.getType();
-        return ConfigFields.INTERACT_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(humanEntityType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(humanEntityType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

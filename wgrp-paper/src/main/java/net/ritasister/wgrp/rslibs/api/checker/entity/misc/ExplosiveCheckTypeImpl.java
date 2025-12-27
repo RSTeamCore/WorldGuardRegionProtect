@@ -3,7 +3,7 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.misc;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.utility.entity.EntityHelper;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Explosive;
@@ -22,7 +22,7 @@ public final class ExplosiveCheckTypeImpl implements EntityCheckType<Entity, Ent
     public boolean check(final @NotNull Entity entity) {
         final Explosive explosive = (Explosive) entity;
         final EntityType explosiveType = explosive.getType();
-        return ConfigFields.ENTITY_EXPLODE_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(explosiveType.name().toLowerCase());
+        return ConfigFields.ENTITY_EXPLODE_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(explosiveType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)
