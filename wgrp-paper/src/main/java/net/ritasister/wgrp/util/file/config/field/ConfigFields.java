@@ -1,26 +1,24 @@
-package net.ritasister.wgrp.util.file.config;
+package net.ritasister.wgrp.util.file.config.field;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
-import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.rslibs.annotation.CanRecover;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Pattern;
 
+/**
+ * Enum representing configuration fields for the WorldGuardRegionProtect plugin.
+ * Each enum constant corresponds to a specific configuration option, along with its
+ * default value and path in the configuration file.
+ */
 public enum ConfigFields {
 
-    @CanRecover
     CONFIG_VERSION("version", 4, "wgRegionProtect.version"),
 
     LANG("lang", "en_US", "wgRegionProtect.lang"),
@@ -264,140 +262,245 @@ public enum ConfigFields {
     DATA_SOURCE_INTERVAL_RELOAD("intervalReload", 60, "wgRegionProtect.dataSource.intervalReload");
 
     private final String field;
+    private final Object defaultValue;
     private final String path;
-
-    @CanRecover
-    private Object param;
-
-    @CanRecover
-    private List<String> elements = new ArrayList<>();
-
-    @CanRecover
-    private boolean bool;
-
-    @CanRecover
-    private int integer;
-
-    @CanRecover
-    private double doubleValue;
+    private FieldType fieldType;
 
     private static final Map<String, ConfigFields> CONFIG_FIELDS = new HashMap<>();
-    private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+    private static final Map<Class<?>, FieldType> SIMPLE_TYPE_MAP = Map.of(
+            String.class, FieldType.STRING,
+            Boolean.class, FieldType.BOOLEAN,
+            Integer.class, FieldType.INTEGER,
+            Double.class, FieldType.DOUBLE,
+            Long.class, FieldType.LONG,
+            Float.class, FieldType.FLOAT
+    );
 
     static {
         for (ConfigFields fields : values()) {
             if (fields.field != null) {
                 CONFIG_FIELDS.put(fields.name().toLowerCase(Locale.ROOT), fields);
             }
+
+            if (fields.defaultValue != null) {
+                fields.fieldType = resolveFieldType(fields.defaultValue);
+            } else {
+                fields.fieldType = FieldType.STRING;
+            }
         }
     }
 
-    ConfigFields(String field, List<String> elements, String path) {
+    ConfigFields(String field, Object defaultValue, String path) {
         this.field = field;
-        this.elements = elements;
+        this.defaultValue = defaultValue;
         this.path = path;
     }
 
-    ConfigFields(String field, boolean bool, String path) {
-        this.field = field;
-        this.bool = bool;
-        this.path = path;
-    }
-
-    ConfigFields(String field, double doubleValue, String path) {
-        this.field = field;
-        this.doubleValue = doubleValue;
-        this.path = path;
-    }
-
-    ConfigFields(String field, int integer, String path) {
-        this.field = field;
-        this.integer = integer;
-        this.path = path;
-    }
-
-    ConfigFields(String field, String param, String path) {
-        this.field = field;
-        this.param = param;
-        this.path = path;
-    }
-
+    /**
+     * Retrieves the ConfigFields enum constant corresponding to the given field name.
+     *
+     * @param field The name of the configuration field.
+     * @return The corresponding ConfigFields enum constant, or null if not found.
+     */
     @ApiStatus.Internal
     @Contract("null -> null")
     @Nullable
-    public static ConfigFields getField(Object field) {
+    public static ConfigFields getField(String field) {
         if (field == null) {
             return null;
         }
-        final String fieldName = field.toString();
-        return CONFIG_FIELDS.get(fieldName.toLowerCase(Locale.ROOT));
+        return CONFIG_FIELDS.get(field.toLowerCase(Locale.ROOT));
     }
 
+    /**
+     * Retrieves the default value of this configuration field.
+     *
+     * @return The default value of the configuration field.
+     */
     public @NotNull String getPath() {
         return path;
     }
 
-    public Object get(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
-        final Field[] fields = this.getClass().getDeclaredFields();
-        Arrays.sort(fields, Comparator.comparing(Field::getName));
-        for (Field field : fields) {
-            if (field.isAnnotationPresent(CanRecover.class)) {
-                if (field.getName().equals("elements")) {
-                    if (!elements.isEmpty()) {
-                        return elements = wgrpPlugin.getWgrpPaperBase().getConfig().getStringList(getPath());
-                    }
-                } else if (field.getName().equals("param") || field.getName().equals("bool") || field.getName().equals("integer")) {
-                    if (param != null && param.toString() != null) {
-                        if (isBoolean(param.toString())) {
-                            return bool = wgrpPlugin.getWgrpPaperBase().getConfig().getBoolean(getPath());
-                        }
-                        if (isInteger(param.toString())) {
-                            return integer = wgrpPlugin.getWgrpPaperBase().getConfig().getInt(getPath());
-                        }
-                        if (isDouble(param.toString())) {
-                            return doubleValue = wgrpPlugin.getWgrpPaperBase().getConfig().getDouble(getPath());
-                        }
-                    }
-                }
+    /**
+     * Retrieves the default value of this configuration field.
+     *
+     * @return The default value of the configuration field.
+     */
+    public FieldType getFieldType() {
+        return fieldType;
+    }
+
+    private static FieldType resolveFieldType(@NonNull Object value) {
+        final FieldType simpleType = SIMPLE_TYPE_MAP.get(value.getClass());
+        if (simpleType != null) return simpleType;
+
+        if (value instanceof List<?> list) {
+            if (!list.isEmpty()) {
+                final Object first = list.get(0);
+                final FieldType firstType = SIMPLE_TYPE_MAP.get(first.getClass());
+
+                return switch (firstType) {
+                    case INTEGER -> FieldType.INTEGER_LIST;
+                    case DOUBLE -> FieldType.DOUBLE_LIST;
+                    case LONG -> FieldType.LONG_LIST;
+                    case FLOAT -> FieldType.FLOAT_LIST;
+                    case BOOLEAN -> FieldType.BOOLEAN_LIST;
+                    default -> FieldType.STRING_LIST;
+                };
             }
+            return FieldType.STRING_LIST;
         }
-        return param = wgrpPlugin.getWgrpPaperBase().getConfig().getString(getPath());
+
+        throw new IllegalArgumentException("Unsupported default value type: " + value.getClass());
     }
 
-    private boolean isBoolean(@NotNull String string) {
-        return string.equalsIgnoreCase("true") || string.equalsIgnoreCase("false");
-    }
-
-    private boolean isInteger(String strNum) {
-        if (strNum == null) {
-            return false;
+    private void ensure(FieldType expected) {
+        if (this.fieldType != expected) {
+            throw new IllegalStateException(name() + " is " + fieldType + ", not " + expected);
         }
-        return pattern.matcher(strNum).matches();
     }
 
-    private boolean isDouble(String string) {
-        try {
-            Double.valueOf(string);
-        } catch (Exception ex) {
-            return false;
-        }
-        return true;
+    /**
+     * Retrieves the value of this configuration field as a String.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a String.
+     * @throws IllegalStateException if the field type is not STRING.
+     */
+    public String asString(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.STRING);
+        return plugin.getConfig().getString(getPath());
     }
 
-    public List<String> getList(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
-        return elements = wgrpBase.getConfig().getStringList(getPath());
+    /**
+     * Retrieves the value of this configuration field as a List of Strings.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a List of Strings.
+     * @throws IllegalStateException if the field type is not STRING_LIST.
+     */
+    public @NonNull List<String> asStringList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.STRING_LIST);
+        return plugin.getConfig().getStringList(getPath());
     }
 
-    public boolean getBoolean(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
-        return bool = wgrpBase.getConfig().getBoolean(getPath());
+    /**
+     * Retrieves the value of this configuration field as a List of Integers.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a List of Integers.
+     * @throws IllegalStateException if the field type is not INTEGER_LIST.
+     */
+    public @NotNull List<Integer> asIntegerList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.INTEGER_LIST);
+        return plugin.getConfig().getIntegerList(getPath());
     }
 
-    public double getDoubleValue(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
-        return doubleValue = wgrpBase.getConfig().getDouble(getPath());
+    /**
+     * Retrieves the value of this configuration field as a List of Doubles.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a List of Doubles.
+     * @throws IllegalStateException if the field type is not DOUBLE_LIST.
+     */
+    public @NotNull List<Double> asDoubleList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.DOUBLE_LIST);
+        return plugin.getConfig().getDoubleList(getPath());
     }
 
-    public int getInteger(@NotNull WorldGuardRegionProtectPaperBase wgrpBase) {
-        return integer =wgrpBase.getConfig().getInt(getPath());
+    /**
+     * Retrieves the value of this configuration field as a List of Longs.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a List of Longs.
+     * @throws IllegalStateException if the field type is not LONG_LIST.
+     */
+    public @NonNull List<Long> asLongList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.LONG_LIST);
+        return plugin.getConfig().getLongList(getPath());
     }
 
+    /**
+     * Retrieves the value of this configuration field as a List of Floats.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a List of Floats.
+     * @throws IllegalStateException if the field type is not FLOAT_LIST.
+     */
+    public @NonNull List<Float> asFloatList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.FLOAT_LIST);
+        return plugin.getConfig().getFloatList(getPath());
+    }
+
+    /**
+     * Retrieves the value of this configuration field as a List of Booleans.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a List of Booleans.
+     * @throws IllegalStateException if the field type is not BOOLEAN_LIST.
+     */
+    public @NonNull List<Boolean> asBooleanList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.BOOLEAN_LIST);
+        return plugin.getConfig().getBooleanList(getPath());
+    }
+
+    /**
+     * Retrieves the value of this configuration field as a boolean.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a boolean.
+     * @throws IllegalStateException if the field type is not BOOLEAN.
+     */
+    public boolean asBoolean(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.BOOLEAN);
+        return plugin.getConfig().getBoolean(getPath());
+    }
+
+    /**
+     * Retrieves the value of this configuration field as a double.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a double.
+     * @throws IllegalStateException if the field type is not DOUBLE.
+     */
+    public double asDouble(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.DOUBLE);
+        return plugin.getConfig().getDouble(getPath());
+    }
+
+    /**
+     * Retrieves the value of this configuration field as an integer.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as an integer.
+     * @throws IllegalStateException if the field type is not INTEGER.
+     */
+    public int asInt(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.INTEGER);
+        return plugin.getConfig().getInt(getPath());
+    }
+
+    /**
+     * Retrieves the value of this configuration field as a long.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a long.
+     * @throws IllegalStateException if the field type is not LONG.
+     */
+    public long asLong(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.LONG);
+        return plugin.getConfig().getLong(getPath());
+    }
+
+    /**
+     * Retrieves the value of this configuration field as a float.
+     *
+     * @param plugin The instance of WorldGuardRegionProtectPaperBase to access the configuration.
+     * @return The value of the configuration field as a float.
+     * @throws IllegalStateException if the field type is not FLOAT.
+     */
+    public float asFloat(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+        ensure(FieldType.FLOAT);
+        return (float) plugin.getConfig().getDouble(getPath());
+    }
 }
