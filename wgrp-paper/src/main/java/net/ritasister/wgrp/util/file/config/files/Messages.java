@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.file.messages;
+package net.ritasister.wgrp.util.file.config.files;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.util.config.messages.ComponentWrapper;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Messages {
+public final class Messages {
 
     private final ComponentWrapper DEFAULT_NULLABLE_MESSAGE = new ComponentWrapper("", this);
     public String prefix;
