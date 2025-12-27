@@ -1,12 +1,13 @@
 package net.ritasister.wgrp.rslibs.api;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
+import net.ritasister.wgrp.api.config.MessageProvider;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.rslibs.api.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
-import net.ritasister.wgrp.util.file.config.ConfigLoader;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.file.config.files.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
@@ -21,11 +22,11 @@ public class RSApiImpl implements MessagingService<Player> {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final EntityCheckTypeProvider entityCheckTypeProvider;
-    private final ConfigLoader configLoader;
+    private final MessageProvider<?, Messages> messageProvider;
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
-        this.configLoader = wgrpPlugin.getConfigLoader();
+        this.messageProvider = wgrpPlugin.getMessageProvider();
         this.entityCheckTypeProvider = new EntityCheckTypeProvider(wgrpPlugin);
     }
 
@@ -34,12 +35,12 @@ public class RSApiImpl implements MessagingService<Player> {
         if (regionName == null) {
             return;
         }
-        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())
+        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.asBoolean(wgrpPlugin.getWgrpPaperBase())
                 && !this.wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
-            final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.getList(wgrpPlugin.getWgrpPaperBase());
+            final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.asStringList(wgrpPlugin.getWgrpPaperBase());
             final String normalizedSenderCommand = senderCommand.toLowerCase();
             if (cmdList.stream().anyMatch(cmd -> cmd.equalsIgnoreCase(normalizedSenderCommand))) {
-                configLoader.getMessages().get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                messageProvider.getMessages().get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
                         .replace("<cmd>", normalizedSenderCommand)
                         .replace("<region>", regionName)
@@ -53,12 +54,12 @@ public class RSApiImpl implements MessagingService<Player> {
         if (regionName == null) {
             return;
         }
-        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_CONSOLE_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.getList(wgrpPlugin.getWgrpPaperBase());
+        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_CONSOLE_ENABLE.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+            final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.asStringList(wgrpPlugin.getWgrpPaperBase());
             final String normalizedSenderCommand = senderCommand.toLowerCase();
             if (cmdList.stream().anyMatch(cmd -> cmd.equalsIgnoreCase(normalizedSenderCommand))) {
                 final ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
-                configLoader.getMessages().get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                messageProvider.getMessages().get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
                         .replace("<cmd>", normalizedSenderCommand)
                         .replace("<region>", regionName)
@@ -82,8 +83,8 @@ public class RSApiImpl implements MessagingService<Player> {
      */
     public void notifyIfActionInRegion(Player admin, Player suspectPlayer, String suspectName, String action, String regionName, double x, double y, double z, String world) {
         if (this.wgrpPlugin.getPermissionCheck().hasPlayerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
-                && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            configLoader.getMessages().get("messages.Notify.sendAdminInfoIfActionInRegion")
+                && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+            messageProvider.getMessages().get("messages.Notify.sendAdminInfoIfActionInRegion")
                     .replace("<player>", suspectName)
                     .replace("<action>", action)
                     .replace("<region>", regionName)
@@ -96,7 +97,7 @@ public class RSApiImpl implements MessagingService<Player> {
 
     public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(checkEntity.getLocation(),
-                wgrpPlugin.getConfigLoader().getConfig().getRegionProtectMap())) {
+                wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())) {
             if (entity instanceof Player player) {
                 if (wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     entityCheck(cancellable, player);

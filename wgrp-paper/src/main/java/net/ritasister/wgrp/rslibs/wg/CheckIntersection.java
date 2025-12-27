@@ -51,7 +51,7 @@ public class CheckIntersection {
             final ProtectedRegion __dummy__ = new ProtectedCuboidRegion("__dummy__", min, max);
             assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
-            final List<String> regionProtectList = wgrpPlugin.getConfigLoader()
+            final List<String> regionProtectList = wgrpPlugin.getConfigProvider()
                     .getConfig()
                     .getRegionProtectMap()
                     .get(player.getWorld().getName());
@@ -64,7 +64,7 @@ public class CheckIntersection {
                 }
             }
             for (final ProtectedRegion rg : set) {
-                final List<String> breakAllowRegions = wgrpPlugin.getConfigLoader()
+                final List<String> breakAllowRegions = wgrpPlugin.getConfigProvider()
                         .getConfig()
                         .getRegionProtectOnlyBreakAllowMap()
                         .get(player.getWorld().getName());

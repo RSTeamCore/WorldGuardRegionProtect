@@ -5,6 +5,10 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
+import net.ritasister.wgrp.api.config.ConfigProvider;
+import net.ritasister.wgrp.api.config.MessageProvider;
+import net.ritasister.wgrp.api.config.ParamsVersionCheck;
+import net.ritasister.wgrp.api.config.VersionChecker;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
@@ -26,9 +30,16 @@ import net.ritasister.wgrp.rslibs.api.manager.region.RegionAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.api.manager.tools.ToolsAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
-import net.ritasister.wgrp.util.file.config.ConfigLoader;
+import net.ritasister.wgrp.util.file.ParamsVersionCheckImpl;
+import net.ritasister.wgrp.util.file.UpdateFile;
+import net.ritasister.wgrp.util.file.config.ConfigType;
+import net.ritasister.wgrp.util.file.config.files.Config;
+import net.ritasister.wgrp.util.file.config.files.Messages;
+import net.ritasister.wgrp.util.file.config.loader.ConfigLoader;
 import net.ritasister.wgrp.rslibs.updater.UpdateDownloaderGitHub;
+import net.ritasister.wgrp.util.file.config.provider.MessagesProvider;
+import net.ritasister.wgrp.util.file.config.version.ConfigCheckVersion;
+import net.ritasister.wgrp.util.file.config.version.MessageCheckVersion;
 import net.ritasister.wgrp.util.schedulers.FoliaRunnable;
 import net.ritasister.wgrp.util.utility.VersionCheck;
 import org.bstats.bukkit.Metrics;
@@ -36,12 +47,14 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -76,8 +89,13 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     private UpdateDownloaderGitHub downloader;
     private UpdateNotify updateNotify;
+
     private VersionCheck versionCheck;
+
     private ConfigLoader configLoader;
+    private ConfigProvider<WorldGuardRegionProtectPaperPlugin, Config> configProvider;
+    private MessageProvider<WorldGuardRegionProtectPaperPlugin, Messages> messageProvider;
+
     private Instant startTime;
 
     public WorldGuardRegionProtectPaperPlugin(final @NotNull WorldGuardRegionProtectPaperBase wgrpPaperBase) {
@@ -106,8 +124,11 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         this.versionCheck = new VersionCheck(this);
         this.spyLog = new ArrayList<>();
 
-        this.configLoader = new ConfigLoader();
-        this.configLoader.initConfig(this);
+        configProvider = new net.ritasister.wgrp.util.file.config.provider.ConfigProvider();
+        messageProvider = new MessagesProvider();
+
+        configLoader = configLoader();
+        configLoader.loadFiles(this);
 
         this.rsApi = new RSApiImpl(this);
         this.playerPermissions = new PlayerPermissionsImpl();
@@ -118,6 +139,16 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
         this.downloader = new UpdateDownloaderGitHub(this);
         this.updateNotify = new UpdateNotify(this);
+    }
+
+    private @NonNull ConfigLoader configLoader() {
+        final ParamsVersionCheck<ConfigType, YamlConfiguration> params = new ParamsVersionCheckImpl();
+        final UpdateFile updateFile = new UpdateFile(params);
+
+        final VersionChecker<WorldGuardRegionProtectPaperPlugin> configCheckVersion = new ConfigCheckVersion(params, updateFile);
+        final VersionChecker<WorldGuardRegionProtectPaperPlugin> langCheckVersion = new MessageCheckVersion(params, updateFile);
+
+        return new ConfigLoader(configProvider, messageProvider, configCheckVersion, langCheckVersion);
     }
 
     private void initializeMetrics() {
@@ -136,25 +167,8 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         } catch (Exception exception) {
             this.getLogger().severe("Failed to unload resources: ", exception);
         }
-        saveConfigFiles();
+        configProvider.getConfig().saveConfigFiles();
         this.getLogger().info("Saved complete. Good luck and thanks for using WorldGuardRegionProtect!");
-    }
-
-    private void saveConfigFiles() {
-        this.getLogger().info("Saving all configuration files before the plugin shuts down...");
-        try {
-            for (ConfigFields configFields : ConfigFields.values()) {
-                final var path = configFields.getPath();
-                final var fields = configFields.get(this);
-                if (configLoader != null) {
-                    configLoader.getConfig().saveConfig(path, fields);
-                }
-                this.getLogger().info(String.format("Successfully checked and saved fields: %s", configFields));
-            }
-        } catch (Exception exception) {
-            this.getLogger().severe("Failed to save config.yml! Error: " + exception.getLocalizedMessage());
-            this.getLogger().severe("Exception details:", exception);
-        }
     }
 
     @Override
@@ -293,6 +307,14 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     public ConfigLoader getConfigLoader() {
-        return this.configLoader;
+        return configLoader;
+    }
+
+    public ConfigProvider<WorldGuardRegionProtectPaperPlugin, Config> getConfigProvider() {
+        return configProvider;
+    }
+
+    public MessageProvider<WorldGuardRegionProtectPaperPlugin, Messages> getMessageProvider() {
+        return messageProvider;
     }
 }
