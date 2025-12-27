@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.listener.entity;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,7 +19,7 @@ public final class HangingProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyHangingPlace(@NotNull HangingPlaceEvent e) {
-        if (!ConfigFields.DENY_PLACE_ITEM_FRAME_OR_PAINTING.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (!ConfigFields.DENY_PLACE_ITEM_FRAME_OR_PAINTING.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
             return;
         }
         wgrpPlugin.getRsApi().entityCheck(e, e.getEntity(), e.getEntity());
@@ -27,7 +27,7 @@ public final class HangingProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyHangingBreakByEntity(@NotNull HangingBreakByEntityEvent e) {
-        if (!ConfigFields.DENY_DAMAGE_ITEM_FRAME_OR_PAINTING.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (!ConfigFields.DENY_DAMAGE_ITEM_FRAME_OR_PAINTING.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
             return;
         }
         wgrpPlugin.getRsApi().entityCheck(e, e.getRemover(), e.getEntity());

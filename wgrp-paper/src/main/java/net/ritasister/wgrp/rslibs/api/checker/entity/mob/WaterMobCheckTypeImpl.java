@@ -2,7 +2,8 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.utility.entity.EntityHelper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.WaterMob;
@@ -21,7 +22,7 @@ public final class WaterMobCheckTypeImpl implements EntityCheckType<Entity, Enti
     public boolean check(final Entity entity) {
         final WaterMob waterMob = (WaterMob) entity;
         final EntityType waterMobType = waterMob.getType();
-        return ConfigFields.WATER_MOB_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(waterMobType.name().toLowerCase());
+        return ConfigFields.WATER_MOB_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(waterMobType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)
@@ -38,6 +39,7 @@ public final class WaterMobCheckTypeImpl implements EntityCheckType<Entity, Enti
             EntityType.TROPICAL_FISH,
             EntityType.SALMON,
             EntityType.PUFFERFISH,
+            EntityHelper.getEntityType("NAUTILUS"), // available from since 1.21.11
         };
     }
 

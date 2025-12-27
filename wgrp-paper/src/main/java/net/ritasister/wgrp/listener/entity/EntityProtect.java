@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.listener.entity;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -32,21 +32,21 @@ public final class EntityProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denySpawnEntity(@NotNull CreatureSpawnEvent event) {
-        if (ConfigFields.DENY_CREATURE_SPAWN.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (ConfigFields.DENY_CREATURE_SPAWN.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
             wgrpPlugin.getRsApi().entityCheck(event, event.getEntity(), event.getEntity());
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denySpawnEntity(@NotNull SpawnerSpawnEvent event) {
-        if(ConfigFields.DENY_MOB_SPAWN_FROM_SPAWNER.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if(ConfigFields.DENY_MOB_SPAWN_FROM_SPAWNER.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
             wgrpPlugin.getRsApi().entityCheck(event, event.getEntity(), event.getEntity());
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyItemSpawn(@NotNull ItemSpawnEvent event) {
-        if (ConfigFields.DENY_MOB_NATURALLY_SPAWN.getBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (ConfigFields.DENY_MOB_NATURALLY_SPAWN.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
             wgrpPlugin.getRsApi().entityCheck(event, event.getEntity(), event.getEntity());
         }
     }

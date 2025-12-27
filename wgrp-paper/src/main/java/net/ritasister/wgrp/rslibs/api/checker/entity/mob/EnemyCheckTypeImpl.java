@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.mob;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.entity.Enemy;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -21,7 +21,7 @@ public final class EnemyCheckTypeImpl implements EntityCheckType<Entity, EntityT
     public boolean check(final Entity entity) {
         final Enemy enemy = (Enemy) entity;
         final EntityType monsterType = enemy.getType();
-        return ConfigFields.ENEMY_ENTITY_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(monsterType.name().toLowerCase());
+        return ConfigFields.ENEMY_ENTITY_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(monsterType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

@@ -3,7 +3,7 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.mob;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.utility.entity.EntityHelper;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
@@ -22,7 +22,7 @@ public final class MonsterCheckTypeImpl implements EntityCheckType<Entity, Entit
     public boolean check(final Entity entity) {
         final Monster monster = (Monster) entity;
         final EntityType monsterType = monster.getType();
-        return ConfigFields.MONSTER_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(monsterType.name().toLowerCase());
+        return ConfigFields.MONSTER_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(monsterType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)
@@ -65,7 +65,10 @@ public final class MonsterCheckTypeImpl implements EntityCheckType<Entity, Entit
             EntityHelper.getEntityType("BREEZE"),
             EntityHelper.getEntityType("BOGGED"),
             //New mobs since mc 1.21.4
-            EntityHelper.getEntityType("CREAKING")
+            EntityHelper.getEntityType("CREAKING"),
+            //New mobs since mc 1.21.11
+            EntityHelper.getEntityType("PARCHED"),
+            EntityHelper.getEntityType("ZOMBIE_NAUTILUS")
         };
     }
 

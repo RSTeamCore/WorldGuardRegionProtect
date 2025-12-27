@@ -2,8 +2,7 @@ package net.ritasister.wgrp.listener.miscellaneous;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.file.config.Config;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,21 +18,18 @@ public final class MiscProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    private final Config config;
-
     public MiscProtect(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
-        this.config = wgrpPlugin.getConfigLoader().getConfig();
     }
 
     @EventHandler(priority = EventPriority.LOW)
     private void denyBlockFromTo(@NotNull BlockFromToEvent e) {
         final Block block = e.getBlock();
         final Location location = e.getToBlock().getLocation();
-        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, config.getRegionProtectMap())) {
-            if (ConfigFields.DENY_WATER_FLOW_TO_REGION.getBoolean(wgrpPlugin.getWgrpPaperBase())
+        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())) {
+            if (ConfigFields.DENY_WATER_FLOW_TO_REGION.asBoolean(wgrpPlugin.getWgrpPaperBase())
                     && block.getType() == Material.WATER
-                    || ConfigFields.DENY_LAVA_FLOW_TO_REGION.getBoolean(wgrpPlugin.getWgrpPaperBase())
+                    || ConfigFields.DENY_LAVA_FLOW_TO_REGION.asBoolean(wgrpPlugin.getWgrpPaperBase())
                     && block.getType() == Material.LAVA) {
                 e.setCancelled(true);
             }
@@ -44,7 +40,7 @@ public final class MiscProtect implements Listener {
     private void denyStructureGrow(@NotNull StructureGrowEvent e) {
         if (e.getPlayer() != null) {
             final Player player = e.getPlayer();
-            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(e.getLocation(), config.getRegionProtectMap())) {
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(e.getLocation(), wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())) {
                 if (!wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     e.setCancelled(true);
                 }

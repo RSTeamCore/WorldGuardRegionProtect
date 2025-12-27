@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.misc;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -21,7 +21,7 @@ public final class ArmorStandCheckTypeImpl implements EntityCheckType<Entity, En
     public boolean check(final @NotNull Entity entity) {
         final ArmorStand armorStand = (ArmorStand) entity;
         final EntityType armorStandType = armorStand.getType();
-        return ConfigFields.INTERACT_TYPE.getList(wgrpPlugin.getWgrpPaperBase()).contains(armorStandType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(armorStandType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

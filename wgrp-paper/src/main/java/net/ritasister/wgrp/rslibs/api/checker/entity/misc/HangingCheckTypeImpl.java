@@ -2,7 +2,7 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.misc;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.util.file.config.ConfigFields;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Hanging;
@@ -21,7 +21,7 @@ public final class HangingCheckTypeImpl implements EntityCheckType<Entity, Entit
     public boolean check(final Entity entity) {
         final Hanging hanging = (Hanging) entity;
         final EntityType hangingType = hanging.getType();
-        return ConfigFields.INTERACT_TYPE.getList(wgrpBukkitPlugin.getWgrpPaperBase()).contains(hangingType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.asStringList(wgrpBukkitPlugin.getWgrpPaperBase()).contains(hangingType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)
