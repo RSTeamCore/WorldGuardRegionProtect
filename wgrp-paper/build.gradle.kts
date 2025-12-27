@@ -27,11 +27,11 @@ dependencies {
     implementation(project(":wgrp-common"))
 
     //Paper or Folia
-    paperweight.paperDevBundle("1.21.10-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
 
     //Plugins api
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.3")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9-SNAPSHOT")
+    compileOnly(dependencyNotation = "com.sk89q.worldguard:worldguard-bukkit:7.0.9-SNAPSHOT")
     compileOnly("com.sk89q.worldedit:worldedit-core:7.3.9")
     compileOnly("me.clip:placeholderapi:2.11.6")
     implementation("org.bstats:bstats-bukkit:3.1.0")
@@ -135,7 +135,7 @@ artifacts {
 }
 
 tasks.named<RunServer>("runServer") {
-    minecraftVersion("1.21.10")
+    minecraftVersion("1.21.11")
     jvmArgs(
         "-Xms3G",
         "-Xmx3G",
