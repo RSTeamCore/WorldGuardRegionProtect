@@ -9,6 +9,7 @@ import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import net.ritasister.wgrp.util.file.config.files.Messages;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -17,6 +18,7 @@ import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 
 public class RSApiImpl implements MessagingService<Player> {
 
@@ -96,8 +98,13 @@ public class RSApiImpl implements MessagingService<Player> {
     }
 
     public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
-        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(checkEntity.getLocation(),
-                wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())) {
+        final Location location = checkEntity.getLocation();
+        final Map<String, List<String>> protectedRegions = wgrpPlugin.getConfigLoader().getConfig().getRegionProtectMap();
+        final Map<String, List<String>> protectedPlayerRegions = wgrpPlugin.getConfigLoader().getConfig().getPlayerRegionProtectMap();
+        final boolean inServerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(location, protectedRegions);
+        final boolean inPlayerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(location, protectedPlayerRegions);
+
+        if ((inServerRegion || inPlayerRegion)) {
             if (entity instanceof Player player) {
                 if (wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     entityCheck(cancellable, player);
