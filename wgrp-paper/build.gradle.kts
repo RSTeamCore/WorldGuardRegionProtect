@@ -46,6 +46,16 @@ dependencies {
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.google.guava:guava:33.3.1-jre")
     implementation("it.unimi.dsi:fastutil:8.5.15")
+
+    //HikariCP
+    implementation("com.zaxxer:HikariCP:5.0.1")
+
+    //MariaDB for DataBase
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.1.2")
+
+    //ORMLite
+    implementation("com.j256.ormlite:ormlite-core:6.1")
+    implementation("com.j256.ormlite:ormlite-jdbc:6.1")
 }
 
 configurations.all {
