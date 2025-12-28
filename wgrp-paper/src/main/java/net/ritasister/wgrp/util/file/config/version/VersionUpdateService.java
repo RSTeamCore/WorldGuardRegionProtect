@@ -56,8 +56,8 @@ public class VersionUpdateService {
             return;
         }
 
-        update(type, plugin, currentFile, resourcePath);
         plugin.getLogger().info("Found new version of " + type + " file, updating...");
+        update(type, plugin, currentFile, resourcePath);
     }
 
     private void update(ConfigType type, WorldGuardRegionProtectPaperPlugin plugin, File file, String resourcePath) {
