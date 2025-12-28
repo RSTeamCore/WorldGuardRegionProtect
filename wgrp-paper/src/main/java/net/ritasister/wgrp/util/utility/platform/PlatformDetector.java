@@ -67,17 +67,18 @@ public class PlatformDetector {
         final String title = getTitle(platformType);
         final String description = getDescription(platformType);
 
-        final String message = """
-        ====================================================
+        final String message =
+            """
+            ====================================================
         
-            WorldGuardRegionProtect %s
-            Server running on %s - %s
+                WorldGuardRegionProtect %s
+                Server running on %s - %s
         
-            %s
-            %s
-        
-        ====================================================
-        """.formatted(dev ? version : version + "-release", bootstrap.getServerVersion(), platformType.getPlatformName(), title, description);
+                %s
+                %s
+            
+            ====================================================
+            """.formatted(dev ? version : version + "-release", bootstrap.getServerVersion(), platformType.getPlatformName(), title, description);
 
         if (platformType == Platform.Type.UNKNOWN || platformType == Platform.Type.BUKKIT || platformType == Platform.Type.SPIGOT) {
             logger.warn(message);
