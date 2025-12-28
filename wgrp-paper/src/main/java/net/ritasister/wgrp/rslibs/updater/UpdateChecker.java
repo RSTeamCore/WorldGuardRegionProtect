@@ -4,6 +4,7 @@ import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.loader.WGRPCompatibilityCheck;
 import net.ritasister.wgrp.util.schedulers.FoliaRunnable;
+import net.ritasister.wgrp.util.utility.platform.PlatformDetector;
 import org.bukkit.Bukkit;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public final class UpdateChecker {
     }
 
     public void getVersion(final Consumer<String> consumer) {
-        final String platformName = WGRPCompatibilityCheck.getPlatformName();
+        final String platformName = PlatformDetector.getPlatformName();
 
         if (platformName.equals(Platform.Type.BUKKIT.getPlatformName())
                 || platformName.equals(Platform.Type.SPIGOT.getPlatformName())) {

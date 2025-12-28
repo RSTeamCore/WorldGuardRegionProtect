@@ -17,12 +17,16 @@ public final class MessageCheckVersion implements VersionChecker<WorldGuardRegio
     }
 
     @Override
-    public void check(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
-        versionUpdateService.checkAndUpdate(
-                wgrpPlugin,
-                ConfigType.LANG,
-                new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(),
-                        "lang/" + ConfigFields.LANG.asString(wgrpPlugin.getWgrpPaperBase()) + ".yml"),
-                "lang/" + ConfigFields.LANG.asString(wgrpPlugin.getWgrpPaperBase()) + ".yml");
+    public boolean check(@NotNull WorldGuardRegionProtectPaperPlugin plugin) {
+        final File langFile = new File(plugin.getWgrpPaperBase().getDataFolder(),
+                "lang/" + ConfigFields.LANG.asString(plugin.getWgrpPaperBase()) + ".yml");
+
+        try {
+            versionUpdateService.checkAndUpdate(plugin, ConfigType.LANG, langFile, "lang/" + ConfigFields.LANG.asString(plugin.getWgrpPaperBase()) + ".yml");
+            return true;
+        } catch (Exception e) {
+            plugin.getLogger().severe("Failed to check/update language file: " + e.getMessage());
+            return false;
+        }
     }
 }
