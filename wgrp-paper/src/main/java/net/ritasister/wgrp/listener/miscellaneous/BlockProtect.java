@@ -83,7 +83,7 @@ public final class BlockProtect implements Listener {
     }
 
     private void sendMessageByPlayer(Player player) {
-        if (ConfigFields.REGION_MESSAGE_PROTECT_BY_PLAYER.asBoolean(this.wgrpPlugin))
+        if (ConfigFields.REGION_MESSAGE_PROTECT_BY_PLAYER.asBoolean(wgrpPlugin))
             wgrpPlugin.getMessageProvider().get().get("messages.ServerMsg.wgrpMsgByPlayer").send(player);
     }
 
