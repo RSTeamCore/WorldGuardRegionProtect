@@ -1,10 +1,11 @@
 package net.ritasister.wgrp.api.config.provider;
 
 /**
- * Interface for providing message configurations.
+ * A provider interface for message resources.
  *
- * @param <P> The type of the plugin instance.
- * @param <M> The type of the messages' configuration.
+ * @param <P> the type of the provider
+ * @param <M> the type of the message resource
+ * @since 1.9.11.21
  */
 public interface MessageProvider<P, M> extends ResourceProvider<P, M> {
 
