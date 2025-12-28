@@ -12,5 +12,5 @@ public interface VersionChecker<P> {
      *
      * @param plugin The plugin instance.
      */
-    void check(P plugin);
+    boolean check(P plugin);
 }

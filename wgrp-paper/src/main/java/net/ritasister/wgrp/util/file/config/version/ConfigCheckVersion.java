@@ -16,10 +16,15 @@ public final class ConfigCheckVersion implements VersionChecker<WorldGuardRegion
     }
 
     @Override
-    public void check(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
-        versionUpdateService.checkAndUpdate(wgrpPlugin,
-                ConfigType.CONFIG,
-                new File(wgrpPlugin.getWgrpPaperBase().getDataFolder(), "config.yml"),
-                "config.yml");
+    public boolean check(@NotNull WorldGuardRegionProtectPaperPlugin plugin) {
+        final File configFile = new File(plugin.getWgrpPaperBase().getDataFolder(), "config.yml");
+
+        try {
+            versionUpdateService.checkAndUpdate(plugin, ConfigType.CONFIG, configFile, "config.yml");
+            return true;
+        } catch (Exception e) {
+            plugin.getLogger().severe("Failed to check/update config.yml: " + e.getMessage());
+            return false;
+        }
     }
 }
