@@ -25,6 +25,15 @@ permissions:
             - wgrp.notify.admin
             - wgrp.command.addregion
             - wgrp.command.removeregion
+            - wgrp.command.protect
+            - wgrp.command.unprotect
+    wgrp.protect:
+        description: All permissions of this plugin for custom groups
+        default: false
+        children:
+            - wgrp.command.wgrpbase
+            - wgrp.command.protect
+            - wgrp.command.unprotect
     wgrp.*:
         description: Alias for wgrp.admin
         default: false
@@ -35,6 +44,12 @@ permissions:
         default: false
     wgrp.command.removeregion:
         description: Access for /wgrp removeregion
+        default: false
+    wgrp.command.protect:
+        description: Access for /wgrp protect
+        default: false
+    wgrp.command.unprotect:
+        description: Access for /wgrp unprotect
         default: false
     wgrp.command.reload:
         description: Access for /wgrp reload command

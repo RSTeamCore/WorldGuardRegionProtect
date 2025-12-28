@@ -1,13 +1,18 @@
 langTitle:
   language: English
   author: RSTeamCore
-  version: 2
+  version: 3
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by server!'
+    wgrpMsgByPlayer: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by a player!'
     wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> You can''t use here the worldedit command!'
     noPerm: '<red>You don''t have permission to use this command.'
   regionManagement:
+    notStandingInRegion: '<red>You are not standing in any region!'
+    notOwnerRegion: '<red>You can''t remove or add to protect the region <gold><region><red> because you are not a owner this region!'
+    restrictProtect: '<red>You can''t protect the region <gold><region><red> because this region protected by admin!'
+    restrictUnProtect: '<red>You can''t remove protect the region <gold><region><red> because this region protected by admin!'
     add: '<green>Region <gold><region><green> added to config.'
     remove: '<red>Region <gold><region><red> removed from config.'
     notContains: '<red>Could not remove region from protect list, because <gold><region> <red>is not protected!'

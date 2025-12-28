@@ -205,9 +205,12 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
         final List<FoliaRunnable> tasks = List.of();
 
+        final ListenerHandler listenerHandler = new ListenerHandler(this);
+        listenerHandler.handle(wgrpPaperBase.getServer().getPluginManager());
+
         final List<Handler<?>> handlers = List.of(
                 new CommandHandler(this),
-                new ListenerHandler(this),
+                listenerHandler,
                 new TaskHandler(this, tasks)
         );
 

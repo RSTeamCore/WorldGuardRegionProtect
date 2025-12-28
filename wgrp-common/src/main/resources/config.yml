@@ -6,7 +6,7 @@ wgRegionProtect:
     # -------------------------------------------------------------
     # Do not touch!
     # -------------------------------------------------------------
-    version: 4
+    version: 5
 
     # -------------------------------------------------------------
     # Language of this plugins.
@@ -25,6 +25,18 @@ wgRegionProtect:
     updateChecker:
         enable: true
         sendNoUpdate: true
+
+    # -------------------------------------------------------------
+    # List of protected regions only have access to this region.
+    # If regions are not needed, specify an empty parameter:
+    # Do not delete all worlds, always leave one world,
+    # otherwise the structure of the configuration is broken!
+    # playerRegionProtect: []
+    # another_world: []
+    # -------------------------------------------------------------
+    playerRegionProtect:
+        world: []
+        another_world: []
 
     # -------------------------------------------------------------
     # List of protected regions.
@@ -546,11 +558,14 @@ wgRegionProtect:
         # denyWaterFlowToRegion — Whether to allow water to flow into protected regions.
         # denyLavaFlowToRegion — Whether to allow lava to flow into protected regions.
         # denyFormObsidianOrCobbleStone - Whether to allow form obsidian or cobblestone from water and lava.
+        # denyUseSuperpickaxe: true - Whether to allow or deny use superpickaxe in protected region.
         # --------------------------------------------------------------------------------------
         other:
             denyWaterFlowToRegion: true
             denyLavaFlowToRegion: true
             denyFormObsidianOrCobbleStone: true
+            denyUseSuperpickaxe: true
+
         # --------------------------------------------------------------------------------------
         # denyCreatureSpawn — Whether to deny spawn mobs from by egg.
         # denyMobSpawner — Wether to deny spawn mobs from spawner.
@@ -646,6 +661,11 @@ wgRegionProtect:
             - //smooth
             - //cut
             - //replacenear
+
+    # --------------------------------------------------------------------------------------
+    # Turn Enable/Disable the protected region message by player.
+    # --------------------------------------------------------------------------------------
+    regionMessageProtectByPlayer: true
 
     # --------------------------------------------------------------------------------------
     # Turn Enable/Disable the protected region message.

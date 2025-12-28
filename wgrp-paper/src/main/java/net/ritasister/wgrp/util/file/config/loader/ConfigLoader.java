@@ -49,8 +49,4 @@ public final class ConfigLoader {
     public Config getConfig() {
         return configProvider.get();
     }
-
-    public Messages getMessages() {
-        return messageProvider.get();
-    }
 }

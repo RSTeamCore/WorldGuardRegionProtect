@@ -30,18 +30,12 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
         if (regions.get(location.getWorld().getName()) == null) {
             return false;
         }
-        if (this.checkStandingRegion(location, regions)) {
-            return this.getOwners(location, uniqueId);
-        }
-        return false;
+        return this.getOwners(location, uniqueId);
     }
 
     @Override
     public boolean isOwnerRegion(@NotNull Location location, @NotNull UUID uniqueId) {
-        if (this.checkStandingRegion(location)) {
-            return this.getOwners(location, uniqueId);
-        }
-        return false;
+        return this.getOwners(location, uniqueId);
     }
 
     @Override
@@ -49,18 +43,12 @@ public class RegionAdapterManagerPaper implements RegionAdapterManager<Location,
         if (regions.get(location.getWorld().getName()) == null) {
             return false;
         }
-        if (this.checkStandingRegion(location, regions)) {
-            return this.getMembers(location, uniqueId);
-        }
-        return false;
+        return this.getMembers(location, uniqueId);
     }
 
     @Override
     public boolean isMemberRegion(@NotNull Location location, @NotNull UUID uniqueId) {
-        if (this.checkStandingRegion(location)) {
-            return this.getMembers(location, uniqueId);
-        }
-        return false;
+        return this.getMembers(location, uniqueId);
     }
 
     @Override
