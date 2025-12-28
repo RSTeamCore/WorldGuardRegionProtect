@@ -41,7 +41,7 @@ public final class PlayerProtect implements Listener {
         final boolean inPlayerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(location, protectedPlayerRegions);
 
         if ((inServerRegion || inPlayerRegion) && wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
-            if (ConfigFields.SIGN_TYPE.asString(wgrpPlugin.getWgrpPaperBase()).contains(e.getBlock().getType().name().toLowerCase())) {
+            if (ConfigFields.SIGN_TYPE.asString(wgrpPlugin).contains(e.getBlock().getType().name().toLowerCase())) {
                 e.setCancelled(true);
             }
         }
@@ -50,14 +50,14 @@ public final class PlayerProtect implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyFlowerPotManipulate(@NotNull PlayerFlowerPotManipulateEvent e) {
         final Location location = e.getFlowerpot().getLocation();
-        if (ConfigFields.DENY_MANIPULATE_WITH_FLOWERPOT.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (ConfigFields.DENY_MANIPULATE_WITH_FLOWERPOT.asBoolean(wgrpPlugin)) {
             final Map<String, List<String>> protectedRegions = wgrpPlugin.getConfigLoader().getConfig().getRegionProtectMap();
             final Map<String, List<String>> protectedPlayerRegions = wgrpPlugin.getConfigLoader().getConfig().getPlayerRegionProtectMap();
             final boolean inServerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(location, protectedRegions);
             final boolean inPlayerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(location, protectedPlayerRegions);
 
             if ((inServerRegion || inPlayerRegion) && wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
-                if (ConfigFields.NATURAL_BLOCK_OR_ITEM.asString(wgrpPlugin.getWgrpPaperBase()).contains(e.getItem().getType().name().toLowerCase())) {
+                if (ConfigFields.NATURAL_BLOCK_OR_ITEM.asString(wgrpPlugin).contains(e.getItem().getType().name().toLowerCase())) {
                     e.setCancelled(true);
                 }
             }
@@ -90,8 +90,8 @@ public final class PlayerProtect implements Listener {
             final boolean inPlayerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(location, protectedPlayerRegions);
 
             if ((inServerRegion || inPlayerRegion) && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
-                for (String spawnVehicleType : ConfigFields.VEHICLE_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase())) {
-                    for (String spawnEntityType : ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase())) {
+                for (String spawnVehicleType : ConfigFields.VEHICLE_TYPE.asStringList(wgrpPlugin)) {
+                    for (String spawnEntityType : ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin)) {
                         checkDenyInteract(event, spawnVehicleType, spawnEntityType, player);
                     }
                 }
@@ -107,7 +107,7 @@ public final class PlayerProtect implements Listener {
 
     private void denyUseSuperPickaxe(@NotNull Player player, Cancellable cancellable) {
         final BukkitPlayer bukkitPlayer = BukkitAdapter.adapt(player);
-        if (ConfigFields.DENY_USE_SUPER_PICKAXE.asBoolean(this.wgrpPlugin.getWgrpPaperBase()) &&
+        if (ConfigFields.DENY_USE_SUPER_PICKAXE.asBoolean(this.wgrpPlugin) &&
                 this.wgrpPlugin.getToolsAdapter().isSuperPickaxeActive(bukkitPlayer))
             cancellable.setCancelled(true);
     }
