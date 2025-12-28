@@ -5,19 +5,6 @@ package net.ritasister.wgrp.api.config.provider;
  *
  * @param <P> The type of the plugin instance.
  */
-public interface ConfigProvider<P, C> {
+public interface ConfigProvider<P, C> extends ResourceProvider<P, C> {
 
-    /**
-     * Initializes the configuration provider with the given plugin instance.
-     *
-     * @param plugin The plugin instance.
-     */
-    void init(P plugin);
-
-    /**
-     * Retrieves the loaded configuration.
-     *
-     * @return The configuration instance.
-     */
-    C getConfig();
 }

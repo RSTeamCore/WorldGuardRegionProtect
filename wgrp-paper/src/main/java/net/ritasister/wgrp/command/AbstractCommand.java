@@ -53,7 +53,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) {
-            configLoader.getMessages().get("messages.usage.wgrpUseHelp").send(sender);
+            configLoader.get().get("messages.usage.wgrpUseHelp").send(sender);
         } else {
             for (Method m : this.getClass().getDeclaredMethods()) {
                 if (m.isAnnotationPresent(SubCommand.class)) {
@@ -87,7 +87,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                                 run(sender, m, sub, subArgs);
                                 break;
                             } else {
-                                configLoader.getMessages().get("messages.ServerMsg.noPerm").send(sender);
+                                configLoader.get().get("messages.ServerMsg.noPerm").send(sender);
                             }
                         } else {
                             run(sender, m, sub, subArgs);

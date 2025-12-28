@@ -26,7 +26,7 @@ public final class ToolsProtect implements Listener {
         final Player player = e.getPlayer();
         final Location location = e.getLectern().getLocation();
         if (ConfigFields.DENY_TAKE_LECTERN_BOOK.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().get().getRegionProtectMap())
                     && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
@@ -38,7 +38,7 @@ public final class ToolsProtect implements Listener {
         final Player player = e.getPlayer();
         final Location location = e.getStonecutterInventory().getLocation();
         if (location != null && ConfigFields.DENY_STONECUTTER_RECIPE_SELECT.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().get().getRegionProtectMap())
                     && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }
@@ -50,7 +50,7 @@ public final class ToolsProtect implements Listener {
         final Player player = e.getPlayer();
         final Location location = e.getLoomInventory().getLocation();
         if (location != null && ConfigFields.DENY_LOOM_PATTERN_SELECT.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().get().getRegionProtectMap())
                     && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                 e.setCancelled(true);
             }

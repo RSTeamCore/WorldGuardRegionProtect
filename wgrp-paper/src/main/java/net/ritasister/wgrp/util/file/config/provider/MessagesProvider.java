@@ -27,7 +27,7 @@ public final class MessagesProvider implements MessageProvider<WorldGuardRegionP
     }
 
     @Override
-    public Messages getMessages() {
+    public Messages get() {
         return messages;
     }
 }

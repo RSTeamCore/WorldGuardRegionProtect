@@ -47,7 +47,6 @@ public final class ConfigLoader {
     }
 
     public Config getConfig() {
-        return configProvider.getConfig();
+        return configProvider.get();
     }
-
 }

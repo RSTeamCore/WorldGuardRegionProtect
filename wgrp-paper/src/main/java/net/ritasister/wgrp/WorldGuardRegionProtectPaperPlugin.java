@@ -189,7 +189,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         } catch (Exception exception) {
             this.getLogger().severe("Failed to unload resources: ", exception);
         }
-        configProvider.getConfig().saveConfigFiles();
+        configProvider.get().saveConfigFiles();
         this.getLogger().info("Saved complete. Good luck and thanks for using WorldGuardRegionProtect!");
     }
 

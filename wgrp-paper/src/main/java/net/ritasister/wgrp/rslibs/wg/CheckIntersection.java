@@ -52,7 +52,7 @@ public class CheckIntersection {
             assert regions != null;
             final ApplicableRegionSet set = regions.getApplicableRegions(__dummy__);
             final List<String> regionProtectList = wgrpPlugin.getConfigProvider()
-                    .getConfig()
+                    .get()
                     .getRegionProtectMap()
                     .get(player.getWorld().getName());
 
@@ -65,7 +65,7 @@ public class CheckIntersection {
             }
             for (final ProtectedRegion rg : set) {
                 final List<String> breakAllowRegions = wgrpPlugin.getConfigProvider()
-                        .getConfig()
+                        .get()
                         .getRegionProtectOnlyBreakAllowMap()
                         .get(player.getWorld().getName());
 
