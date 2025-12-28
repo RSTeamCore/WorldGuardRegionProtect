@@ -5,10 +5,10 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
-import net.ritasister.wgrp.api.config.ConfigProvider;
-import net.ritasister.wgrp.api.config.MessageProvider;
-import net.ritasister.wgrp.api.config.ParamsVersionCheck;
-import net.ritasister.wgrp.api.config.VersionChecker;
+import net.ritasister.wgrp.api.config.provider.ConfigProvider;
+import net.ritasister.wgrp.api.config.provider.MessageProvider;
+import net.ritasister.wgrp.api.config.version.ConfigVersionReader;
+import net.ritasister.wgrp.api.config.version.VersionChecker;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
@@ -30,7 +30,7 @@ import net.ritasister.wgrp.rslibs.api.manager.region.RegionAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.api.manager.tools.ToolsAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
-import net.ritasister.wgrp.util.file.ParamsVersionCheckImpl;
+import net.ritasister.wgrp.util.file.config.provider.ZonedDateProvider;
 import net.ritasister.wgrp.util.file.UpdateFile;
 import net.ritasister.wgrp.util.file.config.ConfigType;
 import net.ritasister.wgrp.util.file.config.files.Config;
@@ -40,6 +40,7 @@ import net.ritasister.wgrp.rslibs.updater.UpdateDownloaderGitHub;
 import net.ritasister.wgrp.util.file.config.provider.MessagesProvider;
 import net.ritasister.wgrp.util.file.config.version.ConfigCheckVersion;
 import net.ritasister.wgrp.util.file.config.version.MessageCheckVersion;
+import net.ritasister.wgrp.util.file.config.version.VersionUpdateService;
 import net.ritasister.wgrp.util.schedulers.FoliaRunnable;
 import net.ritasister.wgrp.util.utility.VersionCheck;
 import org.bstats.bukkit.Metrics;
@@ -142,13 +143,21 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     private @NonNull ConfigLoader configLoader() {
-        final ParamsVersionCheck<ConfigType, YamlConfiguration> params = new ParamsVersionCheckImpl();
-        final UpdateFile updateFile = new UpdateFile(params);
+        final VersionUpdateService versionUpdateService = getVersionUpdateService();
 
-        final VersionChecker<WorldGuardRegionProtectPaperPlugin> configCheckVersion = new ConfigCheckVersion(params, updateFile);
-        final VersionChecker<WorldGuardRegionProtectPaperPlugin> langCheckVersion = new MessageCheckVersion(params, updateFile);
+        final VersionChecker<WorldGuardRegionProtectPaperPlugin> configCheckVersion = new ConfigCheckVersion(versionUpdateService);
+        final VersionChecker<WorldGuardRegionProtectPaperPlugin> langCheckVersion = new MessageCheckVersion(versionUpdateService);
 
         return new ConfigLoader(configProvider, messageProvider, configCheckVersion, langCheckVersion);
+    }
+
+    private static @NonNull VersionUpdateService getVersionUpdateService() {
+        final ConfigVersionReader<ConfigType, YamlConfiguration> versionReader = new net.ritasister.wgrp.util.file.config.version.ConfigVersionReaderImpl();
+        final ZonedDateProvider dateProvider = new ZonedDateProvider();
+
+        final UpdateFile updateFile = new UpdateFile(dateProvider);
+
+        return new VersionUpdateService(versionReader, updateFile);
     }
 
     private void initializeMetrics() {
