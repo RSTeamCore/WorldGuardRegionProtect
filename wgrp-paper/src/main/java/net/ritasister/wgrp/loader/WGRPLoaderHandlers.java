@@ -6,20 +6,19 @@ import net.ritasister.wgrp.api.handler.LoadHandlers;
 import net.ritasister.wgrp.handler.CommandHandler;
 import net.ritasister.wgrp.handler.ListenerHandler;
 import net.ritasister.wgrp.handler.TaskHandler;
-import org.bukkit.plugin.PluginManager;
+
+import java.util.List;
 
 public final class WGRPLoaderHandlers implements LoadHandlers<WorldGuardRegionProtectPaperPlugin> {
 
-    @Override
-    public void loadHandler(WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
-        final Handler<Void> registerCommands = new CommandHandler(wgrpPlugin);
-        registerCommands.handle();
+    private final List<Handler<?>> handlers;
 
-        final Handler<PluginManager> registerListeners = new ListenerHandler(wgrpPlugin);
-        registerListeners.handle(wgrpPlugin.getWgrpPaperBase().getServer().getPluginManager());
-
-        final Handler<Void> registerTasks = new TaskHandler(wgrpPlugin);
-        registerTasks.handle();
+    public WGRPLoaderHandlers(List<Handler<?>> handlers) {
+        this.handlers = handlers;
     }
 
+    @Override
+    public void loadHandler(WorldGuardRegionProtectPaperPlugin plugin) {
+        handlers.forEach(Handler::handle);
+    }
 }

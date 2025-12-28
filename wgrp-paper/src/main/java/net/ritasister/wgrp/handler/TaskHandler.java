@@ -10,23 +10,20 @@ import java.util.stream.Collectors;
 public class TaskHandler implements Handler<Void> {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
+    private final List<FoliaRunnable> tasks;
 
-    public TaskHandler(WorldGuardRegionProtectPaperPlugin wgrpPaperPlugin) {
-        this.wgrpPlugin = wgrpPaperPlugin;
+    public TaskHandler(WorldGuardRegionProtectPaperPlugin plugin, List<FoliaRunnable> tasks) {
+        this.wgrpPlugin = plugin;
+        this.tasks = tasks;
     }
 
+    @Override
     public void handle() {
-
-        final List<FoliaRunnable> allTasks = List.of();
-
-        allTasks.forEach(task -> {
-            this.wgrpPlugin.getLogger().info("Registered task: " + task.getClass().getSimpleName());
+        tasks.forEach(task -> {
+            wgrpPlugin.getLogger().info("Registered task: " + task.getClass().getSimpleName());
             wgrpPlugin.getTaskMap().put(task.getClass(), task);
         });
-        this.wgrpPlugin.getLogger().info(String.format("All tasks registered successfully! List of available registered tasks: %s",
-                allTasks.stream()
-                        .map(task -> task.getClass().getSimpleName())
-                        .collect(Collectors.joining(", "))));
-
+        wgrpPlugin.getLogger().info("All tasks registered successfully! List: " +
+                tasks.stream().map(t -> t.getClass().getSimpleName()).collect(Collectors.joining(", ")));
     }
 }

@@ -22,7 +22,7 @@ public class RSApiImpl implements MessagingService<Player> {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
     private final EntityCheckTypeProvider entityCheckTypeProvider;
-    private final MessageProvider<?, Messages> messageProvider;
+    protected final MessageProvider<?, Messages> messageProvider;
 
     public RSApiImpl(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
