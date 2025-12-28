@@ -83,8 +83,10 @@ public final class BlockProtect implements Listener {
     }
 
     private void sendMessageByPlayer(Player player) {
-        if (ConfigFields.REGION_MESSAGE_PROTECT_BY_PLAYER.asBoolean(wgrpPlugin))
+        if (ConfigFields.REGION_MESSAGE_PROTECT_BY_PLAYER.asBoolean(this.wgrpPlugin)) {
             wgrpPlugin.getMessageProvider().get().get("messages.ServerMsg.wgrpMsgByPlayer").send(player);
+
+        }
     }
 
     private void sendMessage(Player player) {
@@ -98,8 +100,7 @@ public final class BlockProtect implements Listener {
         final Block block = e.getBlock();
         final Location location = block.getLocation();
         final Material blockType = block.getType();
-        if (blockType == Material.RESPAWN_ANCHOR
-                && wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().get().getRegionProtectMap())) {
+        if (blockType == Material.RESPAWN_ANCHOR && wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())) {
             e.setCancelled(true);
         }
     }
