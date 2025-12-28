@@ -565,11 +565,6 @@ wgRegionProtect:
             denyLavaFlowToRegion: true
             denyFormObsidianOrCobbleStone: true
             denyUseSuperpickaxe: true
-        # --------------------------------------------------------------------------------------
-        # checkPlayerInStandingRegion — Whether to check player in standing region.
-        # --------------------------------------------------------------------------------------
-        standingRegion:
-            checkPlayerInStandingRegion: true
 
         # --------------------------------------------------------------------------------------
         # denyCreatureSpawn — Whether to deny spawn mobs from by egg.
