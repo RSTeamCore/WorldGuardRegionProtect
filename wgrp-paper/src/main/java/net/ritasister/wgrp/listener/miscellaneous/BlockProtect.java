@@ -39,7 +39,7 @@ public final class BlockProtect implements Listener {
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
             spyMethod(e.getBlock(), player, location, RegionAction.Type.BREAK.getAction());
-        } else if (this.wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().getConfig().getPlayerRegionProtectMap()) &&
+        } else if (this.wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().get().getPlayerRegionProtectMap()) &&
                 !this.wgrpPlugin.getRegionAdapter().isOwnerRegion(location, player.getUniqueId())) {
             e.setCancelled(true);
             sendMessageByPlayer(player);
@@ -59,7 +59,7 @@ public final class BlockProtect implements Listener {
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
             spyMethod(e.getBlock(), player, location, RegionAction.Type.PLACE.getAction());
-        } else if (this.wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().getConfig().getPlayerRegionProtectMap()) &&
+        } else if (this.wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().get().getPlayerRegionProtectMap()) &&
                 !this.wgrpPlugin.getRegionAdapter().isOwnerRegion(location, player.getUniqueId())) {
             e.setCancelled(true);
             sendMessageByPlayer(player);
@@ -83,7 +83,7 @@ public final class BlockProtect implements Listener {
     }
 
     private void sendMessageByPlayer(Player player) {
-        if (ConfigFields.REGION_MESSAGE_PROTECT_BY_PLAYER.asBoolean(this.wgrpPlugin.getWgrpPaperBase()))
+        if (ConfigFields.REGION_MESSAGE_PROTECT_BY_PLAYER.asBoolean(this.wgrpPlugin))
             wgrpPlugin.getMessageProvider().get().get("messages.ServerMsg.wgrpMsgByPlayer").send(player);
     }
 
