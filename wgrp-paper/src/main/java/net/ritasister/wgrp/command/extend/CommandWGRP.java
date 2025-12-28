@@ -3,6 +3,8 @@ package net.ritasister.wgrp.command.extend;
 import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.command.AbstractCommand;
+import net.ritasister.wgrp.rslibs.api.manager.region.RegionAction;
+import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import net.ritasister.wgrp.util.utility.CheckResult;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
@@ -59,104 +61,123 @@ public class CommandWGRP extends AbstractCommand {
 
     @SubCommand(
             name = "protect",
-            tabArgs = {"<region>", "[world]"},
+            tabArgs = {"<region>"},
             permission = UtilPermissions.COMMAND_PROTECT,
-            description = "add a region the config for to protect.")
+            description = "Add a region to the config to protect.")
     public void wgrpProtect(@NotNull CommandSender sender, String @NotNull [] args) {
-        if (args.length == 1) {
-            final Map<String, List<String>> playerRgMap = wgrpPlugin.getConfigProvider().getConfig().getPlayerRegionProtectMap();
-            final Map<String, List<String>> rgMap = wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap();
-
-            if (sender instanceof Player player) {
-                final String region = args[0];
-                final String world = player.getLocation().getWorld().getName();
-                final List<String> regionMapName = rgMap.get(player.getWorld().getName());
-                if (wgrpPlugin.getRegionAdapter().checkStandingRegion(player.getLocation())) {
-                    if (wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region)) {
-                        if (wgrpPlugin.getRegionAdapter().isOwnerRegion(player.getLocation(), player.getUniqueId())) {
-                            if (!regionMapName.contains(region)) {
-                                manageRegions(sender, playerRgMap, region, world);
-                            } else {
-                                wgrpPlugin.getMessageProvider().getMessages()
-                                        .get("messages.regionManagement.restrictProtect")
-                                        .replace("<region>", region)
-                                        .send(sender);
-                            }
-                        } else {
-                            wgrpPlugin.getMessageProvider().getMessages().get("messages.regionManagement.notOwnerRegion").replace("<region>", region).send(sender);
-                        }
-                    } else {
-                        wgrpPlugin.getMessageProvider().getMessages().get("messages.regionManagement.invalidRegion").replace("<region>", region).send(sender);
-                    }
-                } else {
-                    wgrpPlugin.getMessageProvider().getMessages().get("messages.regionManagement.notStandingInRegion").replace("<region>", region).send(sender);
-                }
-            } else {
-                wgrpPlugin.getMessageProvider().getMessages().get("messages.usage.wgrpUseHelp").send(sender);
-            }
-        }
-    }
-
-    private void manageRegions(@NotNull final CommandSender sender, final @NotNull Map<String, List<String>> playerRgMap, final String region, String world) {
-        if (!playerRgMap.get(world).contains(region)) {
-            final List<String> newPlayerRegionList = new ArrayList<>();
-            if (playerRgMap.containsKey(world) && !playerRgMap.get(world).contains(region)) {
-                newPlayerRegionList.addAll(playerRgMap.get(world));
-            }
-            newPlayerRegionList.add(region);
-            playerRgMap.put(world, newPlayerRegionList);
-            wgrpPlugin.getConfigProvider().getConfig().setPlayerRegionProtectMap(playerRgMap);
-            wgrpPlugin.getMessageProvider().getMessages().get("messages.regionManagement.add").replace("<region>", region).send(sender);
-        } else {
-            wgrpPlugin.getMessageProvider().getMessages().get("messages.regionManagement.alreadyProtected").replace("<region>", region).send(sender);
-        }
+        handleRegionProtection(sender, args, RegionAction.ADD);
     }
 
     @SubCommand(
             name = "unprotect",
-            tabArgs = {"<region>", "[world]"},
+            tabArgs = {"<region>"},
             permission = UtilPermissions.COMMAND_UNPROTECT,
-            description = "remove the region protection from the config to remove the protection.")
+            description = "Remove a region protection from the config.")
     public void wgrpUnProtect(@NotNull CommandSender sender, String @NotNull [] args) {
-        if (args.length == 1) {
-
-            final Map<String, List<String>> playerRgMap = wgrpPlugin.getConfigProvider().getConfig().getPlayerRegionProtectMap();
-            final Map<String, List<String>> rgMap = wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap();
-
-            if (sender instanceof Player player) {
-                final String region = args[0];
-                final String world = player.getLocation().getWorld().getName();
-                final List<String> regionMapName = rgMap.get(player.getWorld().getName());
-
-                if (wgrpPlugin.getRegionAdapter().checkStandingRegion(player.getLocation())) {
-                    if (wgrpPlugin.getRegionAdapter().isOwnerRegion(player.getLocation(), player.getUniqueId())) {
-                        if (!regionMapName.contains(region)) {
-                            getPlayerRgMap(sender, playerRgMap, region, world);
-                        } else {
-                            wgrpPlugin.getMessageProvider().getMessages().get("messages.regionManagement.restrictUnProtect").replace("<region>", region).send(sender);
-                        }
-                    } else {
-                        wgrpPlugin.getMessageProvider().getMessages().get("messages.regionManagement.notOwnerRegion").replace("<region>", region).send(sender);
-                    }
-                } else {
-                    wgrpPlugin.getMessageProvider().getMessages().get("messages.regionManagement.notStandingInRegion").replace("<region>", region).send(sender);
-                }
-            } else {
-                wgrpPlugin.getMessageProvider().getMessages().get("messages.usage.wgrpUseHelp").send(sender);
-            }
-        }
+        handleRegionProtection(sender, args, RegionAction.REMOVE);
     }
 
-    private void getPlayerRgMap(@NotNull final CommandSender sender, final @NotNull Map<String, List<String>> playerRgMap, final String region, final String world) {
-        if (playerRgMap.containsKey(world) && playerRgMap.get(world).contains(region)) {
-            final List<String> newRegionList = new ArrayList<>(playerRgMap.get(world));
-            newRegionList.remove(region);
-            playerRgMap.put(world, newRegionList);
-            wgrpPlugin.getConfigProvider().getConfig().setPlayerRegionProtectMap(playerRgMap);
-            wgrpPlugin.getMessageProvider().getMessages().get("messages.regionManagement.remove").replace("<region>", region).send(sender);
-        } else {
-            wgrpPlugin.getMessageProvider().getMessages().get("messages.regionManagement.notContains").replace("<region>", region).send(sender);
+    private void handleRegionProtection(@NotNull CommandSender sender, String @NotNull [] args, RegionAction action) {
+        if (args.length != 1) {
+            wgrpPlugin.getMessageProvider().getMessages().get("messages.usage.wgrpUseHelp").send(sender);
+            return;
         }
+
+        if (!(sender instanceof Player player)) {
+            wgrpPlugin.getMessageProvider().getMessages().get("messages.usage.wgrpUseHelp").send(sender);
+            return;
+        }
+
+        final String region = args[0];
+        final String world = player.getWorld().getName();
+
+        final Map<String, List<String>> playerRgMap = wgrpPlugin.getConfigProvider().getConfig().getPlayerRegionProtectMap();
+        final Map<String, List<String>> rgMap = wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap();
+
+        final List<String> serverRegions = rgMap.computeIfAbsent(world, k -> new ArrayList<>());
+        final boolean isServerProtected = serverRegions.contains(region);
+        final boolean checkStanding = ConfigFields.CHECK_PLAYER_IN_STANDING_REGION.asBoolean(wgrpPlugin.getWgrpPaperBase());
+
+        if (checkStanding && wgrpPlugin.getRegionAdapter().checkStandingRegion(player.getLocation())) {
+            wgrpPlugin.getMessageProvider().getMessages()
+                    .get("messages.regionManagement.notStandingInRegion")
+                    .replace("<region>", region)
+                    .send(sender);
+            return;
+        }
+
+        if (!wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region)) {
+            wgrpPlugin.getMessageProvider().getMessages()
+                    .get("messages.regionManagement.invalidRegion")
+                    .replace("<region>", region)
+                    .send(sender);
+            return;
+        }
+
+        if (wgrpPlugin.getRegionAdapter().isOwnerRegion(player.getLocation(), player.getUniqueId())) {
+            wgrpPlugin.getMessageProvider().getMessages()
+                    .get("messages.regionManagement.notOwnerRegion")
+                    .replace("<region>", region)
+                    .send(sender);
+            return;
+        }
+
+        final List<String> playerRegions = playerRgMap.computeIfAbsent(world, k -> new ArrayList<>());
+
+        if (action == RegionAction.ADD) {
+            if (isServerProtected) {
+                wgrpPlugin.getMessageProvider().getMessages()
+                        .get("messages.regionManagement.restrictProtect")
+                        .replace("<region>", region)
+                        .send(sender);
+                return;
+            }
+            if (playerRegions.contains(region)) {
+                wgrpPlugin.getMessageProvider().getMessages()
+                        .get("messages.regionManagement.alreadyProtected")
+                        .replace("<region>", region)
+                        .send(sender);
+                return;
+            }
+            modifyRegionMap(playerRgMap, world, region, true);
+            wgrpPlugin.getMessageProvider().getMessages()
+                    .get("messages.regionManagement.add")
+                    .replace("<region>", region)
+                    .send(sender);
+
+        } else {
+            if (isServerProtected) {
+                wgrpPlugin.getMessageProvider().getMessages()
+                        .get("messages.regionManagement.restrictUnProtect")
+                        .replace("<region>", region)
+                        .send(sender);
+                return;
+            }
+            if (!playerRegions.contains(region)) {
+                wgrpPlugin.getMessageProvider().getMessages()
+                        .get("messages.regionManagement.notContains")
+                        .replace("<region>", region)
+                        .send(sender);
+                return;
+            }
+            modifyRegionMap(playerRgMap, world, region, false);
+            wgrpPlugin.getMessageProvider().getMessages()
+                    .get("messages.regionManagement.remove")
+                    .replace("<region>", region)
+                    .send(sender);
+        }
+
+        wgrpPlugin.getConfigProvider().getConfig().setPlayerRegionProtectMap(playerRgMap);
+    }
+
+    private void modifyRegionMap(@NotNull Map<String, List<String>> map, @NotNull String world, @NotNull String region, boolean action) {
+        final List<String> regions = map.computeIfAbsent(world, k -> new ArrayList<>());
+        if (action) {
+            if (!regions.contains(region)) regions.add(region);
+        } else {
+            regions.remove(region);
+        }
+        map.put(world, regions);
     }
 
     @SubCommand(
