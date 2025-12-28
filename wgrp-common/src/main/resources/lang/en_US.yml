@@ -9,6 +9,7 @@ messages:
     wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> You can''t use here the worldedit command!'
     noPerm: '<red>You don''t have permission to use this command.'
   regionManagement:
+    notStandingInRegion: '<red>You are not standing in any region!'
     notOwnerRegion: '<red>You can''t remove or add to protect the region <gold><region><red> because you are not a owner this region!'
     restrictProtect: '<red>You can''t protect the region <gold><region><red> because this region protected by admin!'
     restrictUnProtect: '<red>You can''t remove protect the region <gold><region><red> because this region protected by admin!'
