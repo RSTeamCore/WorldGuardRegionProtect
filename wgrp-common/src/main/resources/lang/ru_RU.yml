@@ -1,13 +1,17 @@
 langTitle:
   language: Русский
   author: RSTeamCore
-  version: 1
+  version: 2
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<red>WGRP<dark_gray>] <green>Этот регион защищён сервером!'
+    wgrpMsgByPlayer: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by a player!'
     wgrpMsgWe: '<dark_gray>[<red>WGRP<dark_gray>]<red> Вы не можете использовать здесь команду worldedit!'
     noPerm: '<red>У вас нет разрешения на использование этой команды.'
   regionManagement:
+    notOwnerRegion: '<red>You can''t remove or add to protect the region <gold><region><red> because you are not a owner this region!'
+    restrictProtect: '<red>You can''t protect the region <gold><region><red> because this region protected by admin!'
+    restrictUnProtect: '<red>You can''t remove protect the region <gold><region><red> because this region protected by admin!'
     add: "<green>Регион <gold><region><green> добавлен в конфиг."
     remove: "<red>Регион <gold><region><red> удален из конфига."
     notContains: '<red>Не удалось удалить регион из списка защиты, так как <gold><region> <red>не защищен!'

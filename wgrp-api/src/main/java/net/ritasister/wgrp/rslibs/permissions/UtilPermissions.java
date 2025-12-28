@@ -19,6 +19,8 @@ public enum UtilPermissions {
     COMMAND_SPY_INSPECT_ADMIN("wgrp.command.spy"),
     COMMAND_ADD_REGION("wgrp.command.addregion"),
     COMMAND_REMOVE_REGION("wgrp.command.removeregion"),
+    COMMAND_PROTECT("wgrp.command.protect"),
+    COMMAND_UNPROTECT("wgrp.command.unprotect"),
 
     // Listener permissions
     ADMIN_RIGHT("wgrp.admin"),

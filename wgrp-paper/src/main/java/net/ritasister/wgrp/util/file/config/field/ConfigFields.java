@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public enum ConfigFields {
 
-    CONFIG_VERSION("version", 4, "wgRegionProtect.version"),
+    CONFIG_VERSION("version", 5, "wgRegionProtect.version"),
 
     LANG("lang", "en_US", "wgRegionProtect.lang"),
 
@@ -142,6 +142,10 @@ public enum ConfigFields {
             "wgRegionProtect.protectInteract.other.denyFormObsidianOrCobbleStone"
     ),
 
+    DENY_USE_SUPER_PICKAXE("denyUseSuperpickaxe", true,
+            "wgRegionProtect.protectInteract.other.denyUseSuperpickaxe"
+    ),
+
     DENY_CREATURE_SPAWN("denyCreatureSpawn", true,
             "wgRegionProtect.protectInteract.mobs.denyCreatureSpawn"
     ),
@@ -214,6 +218,10 @@ public enum ConfigFields {
 
     DENY_EXPLODE_ENTITY("explodeEntity", true,
             "wgRegionProtect.explodeEntity.enable"
+    ),
+
+    REGION_MESSAGE_PROTECT_BY_PLAYER("regionMessageProtectByPlayer", true,
+            "wgRegionProtect.regionMessageProtectByPlayer"
     ),
 
     REGION_MESSAGE_PROTECT("regionMessageProtect", true,
