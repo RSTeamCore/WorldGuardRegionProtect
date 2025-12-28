@@ -124,16 +124,24 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
     }
 
     private void logRegionProtectConfig() {
-        wgrpPaperBase.getLogger().info("=== Loaded fully protected region ===");
-        regionProtect.forEach((world, list) -> wgrpPaperBase.getLogger().info(world + ": " + list));
-
-        wgrpPaperBase.getLogger().info("=== Loaded protected region with allowing interact ===");
-        regionProtectAllow.forEach((world, list) -> wgrpPaperBase.getLogger().info(world + ": " + list));
-
-        wgrpPaperBase.getLogger().info("=== Loaded protected region where allow only breaks event ===");
-        regionProtectOnlyBreakAllow.forEach((world, list) -> wgrpPaperBase.getLogger().info(world + ": " + list));
+        logRegionMap("=== Loaded fully protected regions ===", regionProtect);
+        logRegionMap("=== Loaded regions allowing interact ===", regionProtectAllow);
+        logRegionMap("=== Loaded regions allowing only break events ===", regionProtectOnlyBreakAllow);
     }
 
+    private void logRegionMap(String header, @NonNull Map<String, List<String>> regions) {
+        wgrpPaperBase.getLogger().info(header);
+
+        if (regions.isEmpty()) {
+            wgrpPaperBase.getLogger().info("  No regions configured.");
+            return;
+        }
+
+        regions.forEach((world, list) -> {
+            String output = list.isEmpty() ? "None" : String.join(", ", list);
+            wgrpPaperBase.getLogger().info(String.format("  %-15s : [%s]", world, output));
+        });
+    }
 
     public void saveConfig(final String path, final Object field) {
         try {
