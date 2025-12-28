@@ -38,8 +38,11 @@ public final class BlockProtect implements Listener {
             sendMessage(player);
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
-
             spyMethod(e.getBlock(), player, location, RegionAction.Type.BREAK.getAction());
+        } else if (this.wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().getConfig().getPlayerRegionProtectMap()) &&
+                !this.wgrpPlugin.getRegionAdapter().isOwnerRegion(location, player.getUniqueId())) {
+            e.setCancelled(true);
+            sendMessageByPlayer(player);
         }
     }
 
@@ -55,8 +58,11 @@ public final class BlockProtect implements Listener {
             sendMessage(player);
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
-
             spyMethod(e.getBlock(), player, location, RegionAction.Type.PLACE.getAction());
+        } else if (this.wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().getConfig().getPlayerRegionProtectMap()) &&
+                !this.wgrpPlugin.getRegionAdapter().isOwnerRegion(location, player.getUniqueId())) {
+            e.setCancelled(true);
+            sendMessageByPlayer(player);
         }
     }
 
@@ -74,6 +80,11 @@ public final class BlockProtect implements Listener {
                     block.getWorld().getName()
             );
         }
+    }
+
+    private void sendMessageByPlayer(Player player) {
+        if (ConfigFields.REGION_MESSAGE_PROTECT_BY_PLAYER.asBoolean(this.wgrpPlugin.getWgrpPaperBase()))
+            wgrpPlugin.getMessageProvider().getMessages().get("messages.ServerMsg.wgrpMsgByPlayer").send(player);
     }
 
     private void sendMessage(Player player) {
