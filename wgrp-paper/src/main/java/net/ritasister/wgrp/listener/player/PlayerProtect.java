@@ -1,5 +1,7 @@
 package net.ritasister.wgrp.listener.player;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.bukkit.BukkitPlayer;
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
@@ -8,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -75,8 +78,16 @@ public final class PlayerProtect implements Listener {
                 if (event.getItem() != null && event.getItem().getType().toString().endsWith("_SPAWN_EGG")) {
                     event.setCancelled(true);
                 }
+                this.denyUseSuperPickaxe(player, event);
             }
         }
+    }
+
+    private void denyUseSuperPickaxe(@NotNull Player player, Cancellable cancellable) {
+        final BukkitPlayer bukkitPlayer = BukkitAdapter.adapt(player);
+        if (ConfigFields.DENY_USE_SUPER_PICKAXE.asBoolean(this.wgrpPlugin.getWgrpPaperBase()) &&
+                this.wgrpPlugin.getToolsAdapter().isSuperPickaxeActive(bukkitPlayer))
+            cancellable.setCancelled(true);
     }
 
     private void checkDenyInteract(@NotNull PlayerInteractEvent e, @NotNull String spawnVehicleType, String spawnEntityType, @NotNull Player player) {
