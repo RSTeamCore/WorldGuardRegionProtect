@@ -107,8 +107,8 @@ public final class PlayerProtect implements Listener {
 
     private void denyUseSuperPickaxe(@NotNull Player player, Cancellable cancellable) {
         final BukkitPlayer bukkitPlayer = BukkitAdapter.adapt(player);
-        if (ConfigFields.DENY_USE_SUPER_PICKAXE.asBoolean(this.wgrpPlugin) &&
-                this.wgrpPlugin.getToolsAdapter().isSuperPickaxeActive(bukkitPlayer))
+        if (ConfigFields.DENY_USE_SUPER_PICKAXE.asBoolean(this.wgrpPlugin)
+                && this.wgrpPlugin.getToolsAdapter().isSuperPickaxeActive(bukkitPlayer))
             cancellable.setCancelled(true);
     }
 
