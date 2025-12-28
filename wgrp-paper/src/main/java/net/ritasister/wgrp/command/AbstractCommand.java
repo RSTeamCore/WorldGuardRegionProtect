@@ -21,15 +21,20 @@ import java.util.List;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
-    private final MessageProvider<?, Messages> configLoader;
+    protected final MessageProvider<WorldGuardRegionProtectPaperPlugin, Messages> configLoader;
+    private final WorldGuardRegionProtectPaperPlugin plugin;
 
-    public AbstractCommand(String command, @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
-        final PluginCommand pluginCommand = wgrpPlugin.getWgrpPaperBase().getCommand(command);
+    public AbstractCommand(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
+        this.plugin = wgrpPlugin;
+        this.configLoader = wgrpPlugin.getMessageProvider();
+    }
+
+    public void register(String command) {
+        final PluginCommand pluginCommand = plugin.getWgrpPaperBase().getCommand(command);
         if (pluginCommand != null) {
             pluginCommand.setExecutor(this);
             pluginCommand.setTabCompleter(this);
         }
-        this.configLoader = wgrpPlugin.getMessageProvider();
     }
 
     public List<String> complete() {

@@ -25,8 +25,9 @@ public class CommandWGRP extends AbstractCommand {
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
     public CommandWGRP(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
-        super(UtilCommandList.WGRP.getCommand(), wgrpPlugin);
+        super(wgrpPlugin);
         this.wgrpPlugin = wgrpPlugin;
+        this.register(UtilCommandList.WGRP.getCommand());
     }
 
     @SubCommand(
