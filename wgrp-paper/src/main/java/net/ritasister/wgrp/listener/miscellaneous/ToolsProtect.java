@@ -17,7 +17,6 @@ public final class ToolsProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-
     public ToolsProtect(final @NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.wgrpPlugin = wgrpPlugin;
     }

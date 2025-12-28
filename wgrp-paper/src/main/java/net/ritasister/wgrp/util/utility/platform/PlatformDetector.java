@@ -80,7 +80,7 @@ public class PlatformDetector {
                 Support is not available for servers running on untrusted implementations.
                 """;
 
-        String messageDetail;
+        final String messageDetail;
         if (type.equals(Platform.Type.UNKNOWN.getPlatformName())) {
             messageDetail = isUnTrustedFork;
             plugin.getLogger().warn(String.format(defaultMessage, pluginVersionModified, type, minecraftVersion, messageDetail, ""));

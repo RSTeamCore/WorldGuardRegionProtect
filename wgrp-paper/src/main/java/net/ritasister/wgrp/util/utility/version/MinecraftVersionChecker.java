@@ -22,7 +22,7 @@ public class MinecraftVersionChecker implements VersionChecker<WorldGuardRegionP
 
     @Override
     public boolean check(WorldGuardRegionProtectPaperPlugin plugin) {
-        String currentVersion = getCurrentVersion();
+        final String currentVersion = getCurrentVersion();
         if (isVersionSupported()) {
             plugin.getLogger().info("Server version supported: " + currentVersion);
             plugin.getLogger().info("Supported range: " + SUPPORTED_VERSION_RANGE);

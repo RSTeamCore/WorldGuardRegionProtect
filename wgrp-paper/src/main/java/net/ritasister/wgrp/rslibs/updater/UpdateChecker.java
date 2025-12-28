@@ -2,7 +2,6 @@ package net.ritasister.wgrp.rslibs.updater;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.platform.Platform;
-import net.ritasister.wgrp.loader.WGRPCompatibilityCheck;
 import net.ritasister.wgrp.util.schedulers.FoliaRunnable;
 import net.ritasister.wgrp.util.utility.platform.PlatformDetector;
 import org.bukkit.Bukkit;

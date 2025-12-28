@@ -3,9 +3,6 @@ package net.ritasister.wgrp.loader;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.handler.Handler;
 import net.ritasister.wgrp.api.handler.LoadHandlers;
-import net.ritasister.wgrp.handler.CommandHandler;
-import net.ritasister.wgrp.handler.ListenerHandler;
-import net.ritasister.wgrp.handler.TaskHandler;
 
 import java.util.List;
 
