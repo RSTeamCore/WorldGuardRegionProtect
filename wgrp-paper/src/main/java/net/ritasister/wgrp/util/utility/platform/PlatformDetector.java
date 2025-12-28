@@ -1,8 +1,6 @@
 package net.ritasister.wgrp.util.utility.platform;
 
-import net.ritasister.wgrp.WGRPBootstrap;
 import net.ritasister.wgrp.api.logging.PluginLogger;
-import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.plugin.WorldGuardRegionProtectBootstrap;
 import org.bukkit.Bukkit;
@@ -38,17 +36,17 @@ public class PlatformDetector {
             case SPIGOT -> {
                 if (isRunningOnBukkit()) {
                     setPlatformName(Platform.Type.BUKKIT.getPlatformName());
-                    logPlatformWarning(bootstrap, Platform.Type.BUKKIT.getPlatformName());
+                    logPlatformWarning(bootstrap, Platform.Type.BUKKIT);
                     return Platform.Type.BUKKIT.getPlatformName();
                 } else {
                     setPlatformName(Platform.Type.SPIGOT.getPlatformName());
-                    logPlatformWarning(bootstrap, Platform.Type.SPIGOT.getPlatformName());
+                    logPlatformWarning(bootstrap, Platform.Type.SPIGOT);
                     return Platform.Type.SPIGOT.getPlatformName();
                 }
             }
             default -> {
                 setPlatformName(Platform.Type.UNKNOWN.getPlatformName());
-                logPlatformWarning(bootstrap, Platform.Type.UNKNOWN.getPlatformName());
+                logPlatformWarning(bootstrap, Platform.Type.UNKNOWN);
                 return Platform.Type.UNKNOWN.getPlatformName();
             }
         }
@@ -58,54 +56,48 @@ public class PlatformDetector {
         } catch (ClassNotFoundException ignored) {}
 
         setPlatformName(detectedPlatform.getPlatformName());
-        logPlatformWarning(bootstrap, detectedPlatform.getPlatformName());
+        logPlatformWarning(bootstrap, detectedPlatform);
         return getPlatformName();
     }
 
-    private void logPlatformWarning(@NotNull WorldGuardRegionProtectBootstrap bootstrap, @NotNull String type) {
-        final String pluginVersion = bootstrap.getVersion();
-        final boolean isDevBuild = pluginVersion.contains("-SNAPSHOT") || pluginVersion.contains("-dev");
-        final String pluginVersionModified = isDevBuild ? pluginVersion + "-dev" : pluginVersion;
+    private void logPlatformWarning(@NotNull WorldGuardRegionProtectBootstrap bootstrap, @NotNull Platform.Type platformType) {
+        final String version = bootstrap.getVersion();
+        final boolean dev = version.contains("-SNAPSHOT") || version.contains("-dev");
 
-        final String defaultMessage = """
-                ====================================================
-                
-                    WorldGuardRegionProtect %s
-                    Server running on %s - %s
-                    %s
-                    %s
-                
-                ====================================================
-                """;
+        final String title = getTitle(platformType);
+        final String description = getDescription(platformType);
 
-        final String format = getString(type, pluginVersionModified);
-        if (type.equals(Platform.Type.UNKNOWN.getPlatformName()) ||
-                type.equals(Platform.Type.BUKKIT.getPlatformName()) ||
-                type.equals(Platform.Type.SPIGOT.getPlatformName())) {
-            logger.warn(format);
+        final String message = """
+        ====================================================
+        
+            WorldGuardRegionProtect %s
+            Server running on %s - %s
+        
+            %s
+            %s
+        
+        ====================================================
+        """.formatted(dev ? version : version + "-release", bootstrap.getServerVersion(), platformType.getPlatformName(), title, description);
+
+        if (platformType == Platform.Type.UNKNOWN || platformType == Platform.Type.BUKKIT || platformType == Platform.Type.SPIGOT) {
+            logger.warn(message);
         } else {
-            logger.info(format);
+            logger.info(message);
         }
     }
 
-    private static @NonNull String getString(@NonNull String type, String pluginVersionModified) {
-        final String minecraftVersion = Bukkit.getBukkitVersion().split("-")[0];
-
-        final String messageDetail = getString(type);
-
-        return String.format("====================================================\n\n    WorldGuardRegionProtect %s\n    Server running on %s - %s\n    %s\n    %s\n\n====================================================\n", pluginVersionModified, type, minecraftVersion, messageDetail, "");
+    private static @NonNull String getTitle(Platform.@NonNull Type type) {
+        return switch (type) {
+            case UNKNOWN, BUKKIT, SPIGOT -> "Warning: Unsupported or legacy platform detected!";
+            default -> "Platform compatibility check passed.";
+        };
     }
 
-    private static @NonNull String getString(@NonNull String type) {
-        final String messageDetail;
-        if (type.equals(Platform.Type.UNKNOWN.getPlatformName())) {
-            messageDetail = "It is recommended to use Paper, Folia or its forks for better performance and support!";
-        } else if (type.equals(Platform.Type.BUKKIT.getPlatformName()) || type.equals(Platform.Type.SPIGOT.getPlatformName())) {
-            messageDetail = "It is recommended to use Paper, Folia or its forks for better performance and support!";
-        } else {
-            messageDetail = "Your setup is optimal for plugin performance and support.";
-        }
-        return messageDetail;
+    private static @NonNull String getDescription(Platform.@NonNull Type type) {
+        return switch (type) {
+            case UNKNOWN, BUKKIT, SPIGOT -> "It is recommended to use Paper, Folia or its forks for better performance and support!";
+            default -> "Your setup is optimal for plugin performance and support.";
+        };
     }
 
     private boolean isRunningOnBukkit() {
