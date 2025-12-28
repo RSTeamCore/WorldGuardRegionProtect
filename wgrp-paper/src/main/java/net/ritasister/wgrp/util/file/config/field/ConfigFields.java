@@ -186,6 +186,10 @@ public enum ConfigFields {
             "wgRegionProtect.protectInteract.player.tools.denyLoomPatternSelect"
     ),
 
+    CHECK_PLAYER_IN_STANDING_REGION("checkPlayerInStandingRegion", true,
+            "wgRegionProtect.protectInteract.player.standingRegion.checkPlayerInStandingRegion"
+    ),
+
     CMD_WE("cmdWe", List.of(
             "//set", "//replace", "//overlay",
             "//walls", "//deform", "//fill",
