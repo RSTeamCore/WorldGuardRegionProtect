@@ -32,21 +32,21 @@ public final class EntityProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denySpawnEntity(@NotNull CreatureSpawnEvent event) {
-        if (ConfigFields.DENY_CREATURE_SPAWN.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (ConfigFields.DENY_CREATURE_SPAWN.asBoolean(wgrpPlugin)) {
             wgrpPlugin.getRsApi().entityCheck(event, event.getEntity(), event.getEntity());
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denySpawnEntity(@NotNull SpawnerSpawnEvent event) {
-        if(ConfigFields.DENY_MOB_SPAWN_FROM_SPAWNER.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if(ConfigFields.DENY_MOB_SPAWN_FROM_SPAWNER.asBoolean(wgrpPlugin)) {
             wgrpPlugin.getRsApi().entityCheck(event, event.getEntity(), event.getEntity());
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyItemSpawn(@NotNull ItemSpawnEvent event) {
-        if (ConfigFields.DENY_MOB_NATURALLY_SPAWN.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (ConfigFields.DENY_MOB_NATURALLY_SPAWN.asBoolean(wgrpPlugin)) {
             wgrpPlugin.getRsApi().entityCheck(event, event.getEntity(), event.getEntity());
         }
     }

@@ -22,7 +22,7 @@ public final class GolemCheckTypeImpl implements EntityCheckType<Entity, EntityT
     public boolean check(final @NotNull Entity entity) {
         final Golem golem = (Golem) entity;
         final EntityType golemType = golem.getType();
-        return ConfigFields.ANIMAL_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(golemType.name().toLowerCase());
+        return ConfigFields.ANIMAL_TYPE.asStringList(wgrpPlugin).contains(golemType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

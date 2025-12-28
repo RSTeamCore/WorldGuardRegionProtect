@@ -21,7 +21,7 @@ public final class HumanEntityCheckTypeImpl implements EntityCheckType<Entity, E
     public boolean check(final @NotNull Entity entity) {
         final HumanEntity humanEntity = (HumanEntity) entity;
         final EntityType humanEntityType = humanEntity.getType();
-        return ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(humanEntityType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin).contains(humanEntityType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

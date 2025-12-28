@@ -146,7 +146,7 @@ public final class PlayerProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyInteractWithItemFrame(@NotNull PlayerInteractEntityEvent e) {
-        if (!ConfigFields.DENY_INTERACT_WITH_ITEM_FRAME.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (!ConfigFields.DENY_INTERACT_WITH_ITEM_FRAME.asBoolean(wgrpPlugin)) {
             return;
         }
         final Location rigthClickLocation = e.getRightClicked().getLocation();

@@ -21,7 +21,7 @@ public final class HangingCheckTypeImpl implements EntityCheckType<Entity, Entit
     public boolean check(final Entity entity) {
         final Hanging hanging = (Hanging) entity;
         final EntityType hangingType = hanging.getType();
-        return ConfigFields.INTERACT_TYPE.asStringList(wgrpBukkitPlugin.getWgrpPaperBase()).contains(hangingType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.asStringList(wgrpBukkitPlugin).contains(hangingType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

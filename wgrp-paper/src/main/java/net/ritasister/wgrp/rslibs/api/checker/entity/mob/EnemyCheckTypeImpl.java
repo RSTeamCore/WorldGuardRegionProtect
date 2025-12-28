@@ -21,7 +21,7 @@ public final class EnemyCheckTypeImpl implements EntityCheckType<Entity, EntityT
     public boolean check(final Entity entity) {
         final Enemy enemy = (Enemy) entity;
         final EntityType monsterType = enemy.getType();
-        return ConfigFields.ENEMY_ENTITY_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(monsterType.name().toLowerCase());
+        return ConfigFields.ENEMY_ENTITY_TYPE.asStringList(wgrpPlugin).contains(monsterType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

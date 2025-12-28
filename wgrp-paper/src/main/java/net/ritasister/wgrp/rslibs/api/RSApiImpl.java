@@ -37,9 +37,9 @@ public class RSApiImpl implements MessagingService<Player> {
         if (regionName == null) {
             return;
         }
-        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.asBoolean(wgrpPlugin.getWgrpPaperBase())
+        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.asBoolean(wgrpPlugin)
                 && !this.wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT_NOTIFY_ADMIN)) {
-            final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.asStringList(wgrpPlugin.getWgrpPaperBase());
+            final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.asStringList(wgrpPlugin);
             final String normalizedSenderCommand = senderCommand.toLowerCase();
             if (cmdList.stream().anyMatch(cmd -> cmd.equalsIgnoreCase(normalizedSenderCommand))) {
                 messageProvider.get()
@@ -57,8 +57,8 @@ public class RSApiImpl implements MessagingService<Player> {
         if (regionName == null) {
             return;
         }
-        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_CONSOLE_ENABLE.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.asStringList(wgrpPlugin.getWgrpPaperBase());
+        if (ConfigFields.IS_SPY_COMMAND_NOTIFY_CONSOLE_ENABLE.asBoolean(wgrpPlugin)) {
+            final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.asStringList(wgrpPlugin);
             final String normalizedSenderCommand = senderCommand.toLowerCase();
             if (cmdList.stream().anyMatch(cmd -> cmd.equalsIgnoreCase(normalizedSenderCommand))) {
                 final ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
@@ -87,7 +87,7 @@ public class RSApiImpl implements MessagingService<Player> {
      */
     public void notifyIfActionInRegion(Player admin, Player suspectPlayer, String suspectName, String action, String regionName, double x, double y, double z, String world) {
         if (this.wgrpPlugin.getPermissionCheck().hasPlayerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
-                && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+                && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.asBoolean(wgrpPlugin)) {
             messageProvider.get()
                     .get("messages.Notify.sendAdminInfoIfActionInRegion")
                     .replace("<player>", suspectName)

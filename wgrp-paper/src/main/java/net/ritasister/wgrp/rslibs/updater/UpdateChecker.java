@@ -28,10 +28,10 @@ public final class UpdateChecker {
 
         if (platformName.equals(Platform.Type.BUKKIT.getPlatformName())
                 || platformName.equals(Platform.Type.SPIGOT.getPlatformName())) {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this.wgrpPlugin.getWgrpPaperBase(), t ->
+            Bukkit.getScheduler().runTaskTimerAsynchronously(this.wgrpPlugin.getBootstrap().getLoader(), t ->
                     checkUpdate(consumer, platformName), 0, 6 * 60 * 60 * 20);
         } else if (platformName.equals(Platform.Type.PAPER.getPlatformName())) {
-            Bukkit.getAsyncScheduler().runAtFixedRate(this.wgrpPlugin.getWgrpPaperBase(), t ->
+            Bukkit.getAsyncScheduler().runAtFixedRate(this.wgrpPlugin.getBootstrap().getLoader(), t ->
                     checkUpdate(consumer, Platform.Type.PAPER.getPlatformName()), 0, 6, TimeUnit.HOURS);
         } else if (platformName.equals(Platform.Type.FOLIA.getPlatformName())) {
             new FoliaRunnable(Bukkit.getAsyncScheduler(), TimeUnit.HOURS) {
@@ -39,7 +39,7 @@ public final class UpdateChecker {
                 public void run() {
                     checkUpdate(consumer, Platform.Type.FOLIA.getPlatformName());
                 }
-            }.runAtFixedRate(wgrpPlugin.getWgrpPaperBase(), 0, 6);
+            }.runAtFixedRate(wgrpPlugin.getBootstrap().getLoader(), 0, 6);
         }
     }
 

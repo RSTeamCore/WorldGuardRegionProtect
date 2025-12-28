@@ -22,7 +22,7 @@ public final class AnimalCheckTypeImpl implements EntityCheckType<Entity, Entity
     public boolean check(final @NotNull Entity entity) {
         final Animals animals = (Animals) entity;
         final EntityType animalsType = animals.getType();
-        return ConfigFields.ANIMAL_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(animalsType.name().toLowerCase());
+        return ConfigFields.ANIMAL_TYPE.asStringList(wgrpPlugin).contains(animalsType.name().toLowerCase());
     }
 
     @Contract(" -> new")

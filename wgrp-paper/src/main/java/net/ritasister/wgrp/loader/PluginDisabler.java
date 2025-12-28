@@ -12,11 +12,11 @@ public class PluginDisabler {
     }
 
     public void disableWithMessage(String reason) {
-        if (plugin.getWgrpPaperBase().isEnabled()) {
-            plugin.getLogger().severe(String.format("Disabling plugin '%s' due to: %s", plugin.getWgrpPaperBase().getName(), reason));
-            Bukkit.getServer().getPluginManager().disablePlugin(plugin.getWgrpPaperBase());
+        if (plugin.getBootstrap().getLoader().isEnabled()) {
+            plugin.getLogger().severe(String.format("Disabling plugin '%s' due to: %s", plugin.getBootstrap().getLoader().getName(), reason));
+            Bukkit.getServer().getPluginManager().disablePlugin(plugin.getBootstrap().getLoader());
         } else {
-            plugin.getLogger().warn(String.format("Attempted to disable plugin '%s', but it was already disabled.", plugin.getWgrpPaperBase().getName()));
+            plugin.getLogger().warn(String.format("Attempted to disable plugin '%s', but it was already disabled.", plugin.getBootstrap().getLoader().getName()));
         }
     }
 }

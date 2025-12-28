@@ -21,26 +21,26 @@ public class UpdateFile implements FileUpdater<WorldGuardRegionProtectPaperPlugi
 
     @Override
     public void updateConfig(@NotNull WorldGuardRegionProtectPaperPlugin plugin, @NotNull File currentFile) {
-        final Path renameOldFile = new File(plugin.getWgrpPaperBase().getDataFolder(), "config-old-" + dateProvider.getCurrentDate() + ".yml").toPath();
+        final Path renameOldFile = new File(plugin.getBootstrap().getLoader().getDataFolder(), "config-old-" + dateProvider.getCurrentDate() + ".yml").toPath();
         try {
             Files.move(currentFile.toPath(), renameOldFile, StandardCopyOption.REPLACE_EXISTING);
             plugin.getLogger().info("Old config file is renamed to: " + renameOldFile);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        plugin.getWgrpPaperBase().saveResource("config.yml", true);
+        plugin.getBootstrap().getLoader().saveResource("config.yml", true);
     }
 
     @Override
     public void updateLang(@NotNull WorldGuardRegionProtectPaperPlugin plugin,
                            @NotNull File currentFile, @NotNull String lang) {
-        final Path renameOldLang = new File(plugin.getWgrpPaperBase().getDataFolder(), "lang/" + lang + "-old-" + dateProvider.getCurrentDate() + ".yml").toPath();
+        final Path renameOldLang = new File(plugin.getBootstrap().getLoader().getDataFolder(), "lang/" + lang + "-old-" + dateProvider.getCurrentDate() + ".yml").toPath();
         try {
             Files.move(currentFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);
             plugin.getLogger().info("Old lang file is renamed to: " + renameOldLang);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        plugin.getWgrpPaperBase().saveResource("lang/" + lang + ".yml", true);
+        plugin.getBootstrap().getLoader().saveResource("lang/" + lang + ".yml", true);
     }
 }

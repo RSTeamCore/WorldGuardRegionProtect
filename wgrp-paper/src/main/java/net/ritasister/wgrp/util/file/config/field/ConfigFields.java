@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.util.file.config.field;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -379,9 +379,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as a String.
      * @throws IllegalStateException if the field type is not STRING.
      */
-    public String asString(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public String asString(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.STRING);
-        return plugin.getConfig().getString(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getString(getPath());
     }
 
     /**
@@ -391,9 +391,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as a List of Strings.
      * @throws IllegalStateException if the field type is not STRING_LIST.
      */
-    public @NonNull List<String> asStringList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public @NonNull List<String> asStringList(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.STRING_LIST);
-        return plugin.getConfig().getStringList(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getStringList(getPath());
     }
 
     /**
@@ -403,9 +403,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as a List of Integers.
      * @throws IllegalStateException if the field type is not INTEGER_LIST.
      */
-    public @NotNull List<Integer> asIntegerList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public @NotNull List<Integer> asIntegerList(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.INTEGER_LIST);
-        return plugin.getConfig().getIntegerList(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getIntegerList(getPath());
     }
 
     /**
@@ -415,9 +415,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as a List of Doubles.
      * @throws IllegalStateException if the field type is not DOUBLE_LIST.
      */
-    public @NotNull List<Double> asDoubleList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public @NotNull List<Double> asDoubleList(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.DOUBLE_LIST);
-        return plugin.getConfig().getDoubleList(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getDoubleList(getPath());
     }
 
     /**
@@ -427,9 +427,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as a List of Longs.
      * @throws IllegalStateException if the field type is not LONG_LIST.
      */
-    public @NonNull List<Long> asLongList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public @NonNull List<Long> asLongList(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.LONG_LIST);
-        return plugin.getConfig().getLongList(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getLongList(getPath());
     }
 
     /**
@@ -439,9 +439,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as a List of Floats.
      * @throws IllegalStateException if the field type is not FLOAT_LIST.
      */
-    public @NonNull List<Float> asFloatList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public @NonNull List<Float> asFloatList(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.FLOAT_LIST);
-        return plugin.getConfig().getFloatList(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getFloatList(getPath());
     }
 
     /**
@@ -451,9 +451,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as a List of Booleans.
      * @throws IllegalStateException if the field type is not BOOLEAN_LIST.
      */
-    public @NonNull List<Boolean> asBooleanList(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public @NonNull List<Boolean> asBooleanList(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.BOOLEAN_LIST);
-        return plugin.getConfig().getBooleanList(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getBooleanList(getPath());
     }
 
     /**
@@ -463,9 +463,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as a boolean.
      * @throws IllegalStateException if the field type is not BOOLEAN.
      */
-    public boolean asBoolean(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public boolean asBoolean(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.BOOLEAN);
-        return plugin.getConfig().getBoolean(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getBoolean(getPath());
     }
 
     /**
@@ -475,9 +475,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as a double.
      * @throws IllegalStateException if the field type is not DOUBLE.
      */
-    public double asDouble(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public double asDouble(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.DOUBLE);
-        return plugin.getConfig().getDouble(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getDouble(getPath());
     }
 
     /**
@@ -487,9 +487,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as an integer.
      * @throws IllegalStateException if the field type is not INTEGER.
      */
-    public int asInt(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public int asInt(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.INTEGER);
-        return plugin.getConfig().getInt(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getInt(getPath());
     }
 
     /**
@@ -499,9 +499,9 @@ public enum ConfigFields {
      * @return The value of the configuration field as a long.
      * @throws IllegalStateException if the field type is not LONG.
      */
-    public long asLong(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public long asLong(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.LONG);
-        return plugin.getConfig().getLong(getPath());
+        return plugin.getBootstrap().getLoader().getConfig().getLong(getPath());
     }
 
     /**
@@ -511,8 +511,8 @@ public enum ConfigFields {
      * @return The value of the configuration field as a float.
      * @throws IllegalStateException if the field type is not FLOAT.
      */
-    public float asFloat(@NonNull WorldGuardRegionProtectPaperBase plugin) {
+    public float asFloat(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
         ensure(FieldType.FLOAT);
-        return (float) plugin.getConfig().getDouble(getPath());
+        return (float) plugin.getBootstrap().getLoader().getConfig().getDouble(getPath());
     }
 }

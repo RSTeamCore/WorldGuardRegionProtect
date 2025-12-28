@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.api.implementation;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectPlugin;
+import net.ritasister.wgrp.plugin.WorldGuardRegionProtectPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 
 public class ApiEntityChecker<E, T> implements EntityCheckType<E, T> {

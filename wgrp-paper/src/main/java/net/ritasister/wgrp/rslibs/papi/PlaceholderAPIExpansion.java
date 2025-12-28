@@ -15,17 +15,17 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
+        return wgrpPlugin.getBootstrap().getLoader().getDescription().getVersion();
     }
 
     @Override
     public @NotNull String getAuthor() {
-        return wgrpPlugin.getWgrpPaperBase().getDescription().getAuthors().toString();
+        return wgrpPlugin.getBootstrap().getLoader().getDescription().getAuthors().toString();
     }
 
     @Override
     public @NotNull String getVersion() {
-        return wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
+        return wgrpPlugin.getBootstrap().getLoader().getDescription().getVersion();
     }
 
     @Override

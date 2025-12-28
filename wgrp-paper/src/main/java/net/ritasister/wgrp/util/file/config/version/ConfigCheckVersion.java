@@ -17,7 +17,7 @@ public final class ConfigCheckVersion implements VersionChecker<WorldGuardRegion
 
     @Override
     public boolean check(@NotNull WorldGuardRegionProtectPaperPlugin plugin) {
-        final File configFile = new File(plugin.getWgrpPaperBase().getDataFolder(), "config.yml");
+        final File configFile = new File(plugin.getBootstrap().getLoader().getDataFolder(), "config.yml");
 
         try {
             versionUpdateService.checkAndUpdate(plugin, ConfigType.CONFIG, configFile, "config.yml");

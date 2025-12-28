@@ -23,7 +23,7 @@ public final class MinecartMaterialCheckTypeImpl implements EntityCheckType<Enti
     public boolean check(final Entity entity) {
         final Minecart minecart = (Minecart) entity;
         final Material minecartMaterial = minecart.getMinecartMaterial();
-        return ConfigFields.VEHICLE_TYPE.asStringList(wgrpBukkitPlugin.getWgrpPaperBase()).contains(minecartMaterial.name().toLowerCase());
+        return ConfigFields.VEHICLE_TYPE.asStringList(wgrpBukkitPlugin).contains(minecartMaterial.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

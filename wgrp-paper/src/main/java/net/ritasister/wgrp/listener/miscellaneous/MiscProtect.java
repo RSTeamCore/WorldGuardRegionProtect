@@ -27,9 +27,9 @@ public final class MiscProtect implements Listener {
         final Block block = e.getBlock();
         final Location location = e.getToBlock().getLocation();
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().get().getRegionProtectMap())) {
-            if (ConfigFields.DENY_WATER_FLOW_TO_REGION.asBoolean(wgrpPlugin.getWgrpPaperBase())
+            if (ConfigFields.DENY_WATER_FLOW_TO_REGION.asBoolean(wgrpPlugin)
                     && block.getType() == Material.WATER
-                    || ConfigFields.DENY_LAVA_FLOW_TO_REGION.asBoolean(wgrpPlugin.getWgrpPaperBase())
+                    || ConfigFields.DENY_LAVA_FLOW_TO_REGION.asBoolean(wgrpPlugin)
                     && block.getType() == Material.LAVA) {
                 e.setCancelled(true);
             }

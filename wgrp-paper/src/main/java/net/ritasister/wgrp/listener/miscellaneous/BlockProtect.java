@@ -88,7 +88,7 @@ public final class BlockProtect implements Listener {
     }
 
     private void sendMessage(Player player) {
-        if (ConfigFields.REGION_MESSAGE_PROTECT.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (ConfigFields.REGION_MESSAGE_PROTECT.asBoolean(wgrpPlugin)) {
             wgrpPlugin.getMessageProvider().get().get("messages.ServerMsg.wgrpMsg").send(player);
         }
     }
@@ -107,7 +107,7 @@ public final class BlockProtect implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void denyFormObsidianOrCobblestone(@NotNull BlockFormEvent e) {
         final Location location = e.getBlock().getLocation();
-        if (!ConfigFields.DENY_FORM_BLOCK_FROM_LAVA_AND_WATER.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (!ConfigFields.DENY_FORM_BLOCK_FROM_LAVA_AND_WATER.asBoolean(wgrpPlugin)) {
             return;
         }
         if (e.getNewState().getType() == Material.OBSIDIAN || e.getNewState().getType() == Material.COBBLESTONE

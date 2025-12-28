@@ -21,7 +21,7 @@ public final class AllayMobCheckTypeImpl implements EntityCheckType<Entity, Enti
     public boolean check(final @NotNull Entity entity) {
         final Allay allay = (Allay) entity;
         final EntityType allayType = allay.getType();
-        return ConfigFields.ANIMAL_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(allayType.name().toLowerCase());
+        return ConfigFields.ANIMAL_TYPE.asStringList(wgrpPlugin).contains(allayType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

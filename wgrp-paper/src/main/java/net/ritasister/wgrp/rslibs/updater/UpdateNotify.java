@@ -42,7 +42,7 @@ public final class UpdateNotify {
                         newVersion,
                         PLUGIN_URL_ADDRESS));
 
-                final boolean isUpdateDisabled = ConfigFields.UPDATE_CHECKER.asBoolean(wgrpPlugin.getWgrpPaperBase());
+                final boolean isUpdateDisabled = ConfigFields.UPDATE_CHECKER.asBoolean(wgrpPlugin);
                 if (isUpdateDisabled) {
                     wgrpPlugin.getLogger().info("Starting the download process for the latest plugin version...");
                     wgrpPlugin.getDownloader().downloadLatestJar();

@@ -28,7 +28,7 @@ public class VersionUpdateService {
                                @NotNull String resourcePath) {
 
         final InputStreamReader reader = new InputStreamReader(
-                Objects.requireNonNull(plugin.getWgrpPaperBase().getResource(resourcePath)),
+                Objects.requireNonNull(plugin.getBootstrap().getLoader().getResource(resourcePath)),
                 StandardCharsets.UTF_8
         );
         final YamlConfiguration newConfig = YamlConfiguration.loadConfiguration(reader);

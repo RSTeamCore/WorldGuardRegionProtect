@@ -22,7 +22,7 @@ public final class ExplosiveCheckTypeImpl implements EntityCheckType<Entity, Ent
     public boolean check(final @NotNull Entity entity) {
         final Explosive explosive = (Explosive) entity;
         final EntityType explosiveType = explosive.getType();
-        return ConfigFields.ENTITY_EXPLODE_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(explosiveType.name().toLowerCase());
+        return ConfigFields.ENTITY_EXPLODE_TYPE.asStringList(wgrpPlugin).contains(explosiveType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)
