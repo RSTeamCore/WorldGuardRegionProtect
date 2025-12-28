@@ -21,7 +21,7 @@ public class WGRPBootstrap implements WorldGuardRegionProtectBootstrap {
     private final JavaPlugin loader;
 
     private final WorldGuardRegionProtectPlugin plugin;
-    private Instant startTime;
+    private final Instant startTime;
 
     private final PluginLogger logger;
 
@@ -29,6 +29,7 @@ public class WGRPBootstrap implements WorldGuardRegionProtectBootstrap {
         this.loader = loader;
         this.logger = new JavaPluginLogger(loader.getLogger());
         this.plugin = plugin;
+        this.startTime = Instant.now();
     }
 
     public Server getServer() {

@@ -104,14 +104,11 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     private ConfigProvider<WorldGuardRegionProtectPaperPlugin, Config> configProvider;
     private MessageProvider<WorldGuardRegionProtectPaperPlugin, Messages> messageProvider;
 
-    private Instant startTime;
-
     public WorldGuardRegionProtectPaperPlugin(WorldGuardRegionProtectPaperBase wgrpBase) {
         this.bootstrap = new WGRPBootstrap(wgrpBase,this);
     }
 
     public void onEnable() {
-        this.startTime = Instant.now();
         this.load();
         this.adventure = BukkitAudiences.create(this.bootstrap.getLoader());
         this.initializeFields();
@@ -180,7 +177,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     private void logStartupTime() {
-        final Duration timeTaken = Duration.between(getStartupTime(), Instant.now());
+        final Duration timeTaken = Duration.between(bootstrap.getStartupTime(), Instant.now());
         getLogger().info("Successfully enabled. (took " + timeTaken.toMillis() + "ms)");
     }
 
@@ -262,10 +259,6 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     public PlatformDetector getPlatformDetector() {
         return platformDetector;
-    }
-
-    private Instant getStartupTime() {
-        return this.startTime;
     }
 
     public UpdateDownloaderGitHub getDownloader() {
