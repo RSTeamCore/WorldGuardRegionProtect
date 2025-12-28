@@ -23,7 +23,7 @@ public final class BoatMaterialCheckTypeImpl implements EntityCheckType<Entity, 
     public boolean check(final Entity entity) {
         final Boat boat = (Boat) entity;
         final Material boatMaterial = boat.getBoatMaterial();
-        return ConfigFields.VEHICLE_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(boatMaterial.name().toLowerCase());
+        return ConfigFields.VEHICLE_TYPE.asStringList(wgrpPlugin).contains(boatMaterial.name().toLowerCase());
     }
 
     @Contract(" -> new")

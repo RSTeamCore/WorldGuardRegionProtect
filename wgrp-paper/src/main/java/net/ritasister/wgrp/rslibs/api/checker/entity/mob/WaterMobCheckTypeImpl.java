@@ -22,7 +22,7 @@ public final class WaterMobCheckTypeImpl implements EntityCheckType<Entity, Enti
     public boolean check(final Entity entity) {
         final WaterMob waterMob = (WaterMob) entity;
         final EntityType waterMobType = waterMob.getType();
-        return ConfigFields.WATER_MOB_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(waterMobType.name().toLowerCase());
+        return ConfigFields.WATER_MOB_TYPE.asStringList(wgrpPlugin).contains(waterMobType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

@@ -1,5 +1,6 @@
-package net.ritasister.wgrp;
+package net.ritasister.wgrp.plugin;
 
+import net.ritasister.wgrp.WorldGuardRegionProtectApiProvider;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
 import net.ritasister.wgrp.api.manager.tools.ToolsAdapterManager;
@@ -16,6 +17,13 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * Represent class for any platform.
  */
 public interface WorldGuardRegionProtectPlugin {
+
+    /**
+     * Gets the bootstrap plugin instance
+     *
+     * @return the bootstrap plugin
+     */
+    WorldGuardRegionProtectBootstrap getBootstrap();
 
     /**
      * Gets the platform type this instance of WorldGuardRegionProtect is running on.
@@ -74,6 +82,12 @@ public interface WorldGuardRegionProtectPlugin {
      */
     <P> MessagingService<P> getMessagingService();
 
+    /**
+     * Retrieves the {@link RegionAction} instance that is used to perform actions on regions.
+     *
+     * @return the {@link RegionAction} instance
+     * @since
+     */
     RegionAction getRegionAction();
 
     /**

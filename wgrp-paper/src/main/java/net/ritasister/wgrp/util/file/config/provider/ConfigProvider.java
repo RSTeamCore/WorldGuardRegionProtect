@@ -10,7 +10,7 @@ public class ConfigProvider implements net.ritasister.wgrp.api.config.provider.C
 
     @Override
     public void init(@NonNull WorldGuardRegionProtectPaperPlugin plugin) {
-        this.config = new Config(plugin.getWgrpPaperBase());
+        this.config = new Config(plugin);
     }
 
     @Override

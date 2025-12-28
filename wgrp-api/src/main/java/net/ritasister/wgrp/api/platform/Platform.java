@@ -1,8 +1,17 @@
 package net.ritasister.wgrp.api.platform;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
+
+import java.time.Instant;
 
 public interface Platform {
+
+    /**
+     * Gets the time when the plugin first started.
+     *
+     * @return the enable time
+     */
+    @NotNull Instant getStartTime();
 
     /**
      * Retrieves the type of platform on which WorldGuardRegionProtect is running.
@@ -10,7 +19,7 @@ public interface Platform {
      * @return the platform type as an enum value from {@link Platform.Type}.
      * @since 1.2.1.21
      */
-    Platform.@NonNull Type getType();
+    Platform.@NotNull Type getType();
 
     /**
      * Represents the various types of platforms on which WorldGuardRegionProtect can run.
@@ -59,7 +68,7 @@ public interface Platform {
          * @return the name of the platform type.
          * @since 1.2.1.21
          */
-        public @NonNull String getPlatformName() {
+        public @NotNull String getPlatformName() {
             return this.platform;
         }
     }

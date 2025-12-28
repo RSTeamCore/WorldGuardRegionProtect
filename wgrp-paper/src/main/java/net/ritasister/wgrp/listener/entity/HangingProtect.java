@@ -19,7 +19,7 @@ public final class HangingProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyHangingPlace(@NotNull HangingPlaceEvent e) {
-        if (!ConfigFields.DENY_PLACE_ITEM_FRAME_OR_PAINTING.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (!ConfigFields.DENY_PLACE_ITEM_FRAME_OR_PAINTING.asBoolean(wgrpPlugin)) {
             return;
         }
         wgrpPlugin.getRsApi().entityCheck(e, e.getEntity(), e.getEntity());
@@ -27,7 +27,7 @@ public final class HangingProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyHangingBreakByEntity(@NotNull HangingBreakByEntityEvent e) {
-        if (!ConfigFields.DENY_DAMAGE_ITEM_FRAME_OR_PAINTING.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (!ConfigFields.DENY_DAMAGE_ITEM_FRAME_OR_PAINTING.asBoolean(wgrpPlugin)) {
             return;
         }
         wgrpPlugin.getRsApi().entityCheck(e, e.getRemover(), e.getEntity());

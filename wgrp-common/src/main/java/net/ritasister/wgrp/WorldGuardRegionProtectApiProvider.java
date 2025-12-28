@@ -18,6 +18,7 @@ import net.ritasister.wgrp.api.model.entity.player.Player;
 import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
+import net.ritasister.wgrp.plugin.WorldGuardRegionProtectPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProtect {

@@ -21,7 +21,7 @@ public final class AmbientCheckTypeImpl implements EntityCheckType<Entity, Entit
     public boolean check(final @NotNull Entity entity) {
         final Ambient ambient = (Ambient) entity;
         final EntityType ambientType = ambient.getType();
-        return ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(ambientType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin).contains(ambientType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

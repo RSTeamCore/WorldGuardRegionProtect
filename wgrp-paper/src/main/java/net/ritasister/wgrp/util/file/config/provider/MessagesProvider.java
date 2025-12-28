@@ -15,11 +15,11 @@ public final class MessagesProvider implements MessageProvider<WorldGuardRegionP
 
     @Override
     public void init(@NotNull final WorldGuardRegionProtectPaperPlugin plugin) {
-        final String lang = ConfigFields.LANG.asString(plugin.getWgrpPaperBase());
-        final File file = new File(plugin.getWgrpPaperBase().getDataFolder(), "lang/" + lang + ".yml");
+        final String lang = ConfigFields.LANG.asString(plugin);
+        final File file = new File(plugin.getBootstrap().getLoader().getDataFolder(), "lang/" + lang + ".yml");
 
         if (!file.exists()) {
-            plugin.getWgrpPaperBase().saveResource("lang/" + lang + ".yml", false);
+            plugin.getBootstrap().getLoader().saveResource("lang/" + lang + ".yml", false);
         }
 
         this.messages = new Messages(YamlConfiguration.loadConfiguration(file));

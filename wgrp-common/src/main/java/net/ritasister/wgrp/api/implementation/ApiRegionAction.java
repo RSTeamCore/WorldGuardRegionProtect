@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.api.implementation;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectPlugin;
+import net.ritasister.wgrp.plugin.WorldGuardRegionProtectPlugin;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

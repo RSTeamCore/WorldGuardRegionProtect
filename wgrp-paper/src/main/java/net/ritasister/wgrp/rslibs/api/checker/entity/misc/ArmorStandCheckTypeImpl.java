@@ -21,7 +21,7 @@ public final class ArmorStandCheckTypeImpl implements EntityCheckType<Entity, En
     public boolean check(final @NotNull Entity entity) {
         final ArmorStand armorStand = (ArmorStand) entity;
         final EntityType armorStandType = armorStand.getType();
-        return ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(armorStandType.name().toLowerCase());
+        return ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin).contains(armorStandType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

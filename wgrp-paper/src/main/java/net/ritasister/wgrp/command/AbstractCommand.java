@@ -30,7 +30,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     }
 
     public void register(String command) {
-        final PluginCommand pluginCommand = plugin.getWgrpPaperBase().getCommand(command);
+        final PluginCommand pluginCommand = plugin.getBootstrap().getLoader().getCommand(command);
         if (pluginCommand != null) {
             pluginCommand.setExecutor(this);
             pluginCommand.setTabCompleter(this);

@@ -40,7 +40,7 @@ public class ListenerHandler implements Handler<PluginManager> {
         allListeners.forEach(listener -> {
             this.wgrpPlugin.getLogger().info("Registered listener: " + listener.getClass().getSimpleName());
             this.wgrpPlugin.getListenerHandlerMap().put(listener.getClass(), listener);
-            pluginManager.registerEvents(listener, this.wgrpPlugin.getWgrpPaperBase());
+            pluginManager.registerEvents(listener, this.wgrpPlugin.getBootstrap().getLoader());
         });
 
         this.wgrpPlugin.getLogger().info("Finished registering listeners.");

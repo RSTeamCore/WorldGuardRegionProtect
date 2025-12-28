@@ -1,7 +1,10 @@
-package net.ritasister.wgrp;
+package net.ritasister.wgrp.plugin;
 
+import net.ritasister.wgrp.WorldGuardRegionProtectApiProvider;
 import net.ritasister.wgrp.api.ApiRegistrationUtil;
 import net.ritasister.wgrp.api.WorldGuardRegionProtect;
+import net.ritasister.wgrp.api.logging.PluginLogger;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractWorldGuardRegionProtectPlugin implements WorldGuardRegionProtectPlugin {
 
@@ -23,6 +26,11 @@ public abstract class AbstractWorldGuardRegionProtectPlugin implements WorldGuar
     @Override
     public final WorldGuardRegionProtectApiProvider getApiProvider() {
         return this.apiProvider;
+    }
+
+    @Override
+    public @NotNull PluginLogger getLogger() {
+        return getBootstrap().getPluginLogger();
     }
 
     protected abstract void registerApiOnPlatform(WorldGuardRegionProtect api);

@@ -24,7 +24,8 @@ public class WGRPCompatibilityCheck {
             return false;
         }
 
-        final String platform = platformDetector.detectPlatform(pluginDisabler.plugin);
+        final String platform = platformDetector.detectPlatform(pluginDisabler.plugin.getBootstrap(), pluginDisabler.plugin.getType());
+
         if (Platform.Type.UNKNOWN.getPlatformName().equals(platform)) {
             pluginDisabler.disableWithMessage("Unsupported server platform: " + platform);
             return false;

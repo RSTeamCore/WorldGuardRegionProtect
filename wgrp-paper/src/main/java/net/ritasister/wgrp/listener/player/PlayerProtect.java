@@ -30,7 +30,7 @@ public final class PlayerProtect implements Listener {
     private void denyChangeSign(@NotNull SignChangeEvent e) {
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(e.getPlayer().getLocation(), wgrpPlugin.getConfigLoader().getConfig().getRegionProtectMap())
                 && wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
-            if (ConfigFields.SIGN_TYPE.asString(wgrpPlugin.getWgrpPaperBase()).contains(e.getBlock().getType().name().toLowerCase())) {
+            if (ConfigFields.SIGN_TYPE.asString(wgrpPlugin).contains(e.getBlock().getType().name().toLowerCase())) {
                 e.setCancelled(true);
             }
         }
@@ -39,10 +39,10 @@ public final class PlayerProtect implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyFlowerPotManipulate(@NotNull PlayerFlowerPotManipulateEvent e) {
         final Location location = e.getFlowerpot().getLocation();
-        if (ConfigFields.DENY_MANIPULATE_WITH_FLOWERPOT.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (ConfigFields.DENY_MANIPULATE_WITH_FLOWERPOT.asBoolean(wgrpPlugin)) {
             if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigLoader().getConfig().getRegionProtectMap())
                     && wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
-                if (ConfigFields.NATURAL_BLOCK_OR_ITEM.asString(wgrpPlugin.getWgrpPaperBase()).contains(e.getItem().getType().name().toLowerCase())) {
+                if (ConfigFields.NATURAL_BLOCK_OR_ITEM.asString(wgrpPlugin).contains(e.getItem().getType().name().toLowerCase())) {
                     e.setCancelled(true);
                 }
             }
@@ -67,8 +67,8 @@ public final class PlayerProtect implements Listener {
             final Location location = event.getClickedBlock().getLocation();
             if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigLoader().getConfig().getRegionProtectMap())
                     && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
-                for (String spawnVehicleType : ConfigFields.VEHICLE_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase())) {
-                    for (String spawnEntityType : ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase())) {
+                for (String spawnVehicleType : ConfigFields.VEHICLE_TYPE.asStringList(wgrpPlugin)) {
+                    for (String spawnEntityType : ConfigFields.INTERACT_TYPE.asStringList(wgrpPlugin)) {
                         checkDenyInteract(event, spawnVehicleType, spawnEntityType, player);
                     }
                 }
@@ -108,7 +108,7 @@ public final class PlayerProtect implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     private void denyInteractWithItemFrame(@NotNull PlayerInteractEntityEvent e) {
-        if (!ConfigFields.DENY_INTERACT_WITH_ITEM_FRAME.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+        if (!ConfigFields.DENY_INTERACT_WITH_ITEM_FRAME.asBoolean(wgrpPlugin)) {
             return;
         }
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(

@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.util.file.config.files;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectPaperBase;
+import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.util.file.config.field.ConfigFields;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -16,13 +16,13 @@ import java.util.Map;
 
 public final class Config implements net.ritasister.wgrp.api.config.Config {
 
-    private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
+    private final WorldGuardRegionProtectPaperPlugin wgrpPaperBase;
 
     private Map<String, List<String>> regionProtect;
     private Map<String, List<String>> regionProtectAllow;
     private Map<String, List<String>> regionProtectOnlyBreakAllow;
 
-    public Config(WorldGuardRegionProtectPaperBase wgrpPaperBase) {
+    public Config(WorldGuardRegionProtectPaperPlugin wgrpPaperBase) {
         this.wgrpPaperBase = wgrpPaperBase;
         this.reloadConfig();
     }
@@ -32,8 +32,8 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
         regionProtectAllow = new HashMap<>();
         regionProtectOnlyBreakAllow = new HashMap<>();
 
-        wgrpPaperBase.saveDefaultConfig();
-        wgrpPaperBase.reloadConfig();
+        wgrpPaperBase.getBootstrap().getLoader().saveDefaultConfig();
+        wgrpPaperBase.getBootstrap().getLoader().reloadConfig();
 
         for (ConfigFields field : ConfigFields.values()) {
             try {
@@ -94,7 +94,7 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
     }
 
     public void saveRegionProtectConfig() {
-        final Configuration configFile = wgrpPaperBase.getConfig();
+        final Configuration configFile = wgrpPaperBase.getBootstrap().getLoader().getConfig();
 
         loadMap(configFile, "wgRegionProtect.regionProtect", regionProtect);
         loadMap(configFile, "wgRegionProtect.regionProtectAllow", regionProtectAllow);
@@ -145,8 +145,8 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
 
     public void saveConfig(final String path, final Object field) {
         try {
-            wgrpPaperBase.getConfig().set(path, field);
-            wgrpPaperBase.saveConfig();
+            wgrpPaperBase.getBootstrap().getLoader().getConfig().set(path, field);
+            wgrpPaperBase.getBootstrap().getLoader().saveConfig();
         } catch (Exception e) {
             wgrpPaperBase.getLogger().severe("Could not save config.yml! Error: " + e.getMessage());
             e.fillInStackTrace();

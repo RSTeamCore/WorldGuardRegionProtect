@@ -22,7 +22,7 @@ public final class MiscCheckTypeImpl implements EntityCheckType<Entity, EntityTy
     public boolean check(final Entity entity) {
         final Item projectile = (Item) entity;
         final EntityType projectileType = projectile.getType();
-        return ConfigFields.MISC_ENTITY_TYPE.asStringList(wgrpBukkitPlugin.getWgrpPaperBase()).contains(projectileType.name().toLowerCase());
+        return ConfigFields.MISC_ENTITY_TYPE.asStringList(wgrpBukkitPlugin).contains(projectileType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

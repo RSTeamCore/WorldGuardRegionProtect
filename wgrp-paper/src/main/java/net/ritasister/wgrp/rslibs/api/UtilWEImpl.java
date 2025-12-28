@@ -20,42 +20,42 @@ public class UtilWEImpl implements UtilCommandWE {
 
     public boolean cmdWe(@NotNull String s) {
         final String cleanedInput = s.replace("worldedit:", "").toLowerCase();
-        return ConfigFields.CMD_WE.asStringList(wgrpPlugin.getWgrpPaperBase())
+        return ConfigFields.CMD_WE.asStringList(wgrpPlugin)
                 .stream()
                 .anyMatch(command -> command.equalsIgnoreCase(cleanedInput));
     }
 
     public boolean cmdWeC(@NotNull String s) {
         final String cleanedInput = s.replace("worldedit:", "").toLowerCase();
-        return ConfigFields.CMD_WE_C.asStringList(wgrpPlugin.getWgrpPaperBase())
+        return ConfigFields.CMD_WE_C.asStringList(wgrpPlugin)
                 .stream()
                 .anyMatch(command -> command.equalsIgnoreCase(cleanedInput));
     }
 
     public boolean cmdWeP(@NotNull String s) {
         final String cleanedInput = s.replace("worldedit:", "").toLowerCase();
-        return ConfigFields.CMD_WE_P.asStringList(wgrpPlugin.getWgrpPaperBase())
+        return ConfigFields.CMD_WE_P.asStringList(wgrpPlugin)
                 .stream()
                 .anyMatch(command -> command.equalsIgnoreCase(cleanedInput));
     }
 
     public boolean cmdWeS(@NotNull String s) {
         final String cleanedInput = s.replace("worldedit:", "").toLowerCase();
-        return ConfigFields.CMD_WE_S.asStringList(wgrpPlugin.getWgrpPaperBase())
+        return ConfigFields.CMD_WE_S.asStringList(wgrpPlugin)
                 .stream()
                 .anyMatch(command -> command.equalsIgnoreCase(cleanedInput));
     }
 
     public boolean cmdWeU(@NotNull String s) {
         final String cleanedInput = s.replace("worldedit:", "").toLowerCase();
-        return ConfigFields.CMD_WE_U.asStringList(wgrpPlugin.getWgrpPaperBase())
+        return ConfigFields.CMD_WE_U.asStringList(wgrpPlugin)
                 .stream()
                 .anyMatch(command -> command.equalsIgnoreCase(cleanedInput));
     }
 
     public boolean cmdWeCP(@NotNull String s) {
         final String cleanedInput = s.replace("worldedit:", "").toLowerCase();
-        return ConfigFields.CMD_WE_CP.asStringList(wgrpPlugin.getWgrpPaperBase())
+        return ConfigFields.CMD_WE_CP.asStringList(wgrpPlugin)
                 .stream()
                 .anyMatch(command -> command.equalsIgnoreCase(cleanedInput));
     }

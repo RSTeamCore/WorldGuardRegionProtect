@@ -1,6 +1,6 @@
 package net.ritasister.wgrp.api.implementation;
 
-import net.ritasister.wgrp.WorldGuardRegionProtectPlugin;
+import net.ritasister.wgrp.plugin.WorldGuardRegionProtectPlugin;
 import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 

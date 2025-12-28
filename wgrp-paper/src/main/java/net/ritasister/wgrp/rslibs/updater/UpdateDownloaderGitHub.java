@@ -27,14 +27,14 @@ public final class UpdateDownloaderGitHub {
     public void downloadLatestJar() {
         try {
             final String organization = "RSTeamCore";
-            final String pluginName = wgrpPlugin.getWgrpPaperBase().getName();
-            final String currentVersion = wgrpPlugin.getWgrpPaperBase().getDescription().getVersion();
+            final String pluginName = wgrpPlugin.getBootstrap().getLoader().getName();
+            final String currentVersion = wgrpPlugin.getBootstrap().getLoader().getDescription().getVersion();
             final String latestReleaseTag = getLatestReleaseTag(pluginName);
 
             final String fileNew = String.format("WorldGuardRegionProtect-%s.jar", latestReleaseTag);
             final String fileCurrent = String.format("WorldGuardRegionProtect-%s.jar", currentVersion);
-            final String newVersionPluginPath = wgrpPlugin.getWgrpPaperBase().getDataFolder().getParentFile() + File.separator + fileNew;
-            final String oldVersionPluginPath = wgrpPlugin.getWgrpPaperBase().getDataFolder().getParentFile() + File.separator + fileCurrent;
+            final String newVersionPluginPath = wgrpPlugin.getBootstrap().getLoader().getDataFolder().getParentFile() + File.separator + fileNew;
+            final String oldVersionPluginPath = wgrpPlugin.getBootstrap().getLoader().getDataFolder().getParentFile() + File.separator + fileCurrent;
             final File newJar = new File(newVersionPluginPath);
             final File oldJar = new File(oldVersionPluginPath);
 
@@ -70,7 +70,7 @@ public final class UpdateDownloaderGitHub {
 
     private void removeOldJar(String fileNew, File fileCurrent) {
         try {
-            final File directory = new File(wgrpPlugin.getWgrpPaperBase().getDataFolder().getParentFile().getPath());
+            final File directory = new File(wgrpPlugin.getBootstrap().getLoader().getDataFolder().getParentFile().getPath());
             final File[] files = directory.listFiles((dir, name) -> name.startsWith("WorldGuardRegionProtect-") && name.endsWith(".jar"));
 
             if (files != null) {

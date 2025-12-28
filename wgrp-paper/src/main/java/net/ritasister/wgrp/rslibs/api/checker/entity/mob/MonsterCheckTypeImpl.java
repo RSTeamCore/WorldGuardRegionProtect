@@ -22,7 +22,7 @@ public final class MonsterCheckTypeImpl implements EntityCheckType<Entity, Entit
     public boolean check(final Entity entity) {
         final Monster monster = (Monster) entity;
         final EntityType monsterType = monster.getType();
-        return ConfigFields.MONSTER_TYPE.asStringList(wgrpPlugin.getWgrpPaperBase()).contains(monsterType.name().toLowerCase());
+        return ConfigFields.MONSTER_TYPE.asStringList(wgrpPlugin).contains(monsterType.name().toLowerCase());
     }
 
     @Contract(value = " -> new", pure = true)

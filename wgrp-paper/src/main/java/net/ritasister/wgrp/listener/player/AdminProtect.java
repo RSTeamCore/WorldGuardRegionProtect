@@ -36,10 +36,10 @@ public final class AdminProtect implements Listener {
     private void checkUpdateNotifyJoinPlayer(@NotNull PlayerJoinEvent e) {
         if (!wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.ADMIN_RIGHT)) {
             wgrpPlugin.getUpdateNotify().checkUpdateNotify(
-                    wgrpPlugin.getWgrpPaperBase().getDescription().getVersion(),
+                    wgrpPlugin.getBootstrap().getLoader().getDescription().getVersion(),
                     e.getPlayer(),
-                    ConfigFields.UPDATE_CHECKER.asBoolean(wgrpPlugin.getWgrpPaperBase()),
-                    ConfigFields.SEND_NO_UPDATE.asBoolean(wgrpPlugin.getWgrpPaperBase()));
+                    ConfigFields.UPDATE_CHECKER.asBoolean(wgrpPlugin),
+                    ConfigFields.SEND_NO_UPDATE.asBoolean(wgrpPlugin));
         }
     }
 
@@ -89,7 +89,7 @@ public final class AdminProtect implements Listener {
                 || playerUtilWE.cmdWeS(string[0]) && !checkIntersection.checkSIntersection(e.getPlayer(), string)
                 || playerUtilWE.cmdWeU(string[0]) && !checkIntersection.checkUIntersection(e.getPlayer(), string)) {
 
-            if (ConfigFields.REGION_MESSAGE_PROTECT_WE.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
+            if (ConfigFields.REGION_MESSAGE_PROTECT_WE.asBoolean(wgrpPlugin)) {
                 wgrpPlugin.getMessageProvider().get().get("messages.ServerMsg.wgrpMsgWe").send(e.getPlayer());
                 e.setCancelled(true);
             }
