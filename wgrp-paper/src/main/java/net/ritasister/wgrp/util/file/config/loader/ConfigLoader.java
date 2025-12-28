@@ -50,7 +50,4 @@ public final class ConfigLoader {
         return configProvider.getConfig();
     }
 
-    public Messages getMessages() {
-        return messageProvider.getMessages();
-    }
 }

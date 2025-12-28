@@ -1,13 +1,17 @@
 langTitle:
   language: 简体中文
   author: SnowCutieOwO
-  version: 2
+  version: 3
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> 该区域受服务器保护！'
+    wgrpMsgByPlayer: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by a player!'
     wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> 你不能在这里使用 WorldEdit 命令！'
     noPerm: '<red>你没有权限使用此命令。'
   regionManagement:
+    notOwnerRegion: '<red>You can''t remove or add to protect the region <gold><region><red> because you are not a owner this region!'
+    restrictProtect: '<red>You can''t protect the region <gold><region><red> because this region protected by admin!'
+    restrictUnProtect: '<red>You can''t remove protect the region <gold><region><red> because this region protected by admin!'
     add: '<green>区域 <gold><region><green> 已添加至配置文件中。'
     remove: '<red>区域 <gold><region><red> 已从配置文件中移出。'
     notContains: '<red>无法将区域从保护列表中移除，因为 <gold><region><red> 没有受到保护！'

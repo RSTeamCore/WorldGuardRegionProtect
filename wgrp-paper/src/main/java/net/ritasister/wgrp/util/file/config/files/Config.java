@@ -19,6 +19,7 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
     private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
 
     private Map<String, List<String>> regionProtect;
+    private Map<String, List<String>> playerRegionProtect;
     private Map<String, List<String>> regionProtectAllow;
     private Map<String, List<String>> regionProtectOnlyBreakAllow;
 
@@ -29,6 +30,7 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
 
     public void reloadConfig() {
         regionProtect = new HashMap<>();
+        playerRegionProtect = new HashMap<>();
         regionProtectAllow = new HashMap<>();
         regionProtectOnlyBreakAllow = new HashMap<>();
 
@@ -57,7 +59,7 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
                 e.printStackTrace();
             }
         }
-        this.saveRegionProtectConfig();
+        this.loadRegionProtectConfig();
     }
 
     @Override
@@ -68,6 +70,15 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
     @Override
     public void setRegionProtectMap(@NotNull Map<String, List<String>> value) {
         regionProtect = value;
+        saveRegionProtectConfig();
+    }
+
+    public Map<String, List<String>> getPlayerRegionProtectMap() {
+        return playerRegionProtect;
+    }
+
+    public void setPlayerRegionProtectMap(@NotNull Map<String, List<String>> value) {
+        playerRegionProtect = value;
         saveRegionProtectConfig();
     }
 
@@ -93,19 +104,33 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
         saveRegionProtectConfig();
     }
 
-    public void saveRegionProtectConfig() {
+    public void loadRegionProtectConfig() {
         final Configuration configFile = wgrpPaperBase.getConfig();
 
         loadMap(configFile, "wgRegionProtect.regionProtect", regionProtect);
+        loadMap(configFile, "wgRegionProtect.playerRegionProtect", playerRegionProtect);
         loadMap(configFile, "wgRegionProtect.regionProtectAllow", regionProtectAllow);
         loadMap(configFile, "wgRegionProtect.regionProtectOnlyBreakAllow", regionProtectOnlyBreakAllow);
 
         for (World w : Bukkit.getWorlds()) {
             regionProtect.putIfAbsent(w.getName(), new ArrayList<>());
+            playerRegionProtect.putIfAbsent(w.getName(), new ArrayList<>());
             regionProtectAllow.putIfAbsent(w.getName(), new ArrayList<>());
             regionProtectOnlyBreakAllow.putIfAbsent(w.getName(), new ArrayList<>());
         }
 
+        this.logRegionProtectConfig();
+    }
+
+    public void saveRegionProtectConfig() {
+        final Configuration configFile = wgrpPaperBase.getConfig();
+
+        configFile.set("wgRegionProtect.regionProtect", regionProtect);
+        configFile.set("wgRegionProtect.playerRegionProtect", playerRegionProtect);
+        configFile.set("wgRegionProtect.regionProtectAllow", regionProtectAllow);
+        configFile.set("wgRegionProtect.regionProtectOnlyBreakAllow", regionProtectOnlyBreakAllow);
+
+        wgrpPaperBase.saveConfig();
         this.logRegionProtectConfig();
     }
 
@@ -114,7 +139,6 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
         if (section != null) {
             for (String key : section.getKeys(false)) {
                 final List<String> list = section.getStringList(key);
-
                 map.put(key, list);
             }
         } else {
@@ -125,6 +149,7 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
 
     private void logRegionProtectConfig() {
         logRegionMap("=== Loaded fully protected regions ===", regionProtect);
+        logRegionMap("=== Loaded player protected regions ===", playerRegionProtect);
         logRegionMap("=== Loaded regions allowing interact ===", regionProtectAllow);
         logRegionMap("=== Loaded regions allowing only break events ===", regionProtectOnlyBreakAllow);
     }

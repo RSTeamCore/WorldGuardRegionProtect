@@ -1,13 +1,17 @@
 langTitle:
   language: Turkish
   author: DarkSavic
-  version: 2
+  version: 3
 messages:
   ServerMsg:
     wgrpMsg: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> Bu bölge sunucu tarafından korunmaktadır!'
+    wgrpMsgByPlayer: '<dark_gray>[<dark_red>WGRP<dark_gray>]<green> This region is protected by a player!'
     wgrpMsgWe: '<dark_gray>[<dark_red>WGRP<dark_gray>]<red> Burada worldedit komutunu kullanamazsınız!'
     noPerm: '<red>Bu komutu kullanma izniniz yok.'
   regionManagement:
+    notOwnerRegion: '<red>You can''t remove or add to protect the region <gold><region><red> because you are not a owner this region!'
+    restrictProtect: '<red>You can''t protect the region <gold><region><red> because this region protected by admin!'
+    restrictUnProtect: '<red>You can''t remove protect the region <gold><region><red> because this region protected by admin!'
     add: '<green>Bölge <gold><region><green> yapılandırmaya eklendi.'
     remove: '<red>Bölge <gold><region><red> yapılandırmadan kaldırıldı.'
     notContains: '<red>Bölgeyi koruma listesinden kaldıramadık çünkü <gold><region> <red>korunmuyor!'
