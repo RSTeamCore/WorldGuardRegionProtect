@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.api.config;
+package net.ritasister.wgrp.api.config.provider;
 
 /**
  * Interface for configuration providers handling region protection data.
