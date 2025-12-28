@@ -9,6 +9,7 @@ import net.ritasister.wgrp.api.config.provider.ConfigProvider;
 import net.ritasister.wgrp.api.config.provider.MessageProvider;
 import net.ritasister.wgrp.api.config.version.ConfigVersionReader;
 import net.ritasister.wgrp.api.config.version.VersionChecker;
+import net.ritasister.wgrp.api.handler.Handler;
 import net.ritasister.wgrp.api.logging.JavaPluginLogger;
 import net.ritasister.wgrp.api.logging.PluginLogger;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
@@ -18,6 +19,10 @@ import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.api.platform.Platform;
+import net.ritasister.wgrp.handler.CommandHandler;
+import net.ritasister.wgrp.handler.ListenerHandler;
+import net.ritasister.wgrp.handler.TaskHandler;
+import net.ritasister.wgrp.loader.PluginDisabler;
 import net.ritasister.wgrp.loader.WGRPCompatibilityCheck;
 import net.ritasister.wgrp.loader.WGRPLoaderHandlers;
 import net.ritasister.wgrp.loader.plugin.LoadPlaceholderAPI;
@@ -42,8 +47,10 @@ import net.ritasister.wgrp.util.file.config.version.ConfigCheckVersion;
 import net.ritasister.wgrp.util.file.config.version.MessageCheckVersion;
 import net.ritasister.wgrp.util.file.config.version.VersionUpdateService;
 import net.ritasister.wgrp.util.schedulers.FoliaRunnable;
-import net.ritasister.wgrp.util.utility.VersionCheck;
+import net.ritasister.wgrp.util.utility.platform.PlatformDetector;
+import net.ritasister.wgrp.util.utility.version.MinecraftVersionChecker;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
@@ -71,6 +78,9 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     private final WorldGuardRegionProtectPaperBase wgrpPaperBase;
     private final PluginLogger logger;
+
+    private PlatformDetector platformDetector;
+
     private BukkitAudiences adventure;
     private WorldGuardRegionProtectMetadata wgrpMetadata;
     private RegionAction regionAction;
@@ -91,7 +101,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     private UpdateDownloaderGitHub downloader;
     private UpdateNotify updateNotify;
 
-    private VersionCheck versionCheck;
+    private MinecraftVersionChecker versionCheck;
 
     private ConfigLoader configLoader;
     private ConfigProvider<WorldGuardRegionProtectPaperPlugin, Config> configProvider;
@@ -110,11 +120,14 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         this.adventure = BukkitAudiences.create(wgrpPaperBase);
         this.initializeFields();
 
-        final WGRPCompatibilityCheck compatibilityCheck = new WGRPCompatibilityCheck(this);
+        final MinecraftVersionChecker versionChecker = this.versionCheck;
+        platformDetector = new PlatformDetector();
+        final PluginDisabler pluginDisabler = new PluginDisabler(this);
+        final WGRPCompatibilityCheck compatibilityCheck = new WGRPCompatibilityCheck(versionChecker, platformDetector, pluginDisabler);
+
         if (!compatibilityCheck.performCompatibilityChecks()) {
             return;
         }
-        compatibilityCheck.checkUpdate();
 
         this.initializeMetrics();
         this.loadAnotherClassAndMethods();
@@ -122,7 +135,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     private void initializeFields() {
-        this.versionCheck = new VersionCheck(this);
+        this.versionCheck = new MinecraftVersionChecker(() -> Bukkit.getBukkitVersion().split("-")[0]);
         this.spyLog = new ArrayList<>();
 
         configProvider = new net.ritasister.wgrp.util.file.config.provider.ConfigProvider();
@@ -186,17 +199,27 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
     }
 
     private void loadAnotherClassAndMethods() {
-        new LoadWorldGuard(this).loadPlugin();
-        new LoadPlaceholderAPI(this).loadPlugin();
+        final LoadWorldGuard loadWorldGuard = new LoadWorldGuard(this);
+        loadWorldGuard.loadPlugin();
 
-        new WGRPLoaderHandlers().loadHandler(this);
+        final LoadPlaceholderAPI loadPlaceholderAPI = new LoadPlaceholderAPI(this);
+        loadPlaceholderAPI.loadPlugin();
+
+        final List<FoliaRunnable> tasks = List.of();
+
+        final List<Handler<?>> handlers = List.of(
+                new CommandHandler(this),
+                new ListenerHandler(this),
+                new TaskHandler(this, tasks)
+        );
+
+        new WGRPLoaderHandlers(handlers).loadHandler(this);
 
         this.regionAdapter = new RegionAdapterManagerPaper();
         this.toolsAdapter = new ToolsAdapterManagerPaper();
 
         playerUtilWE = new UtilWEImpl(this);
         checkIntersection = playerUtilWE.setUpWorldGuardVersionSeven();
-
     }
 
     public List<UUID> getSpyLog() {
@@ -233,6 +256,10 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         } else {
             return Platform.Type.BUKKIT;
         }
+    }
+
+    public PlatformDetector getPlatformDetector() {
+        return platformDetector;
     }
 
     private Instant getStartupTime() {
@@ -297,7 +324,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         return taskMap;
     }
 
-    public VersionCheck getVersionCheck() {
+    public MinecraftVersionChecker getVersionCheck() {
         return versionCheck;
     }
 
