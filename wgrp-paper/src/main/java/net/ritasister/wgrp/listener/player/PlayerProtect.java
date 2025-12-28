@@ -135,7 +135,7 @@ public final class PlayerProtect implements Listener {
         final boolean inServerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(clickLoc, protectedRegions);
         final boolean inPlayerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(clickLoc, protectedPlayerRegions);
 
-        if ((inServerRegion || inPlayerRegion)) {
+        if (inServerRegion || inPlayerRegion) {
             if (wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
                 if (e.getRightClicked().getType() == EntityType.ARMOR_STAND) {
                     e.setCancelled(true);
@@ -155,7 +155,7 @@ public final class PlayerProtect implements Listener {
         final boolean inServerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(rigthClickLocation, protectedRegions);
         final boolean inPlayerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(rigthClickLocation, protectedPlayerRegions);
 
-        if ((inServerRegion || inPlayerRegion)) {
+        if (inServerRegion || inPlayerRegion) {
             if (wgrpPlugin.getPermissionCheck().hasPlayerPermission(e.getPlayer(), UtilPermissions.REGION_PROTECT)) {
                 switch (e.getRightClicked().getType()) {
                     case ITEM_FRAME, GLOW_ITEM_FRAME -> e.setCancelled(true);

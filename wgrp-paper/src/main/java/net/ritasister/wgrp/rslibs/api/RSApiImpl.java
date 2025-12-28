@@ -107,7 +107,7 @@ public class RSApiImpl implements MessagingService<Player> {
         final boolean inServerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(location, protectedRegions);
         final boolean inPlayerRegion = wgrpPlugin.getRegionAdapter().checkStandingRegion(location, protectedPlayerRegions);
 
-        if ((inServerRegion || inPlayerRegion)) {
+        if (inServerRegion || inPlayerRegion) {
             if (entity instanceof Player player) {
                 if (wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     entityCheck(cancellable, player);
