@@ -20,10 +20,4 @@ public class ConfigProvider implements net.ritasister.wgrp.api.config.provider.C
         }
         return config;
     }
-
-    public void saveConfig(String path, Object value) {
-        if (config != null) {
-            config.saveConfig(path, value);
-        }
-    }
 }
