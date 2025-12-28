@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.api.config;
+package net.ritasister.wgrp.api.config.provider;
 
 /**
  * Interface for providing message configurations.

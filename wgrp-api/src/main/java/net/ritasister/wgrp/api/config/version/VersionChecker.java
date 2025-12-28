@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.api.config;
+package net.ritasister.wgrp.api.config.version;
 
 /**
  * Interface for checking the version of the plugin or configuration.
