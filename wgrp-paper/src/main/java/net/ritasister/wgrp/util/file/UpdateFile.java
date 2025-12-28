@@ -3,8 +3,6 @@ package net.ritasister.wgrp.util.file;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.FileUpdater;
 import net.ritasister.wgrp.api.config.version.DateProvider;
-import net.ritasister.wgrp.util.file.config.ConfigType;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

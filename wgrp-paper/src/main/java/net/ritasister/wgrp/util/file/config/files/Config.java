@@ -138,7 +138,7 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
         }
 
         regions.forEach((world, list) -> {
-            String output = list.isEmpty() ? "None" : String.join(", ", list);
+            final String output = list.isEmpty() ? "None" : String.join(", ", list);
             wgrpPaperBase.getLogger().info(String.format("  %-15s : [%s]", world, output));
         });
     }

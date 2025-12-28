@@ -64,7 +64,7 @@ public class VersionUpdateService {
         if (type == ConfigType.CONFIG) {
             updateFile.updateConfig(plugin, file);
         } else {
-            String lang = new File(resourcePath).getName().replace(".yml", "");
+            final String lang = new File(resourcePath).getName().replace(".yml", "");
             updateFile.updateLang(plugin, file, lang);
         }
     }
