@@ -5,6 +5,7 @@ package net.ritasister.wgrp.api.config.provider;
  *
  * @param <P> plugin type
  * @param <T> provided object type
+ * @since 1.9.11.21
  */
 public interface ResourceProvider<P, T> {
 
