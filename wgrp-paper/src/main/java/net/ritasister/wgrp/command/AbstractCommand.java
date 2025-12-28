@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.command;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.api.config.MessageProvider;
+import net.ritasister.wgrp.api.config.provider.MessageProvider;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.util.file.config.files.Messages;

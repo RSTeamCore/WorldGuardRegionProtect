@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.rslibs.api;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.api.config.MessageProvider;
+import net.ritasister.wgrp.api.config.provider.MessageProvider;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.rslibs.api.checker.entity.EntityCheckTypeProvider;

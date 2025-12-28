@@ -1,9 +1,9 @@
 package net.ritasister.wgrp.util.file.config.loader;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.api.config.ConfigProvider;
-import net.ritasister.wgrp.api.config.MessageProvider;
-import net.ritasister.wgrp.api.config.VersionChecker;
+import net.ritasister.wgrp.api.config.provider.ConfigProvider;
+import net.ritasister.wgrp.api.config.provider.MessageProvider;
+import net.ritasister.wgrp.api.config.version.VersionChecker;
 import net.ritasister.wgrp.util.file.config.files.Config;
 import net.ritasister.wgrp.util.file.config.files.Messages;
 
