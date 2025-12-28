@@ -14,7 +14,7 @@ public class ConfigProvider implements net.ritasister.wgrp.api.config.provider.C
     }
 
     @Override
-    public Config getConfig() {
+    public Config get() {
         if (config == null) {
             throw new IllegalStateException("config provider is not initialized yet! Call init(plugin) first.");
         }

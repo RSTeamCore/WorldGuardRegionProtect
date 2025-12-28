@@ -40,7 +40,8 @@ public class RSApiImpl implements MessagingService<Player> {
             final List<String> cmdList = ConfigFields.SPY_COMMAND_LIST.asStringList(wgrpPlugin.getWgrpPaperBase());
             final String normalizedSenderCommand = senderCommand.toLowerCase();
             if (cmdList.stream().anyMatch(cmd -> cmd.equalsIgnoreCase(normalizedSenderCommand))) {
-                messageProvider.getMessages().get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                messageProvider.get()
+                        .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
                         .replace("<cmd>", normalizedSenderCommand)
                         .replace("<region>", regionName)
@@ -59,7 +60,8 @@ public class RSApiImpl implements MessagingService<Player> {
             final String normalizedSenderCommand = senderCommand.toLowerCase();
             if (cmdList.stream().anyMatch(cmd -> cmd.equalsIgnoreCase(normalizedSenderCommand))) {
                 final ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
-                messageProvider.getMessages().get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                messageProvider.get()
+                        .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
                         .replace("<cmd>", normalizedSenderCommand)
                         .replace("<region>", regionName)
@@ -84,7 +86,8 @@ public class RSApiImpl implements MessagingService<Player> {
     public void notifyIfActionInRegion(Player admin, Player suspectPlayer, String suspectName, String action, String regionName, double x, double y, double z, String world) {
         if (this.wgrpPlugin.getPermissionCheck().hasPlayerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
                 && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.asBoolean(wgrpPlugin.getWgrpPaperBase())) {
-            messageProvider.getMessages().get("messages.Notify.sendAdminInfoIfActionInRegion")
+            messageProvider.get()
+                    .get("messages.Notify.sendAdminInfoIfActionInRegion")
                     .replace("<player>", suspectName)
                     .replace("<action>", action)
                     .replace("<region>", regionName)
@@ -97,7 +100,7 @@ public class RSApiImpl implements MessagingService<Player> {
 
     public void entityCheck(Cancellable cancellable, Entity entity, @NotNull Entity checkEntity) {
         if (wgrpPlugin.getRegionAdapter().checkStandingRegion(checkEntity.getLocation(),
-                wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())) {
+                wgrpPlugin.getConfigProvider().get().getRegionProtectMap())) {
             if (entity instanceof Player player) {
                 if (wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     entityCheck(cancellable, player);

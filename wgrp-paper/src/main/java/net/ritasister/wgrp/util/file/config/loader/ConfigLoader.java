@@ -47,10 +47,10 @@ public final class ConfigLoader {
     }
 
     public Config getConfig() {
-        return configProvider.getConfig();
+        return configProvider.get();
     }
 
     public Messages getMessages() {
-        return messageProvider.getMessages();
+        return messageProvider.get();
     }
 }

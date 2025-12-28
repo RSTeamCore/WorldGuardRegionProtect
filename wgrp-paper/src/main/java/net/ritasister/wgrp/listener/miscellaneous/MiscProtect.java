@@ -26,7 +26,7 @@ public final class MiscProtect implements Listener {
     private void denyBlockFromTo(@NotNull BlockFromToEvent e) {
         final Block block = e.getBlock();
         final Location location = e.getToBlock().getLocation();
-        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())) {
+        if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().get().getRegionProtectMap())) {
             if (ConfigFields.DENY_WATER_FLOW_TO_REGION.asBoolean(wgrpPlugin.getWgrpPaperBase())
                     && block.getType() == Material.WATER
                     || ConfigFields.DENY_LAVA_FLOW_TO_REGION.asBoolean(wgrpPlugin.getWgrpPaperBase())
@@ -40,7 +40,7 @@ public final class MiscProtect implements Listener {
     private void denyStructureGrow(@NotNull StructureGrowEvent e) {
         if (e.getPlayer() != null) {
             final Player player = e.getPlayer();
-            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(e.getLocation(), wgrpPlugin.getConfigProvider().getConfig().getRegionProtectMap())) {
+            if (wgrpPlugin.getRegionAdapter().checkStandingRegion(e.getLocation(), wgrpPlugin.getConfigProvider().get().getRegionProtectMap())) {
                 if (!wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.REGION_PROTECT)) {
                     e.setCancelled(true);
                 }
