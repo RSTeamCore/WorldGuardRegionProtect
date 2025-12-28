@@ -96,15 +96,6 @@ public class CommandWGRP extends AbstractCommand {
 
         final List<String> serverRegions = rgMap.computeIfAbsent(world, k -> new ArrayList<>());
         final boolean isServerProtected = serverRegions.contains(region);
-        final boolean checkStanding = ConfigFields.CHECK_PLAYER_IN_STANDING_REGION.asBoolean(wgrpPlugin.getWgrpPaperBase());
-
-        if (checkStanding && wgrpPlugin.getRegionAdapter().checkStandingRegion(player.getLocation())) {
-            wgrpPlugin.getMessageProvider().getMessages()
-                    .get("messages.regionManagement.notStandingInRegion")
-                    .replace("<region>", region)
-                    .send(sender);
-            return;
-        }
 
         if (!wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region)) {
             wgrpPlugin.getMessageProvider().getMessages()
@@ -114,7 +105,7 @@ public class CommandWGRP extends AbstractCommand {
             return;
         }
 
-        if (wgrpPlugin.getRegionAdapter().isOwnerRegion(player.getLocation(), player.getUniqueId())) {
+        if (!wgrpPlugin.getRegionAdapter().isOwnerRegion(player.getLocation(), player.getUniqueId())) {
             wgrpPlugin.getMessageProvider().getMessages()
                     .get("messages.regionManagement.notOwnerRegion")
                     .replace("<region>", region)
