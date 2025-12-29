@@ -28,6 +28,9 @@ public final class MessagesProvider implements MessageProvider<WorldGuardRegionP
 
     @Override
     public Messages get() {
+        if (messages == null) {
+            throw new IllegalStateException("message provider is not initialized yet! Call init(plugin) first.");
+        }
         return messages;
     }
 }
