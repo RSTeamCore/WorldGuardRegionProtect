@@ -4,7 +4,7 @@ import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.util.file.config.files.Config;
 import org.jspecify.annotations.NonNull;
 
-public class ConfigProvider implements net.ritasister.wgrp.api.config.provider.ConfigProvider<WorldGuardRegionProtectPaperPlugin, Config> {
+public final class ConfigProvider implements net.ritasister.wgrp.api.config.provider.ConfigProvider<WorldGuardRegionProtectPaperPlugin, Config> {
 
     private Config config;
 
