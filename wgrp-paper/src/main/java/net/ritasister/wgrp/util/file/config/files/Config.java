@@ -39,20 +39,7 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
 
         for (ConfigFields field : ConfigFields.values()) {
             try {
-                final Object value = switch (field.getFieldType()) {
-                    case STRING -> field.asString(wgrpPaperBase);
-                    case BOOLEAN -> field.asBoolean(wgrpPaperBase);
-                    case INTEGER -> field.asInt(wgrpPaperBase);
-                    case DOUBLE -> field.asDouble(wgrpPaperBase);
-                    case LONG -> field.asLong(wgrpPaperBase);
-                    case FLOAT -> field.asFloat(wgrpPaperBase);
-                    case STRING_LIST -> field.asStringList(wgrpPaperBase);
-                    case INTEGER_LIST -> field.asIntegerList(wgrpPaperBase);
-                    case DOUBLE_LIST -> field.asDoubleList(wgrpPaperBase);
-                    case LONG_LIST -> field.asLongList(wgrpPaperBase);
-                    case FLOAT_LIST -> field.asFloatList(wgrpPaperBase);
-                    case BOOLEAN_LIST -> field.asBooleanList(wgrpPaperBase);
-                };
+                final Object value = this.getValue(field);
                 saveConfig(field.getPath(), value);
             } catch (Exception e) {
                 wgrpPaperBase.getLogger().severe("Could not load config.yml for " + field.name() + "! Error: " + e.getLocalizedMessage());
@@ -60,6 +47,23 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
             }
         }
         this.loadRegionProtectConfig();
+    }
+
+    private Object getValue(@NonNull ConfigFields field) {
+        return switch (field.getFieldType()) {
+            case STRING -> field.asString(wgrpPaperBase);
+            case BOOLEAN -> field.asBoolean(wgrpPaperBase);
+            case INTEGER -> field.asInt(wgrpPaperBase);
+            case DOUBLE -> field.asDouble(wgrpPaperBase);
+            case LONG -> field.asLong(wgrpPaperBase);
+            case FLOAT -> field.asFloat(wgrpPaperBase);
+            case STRING_LIST -> field.asStringList(wgrpPaperBase);
+            case INTEGER_LIST -> field.asIntegerList(wgrpPaperBase);
+            case DOUBLE_LIST -> field.asDoubleList(wgrpPaperBase);
+            case LONG_LIST -> field.asLongList(wgrpPaperBase);
+            case FLOAT_LIST -> field.asFloatList(wgrpPaperBase);
+            case BOOLEAN_LIST -> field.asBooleanList(wgrpPaperBase);
+        };
     }
 
     @Override
@@ -182,20 +186,7 @@ public final class Config implements net.ritasister.wgrp.api.config.Config {
         wgrpPaperBase.getLogger().info("Saving all configuration files before the plugin shuts down...");
         for (ConfigFields field : ConfigFields.values()) {
             try {
-                final Object value = switch (field.getFieldType()) {
-                    case STRING -> field.asString(wgrpPaperBase);
-                    case BOOLEAN -> field.asBoolean(wgrpPaperBase);
-                    case INTEGER -> field.asInt(wgrpPaperBase);
-                    case DOUBLE -> field.asDouble(wgrpPaperBase);
-                    case LONG -> field.asLong(wgrpPaperBase);
-                    case FLOAT -> field.asFloat(wgrpPaperBase);
-                    case STRING_LIST -> field.asStringList(wgrpPaperBase);
-                    case INTEGER_LIST -> field.asIntegerList(wgrpPaperBase);
-                    case DOUBLE_LIST -> field.asDoubleList(wgrpPaperBase);
-                    case LONG_LIST -> field.asLongList(wgrpPaperBase);
-                    case FLOAT_LIST -> field.asFloatList(wgrpPaperBase);
-                    case BOOLEAN_LIST -> field.asBooleanList(wgrpPaperBase);
-                };
+                final Object value = this.getValue(field);
 
                 this.saveConfig(field.getPath(), value);
                 wgrpPaperBase.getLogger().info(String.format("Checking and saving field: %s = %s", field.name(), value));
