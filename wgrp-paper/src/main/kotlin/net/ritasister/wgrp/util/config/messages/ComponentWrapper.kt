@@ -5,6 +5,7 @@ import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import net.ritasister.wgrp.util.config.files.Messages
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.command.CommandSender
 
@@ -28,30 +29,44 @@ class ComponentWrapper(private var value: MutableList<String>, private val conta
         } as TextComponent
     }
 
+    fun toComponentList(): List<TextComponent> {
+        return value.map { message ->
+            val component = miniMessage.deserialize(message) as TextComponent
+            component.toBuilder().also { builder ->
+                value.map {
+                    miniMessage.deserialize(it)
+                }.forEachIndexed { index, textComponent ->
+                    builder.append(textComponent)
+                    if (value.size != 1 && value.lastIndex != index) builder.append(Component.newline())
+                }
+            }.build()
+        }
+    }
+
     fun toComponent(withPrefix: Boolean = true, vararg resolvers: TagResolver): TextComponent =
         ((if (withPrefix) prefix else "")?.let {
             miniMessage.deserialize(
                 it
             )
         } as TextComponent).toBuilder().also { component ->
-                value.map {
-                    miniMessage.deserialize(it, TagResolver.resolver(resolvers.asIterable()))
-                }.mapIndexed { index, it ->
-                    component.append(it)
-                    if (value.size != 1 && value.lastIndex != index) component.append(Component.newline())
-                }
-            }.build()
-
-    fun toComponent(): TextComponent = (prefix?.let {
-        miniMessage.deserialize(it)
-    } as TextComponent).toBuilder().also { component ->
             value.map {
-                miniMessage.deserialize(it)
+                miniMessage.deserialize(it, TagResolver.resolver(resolvers.asIterable()))
             }.mapIndexed { index, it ->
                 component.append(it)
                 if (value.size != 1 && value.lastIndex != index) component.append(Component.newline())
             }
         }.build()
+
+    fun toComponent(): TextComponent = (prefix?.let {
+        miniMessage.deserialize(it)
+    } as TextComponent).toBuilder().also { component ->
+        value.map {
+            miniMessage.deserialize(it)
+        }.mapIndexed { index, it ->
+            component.append(it)
+            if (value.size != 1 && value.lastIndex != index) component.append(Component.newline())
+        }
+    }.build()
 
     operator fun plusAssign(string: String) {
         value += string
@@ -61,9 +76,12 @@ class ComponentWrapper(private var value: MutableList<String>, private val conta
         value += component.content()
     }
 
-
     operator fun minusAssign(string: String) {
         value -= string
+    }
+
+    fun broadcastMessage() {
+        Bukkit.broadcast(toComponent())
     }
 
     fun send(sender: CommandSender) {
