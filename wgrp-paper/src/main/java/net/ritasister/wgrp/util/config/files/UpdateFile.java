@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.file;
+package net.ritasister.wgrp.util.config.files;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.FileUpdater;
@@ -32,8 +32,7 @@ public class UpdateFile implements FileUpdater<WorldGuardRegionProtectPaperPlugi
     }
 
     @Override
-    public void updateLang(@NotNull WorldGuardRegionProtectPaperPlugin plugin,
-                           @NotNull File currentFile, @NotNull String lang) {
+    public void updateLang(@NotNull WorldGuardRegionProtectPaperPlugin plugin, @NotNull File currentFile, @NotNull String lang) {
         final Path renameOldLang = new File(plugin.getBootstrap().getLoader().getDataFolder(), "lang/" + lang + "-old-" + dateProvider.getCurrentDate() + ".yml").toPath();
         try {
             Files.move(currentFile.toPath(), renameOldLang, StandardCopyOption.REPLACE_EXISTING);

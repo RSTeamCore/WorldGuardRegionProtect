@@ -3,7 +3,7 @@ package net.ritasister.wgrp.rslibs.api.checker.entity.transport;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.util.utility.entity.EntityHelper;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
 import org.bukkit.Material;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;

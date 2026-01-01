@@ -4,7 +4,7 @@ import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -90,7 +90,7 @@ public final class AdminProtect implements Listener {
                 || playerUtilWE.cmdWeU(string[0]) && !checkIntersection.checkUIntersection(e.getPlayer(), string)) {
 
             if (ConfigFields.REGION_MESSAGE_PROTECT_WE.asBoolean(wgrpPlugin)) {
-                wgrpPlugin.getMessageProvider().get().get("messages.ServerMsg.wgrpMsgWe").send(e.getPlayer());
+                wgrpPlugin.getMessageProvider().get().getMessage("messages.ServerMsg.wgrpMsgWe").send(e.getPlayer());
                 e.setCancelled(true);
             }
 

@@ -3,7 +3,7 @@ package net.ritasister.wgrp.listener.miscellaneous;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -84,12 +84,12 @@ public final class BlockProtect implements Listener {
 
     private void sendMessageByPlayer(Player player) {
         if (ConfigFields.REGION_MESSAGE_PROTECT_BY_PLAYER.asBoolean(wgrpPlugin))
-            wgrpPlugin.getMessageProvider().get().get("messages.ServerMsg.wgrpMsgByPlayer").send(player);
+            wgrpPlugin.getMessageProvider().get().getMessage("messages.ServerMsg.wgrpMsgByPlayer").send(player);
     }
 
     private void sendMessage(Player player) {
         if (ConfigFields.REGION_MESSAGE_PROTECT.asBoolean(wgrpPlugin)) {
-            wgrpPlugin.getMessageProvider().get().get("messages.ServerMsg.wgrpMsg").send(player);
+            wgrpPlugin.getMessageProvider().get().getMessage("messages.ServerMsg.wgrpMsg").send(player);
         }
     }
 

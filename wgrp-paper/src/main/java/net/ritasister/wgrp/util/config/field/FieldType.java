@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.file.config.field;
+package net.ritasister.wgrp.util.config.field;
 
 /**
  * Enum representing different types of fields that can be used in configuration files.

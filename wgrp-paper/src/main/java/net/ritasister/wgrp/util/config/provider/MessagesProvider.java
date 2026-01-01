@@ -1,9 +1,9 @@
-package net.ritasister.wgrp.util.file.config.provider;
+package net.ritasister.wgrp.util.config.provider;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.provider.MessageProvider;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
-import net.ritasister.wgrp.util.file.config.files.Messages;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.files.Messages;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 

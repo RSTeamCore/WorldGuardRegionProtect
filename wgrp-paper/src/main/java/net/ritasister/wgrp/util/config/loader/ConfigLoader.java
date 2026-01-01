@@ -1,11 +1,11 @@
-package net.ritasister.wgrp.util.file.config.loader;
+package net.ritasister.wgrp.util.config.loader;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.provider.ConfigProvider;
 import net.ritasister.wgrp.api.config.provider.MessageProvider;
 import net.ritasister.wgrp.api.config.version.VersionChecker;
-import net.ritasister.wgrp.util.file.config.files.Config;
-import net.ritasister.wgrp.util.file.config.files.Messages;
+import net.ritasister.wgrp.util.config.files.Config;
+import net.ritasister.wgrp.util.config.files.Messages;
 
 public final class ConfigLoader {
 

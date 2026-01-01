@@ -1,7 +1,7 @@
-package net.ritasister.wgrp.util.file.config.files;
+package net.ritasister.wgrp.util.config.files;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.Configuration;

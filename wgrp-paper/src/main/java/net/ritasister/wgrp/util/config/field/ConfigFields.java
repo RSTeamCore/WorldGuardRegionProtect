@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.file.config.field;
+package net.ritasister.wgrp.util.config.field;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import org.jetbrains.annotations.ApiStatus;

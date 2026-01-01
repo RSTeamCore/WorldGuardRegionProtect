@@ -4,7 +4,7 @@ import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.provider.MessageProvider;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.file.config.files.Messages;
+import net.ritasister.wgrp.util.config.files.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,12 +21,12 @@ import java.util.List;
 
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
 
-    protected final MessageProvider<WorldGuardRegionProtectPaperPlugin, Messages> configLoader;
+    protected final MessageProvider<WorldGuardRegionProtectPaperPlugin, Messages> messageProvider;
     private final WorldGuardRegionProtectPaperPlugin plugin;
 
     public AbstractCommand(@NotNull WorldGuardRegionProtectPaperPlugin wgrpPlugin) {
         this.plugin = wgrpPlugin;
-        this.configLoader = wgrpPlugin.getMessageProvider();
+        this.messageProvider = wgrpPlugin.getMessageProvider();
     }
 
     public void register(String command) {
@@ -53,7 +53,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) {
-            configLoader.get().get("messages.usage.wgrpUseHelp").send(sender);
+            messageProvider.get().getMessage("messages.usage.wgrpUseHelp").send(sender);
         } else {
             for (Method m : this.getClass().getDeclaredMethods()) {
                 if (m.isAnnotationPresent(SubCommand.class)) {
@@ -87,7 +87,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
                                 run(sender, m, sub, subArgs);
                                 break;
                             } else {
-                                configLoader.get().get("messages.ServerMsg.noPerm").send(sender);
+                                messageProvider.get().getMessage("messages.ServerMsg.noPerm").send(sender);
                             }
                         } else {
                             run(sender, m, sub, subArgs);

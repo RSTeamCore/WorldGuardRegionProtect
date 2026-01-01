@@ -34,17 +34,18 @@ import net.ritasister.wgrp.rslibs.api.manager.region.RegionAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.api.manager.tools.ToolsAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
-import net.ritasister.wgrp.util.file.config.provider.ZonedDateProvider;
-import net.ritasister.wgrp.util.file.UpdateFile;
+import net.ritasister.wgrp.util.config.provider.ZonedDateProvider;
+import net.ritasister.wgrp.util.config.version.ConfigVersionReaderImpl;
+import net.ritasister.wgrp.util.config.files.UpdateFile;
 import net.ritasister.wgrp.util.file.config.ConfigType;
-import net.ritasister.wgrp.util.file.config.files.Config;
-import net.ritasister.wgrp.util.file.config.files.Messages;
-import net.ritasister.wgrp.util.file.config.loader.ConfigLoader;
+import net.ritasister.wgrp.util.config.files.Config;
+import net.ritasister.wgrp.util.config.files.Messages;
+import net.ritasister.wgrp.util.config.loader.ConfigLoader;
 import net.ritasister.wgrp.rslibs.updater.UpdateDownloaderGitHub;
-import net.ritasister.wgrp.util.file.config.provider.MessagesProvider;
-import net.ritasister.wgrp.util.file.config.version.ConfigCheckVersion;
-import net.ritasister.wgrp.util.file.config.version.MessageCheckVersion;
-import net.ritasister.wgrp.util.file.config.version.VersionUpdateService;
+import net.ritasister.wgrp.util.config.provider.MessagesProvider;
+import net.ritasister.wgrp.util.config.version.ConfigCheckVersion;
+import net.ritasister.wgrp.util.config.version.MessageCheckVersion;
+import net.ritasister.wgrp.util.config.version.VersionUpdateService;
 import net.ritasister.wgrp.util.schedulers.FoliaRunnable;
 import net.ritasister.wgrp.util.utility.platform.PlatformDetector;
 import net.ritasister.wgrp.util.utility.version.MinecraftVersionChecker;
@@ -136,7 +137,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         this.versionCheck = new MinecraftVersionChecker(this.bootstrap);
         this.spyLog = new ArrayList<>();
 
-        configProvider = new net.ritasister.wgrp.util.file.config.provider.ConfigProvider();
+        configProvider = new net.ritasister.wgrp.util.config.provider.ConfigProvider();
         messageProvider = new MessagesProvider();
 
         configLoader = configLoader();
@@ -162,8 +163,8 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         return new ConfigLoader(configProvider, messageProvider, configCheckVersion, langCheckVersion);
     }
 
-    private static @NonNull VersionUpdateService getVersionUpdateService() {
-        final ConfigVersionReader<ConfigType, YamlConfiguration> versionReader = new net.ritasister.wgrp.util.file.config.version.ConfigVersionReaderImpl();
+    private @NonNull VersionUpdateService getVersionUpdateService() {
+        final ConfigVersionReader<ConfigType, YamlConfiguration> versionReader = new ConfigVersionReaderImpl();
         final ZonedDateProvider dateProvider = new ZonedDateProvider();
 
         final UpdateFile updateFile = new UpdateFile(dateProvider);

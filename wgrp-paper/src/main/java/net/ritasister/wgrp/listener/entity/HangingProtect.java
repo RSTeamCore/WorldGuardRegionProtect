@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.listener.entity;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

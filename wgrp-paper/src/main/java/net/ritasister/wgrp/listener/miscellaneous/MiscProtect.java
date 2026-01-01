@@ -2,7 +2,7 @@ package net.ritasister.wgrp.listener.miscellaneous;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

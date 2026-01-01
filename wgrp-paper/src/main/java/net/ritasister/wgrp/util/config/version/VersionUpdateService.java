@@ -1,8 +1,8 @@
-package net.ritasister.wgrp.util.file.config.version;
+package net.ritasister.wgrp.util.config.version;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.api.config.version.ConfigVersionReader;
-import net.ritasister.wgrp.util.file.UpdateFile;
+import net.ritasister.wgrp.util.config.files.UpdateFile;
 import net.ritasister.wgrp.util.file.config.ConfigType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;

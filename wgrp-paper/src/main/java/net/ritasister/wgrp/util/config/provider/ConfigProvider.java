@@ -1,7 +1,7 @@
-package net.ritasister.wgrp.util.file.config.provider;
+package net.ritasister.wgrp.util.config.provider;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.util.file.config.files.Config;
+import net.ritasister.wgrp.util.config.files.Config;
 import org.jspecify.annotations.NonNull;
 
 public final class ConfigProvider implements net.ritasister.wgrp.api.config.provider.ConfigProvider<WorldGuardRegionProtectPaperPlugin, Config> {

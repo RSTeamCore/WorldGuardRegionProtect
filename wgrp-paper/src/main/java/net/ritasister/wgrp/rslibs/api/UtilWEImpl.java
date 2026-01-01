@@ -3,7 +3,7 @@ package net.ritasister.wgrp.rslibs.api;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
 import org.jetbrains.annotations.NotNull;
 
 public class UtilWEImpl implements UtilCommandWE {

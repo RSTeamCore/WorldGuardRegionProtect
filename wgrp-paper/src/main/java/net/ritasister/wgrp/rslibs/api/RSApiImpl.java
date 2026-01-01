@@ -6,8 +6,8 @@ import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
 import net.ritasister.wgrp.rslibs.api.checker.entity.EntityCheckTypeProvider;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
-import net.ritasister.wgrp.util.file.config.files.Messages;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.files.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.ConsoleCommandSender;
@@ -43,7 +43,7 @@ public class RSApiImpl implements MessagingService<Player> {
             final String normalizedSenderCommand = senderCommand.toLowerCase();
             if (cmdList.stream().anyMatch(cmd -> cmd.equalsIgnoreCase(normalizedSenderCommand))) {
                 messageProvider.get()
-                        .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                        .getMessage("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
                         .replace("<cmd>", normalizedSenderCommand)
                         .replace("<region>", regionName)
@@ -63,7 +63,7 @@ public class RSApiImpl implements MessagingService<Player> {
             if (cmdList.stream().anyMatch(cmd -> cmd.equalsIgnoreCase(normalizedSenderCommand))) {
                 final ConsoleCommandSender consoleSender = Bukkit.getConsoleSender();
                 messageProvider.get()
-                        .get("messages.Notify.sendAdminInfoIfUsedCommandInRG")
+                        .getMessage("messages.Notify.sendAdminInfoIfUsedCommandInRG")
                         .replace("<player>", playerName)
                         .replace("<cmd>", normalizedSenderCommand)
                         .replace("<region>", regionName)
@@ -89,7 +89,7 @@ public class RSApiImpl implements MessagingService<Player> {
         if (this.wgrpPlugin.getPermissionCheck().hasPlayerPermission(suspectPlayer, UtilPermissions.SPY_INSPECT_FOR_SUSPECT)
                 && ConfigFields.IS_SPY_COMMAND_NOTIFY_ADMIN_ENABLE.asBoolean(wgrpPlugin)) {
             messageProvider.get()
-                    .get("messages.Notify.sendAdminInfoIfActionInRegion")
+                    .getMessage("messages.Notify.sendAdminInfoIfActionInRegion")
                     .replace("<player>", suspectName)
                     .replace("<action>", action)
                     .replace("<region>", regionName)

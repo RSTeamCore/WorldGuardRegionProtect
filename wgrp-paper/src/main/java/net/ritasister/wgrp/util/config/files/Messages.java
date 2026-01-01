@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.file.config.files;
+package net.ritasister.wgrp.util.config.files;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.ritasister.wgrp.util.config.messages.ComponentWrapper;
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public final class Messages {
 
@@ -21,7 +20,7 @@ public final class Messages {
 
     public Messages(ConfigurationSection section) {
         try {
-            prefix = Objects.requireNonNull(section.getString("prefix"));
+            prefix = section.getString("prefix");
         } catch (NullPointerException e) {
             prefix = null;
         }
@@ -65,7 +64,7 @@ public final class Messages {
         return langStrings.containsKey(key);
     }
 
-    public ComponentWrapper get(String key) {
+    public ComponentWrapper getMessage(String key) {
         message = langStrings.get(key);
         if (message == null) {
             return DEFAULT_NULLABLE_MESSAGE;
@@ -76,7 +75,7 @@ public final class Messages {
         return message;
     }
 
-    public ComponentWrapper get(String key, boolean withPrefix) {
+    public ComponentWrapper getMessage(String key, boolean withPrefix) {
         message = langStrings.get(key);
         if (message == null) {
             return DEFAULT_NULLABLE_MESSAGE;

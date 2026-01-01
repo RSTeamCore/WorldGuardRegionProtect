@@ -1,4 +1,4 @@
-package net.ritasister.wgrp.util.file.config.provider;
+package net.ritasister.wgrp.util.config.provider;
 
 import net.ritasister.wgrp.api.config.version.DateProvider;
 import org.jetbrains.annotations.NotNull;

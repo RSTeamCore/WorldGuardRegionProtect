@@ -37,7 +37,7 @@ public class CommandWGRP extends AbstractCommand {
             description = "reload config and lang file.")
     public void wgrpReload(@NotNull CommandSender sender) {
         wgrpPlugin.getMessageProvider().get()
-                .get("messages.Configs.configReloaded")
+                .getMessage("messages.Configs.configReloaded")
                 .replace("<time>", wgrpPlugin.getConfigLoader().reload(wgrpPlugin)).send(sender);
     }
 
@@ -79,12 +79,12 @@ public class CommandWGRP extends AbstractCommand {
 
     private void handleRegionProtection(@NotNull CommandSender sender, String @NotNull [] args, RegionAction action) {
         if (args.length != 1) {
-            wgrpPlugin.getMessageProvider().get().get("messages.usage.wgrpUseHelp").send(sender);
+            wgrpPlugin.getMessageProvider().get().getMessage("messages.usage.wgrpUseHelp").send(sender);
             return;
         }
 
         if (!(sender instanceof Player player)) {
-            wgrpPlugin.getMessageProvider().get().get("messages.usage.wgrpUseHelp").send(sender);
+            wgrpPlugin.getMessageProvider().get().getMessage("messages.usage.wgrpUseHelp").send(sender);
             return;
         }
 
@@ -99,7 +99,7 @@ public class CommandWGRP extends AbstractCommand {
 
         if (!wgrpPlugin.getRegionAdapter().getProtectRegionName(player.getLocation()).equalsIgnoreCase(region)) {
             wgrpPlugin.getMessageProvider().get()
-                    .get("messages.regionManagement.invalidRegion")
+                    .getMessage("messages.regionManagement.invalidRegion")
                     .replace("<region>", region)
                     .send(sender);
             return;
@@ -107,7 +107,7 @@ public class CommandWGRP extends AbstractCommand {
 
         if (!wgrpPlugin.getRegionAdapter().isOwnerRegion(player.getLocation(), player.getUniqueId())) {
             wgrpPlugin.getMessageProvider().get()
-                    .get("messages.regionManagement.notOwnerRegion")
+                    .getMessage("messages.regionManagement.notOwnerRegion")
                     .replace("<region>", region)
                     .send(sender);
             return;
@@ -118,42 +118,42 @@ public class CommandWGRP extends AbstractCommand {
         if (action == RegionAction.ADD) {
             if (isServerProtected) {
                 wgrpPlugin.getMessageProvider().get()
-                        .get("messages.regionManagement.restrictProtect")
+                        .getMessage("messages.regionManagement.restrictProtect")
                         .replace("<region>", region)
                         .send(sender);
                 return;
             }
             if (playerRegions.contains(region)) {
                 wgrpPlugin.getMessageProvider().get()
-                        .get("messages.regionManagement.alreadyProtected")
+                        .getMessage("messages.regionManagement.alreadyProtected")
                         .replace("<region>", region)
                         .send(sender);
                 return;
             }
             modifyRegionMap(playerRgMap, world, region, true);
             wgrpPlugin.getMessageProvider().get()
-                    .get("messages.regionManagement.add")
+                    .getMessage("messages.regionManagement.add")
                     .replace("<region>", region)
                     .send(sender);
 
         } else {
             if (isServerProtected) {
                 wgrpPlugin.getMessageProvider().get()
-                        .get("messages.regionManagement.restrictUnProtect")
+                        .getMessage("messages.regionManagement.restrictUnProtect")
                         .replace("<region>", region)
                         .send(sender);
                 return;
             }
             if (!playerRegions.contains(region)) {
                 wgrpPlugin.getMessageProvider().get()
-                        .get("messages.regionManagement.notContains")
+                        .getMessage("messages.regionManagement.notContains")
                         .replace("<region>", region)
                         .send(sender);
                 return;
             }
             modifyRegionMap(playerRgMap, world, region, false);
             wgrpPlugin.getMessageProvider().get()
-                    .get("messages.regionManagement.remove")
+                    .getMessage("messages.regionManagement.remove")
                     .replace("<region>", region)
                     .send(sender);
         }
@@ -188,7 +188,7 @@ public class CommandWGRP extends AbstractCommand {
 
                 final String worldName = result.finalWorld().getName();
                 if (rgMap.containsKey(worldName) && rgMap.get(worldName) != null && rgMap.get(worldName).contains(result.region())) {
-                    wgrpPlugin.getMessageProvider().get().get("messages.regionManagement.alreadyProtected").replace("<region>", result.region()).send(sender);
+                    wgrpPlugin.getMessageProvider().get().getMessage("messages.regionManagement.alreadyProtected").replace("<region>", result.region()).send(sender);
                     return;
                 }
 
@@ -199,7 +199,7 @@ public class CommandWGRP extends AbstractCommand {
                 newRegionList.add(result.region());
                 rgMap.put(worldName, newRegionList);
                 wgrpPlugin.getConfigProvider().get().setRegionProtectMap(rgMap);
-                wgrpPlugin.getMessageProvider().get().get("messages.regionManagement.add").replace("<region>", result.region()).send(sender);
+                wgrpPlugin.getMessageProvider().get().getMessage("messages.regionManagement.add").replace("<region>", result.region()).send(sender);
             } else if (args.length == 2) {
                 final String region = args[0];
                 final Check result = getCheck(sender, args).getCheck();
@@ -211,12 +211,12 @@ public class CommandWGRP extends AbstractCommand {
                 newRegionList.add(region);
                 rgMap.put(worldName, newRegionList);
                 wgrpPlugin.getConfigProvider().get().setRegionProtectMap(rgMap);
-                wgrpPlugin.getMessageProvider().get().get("messages.regionManagement.add").replace("<region>", region).send(sender);
+                wgrpPlugin.getMessageProvider().get().getMessage("messages.regionManagement.add").replace("<region>", region).send(sender);
             } else {
-                wgrpPlugin.getMessageProvider().get().get("messages.usage.addRegionFromConsole").send(sender);
+                wgrpPlugin.getMessageProvider().get().getMessage("messages.usage.addRegionFromConsole").send(sender);
             }
         } else {
-            wgrpPlugin.getMessageProvider().get().get("messages.usage.wgrpUseHelp").send(sender);
+            wgrpPlugin.getMessageProvider().get().getMessage("messages.usage.wgrpUseHelp").send(sender);
         }
     }
 
@@ -243,11 +243,11 @@ public class CommandWGRP extends AbstractCommand {
                     final String world = args[1];
                     getRgMap(sender, rgMap, region, world);
                 } else {
-                    wgrpPlugin.getMessageProvider().get().get("messages.regionManagement.removeRegionFromConsole").send(sender);
+                    wgrpPlugin.getMessageProvider().get().getMessage("messages.regionManagement.removeRegionFromConsole").send(sender);
                 }
             }
         } else {
-            wgrpPlugin.getMessageProvider().get().get("messages.usage.wgrpUseHelp").send(sender);
+            wgrpPlugin.getMessageProvider().get().getMessage("messages.usage.wgrpUseHelp").send(sender);
         }
     }
 
@@ -267,7 +267,7 @@ public class CommandWGRP extends AbstractCommand {
                     .orElse(null);
 
             if (world == null) {
-                wgrpPlugin.getMessageProvider().get().get("messages.regionManagement.invalidWorld").replace("<world>", worldName).send(sender);
+                wgrpPlugin.getMessageProvider().get().getMessage("messages.regionManagement.invalidWorld").replace("<world>", worldName).send(sender);
                 return CheckResult.error("World '" + worldName + "' does not exist.");
             }
         } else {
@@ -276,7 +276,7 @@ public class CommandWGRP extends AbstractCommand {
 
         final String region = wgrpPlugin.getRegionAdapter().getProtectRegionName(regionName, world);
         if (region == null || region.equals("unknown-region")) {
-            wgrpPlugin.getMessageProvider().get().get("messages.regionManagement.invalidRegion").replace("<region>", regionName).send(sender);
+            wgrpPlugin.getMessageProvider().get().getMessage("messages.regionManagement.invalidRegion").replace("<region>", regionName).send(sender);
             return CheckResult.error("Region '" + regionName + "' does not exist in world '" + world.getName() + "'.");
         }
         return CheckResult.success(new Check(regionName, world));
@@ -290,9 +290,9 @@ public class CommandWGRP extends AbstractCommand {
             newRegionList.remove(region);
             rgMap.put(world, newRegionList);
             wgrpPlugin.getConfigProvider().get().setRegionProtectMap(rgMap);
-            wgrpPlugin.getMessageProvider().get().get("messages.regionManagement.remove").replace("<region>", region).send(sender);
+            wgrpPlugin.getMessageProvider().get().getMessage("messages.regionManagement.remove").replace("<region>", region).send(sender);
         } else {
-            wgrpPlugin.getMessageProvider().get().get("messages.regionManagement.notContains").replace("<region>", region).send(sender);
+            wgrpPlugin.getMessageProvider().get().getMessage("messages.regionManagement.notContains").replace("<region>", region).send(sender);
         }
     }
 
@@ -301,14 +301,14 @@ public class CommandWGRP extends AbstractCommand {
             description = "for seen helping.")
     public void wgrpHelp(CommandSender sender) {
         final List<Component> messages = new ArrayList<>(this.wgrpPlugin.getMessageProvider().get()
-                .get("messages.usage.title")
+                .getMessage("messages.usage.title")
                 .replace("%command%", "/wgrp")
                 .toComponentList(false));
         for (Method m : this.getClass().getDeclaredMethods()) {
             if (m.isAnnotationPresent(SubCommand.class)) {
                 final SubCommand sub = m.getAnnotation(SubCommand.class);
                 final String tabArgs = String.join(" ", sub.tabArgs());
-                messages.addAll(this.wgrpPlugin.getMessageProvider().get().get("messages.usage.format")
+                messages.addAll(this.wgrpPlugin.getMessageProvider().get().getMessage("messages.usage.format")
                         .replace("%command%", "/wgrp")
                         .replace("%alias%", sub.name())
                         .replace("%description%", sub.description())

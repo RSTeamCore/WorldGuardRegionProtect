@@ -4,7 +4,7 @@ import io.papermc.paper.event.player.PlayerLoomPatternSelectEvent;
 import io.papermc.paper.event.player.PlayerStonecutterRecipeSelectEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

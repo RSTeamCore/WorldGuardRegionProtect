@@ -5,7 +5,7 @@ import com.sk89q.worldedit.bukkit.BukkitPlayer;
 import io.papermc.paper.event.player.PlayerFlowerPotManipulateEvent;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.util.file.config.field.ConfigFields;
+import net.ritasister.wgrp.util.config.field.ConfigFields;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;

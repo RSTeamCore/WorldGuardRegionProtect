@@ -45,6 +45,11 @@ public interface Platform {
         PAPER("Paper"),
 
         /**
+         * Represents the Purpur platform.
+         * A high-performance fork of Spigot, providing additional optimizations and features.
+         */
+        PURPUR("Purpur"),
+        /**
          * Represents the Folia platform.
          * A newer, multithreaded Minecraft server solution designed for better performance.
          */
