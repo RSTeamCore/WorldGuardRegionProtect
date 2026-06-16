@@ -1,9 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import xyz.jpenilla.runpaper.task.RunServer
-import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
 
 plugins {
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.19"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
     alias(libs.plugins.shadow)
     alias(libs.plugins.runPaper)
 }
@@ -21,13 +20,11 @@ repositories {
     mavenCentral()
 }
 
-paperweight.reobfArtifactConfiguration = ReobfArtifactConfiguration.MOJANG_PRODUCTION
-
 dependencies {
     implementation(project(":wgrp-common"))
 
     //Paper or Folia
-    paperweight.foliaDevBundle("1.21.11-R0.1-SNAPSHOT")
+    paperweight.folisDevBundle("26.1.2.build.+")
 
     //Plugins api
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.3")
@@ -170,4 +167,8 @@ fun String.runCommand(): String {
     } catch (_: Exception) {
         ""
     }
+}
+
+tasks.named("reobfJar") {
+    enabled = false
 }

@@ -44,11 +44,11 @@ allprojects {
         checkstyle(checkstyleVersion)
 
         kotlin {
-            jvmToolchain(21)
+            jvmToolchain(25)
         }
 
         javaVersions {
-            target(21)
+            target(25)
         }
     }
 }
@@ -56,12 +56,12 @@ allprojects {
 subprojects {
     tasks.withType<JavaCompile> {
         options.encoding = Charsets.UTF_8.name()
-        options.release.set(21)
+        options.release.set(25)
     }
 
     tasks.withType<KotlinCompile> {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
+            jvmTarget.set(JvmTarget.JVM_25)
             languageVersion.set(KotlinVersion.KOTLIN_2_0)
         }
     }
