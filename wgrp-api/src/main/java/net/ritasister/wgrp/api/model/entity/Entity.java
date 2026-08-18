@@ -3,6 +3,8 @@ package net.ritasister.wgrp.api.model.entity;
 import net.ritasister.wgrp.api.model.location.Location;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public interface Entity {
 
     /**
@@ -10,7 +12,7 @@ public interface Entity {
      *
      * @return the unique identifier
      */
-    String getUniqueId();
+    UUID getUniqueId();
 
     /**
      * Gets the type of the entity.

@@ -38,7 +38,7 @@ public final class BlockProtect implements Listener {
             sendMessage(player);
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
-            spyMethod(e.getBlock(), player, location, RegionAction.Type.BREAK.getAction());
+            spyMethod(e.getBlock(), player, location, RegionAction.Type.BREAK.getName());
         } else if (this.wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().get().getPlayerRegionProtectMap()) &&
                 !this.wgrpPlugin.getRegionAdapter().isOwnerRegion(location, player.getUniqueId())) {
             e.setCancelled(true);
@@ -58,7 +58,7 @@ public final class BlockProtect implements Listener {
             sendMessage(player);
         } else if (wgrpPlugin.getRegionAdapter().checkStandingRegion(location)
                 && wgrpPlugin.getPermissionCheck().hasPlayerPermission(player, UtilPermissions.SPY_INSPECT_ADMIN_LISTENER)) {
-            spyMethod(e.getBlock(), player, location, RegionAction.Type.PLACE.getAction());
+            spyMethod(e.getBlock(), player, location, RegionAction.Type.PLACE.getName());
         } else if (this.wgrpPlugin.getRegionAdapter().checkStandingRegion(location, wgrpPlugin.getConfigProvider().get().getPlayerRegionProtectMap()) &&
                 !this.wgrpPlugin.getRegionAdapter().isOwnerRegion(location, player.getUniqueId())) {
             e.setCancelled(true);

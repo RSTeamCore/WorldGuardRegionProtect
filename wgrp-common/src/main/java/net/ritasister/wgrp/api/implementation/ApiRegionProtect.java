@@ -1,7 +1,7 @@
 package net.ritasister.wgrp.api.implementation;
 
 import net.ritasister.wgrp.plugin.WorldGuardRegionProtectPlugin;
-import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
+import net.ritasister.wgrp.api.manager.RegionAdapterManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

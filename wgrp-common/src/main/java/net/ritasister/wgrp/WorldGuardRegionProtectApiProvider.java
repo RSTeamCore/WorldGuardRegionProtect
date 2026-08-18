@@ -9,16 +9,16 @@ import net.ritasister.wgrp.api.implementation.ApiRegionAction;
 import net.ritasister.wgrp.api.implementation.ApiRegionProtect;
 import net.ritasister.wgrp.api.implementation.ApiToolsProtect;
 import net.ritasister.wgrp.api.logging.PluginLogger;
-import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
-import net.ritasister.wgrp.api.manager.tools.ToolsAdapterManager;
+import net.ritasister.wgrp.api.manager.RegionAdapterManager;
+import net.ritasister.wgrp.api.manager.ToolsAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
-import net.ritasister.wgrp.api.model.entity.player.Player;
 import net.ritasister.wgrp.api.model.permissions.PermissionCheck;
 import net.ritasister.wgrp.api.platform.Platform;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
 import net.ritasister.wgrp.plugin.WorldGuardRegionProtectPlugin;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProtect {
@@ -27,11 +27,10 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
 
     private final ApiPlatform platform;
     private final RegionAdapterManager<?, ?, ?> regionAdapterManager;
-    private final ToolsAdapterManager<Player> toolsAdapterManager;
+    private final ToolsAdapterManager toolsAdapterManager;
     private final ApiEntityChecker<?, ?> entityCheckType;
     private final MessagingService<?> messagingService;
     private final PermissionCheck permissionCheck;
-
     private final RegionAction regionAction;
 
     public WorldGuardRegionProtectApiProvider(WorldGuardRegionProtectPlugin plugin) {
@@ -39,6 +38,7 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
 
         this.platform = new ApiPlatform(plugin);
         this.regionAdapterManager = new ApiRegionProtect<>(plugin);
+
         this.toolsAdapterManager = new ApiToolsProtect<>(plugin);
         this.regionAction = new ApiRegionAction(plugin);
         this.entityCheckType = new ApiEntityChecker<>(plugin);
@@ -78,6 +78,11 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     }
 
     @Override
+    public @NonNull RegionAdapterManager getRegionAdapter() {
+        return this.regionAdapterManager;
+    }
+
+    @Override
     public @NotNull ToolsAdapterManager getToolsAdapterManager() {
         return this.toolsAdapterManager;
     }
@@ -85,11 +90,6 @@ public class WorldGuardRegionProtectApiProvider implements WorldGuardRegionProte
     @Override
     public @NotNull WorldGuardRegionProtectMetadata getMetaData() {
         return this.platform;
-    }
-
-    @Override
-    public @NotNull RegionAdapterManager getRegionAdapter() {
-        return this.regionAdapterManager;
     }
 
     @Override

@@ -2,8 +2,8 @@ package net.ritasister.wgrp.plugin;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectApiProvider;
 import net.ritasister.wgrp.api.logging.PluginLogger;
-import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
-import net.ritasister.wgrp.api.manager.tools.ToolsAdapterManager;
+import net.ritasister.wgrp.api.manager.RegionAdapterManager;
+import net.ritasister.wgrp.api.manager.ToolsAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
@@ -96,7 +96,7 @@ public interface WorldGuardRegionProtectPlugin {
      * @return the {@link ToolsAdapterManager} instance
      * @since 1.8.1.21
      */
-    <P> ToolsAdapterManager<P> getToolsAdapter();
+    <P> ToolsAdapterManager getToolsAdapter();
 
     /**
      * Attempts to identify the plugin behind the given classloader.

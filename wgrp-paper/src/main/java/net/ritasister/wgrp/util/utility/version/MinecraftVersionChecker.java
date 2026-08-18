@@ -7,10 +7,12 @@ import java.util.Set;
 
 public class MinecraftVersionChecker {
 
-    private static final String SUPPORTED_VERSION_RANGE = "1.20 - 1.21.11";
+    private static final String MIN_SUPPORTED = "26.1";
+    private static final String MAX_SUPPORTED = "26.2";
+
+    private static final String SUPPORTED_VERSION_RANGE = MIN_SUPPORTED + " - " + MAX_SUPPORTED;
     private static final Set<String> SUPPORTED_VERSIONS = Set.of(
-            "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
-            "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5", "1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.10", "1.21.11"
+            "26.1", "26.2"
     );
 
     private final WGRPBootstrap bootstrap;
@@ -26,21 +28,31 @@ public class MinecraftVersionChecker {
             plugin.getLogger().info("Supported range: " + SUPPORTED_VERSION_RANGE);
             return true;
         } else {
-            plugin.getLogger().severe(String.format("""
-                    ====================================================
-                    
-                        Your server version is %s.
-                        WorldGuardRegionProtect only works on %s!
-                        Please refer to this thread: https://www.spigotmc.org/resources/81321/
-                    
-                    ====================================================
-                    """, currentVersion, SUPPORTED_VERSION_RANGE));
+            plugin.getLogger().severe(String.format(
+                    """
+                            ====================================================
+                            
+                                Your server version is %s.
+                                WorldGuardRegionProtect only works on %s!
+                                Please refer to this thread: https://www.spigotmc.org/resources/81321/
+                            
+                            ====================================================
+                            """, currentVersion, SUPPORTED_VERSION_RANGE
+            ));
             return false;
         }
     }
 
     public boolean isVersionSupported() {
-        return SUPPORTED_VERSIONS.contains(getCurrentVersion());
+        try {
+            final Version current = new Version(getCurrentVersion());
+            final Version min = new Version(MIN_SUPPORTED);
+            final Version max = new Version(MAX_SUPPORTED);
+
+            return current.compareTo(min) >= 0 && current.compareTo(max) <= 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String getCurrentVersion() {
@@ -51,6 +63,7 @@ public class MinecraftVersionChecker {
         return SUPPORTED_VERSION_RANGE;
     }
 
+    @Deprecated
     public static Set<String> getSupportedVersions() {
         return SUPPORTED_VERSIONS;
     }

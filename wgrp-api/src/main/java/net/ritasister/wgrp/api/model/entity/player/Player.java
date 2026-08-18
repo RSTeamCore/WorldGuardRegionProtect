@@ -2,6 +2,9 @@ package net.ritasister.wgrp.api.model.entity.player;
 
 import net.ritasister.wgrp.api.model.entity.Entity;
 import net.ritasister.wgrp.api.model.location.World;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.UUID;
 
 /**
  * InDev...
@@ -13,14 +16,14 @@ public interface Player extends Entity {
      *
      * @return the unique identifier
      */
-    String getUniqueId();
+    @NonNull UUID getUniqueId();
 
     /**
      * Gets the name of the player.
      *
      * @return the player's name
      */
-    String getName();
+    @NonNull String getName();
 
     /**
      * Gets the world where the player is currently located.

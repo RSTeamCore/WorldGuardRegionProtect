@@ -1,9 +1,9 @@
 package net.ritasister.wgrp.listener.player;
 
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
-import net.ritasister.wgrp.rslibs.UtilCommandWE;
+import net.ritasister.wgrp.rslibs.worldguard.UtilCommandWE;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;
-import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
+import net.ritasister.wgrp.rslibs.worldguard.CheckIntersection;
 import net.ritasister.wgrp.util.config.field.ConfigFields;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,15 +18,15 @@ public final class AdminProtect implements Listener {
 
     private final WorldGuardRegionProtectPaperPlugin wgrpPlugin;
 
-    static final Set<String> REGION_COMMANDS_NAME = Set.of(
+    private static final Set<String> REGION_COMMANDS_NAME = Set.of(
             "/rg",
             "/region",
             "/regions",
             "/worldguard:rg",
             "/worldguard:region",
             "/worldguard:regions");
-    static final Set<String> REGION_EDIT_ARGS = Set.of("f", "flag");
-    static final Set<String> REGION_EDIT_ARGS_FLAGS = Set.of("-f", "-u", "-n", "-g", "-a");
+    private static final Set<String> REGION_EDIT_ARGS = Set.of("f", "flag");
+    private static final Set<String> REGION_EDIT_ARGS_FLAGS = Set.of("-f", "-u", "-n", "-g", "-a");
 
     public AdminProtect(final WorldGuardRegionProtectPaperPlugin plugin) {
         this.wgrpPlugin = plugin;
@@ -101,86 +101,114 @@ public final class AdminProtect implements Listener {
     }
 
     private void checkRegionEditArgs1(@NotNull PlayerCommandPreprocessEvent e, String @NotNull [] string) {
-        if (string.length > 3 && REGION_EDIT_ARGS.contains(string[2].toLowerCase())
-                || string.length > 3 && REGION_EDIT_ARGS_FLAGS.contains(string[2].toLowerCase())) {
-            for (String list : wgrpPlugin.getConfigProvider().get().getRegionProtectMap().get(
-                    e.getPlayer().getLocation().getWorld().getName())) {
-                if (list.equalsIgnoreCase(string[3])) {
-                    e.setCancelled(true);
-                }
-            }
-            for (String list : wgrpPlugin.getConfigProvider().get().getRegionProtectOnlyBreakAllowMap().get(
-                    e.getPlayer().getLocation()
-                            .getWorld()
-                            .getName())) {
-                if (list.equalsIgnoreCase(string[3])) {
-                    e.setCancelled(true);
-                }
-            }
-        }
+        checkRegionEditArgs(e, string, 3, 2, 3);
     }
 
     private void checkRegionEditArgs2(@NotNull PlayerCommandPreprocessEvent e, String @NotNull [] string) {
-        if (string.length > 4 && string[2].equalsIgnoreCase("-w")
-                || string.length > 4 && REGION_EDIT_ARGS.contains(string[2].toLowerCase())) {
-            for (String list : wgrpPlugin.getConfigProvider().get().getRegionProtectMap().get(
-                    e.getPlayer().getLocation().getWorld().getName())) {
-                if (list.equalsIgnoreCase(string[4])) {
-                    e.setCancelled(true);
-                }
-            }
-            for (String list : wgrpPlugin.getConfigProvider().get().getRegionProtectOnlyBreakAllowMap().get(
-                    e.getPlayer().getLocation()
-                            .getWorld()
-                            .getName())) {
-                if (list.equalsIgnoreCase(string[4])) {
-                    e.setCancelled(true);
-                }
-            }
-        }
+        checkRegionEditArgs(e, string, 4, 2, 4);
     }
 
     private void checkRegionEditArgs3(@NotNull PlayerCommandPreprocessEvent e, String @NotNull [] string) {
-        if (string.length > 5 && string[3].equalsIgnoreCase("-w")
-                || string.length > 5 && REGION_EDIT_ARGS.contains(string[4].toLowerCase())
-                || string.length > 5 && REGION_EDIT_ARGS_FLAGS.contains(string[4].toLowerCase())) {
-            for (String list : wgrpPlugin.getConfigProvider().get().getRegionProtectMap().get(
-                    e.getPlayer().getLocation().getWorld().getName())) {
-                if (list.equalsIgnoreCase(string[5])) {
-                    e.setCancelled(true);
-                }
-            }
-            for (String list : wgrpPlugin.getConfigProvider().get().getRegionProtectOnlyBreakAllowMap().get(
-                    e.getPlayer().getLocation()
-                            .getWorld()
-                            .getName())) {
-                if (list.equalsIgnoreCase(string[5])) {
-                    e.setCancelled(true);
-                }
+        if (string.length > 5) {
+            if (string[3].equalsIgnoreCase("-w")) {
+                checkRegionEditArgs(e, string, 5, 3, 5);
+            } else {
+                checkRegionEditArgs(e, string, 5, 4, 5);
             }
         }
     }
 
     private void checkRegionEditArgs4(@NotNull PlayerCommandPreprocessEvent e, String @NotNull [] string) {
-        if (string.length > 6 && string[4].equalsIgnoreCase("-w")
-                || string.length > 6 && string[4].equalsIgnoreCase("-h")
-                || string.length > 6 && REGION_EDIT_ARGS.contains(string[5].toLowerCase())
-                || string.length > 6 && REGION_EDIT_ARGS_FLAGS.contains(string[5].toLowerCase())) {
-            for (String list : wgrpPlugin.getConfigProvider().get().getRegionProtectMap().get(e.getPlayer().getLocation().getWorld().getName())) {
-                if (list.equalsIgnoreCase(string[6])) {
+        if (string.length > 6) {
+            int checkIdx = (string[4].equalsIgnoreCase("-w") || string[4].equalsIgnoreCase("-h")) ? 4 : 5;
+            checkRegionEditArgsCustom(e, string, checkIdx);
+        }
+    }
+
+    private void checkRegionEditArgs(@NotNull PlayerCommandPreprocessEvent e, @NotNull String @NotNull [] string, int minLength, int checkIndex, int valueIndex) {
+        if (string.length <= minLength) {
+            return;
+        }
+
+        final String checkArg = string[checkIndex].toLowerCase();
+        final boolean matches = checkArg.equals("-w")
+                || checkArg.equals("-h")
+                || REGION_EDIT_ARGS.contains(checkArg)
+                || REGION_EDIT_ARGS_FLAGS.contains(checkArg);
+
+        if (!matches) {
+            return;
+        }
+
+        final String worldName = e.getPlayer().getLocation().getWorld().getName();
+        final String targetValue = string[valueIndex];
+
+        // Проверка regionProtectMap
+        var protectMap = wgrpPlugin.getConfigProvider().get().getRegionProtectMap().get(worldName);
+        if (protectMap != null) {
+            for (String list : protectMap) {
+                if (list.equalsIgnoreCase(targetValue)) {
                     e.setCancelled(true);
+                    return;
                 }
             }
-            for (String list : wgrpPlugin.getConfigProvider().get().getRegionProtectOnlyBreakAllowMap().get(
-                    e.getPlayer().getLocation()
-                            .getWorld()
-                            .getName())) {
-                if (list.equalsIgnoreCase(string[6])) {
-                    e.setCancelled(false);
+        }
+
+        // Проверка regionProtectOnlyBreakAllowMap
+        var breakAllowMap = wgrpPlugin.getConfigProvider().get().getRegionProtectOnlyBreakAllowMap().get(worldName);
+        if (breakAllowMap != null) {
+            for (String list : breakAllowMap) {
+                if (list.equalsIgnoreCase(targetValue)) {
+                    e.setCancelled(true);
+                    return;
                 }
             }
         }
     }
 
+    private void checkRegionEditArgsCustom(@NotNull PlayerCommandPreprocessEvent e,
+                                           @NotNull String[] string,
+                                           int checkIndex
+    ) {
+        if (string.length <= 6) {
+            return;
+        }
+
+        String checkArg = string[checkIndex].toLowerCase();
+
+        boolean matches = checkArg.equals("-w")
+                || checkArg.equals("-h")
+                || REGION_EDIT_ARGS.contains(checkArg)
+                || REGION_EDIT_ARGS_FLAGS.contains(checkArg);
+
+        if (!matches) {
+            return;
+        }
+
+        String worldName = e.getPlayer().getLocation().getWorld().getName();
+        String targetValue = string[6];
+
+        // 1. Проверка regionProtectMap -> e.setCancelled(true)
+        var protectMap = wgrpPlugin.getConfigProvider().get().getRegionProtectMap().get(worldName);
+        if (protectMap != null) {
+            for (String list : protectMap) {
+                if (list.equalsIgnoreCase(targetValue)) {
+                    e.setCancelled(true);
+                    return;
+                }
+            }
+        }
+
+        // 2. Проверка regionProtectOnlyBreakAllowMap -> e.setCancelled(false) (как в вашем 4-м методе)
+        var breakAllowMap = wgrpPlugin.getConfigProvider().get().getRegionProtectOnlyBreakAllowMap().get(worldName);
+        if (breakAllowMap != null) {
+            for (String list : breakAllowMap) {
+                if (list.equalsIgnoreCase(targetValue)) {
+                    e.setCancelled(false);
+                    return;
+                }
+            }
+        }
+    }
 }
 

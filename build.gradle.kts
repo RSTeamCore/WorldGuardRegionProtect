@@ -8,14 +8,13 @@ plugins {
     id("java")
     id("java-library")
     id("org.jetbrains.kotlin.jvm")
-    id("net.kyori.indra") version "3.1.3"
-    id("net.kyori.indra.checkstyle") version "3.1.3"
+    //id("net.kyori.indra") version "4.0.0"
+    //id("net.kyori.indra.checkstyle") version "4.0.0"
 }
 
-val checkstyleVersion = "9.3"
+//val checkstyleVersion = "9.3"
 
-logger.lifecycle(
-    """
+logger.lifecycle("""
 *******************************************
  You are building WorldGuardRegionProtect!
  If you encounter trouble:
@@ -36,33 +35,37 @@ allprojects {
     plugins.apply("java")
     plugins.apply("java-library")
     plugins.apply("org.jetbrains.kotlin.jvm")
-    plugins.apply("net.kyori.indra")
-    plugins.apply("net.kyori.indra.checkstyle")
+    //plugins.apply("net.kyori.indra")
+    //plugins.apply("net.kyori.indra.checkstyle")
     plugins.apply("maven-publish")
 
-    indra {
+    /*indra {
         checkstyle(checkstyleVersion)
-
-        kotlin {
-            jvmToolchain(21)
-        }
-
-        javaVersions {
-            target(21)
-        }
     }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(25))
+        }
+    }*/
 }
 
 subprojects {
+    configure<org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension> {
+        jvmToolchain(25)
+    }
+
     tasks.withType<JavaCompile> {
         options.encoding = Charsets.UTF_8.name()
-        options.release.set(21)
+        options.release.set(25)
     }
 
     tasks.withType<KotlinCompile> {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
+            jvmTarget.set(JvmTarget.JVM_25)
             languageVersion.set(KotlinVersion.KOTLIN_2_0)
+
+            freeCompilerArgs.add("-Xjdk-release=25")
         }
     }
 

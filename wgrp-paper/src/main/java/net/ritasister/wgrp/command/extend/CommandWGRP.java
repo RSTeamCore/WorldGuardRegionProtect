@@ -3,7 +3,7 @@ package net.ritasister.wgrp.command.extend;
 import net.kyori.adventure.text.Component;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
 import net.ritasister.wgrp.command.AbstractCommand;
-import net.ritasister.wgrp.rslibs.api.manager.region.RegionAction;
+import net.ritasister.wgrp.manager.region.RegionAction;
 import net.ritasister.wgrp.util.utility.CheckResult;
 import net.ritasister.wgrp.rslibs.annotation.SubCommand;
 import net.ritasister.wgrp.rslibs.permissions.UtilPermissions;

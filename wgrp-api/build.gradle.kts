@@ -41,8 +41,17 @@ dependencies {
     compileOnly("org.slf4j:slf4j-api:2.0.12")
 }
 
-tasks.withType<Javadoc> {
-    options.encoding = Charsets.UTF_8.name()
+tasks.withType<Javadoc>().configureEach {
+    val opts = options as StandardJavadocDocletOptions
+
+    opts.encoding = "UTF-8"
+    opts.source = "21"
+
+    javadocTool.set(
+            javaToolchains.javadocToolFor {
+                languageVersion.set(JavaLanguageVersion.of(21))
+            }
+    )
 }
 
 java {

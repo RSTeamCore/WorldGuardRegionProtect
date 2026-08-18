@@ -12,46 +12,34 @@ public interface RegionAction {
      *
      * @return The type of the region action.
      */
-    RegionAction.@NonNull Type getType();
+    @NonNull Type getType();
 
     /**
      * Represents the various types of actions that can be performed in a region.
      */
-    enum Type {
+    @FunctionalInterface
+    interface Type {
+
+        /**
+         * Return name of the type of the action.
+         */
+        String getName();
+
         /**
          * Represents the action of breaking within a region.
          */
-        BREAK("break"),
+        Type BREAK = () -> "break";
 
         /**
          * Represents the action of placing within a region.
          */
-        PLACE("place"),
+        Type PLACE = () -> "place";
 
         /**
          * Represents the action of interacting within a region.
          */
-        INTERACT("interact");
+        Type INTERACT = () -> "interact";
 
-        private final String action;
-
-        /**
-         * Constructs a Type with the specified action name.
-         *
-         * @param action The name of the action.
-         */
-        Type(String action) {
-            this.action = action;
-        }
-
-        /**
-         * Retrieves the name of the action represented by this type.
-         *
-         * @return The name of the action.
-         */
-        public String getAction() {
-            return this.action;
-        }
     }
 
 }

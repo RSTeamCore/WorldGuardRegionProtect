@@ -1,8 +1,8 @@
 package net.ritasister.wgrp.api;
 
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
-import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
-import net.ritasister.wgrp.api.manager.tools.ToolsAdapterManager;
+import net.ritasister.wgrp.api.manager.RegionAdapterManager;
+import net.ritasister.wgrp.api.manager.ToolsAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
@@ -60,7 +60,7 @@ public interface WorldGuardRegionProtect {
      */
     @ApiStatus.Experimental
     @NonNull
-    <P> ToolsAdapterManager<P> getToolsAdapterManager();
+    <P> ToolsAdapterManager getToolsAdapterManager();
 
     /**
      * Retrieves the {@link EntityCheckType}, which defines the types of entity checks

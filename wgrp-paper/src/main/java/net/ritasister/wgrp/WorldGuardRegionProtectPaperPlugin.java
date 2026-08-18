@@ -11,7 +11,7 @@ import net.ritasister.wgrp.api.config.version.ConfigVersionReader;
 import net.ritasister.wgrp.api.config.version.VersionChecker;
 import net.ritasister.wgrp.api.handler.Handler;
 import net.ritasister.wgrp.api.manager.regions.RegionAction;
-import net.ritasister.wgrp.api.manager.regions.RegionAdapterManager;
+import net.ritasister.wgrp.api.manager.RegionAdapterManager;
 import net.ritasister.wgrp.api.messaging.MessagingService;
 import net.ritasister.wgrp.api.metadata.WorldGuardRegionProtectMetadata;
 import net.ritasister.wgrp.api.model.entity.EntityCheckType;
@@ -26,14 +26,14 @@ import net.ritasister.wgrp.loader.WGRPLoaderHandlers;
 import net.ritasister.wgrp.loader.plugin.LoadPlaceholderAPI;
 import net.ritasister.wgrp.loader.plugin.LoadWorldGuard;
 import net.ritasister.wgrp.plugin.AbstractWorldGuardRegionProtectPlugin;
-import net.ritasister.wgrp.rslibs.UtilCommandWE;
-import net.ritasister.wgrp.rslibs.api.PlayerPermissionsImpl;
-import net.ritasister.wgrp.rslibs.api.RSApiImpl;
-import net.ritasister.wgrp.rslibs.api.UtilWEImpl;
-import net.ritasister.wgrp.rslibs.api.manager.region.RegionAdapterManagerPaper;
-import net.ritasister.wgrp.rslibs.api.manager.tools.ToolsAdapterManagerPaper;
+import net.ritasister.wgrp.rslibs.worldguard.UtilCommandWE;
+import net.ritasister.wgrp.model.PlayerPermissionsImpl;
+import net.ritasister.wgrp.rslibs.core.RSApiImpl;
+import net.ritasister.wgrp.rslibs.worldguard.UtilWEImpl;
+import net.ritasister.wgrp.manager.region.RegionAdapterManagerPaper;
+import net.ritasister.wgrp.manager.tools.ToolsAdapterManagerPaper;
 import net.ritasister.wgrp.rslibs.updater.UpdateNotify;
-import net.ritasister.wgrp.rslibs.wg.CheckIntersection;
+import net.ritasister.wgrp.rslibs.worldguard.CheckIntersection;
 import net.ritasister.wgrp.util.config.provider.ZonedDateProvider;
 import net.ritasister.wgrp.util.config.version.ConfigVersionReaderImpl;
 import net.ritasister.wgrp.util.config.files.UpdateFile;
@@ -238,7 +238,7 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
 
     public void messageToCommandSender(final @NotNull CommandSender commandSender, final String message) {
         final Audience audience = adventure.sender(commandSender);
-        final var miniMessage = MiniMessage.miniMessage();
+        final @NotNull MiniMessage miniMessage = MiniMessage.miniMessage();
         final Component parsed = miniMessage.deserialize(message);
         audience.sendMessage(parsed);
     }
@@ -284,7 +284,6 @@ public class WorldGuardRegionProtectPaperPlugin extends AbstractWorldGuardRegion
         return this.regionAction;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public ToolsAdapterManagerPaper getToolsAdapter() {
         return this.toolsAdapter;
