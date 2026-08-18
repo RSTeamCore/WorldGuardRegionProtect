@@ -12,7 +12,7 @@ public class MinecraftVersionChecker {
 
     private static final String SUPPORTED_VERSION_RANGE = MIN_SUPPORTED + " - " + MAX_SUPPORTED;
     private static final Set<String> SUPPORTED_VERSIONS = Set.of(
-            "26.1", "26.2"
+            "26.1", "26.1.1", "26.1.2", "26.2"
     );
 
     private final WGRPBootstrap bootstrap;
