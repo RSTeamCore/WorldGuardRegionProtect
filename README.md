@@ -14,6 +14,8 @@
 
 ## 🌈 Community
 
+Hosting where u can buy vds/dedicated server https://nutao.cloud/
+
 🚩 Do you speak multiple languages? If so, we always welcome contributions to
 our [Crowdin project](https://crowdin.com/project/worldguardregionprotect).
 
