@@ -24,7 +24,7 @@ dependencies {
     implementation(project(":wgrp-common"))
 
     //Paper or Folia
-    paperweight.paperDevBundle("26.2.build.+")
+    paperweight.paperDevBundle("26.3.build.+")
 
     //Plugins api
     compileOnly("net.kyori:adventure-platform-bukkit:4.3.3")

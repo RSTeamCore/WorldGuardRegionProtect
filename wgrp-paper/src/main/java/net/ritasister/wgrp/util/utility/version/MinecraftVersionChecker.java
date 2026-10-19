@@ -2,17 +2,18 @@ package net.ritasister.wgrp.util.utility.version;
 
 import net.ritasister.wgrp.WGRPBootstrap;
 import net.ritasister.wgrp.WorldGuardRegionProtectPaperPlugin;
+import org.jetbrains.annotations.Contract;
 
 import java.util.Set;
 
 public class MinecraftVersionChecker {
 
     private static final String MIN_SUPPORTED = "26.1";
-    private static final String MAX_SUPPORTED = "26.2";
+    private static final String MAX_SUPPORTED = "26.3";
 
     private static final String SUPPORTED_VERSION_RANGE = MIN_SUPPORTED + " - " + MAX_SUPPORTED;
     private static final Set<String> SUPPORTED_VERSIONS = Set.of(
-            "26.1", "26.2"
+            "26.1", "26.1.1", "26.1.2", "26.2", "26.3"
     );
 
     private final WGRPBootstrap bootstrap;
@@ -63,7 +64,15 @@ public class MinecraftVersionChecker {
         return SUPPORTED_VERSION_RANGE;
     }
 
-    @Deprecated
+    /**
+     * Retrieves the set of supported versions.
+     * <p>
+     * This method is marked as deprecated and is planned for removal in a future version.
+     *
+     * @return a set containing the supported version strings
+     */
+    @Contract(pure = true)
+    @Deprecated(forRemoval = true, since = "26.2")
     public static Set<String> getSupportedVersions() {
         return SUPPORTED_VERSIONS;
     }
